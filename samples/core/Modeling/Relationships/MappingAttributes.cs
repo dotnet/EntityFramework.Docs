@@ -1,5 +1,4 @@
-﻿#nullable disable
-
+﻿
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -8,9 +7,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace EFModeling.Relationships;
 
-public class MappingAttributes
+public static class MappingAttributes
 {
-    public class RequiredOnForeignKey
+    public static class RequiredOnForeignKey
     {
         public static void BuildModels()
         {
@@ -24,7 +23,7 @@ public class MappingAttributes
         public class Blog
         {
             public string Id { get; set; }
-            public List<Post> Posts { get; } = new();
+            public List<Post> Posts { get; } = [];
         }
 
         public class Post
@@ -43,12 +42,12 @@ public class MappingAttributes
             public DbSet<Blog> Blogs => Set<Blog>();
             public DbSet<Post> Posts => Set<Post>();
 
-            protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-                => optionsBuilder.UseSqlite($"DataSource = RequiredOnForeignKey{GetType().Name}.db");
+            protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) =>
+                optionsBuilder.UseSqlite($"DataSource = RequiredOnForeignKey{GetType().Name}.db");
         }
     }
 
-    public class RequiredOnDependentNavigation
+    public static class RequiredOnDependentNavigation
     {
         public static void BuildModels()
         {
@@ -62,7 +61,7 @@ public class MappingAttributes
         public class Blog
         {
             public string Id { get; set; }
-            public List<Post> Posts { get; } = new();
+            public List<Post> Posts { get; } = [];
         }
 
         public class Post
@@ -81,12 +80,12 @@ public class MappingAttributes
             public DbSet<Blog> Blogs => Set<Blog>();
             public DbSet<Post> Posts => Set<Post>();
 
-            protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-                => optionsBuilder.UseSqlite($"DataSource = RequiredOnDependentNavigation{GetType().Name}.db");
+            protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) =>
+                optionsBuilder.UseSqlite($"DataSource = RequiredOnDependentNavigation{GetType().Name}.db");
         }
     }
 
-    public class RequiredOnDependentNavigationShadowFk
+    public static class RequiredOnDependentNavigationShadowFk
     {
         public static void BuildModels()
         {
@@ -100,7 +99,7 @@ public class MappingAttributes
         public class Blog
         {
             public string Id { get; set; }
-            public List<Post> Posts { get; } = new();
+            public List<Post> Posts { get; } = [];
         }
 
         public class Post
@@ -117,12 +116,12 @@ public class MappingAttributes
             public DbSet<Blog> Blogs => Set<Blog>();
             public DbSet<Post> Posts => Set<Post>();
 
-            protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-                => optionsBuilder.UseSqlite($"DataSource = RequiredOnDependentNavigationShadowFk{GetType().Name}.db");
+            protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) =>
+                optionsBuilder.UseSqlite($"DataSource = RequiredOnDependentNavigationShadowFk{GetType().Name}.db");
         }
     }
 
-    public class ForeignKeyOnProperty
+    public static class ForeignKeyOnProperty
     {
         public static void BuildModels()
         {
@@ -136,7 +135,7 @@ public class MappingAttributes
         public class Blog
         {
             public string Id { get; set; }
-            public List<Post> Posts { get; } = new();
+            public List<Post> Posts { get; } = [];
         }
 
         public class Post
@@ -155,12 +154,12 @@ public class MappingAttributes
             public DbSet<Blog> Blogs => Set<Blog>();
             public DbSet<Post> Posts => Set<Post>();
 
-            protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-                => optionsBuilder.UseSqlite($"DataSource = ForeignKeyOnProperty{GetType().Name}.db");
+            protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) =>
+                optionsBuilder.UseSqlite($"DataSource = ForeignKeyOnProperty{GetType().Name}.db");
         }
     }
 
-    public class ForeignKeyOnDependentNavigation
+    public static class ForeignKeyOnDependentNavigation
     {
         public static void BuildModels()
         {
@@ -174,7 +173,7 @@ public class MappingAttributes
         public class Blog
         {
             public string Id { get; set; }
-            public List<Post> Posts { get; } = new();
+            public List<Post> Posts { get; } = [];
         }
 
         public class Post
@@ -193,12 +192,12 @@ public class MappingAttributes
             public DbSet<Blog> Blogs => Set<Blog>();
             public DbSet<Post> Posts => Set<Post>();
 
-            protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-                => optionsBuilder.UseSqlite($"DataSource = ForeignKeyOnDependentNavigation{GetType().Name}.db");
+            protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) =>
+                optionsBuilder.UseSqlite($"DataSource = ForeignKeyOnDependentNavigation{GetType().Name}.db");
         }
     }
 
-    public class ForeignKeyOnPrincipalNavigation
+    public static class ForeignKeyOnPrincipalNavigation
     {
         public static void BuildModels()
         {
@@ -214,7 +213,7 @@ public class MappingAttributes
             public string Id { get; set; }
 
             [ForeignKey(nameof(Post.BlogKey))]
-            public List<Post> Posts { get; } = new();
+            public List<Post> Posts { get; } = [];
         }
 
         public class Post
@@ -230,12 +229,12 @@ public class MappingAttributes
             public DbSet<Blog> Blogs => Set<Blog>();
             public DbSet<Post> Posts => Set<Post>();
 
-            protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-                => optionsBuilder.UseSqlite($"DataSource = ForeignKeyOnPrincipalNavigation{GetType().Name}.db");
+            protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) =>
+                optionsBuilder.UseSqlite($"DataSource = ForeignKeyOnPrincipalNavigation{GetType().Name}.db");
         }
     }
 
-    public class ForeignKeyOnDependentNavigationShadowFk
+    public static class ForeignKeyOnDependentNavigationShadowFk
     {
         public static void BuildModels()
         {
@@ -249,7 +248,7 @@ public class MappingAttributes
         public class Blog
         {
             public string Id { get; set; }
-            public List<Post> Posts { get; } = new();
+            public List<Post> Posts { get; } = [];
         }
 
         public class Post
@@ -266,12 +265,12 @@ public class MappingAttributes
             public DbSet<Blog> Blogs => Set<Blog>();
             public DbSet<Post> Posts => Set<Post>();
 
-            protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-                => optionsBuilder.UseSqlite($"DataSource = ForeignKeyOnDependentNavigationShadowFk{GetType().Name}.db");
+            protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) =>
+                optionsBuilder.UseSqlite($"DataSource = ForeignKeyOnDependentNavigationShadowFk{GetType().Name}.db");
         }
     }
 
-    public class ForeignKeyOnPrincipalNavigationShadowFk
+    public static class ForeignKeyOnPrincipalNavigationShadowFk
     {
         public static void BuildModels()
         {
@@ -287,7 +286,7 @@ public class MappingAttributes
             public string Id { get; set; }
 
             [ForeignKey("BlogKey")]
-            public List<Post> Posts { get; } = new();
+            public List<Post> Posts { get; } = [];
         }
 
         public class Post
@@ -302,12 +301,12 @@ public class MappingAttributes
             public DbSet<Blog> Blogs => Set<Blog>();
             public DbSet<Post> Posts => Set<Post>();
 
-            protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-                => optionsBuilder.UseSqlite($"DataSource = ForeignKeyOnPrincipalNavigationShadowFk{GetType().Name}.db");
+            protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) =>
+                optionsBuilder.UseSqlite($"DataSource = ForeignKeyOnPrincipalNavigationShadowFk{GetType().Name}.db");
         }
     }
 
-    public class InverseOnDependentNavigation
+    public static class InverseOnDependentNavigation
     {
         public static void BuildModels()
         {
@@ -322,7 +321,7 @@ public class MappingAttributes
         {
             public int Id { get; set; }
 
-            public List<Post> Posts { get; } = new();
+            public List<Post> Posts { get; } = [];
 
             public int FeaturedPostId { get; set; }
             public Post FeaturedPost { get; set; }
@@ -343,12 +342,12 @@ public class MappingAttributes
             public DbSet<Blog> Blogs => Set<Blog>();
             public DbSet<Post> Posts => Set<Post>();
 
-            protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-                => optionsBuilder.UseSqlite($"DataSource = InverseOnDependentNavigation{GetType().Name}.db");
+            protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) =>
+                optionsBuilder.UseSqlite($"DataSource = InverseOnDependentNavigation{GetType().Name}.db");
         }
     }
 
-    public class InverseOnPrincipalNavigation
+    public static class InverseOnPrincipalNavigation
     {
         public static void BuildModels()
         {
@@ -364,7 +363,7 @@ public class MappingAttributes
             public int Id { get; set; }
 
             [InverseProperty("Blog")]
-            public List<Post> Posts { get; } = new();
+            public List<Post> Posts { get; } = [];
 
             public int FeaturedPostId { get; set; }
             public Post FeaturedPost { get; set; }
@@ -384,12 +383,12 @@ public class MappingAttributes
             public DbSet<Blog> Blogs => Set<Blog>();
             public DbSet<Post> Posts => Set<Post>();
 
-            protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-                => optionsBuilder.UseSqlite($"DataSource = InverseOnPrincipalNavigation{GetType().Name}.db");
+            protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) =>
+                optionsBuilder.UseSqlite($"DataSource = InverseOnPrincipalNavigation{GetType().Name}.db");
         }
     }
 
-    public class DeleteBehaviorOnDependentNavigation
+    public static class DeleteBehaviorOnDependentNavigation
     {
         public static void BuildModels()
         {
@@ -403,7 +402,7 @@ public class MappingAttributes
         public class Blog
         {
             public int Id { get; set; }
-            public List<Post> Posts { get; } = new();
+            public List<Post> Posts { get; } = [];
         }
 
         public class Post
@@ -421,12 +420,12 @@ public class MappingAttributes
             public DbSet<Blog> Blogs => Set<Blog>();
             public DbSet<Post> Posts => Set<Post>();
 
-            protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-                => optionsBuilder.UseSqlite($"DataSource = DeleteBehaviorOnDependentNavigation{GetType().Name}.db");
+            protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) =>
+                optionsBuilder.UseSqlite($"DataSource = DeleteBehaviorOnDependentNavigation{GetType().Name}.db");
         }
     }
 
-    public class DeleteBehaviorOnPrincipalNavigation
+    public static class DeleteBehaviorOnPrincipalNavigation
     {
         public static void BuildModels()
         {
@@ -440,7 +439,7 @@ public class MappingAttributes
         public class Blog
         {
             public int Id { get; set; }
-            public List<Post> Posts { get; } = new();
+            public List<Post> Posts { get; } = [];
         }
 
         public class Post
@@ -458,8 +457,8 @@ public class MappingAttributes
             public DbSet<Blog> Blogs => Set<Blog>();
             public DbSet<Post> Posts => Set<Post>();
 
-            protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-                => optionsBuilder.UseSqlite($"DataSource = DeleteBehaviorOnPrincipalNavigation{GetType().Name}.db");
+            protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) =>
+                optionsBuilder.UseSqlite($"DataSource = DeleteBehaviorOnPrincipalNavigation{GetType().Name}.db");
         }
     }
 }

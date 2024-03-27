@@ -41,7 +41,7 @@ public static class OptionalDependentsSample
         using (var context = new SomeDbContext())
         {
             #region CheckForNullAddress
-            foreach (var customer in context.Customers1)
+            foreach (WithRequiredProperty.Customer customer in context.Customers1)
             {
                 Console.Write(customer.Name);
 
@@ -92,19 +92,19 @@ public static class OptionalDependentsSample
 
         using (var context = new SomeDbContext())
         {
-            var connection = context.Database.GetDbConnection();
+            System.Data.Common.DbConnection connection = context.Database.GetDbConnection();
             connection.Open();
 
-            using var command = connection.CreateCommand();
+            using System.Data.Common.DbCommand command = connection.CreateCommand();
             command.CommandText = "SELECT Id, Name, Address_House, Address_Street, Address_City, Address_Postcode FROM Customers2";
 
-            Console.WriteLine($"Id  Name               House   Street  City    Postcode");
+            Console.WriteLine("Id  Name               House   Street  City    Postcode");
 
-            using var reader = command.ExecuteReader();
+            using System.Data.Common.DbDataReader reader = command.ExecuteReader();
             while (reader.Read())
             {
-                Console.Write($"{reader.GetInt32(0)}   {reader.GetString(1).PadRight(17)}  ");
-                for (int i = 2; i <= 5; i++)
+                Console.Write($"{reader.GetInt32(0)}   {reader.GetString(1),-17}  ");
+                for (var i = 2; i <= 5; i++)
                 {
                     Console.Write(reader.IsDBNull(i) ? "NULL    " : reader.GetString(i).PadRight(8));
                 }
@@ -139,7 +139,7 @@ public static class OptionalDependentsSample
 
         using (var context = new SomeDbContext())
         {
-            var principal = context.PrincipalsWithOptionalDependents.Single();
+            PrincipalWithOptionalDependents principal = context.PrincipalsWithOptionalDependents.Single();
             Console.WriteLine("After querying back principal and dependents saved above:");
             Console.WriteLine($"  Dependent with only optional properties is {(principal.DependentWithOnlyOptionalProperties != null ? "not " : "")}null.");
             Console.WriteLine($"  Dependent with only required properties is {(principal.DependentWithOnlyRequiredProperties != null ? "not " : "")}null.");
@@ -181,7 +181,7 @@ public static class OptionalDependentsSample
 
         using (var context = new SomeDbContext())
         {
-            var principal = context.PrincipalsWithOptionalDependents.Single();
+            PrincipalWithOptionalDependents principal = context.PrincipalsWithOptionalDependents.Single();
             Console.WriteLine("After querying back principal and dependents saved above:");
             Console.WriteLine($"  Dependent with only optional properties is {(principal.DependentWithOnlyOptionalProperties != null ? "not " : "")}null. <-- Note dependent is null here.");
             Console.WriteLine($"  Dependent with only required properties is {(principal.DependentWithOnlyRequiredProperties != null ? "not " : "")}null.");
@@ -218,7 +218,7 @@ public static class OptionalDependentsSample
 
         using (var context = new SomeDbContext())
         {
-            var principal = context.PrincipalsWithRequiredDependents.Single();
+            PrincipalWithRequiredDependents principal = context.PrincipalsWithRequiredDependents.Single();
             Console.WriteLine("After querying back principal and dependents saved above:");
             Console.WriteLine($"  Dependent with only optional properties is {(principal.DependentWithOnlyOptionalProperties != null ? "not " : "")}null.");
             Console.WriteLine($"  Dependent with only required properties is {(principal.DependentWithOnlyRequiredProperties != null ? "not " : "")}null.");
@@ -251,7 +251,6 @@ public static class OptionalDependentsSample
             Console.WriteLine($"  Dependent with only optional properties is {(principal.DependentWithOptionalNestedDependents != null ? "not " : "")}null.");
             Console.WriteLine($"  Nested dependent with only optional properties is {(principal.DependentWithOptionalNestedDependents?.Nested != null ? "not " : "")}null.");
 
-
             Console.WriteLine();
             Console.WriteLine("SaveChanges will warn:");
             Console.WriteLine();
@@ -261,7 +260,7 @@ public static class OptionalDependentsSample
 
         using (var context = new SomeDbContext())
         {
-            var principal = context.PrincipalsWithNestedOptionalDependents.Single();
+            PrincipalWithNestedOptionalDependents principal = context.PrincipalsWithNestedOptionalDependents.Single();
             Console.WriteLine("After querying back principal and dependents saved above:");
             Console.WriteLine($"  Dependent with only optional properties is {(principal.DependentWithOptionalNestedDependents != null ? "not " : "")}null.");
             Console.WriteLine($"  Nested dependent with only optional properties is {(principal.DependentWithOptionalNestedDependents?.Nested != null ? "not " : "")}null. <-- Note nested dependent is null here.");
@@ -298,7 +297,7 @@ public static class OptionalDependentsSample
 
         using (var context = new SomeDbContext())
         {
-            var principal = context.PrincipalsWithNestedRequiredDependents.Single();
+            PrincipalWithNestedRequiredDependents principal = context.PrincipalsWithNestedRequiredDependents.Single();
             Console.WriteLine("After querying back principal and dependents saved above:");
             Console.WriteLine($"  Dependent with only optional properties is {(principal.DependentWithRequiredNestedDependents != null ? "not " : "")}null.");
             Console.WriteLine($"  Nested dependent with only optional properties is {(principal.DependentWithRequiredNestedDependents?.Nested != null ? "not " : "")}null.");
@@ -378,7 +377,7 @@ public static class OptionalDependentsSample
         public DependentWithOnlyOptionalProperties Nested { get; set; }
     }
 
-    public class WithRequiredProperty
+    public static class WithRequiredProperty
     {
         #region AddressWithRequiredProperty
         public class Customer
@@ -400,7 +399,7 @@ public static class OptionalDependentsSample
         #endregion
     }
 
-    public class WithoutRequiredProperty
+    public static class WithoutRequiredProperty
     {
         #region AddressWithoutRequiredProperty
         public class Customer
@@ -420,7 +419,7 @@ public static class OptionalDependentsSample
         #endregion
     }
 
-    public class WithRequiredNavigation
+    public static class WithRequiredNavigation
     {
         #region AddressWithRequiredNavigation
         public class Customer
@@ -442,7 +441,7 @@ public static class OptionalDependentsSample
         #endregion
     }
 
-    public class WithDifferentTable
+    public static class WithDifferentTable
     {
         #region AddressWithDifferentTable
         public class Customer
@@ -462,7 +461,7 @@ public static class OptionalDependentsSample
         #endregion
     }
 
-    public class NestedWithoutRequiredProperty
+    public static class NestedWithoutRequiredProperty
     {
         #region NestedWithoutRequiredProperty
         public class Customer
@@ -498,12 +497,9 @@ public static class OptionalDependentsSample
         public DbSet<WithRequiredProperty.Customer> Customers1 { get; set; }
         public DbSet<WithoutRequiredProperty.Customer> Customers2 { get; set; }
 
-        private readonly bool _quiet;
+        readonly bool _quiet;
 
-        public SomeDbContext(bool quiet = false)
-        {
-            _quiet = quiet;
-        }
+        public SomeDbContext(bool quiet = false) => _quiet = quiet;
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -556,13 +552,7 @@ public static class OptionalDependentsSample
                 });
 
             modelBuilder.Entity<PrincipalWithNestedOptionalDependents>(
-                b =>
-                {
-                    b.OwnsOne(e => e.DependentWithOptionalNestedDependents, b =>
-                    {
-                        b.OwnsOne(e => e.Nested);
-                    });
-                });
+                b => b.OwnsOne(e => e.DependentWithOptionalNestedDependents, b => b.OwnsOne(e => e.Nested)));
 
             modelBuilder.Entity<PrincipalWithNestedRequiredDependents>(
                 b =>

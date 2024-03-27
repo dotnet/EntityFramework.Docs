@@ -7,8 +7,8 @@ public class OwnedEntityContext : DbContext
     public DbSet<Order> Orders { get; set; }
     public DbSet<DetailedOrder> DetailedOrders { get; set; }
 
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        => optionsBuilder
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) =>
+        optionsBuilder
             .UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=EFOwnedEntity;Trusted_Connection=True");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -60,7 +60,7 @@ public class OwnedEntityContext : DbContext
         #endregion
 
         #region OwnsOneTable
-        modelBuilder.Entity<DetailedOrder>().OwnsOne(p => p.OrderDetails, od => { od.ToTable("OrderDetails"); });
+        modelBuilder.Entity<DetailedOrder>().OwnsOne(p => p.OrderDetails, od => od.ToTable("OrderDetails"));
         #endregion
 
         #region OwnsMany

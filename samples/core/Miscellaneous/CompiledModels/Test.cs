@@ -6,7 +6,7 @@ using CompiledModelTest;
 public class Test
 {
     [Benchmark]
-    public void TimeToFirstQuery()
+    public static void TimeToFirstQuery()
     {
         using var context = new BlogsContext();
         var results = context.Set<Blog0000>().ToList();

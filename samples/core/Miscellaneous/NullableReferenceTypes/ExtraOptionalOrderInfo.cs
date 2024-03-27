@@ -5,9 +5,6 @@ namespace NullableReferenceTypes
         public int Id { get; set; }
         public string SomeExtraAdditionalInfo { get; set; }
 
-        public ExtraOptionalOrderInfo(string someExtraAdditionalInfo)
-        {
-            SomeExtraAdditionalInfo = someExtraAdditionalInfo;
-        }
+        public ExtraOptionalOrderInfo(string someExtraAdditionalInfo) => SomeExtraAdditionalInfo = someExtraAdditionalInfo;
     }
 }

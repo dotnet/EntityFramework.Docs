@@ -17,29 +17,27 @@ public static class LazyConnectionStringSample
                 .LogTo(Console.WriteLine, LogLevel.Information)
                 .EnableSensitiveDataLogging());
 
-        var serviceProvider = services.BuildServiceProvider();
+        ServiceProvider serviceProvider = services.BuildServiceProvider();
 
-        using (var scope = serviceProvider.CreateScope())
-        {
-            var context = scope.ServiceProvider.GetRequiredService<CustomerContext>();
+        using IServiceScope scope = serviceProvider.CreateScope();
+        CustomerContext context = scope.ServiceProvider.GetRequiredService<CustomerContext>();
 
-            await context.Database.EnsureDeletedAsync();
-            await context.Database.EnsureCreatedAsync();
+        await context.Database.EnsureDeletedAsync();
+        await context.Database.EnsureCreatedAsync();
 
-            await context.AddRangeAsync(
-                new Customer { Name = "Alice" },
-                new Customer { Name = "Mac" });
+        await context.AddRangeAsync(
+            new Customer { Name = "Alice" },
+            new Customer { Name = "Mac" });
 
-            await context.SaveChangesAsync();
+        await context.SaveChangesAsync();
 
-            var customer = await context.Customers.SingleAsync(e => e.Name == "Alice");
-            Console.WriteLine();
-            Console.WriteLine($"Loaded {customer.Name}");
-            Console.WriteLine();
-        }
+        Customer customer = await context.Customers.SingleAsync(e => e.Name == "Alice");
+        Console.WriteLine();
+        Console.WriteLine($"Loaded {customer.Name}");
+        Console.WriteLine();
     }
 
-    private static void PrintSampleName([CallerMemberName] string? methodName = null)
+    static void PrintSampleName([CallerMemberName] string? methodName = null)
     {
         Console.WriteLine($">>>> Sample: {methodName}");
         Console.WriteLine();
@@ -47,21 +45,18 @@ public static class LazyConnectionStringSample
 
     public class CustomerContext : DbContext
     {
-        private readonly IClientConnectionStringFactory _connectionStringFactory;
+        readonly IClientConnectionStringFactory _connectionStringFactory;
 
         public CustomerContext(
             DbContextOptions<CustomerContext> options,
             IClientConnectionStringFactory connectionStringFactory)
-            : base(options)
-        {
-            _connectionStringFactory = connectionStringFactory;
-        }
+            : base(options) => _connectionStringFactory = connectionStringFactory;
 
         public DbSet<Customer> Customers
             => Set<Customer>();
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-            => optionsBuilder.AddInterceptors(
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) =>
+            optionsBuilder.AddInterceptors(
                 new ConnectionStringInitializationInterceptor(_connectionStringFactory));
     }
 
@@ -84,12 +79,10 @@ public static class LazyConnectionStringSample
     #region ConnectionStringInitializationInterceptor
     public class ConnectionStringInitializationInterceptor : DbConnectionInterceptor
     {
-        private readonly IClientConnectionStringFactory _connectionStringFactory;
+        readonly IClientConnectionStringFactory _connectionStringFactory;
 
-        public ConnectionStringInitializationInterceptor(IClientConnectionStringFactory connectionStringFactory)
-        {
+        public ConnectionStringInitializationInterceptor(IClientConnectionStringFactory connectionStringFactory) =>
             _connectionStringFactory = connectionStringFactory;
-        }
 
         public override InterceptionResult ConnectionOpening(
             DbConnection connection,
@@ -103,7 +96,7 @@ public static class LazyConnectionStringSample
         {
             if (string.IsNullOrEmpty(connection.ConnectionString))
             {
-                connection.ConnectionString = (await _connectionStringFactory.GetConnectionStringAsync(cancellationToken));
+                connection.ConnectionString = await _connectionStringFactory.GetConnectionStringAsync(cancellationToken);
             }
 
             return result;

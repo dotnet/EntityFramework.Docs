@@ -9,17 +9,17 @@ public static class InjectLoggerSample
     {
         PrintSampleName();
 
-        var loggerFactory = LoggerFactory.Create(builder => { builder.AddConsole(); });
+        ILoggerFactory loggerFactory = LoggerFactory.Create(builder => builder.AddConsole());
 
-        var serviceProvider = new ServiceCollection()
+        ServiceProvider serviceProvider = new ServiceCollection()
             .AddDbContext<CustomerContext>(
                 b => b.UseLoggerFactory(loggerFactory)
                     .UseSqlite("Data Source = customers.db"))
             .BuildServiceProvider();
 
-        using (var scope = serviceProvider.CreateScope())
+        using (IServiceScope scope = serviceProvider.CreateScope())
         {
-            var context = scope.ServiceProvider.GetRequiredService<CustomerContext>();
+            CustomerContext context = scope.ServiceProvider.GetRequiredService<CustomerContext>();
 
             await context.Database.EnsureDeletedAsync();
             await context.Database.EnsureCreatedAsync();
@@ -31,16 +31,16 @@ public static class InjectLoggerSample
             await context.SaveChangesAsync();
         }
 
-        using (var scope = serviceProvider.CreateScope())
+        using (IServiceScope scope = serviceProvider.CreateScope())
         {
-            var context = scope.ServiceProvider.GetRequiredService<CustomerContext>();
+            CustomerContext context = scope.ServiceProvider.GetRequiredService<CustomerContext>();
 
-            var customer = await context.Customers.SingleAsync(e => e.Name == "Alice");
+            Customer customer = await context.Customers.SingleAsync(e => e.Name == "Alice");
             customer.PhoneNumber = "+1 515 555 0125";
         }
     }
 
-    private static void PrintSampleName([CallerMemberName] string? methodName = null)
+    static void PrintSampleName([CallerMemberName] string? methodName = null)
     {
         Console.WriteLine($">>>> Sample: {methodName}");
         Console.WriteLine();
@@ -57,15 +57,15 @@ public static class InjectLoggerSample
             => Set<Customer>();
 
         #region OnConfiguring
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-            => optionsBuilder.AddInterceptors(new LoggerInjectionInterceptor());
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) =>
+            optionsBuilder.AddInterceptors(new LoggerInjectionInterceptor());
         #endregion
     }
 
     #region LoggerInjectionInterceptor
     public class LoggerInjectionInterceptor : IMaterializationInterceptor
     {
-        private ILogger? _logger;
+        ILogger? _logger;
 
         public object InitializedInstance(MaterializationInterceptionData materializationData, object instance)
         {
@@ -90,7 +90,7 @@ public static class InjectLoggerSample
     #region CustomerIHasLogger
     public class Customer : IHasLogger
     {
-        private string? _phoneNumber;
+        string? _phoneNumber;
 
         public int Id { get; set; }
         public string Name { get; set; } = null!;
@@ -100,8 +100,7 @@ public static class InjectLoggerSample
             get => _phoneNumber;
             set
             {
-                Logger?.LogInformation(1, $"Updating phone number for '{Name}' from '{_phoneNumber}' to '{value}'.");
-
+                Logger?.LogInformation(1, "Updating phone number for '{Name}' from '{oldNumber}' to '{newNumber}'.", Name, _phoneNumber, value);
                 _phoneNumber = value;
             }
         }

@@ -13,7 +13,7 @@ db.SaveChanges();
 
 // Read
 Console.WriteLine("Querying for a blog");
-var blog = db.Blogs
+Blog blog = db.Blogs
     .OrderBy(b => b.BlogId)
     .First();
 

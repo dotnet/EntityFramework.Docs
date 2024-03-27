@@ -20,23 +20,21 @@ public static class OptimisticConcurrencyInterceptionSample
             await context.SaveChangesAsync();
         }
 
-        await using (var context1 = new CustomerContext())
+        await using var context1 = new CustomerContext();
+        Customer customer1 = await context1.Customers.SingleAsync(e => e.Name == "Bill");
+
+        await using (var context2 = new CustomerContext())
         {
-            var customer1 = await context1.Customers.SingleAsync(e => e.Name == "Bill");
-
-            await using (var context2 = new CustomerContext())
-            {
-                var customer2 = await context1.Customers.SingleAsync(e => e.Name == "Bill");
-                context2.Entry(customer2).State = EntityState.Deleted;
-                await context2.SaveChangesAsync();
-            }
-
-            context1.Entry(customer1).State = EntityState.Deleted;
-            await context1.SaveChangesAsync();
+            Customer customer2 = await context1.Customers.SingleAsync(e => e.Name == "Bill");
+            context2.Entry(customer2).State = EntityState.Deleted;
+            await context2.SaveChangesAsync();
         }
+
+        context1.Entry(customer1).State = EntityState.Deleted;
+        await context1.SaveChangesAsync();
     }
 
-    private static void PrintSampleName([CallerMemberName] string? methodName = null)
+    static void PrintSampleName([CallerMemberName] string? methodName = null)
     {
         Console.WriteLine($">>>> Sample: {methodName}");
         Console.WriteLine();
@@ -44,13 +42,13 @@ public static class OptimisticConcurrencyInterceptionSample
 
     public class CustomerContext : DbContext
     {
-        private static readonly SuppressDeleteConcurrencyInterceptor _concurrencyInterceptor = new();
+        static readonly SuppressDeleteConcurrencyInterceptor _concurrencyInterceptor = new();
 
         public DbSet<Customer> Customers
             => Set<Customer>();
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-            => optionsBuilder
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) =>
+            optionsBuilder
                 .AddInterceptors(_concurrencyInterceptor)
                 .UseSqlite("Data Source = customers.db")
                 .LogTo(Console.WriteLine, LogLevel.Information);

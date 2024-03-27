@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace EFModeling.GeneratedProperties.DataAnnotations.ValueGeneratedOnAdd;
 
-internal class MyContext : DbContext
+class MyContext : DbContext
 {
     public DbSet<Blog> Blogs { get; set; }
 }

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
-namespace Performance;
+namespace Performance.Other;
 
 public class BloggingContext : DbContext
 {
@@ -11,18 +11,14 @@ public class BloggingContext : DbContext
     public DbSet<Post> Posts { get; set; }
 
     #region SimpleLogging
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-    {
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) =>
         optionsBuilder
             .UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=Blogging;Trusted_Connection=True")
             .LogTo(Console.WriteLine, LogLevel.Information);
-    }
     #endregion
 
-    protected override void OnModelCreating(ModelBuilder modelBuilder)
-    {
+    protected override void OnModelCreating(ModelBuilder modelBuilder) =>
         modelBuilder.Entity<Post>().HasIndex(p => p.Title);
-    }
 }
 
 public class Blog

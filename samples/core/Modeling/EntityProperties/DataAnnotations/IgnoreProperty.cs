@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace EFModeling.EntityProperties.DataAnnotations.IgnoreProperty;
 
-internal class MyContext : DbContext
+class MyContext : DbContext
 {
     public DbSet<Blog> Blogs { get; set; }
 }

@@ -2,20 +2,18 @@
 
 namespace EFModeling.Keys.FluentAPI.KeySingle;
 
-internal class MyContext : DbContext
+class MyContext : DbContext
 {
     public DbSet<Car> Cars { get; set; }
 
     #region KeySingle
-    protected override void OnModelCreating(ModelBuilder modelBuilder)
-    {
+    protected override void OnModelCreating(ModelBuilder modelBuilder) =>
         modelBuilder.Entity<Car>()
             .HasKey(c => c.LicensePlate);
-    }
     #endregion
 }
 
-internal class Car
+class Car
 {
     public string LicensePlate { get; set; }
 

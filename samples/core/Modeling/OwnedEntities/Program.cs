@@ -5,7 +5,7 @@ namespace EFModeling.OwnedEntities;
 
 public static class Program
 {
-    private static void Main(string[] args)
+    static void Main()
     {
         using (var context = new OwnedEntityContext())
         {
@@ -29,7 +29,7 @@ public static class Program
         using (var context = new OwnedEntityContext())
         {
             #region DetailedOrderQuery
-            var order = context.DetailedOrders.First(o => o.Status == OrderStatus.Pending);
+            DetailedOrder order = context.DetailedOrders.First(o => o.Status == OrderStatus.Pending);
             Console.WriteLine($"First pending order will ship to: {order.OrderDetails.ShippingAddress.City}");
             #endregion
         }

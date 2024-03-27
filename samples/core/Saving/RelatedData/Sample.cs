@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace EFSaving.RelatedData;
 
-public class Sample
+public static class Sample
 {
     public static void Run()
     {
@@ -20,12 +20,12 @@ public class Sample
             var blog = new Blog
             {
                 Url = "http://blogs.msdn.com/dotnet",
-                Posts = new List<Post>
-                {
-                    new Post { Title = "Intro to C#" },
-                    new Post { Title = "Intro to VB.NET" },
-                    new Post { Title = "Intro to F#" }
-                }
+                Posts =
+                [
+                    new() { Title = "Intro to C#" },
+                    new() { Title = "Intro to VB.NET" },
+                    new() { Title = "Intro to F#" }
+                ]
             };
 
             context.Blogs.Add(blog);
@@ -36,7 +36,7 @@ public class Sample
         #region AddingRelatedEntity
         using (var context = new BloggingContext())
         {
-            var blog = context.Blogs.Include(b => b.Posts).First();
+            Blog blog = context.Blogs.Include(b => b.Posts).First();
             var post = new Post { Title = "Intro to EF Core" };
 
             blog.Posts.Add(post);
@@ -48,7 +48,7 @@ public class Sample
         using (var context = new BloggingContext())
         {
             var blog = new Blog { Url = "http://blogs.msdn.com/visualstudio" };
-            var post = context.Posts.First();
+            Post post = context.Posts.First();
 
             post.Blog = blog;
             context.SaveChanges();
@@ -58,8 +58,8 @@ public class Sample
         #region RemovingRelationships
         using (var context = new BloggingContext())
         {
-            var blog = context.Blogs.Include(b => b.Posts).First();
-            var post = blog.Posts.First();
+            Blog blog = context.Blogs.Include(b => b.Posts).First();
+            Post post = blog.Posts[0];
 
             blog.Posts.Remove(post);
             context.SaveChanges();
@@ -72,11 +72,9 @@ public class Sample
         public DbSet<Blog> Blogs { get; set; }
         public DbSet<Post> Posts { get; set; }
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) =>
             optionsBuilder.UseSqlServer(
                 @"Server=(localdb)\mssqllocaldb;Database=EFSaving.RelatedData;Trusted_Connection=True");
-        }
     }
 
     public class Blog

@@ -5,15 +5,13 @@ using Microsoft.EntityFrameworkCore;
 #region AuditContext
 public class AuditContext : DbContext
 {
-    private readonly string _connectionString;
+    readonly string _connectionString;
 
-    public AuditContext(string connectionString)
-    {
+    public AuditContext(string connectionString) =>
         _connectionString = connectionString;
-    }
 
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        => optionsBuilder.UseSqlite(_connectionString);
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) =>
+        optionsBuilder.UseSqlite(_connectionString);
 
     public DbSet<SaveChangesAudit> SaveChangesAudits { get; set; }
 }

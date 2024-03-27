@@ -10,7 +10,7 @@ namespace EFModeling.KeylessEntityTypes;
 
 public class Program
 {
-    private static void Main()
+    static void Main()
     {
         SetupDatabase();
 
@@ -19,7 +19,7 @@ public class Program
         #region Query
         var postCounts = db.BlogPostCounts.ToList();
 
-        foreach (var postCount in postCounts)
+        foreach (BlogPostsCount postCount in postCounts)
         {
             Console.WriteLine($"{postCount.BlogName} has {postCount.PostCount} posts.");
             Console.WriteLine();
@@ -27,7 +27,7 @@ public class Program
         #endregion
     }
 
-    private static void SetupDatabase()
+    static void SetupDatabase()
     {
         using var db = new BloggingContext();
 
@@ -40,9 +40,9 @@ public class Program
                     Url = "http://sample.com/blogs/fish",
                     Posts = new List<Post>
                     {
-                        new Post { Title = "Fish care 101" },
-                        new Post { Title = "Caring for tropical fish" },
-                        new Post { Title = "Types of ornamental fish" }
+                        new() { Title = "Fish care 101" },
+                        new() { Title = "Caring for tropical fish" },
+                        new() { Title = "Types of ornamental fish" }
                     }
                 });
 
@@ -53,9 +53,9 @@ public class Program
                     Url = "http://sample.com/blogs/cats",
                     Posts = new List<Post>
                     {
-                        new Post { Title = "Cat care 101" },
-                        new Post { Title = "Caring for tropical cats" },
-                        new Post { Title = "Types of ornamental cats" }
+                        new() { Title = "Cat care 101" },
+                        new() { Title = "Caring for tropical cats" },
+                        new() { Title = "Types of ornamental cats" }
                     }
                 });
 
@@ -66,7 +66,7 @@ public class Program
                     Url = "http://sample.com/blogs/catfish",
                     Posts = new List<Post>
                     {
-                        new Post { Title = "Catfish care 101" }, new Post { Title = "History of the catfish name" }
+                        new() { Title = "Catfish care 101" }, new() { Title = "History of the catfish name" }
                     }
                 });
 
@@ -86,7 +86,7 @@ public class Program
 
 public class BloggingContext : DbContext
 {
-    private static readonly ILoggerFactory _loggerFactory
+    static readonly ILoggerFactory _loggerFactory
         = LoggerFactory.Create(
             builder => builder.AddConsole().AddFilter((c, l) => l == LogLevel.Information && !c.EndsWith("Connection")));
 
@@ -97,17 +97,14 @@ public class BloggingContext : DbContext
     public DbSet<BlogPostsCount> BlogPostCounts { get; set; }
     #endregion
 
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-    {
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) =>
         optionsBuilder
             .UseSqlServer(
                 @"Server=(localdb)\mssqllocaldb;Database=Sample.KeylessEntityTypes;Trusted_Connection=True")
             .UseLoggerFactory(_loggerFactory);
-    }
 
     #region Configuration
-    protected override void OnModelCreating(ModelBuilder modelBuilder)
-    {
+    protected override void OnModelCreating(ModelBuilder modelBuilder) =>
         modelBuilder
             .Entity<BlogPostsCount>(
                 eb =>
@@ -116,7 +113,6 @@ public class BloggingContext : DbContext
                     eb.ToView("View_BlogPostCounts");
                     eb.Property(v => v.BlogName).HasColumnName("Name");
                 });
-    }
     #endregion
 }
 

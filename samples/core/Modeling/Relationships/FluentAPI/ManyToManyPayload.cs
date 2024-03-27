@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 namespace EFModeling.Relationships.FluentAPI.ManyToManyPayload;
 
 #region ManyToManyPayload
-internal class MyContext : DbContext
+class MyContext : DbContext
 {
     public MyContext(DbContextOptions<MyContext> options)
         : base(options)
@@ -15,8 +15,7 @@ internal class MyContext : DbContext
     public DbSet<Post> Posts { get; set; }
     public DbSet<Tag> Tags { get; set; }
 
-    protected override void OnModelCreating(ModelBuilder modelBuilder)
-    {
+    protected override void OnModelCreating(ModelBuilder modelBuilder) =>
         modelBuilder.Entity<Post>()
             .HasMany(p => p.Tags)
             .WithMany(p => p.Posts)
@@ -34,7 +33,6 @@ internal class MyContext : DbContext
                     j.Property(pt => pt.PublicationDate).HasDefaultValueSql("CURRENT_TIMESTAMP");
                     j.HasKey(t => new { t.PostId, t.TagId });
                 });
-    }
 }
 
 public class Post

@@ -13,7 +13,7 @@ namespace EFModeling.ValueConversions;
 
 public class FixedLengthStrings : Program
 {
-    public void Run()
+    public static void Run()
     {
         ConsoleWriteLines("Sample showing value conversions for fixed-length, case-insensitive string keys...");
 
@@ -48,7 +48,7 @@ public class FixedLengthStrings : Program
         {
             ConsoleWriteLines("Read the entities back...");
 
-            var blog = context.Set<Blog>().Include(e => e.Posts).Single();
+            Blog blog = context.Set<Blog>().Include(e => e.Posts).Single();
 
             ConsoleWriteLines($"The blog has {blog.Posts.Count} posts with foreign keys '{blog.Posts.First().BlogId}' and '{blog.Posts.Skip(1).First().BlogId}'");
         }
@@ -64,7 +64,7 @@ public class FixedLengthStrings : Program
             var converter = new ValueConverter<string, string>(
                 v => v,
                 v => v.Trim());
-                
+
             var comparer = new ValueComparer<string>(
                 (l, r) => string.Equals(l, r, StringComparison.OrdinalIgnoreCase),
                 v => v.ToUpper().GetHashCode(),
@@ -84,8 +84,8 @@ public class FixedLengthStrings : Program
         }
         #endregion
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-            => optionsBuilder
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) =>
+            optionsBuilder
                 .LogTo(Console.WriteLine, new[] { RelationalEventId.CommandExecuted })
                 .UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=FixedLengthStrings;Trusted_Connection=True")
                 .EnableSensitiveDataLogging();

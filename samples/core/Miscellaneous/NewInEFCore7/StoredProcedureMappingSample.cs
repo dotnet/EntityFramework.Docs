@@ -20,7 +20,7 @@ public static class StoredProcedureMappingSample
         return SprocMappingTest<TpcDocumentsContext>();
     }
 
-    private static async Task SprocMappingTest<TContext>()
+    static async Task SprocMappingTest<TContext>()
         where TContext : DocumentsContext, new()
     {
         await using var context = new TContext();
@@ -64,20 +64,20 @@ public static class StoredProcedureMappingSample
         context.RemoveRange(context.Magazines.Local.Where(magazine => magazine.Title.Contains("Amstrad")));
         context.RemoveRange(context.Books.Local.Where(book => book.NumberOfPages < 200));
 
-        foreach (var magazine in context.Magazines.Local)
+        foreach (Magazine magazine in context.Magazines.Local)
         {
             magazine.CoverPrice += 1.0m;
         }
 
-        foreach (var book in context.Books.Local)
+        foreach (Book book in context.Books.Local)
         {
             book.Title += " (New Edition!)";
         }
 
-        foreach (var person in context.People.Local.Where(person => person.Contact.Address.Country == "UK"))
+        foreach (Person? person in context.People.Local.Where(person => person.Contact.Address.Country == "UK"))
         {
             person.Name = "Dr. " + person.Name;
-            person.Contact.Phone = "+44 " + person.Contact.Phone!.Substring(1);
+            person.Contact.Phone = "+44 " + person.Contact.Phone![1..];
             person.Contact.Address.Country = "United Kingdom";
         }
 
@@ -145,7 +145,7 @@ public static class StoredProcedureMappingSample
         Console.WriteLine();
     }
 
-    private static void PrintSampleName([CallerMemberName] string? methodName = null)
+    static void PrintSampleName([CallerMemberName] string? methodName = null)
     {
         Console.WriteLine($">>>> Sample: {methodName}");
         Console.WriteLine();

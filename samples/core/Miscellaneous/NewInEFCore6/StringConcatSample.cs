@@ -21,7 +21,7 @@ public static class StringConcatSample
             .Where(e => string.Concat(e.Token1, e.Token2, e.Token3) != e.TokensProcessed).ToList();
         #endregion
 
-        foreach (var shard in shards)
+        foreach (Shard shard in shards)
         {
             Console.WriteLine($"Found shard {shard.Id} with unprocessed tokens.");
         }
@@ -105,12 +105,9 @@ public static class StringConcatSample
     {
         public DbSet<Shard> Shards { get; set; }
 
-        private readonly bool _quiet;
+        readonly bool _quiet;
 
-        public BooksContext(bool quiet = false)
-        {
-            _quiet = quiet;
-        }
+        public BooksContext(bool quiet = false) => _quiet = quiet;
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

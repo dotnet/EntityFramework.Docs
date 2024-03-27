@@ -1,17 +1,15 @@
 using Microsoft.EntityFrameworkCore;
 
-namespace Performance;
+namespace Performance.Other;
 
 public class BatchTweakingContext : DbContext
 {
     #region BatchTweaking
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-    {
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) =>
         optionsBuilder.UseSqlServer(
             @"Server=(localdb)\mssqllocaldb;Database=Blogging;Trusted_Connection=True",
             o => o
                 .MinBatchSize(1)
                 .MaxBatchSize(100));
-    }
     #endregion
 }

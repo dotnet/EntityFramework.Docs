@@ -9,7 +9,7 @@ namespace EFModeling.ValueConversions;
 
 public class OverridingByteArrayComparisons : Program
 {
-    public void Run()
+    public static void Run()
     {
         ConsoleWriteLines("Sample showing overriding byte array comparisons...");
 
@@ -19,7 +19,7 @@ public class OverridingByteArrayComparisons : Program
 
             ConsoleWriteLines("Save a new entity...");
 
-            var entity = new EntityType { MyBytes = new byte[] { 1, 2, 3 } };
+            var entity = new EntityType { MyBytes = [1, 2, 3] };
             context.Add(entity);
             context.SaveChanges();
 
@@ -36,7 +36,7 @@ public class OverridingByteArrayComparisons : Program
         {
             ConsoleWriteLines("Read the entity back...");
 
-            var entity = context.Set<EntityType>().Single();
+            EntityType entity = context.Set<EntityType>().Single();
 
             Debug.Assert(entity.MyBytes.SequenceEqual(new byte[] { 1, 4, 3 }));
         }
@@ -46,12 +46,11 @@ public class OverridingByteArrayComparisons : Program
 
     public class SampleDbContext : DbContext
     {
-        private static readonly ILoggerFactory
-            Logger = LoggerFactory.Create(x => x.AddConsole()); //.SetMinimumLevel(LogLevel.Debug));
+        static readonly ILoggerFactory
+            _logger = LoggerFactory.Create(x => x.AddConsole()); //.SetMinimumLevel(LogLevel.Debug));
 
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            #region OverrideComparer
+        protected override void OnModelCreating(ModelBuilder modelBuilder) =>
+        #region OverrideComparer
             modelBuilder
                 .Entity<EntityType>()
                 .Property(e => e.MyBytes)
@@ -61,12 +60,11 @@ public class OverridingByteArrayComparisons : Program
                         (c1, c2) => c1.SequenceEqual(c2),
                         c => c.Aggregate(0, (a, v) => HashCode.Combine(a, v.GetHashCode())),
                         c => c.ToArray()));
-            #endregion
-        }
+        #endregion
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-            => optionsBuilder
-                .UseLoggerFactory(Logger)
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) =>
+            optionsBuilder
+                .UseLoggerFactory(_logger)
                 .UseSqlite("DataSource=test.db")
                 .EnableSensitiveDataLogging();
     }

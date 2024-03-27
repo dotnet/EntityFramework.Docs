@@ -51,13 +51,13 @@ public static class ModelBuildingSample
 
         await using (var context = new EntitySplittingContext())
         {
-            var customers = await context.Customers
+            List<Customer> customers = await context.Customers
                 .Where(customer => customer.PhoneNumber!.StartsWith("01632") && customer.City == "Chigley")
                 .OrderBy(customer => customer.PostCode)
                 .ThenBy(customer => customer.Name)
                 .ToListAsync();
 
-            foreach (var customer in customers)
+            foreach (Customer customer in customers)
             {
                 Console.WriteLine($"{customer.Name} from {customer.City} with phone {customer.PhoneNumber}");
             }
@@ -121,12 +121,12 @@ public static class ModelBuildingSample
             Console.WriteLine();
             Console.WriteLine("Starting data:");
 
-            var employees = await context.Employees.ToListAsync();
-            foreach (var employee in employees)
+            List<Employee> employees = await context.Employees.ToListAsync();
+            foreach (Employee? employee in employees)
             {
-                var employeeEntry = context.Entry(employee);
-                var periodStart = employeeEntry.Property<DateTime>("PeriodStart").CurrentValue;
-                var periodEnd = employeeEntry.Property<DateTime>("PeriodEnd").CurrentValue;
+                Microsoft.EntityFrameworkCore.ChangeTracking.EntityEntry<Employee> employeeEntry = context.Entry(employee);
+                DateTime periodStart = employeeEntry.Property<DateTime>("PeriodStart").CurrentValue;
+                DateTime periodEnd = employeeEntry.Property<DateTime>("PeriodEnd").CurrentValue;
 
                 Console.WriteLine($"  Employee {employee.Name} valid from {periodStart} to {periodEnd}");
             }
@@ -141,7 +141,7 @@ public static class ModelBuildingSample
             timeStamp1 = DateTime.UtcNow;
             Thread.Sleep(millisecondsDelay);
 
-            var employee = await context.Employees.SingleAsync(e => e.Name == "Rainbow Dash");
+            Employee employee = await context.Employees.SingleAsync(e => e.Name == "Rainbow Dash");
             employee.Info.Position = "Wonderbolt Trainee";
             await context.SaveChangesAsync();
 
@@ -167,7 +167,7 @@ public static class ModelBuildingSample
         await using (var context = new EntitySplittingContext())
         {
             #region NormalQuery
-            var employee = await context.Employees.SingleAsync(e => e.Name == "Rainbow Dash");
+            Employee employee = await context.Employees.SingleAsync(e => e.Name == "Rainbow Dash");
             context.Remove(employee);
             await context.SaveChangesAsync();
             #endregion
@@ -179,12 +179,12 @@ public static class ModelBuildingSample
             Console.WriteLine("After updates and delete:");
 
             #region TrackingQuery
-            var employees = await context.Employees.ToListAsync();
-            foreach (var employee in employees)
+            List<Employee> employees = await context.Employees.ToListAsync();
+            foreach (Employee? employee in employees)
             {
-                var employeeEntry = context.Entry(employee);
-                var periodStart = employeeEntry.Property<DateTime>("PeriodStart").CurrentValue;
-                var periodEnd = employeeEntry.Property<DateTime>("PeriodEnd").CurrentValue;
+                Microsoft.EntityFrameworkCore.ChangeTracking.EntityEntry<Employee> employeeEntry = context.Entry(employee);
+                DateTime periodStart = employeeEntry.Property<DateTime>("PeriodStart").CurrentValue;
+                DateTime periodEnd = employeeEntry.Property<DateTime>("PeriodEnd").CurrentValue;
 
                 Console.WriteLine($"  Employee {employee.Name} valid from {periodStart} to {periodEnd}");
             }
@@ -257,7 +257,9 @@ public static class ModelBuildingSample
                 .Select(
                     e => new
                     {
-                        Employee = e, PeriodStart = EF.Property<DateTime>(e, "PeriodStart"), PeriodEnd = EF.Property<DateTime>(e, "PeriodEnd")
+                        Employee = e,
+                        PeriodStart = EF.Property<DateTime>(e, "PeriodStart"),
+                        PeriodEnd = EF.Property<DateTime>(e, "PeriodEnd")
                     })
                 .ToListAsync();
 
@@ -281,18 +283,21 @@ public static class ModelBuildingSample
         #region InsertPostsAndTags
         var tags = new Tag[] { new() { TagName = "Tag1" }, new() { TagName = "Tag2" }, new() { TagName = "Tag2" }, };
 
-        await context.AddRangeAsync(new Blog { Posts =
+        await context.AddRangeAsync(new Blog
+        {
+            Posts =
         {
             new Post { Tags = { tags[0], tags[1] } },
             new Post { Tags = { tags[1], tags[0], tags[2] } },
             new Post()
-        } });
+        }
+        });
 
         await context.SaveChangesAsync();
         #endregion
     }
 
-    private static void PrintSampleName([CallerMemberName] string? methodName = null)
+    static void PrintSampleName([CallerMemberName] string? methodName = null)
     {
         Console.WriteLine($">>>> Sample: {methodName}");
         Console.WriteLine();
@@ -303,9 +308,9 @@ public static class ModelBuildingSample
         public DbSet<Blog> Blogs => Set<Blog>();
         public DbSet<Post> Posts => Set<Post>();
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-            => optionsBuilder
-                .UseSqlServer(@$"Server=(localdb)\mssqllocaldb;Database=Blogs")
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) =>
+            optionsBuilder
+                .UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=Blogs")
                 .LogTo(Console.WriteLine, LogLevel.Information)
                 .EnableSensitiveDataLogging();
 
@@ -399,9 +404,9 @@ public static class ModelBuildingSample
 
     public class AnimalsTptContext : DbContext
     {
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-            => optionsBuilder
-                .UseSqlServer(@$"Server=(localdb)\mssqllocaldb;Database=AnimalsTpt")
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) =>
+            optionsBuilder
+                .UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=AnimalsTpt")
                 .LogTo(Console.WriteLine, LogLevel.Information)
                 .EnableSensitiveDataLogging();
 
@@ -425,9 +430,9 @@ public static class ModelBuildingSample
 
     public class AnimalsTpcContext : DbContext
     {
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-            => optionsBuilder
-                .UseSqlServer(@$"Server=(localdb)\mssqllocaldb;Database=AnimalsTpc")
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) =>
+            optionsBuilder
+                .UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=AnimalsTpc")
                 .LogTo(Console.WriteLine, LogLevel.Information)
                 .EnableSensitiveDataLogging();
 
@@ -483,9 +488,9 @@ public static class ModelBuildingSample
         public DbSet<Employee> Employees
             => Set<Employee>();
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-            => optionsBuilder
-                .UseSqlServer(@$"Server=(localdb)\mssqllocaldb;Database=Images")
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) =>
+            optionsBuilder
+                .UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=Images")
                 .LogTo(Console.WriteLine, LogLevel.Information)
                 .EnableSensitiveDataLogging();
 
@@ -493,9 +498,7 @@ public static class ModelBuildingSample
         {
             #region EntitySplitting
             modelBuilder.Entity<Customer>(
-                entityBuilder =>
-                {
-                    entityBuilder
+                entityBuilder => entityBuilder
                         .ToTable("Customers")
                         .SplitToTable(
                             "PhoneNumbers",
@@ -513,8 +516,7 @@ public static class ModelBuildingSample
                                 tableBuilder.Property(customer => customer.City);
                                 tableBuilder.Property(customer => customer.PostCode);
                                 tableBuilder.Property(customer => customer.Country);
-                            });
-                });
+                            }));
             #endregion
 
             #region LinkingForeignKey

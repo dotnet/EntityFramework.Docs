@@ -3,6 +3,8 @@ using System.Linq;
 using BenchmarkDotNet.Attributes;
 using Microsoft.EntityFrameworkCore;
 
+namespace Benchmarks;
+
 [MemoryDiagnoser]
 public class AverageBlogRanking
 {
@@ -20,12 +22,12 @@ public class AverageBlogRanking
 
     #region LoadEntities
     [Benchmark]
-    public double LoadEntities()
+    public static double LoadEntities()
     {
         var sum = 0;
         var count = 0;
         using var ctx = new BloggingContext();
-        foreach (var blog in ctx.Blogs)
+        foreach (Blog blog in ctx.Blogs)
         {
             sum += blog.Rating;
             count++;
@@ -37,12 +39,12 @@ public class AverageBlogRanking
 
     #region LoadEntitiesNoTracking
     [Benchmark]
-    public double LoadEntitiesNoTracking()
+    public static double LoadEntitiesNoTracking()
     {
         var sum = 0;
         var count = 0;
         using var ctx = new BloggingContext();
-        foreach (var blog in ctx.Blogs.AsNoTracking())
+        foreach (Blog blog in ctx.Blogs.AsNoTracking())
         {
             sum += blog.Rating;
             count++;
@@ -54,7 +56,7 @@ public class AverageBlogRanking
 
     #region ProjectOnlyRanking
     [Benchmark]
-    public double ProjectOnlyRanking()
+    public static double ProjectOnlyRanking()
     {
         var sum = 0;
         var count = 0;
@@ -71,7 +73,7 @@ public class AverageBlogRanking
 
     #region CalculateInDatabase
     [Benchmark(Baseline = true)]
-    public double CalculateInDatabase()
+    public static double CalculateInDatabase()
     {
         using var ctx = new BloggingContext();
         return ctx.Blogs.Average(b => b.Rating);
@@ -82,8 +84,8 @@ public class AverageBlogRanking
     {
         public DbSet<Blog> Blogs { get; set; }
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-            => optionsBuilder.UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=Blogging;Trusted_Connection=True");
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) =>
+            optionsBuilder.UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=Blogging;Trusted_Connection=True");
 
         public void SeedData(int numblogs)
         {
@@ -91,7 +93,10 @@ public class AverageBlogRanking
                 Enumerable.Range(0, numblogs).Select(
                     i => new Blog
                     {
-                        Name = $"Blog{i}", Url = $"blog{i}.blogs.net", CreationTime = new DateTime(2020, 1, 1), Rating = i % 5
+                        Name = $"Blog{i}",
+                        Url = $"blog{i}.blogs.net",
+                        CreationTime = new DateTime(2020, 1, 1),
+                        Rating = i % 5
                     }));
             SaveChanges();
         }

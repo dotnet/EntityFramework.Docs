@@ -2,16 +2,14 @@
 
 namespace EFModeling.EntityTypes.FluentAPI.TableExcludeFromMigrations;
 
-internal class MyContext : DbContext
+class MyContext : DbContext
 {
     public DbSet<IdentityUser> Users { get; set; }
 
     #region TableExcludeFromMigrations
-    protected override void OnModelCreating(ModelBuilder modelBuilder)
-    {
+    protected override void OnModelCreating(ModelBuilder modelBuilder) =>
         modelBuilder.Entity<IdentityUser>()
             .ToTable("AspNetUsers", t => t.ExcludeFromMigrations());
-    }
     #endregion
 }
 

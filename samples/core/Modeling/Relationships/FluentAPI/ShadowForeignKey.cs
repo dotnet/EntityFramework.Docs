@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 namespace EFModeling.Relationships.FluentAPI.ShadowForeignKey;
 
 #region ShadowForeignKey
-internal class MyContext : DbContext
+class MyContext : DbContext
 {
     public DbSet<Blog> Blogs { get; set; }
     public DbSet<Post> Posts { get; set; }

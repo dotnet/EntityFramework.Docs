@@ -20,7 +20,7 @@ public static class GroupByFinalOperatorSample
         return QueryTest<BookContextInMemory>();
     }
 
-    private static async Task QueryTest<TContext>()
+    static async Task QueryTest<TContext>()
         where TContext : BookContext, new()
     {
         await using (var context = new TContext())
@@ -44,17 +44,17 @@ public static class GroupByFinalOperatorSample
         await using (var context = new TContext())
         {
             #region GroupByFinalOperator
-            var query = context.Books.GroupBy(s => s.Price);
+            IQueryable<IGrouping<int?, Book>> query = context.Books.GroupBy(s => s.Price);
             #endregion
 
-            await foreach (var group in query.AsAsyncEnumerable())
+            await foreach (IGrouping<int?, Book>? group in query.AsAsyncEnumerable())
             {
                 Console.WriteLine($"Price: {group.Key}; Count = {group.Count()}");
             }
         }
     }
 
-    private static void PrintSampleName([CallerMemberName] string? methodName = null)
+    static void PrintSampleName([CallerMemberName] string? methodName = null)
     {
         Console.WriteLine($">>>> Sample: {methodName}");
         Console.WriteLine();
@@ -65,8 +65,8 @@ public static class GroupByFinalOperatorSample
         public DbSet<Book> Books => Set<Book>();
         public DbSet<Author> Authors => Set<Author>();
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-            => optionsBuilder
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) =>
+            optionsBuilder
                 .LogTo(Console.WriteLine, LogLevel.Information)
                 .EnableSensitiveDataLogging();
     }

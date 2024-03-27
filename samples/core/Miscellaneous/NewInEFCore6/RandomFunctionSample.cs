@@ -19,7 +19,7 @@ public static class RandomFunctionSample
         var users = context.Users.Where(u => u.Popularity == (int)(EF.Functions.Random() * 4.0) + 1).ToList();
         #endregion
 
-        foreach (var user in users)
+        foreach (User user in users)
         {
             Console.WriteLine($"  Found '{user.Username}' with popularity '{user.Popularity}'");
         }
@@ -68,12 +68,9 @@ public static class RandomFunctionSample
     {
         public DbSet<User> Users { get; set; }
 
-        private readonly bool _quiet;
+        readonly bool _quiet;
 
-        public BooksContext(bool quiet = false)
-        {
-            _quiet = quiet;
-        }
+        public BooksContext(bool quiet = false) => _quiet = quiet;
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

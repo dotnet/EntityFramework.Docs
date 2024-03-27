@@ -8,12 +8,10 @@ public class AnimalContext : DbContext
     public DbSet<Animal> Animals { get; set; }
     public DbSet<Toy> Toys { get; set; }
 
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-    {
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) =>
         optionsBuilder
             .UseSqlServer(
                 @"Server=(localdb)\mssqllocaldb;Database=Querying.QueryFilters.Animals;Trusted_Connection=True");
-    }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -21,7 +19,7 @@ public class AnimalContext : DbContext
         modelBuilder.Entity<Dog>().HasOne(d => d.FavoriteToy).WithOne(t => t.BelongsTo).HasForeignKey<Toy>(d => d.BelongsToId);
 
         modelBuilder.Entity<Person>().HasQueryFilter(p => p.Pets.Count > 0);
-        modelBuilder.Entity<Animal>().HasQueryFilter(a => !a.Name.StartsWith("P"));
+        modelBuilder.Entity<Animal>().HasQueryFilter(a => !a.Name.StartsWith('P'));
         modelBuilder.Entity<Toy>().HasQueryFilter(a => a.Name.Length > 5);
 
         // Invalid query filter configuration as it causes cycles in query filters

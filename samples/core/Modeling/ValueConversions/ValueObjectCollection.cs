@@ -14,7 +14,7 @@ namespace EFModeling.ValueConversions;
 
 public class ValueObjectCollection : Program
 {
-    public void Run()
+    public static void Run()
     {
         ConsoleWriteLines("Sample showing value conversions for a collection of value objects...");
 
@@ -29,9 +29,9 @@ public class ValueObjectCollection : Program
                 {
                     Finances = new List<AnnualFinance>
                     {
-                        new AnnualFinance(2018, new Money(326.65m, Currency.UsDollars), new Money(125m, Currency.UsDollars)),
-                        new AnnualFinance(2019, new Money(112.20m, Currency.UsDollars), new Money(125m, Currency.UsDollars)),
-                        new AnnualFinance(2020, new Money(25.77m, Currency.UsDollars), new Money(125m, Currency.UsDollars))
+                        new(2018, new Money(326.65m, Currency.UsDollars), new Money(125m, Currency.UsDollars)),
+                        new(2019, new Money(112.20m, Currency.UsDollars), new Money(125m, Currency.UsDollars)),
+                        new(2020, new Money(25.77m, Currency.UsDollars), new Money(125m, Currency.UsDollars))
                     }
                 });
             context.SaveChanges();
@@ -41,7 +41,7 @@ public class ValueObjectCollection : Program
         {
             ConsoleWriteLines("Read the entity back...");
 
-            var blog = context.Set<Blog>().Single();
+            Blog blog = context.Set<Blog>().Single();
 
             ConsoleWriteLines($"Blog with finances {string.Join(", ", blog.Finances.Select(f => $"{f.Year}: I={f.Income} E={f.Expenses} R={f.Revenue}"))}.");
 
@@ -56,9 +56,8 @@ public class ValueObjectCollection : Program
 
     public class SampleDbContext : DbContext
     {
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            #region ConfigureValueObjectCollection
+        protected override void OnModelCreating(ModelBuilder modelBuilder) =>
+        #region ConfigureValueObjectCollection
             modelBuilder.Entity<Blog>()
                 .Property(e => e.Finances)
                 .HasConversion(
@@ -67,12 +66,11 @@ public class ValueObjectCollection : Program
                     new ValueComparer<IList<AnnualFinance>>(
                         (c1, c2) => c1.SequenceEqual(c2),
                         c => c.Aggregate(0, (a, v) => HashCode.Combine(a, v.GetHashCode())),
-                        c => (IList<AnnualFinance>)c.ToList()));
-            #endregion
-        }
+                        c => c.ToList()));
+        #endregion
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-            => optionsBuilder
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) =>
+            optionsBuilder
                 .LogTo(Console.WriteLine, new[] { RelationalEventId.CommandExecuted })
                 .UseSqlite("DataSource=test.db")
                 .EnableSensitiveDataLogging();
@@ -92,7 +90,7 @@ public class ValueObjectCollection : Program
         public int Year { get; }
         public Money Income { get; }
         public Money Expenses { get; }
-        public Money Revenue => new Money(Income.Amount - Expenses.Amount, Income.Currency);
+        public Money Revenue => new(Income.Amount - Expenses.Amount, Income.Currency);
     }
     #endregion
 

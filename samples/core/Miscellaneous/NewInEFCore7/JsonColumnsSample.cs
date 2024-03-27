@@ -16,7 +16,7 @@ public static class JsonColumnsSample
         return JsonColumnsTest<JsonBlogsContextSqlite>();
     }
 
-    private static async Task JsonColumnsTest<TContext>()
+    static async Task JsonColumnsTest<TContext>()
         where TContext : BlogsContext, new()
     {
         await using var context = new TContext();
@@ -28,13 +28,13 @@ public static class JsonColumnsSample
         context.ChangeTracker.Clear();
 
         #region AuthorsInChigley
-        var authorsInChigley = await context.Authors
+        List<Author> authorsInChigley = await context.Authors
             .Where(author => author.Contact.Address.City == "Chigley")
             .ToListAsync();
         #endregion
 
         Console.WriteLine();
-        foreach (var author in authorsInChigley)
+        foreach (Author author in authorsInChigley)
         {
             Console.WriteLine($"{author.Name} lives at '{author.Contact.Address.Street}' in Chigley.");
         }
@@ -42,7 +42,7 @@ public static class JsonColumnsSample
         Console.WriteLine();
 
         #region PostcodesInChigley
-        var postcodesInChigley = await context.Authors
+        List<string> postcodesInChigley = await context.Authors
             .Where(author => author.Contact.Address.City == "Chigley")
             .Select(author => author.Contact.Address.Postcode)
             .ToListAsync();
@@ -53,11 +53,11 @@ public static class JsonColumnsSample
         Console.WriteLine();
 
         #region OrderedAddresses
-        var orderedAddresses = await context.Authors
+        List<string> orderedAddresses = await context.Authors
             .Where(
                 author => (author.Contact.Address.City == "Chigley"
                            && author.Contact.Phone != null)
-                          || author.Name.StartsWith("D"))
+                          || author.Name.StartsWith('D'))
             .OrderBy(author => author.Contact.Phone)
             .Select(
                 author => author.Name + " (" + author.Contact.Address.Street
@@ -74,7 +74,7 @@ public static class JsonColumnsSample
 
         Console.WriteLine();
 
-        var authorsInChigleyWithPosts = await context.Authors
+        List<Author> authorsInChigleyWithPosts = await context.Authors
             .Where(
                 author => author.Contact.Address.City == "Chigley"
                           && author.Posts.Count > 1)
@@ -82,7 +82,7 @@ public static class JsonColumnsSample
             .ToListAsync();
 
         Console.WriteLine();
-        foreach (var author in authorsInChigleyWithPosts)
+        foreach (Author author in authorsInChigleyWithPosts)
         {
             Console.WriteLine($"{author.Name} has {author.Posts.Count} posts");
         }
@@ -95,7 +95,10 @@ public static class JsonColumnsSample
             .Select(
                 post => new
                 {
-                    post.Author!.Name, post.Metadata!.Views, Searches = post.Metadata.TopSearches, Commits = post.Metadata.Updates
+                    post.Author!.Name,
+                    post.Metadata!.Views,
+                    Searches = post.Metadata.TopSearches,
+                    Commits = post.Metadata.Updates
                 })
             .ToListAsync();
         #endregion
@@ -115,7 +118,7 @@ public static class JsonColumnsSample
         Console.WriteLine();
 
         #region UpdateDocument
-        var jeremy = await context.Authors.SingleAsync(author => author.Name.StartsWith("Jeremy"));
+        Author jeremy = await context.Authors.SingleAsync(author => author.Name.StartsWith("Jeremy"));
 
         jeremy.Contact = new() { Address = new("2 Riverside", "Trimbridge", "TB1 5ZS", "UK"), Phone = "01632 88346" };
 
@@ -128,7 +131,7 @@ public static class JsonColumnsSample
         Console.WriteLine();
 
         #region UpdateSubDocument
-        var brice = await context.Authors.SingleAsync(author => author.Name.StartsWith("Brice"));
+        Author brice = await context.Authors.SingleAsync(author => author.Name.StartsWith("Brice"));
 
         brice.Contact.Address = new("4 Riverside", "Trimbridge", "TB1 5ZS", "UK");
 
@@ -142,7 +145,7 @@ public static class JsonColumnsSample
         Console.WriteLine();
 
         #region UpdateProperty
-        var arthur = await context.Authors.SingleAsync(author => author.Name.StartsWith("Arthur"));
+        Author arthur = await context.Authors.SingleAsync(author => author.Name.StartsWith("Arthur"));
 
         arthur.Contact.Address.Country = "United Kingdom";
 
@@ -153,7 +156,7 @@ public static class JsonColumnsSample
 
         context.ChangeTracker.Clear();
 
-        var post = await context.Posts.SingleAsync(post => post.Title.StartsWith("Hacking"));
+        Post post = await context.Posts.SingleAsync(post => post.Title.StartsWith("Hacking"));
 
         post.Metadata!.Updates.Add(new PostUpdate(IPAddress.Broadcast, DateTime.UtcNow) { UpdatedBy = "User" });
         post.Metadata!.TopGeographies.Clear();
@@ -161,7 +164,7 @@ public static class JsonColumnsSample
         await context.SaveChangesAsync();
     }
 
-    private static void PrintSampleName([CallerMemberName] string? methodName = null)
+    static void PrintSampleName([CallerMemberName] string? methodName = null)
     {
         Console.WriteLine($">>>> Sample: {methodName}");
         Console.WriteLine();
@@ -218,47 +221,35 @@ public class JsonBlogsContextSqlite : JsonBlogsContextBase
 public abstract class TableSharingAggregateContext : TphBlogsContext
 {
     #region TableSharingAggregate
-    protected override void OnModelCreating(ModelBuilder modelBuilder)
-    {
+    protected override void OnModelCreating(ModelBuilder modelBuilder) =>
         modelBuilder.Entity<Author>().OwnsOne(
-            author => author.Contact, ownedNavigationBuilder =>
-            {
-                ownedNavigationBuilder.OwnsOne(contactDetails => contactDetails.Address);
-            });
-    }
+            author => author.Contact, ownedNavigationBuilder => ownedNavigationBuilder.OwnsOne(contactDetails => contactDetails.Address));
     #endregion
 }
 
 public abstract class TableMappedAggregateContext : TphBlogsContext
 {
     #region TableMappedAggregate
-    protected override void OnModelCreating(ModelBuilder modelBuilder)
-    {
+    protected override void OnModelCreating(ModelBuilder modelBuilder) =>
         modelBuilder.Entity<Author>().OwnsOne(
             author => author.Contact, ownedNavigationBuilder =>
             {
                 ownedNavigationBuilder.ToTable("Contacts");
                 ownedNavigationBuilder.OwnsOne(
-                    contactDetails => contactDetails.Address, ownedOwnedNavigationBuilder =>
-                    {
-                        ownedOwnedNavigationBuilder.ToTable("Addresses");
-                    });
+                    contactDetails => contactDetails.Address, ownedOwnedNavigationBuilder => ownedOwnedNavigationBuilder.ToTable("Addresses"));
             });
-    }
     #endregion
 }
 
 public abstract class JsonColumnAggregateContext : TphBlogsContext
 {
     #region JsonColumnAggregate
-    protected override void OnModelCreating(ModelBuilder modelBuilder)
-    {
+    protected override void OnModelCreating(ModelBuilder modelBuilder) =>
         modelBuilder.Entity<Author>().OwnsOne(
             author => author.Contact, ownedNavigationBuilder =>
             {
                 ownedNavigationBuilder.ToJson();
                 ownedNavigationBuilder.OwnsOne(contactDetails => contactDetails.Address);
             });
-    }
     #endregion
 }

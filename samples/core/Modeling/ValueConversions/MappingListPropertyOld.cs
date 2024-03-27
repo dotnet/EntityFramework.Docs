@@ -11,7 +11,7 @@ namespace EFModeling.ValueConversions;
 
 public class MappingListPropertyOld : Program
 {
-    public void Run()
+    public static void Run()
     {
         ConsoleWriteLines("Sample showing value conversions for a List<int>...");
 
@@ -21,7 +21,7 @@ public class MappingListPropertyOld : Program
 
             ConsoleWriteLines("Save a new entity...");
 
-            var entity = new EntityType { MyListProperty = new List<int> { 1, 2, 3 } };
+            var entity = new EntityType { MyListProperty = [1, 2, 3] };
             context.Add(entity);
             context.SaveChanges();
 
@@ -37,7 +37,7 @@ public class MappingListPropertyOld : Program
         {
             ConsoleWriteLines("Read the entity back...");
 
-            var entity = context.Set<EntityType>().Single();
+            EntityType entity = context.Set<EntityType>().Single();
 
             Debug.Assert(entity.MyListProperty.SequenceEqual(new List<int> { 1, 2, 3, 4 }));
         }
@@ -47,8 +47,8 @@ public class MappingListPropertyOld : Program
 
     public class SampleDbContext : DbContext
     {
-        private static readonly ILoggerFactory
-            Logger = LoggerFactory.Create(x => x.AddConsole()); //.SetMinimumLevel(LogLevel.Debug));
+        static readonly ILoggerFactory
+            _logger = LoggerFactory.Create(x => x.AddConsole()); //.SetMinimumLevel(LogLevel.Debug));
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -73,9 +73,9 @@ public class MappingListPropertyOld : Program
             #endregion
         }
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-            => optionsBuilder
-                .UseLoggerFactory(Logger)
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) =>
+            optionsBuilder
+                .UseLoggerFactory(_logger)
                 .UseSqlite("DataSource=test.db")
                 .EnableSensitiveDataLogging();
     }

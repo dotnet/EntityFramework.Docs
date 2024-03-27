@@ -17,18 +17,19 @@ public class Blog
 
 public class BloggingContext : DbContext
 {
-    public static long InstanceCount;
+    static long _instanceCount;
+    public static long InstanceCount => _instanceCount;
 
     public BloggingContext(DbContextOptions options)
         : base(options)
-        => Interlocked.Increment(ref InstanceCount);
+        => Interlocked.Increment(ref _instanceCount);
 
     public DbSet<Blog> Blogs { get; set; }
 }
 
 public class BlogController
 {
-    private readonly BloggingContext _context;
+    readonly BloggingContext _context;
 
     public BlogController(BloggingContext context) => _context = context;
 
@@ -37,35 +38,32 @@ public class BlogController
 
 public class Startup
 {
-    private const string ConnectionString
+    const string ConnectionString
         = @"Server=(localdb)\mssqllocaldb;Database=Demo.ContextPooling;Trusted_Connection=True";
 
-    public void ConfigureServices(IServiceCollection services)
-    {
+    public void ConfigureServices(IServiceCollection services) =>
         // Switch the lines below to compare pooling with the traditional instance-per-request approach.
         //services.AddDbContext<BloggingContext>(c => c.UseSqlServer(ConnectionString));
         services.AddDbContextPool<BloggingContext>(c => c.UseSqlServer(ConnectionString));
-    }
 }
 
 public class Program
 {
-    private const int Threads = 32;
-    private const int Seconds = 10;
+    const int Threads = 32, Seconds = 10;
 
-    private static long _requestsProcessed;
+    static long _requestsProcessed;
 
-    private static async Task Main()
+    static async Task Main()
     {
         var serviceCollection = new ServiceCollection();
         new Startup().ConfigureServices(serviceCollection);
-        var serviceProvider = serviceCollection.BuildServiceProvider();
+        ServiceProvider serviceProvider = serviceCollection.BuildServiceProvider();
 
         SetupDatabase(serviceProvider);
 
         var stopwatch = new Stopwatch();
 
-        var monitorTask = MonitorResults(TimeSpan.FromSeconds(Seconds), stopwatch);
+        Task monitorTask = MonitorResults(TimeSpan.FromSeconds(Seconds), stopwatch);
 
         await Task.WhenAll(
             Enumerable
@@ -75,10 +73,10 @@ public class Program
         await monitorTask;
     }
 
-    private static void SetupDatabase(IServiceProvider serviceProvider)
+    static void SetupDatabase(IServiceProvider serviceProvider)
     {
-        using var serviceScope = serviceProvider.CreateScope();
-        var context = serviceScope.ServiceProvider.GetService<BloggingContext>();
+        using IServiceScope serviceScope = serviceProvider.CreateScope();
+        BloggingContext context = serviceScope.ServiceProvider.GetService<BloggingContext>();
 
         if (context.Database.EnsureCreated())
         {
@@ -88,11 +86,11 @@ public class Program
         }
     }
 
-    private static async Task SimulateRequestsAsync(IServiceProvider serviceProvider, Stopwatch stopwatch)
+    static async Task SimulateRequestsAsync(IServiceProvider serviceProvider, Stopwatch stopwatch)
     {
         while (stopwatch.IsRunning)
         {
-            using (var serviceScope = serviceProvider.CreateScope())
+            using (IServiceScope serviceScope = serviceProvider.CreateScope())
             {
                 await new BlogController(serviceScope.ServiceProvider.GetService<BloggingContext>()).ActionAsync();
             }
@@ -101,11 +99,11 @@ public class Program
         }
     }
 
-    private static async Task MonitorResults(TimeSpan duration, Stopwatch stopwatch)
+    static async Task MonitorResults(TimeSpan duration, Stopwatch stopwatch)
     {
         var lastInstanceCount = 0L;
         var lastRequestCount = 0L;
-        var lastElapsed = TimeSpan.Zero;
+        TimeSpan lastElapsed = TimeSpan.Zero;
 
         stopwatch.Start();
 
@@ -115,8 +113,8 @@ public class Program
 
             var instanceCount = BloggingContext.InstanceCount;
             var requestCount = _requestsProcessed;
-            var elapsed = stopwatch.Elapsed;
-            var currentElapsed = elapsed - lastElapsed;
+            TimeSpan elapsed = stopwatch.Elapsed;
+            TimeSpan currentElapsed = elapsed - lastElapsed;
             var currentRequests = requestCount - lastRequestCount;
 
             Console.WriteLine(

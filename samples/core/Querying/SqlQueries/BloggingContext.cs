@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 
-namespace EFQuerying.RawSQL;
+namespace EFQuerying.SqlQueries;
 
 public class BloggingContext : DbContext
 {
@@ -10,8 +10,8 @@ public class BloggingContext : DbContext
     {
         modelBuilder.Entity<Blog>()
             .HasData(
-                new Blog { BlogId = 1, Url = @"https://devblogs.microsoft.com/dotnet", Rating = 5 },
-                new Blog { BlogId = 2, Url = @"https://mytravelblog.com/", Rating = 4 });
+                new Blog { BlogId = 1, Url = "https://devblogs.microsoft.com/dotnet", Rating = 5 },
+                new Blog { BlogId = 2, Url = "https://mytravelblog.com/", Rating = 4 });
 
         modelBuilder.Entity<Post>()
             .HasData(
@@ -49,9 +49,7 @@ public class BloggingContext : DbContext
                 });
     }
 
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-    {
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) =>
         optionsBuilder.UseSqlServer(
             @"Server=(localdb)\mssqllocaldb;Database=EFQuerying.RawSQL;Trusted_Connection=True");
-    }
 }

@@ -7,10 +7,10 @@ using Microsoft.EntityFrameworkCore.Diagnostics;
 public class CachingCommandInterceptor : DbCommandInterceptor
 {
     #region InterceptorState
-    private readonly object _lock = new object();
-    private int _id;
-    private string _message;
-    private DateTime _queriedAt;
+    readonly object _lock = new();
+    int _id;
+    string _message;
+    DateTime _queriedAt;
     #endregion
 
     public override InterceptionResult<DbDataReader> ReaderExecuting(
@@ -49,7 +49,7 @@ public class CachingCommandInterceptor : DbCommandInterceptor
         CancellationToken cancellationToken = default)
     {
         if (command.CommandText.StartsWith("-- Get_Daily_Message", StringComparison.Ordinal)
-            && !(result is CachedDailyMessageDataReader))
+            && result is not CachedDailyMessageDataReader)
         {
             try
             {

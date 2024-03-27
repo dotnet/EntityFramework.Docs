@@ -12,7 +12,7 @@ namespace EFModeling.ValueConversions;
 
 public class CaseInsensitiveStrings : Program
 {
-    public void Run()
+    public static void Run()
     {
         ConsoleWriteLines("Sample showing value conversions for case-insensitive string keys...");
 
@@ -47,7 +47,7 @@ public class CaseInsensitiveStrings : Program
         {
             ConsoleWriteLines("Read the entities back...");
 
-            var blog = context.Set<Blog>().Include(e => e.Posts).Single();
+            Blog blog = context.Set<Blog>().Include(e => e.Posts).Single();
 
             ConsoleWriteLines($"The blog has {blog.Posts.Count} posts with foreign keys '{blog.Posts.First().BlogId}' and '{blog.Posts.Skip(1).First().BlogId}'");
         }
@@ -78,8 +78,8 @@ public class CaseInsensitiveStrings : Program
         }
         #endregion
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-            => optionsBuilder
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) =>
+            optionsBuilder
                 .LogTo(Console.WriteLine, new[] { RelationalEventId.CommandExecuted })
                 .UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=CaseInsensitiveStrings;Trusted_Connection=True")
                 .EnableSensitiveDataLogging();

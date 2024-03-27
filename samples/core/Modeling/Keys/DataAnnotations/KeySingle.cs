@@ -3,13 +3,13 @@ using Microsoft.EntityFrameworkCore;
 
 namespace EFModeling.Keys.DataAnnotations.KeySingle;
 
-internal class MyContext : DbContext
+class MyContext : DbContext
 {
     public DbSet<Car> Cars { get; set; }
 }
 
 #region KeySingle
-internal class Car
+class Car
 {
     [Key]
     public string LicensePlate { get; set; }

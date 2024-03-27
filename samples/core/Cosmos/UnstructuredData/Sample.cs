@@ -24,7 +24,9 @@ public static class Sample
 
             var order = new Order
             {
-                Id = 1, ShippingAddress = new StreetAddress { City = "London", Street = "221 B Baker St" }, PartitionKey = "1"
+                Id = 1,
+                ShippingAddress = new StreetAddress { City = "London", Street = "221 B Baker St" },
+                PartitionKey = "1"
             };
 
             context.Add(order);
@@ -34,10 +36,10 @@ public static class Sample
 
         using (var context = new OrderContext())
         {
-            var order = await context.Orders.FirstAsync();
-            var orderEntry = context.Entry(order);
+            Order order = await context.Orders.FirstAsync();
+            Microsoft.EntityFrameworkCore.ChangeTracking.EntityEntry<Order> orderEntry = context.Entry(order);
 
-            var jsonProperty = orderEntry.Property<JObject>("__jObject");
+            Microsoft.EntityFrameworkCore.ChangeTracking.PropertyEntry<Order, JObject> jsonProperty = orderEntry.Property<JObject>("__jObject");
             jsonProperty.CurrentValue["BillingAddress"] = "Clarence House";
 
             orderEntry.State = EntityState.Modified;
@@ -47,9 +49,9 @@ public static class Sample
 
         using (var context = new OrderContext())
         {
-            var order = await context.Orders.FirstAsync();
-            var orderEntry = context.Entry(order);
-            var jsonProperty = orderEntry.Property<JObject>("__jObject");
+            Order order = await context.Orders.FirstAsync();
+            Microsoft.EntityFrameworkCore.ChangeTracking.EntityEntry<Order> orderEntry = context.Entry(order);
+            Microsoft.EntityFrameworkCore.ChangeTracking.PropertyEntry<Order, JObject> jsonProperty = orderEntry.Property<JObject>("__jObject");
 
             Console.WriteLine($"First order will be billed to: {jsonProperty.CurrentValue["BillingAddress"]}");
         }
@@ -58,12 +60,12 @@ public static class Sample
         #region CosmosClient
         using (var context = new OrderContext())
         {
-            var cosmosClient = context.Database.GetCosmosClient();
-            var database = cosmosClient.GetDatabase("OrdersDB");
-            var container = database.GetContainer("Orders");
+            CosmosClient cosmosClient = context.Database.GetCosmosClient();
+            Database database = cosmosClient.GetDatabase("OrdersDB");
+            Container container = database.GetContainer("Orders");
 
-            var resultSet = container.GetItemQueryIterator<JObject>(new QueryDefinition("select * from o"));
-            var order = (await resultSet.ReadNextAsync()).First();
+            FeedIterator<JObject> resultSet = container.GetItemQueryIterator<JObject>(new QueryDefinition("select * from o"));
+            JObject order = (await resultSet.ReadNextAsync()).First();
 
             Console.WriteLine($"First order JSON: {order}");
 
@@ -76,8 +78,8 @@ public static class Sample
         #region MissingProperties
         using (var context = new OrderContext())
         {
-            var orders = await context.Orders.ToListAsync();
-            var sortedOrders = await context.Orders.OrderBy(o => o.TrackingNumber).ToListAsync();
+            System.Collections.Generic.List<Order> orders = await context.Orders.ToListAsync();
+            System.Collections.Generic.List<Order> sortedOrders = await context.Orders.OrderBy(o => o.TrackingNumber).ToListAsync();
 
             Console.WriteLine($"Number of orders: {orders.Count}");
             Console.WriteLine($"Number of sorted orders: {sortedOrders.Count}");

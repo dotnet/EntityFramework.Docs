@@ -8,13 +8,11 @@ using Microsoft.EntityFrameworkCore.Diagnostics;
 
 public class AuditingInterceptor : ISaveChangesInterceptor
 {
-    private readonly string _connectionString;
-    private SaveChangesAudit _audit;
+    readonly string _connectionString;
+    SaveChangesAudit _audit;
 
-    public AuditingInterceptor(string connectionString)
-    {
+    public AuditingInterceptor(string connectionString) =>
         _connectionString = connectionString;
-    }
 
     #region SavingChanges
     public async ValueTask<InterceptionResult<int>> SavingChangesAsync(
@@ -24,10 +22,10 @@ public class AuditingInterceptor : ISaveChangesInterceptor
     {
         _audit = CreateAudit(eventData.Context);
 
-        using var auditContext = new AuditContext(_connectionString);
+        await using var auditContext = new AuditContext(_connectionString);
 
         auditContext.Add(_audit);
-        await auditContext.SaveChangesAsync();
+        await auditContext.SaveChangesAsync(cancellationToken);
 
         return result;
     }
@@ -65,7 +63,7 @@ public class AuditingInterceptor : ISaveChangesInterceptor
         int result,
         CancellationToken cancellationToken = default)
     {
-        using var auditContext = new AuditContext(_connectionString);
+        await using var auditContext = new AuditContext(_connectionString);
 
         auditContext.Attach(_audit);
         _audit.Succeeded = true;
@@ -94,7 +92,7 @@ public class AuditingInterceptor : ISaveChangesInterceptor
         DbContextErrorEventData eventData,
         CancellationToken cancellationToken = default)
     {
-        using var auditContext = new AuditContext(_connectionString);
+        await using var auditContext = new AuditContext(_connectionString);
 
         auditContext.Attach(_audit);
         _audit.Succeeded = false;
@@ -106,13 +104,13 @@ public class AuditingInterceptor : ISaveChangesInterceptor
     #endregion
 
     #region CreateAudit
-    private static SaveChangesAudit CreateAudit(DbContext context)
+    static SaveChangesAudit CreateAudit(DbContext context)
     {
         context.ChangeTracker.DetectChanges();
 
         var audit = new SaveChangesAudit { AuditId = Guid.NewGuid(), StartTime = DateTime.UtcNow };
 
-        foreach (var entry in context.ChangeTracker.Entries())
+        foreach (EntityEntry entry in context.ChangeTracker.Entries())
         {
             var auditMessage = entry.State switch
             {

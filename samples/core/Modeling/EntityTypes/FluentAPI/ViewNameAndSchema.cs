@@ -2,7 +2,7 @@
 
 namespace EFModeling.EntityTypes.FluentAPI.ViewNameAndSchema;
 
-internal class MyContext : DbContext
+class MyContext : DbContext
 {
     public DbSet<Blog> Blogs { get; set; }
 

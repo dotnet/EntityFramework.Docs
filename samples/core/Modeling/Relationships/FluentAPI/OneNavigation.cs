@@ -4,17 +4,15 @@ using Microsoft.EntityFrameworkCore;
 namespace EFModeling.Relationships.FluentAPI.OneNavigation;
 
 #region OneNavigation
-internal class MyContext : DbContext
+class MyContext : DbContext
 {
     public DbSet<Blog> Blogs { get; set; }
     public DbSet<Post> Posts { get; set; }
 
-    protected override void OnModelCreating(ModelBuilder modelBuilder)
-    {
+    protected override void OnModelCreating(ModelBuilder modelBuilder) =>
         modelBuilder.Entity<Blog>()
             .HasMany(b => b.Posts)
             .WithOne();
-    }
 }
 
 public class Blog

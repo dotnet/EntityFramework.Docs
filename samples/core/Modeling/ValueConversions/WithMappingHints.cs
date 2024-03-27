@@ -11,7 +11,7 @@ namespace EFModeling.ValueConversions;
 
 public class WithMappingHints : Program
 {
-    public void Run()
+    public static void Run()
     {
         ConsoleWriteLines("Sample showing value conversions with mapping hints for facets...");
 
@@ -30,8 +30,8 @@ public class WithMappingHints : Program
         {
             ConsoleWriteLines("Read the entities back...");
 
-            var entity1 = context.Set<Order1>().Single();
-            var entity2 = context.Set<Order2>().Single();
+            Order1 entity1 = context.Set<Order1>().Single();
+            Order2 entity2 = context.Set<Order2>().Single();
         }
 
         ConsoleWriteLines("Sample finished.");
@@ -60,8 +60,8 @@ public class WithMappingHints : Program
             #endregion
         }
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-            => optionsBuilder
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) =>
+            optionsBuilder
                 .LogTo(Console.WriteLine, new[] { RelationalEventId.CommandExecuted })
                 .UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=WithMappingHints;Trusted_Connection=True")
                 .EnableSensitiveDataLogging();

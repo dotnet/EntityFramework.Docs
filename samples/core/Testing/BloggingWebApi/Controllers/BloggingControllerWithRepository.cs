@@ -1,6 +1,4 @@
-﻿using System;
-using System.Data;
-using System.Linq;
+﻿using System.Linq;
 using EF.Testing.BusinessLogic;
 using Microsoft.AspNetCore.Mvc;
 
@@ -11,7 +9,7 @@ namespace EF.Testing.BloggingWebApi.Controllers;
 public class BloggingControllerWithRepository : ControllerBase
 {
     #region BloggingControllerWithRepository
-    private readonly IBloggingRepository _repository;
+    readonly IBloggingRepository _repository;
 
     public BloggingControllerWithRepository(IBloggingRepository repository)
         => _repository = repository;
@@ -37,7 +35,7 @@ public class BloggingControllerWithRepository : ControllerBase
     [HttpPost]
     public ActionResult UpdateBlogUrl(string name, string url)
     {
-        var blog = _repository.GetBlogByName(name);
+        Blog blog = _repository.GetBlogByName(name);
         if (blog is null)
         {
             return NotFound();

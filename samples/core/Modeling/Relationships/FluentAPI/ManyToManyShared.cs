@@ -25,9 +25,9 @@ public class MyContext : DbContext
         #endregion
 
         #region Metadata
-        foreach (var entityType in modelBuilder.Model.GetEntityTypes())
+        foreach (Microsoft.EntityFrameworkCore.Metadata.IMutableEntityType entityType in modelBuilder.Model.GetEntityTypes())
         {
-            foreach (var skipNavigation in entityType.GetSkipNavigations())
+            foreach (Microsoft.EntityFrameworkCore.Metadata.IMutableSkipNavigation skipNavigation in entityType.GetSkipNavigations())
             {
                 Console.WriteLine(entityType.DisplayName() + "." + skipNavigation.Name);
             }

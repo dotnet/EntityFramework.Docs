@@ -2,16 +2,14 @@
 
 namespace EFModeling.EntityTypes.FluentAPI.TableComment;
 
-internal class MyContext : DbContext
+class MyContext : DbContext
 {
     public DbSet<Blog> Blogs { get; set; }
 
     #region TableComment
-    protected override void OnModelCreating(ModelBuilder modelBuilder)
-    {
+    protected override void OnModelCreating(ModelBuilder modelBuilder) =>
         modelBuilder.Entity<Blog>().ToTable(
             tableBuilder => tableBuilder.HasComment("Blogs managed on the website"));
-    }
     #endregion
 }
 

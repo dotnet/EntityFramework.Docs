@@ -11,8 +11,8 @@ public class CustomTools
     public static void AddMigration(string migrationName)
     {
         var projectDir = Directory.GetCurrentDirectory();
-        var rootNamespace = "ConsoleApp1";
-        var outputDir = "Migraitons";
+        const string rootNamespace = "ConsoleApp1";
+        const string outputDir = "Migrations";
 
         #region CustomTools
         var db = new MyDbContext();
@@ -21,16 +21,14 @@ public class CustomTools
         var serviceCollection = new ServiceCollection();
         serviceCollection.AddEntityFrameworkDesignTimeServices();
         serviceCollection.AddDbContextDesignTimeServices(db);
-        var serviceProvider = serviceCollection.BuildServiceProvider();
+        ServiceProvider serviceProvider = serviceCollection.BuildServiceProvider();
 
         // Add a migration
-        var migrationsScaffolder = serviceProvider.GetService<IMigrationsScaffolder>();
-        var migration = migrationsScaffolder.ScaffoldMigration(migrationName, rootNamespace);
+        IMigrationsScaffolder migrationsScaffolder = serviceProvider.GetService<IMigrationsScaffolder>();
+        ScaffoldedMigration migration = migrationsScaffolder.ScaffoldMigration(migrationName, rootNamespace);
         migrationsScaffolder.Save(projectDir, migration, outputDir);
         #endregion
     }
 }
 
-internal class MyDbContext : DbContext
-{
-}
+class MyDbContext : DbContext;

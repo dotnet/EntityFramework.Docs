@@ -22,7 +22,7 @@ public static class QueryInterceptionSample
             await context.SaveChangesAsync();
         }
 
-        foreach (var customer in await GetPageOfCustomers("City", 0))
+        foreach (Customer customer in await GetPageOfCustomers("City", 0))
         {
             Console.WriteLine($"{customer.Name}");
         }
@@ -38,7 +38,7 @@ public static class QueryInterceptionSample
         }
         #endregion
 
-        foreach (var customer in await GetPageOfCustomers2("City", 0))
+        foreach (Customer customer in await GetPageOfCustomers2("City", 0))
         {
             Console.WriteLine($"{customer.Name}");
         }
@@ -56,7 +56,7 @@ public static class QueryInterceptionSample
         #endregion
     }
 
-    private static void PrintSampleName([CallerMemberName] string? methodName = null)
+    static void PrintSampleName([CallerMemberName] string? methodName = null)
     {
         Console.WriteLine($">>>> Sample: {methodName}");
         Console.WriteLine();
@@ -64,13 +64,13 @@ public static class QueryInterceptionSample
 
     public class CustomerContext : DbContext
     {
-        private static readonly KeyOrderingExpressionInterceptor _keyOrderingExpressionInterceptor = new();
+        static readonly KeyOrderingExpressionInterceptor _keyOrderingExpressionInterceptor = new();
 
         public DbSet<Customer> Customers
             => Set<Customer>();
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-            => optionsBuilder
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) =>
+            optionsBuilder
                 .AddInterceptors(_keyOrderingExpressionInterceptor)
                 .UseSqlite("Data Source = customers.db")
                 .LogTo(Console.WriteLine, LogLevel.Information);
@@ -82,24 +82,24 @@ public static class QueryInterceptionSample
         public Expression QueryCompilationStarting(Expression queryExpression, QueryExpressionEventData eventData)
             => new KeyOrderingExpressionVisitor().Visit(queryExpression);
 
-        private class KeyOrderingExpressionVisitor : ExpressionVisitor
+        class KeyOrderingExpressionVisitor : ExpressionVisitor
         {
-            private static readonly MethodInfo ThenByMethod
+            static readonly MethodInfo ThenByMethod
                 = typeof(Queryable).GetMethods()
                     .Single(m => m.Name == nameof(Queryable.ThenBy) && m.GetParameters().Length == 2);
 
             protected override Expression VisitMethodCall(MethodCallExpression? methodCallExpression)
             {
-                var methodInfo = methodCallExpression!.Method;
+                MethodInfo methodInfo = methodCallExpression!.Method;
                 if (methodInfo.DeclaringType == typeof(Queryable)
                     && methodInfo.Name == nameof(Queryable.OrderBy)
                     && methodInfo.GetParameters().Length == 2)
                 {
-                    var sourceType = methodCallExpression.Type.GetGenericArguments()[0];
+                    Type sourceType = methodCallExpression.Type.GetGenericArguments()[0];
                     if (typeof(IHasIntKey).IsAssignableFrom(sourceType))
                     {
                         var lambdaExpression = (LambdaExpression)((UnaryExpression)methodCallExpression.Arguments[1]).Operand;
-                        var entityParameterExpression = lambdaExpression.Parameters[0];
+                        ParameterExpression entityParameterExpression = lambdaExpression.Parameters[0];
 
                         return Expression.Call(
                             ThenByMethod.MakeGenericMethod(

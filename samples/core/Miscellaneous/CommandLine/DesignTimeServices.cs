@@ -3,14 +3,14 @@ using Microsoft.EntityFrameworkCore.Migrations.Design;
 using Microsoft.Extensions.DependencyInjection;
 
 #region DesignTimeServices
-internal class MyDesignTimeServices : IDesignTimeServices
+class MyDesignTimeServices : IDesignTimeServices
 {
     public void ConfigureDesignTimeServices(IServiceCollection services)
         => services.AddSingleton<IMigrationsCodeGenerator, MyMigrationsCodeGenerator>();
 }
 #endregion
 
-internal class MyMigrationsCodeGenerator : CSharpMigrationsGenerator
+class MyMigrationsCodeGenerator : CSharpMigrationsGenerator
 {
     public MyMigrationsCodeGenerator(
         MigrationsCodeGeneratorDependencies dependencies,

@@ -19,8 +19,8 @@ public class ExplicitJoinEntityWithPayloadSamples
         #region Many_to_many_relationships_7
         using var context = new BlogsContext();
 
-        var post = context.Posts.Single(e => e.Id == 3);
-        var tag = context.Tags.Single(e => e.Id == 1);
+        Post post = context.Posts.Single(e => e.Id == 3);
+        Tag tag = context.Tags.Single(e => e.Id == 1);
 
         post.Tags.Add(tag);
 
@@ -131,12 +131,9 @@ public class PostTag
 
 public class BlogsContext : DbContext
 {
-    private readonly bool _quiet;
+    readonly bool _quiet;
 
-    public BlogsContext(bool quiet = false)
-    {
-        _quiet = quiet;
-    }
+    public BlogsContext(bool quiet = false) => _quiet = quiet;
 
     public DbSet<Blog> Blogs { get; set; }
     public DbSet<Post> Posts { get; set; }
@@ -155,8 +152,7 @@ public class BlogsContext : DbContext
     }
 
     #region OnModelCreating
-    protected override void OnModelCreating(ModelBuilder modelBuilder)
-    {
+    protected override void OnModelCreating(ModelBuilder modelBuilder) =>
         modelBuilder.Entity<Post>()
             .HasMany(p => p.Tags)
             .WithMany(p => p.Posts)
@@ -164,6 +160,5 @@ public class BlogsContext : DbContext
                 j => j.HasOne<Tag>().WithMany(),
                 j => j.HasOne<Post>().WithMany(),
                 j => j.Property(e => e.TaggedOn).HasDefaultValueSql("CURRENT_TIMESTAMP"));
-    }
     #endregion
 }

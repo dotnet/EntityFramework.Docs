@@ -75,8 +75,7 @@ public static class DefaultConstraintSample
         Console.WriteLine();
     }
 
-
-    private static void PrintSampleName([CallerMemberName] string? methodName = null)
+    static void PrintSampleName([CallerMemberName] string? methodName = null)
     {
         Console.WriteLine($">>>> Sample: {methodName}");
         Console.WriteLine();
@@ -122,7 +121,7 @@ public static class DefaultConstraintSample
     {
         public int Id { get; set; }
 
-        private int? _credits;
+        int? _credits;
 
         public int Credits
         {
@@ -135,7 +134,7 @@ public static class DefaultConstraintSample
     {
         public int Id { get; set; }
 
-        private bool? _isActive;
+        bool? _isActive;
 
         public bool IsActive
         {
@@ -148,7 +147,7 @@ public static class DefaultConstraintSample
     {
         public int Id { get; set; }
 
-        private Level? _level;
+        Level? _level;
 
         public Level Level
         {
@@ -171,7 +170,7 @@ public static class DefaultConstraintSample
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
             => (UseSqlite
-                    ? optionsBuilder.UseSqlite(@$"DataSource={GetType().Name}.db")
+                    ? optionsBuilder.UseSqlite($"DataSource={GetType().Name}.db")
                     : optionsBuilder.UseSqlServer(
                         @$"Server=(localdb)\mssqllocaldb;Database={GetType().Name}",
                         sqlServerOptionsBuilder => sqlServerOptionsBuilder.UseNetTopologySuite()))

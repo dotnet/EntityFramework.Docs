@@ -1,9 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace EFModeling.Misc.EntityTypeConfiguration;
+namespace EFModeling.ConcurrencyTokens;
 
-internal class MyContext : DbContext
+class MyContext : DbContext
 {
     public DbSet<Blog> Blogs { get; set; }
 
@@ -22,12 +22,9 @@ internal class MyContext : DbContext
 #region IEntityTypeConfiguration
 public class BlogEntityTypeConfiguration : IEntityTypeConfiguration<Blog>
 {
-    public void Configure(EntityTypeBuilder<Blog> builder)
-    {
-        builder
+    public void Configure(EntityTypeBuilder<Blog> builder) => builder
             .Property(b => b.Url)
             .IsRequired();
-    }
 }
 #endregion
 

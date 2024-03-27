@@ -5,7 +5,7 @@ namespace EFModeling.TableSplitting;
 
 public static class Program
 {
-    private static void Main(string[] args)
+    static void Main()
     {
         #region Usage
         using (var context = new TableSplittingContext())
@@ -36,7 +36,7 @@ public static class Program
 
         using (var context = new TableSplittingContext())
         {
-            var order = context.DetailedOrders.First(o => o.Status == OrderStatus.Pending);
+            DetailedOrder order = context.DetailedOrders.First(o => o.Status == OrderStatus.Pending);
             Console.WriteLine($"First pending order will ship to: {order.ShippingAddress}");
         }
         #endregion

@@ -2,18 +2,16 @@ using Microsoft.EntityFrameworkCore;
 
 namespace EFModeling.IndexesAndConstraints.FluentAPI.IndexNoFilter;
 
-internal class MyContext : DbContext
+class MyContext : DbContext
 {
     public DbSet<Blog> Blogs { get; set; }
 
     #region IndexNoFilter
-    protected override void OnModelCreating(ModelBuilder modelBuilder)
-    {
+    protected override void OnModelCreating(ModelBuilder modelBuilder) =>
         modelBuilder.Entity<Blog>()
             .HasIndex(b => b.Url)
             .IsUnique()
             .HasFilter(null);
-    }
     #endregion
 }
 

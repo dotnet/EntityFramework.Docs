@@ -28,7 +28,7 @@ public class Program
 
         using (var context = new BlogsContext())
         {
-            var blog = context.Blogs.Include(e => e.Posts).Single();
+            Blog blog = context.Blogs.Include(e => e.Posts).Single();
 
             blog.Name = "EF Core Blog";
             context.Remove(blog.Posts.First());
@@ -51,13 +51,13 @@ public class BlogsContext : DbContext
     }
     #endregion
 
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        => optionsBuilder.UseSqlite("DataSource=blogs.db");
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) =>
+        optionsBuilder.UseSqlite("DataSource=blogs.db");
 
     public DbSet<Blog> Blogs { get; set; }
 
     #region UpdateTimestamps
-    private static void UpdateTimestamps(object sender, EntityEntryEventArgs e)
+    static void UpdateTimestamps(object sender, EntityEntryEventArgs e)
     {
         if (e.Entry.Entity is IHasTimestamps entityWithTimestamps)
         {
@@ -87,7 +87,7 @@ public static class HasTimestampsExtensions
     {
         return $"{GetStamp("Added", entity.Added)}{GetStamp("Modified", entity.Modified)}{GetStamp("Deleted", entity.Deleted)}";
 
-        string GetStamp(string state, DateTime? dateTime)
+        static string GetStamp(string state, DateTime? dateTime)
             => dateTime == null ? "" : $" {state} on: {dateTime}";
     }
 }

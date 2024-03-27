@@ -15,7 +15,7 @@ public class Program
 
         using (var db = new BloggingContext())
         {
-            foreach (var blog in db.Blogs)
+            foreach (Blog blog in db.Blogs)
             {
                 Console.WriteLine(blog.Url);
             }
@@ -30,7 +30,7 @@ public class Program
 
         using (var db = new BloggingContextWithFiltering())
         {
-            foreach (var blog in db.Blogs)
+            foreach (Blog blog in db.Blogs)
             {
                 Console.WriteLine(blog.Url);
             }

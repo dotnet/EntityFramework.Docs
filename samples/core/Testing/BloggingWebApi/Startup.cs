@@ -10,10 +10,7 @@ namespace EF.Testing.BloggingWebApi;
 
 public class Startup
 {
-    public Startup(IConfiguration configuration)
-    {
-        Configuration = configuration;
-    }
+    public Startup(IConfiguration configuration) => Configuration = configuration;
 
     public IConfiguration Configuration { get; }
 
@@ -40,6 +37,6 @@ public class Startup
         app.UseHttpsRedirection();
         app.UseRouting();
         app.UseAuthorization();
-        app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
+        app.UseEndpoints(endpoints => endpoints.MapControllers());
     }
 }

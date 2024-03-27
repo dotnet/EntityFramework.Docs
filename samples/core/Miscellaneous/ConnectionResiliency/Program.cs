@@ -7,7 +7,7 @@ namespace EFConnectionResiliency;
 
 public class Program
 {
-    public static void Main(string[] args)
+    public static void Main()
     {
         using (var db = new BloggingContext())
         {
@@ -24,18 +24,18 @@ public class Program
         ExecuteInTransactionWithTracking();
     }
 
-    private static void ExecuteWithManualTransaction()
+    static void ExecuteWithManualTransaction()
     {
         #region ManualTransaction
 
         using var db = new BloggingContext();
-        var strategy = db.Database.CreateExecutionStrategy();
+        Microsoft.EntityFrameworkCore.Storage.IExecutionStrategy strategy = db.Database.CreateExecutionStrategy();
 
         strategy.Execute(
             () =>
             {
                 using var context = new BloggingContext();
-                using var transaction = context.Database.BeginTransaction();
+                using Microsoft.EntityFrameworkCore.Storage.IDbContextTransaction transaction = context.Database.BeginTransaction();
 
                 context.Blogs.Add(new Blog { Url = "http://blogs.msdn.com/dotnet" });
                 context.SaveChanges();
@@ -49,14 +49,14 @@ public class Program
         #endregion
     }
 
-    private static void ExecuteWithManualAmbientTransaction()
+    static void ExecuteWithManualAmbientTransaction()
     {
         #region AmbientTransaction
 
         using var context1 = new BloggingContext();
         context1.Blogs.Add(new Blog { Url = "http://blogs.msdn.com/visualstudio" });
 
-        var strategy = context1.Database.CreateExecutionStrategy();
+        Microsoft.EntityFrameworkCore.Storage.IExecutionStrategy strategy = context1.Database.CreateExecutionStrategy();
 
         strategy.Execute(
             () =>
@@ -75,19 +75,19 @@ public class Program
         #endregion
     }
 
-    private static void ExecuteInTransactionWithVerification()
+    static void ExecuteInTransactionWithVerification()
     {
         #region Verification
 
         using var db = new BloggingContext();
-        var strategy = db.Database.CreateExecutionStrategy();
+        Microsoft.EntityFrameworkCore.Storage.IExecutionStrategy strategy = db.Database.CreateExecutionStrategy();
 
         var blogToAdd = new Blog { Url = "http://blogs.msdn.com/dotnet" };
         db.Blogs.Add(blogToAdd);
 
         strategy.ExecuteInTransaction(
             db,
-            operation: context => { context.SaveChanges(acceptAllChangesOnSuccess: false); },
+            operation: context => context.SaveChanges(acceptAllChangesOnSuccess: false),
             verifySucceeded: context => context.Blogs.AsNoTracking().Any(b => b.BlogId == blogToAdd.BlogId));
 
         db.ChangeTracker.AcceptAllChanges();
@@ -95,12 +95,12 @@ public class Program
         #endregion
     }
 
-    private static void ExecuteInTransactionWithTracking()
+    static void ExecuteInTransactionWithTracking()
     {
         #region Tracking
 
         using var db = new BloggingContext();
-        var strategy = db.Database.CreateExecutionStrategy();
+        Microsoft.EntityFrameworkCore.Storage.IExecutionStrategy strategy = db.Database.CreateExecutionStrategy();
 
         db.Blogs.Add(new Blog { Url = "http://blogs.msdn.com/dotnet" });
 
@@ -109,7 +109,7 @@ public class Program
 
         strategy.ExecuteInTransaction(
             db,
-            operation: context => { context.SaveChanges(acceptAllChangesOnSuccess: false); },
+            operation: context => context.SaveChanges(acceptAllChangesOnSuccess: false),
             verifySucceeded: context => context.Transactions.AsNoTracking().Any(t => t.Id == transaction.Id));
 
         db.ChangeTracker.AcceptAllChanges();
@@ -126,19 +126,15 @@ public class BloggingContext : DbContext
     public DbSet<TransactionRow> Transactions { get; set; }
 
     #region OnConfiguring
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-    {
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) =>
         optionsBuilder
             .UseSqlServer(
                 @"Server=(localdb)\mssqllocaldb;Database=EFMiscellanous.ConnectionResiliency;Trusted_Connection=True",
                 options => options.EnableRetryOnFailure());
-    }
     #endregion
 
-    protected override void OnModelCreating(ModelBuilder modelBuilder)
-    {
+    protected override void OnModelCreating(ModelBuilder modelBuilder) =>
         modelBuilder.Entity<Blog>().Property(b => b.BlogId).UseHiLo();
-    }
 }
 
 public class Blog

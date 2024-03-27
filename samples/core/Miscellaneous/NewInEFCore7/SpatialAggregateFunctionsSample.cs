@@ -25,7 +25,7 @@ public static class SpatialAggregateFunctionsSample
         return QueryTest<GeoCacheContextInMemory>();
     }
 
-    private static async Task QueryTest<TContext>()
+    static async Task QueryTest<TContext>()
         where TContext : GeoCacheContext, new()
     {
         await using (var context = new TContext())
@@ -36,11 +36,15 @@ public static class SpatialAggregateFunctionsSample
             await context.AddRangeAsync(
                 new GeoCache
                 {
-                    Name = "Sandpiper Cache", Owner = "Nilwob Inc.", Location = new Point(-93.71855, 41.760783) { SRID = 4326 }
+                    Name = "Sandpiper Cache",
+                    Owner = "Nilwob Inc.",
+                    Location = new Point(-93.71855, 41.760783) { SRID = 4326 }
                 },
                 new GeoCache
                 {
-                    Name = "Paddy's Pot-O-Gold", Owner = "Nilwob Inc.", Location = new Point(-93.733633, 41.775633) { SRID = 4326 }
+                    Name = "Paddy's Pot-O-Gold",
+                    Owner = "Nilwob Inc.",
+                    Location = new Point(-93.733633, 41.775633) { SRID = 4326 }
                 },
                 new GeoCache { Name = "Blazing Beacon", Owner = "The Spokes", Location = new Point(-1.606483, 55.392433) { SRID = 4326 } },
                 new GeoCache
@@ -106,7 +110,8 @@ public static class SpatialAggregateFunctionsSample
                 .Select(
                     grouping => new
                     {
-                        Id = grouping.Key, Combined = EnvelopeCombiner.CombineAsGeometry(grouping.Select(point => point.Point))
+                        Id = grouping.Key,
+                        Combined = EnvelopeCombiner.CombineAsGeometry(grouping.Select(point => point.Point))
                     });
 
             await foreach (var group in query.AsAsyncEnumerable())
@@ -118,7 +123,7 @@ public static class SpatialAggregateFunctionsSample
         Console.WriteLine();
     }
 
-    private static void PrintSampleName([CallerMemberName] string? methodName = null)
+    static void PrintSampleName([CallerMemberName] string? methodName = null)
     {
         Console.WriteLine($">>>> Sample: {methodName}");
         Console.WriteLine();
@@ -129,8 +134,8 @@ public static class SpatialAggregateFunctionsSample
         public DbSet<GeoCache> Caches => Set<GeoCache>();
         public DbSet<EuclideanPoint> Points => Set<EuclideanPoint>();
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-            => optionsBuilder
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) =>
+            optionsBuilder
                 .LogTo(Console.WriteLine, LogLevel.Information)
                 .EnableSensitiveDataLogging();
     }

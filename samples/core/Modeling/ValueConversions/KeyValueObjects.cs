@@ -12,7 +12,7 @@ namespace EFModeling.ValueConversions;
 
 public class KeyValueObjects : Program
 {
-    public void Run()
+    public static void Run()
     {
         ConsoleWriteLines("Sample showing value conversions for a value objects used as keys...");
 
@@ -27,12 +27,10 @@ public class KeyValueObjects : Program
                 Id = new BlogKey(1),
                 Posts = new List<Post>
                 {
-                    new Post
-                    {
+                    new() {
                         Id = new PostKey(1)
                     },
-                    new Post
-                    {
+                    new() {
                         Id = new PostKey(2)
                     },
                 }
@@ -45,7 +43,7 @@ public class KeyValueObjects : Program
         {
             ConsoleWriteLines("Read the entity back...");
 
-            var blog = context.Set<Blog>().Include(e => e.Posts).Single();
+            Blog blog = context.Set<Blog>().Include(e => e.Posts).Single();
         }
 
         ConsoleWriteLines("Sample finished.");
@@ -71,8 +69,8 @@ public class KeyValueObjects : Program
         }
         #endregion
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-            => optionsBuilder
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) =>
+            optionsBuilder
                 .LogTo(Console.WriteLine, new[] { RelationalEventId.CommandExecuted })
                 .UseSqlite("DataSource=test.db")
                 .EnableSensitiveDataLogging();

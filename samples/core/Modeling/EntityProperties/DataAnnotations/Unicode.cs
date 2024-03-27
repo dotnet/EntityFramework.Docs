@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace EFModeling.EntityProperties.DataAnnotations.Unicode;
 
-internal class MyContext : DbContext
+class MyContext : DbContext
 {
     public DbSet<Book> Books { get; set; }
 }

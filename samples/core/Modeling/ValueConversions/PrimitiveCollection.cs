@@ -13,7 +13,7 @@ namespace EFModeling.ValueConversions;
 
 public class PrimitiveCollection : Program
 {
-    public void Run()
+    public static void Run()
     {
         ConsoleWriteLines("Sample showing value conversions for a collections of primitive values...");
 
@@ -31,7 +31,7 @@ public class PrimitiveCollection : Program
         {
             ConsoleWriteLines("Read the entity back...");
 
-            var post = context.Set<Post>().Single();
+            Post post = context.Set<Post>().Single();
 
             ConsoleWriteLines($"Post with tags {string.Join(", ", post.Tags)}.");
 
@@ -46,9 +46,8 @@ public class PrimitiveCollection : Program
 
     public class SampleDbContext : DbContext
     {
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            #region ConfigurePrimitiveCollection
+        protected override void OnModelCreating(ModelBuilder modelBuilder) =>
+        #region ConfigurePrimitiveCollection
             modelBuilder.Entity<Post>()
                 .Property(e => e.Tags)
                 .HasConversion(
@@ -57,12 +56,11 @@ public class PrimitiveCollection : Program
                     new ValueComparer<ICollection<string>>(
                         (c1, c2) => c1.SequenceEqual(c2),
                         c => c.Aggregate(0, (a, v) => HashCode.Combine(a, v.GetHashCode())),
-                        c => (ICollection<string>)c.ToList()));
-            #endregion
-        }
+                        c => c.ToList()));
+        #endregion
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-            => optionsBuilder
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) =>
+            optionsBuilder
                 .LogTo(Console.WriteLine, new[] { RelationalEventId.CommandExecuted })
                 .UseSqlite("DataSource=test.db")
                 .EnableSensitiveDataLogging();

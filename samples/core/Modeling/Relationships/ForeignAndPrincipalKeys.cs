@@ -7,9 +7,9 @@ using Microsoft.EntityFrameworkCore.Diagnostics;
 
 namespace EFModeling.Relationships;
 
-public class ForeignAndPrincipalKeys
+public static class ForeignAndPrincipalKeys
 {
-    public class ForeignKeyConfigurationByLambda
+    public static class ForeignKeyConfigurationByLambda
     {
         public static void BuildModels()
         {
@@ -22,7 +22,7 @@ public class ForeignAndPrincipalKeys
         public class Blog
         {
             public int Id { get; set; }
-            public List<Post> Posts { get; } = new();
+            public List<Post> Posts { get; } = [];
         }
 
         public class Post
@@ -36,22 +36,20 @@ public class ForeignAndPrincipalKeys
         {
             public DbSet<Blog> Blogs => Set<Blog>();
 
-            protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-                => optionsBuilder.UseSqlite($"DataSource = ForeignKeyConfigurationByLambda{GetType().Name}.db");
+            protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) =>
+                optionsBuilder.UseSqlite($"DataSource = ForeignKeyConfigurationByLambda{GetType().Name}.db");
 
             #region ForeignKeyByLambda
-            protected override void OnModelCreating(ModelBuilder modelBuilder)
-            {
+            protected override void OnModelCreating(ModelBuilder modelBuilder) =>
                 modelBuilder.Entity<Blog>()
                     .HasMany(e => e.Posts)
                     .WithOne(e => e.Blog)
                     .HasForeignKey(e => e.ContainingBlogId);
-            }
             #endregion
         }
     }
 
-    public class ForeignKeyConfigurationByString
+    public static class ForeignKeyConfigurationByString
     {
         public static void BuildModels()
         {
@@ -64,13 +62,13 @@ public class ForeignAndPrincipalKeys
         public class Blog
         {
             public int Id { get; set; }
-            public List<Post> Posts { get; } = new();
+            public List<Post> Posts { get; } = [];
         }
 
         public class Post
         {
             public int Id { get; set; }
-            private int? ContainingBlogId { get; set; }
+            public int? ContainingBlogId { get; set; }
             public Blog? Blog { get; init; }
         }
 
@@ -78,22 +76,20 @@ public class ForeignAndPrincipalKeys
         {
             public DbSet<Blog> Blogs => Set<Blog>();
 
-            protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-                => optionsBuilder.UseSqlite($"DataSource = ForeignKeyConfigurationByString{GetType().Name}.db");
+            protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) =>
+                optionsBuilder.UseSqlite($"DataSource = ForeignKeyConfigurationByString{GetType().Name}.db");
 
             #region ForeignKeyByString
-            protected override void OnModelCreating(ModelBuilder modelBuilder)
-            {
+            protected override void OnModelCreating(ModelBuilder modelBuilder) =>
                 modelBuilder.Entity<Blog>()
                     .HasMany(e => e.Posts)
                     .WithOne(e => e.Blog)
                     .HasForeignKey("ContainingBlogId");
-            }
             #endregion
         }
     }
 
-    public class CompositeForeignKeyConfigurationByLambda
+    public static class CompositeForeignKeyConfigurationByLambda
     {
         public static void BuildModels()
         {
@@ -108,7 +104,7 @@ public class ForeignAndPrincipalKeys
         {
             public int Id1 { get; set; }
             public int Id2 { get; set; }
-            public List<Post> Posts { get; } = new();
+            public List<Post> Posts { get; } = [];
         }
 
         public class Post
@@ -123,22 +119,20 @@ public class ForeignAndPrincipalKeys
         {
             public DbSet<Blog> Blogs => Set<Blog>();
 
-            protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-                => optionsBuilder.UseSqlite($"DataSource = CompositeForeignKeyConfigurationByLambda{GetType().Name}.db");
+            protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) =>
+                optionsBuilder.UseSqlite($"DataSource = CompositeForeignKeyConfigurationByLambda{GetType().Name}.db");
 
             #region CompositeForeignKeyByLambda
-            protected override void OnModelCreating(ModelBuilder modelBuilder)
-            {
+            protected override void OnModelCreating(ModelBuilder modelBuilder) =>
                 modelBuilder.Entity<Blog>()
                     .HasMany(e => e.Posts)
                     .WithOne(e => e.Blog)
                     .HasForeignKey(e => new { e.ContainingBlogId1, e.ContainingBlogId2 });
-            }
             #endregion
         }
     }
 
-    public class CompositeForeignKeyConfigurationByString
+    public static class CompositeForeignKeyConfigurationByString
     {
         public static void BuildModels()
         {
@@ -153,7 +147,7 @@ public class ForeignAndPrincipalKeys
         {
             public int Id1 { get; set; }
             public int Id2 { get; set; }
-            public List<Post> Posts { get; } = new();
+            public List<Post> Posts { get; } = [];
         }
 
         public class Post
@@ -166,22 +160,20 @@ public class ForeignAndPrincipalKeys
         {
             public DbSet<Blog> Blogs => Set<Blog>();
 
-            protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-                => optionsBuilder.UseSqlite($"DataSource = CompositeForeignKeyConfigurationByString{GetType().Name}.db");
+            protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) =>
+                optionsBuilder.UseSqlite($"DataSource = CompositeForeignKeyConfigurationByString{GetType().Name}.db");
 
             #region CompositeForeignKeyByString
-            protected override void OnModelCreating(ModelBuilder modelBuilder)
-            {
+            protected override void OnModelCreating(ModelBuilder modelBuilder) =>
                 modelBuilder.Entity<Blog>()
                     .HasMany(e => e.Posts)
                     .WithOne(e => e.Blog)
                     .HasForeignKey("ContainingBlogId1", "ContainingBlogId2");
-            }
             #endregion
         }
     }
 
-    public class RequiredForeignKey
+    public static class RequiredForeignKey
     {
         public static void BuildModels()
         {
@@ -202,7 +194,7 @@ public class ForeignAndPrincipalKeys
         public class Blog
         {
             public int Id { get; set; }
-            public List<Post> Posts { get; } = new();
+            public List<Post> Posts { get; } = [];
         }
 
         public class Post
@@ -216,48 +208,42 @@ public class ForeignAndPrincipalKeys
         {
             public DbSet<Blog> Blogs => Set<Blog>();
 
-            protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-                => optionsBuilder.UseSqlite($"DataSource = RequiredForeignKey{GetType().Name}.db");
+            protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) =>
+                optionsBuilder.UseSqlite($"DataSource = RequiredForeignKey{GetType().Name}.db");
 
             #region RequiredForeignKeyConfig
-            protected override void OnModelCreating(ModelBuilder modelBuilder)
-            {
+            protected override void OnModelCreating(ModelBuilder modelBuilder) =>
                 modelBuilder.Entity<Blog>()
                     .HasMany(e => e.Posts)
                     .WithOne(e => e.Blog)
                     .HasForeignKey(e => e.BlogId)
                     .IsRequired();
-            }
             #endregion
         }
 
         public class BlogContext1 : BlogContext0
         {
             #region RequiredForeignKeyConfig2
-            protected override void OnModelCreating(ModelBuilder modelBuilder)
-            {
+            protected override void OnModelCreating(ModelBuilder modelBuilder) =>
                 modelBuilder.Entity<Blog>()
                     .HasMany(e => e.Posts)
                     .WithOne(e => e.Blog)
                     .IsRequired();
-            }
             #endregion
         }
 
         public class BlogContext2 : BlogContext0
         {
             #region RequiredForeignKeyConfigByProperty
-            protected override void OnModelCreating(ModelBuilder modelBuilder)
-            {
+            protected override void OnModelCreating(ModelBuilder modelBuilder) =>
                 modelBuilder.Entity<Post>()
                     .Property(e => e.BlogId)
                     .IsRequired();
-            }
             #endregion
         }
     }
 
-    public class ShadowForeignKey
+    public static class ShadowForeignKey
     {
         public static void BuildModels()
         {
@@ -276,7 +262,7 @@ public class ForeignAndPrincipalKeys
         public class Blog
         {
             public string Id { get; set; } = null!;
-            public List<Post> Posts { get; } = new();
+            public List<Post> Posts { get; } = [];
         }
 
         public class Post
@@ -289,17 +275,15 @@ public class ForeignAndPrincipalKeys
         {
             public DbSet<Blog> Blogs => Set<Blog>();
 
-            protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-                => optionsBuilder.UseSqlite($"DataSource = ShadowForeignKey{GetType().Name}.db");
+            protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) =>
+                optionsBuilder.UseSqlite($"DataSource = ShadowForeignKey{GetType().Name}.db");
 
             #region ShadowForeignKeyConfig
-            protected override void OnModelCreating(ModelBuilder modelBuilder)
-            {
+            protected override void OnModelCreating(ModelBuilder modelBuilder) =>
                 modelBuilder.Entity<Blog>()
                     .HasMany(e => e.Posts)
                     .WithOne(e => e.Blog)
                     .HasForeignKey("MyBlogId");
-            }
             #endregion
         }
 
@@ -321,7 +305,7 @@ public class ForeignAndPrincipalKeys
         }
     }
 
-    public class ForeignKeyConstraintName
+    public static class ForeignKeyConstraintName
     {
         public static void BuildModels()
         {
@@ -338,7 +322,7 @@ public class ForeignAndPrincipalKeys
         public class Blog
         {
             public int Id { get; set; }
-            public List<Post> Posts { get; } = new();
+            public List<Post> Posts { get; } = [];
         }
 
         public class Post
@@ -352,23 +336,21 @@ public class ForeignAndPrincipalKeys
         {
             public DbSet<Blog> Blogs => Set<Blog>();
 
-            protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-                => optionsBuilder.UseSqlite($"DataSource = ForeignKeyConstraintName{GetType().Name}.db");
+            protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) =>
+                optionsBuilder.UseSqlite($"DataSource = ForeignKeyConstraintName{GetType().Name}.db");
 
             #region ForeignKeyConstraintNameConfig
-            protected override void OnModelCreating(ModelBuilder modelBuilder)
-            {
+            protected override void OnModelCreating(ModelBuilder modelBuilder) =>
                 modelBuilder.Entity<Blog>()
                     .HasMany(e => e.Posts)
                     .WithOne(e => e.Blog)
                     .HasForeignKey(e => e.BlogId)
                     .HasConstraintName("My_BlogId_Constraint");
-            }
             #endregion
         }
     }
 
-    public class AlternateKeyConfigurationByLambda
+    public static class AlternateKeyConfigurationByLambda
     {
         public static void BuildModels()
         {
@@ -387,7 +369,7 @@ public class ForeignAndPrincipalKeys
         {
             public int Id { get; set; }
             public int AlternateId { get; set; }
-            public List<Post> Posts { get; } = new();
+            public List<Post> Posts { get; } = [];
         }
 
         public class Post
@@ -401,34 +383,30 @@ public class ForeignAndPrincipalKeys
         {
             public DbSet<Blog> Blogs => Set<Blog>();
 
-            protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-                => optionsBuilder.UseSqlite($"DataSource = AlternateKeyConfigurationByLambda{GetType().Name}.db");
+            protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) =>
+                optionsBuilder.UseSqlite($"DataSource = AlternateKeyConfigurationByLambda{GetType().Name}.db");
 
             #region AlternateKeyConfigurationByLambda
-            protected override void OnModelCreating(ModelBuilder modelBuilder)
-            {
+            protected override void OnModelCreating(ModelBuilder modelBuilder) =>
                 modelBuilder.Entity<Blog>()
                     .HasMany(e => e.Posts)
                     .WithOne(e => e.Blog)
                     .HasPrincipalKey(e => e.AlternateId);
-            }
             #endregion
         }
 
         public class BlogContext1 : BlogContext0
         {
-            protected override void OnModelCreating(ModelBuilder modelBuilder)
-            {
+            protected override void OnModelCreating(ModelBuilder modelBuilder) =>
                 modelBuilder.Entity<Blog>()
                     .HasMany(e => e.Posts)
                     .WithOne(e => e.Blog)
                     .HasForeignKey(e => e.BlogId)
                     .HasPrincipalKey(e => e.AlternateId);
-            }
         }
     }
 
-    public class AlternateKeyConfigurationByString
+    public static class AlternateKeyConfigurationByString
     {
         public static void BuildModels()
         {
@@ -446,8 +424,8 @@ public class ForeignAndPrincipalKeys
         public class Blog
         {
             public int Id { get; set; }
-            private int AlternateId { get; set; }
-            public List<Post> Posts { get; } = new();
+            int AlternateId { get; }
+            public List<Post> Posts { get; } = [];
         }
 
         public class Post
@@ -461,34 +439,30 @@ public class ForeignAndPrincipalKeys
         {
             public DbSet<Blog> Blogs => Set<Blog>();
 
-            protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-                => optionsBuilder.UseSqlite($"DataSource = AlternateKeyConfigurationByString{GetType().Name}.db");
+            protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) =>
+                optionsBuilder.UseSqlite($"DataSource = AlternateKeyConfigurationByString{GetType().Name}.db");
 
             #region AlternateKeyConfigurationByString
-            protected override void OnModelCreating(ModelBuilder modelBuilder)
-            {
+            protected override void OnModelCreating(ModelBuilder modelBuilder) =>
                 modelBuilder.Entity<Blog>()
                     .HasMany(e => e.Posts)
                     .WithOne(e => e.Blog)
                     .HasPrincipalKey("AlternateId");
-            }
             #endregion
         }
 
         public class BlogContext1 : BlogContext0
         {
-            protected override void OnModelCreating(ModelBuilder modelBuilder)
-            {
+            protected override void OnModelCreating(ModelBuilder modelBuilder) =>
                 modelBuilder.Entity<Blog>()
                     .HasMany(e => e.Posts)
                     .WithOne(e => e.Blog)
                     .HasForeignKey("BlogAlternateId")
                     .HasPrincipalKey("AlternateId");
-            }
         }
     }
 
-    public class CompositeAlternateKeyConfigurationByLambda
+    public static class CompositeAlternateKeyConfigurationByLambda
     {
         public static void BuildModels()
         {
@@ -508,7 +482,7 @@ public class ForeignAndPrincipalKeys
             public int Id { get; set; }
             public int AlternateId1 { get; set; }
             public int AlternateId2 { get; set; }
-            public List<Post> Posts { get; } = new();
+            public List<Post> Posts { get; } = [];
         }
 
         public class Post
@@ -523,34 +497,30 @@ public class ForeignAndPrincipalKeys
         {
             public DbSet<Blog> Blogs => Set<Blog>();
 
-            protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-                => optionsBuilder.UseSqlite($"DataSource = CompositeAlternateKeyConfigurationByLambda{GetType().Name}.db");
+            protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) =>
+                optionsBuilder.UseSqlite($"DataSource = CompositeAlternateKeyConfigurationByLambda{GetType().Name}.db");
 
             #region CompositeAlternateKeyConfigurationByLambda
-            protected override void OnModelCreating(ModelBuilder modelBuilder)
-            {
+            protected override void OnModelCreating(ModelBuilder modelBuilder) =>
                 modelBuilder.Entity<Blog>()
                     .HasMany(e => e.Posts)
                     .WithOne(e => e.Blog)
                     .HasPrincipalKey(e => new { e.AlternateId1, e.AlternateId2 });
-            }
             #endregion
         }
 
         public class BlogContext1 : BlogContext0
         {
-            protected override void OnModelCreating(ModelBuilder modelBuilder)
-            {
+            protected override void OnModelCreating(ModelBuilder modelBuilder) =>
                 modelBuilder.Entity<Blog>()
                     .HasMany(e => e.Posts)
                     .WithOne(e => e.Blog)
                     .HasForeignKey(e => new { e.BlogAlternateId1, e.BlogAlternateId2 })
                     .HasPrincipalKey(e => new { e.AlternateId1, e.AlternateId2 });
-            }
         }
     }
 
-    public class CompositeAlternateKeyConfigurationByString
+    public static class CompositeAlternateKeyConfigurationByString
     {
         public static void BuildModels()
         {
@@ -570,7 +540,7 @@ public class ForeignAndPrincipalKeys
             public int Id { get; set; }
             public int AlternateId1 { get; set; }
             public int AlternateId2 { get; set; }
-            public List<Post> Posts { get; } = new();
+            public List<Post> Posts { get; } = [];
         }
 
         public class Post
@@ -583,34 +553,30 @@ public class ForeignAndPrincipalKeys
         {
             public DbSet<Blog> Blogs => Set<Blog>();
 
-            protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-                => optionsBuilder.UseSqlite($"DataSource = CompositeAlternateKeyConfigurationByString{GetType().Name}.db");
+            protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) =>
+                optionsBuilder.UseSqlite($"DataSource = CompositeAlternateKeyConfigurationByString{GetType().Name}.db");
 
             #region CompositeAlternateKeyConfigurationByString
-            protected override void OnModelCreating(ModelBuilder modelBuilder)
-            {
+            protected override void OnModelCreating(ModelBuilder modelBuilder) =>
                 modelBuilder.Entity<Blog>()
                     .HasMany(e => e.Posts)
                     .WithOne(e => e.Blog)
                     .HasPrincipalKey("AlternateId1", "AlternateId2");
-            }
             #endregion
         }
 
         public class BlogContext1 : BlogContext0
         {
-            protected override void OnModelCreating(ModelBuilder modelBuilder)
-            {
+            protected override void OnModelCreating(ModelBuilder modelBuilder) =>
                 modelBuilder.Entity<Blog>()
                     .HasMany(e => e.Posts)
                     .WithOne(e => e.Blog)
                     .HasForeignKey("BlogAlternateId1", "BlogAlternateId2")
                     .HasPrincipalKey("AlternateId1", "AlternateId2");
-            }
         }
     }
 
-    public class ForeignKeyInKeylessType
+    public static class ForeignKeyInKeylessType
     {
         public static void BuildModels()
         {
@@ -638,8 +604,8 @@ public class ForeignAndPrincipalKeys
         {
             public DbSet<Post> Blogs => Set<Post>();
 
-            protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-                => optionsBuilder.UseSqlite($"DataSource = ForeignKeyInKeylessType{GetType().Name}.db");
+            protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) =>
+                optionsBuilder.UseSqlite($"DataSource = ForeignKeyInKeylessType{GetType().Name}.db");
 
             #region ForeignKeyInKeylessTypeConfig
             protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -655,7 +621,7 @@ public class ForeignAndPrincipalKeys
         }
     }
 
-    public class ManyToManyForeignKeyConstraintNames
+    public static class ManyToManyForeignKeyConstraintNames
     {
         public static void BuildModels()
         {
@@ -677,13 +643,13 @@ public class ForeignAndPrincipalKeys
         public class Post
         {
             public int Id { get; set; }
-            public List<Tag> Tags { get; } = new();
+            public List<Tag> Tags { get; } = [];
         }
 
         public class Tag
         {
             public int Id { get; set; }
-            public List<Post> Posts { get; } = new();
+            public List<Post> Posts { get; } = [];
         }
         #endregion
 
@@ -692,26 +658,23 @@ public class ForeignAndPrincipalKeys
             public DbSet<Post> Posts => Set<Post>();
             public DbSet<Tag> Tags => Set<Tag>();
 
-            protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-                => optionsBuilder.UseSqlite($"DataSource = ManyToManyForeignKeyConstraintNames{GetType().Name}.db");
+            protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) =>
+                optionsBuilder.UseSqlite($"DataSource = ManyToManyForeignKeyConstraintNames{GetType().Name}.db");
 
             #region ManyToManyForeignKeyConstraintNamesConfig
-            protected override void OnModelCreating(ModelBuilder modelBuilder)
-            {
+            protected override void OnModelCreating(ModelBuilder modelBuilder) =>
                 modelBuilder.Entity<Post>()
                     .HasMany(e => e.Tags)
                     .WithMany(e => e.Posts)
                     .UsingEntity(
                         l => l.HasOne(typeof(Tag)).WithMany().HasConstraintName("TagForeignKey_Constraint"),
                         r => r.HasOne(typeof(Post)).WithMany().HasConstraintName("PostForeignKey_Constraint"));
-            }
             #endregion
         }
 
         public class BlogContext1 : BlogContext0
         {
-            protected override void OnModelCreating(ModelBuilder modelBuilder)
-            {
+            protected override void OnModelCreating(ModelBuilder modelBuilder) =>
                 modelBuilder.Entity<Post>()
                     .HasMany(e => e.Tags)
                     .WithMany(e => e.Posts)
@@ -720,11 +683,10 @@ public class ForeignAndPrincipalKeys
                         l => l.HasOne(typeof(Tag)).WithMany().HasForeignKey("TagsId").HasPrincipalKey(nameof(Tag.Id)).HasConstraintName("TagForeignKey_Constraint"),
                         r => r.HasOne(typeof(Post)).WithMany().HasForeignKey("PostsId").HasPrincipalKey(nameof(Post.Id)).HasConstraintName("PostForeignKey_Constraint"),
                         j => j.HasKey("PostsId", "TagsId"));
-            }
         }
     }
 
-    public class NavigationConfiguration
+    public static class NavigationConfiguration
     {
         public static void BuildModels()
         {
@@ -737,7 +699,7 @@ public class ForeignAndPrincipalKeys
         public class Blog
         {
             public int Id { get; set; }
-            public List<Post> Posts { get; } = new();
+            public List<Post> Posts { get; } = [];
         }
 
         public class Post
@@ -751,8 +713,8 @@ public class ForeignAndPrincipalKeys
         {
             public DbSet<Blog> Blogs => Set<Blog>();
 
-            protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-                => optionsBuilder.UseSqlite($"DataSource = NavigationConfiguration{GetType().Name}.db");
+            protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) =>
+                optionsBuilder.UseSqlite($"DataSource = NavigationConfiguration{GetType().Name}.db");
 
             #region NavigationConfiguration
             protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -773,8 +735,8 @@ public class ForeignAndPrincipalKeys
             public DbSet<Blog> Blogs => Set<Blog>();
 
             #region ThrowForShadow
-            protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-                => optionsBuilder.ConfigureWarnings(b => b.Throw(CoreEventId.ShadowPropertyCreated));
+            protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) =>
+                optionsBuilder.ConfigureWarnings(b => b.Throw(CoreEventId.ShadowPropertyCreated));
             #endregion
         }
     }

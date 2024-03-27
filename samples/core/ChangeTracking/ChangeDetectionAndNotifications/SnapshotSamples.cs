@@ -18,7 +18,7 @@ public class SnapshotSamples
 
         #region Snapshot_change_tracking_1
         using var context = new BlogsContext();
-        var blog = context.Blogs.Include(e => e.Posts).First(e => e.Name == ".NET Blog");
+        Blog blog = context.Blogs.Include(e => e.Posts).First(e => e.Name == ".NET Blog");
 
         // Change a property value
         blog.Name = ".NET Blog (Updated!)";
@@ -27,7 +27,8 @@ public class SnapshotSamples
         blog.Posts.Add(
             new Post
             {
-                Title = "What’s next for System.Text.Json?", Content = ".NET 5.0 was released recently and has come with many..."
+                Title = "What’s next for System.Text.Json?",
+                Content = ".NET 5.0 was released recently and has come with many..."
             });
 
         Console.WriteLine(context.ChangeTracker.DebugView.LongView);
@@ -48,7 +49,7 @@ public class SnapshotSamples
 
         #region Snapshot_change_tracking_2
         using var context = new BlogsContext();
-        var blog = context.Blogs.Include(e => e.Posts).First(e => e.Name == ".NET Blog");
+        Blog blog = context.Blogs.Include(e => e.Posts).First(e => e.Name == ".NET Blog");
 
         // Change a property value
         context.Entry(blog).Property(e => e.Name).CurrentValue = ".NET Blog (Updated!)";
@@ -153,12 +154,9 @@ public class PostTag
 
 public class BlogsContext : DbContext
 {
-    private readonly bool _quiet;
+    readonly bool _quiet;
 
-    public BlogsContext(bool quiet = false)
-    {
-        _quiet = quiet;
-    }
+    public BlogsContext(bool quiet = false) => _quiet = quiet;
 
     public DbSet<Blog> Blogs { get; set; }
     public DbSet<Post> Posts { get; set; }
@@ -175,15 +173,13 @@ public class BlogsContext : DbContext
         }
     }
 
-    protected override void OnModelCreating(ModelBuilder modelBuilder)
-    {
+    protected override void OnModelCreating(ModelBuilder modelBuilder) =>
         modelBuilder.Entity<PostTag>().HasKey(e => new { e.PostId, e.TagId });
-    }
 
     #region SaveChanges
     public override int SaveChanges()
     {
-        foreach (var entityEntry in ChangeTracker.Entries<PostTag>()) // Detects changes automatically
+        foreach (Microsoft.EntityFrameworkCore.ChangeTracking.EntityEntry<PostTag> entityEntry in ChangeTracker.Entries<PostTag>()) // Detects changes automatically
         {
             if (entityEntry.State == EntityState.Added)
             {

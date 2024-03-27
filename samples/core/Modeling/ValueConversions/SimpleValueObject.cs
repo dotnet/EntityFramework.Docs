@@ -10,7 +10,7 @@ namespace EFModeling.ValueConversions;
 
 public class SimpleValueObject : Program
 {
-    public void Run()
+    public static void Run()
     {
         ConsoleWriteLines("Sample showing value conversions for a simple value object...");
 
@@ -28,7 +28,7 @@ public class SimpleValueObject : Program
         {
             ConsoleWriteLines("Read the entity back...");
 
-            var entity = context.Set<Order>().Single();
+            Order entity = context.Set<Order>().Single();
         }
 
         ConsoleWriteLines("Sample finished.");
@@ -36,19 +36,17 @@ public class SimpleValueObject : Program
 
     public class SampleDbContext : DbContext
     {
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            #region ConfigureImmutableStructProperty
+        protected override void OnModelCreating(ModelBuilder modelBuilder) =>
+        #region ConfigureImmutableStructProperty
             modelBuilder.Entity<Order>()
                 .Property(e => e.Price)
                 .HasConversion(
                     v => v.Amount,
                     v => new Dollars(v));
-            #endregion
-        }
+        #endregion
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-            => optionsBuilder
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) =>
+            optionsBuilder
                 .LogTo(Console.WriteLine, new[] { RelationalEventId.CommandExecuted })
                 .UseSqlite("DataSource=test.db")
                 .EnableSensitiveDataLogging();
@@ -66,12 +64,12 @@ public class SimpleValueObject : Program
     #region SimpleValueObject
     public readonly struct Dollars
     {
-        public Dollars(decimal amount) 
+        public Dollars(decimal amount)
             => Amount = amount;
-            
+
         public decimal Amount { get; }
 
-        public override string ToString() 
+        public override string ToString()
             => $"${Amount}";
     }
     #endregion

@@ -1,11 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
 
 namespace EFSaving.Disconnected;
 
-public class Sample
+public static class Sample
 {
     public static void Run()
     {
@@ -26,7 +25,7 @@ public class Sample
         InsertUpdateOrDeleteTrackGraph();
     }
 
-    private static void IsItNew()
+    static void IsItNew()
     {
         Console.WriteLine();
         Console.WriteLine("Show entity-specific check for key set:");
@@ -90,7 +89,7 @@ public class Sample
         }
     }
 
-    private static void InsertAndUpdateSingleEntity()
+    static void InsertAndUpdateSingleEntity()
     {
         Console.WriteLine();
         Console.WriteLine("Save single entity with explicit insert or update:");
@@ -116,11 +115,11 @@ public class Sample
 
         using (var context = new BloggingContext())
         {
-            Console.WriteLine($"  Found with URL {(context.Blogs.Single(b => b.BlogId == blog.BlogId)).Url}");
+            Console.WriteLine($"  Found with URL {context.Blogs.Single(b => b.BlogId == blog.BlogId).Url}");
         }
     }
 
-    private static void InsertOrUpdateSingleEntityStoreGenerated()
+    static void InsertOrUpdateSingleEntityStoreGenerated()
     {
         Console.WriteLine();
         Console.WriteLine("Save single entity with auto-generated key:");
@@ -146,11 +145,11 @@ public class Sample
 
         using (var context = new BloggingContext())
         {
-            Console.WriteLine($"  Found with URL {(context.Blogs.Single(b => b.BlogId == blog.BlogId)).Url}");
+            Console.WriteLine($"  Found with URL {context.Blogs.Single(b => b.BlogId == blog.BlogId).Url}");
         }
     }
 
-    private static void InsertOrUpdateSingleEntityFind()
+    static void InsertOrUpdateSingleEntityFind()
     {
         Console.WriteLine();
         Console.WriteLine("Save single entity with any kind of key:");
@@ -180,11 +179,11 @@ public class Sample
         }
     }
 
-    private static void InsertAndUpdateGraph()
+    static void InsertAndUpdateGraph()
     {
         Console.WriteLine();
         Console.WriteLine("Save graph with explicit insert or update:");
-        var blog = CreateBlogAndPosts();
+        Blog blog = CreateBlogAndPosts();
 
         using (var context = new BloggingContext())
         {
@@ -194,7 +193,7 @@ public class Sample
 
         using (var context = new BloggingContext())
         {
-            var read = context.Blogs.Include(b => b.Posts).Single(b => b.BlogId == blog.BlogId);
+            Blog read = context.Blogs.Include(b => b.Posts).Single(b => b.BlogId == blog.BlogId);
             Console.WriteLine($"  Found with URL {read.Url} and {read.Posts[0].Title}, {read.Posts[1].Title}");
         }
 
@@ -210,16 +209,16 @@ public class Sample
 
         using (var context = new BloggingContext())
         {
-            var read = context.Blogs.Include(b => b.Posts).Single(b => b.BlogId == blog.BlogId);
+            Blog read = context.Blogs.Include(b => b.Posts).Single(b => b.BlogId == blog.BlogId);
             Console.WriteLine($"  Found with URL {read.Url} and {read.Posts[0].Title}, {read.Posts[1].Title}");
         }
     }
 
-    private static void InsertOrUpdateGraphStoreGenerated()
+    static void InsertOrUpdateGraphStoreGenerated()
     {
         Console.WriteLine();
         Console.WriteLine("Save graph with auto-generated key:");
-        var blog = CreateBlogAndPosts();
+        Blog blog = CreateBlogAndPosts();
 
         using (var context = new BloggingContext())
         {
@@ -229,7 +228,7 @@ public class Sample
 
         using (var context = new BloggingContext())
         {
-            var read = context.Blogs.Include(b => b.Posts).Single(b => b.BlogId == blog.BlogId);
+            Blog read = context.Blogs.Include(b => b.Posts).Single(b => b.BlogId == blog.BlogId);
             Console.WriteLine($"  Found with URL {read.Url} and {read.Posts[0].Title}, {read.Posts[1].Title}");
         }
 
@@ -246,16 +245,16 @@ public class Sample
 
         using (var context = new BloggingContext())
         {
-            var read = context.Blogs.Include(b => b.Posts).Single(b => b.BlogId == blog.BlogId);
+            Blog read = context.Blogs.Include(b => b.Posts).Single(b => b.BlogId == blog.BlogId);
             Console.WriteLine($"  Found with URL {read.Url} and {read.Posts[0].Title}, {read.Posts[1].Title}, {read.Posts[2].Title}");
         }
     }
 
-    private static void InsertOrUpdateGraphFind()
+    static void InsertOrUpdateGraphFind()
     {
         Console.WriteLine();
         Console.WriteLine("Save graph with any kind of key:");
-        var blog = CreateBlogAndPosts();
+        Blog blog = CreateBlogAndPosts();
 
         using (var context = new BloggingContext())
         {
@@ -265,7 +264,7 @@ public class Sample
 
         using (var context = new BloggingContext())
         {
-            var read = context.Blogs.Include(b => b.Posts).Single(b => b.BlogId == blog.BlogId);
+            Blog read = context.Blogs.Include(b => b.Posts).Single(b => b.BlogId == blog.BlogId);
             Console.WriteLine($"  Found with URL {read.Url} and {read.Posts[0].Title}, {read.Posts[1].Title}");
         }
 
@@ -282,16 +281,16 @@ public class Sample
 
         using (var context = new BloggingContext())
         {
-            var read = context.Blogs.Include(b => b.Posts).Single(b => b.BlogId == blog.BlogId);
+            Blog read = context.Blogs.Include(b => b.Posts).Single(b => b.BlogId == blog.BlogId);
             Console.WriteLine($"  Found with URL {read.Url} and {read.Posts[0].Title}, {read.Posts[1].Title}, {read.Posts[2].Title}");
         }
     }
 
-    private static void InsertUpdateOrDeleteGraphFind()
+    static void InsertUpdateOrDeleteGraphFind()
     {
         Console.WriteLine();
         Console.WriteLine("Save graph with deletes and any kind of key:");
-        var blog = CreateBlogAndPosts();
+        Blog blog = CreateBlogAndPosts();
 
         using (var context = new BloggingContext())
         {
@@ -301,7 +300,7 @@ public class Sample
 
         using (var context = new BloggingContext())
         {
-            var read = context.Blogs.Include(b => b.Posts).Single(b => b.BlogId == blog.BlogId);
+            Blog read = context.Blogs.Include(b => b.Posts).Single(b => b.BlogId == blog.BlogId);
             Console.WriteLine($"  Found with URL {read.Url} and {read.Posts[0].Title}, {read.Posts[1].Title}");
         }
 
@@ -318,16 +317,16 @@ public class Sample
 
         using (var context = new BloggingContext())
         {
-            var read = context.Blogs.Include(b => b.Posts).Single(b => b.BlogId == blog.BlogId);
+            Blog read = context.Blogs.Include(b => b.Posts).Single(b => b.BlogId == blog.BlogId);
             Console.WriteLine($"  Found with URL {read.Url} and {read.Posts[0].Title}, {read.Posts[1].Title}");
         }
     }
 
-    private static void InsertUpdateOrDeleteTrackGraph()
+    static void InsertUpdateOrDeleteTrackGraph()
     {
         Console.WriteLine();
         Console.WriteLine("Save graph using TrackGraph:");
-        var blog = CreateBlogAndPosts();
+        Blog blog = CreateBlogAndPosts();
         blog.IsNew = true;
         blog.Posts[0].IsNew = true;
         blog.Posts[1].IsNew = true;
@@ -340,7 +339,7 @@ public class Sample
 
         using (var context = new BloggingContext())
         {
-            var read = context.Blogs.Include(b => b.Posts).Single(b => b.BlogId == blog.BlogId);
+            Blog read = context.Blogs.Include(b => b.Posts).Single(b => b.BlogId == blog.BlogId);
             Console.WriteLine($"  Found with URL {read.Url} and {read.Posts[0].Title}, {read.Posts[1].Title}");
         }
 
@@ -363,7 +362,7 @@ public class Sample
 
         using (var context = new BloggingContext())
         {
-            var read = context.Blogs.Include(b => b.Posts).Single(b => b.BlogId == blog.BlogId);
+            Blog read = context.Blogs.Include(b => b.Posts).Single(b => b.BlogId == blog.BlogId);
             Console.WriteLine($"  Found with URL {read.Url} and {read.Posts[0].Title}, {read.Posts[1].Title}");
         }
     }
@@ -408,7 +407,7 @@ public class Sample
     #region InsertOrUpdateSingleEntityWithFind
     public static void InsertOrUpdate(BloggingContext context, Blog blog)
     {
-        var existingBlog = context.Blogs.Find(blog.BlogId);
+        Blog existingBlog = context.Blogs.Find(blog.BlogId);
         if (existingBlog == null)
         {
             context.Add(blog);
@@ -422,12 +421,13 @@ public class Sample
     }
     #endregion
 
-    private static Blog CreateBlogAndPosts()
+    static Blog CreateBlogAndPosts()
     {
         #region CreateBlogAndPosts
         var blog = new Blog
         {
-            Url = "http://sample.com", Posts = new List<Post> { new Post { Title = "Post 1" }, new Post { Title = "Post 2" }, }
+            Url = "http://sample.com",
+            Posts = [new() { Title = "Post 1" }, new() { Title = "Post 2" },]
         };
         #endregion
 
@@ -461,7 +461,7 @@ public class Sample
     #region InsertOrUpdateGraphWithFind
     public static void InsertOrUpdateGraph(BloggingContext context, Blog blog)
     {
-        var existingBlog = context.Blogs
+        Blog existingBlog = context.Blogs
             .Include(b => b.Posts)
             .FirstOrDefault(b => b.BlogId == blog.BlogId);
 
@@ -472,10 +472,10 @@ public class Sample
         else
         {
             context.Entry(existingBlog).CurrentValues.SetValues(blog);
-            foreach (var post in blog.Posts)
+            foreach (Post post in blog.Posts)
             {
-                var existingPost = existingBlog.Posts
-                    .FirstOrDefault(p => p.PostId == post.PostId);
+                Post existingPost = existingBlog.Posts
+                    .Find(p => p.PostId == post.PostId);
 
                 if (existingPost == null)
                 {
@@ -495,7 +495,7 @@ public class Sample
     #region InsertUpdateOrDeleteGraphWithFind
     public static void InsertUpdateOrDeleteGraph(BloggingContext context, Blog blog)
     {
-        var existingBlog = context.Blogs
+        Blog existingBlog = context.Blogs
             .Include(b => b.Posts)
             .FirstOrDefault(b => b.BlogId == blog.BlogId);
 
@@ -506,10 +506,10 @@ public class Sample
         else
         {
             context.Entry(existingBlog).CurrentValues.SetValues(blog);
-            foreach (var post in blog.Posts)
+            foreach (Post post in blog.Posts)
             {
-                var existingPost = existingBlog.Posts
-                    .FirstOrDefault(p => p.PostId == post.PostId);
+                Post existingPost = existingBlog.Posts
+                    .Find(p => p.PostId == post.PostId);
 
                 if (existingPost == null)
                 {
@@ -521,7 +521,7 @@ public class Sample
                 }
             }
 
-            foreach (var post in existingBlog.Posts)
+            foreach (Post post in existingBlog.Posts)
             {
                 if (!blog.Posts.Any(p => p.PostId == post.PostId))
                 {

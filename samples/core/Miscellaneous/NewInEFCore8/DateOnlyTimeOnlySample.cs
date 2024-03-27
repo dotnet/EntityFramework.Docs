@@ -20,7 +20,7 @@ public static class DateOnlyTimeOnlySample
         return DateOnlyTimeOnlyTest<BritishSchoolsContextSqlite>();
     }
 
-    private static async Task DateOnlyTimeOnlyTest<TContext>()
+    static async Task DateOnlyTimeOnlyTest<TContext>()
         where TContext : BritishSchoolsContextBase, new()
     {
         await using var context = new TContext();
@@ -31,18 +31,18 @@ public static class DateOnlyTimeOnlySample
         context.LoggingEnabled = true;
         context.ChangeTracker.Clear();
 
-        var now = TimeZoneInfo.ConvertTimeBySystemTimeZoneId(DateTime.UtcNow, "UTC", "GMT");
+        DateTime now = TimeZoneInfo.ConvertTimeBySystemTimeZoneId(DateTime.UtcNow, "UTC", "GMT");
 
         var today = DateOnly.FromDateTime(now);
-        var currentTerms = await context.Schools
+        List<School> currentTerms = await context.Schools
             .Include(s => s.Terms.Where(t => t.FirstDay <= today && t.LastDay >= today))
             .ToListAsync();
 
         Console.WriteLine();
         Console.WriteLine("Current terms:");
-        foreach (var school in currentTerms)
+        foreach (School? school in currentTerms)
         {
-            var term = school.Terms.SingleOrDefault();
+            Term? term = school.Terms.SingleOrDefault();
             if (term == null)
             {
                 Console.WriteLine($"  {school.Name} is not current in term.");
@@ -56,7 +56,7 @@ public static class DateOnlyTimeOnlySample
         Console.WriteLine();
 
         var time = TimeOnly.FromDateTime(now);
-        var dayOfWeek = today.DayOfWeek;
+        DayOfWeek dayOfWeek = today.DayOfWeek;
         List<School> openSchools;
 
         if (context.UsesJson)
@@ -89,7 +89,7 @@ public static class DateOnlyTimeOnlySample
 
         Console.WriteLine();
         Console.WriteLine("Open schools:");
-        foreach (var school in openSchools)
+        foreach (School school in openSchools)
         {
             Console.WriteLine($"  {school.Name} is open and closes at {school.OpeningHours.Single(e => e.DayOfWeek == dayOfWeek).ClosesAt}.");
         }
@@ -98,11 +98,11 @@ public static class DateOnlyTimeOnlySample
 
         context.ChangeTracker.Clear();
 
-        foreach (var school in await context.Schools.Include(e => e.Terms).ToListAsync())
+        foreach (School? school in await context.Schools.Include(e => e.Terms).ToListAsync())
         {
-            var winter = school.Terms.Single(e => e.LastDay.Year == 2022);
+            Term winter = school.Terms.Single(e => e.LastDay.Year == 2022);
             winter.LastDay = winter.LastDay.AddDays(1);
-            var friday = school.OpeningHours.Single(e => e.DayOfWeek == DayOfWeek.Friday);
+            OpeningHours friday = school.OpeningHours.Single(e => e.DayOfWeek == DayOfWeek.Friday);
             friday.OpensAt = friday.OpensAt?.AddHours(-1);
         }
 
@@ -132,7 +132,7 @@ public static class DateOnlyTimeOnlySample
         Console.WriteLine();
     }
 
-    private static void PrintSampleName([CallerMemberName] string? methodName = null)
+    static void PrintSampleName([CallerMemberName] string? methodName = null)
     {
         Console.WriteLine($">>>> Sample: {methodName}");
         Console.WriteLine();
@@ -141,10 +141,7 @@ public static class DateOnlyTimeOnlySample
 
 public abstract class BritishSchoolsContextBase : DbContext
 {
-    protected BritishSchoolsContextBase(bool useSqlite = false)
-    {
-        UseSqlite = useSqlite;
-    }
+    protected BritishSchoolsContextBase(bool useSqlite = false) => UseSqlite = useSqlite;
 
     public bool UseSqlite { get; }
     public virtual bool UsesJson => false;
@@ -154,7 +151,7 @@ public abstract class BritishSchoolsContextBase : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         => (UseSqlite
-                ? optionsBuilder.UseSqlite(@$"DataSource={GetType().Name}.db")
+                ? optionsBuilder.UseSqlite($"DataSource={GetType().Name}.db")
                 : optionsBuilder.UseSqlServer(
                     @$"Server=(localdb)\mssqllocaldb;Database={GetType().Name}",
                     sqlServerOptionsBuilder => sqlServerOptionsBuilder.UseNetTopologySuite()))
@@ -226,13 +223,10 @@ public abstract class BritishSchoolsContextBase : DbContext
     }
 }
 
-public class BritishSchoolsContext : BritishSchoolsContextBase
-{
-}
+public class BritishSchoolsContext : BritishSchoolsContextBase;
 
 public class BritishSchoolsContextJson : BritishSchoolsContextBase
 {
-
     public override bool UsesJson => true;
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -269,8 +263,8 @@ public class School
     public int Id { get; set; }
     public string Name { get; set; } = null!;
     public DateOnly Founded { get; set; }
-    public List<Term> Terms { get; } = new();
-    public List<OpeningHours> OpeningHours { get; } = new();
+    public List<Term> Terms { get; } = [];
+    public List<OpeningHours> OpeningHours { get; } = [];
 }
 
 public class Term
@@ -292,7 +286,7 @@ public class OpeningHours
         ClosesAt = closesAt;
     }
 
-    public DayOfWeek DayOfWeek { get; private set; }
+    public DayOfWeek DayOfWeek { get; }
     public TimeOnly? OpensAt { get; set; }
     public TimeOnly? ClosesAt { get; set; }
 }

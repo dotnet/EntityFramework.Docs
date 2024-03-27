@@ -9,8 +9,8 @@ using Microsoft.EntityFrameworkCore;
 [MemoryDiagnoser]
 public class DynamicallyConstructedQueries
 {
-    private int _blogNumber;
-    private bool _addWhereClause = true;
+    int _blogNumber;
+    readonly bool _addWhereClause = true;
 
     [GlobalSetup]
     public static void GlobalSetup()
@@ -31,7 +31,7 @@ public class DynamicallyConstructedQueries
 
         if (_addWhereClause)
         {
-            var blogParam = Expression.Parameter(typeof(Blog), "b");
+            ParameterExpression blogParam = Expression.Parameter(typeof(Blog), "b");
             var whereLambda = Expression.Lambda<Func<Blog, bool>>(
                 Expression.Equal(
                     Expression.MakeMemberAccess(
@@ -58,14 +58,14 @@ public class DynamicallyConstructedQueries
 
         if (_addWhereClause)
         {
-            var blogParam = Expression.Parameter(typeof(Blog), "b");
+            ParameterExpression blogParam = Expression.Parameter(typeof(Blog), "b");
 
             // This creates a lambda expression whose body is identical to the url captured closure variable in the non-dynamic query:
             // blogs.Where(b => b.Url == url)
             // This dynamically creates an expression node which EF can properly recognize and parameterize in the database query.
             // We then extract that body and use it in our dynamically-constructed query.
             Expression<Func<string>> urlParameterLambda = () => url;
-            var urlParamExpression = urlParameterLambda.Body;
+            Expression urlParamExpression = urlParameterLambda.Body;
 
             var whereLambda = Expression.Lambda<Func<Blog, bool>>(
                 Expression.Equal(
@@ -108,8 +108,8 @@ public class DynamicallyConstructedQueries
         public DbSet<Blog> Blogs { get; set; }
         public DbSet<Post> Posts { get; set; }
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-            => optionsBuilder.UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=Blogging;Trusted_Connection=True");
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) =>
+            optionsBuilder.UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=Blogging;Trusted_Connection=True");
     }
 
     public class Blog

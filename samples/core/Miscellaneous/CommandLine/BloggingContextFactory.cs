@@ -1,7 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 
-namespace MyProject;
+namespace CommandLine;
 
 #region BloggingContextFactory
 public class BloggingContextFactory : IDesignTimeDbContextFactory<BloggingContext>

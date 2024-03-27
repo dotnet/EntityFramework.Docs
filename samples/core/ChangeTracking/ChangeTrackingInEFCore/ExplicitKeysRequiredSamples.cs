@@ -19,7 +19,7 @@ public static class ExplicitKeysRequiredSamples
 
         using var context = new BlogsContext();
 
-        var blog = GetDisconnectedBlogAndPosts();
+        Blog blog = GetDisconnectedBlogAndPosts();
 
         #region Deleting_principal_parent_entities_1
         // Attach a blog and associated posts
@@ -39,7 +39,7 @@ public static class ExplicitKeysRequiredSamples
 
         Console.WriteLine();
 
-        Blog GetDisconnectedBlogAndPosts()
+        static Blog GetDisconnectedBlogAndPosts()
         {
             using var tempContext = new BlogsContext();
             return tempContext.Blogs.Include(e => e.Posts).Single();
@@ -113,12 +113,9 @@ public class Post
 
 public class BlogsContext : DbContext
 {
-    private readonly bool _quiet;
+    readonly bool _quiet;
 
-    public BlogsContext(bool quiet = false)
-    {
-        _quiet = quiet;
-    }
+    public BlogsContext(bool quiet = false) => _quiet = quiet;
 
     public DbSet<Blog> Blogs { get; set; }
     public DbSet<Post> Posts { get; set; }

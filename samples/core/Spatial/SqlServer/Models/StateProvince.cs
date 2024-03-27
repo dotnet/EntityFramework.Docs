@@ -4,7 +4,7 @@ using NetTopologySuite.Geometries;
 namespace SqlServer.Models;
 
 [Table("StateProvinces", Schema = "Application")]
-internal class StateProvince
+class StateProvince
 {
     public int StateProvinceID { get; set; }
 

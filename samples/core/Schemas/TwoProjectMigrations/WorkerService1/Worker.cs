@@ -6,11 +6,11 @@ using Microsoft.Extensions.Hosting;
 
 namespace WorkerService1;
 
-internal class Worker : IHostedService, IDisposable
+class Worker : IHostedService, IDisposable
 {
-    private readonly IServiceProvider _services;
+    readonly IServiceProvider _services;
 
-    private Timer _timer;
+    Timer _timer;
 
     public Worker(IServiceProvider services)
         => _services = services;
@@ -26,12 +26,12 @@ internal class Worker : IHostedService, IDisposable
         return Task.CompletedTask;
     }
 
-    private void Execute()
+    void Execute()
     {
-        using var scope = _services.CreateScope();
-        var services = scope.ServiceProvider;
+        using IServiceScope scope = _services.CreateScope();
+        IServiceProvider services = scope.ServiceProvider;
 
-        var db = services.GetService<BlogContext>();
+        BlogContext db = services.GetService<BlogContext>();
 
         // TODO: Something interesting
     }

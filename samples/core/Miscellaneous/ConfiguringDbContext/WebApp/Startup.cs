@@ -9,10 +9,7 @@ namespace WebApp;
 
 public class Startup
 {
-    public Startup(IConfiguration configuration)
-    {
-        Configuration = configuration;
-    }
+    public Startup(IConfiguration configuration) => Configuration = configuration;
 
     public IConfiguration Configuration { get; }
 
@@ -41,6 +38,6 @@ public class Startup
 
         app.UseAuthorization();
 
-        app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
+        app.UseEndpoints(endpoints => endpoints.MapControllers());
     }
 }

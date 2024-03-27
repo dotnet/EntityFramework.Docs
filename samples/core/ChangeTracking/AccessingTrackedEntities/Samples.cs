@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
@@ -22,8 +20,8 @@ public static class Samples
         #region Using_DbContext_Entry_and_EntityEntry_instances_1
         using var context = new BlogsContext();
 
-        var blog = context.Blogs.Single(e => e.Id == 1);
-        var entityEntry = context.Entry(blog);
+        Blog blog = context.Blogs.Single(e => e.Id == 1);
+        EntityEntry<Blog> entityEntry = context.Entry(blog);
         #endregion
 
         Console.WriteLine();
@@ -39,10 +37,10 @@ public static class Samples
 
         using var context = new BlogsContext();
 
-        var blog = context.Blogs.Single(e => e.Id == 1);
+        Blog blog = context.Blogs.Single(e => e.Id == 1);
 
         #region Work_with_the_entity_1
-        var currentState = context.Entry(blog).State;
+        EntityState currentState = context.Entry(blog).State;
         if (currentState == EntityState.Unchanged)
         {
             context.Entry(blog).State = EntityState.Modified;
@@ -84,7 +82,7 @@ public static class Samples
         using var context = new BlogsContext();
 
         {
-            var blog = context.Blogs.Single(e => e.Id == 1);
+            Blog blog = context.Blogs.Single(e => e.Id == 1);
 
             #region Work_with_a_single_property_1a
             PropertyEntry<Blog, string> propertyEntry = context.Entry(blog).Property(e => e.Name);
@@ -92,7 +90,7 @@ public static class Samples
         }
 
         {
-            var blog = context.Blogs.Single(e => e.Id == 1);
+            Blog blog = context.Blogs.Single(e => e.Id == 1);
 
             #region Work_with_a_single_property_1b
             PropertyEntry<Blog, string> propertyEntry = context.Entry(blog).Property<string>("Name");
@@ -100,7 +98,7 @@ public static class Samples
         }
 
         {
-            var blog = context.Blogs.Single(e => e.Id == 1);
+            Blog blog = context.Blogs.Single(e => e.Id == 1);
 
             #region Work_with_a_single_property_1c
             PropertyEntry propertyEntry = context.Entry(blog).Property("Name");
@@ -108,10 +106,10 @@ public static class Samples
         }
 
         {
-            var blog = context.Blogs.Single(e => e.Id == 1);
+            Blog blog = context.Blogs.Single(e => e.Id == 1);
 
             #region Work_with_a_single_property_1d
-            string currentValue = context.Entry(blog).Property(e => e.Name).CurrentValue;
+            var currentValue = context.Entry(blog).Property(e => e.Name).CurrentValue;
             context.Entry(blog).Property(e => e.Name).CurrentValue = "1unicorn2";
             #endregion
         }
@@ -120,7 +118,7 @@ public static class Samples
             #region Work_with_a_single_property_1e
             object blog = context.Blogs.Single(e => e.Id == 1);
 
-            object currentValue = context.Entry(blog).Property("Name").CurrentValue;
+            var currentValue = context.Entry(blog).Property("Name").CurrentValue;
             context.Entry(blog).Property("Name").CurrentValue = "1unicorn2";
             #endregion
         }
@@ -138,7 +136,7 @@ public static class Samples
 
         using var context = new BlogsContext();
 
-        var post = context.Posts.Include(e => e.Blog).Single(e => e.Id == 1);
+        Post post = context.Posts.Include(e => e.Blog).Single(e => e.Id == 1);
 
         #region Work_with_a_single_navigation_1
         ReferenceEntry<Post, Blog> referenceEntry1 = context.Entry(post).Reference(e => e.Blog);
@@ -159,7 +157,7 @@ public static class Samples
 
         using var context = new BlogsContext();
 
-        var blog = context.Blogs.Include(e => e.Posts).Single(e => e.Id == 1);
+        Blog blog = context.Blogs.Include(e => e.Posts).Single(e => e.Id == 1);
 
         #region Work_with_a_single_navigation_2a
         CollectionEntry<Blog, Post> collectionEntry1 = context.Entry(blog).Collection(e => e.Posts);
@@ -184,10 +182,10 @@ public static class Samples
 
         using var context = new BlogsContext();
 
-        var blog = context.Blogs.Include(e => e.Posts).Single(e => e.Id == 1);
+        Blog blog = context.Blogs.Include(e => e.Posts).Single(e => e.Id == 1);
 
         #region Work_with_all_properties_of_an_entity_1
-        foreach (var propertyEntry in context.Entry(blog).Properties)
+        foreach (PropertyEntry propertyEntry in context.Entry(blog).Properties)
         {
             if (propertyEntry.Metadata.ClrType == typeof(DateTime))
             {
@@ -209,13 +207,13 @@ public static class Samples
 
         using var context = new BlogsContext();
 
-        var blog = context.Blogs.Include(e => e.Posts).Single(e => e.Id == 1);
+        Blog blog = context.Blogs.Include(e => e.Posts).Single(e => e.Id == 1);
 
         {
             #region Work_with_all_properties_of_an_entity_2a
-            var currentValues = context.Entry(blog).CurrentValues;
-            var originalValues = context.Entry(blog).OriginalValues;
-            var databaseValues = context.Entry(blog).GetDatabaseValues();
+            PropertyValues currentValues = context.Entry(blog).CurrentValues;
+            PropertyValues originalValues = context.Entry(blog).OriginalValues;
+            PropertyValues databaseValues = context.Entry(blog).GetDatabaseValues();
             #endregion
         }
 
@@ -229,7 +227,7 @@ public static class Samples
 
         {
             #region Work_with_all_properties_of_an_entity_2c
-            var databaseValues = context.Entry(blog).GetDatabaseValues();
+            PropertyValues databaseValues = context.Entry(blog).GetDatabaseValues();
             context.Entry(blog).CurrentValues.SetValues(databaseValues);
             context.Entry(blog).OriginalValues.SetValues(databaseValues);
             #endregion
@@ -262,10 +260,10 @@ public static class Samples
 
         using var context = new BlogsContext();
 
-        var blog = context.Blogs.Single(e => e.Id == 1);
+        Blog blog = context.Blogs.Single(e => e.Id == 1);
 
         #region Work_with_all_navigations_of_an_entity_1
-        foreach (var navigationEntry in context.Entry(blog).Navigations)
+        foreach (NavigationEntry navigationEntry in context.Entry(blog).Navigations)
         {
             navigationEntry.Load();
         }
@@ -284,10 +282,10 @@ public static class Samples
 
         using var context = new BlogsContext();
 
-        var blog = context.Blogs.Single(e => e.Id == 1);
+        Blog blog = context.Blogs.Single(e => e.Id == 1);
 
         #region Work_with_all_members_of_an_entity_1
-        foreach (var memberEntry in context.Entry(blog).Members)
+        foreach (MemberEntry memberEntry in context.Entry(blog).Members)
         {
             Console.WriteLine(
                 $"Member {memberEntry.Metadata.Name} is of type {memberEntry.Metadata.ClrType.ShortDisplayName()} and has value {memberEntry.CurrentValue}");
@@ -309,13 +307,13 @@ public static class Samples
         using var context = new BlogsContext();
 
         Console.WriteLine("First call to Find...");
-        var blog1 = context.Blogs.Find(1);
+        Blog blog1 = context.Blogs.Find(1);
 
         Console.WriteLine($"...found blog {blog1.Name}");
 
         Console.WriteLine();
         Console.WriteLine("Second call to Find...");
-        var blog2 = context.Blogs.Find(1);
+        Blog blog2 = context.Blogs.Find(1);
         Debug.Assert(blog1 == blog2);
 
         Console.WriteLine("...returned the same instance without executing a query.");
@@ -333,11 +331,11 @@ public static class Samples
         Helpers.PopulateDatabase();
 
         using var context = new BlogsContext();
-        var orderId = 1;
-        var productId = 2;
+        const int orderId = 1;
+        const int productId = 2;
 
         #region Find_and_FindAsync_2
-        var orderline = context.OrderLines.Find(orderId, productId);
+        OrderLine orderline = context.OrderLines.Find(orderId, productId);
         #endregion
 
         Console.WriteLine();
@@ -355,7 +353,7 @@ public static class Samples
         using var context = new BlogsContext();
         var blogs = context.Blogs.Include(e => e.Posts).ToList();
 
-        foreach (var entityEntry in context.ChangeTracker.Entries())
+        foreach (EntityEntry entityEntry in context.ChangeTracker.Entries())
         {
             Console.WriteLine($"Found {entityEntry.Metadata.Name} entity with ID {entityEntry.Property("Id").CurrentValue}");
         }
@@ -364,7 +362,7 @@ public static class Samples
         Console.WriteLine();
 
         #region Using_ChangeTracker_Entries_to_access_all_tracked_entities_1b
-        foreach (var entityEntry in context.ChangeTracker.Entries<Post>())
+        foreach (EntityEntry<Post> entityEntry in context.ChangeTracker.Entries<Post>())
         {
             Console.WriteLine(
                 $"Found {entityEntry.Metadata.Name} entity with ID {entityEntry.Property(e => e.Id).CurrentValue}");
@@ -374,7 +372,7 @@ public static class Samples
         Console.WriteLine();
 
         #region Using_ChangeTracker_Entries_to_access_all_tracked_entities_1c
-        foreach (var entityEntry in context.ChangeTracker.Entries<IEntityWithKey>())
+        foreach (EntityEntry<IEntityWithKey> entityEntry in context.ChangeTracker.Entries<IEntityWithKey>())
         {
             Console.WriteLine(
                 $"Found {entityEntry.Metadata.Name} entity with ID {entityEntry.Property(e => e.Id).CurrentValue}");
@@ -397,12 +395,12 @@ public static class Samples
 
         context.Blogs.Include(e => e.Posts).Load();
 
-        foreach (var blog in context.Blogs.Local)
+        foreach (Blog blog in context.Blogs.Local)
         {
             Console.WriteLine($"Blog: {blog.Name}");
         }
 
-        foreach (var post in context.Posts.Local)
+        foreach (Post post in context.Posts.Local)
         {
             Console.WriteLine($"Post: {post.Title}");
         }
@@ -426,7 +424,7 @@ public static class Samples
 
         Console.WriteLine("Local view after loading posts:");
 
-        foreach (var post in context.Posts.Local)
+        foreach (Post post in context.Posts.Local)
         {
             Console.WriteLine($"  Post: {post.Title}");
         }
@@ -443,7 +441,7 @@ public static class Samples
 
         Console.WriteLine("Local view after adding and deleting posts:");
 
-        foreach (var post in context.Posts.Local)
+        foreach (Post post in context.Posts.Local)
         {
             Console.WriteLine($"  Post: {post.Title}");
         }
@@ -467,7 +465,7 @@ public static class Samples
 
         Console.WriteLine("Local view after loading posts:");
 
-        foreach (var post in context.Posts.Local)
+        foreach (Post post in context.Posts.Local)
         {
             Console.WriteLine($"  Post: {post.Title}");
         }
@@ -484,7 +482,7 @@ public static class Samples
 
         Console.WriteLine("Local view after adding and deleting posts:");
 
-        foreach (var post in context.Posts.Local)
+        foreach (Post post in context.Posts.Local)
         {
             Console.WriteLine($"  Post: {post.Title}");
         }
@@ -506,8 +504,8 @@ public static class Samples
         context.Posts.Include(e => e.Blog).Load();
 
         #region Using_DbSet_Local_to_query_tracked_entities_4
-        ObservableCollection<Post> observableCollection = context.Posts.Local.ToObservableCollection();
-        BindingList<Post> bindingList = context.Posts.Local.ToBindingList();
+        var observableCollection = context.Posts.Local.ToObservableCollection();
+        var bindingList = context.Posts.Local.ToBindingList();
         #endregion
 
         Console.WriteLine();
@@ -596,12 +594,9 @@ public interface IEntityWithKey
 
 public class BlogsContext : DbContext
 {
-    private readonly bool _quiet;
+    readonly bool _quiet;
 
-    public BlogsContext(bool quiet = false)
-    {
-        _quiet = quiet;
-    }
+    public BlogsContext(bool quiet = false) => _quiet = quiet;
 
     public DbSet<Blog> Blogs { get; set; }
     public DbSet<Post> Posts { get; set; }
@@ -620,11 +615,9 @@ public class BlogsContext : DbContext
     }
 
     #region OnModelCreating
-    protected override void OnModelCreating(ModelBuilder modelBuilder)
-    {
+    protected override void OnModelCreating(ModelBuilder modelBuilder) =>
         modelBuilder
             .Entity<OrderLine>()
             .HasKey(e => new { e.OrderId, e.ProductId });
-    }
     #endregion
 }

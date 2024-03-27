@@ -7,7 +7,7 @@ namespace EFModeling.ValueConversions;
 
 public class MappingImmutableClassProperty : Program
 {
-    public void Run()
+    public static void Run()
     {
         ConsoleWriteLines("Sample showing value conversions for a simple immutable class...");
 
@@ -33,7 +33,7 @@ public class MappingImmutableClassProperty : Program
         {
             ConsoleWriteLines("Read the entity back...");
 
-            var entity = context.Set<MyEntityType>().Single();
+            MyEntityType entity = context.Set<MyEntityType>().Single();
 
             Debug.Assert(entity.MyProperty.Value == 77);
         }
@@ -43,24 +43,22 @@ public class MappingImmutableClassProperty : Program
 
     public class SampleDbContext : DbContext
     {
-        private static readonly ILoggerFactory
-            Logger = LoggerFactory.Create(x => x.AddConsole()); //.SetMinimumLevel(LogLevel.Debug));
+        static readonly ILoggerFactory
+            _logger = LoggerFactory.Create(x => x.AddConsole()); //.SetMinimumLevel(LogLevel.Debug));
 
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            #region ConfigureImmutableClassProperty
+        protected override void OnModelCreating(ModelBuilder modelBuilder) =>
+        #region ConfigureImmutableClassProperty
             modelBuilder
                 .Entity<MyEntityType>()
                 .Property(e => e.MyProperty)
                 .HasConversion(
                     v => v.Value,
                     v => new ImmutableClass(v));
-            #endregion
-        }
+        #endregion
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-            => optionsBuilder
-                .UseLoggerFactory(Logger)
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) =>
+            optionsBuilder
+                .UseLoggerFactory(_logger)
                 .UseSqlite("DataSource=test.db")
                 .EnableSensitiveDataLogging();
     }
@@ -74,18 +72,15 @@ public class MappingImmutableClassProperty : Program
     #region SimpleImmutableClass
     public sealed class ImmutableClass
     {
-        public ImmutableClass(int value)
-        {
-            Value = value;
-        }
+        public ImmutableClass(int value) => Value = value;
 
         public int Value { get; }
 
-        private bool Equals(ImmutableClass other)
+        bool Equals(ImmutableClass other)
             => Value == other.Value;
 
         public override bool Equals(object obj)
-            => ReferenceEquals(this, obj) || obj is ImmutableClass other && Equals(other);
+            => ReferenceEquals(this, obj) || (obj is ImmutableClass other && Equals(other));
 
         public override int GetHashCode()
             => Value.GetHashCode();

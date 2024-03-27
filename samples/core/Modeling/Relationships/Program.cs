@@ -2,7 +2,7 @@ namespace EFModeling.Relationships;
 
 public class Program
 {
-    private static void Main()
+    static void Main()
     {
         OneToMany.Required.BuildModels();
         OneToMany.Optional.BuildModels();

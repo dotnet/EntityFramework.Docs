@@ -1,0 +1,12 @@
+{
+  "profiles": {
+    "BloggingWebApi": {
+      "commandName": "Project",
+      "launchBrowser": true,
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "applicationUrl": "https://localhost:57982;http://localhost:57983"
+    }
+  }
+}

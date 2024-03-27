@@ -28,7 +28,7 @@ public class TaggedQueryCommandInterceptor : DbCommandInterceptor
         return new ValueTask<InterceptionResult<DbDataReader>>(result);
     }
 
-    private static void ManipulateCommand(DbCommand command)
+    static void ManipulateCommand(DbCommand command)
     {
         if (command.CommandText.StartsWith("-- Use hint: robust plan", StringComparison.Ordinal))
         {

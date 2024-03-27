@@ -1,15 +1,16 @@
 ﻿using System.Collections.Generic;
+using NetTopologySuite.Geometries;
 using ProjNet;
 using ProjNet.CoordinateSystems;
 using ProjNet.CoordinateSystems.Transformations;
 
-namespace NetTopologySuite.Geometries;
+namespace Projections;
 
 #region snippet_GeometryExtensions
 public static class GeometryExtensions
 {
-    private static readonly CoordinateSystemServices _coordinateSystemServices
-        = new CoordinateSystemServices(
+    static readonly CoordinateSystemServices _coordinateSystemServices
+        = new(
             new Dictionary<int, string>
             {
                 // Coordinate systems:
@@ -46,17 +47,17 @@ public static class GeometryExtensions
 
     public static Geometry ProjectTo(this Geometry geometry, int srid)
     {
-        var transformation = _coordinateSystemServices.CreateTransformation(geometry.SRID, srid);
+        ICoordinateTransformation transformation = _coordinateSystemServices.CreateTransformation(geometry.SRID, srid);
 
-        var result = geometry.Copy();
+        Geometry result = geometry.Copy();
         result.Apply(new MathTransformFilter(transformation.MathTransform));
 
         return result;
     }
 
-    private class MathTransformFilter : ICoordinateSequenceFilter
+    class MathTransformFilter : ICoordinateSequenceFilter
     {
-        private readonly MathTransform _transform;
+        readonly MathTransform _transform;
 
         public MathTransformFilter(MathTransform transform)
             => _transform = transform;

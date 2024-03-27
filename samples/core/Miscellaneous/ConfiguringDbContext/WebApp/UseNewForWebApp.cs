@@ -7,7 +7,7 @@ public static class UseNewForWebApp
     public static void Example()
     {
         #region UseNewForWebApp
-        var contextOptions = new DbContextOptionsBuilder<ApplicationDbContext>()
+        DbContextOptions<ApplicationDbContext> contextOptions = new DbContextOptionsBuilder<ApplicationDbContext>()
             .UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=Test")
             .Options;
 

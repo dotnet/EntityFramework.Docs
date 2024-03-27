@@ -66,16 +66,16 @@ public static class TemporaryValuesSample
         var post1 = new Post();
         var post2 = new Post();
 
-        var blogIdEntry = context.Entry(blog).Property(e => e.Id);
+        Microsoft.EntityFrameworkCore.ChangeTracking.PropertyEntry<Blog, int> blogIdEntry = context.Entry(blog).Property(e => e.Id);
         blog.Id = blogIdEntry.CurrentValue;
         blogIdEntry.IsTemporary = true;
 
-        var post1IdEntry = context.Add(post1).Property(e => e.Id);
+        Microsoft.EntityFrameworkCore.ChangeTracking.PropertyEntry<Post, int> post1IdEntry = context.Add(post1).Property(e => e.Id);
         post1.Id = post1IdEntry.CurrentValue;
         post1IdEntry.IsTemporary = true;
         post1.BlogId = blog.Id;
 
-        var post2IdEntry = context.Add(post2).Property(e => e.Id);
+        Microsoft.EntityFrameworkCore.ChangeTracking.PropertyEntry<Post, int> post2IdEntry = context.Add(post2).Property(e => e.Id);
         post2.Id = post2IdEntry.CurrentValue;
         post2IdEntry.IsTemporary = true;
         post2.BlogId = blog.Id;
@@ -129,12 +129,9 @@ public static class TemporaryValuesSample
     {
         public DbSet<Blog> Blogs { get; set; }
 
-        private readonly bool _quiet;
+        readonly bool _quiet;
 
-        public SomeDbContext(bool quiet = false)
-        {
-            _quiet = quiet;
-        }
+        public SomeDbContext(bool quiet = false) => _quiet = quiet;
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

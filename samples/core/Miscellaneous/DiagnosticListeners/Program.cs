@@ -72,7 +72,7 @@ public class Program
 
         using (var context = new BlogsContext())
         {
-            var blog = context.Blogs.Include(e => e.Posts).Single();
+            Blog blog = context.Blogs.Include(e => e.Posts).Single();
 
             blog.Name = "EF Core Blog";
             context.Remove(blog.Posts.First());
@@ -86,8 +86,8 @@ public class Program
 
 public class BlogsContext : DbContext
 {
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        => optionsBuilder.UseSqlite("DataSource=blogs.db");
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) =>
+        optionsBuilder.UseSqlite("DataSource=blogs.db");
 
     public DbSet<Blog> Blogs { get; set; }
 }

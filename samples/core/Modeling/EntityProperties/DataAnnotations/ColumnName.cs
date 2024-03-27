@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace EFModeling.EntityProperties.DataAnnotations.ColumnName;
 
-internal class MyContext : DbContext
+class MyContext : DbContext
 {
     public DbSet<Blog> Blogs { get; set; }
 }

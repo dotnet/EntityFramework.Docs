@@ -26,7 +26,7 @@ public static class ExecuteUpdateSample
         return ExecuteUpdateTest<TphSqliteBlogsContext>();
     }
 
-    private static async Task ExecuteUpdateTest<TContext>()
+    static async Task ExecuteUpdateTest<TContext>()
         where TContext : BlogsContext, new()
     {
         await using var context = new TContext();
@@ -51,7 +51,7 @@ public static class ExecuteUpdateSample
         Console.WriteLine();
     }
 
-    private static async Task UpdateAllBlogs<TContext>()
+    static async Task UpdateAllBlogs<TContext>()
         where TContext : BlogsContext, new()
     {
         await using var context = new TContext();
@@ -77,7 +77,7 @@ public static class ExecuteUpdateSample
         Console.WriteLine();
     }
 
-    private static async Task UpdateOldPosts<TContext>()
+    static async Task UpdateOldPosts<TContext>()
         where TContext : BlogsContext, new()
     {
         await using var context = new TContext();
@@ -106,7 +106,7 @@ public static class ExecuteUpdateSample
         Console.WriteLine();
     }
 
-    private static async Task UpdateFeaturedPosts<TContext>()
+    static async Task UpdateFeaturedPosts<TContext>()
         where TContext : BlogsContext, new()
     {
         await using var context = new TContext();
@@ -130,7 +130,7 @@ public static class ExecuteUpdateSample
         Console.WriteLine();
     }
 
-    private static async Task UpdateTagsOnOldPosts<TContext>()
+    static async Task UpdateTagsOnOldPosts<TContext>()
         where TContext : BlogsContext, new()
     {
         await using var context = new TContext();
@@ -157,7 +157,7 @@ public static class ExecuteUpdateSample
         Console.WriteLine();
     }
 
-    private static void PrintSampleName([CallerMemberName] string? methodName = null)
+    static void PrintSampleName([CallerMemberName] string? methodName = null)
     {
         Console.WriteLine($">>>> Sample: {methodName}");
         Console.WriteLine();

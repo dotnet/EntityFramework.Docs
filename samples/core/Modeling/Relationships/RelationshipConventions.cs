@@ -6,9 +6,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace EFModeling.Relationships;
 
-public class RelationshipConventions
+public static class RelationshipConventions
 {
-    public class ReferenceNavigations
+    public static class ReferenceNavigations
     {
         public static void BuildModels()
         {
@@ -29,7 +29,7 @@ public class RelationshipConventions
             public Author DefaultAuthor => new() { Name = $"Author of the blog {Title}" };
 
             // Discovered as a reference navigation:
-            public Author? Author { get; private set; }
+            public Author? Author { get; }
         }
 
         public class Author
@@ -51,14 +51,12 @@ public class RelationshipConventions
             protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
                 => optionsBuilder.UseSqlite($"DataSource = ReferenceNavigations{GetType().Name}.db");
 
-            protected override void OnModelCreating(ModelBuilder modelBuilder)
-            {
+            protected override void OnModelCreating(ModelBuilder modelBuilder) =>
                 modelBuilder.Entity<Blog>().Ignore(e => e.ConsoleKeyInfo);
-            }
         }
     }
 
-    public class CollectionNavigations
+    public static class CollectionNavigations
     {
         public static void BuildModels()
         {
@@ -91,7 +89,7 @@ public class RelationshipConventions
         }
     }
 
-    public class OneToManySingleRelationship
+    public static class OneToManySingleRelationship
     {
         public static void BuildModels()
         {
@@ -128,7 +126,7 @@ public class RelationshipConventions
         }
     }
 
-    public class OneToOneSingleRelationship
+    public static class OneToOneSingleRelationship
     {
         public static void BuildModels()
         {
@@ -165,7 +163,7 @@ public class RelationshipConventions
         }
     }
 
-    public class ManyToManySingleRelationship
+    public static class ManyToManySingleRelationship
     {
         public static void BuildModels()
         {
@@ -201,7 +199,7 @@ public class RelationshipConventions
         }
     }
 
-    public class NavigationPrincipalKeyFKName
+    public static class NavigationPrincipalKeyFKName
     {
         public static void BuildModels()
         {
@@ -233,14 +231,12 @@ public class RelationshipConventions
             protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
                 => optionsBuilder.UseSqlite($"DataSource = NavigationPrincipalKeyFKName{GetType().Name}.db");
 
-            protected override void OnModelCreating(ModelBuilder modelBuilder)
-            {
+            protected override void OnModelCreating(ModelBuilder modelBuilder) =>
                 modelBuilder.Entity<Blog>().HasKey(e => e.Key);
-            }
         }
     }
 
-    public class NavigationIdFKName
+    public static class NavigationIdFKName
     {
         public static void BuildModels()
         {
@@ -272,14 +268,12 @@ public class RelationshipConventions
             protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
                 => optionsBuilder.UseSqlite($"DataSource = NavigationIdFKName{GetType().Name}.db");
 
-            protected override void OnModelCreating(ModelBuilder modelBuilder)
-            {
+            protected override void OnModelCreating(ModelBuilder modelBuilder) =>
                 modelBuilder.Entity<Blog>().HasKey(e => e.Key);
-            }
         }
     }
 
-    public class PrincipalTypePrincipalKeyFKName
+    public static class PrincipalTypePrincipalKeyFKName
     {
         public static void BuildModels()
         {
@@ -311,14 +305,12 @@ public class RelationshipConventions
             protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
                 => optionsBuilder.UseSqlite($"DataSource = PrincipalTypePrincipalKeyFKName{GetType().Name}.db");
 
-            protected override void OnModelCreating(ModelBuilder modelBuilder)
-            {
+            protected override void OnModelCreating(ModelBuilder modelBuilder) =>
                 modelBuilder.Entity<Blog>().HasKey(e => e.Key);
-            }
         }
     }
 
-    public class PrincipalTypeIdFKName
+    public static class PrincipalTypeIdFKName
     {
         public static void BuildModels()
         {
@@ -350,10 +342,8 @@ public class RelationshipConventions
             protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
                 => optionsBuilder.UseSqlite($"DataSource = PrincipalTypeIdFKName{GetType().Name}.db");
 
-            protected override void OnModelCreating(ModelBuilder modelBuilder)
-            {
+            protected override void OnModelCreating(ModelBuilder modelBuilder) =>
                 modelBuilder.Entity<Blog>().HasKey(e => e.Key);
-            }
         }
     }
 }

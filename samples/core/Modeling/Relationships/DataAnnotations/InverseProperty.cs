@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace EFModeling.Relationships.DataAnnotations.InverseProperty;
 
-internal class MyContext : DbContext
+class MyContext : DbContext
 {
     public DbSet<Post> Posts { get; set; }
     public DbSet<User> Users { get; set; }

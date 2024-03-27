@@ -32,10 +32,10 @@ public static class MiscellaneousTranslationsSample
         await using (var context = new BlogsContext { LoggingEnabled = true })
         {
             #region GetType
-            var query = context.Posts.Where(post => post.GetType() == typeof(Post));
+            IQueryable<Post> query = context.Posts.Where(post => post.GetType() == typeof(Post));
             #endregion
 
-            await foreach (var post in query.AsAsyncEnumerable())
+            await foreach (Post? post in query.AsAsyncEnumerable())
             {
                 Console.WriteLine($"{post.GetType().Name} : {post.Title}");
             }
@@ -46,10 +46,10 @@ public static class MiscellaneousTranslationsSample
         await using (var context = new BlogsContext { LoggingEnabled = true })
         {
             #region OfType
-            var query = context.Posts.OfType<Post>();
+            IQueryable<Post> query = context.Posts.OfType<Post>();
             #endregion
 
-            await foreach (var post in query.AsAsyncEnumerable())
+            await foreach (Post? post in query.AsAsyncEnumerable())
             {
                 Console.WriteLine($"{post.GetType().Name} : {post.Title}");
             }
@@ -81,17 +81,17 @@ public static class MiscellaneousTranslationsSample
         await using (var context = new BlogsContext { LoggingEnabled = true })
         {
             #region FilteredInclude
-            var query = context.Blogs.Include(
+            Microsoft.EntityFrameworkCore.Query.IIncludableQueryable<Blog, IOrderedEnumerable<Post>> query = context.Blogs.Include(
                 blog => EF.Property<ICollection<Post>>(blog, "Posts")
                     .Where(post => post.Content.Contains(".NET"))
                     .OrderBy(post => post.Title));
             #endregion
 
-            await foreach (var blog in query.AsAsyncEnumerable())
+            await foreach (Blog? blog in query.AsAsyncEnumerable())
             {
                 Console.WriteLine($"Blog {blog.Name}:");
 
-                foreach (var post in blog.Posts)
+                foreach (Post post in blog.Posts)
                 {
                     Console.WriteLine($"  Post {post.Title}");
                 }
@@ -101,7 +101,7 @@ public static class MiscellaneousTranslationsSample
         }
     }
 
-    private static void PrintSampleName([CallerMemberName] string? methodName = null)
+    static void PrintSampleName([CallerMemberName] string? methodName = null)
     {
         Console.WriteLine($">>>> Sample: {methodName}");
         Console.WriteLine();

@@ -5,12 +5,11 @@ using Microsoft.EntityFrameworkCore;
 namespace EFModeling.ShadowAndIndexerProperties.SharedType;
 
 #region SharedType
-internal class MyContext : DbContext
+class MyContext : DbContext
 {
     public DbSet<Dictionary<string, object>> Blogs => Set<Dictionary<string, object>>("Blog");
 
-    protected override void OnModelCreating(ModelBuilder modelBuilder)
-    {
+    protected override void OnModelCreating(ModelBuilder modelBuilder) =>
         modelBuilder.SharedTypeEntity<Dictionary<string, object>>(
             "Blog", bb =>
             {
@@ -18,6 +17,5 @@ internal class MyContext : DbContext
                 bb.Property<string>("Url");
                 bb.Property<DateTime>("LastUpdated");
             });
-    }
 }
 #endregion
