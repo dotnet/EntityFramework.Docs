@@ -562,6 +562,124 @@ protected override void Up(MigrationBuilder migrationBuilder)
 
 ## Model building
 
+<a name="auto-compiled-models"></a>
+
+### Auto-compiled models
+
+> [!TIP]
+> The code shown here comes from the [NewInEFCore9.CompiledModels](https://github.com/dotnet/EntityFramework.Docs/tree/main/samples/core/Miscellaneous/NewInEFCore9.CompiledModels/) sample.
+
+Compiled models can improve startup time for applications with large models--that is entity type counts in the 100s or 1000s. In previous versions of EF Core, a compiled model had to be generated manually, using the command line. For example:
+
+```dotnetcli
+dotnet ef dbcontext optimize
+```
+
+After running the command, a line like, `.UseModel(MyCompiledModels.BlogsContextModel.Instance)` must be added to `OnConfiguring` to tell EF Core to use the compiled model.
+
+Starting with EF9, this `.UseModel` line is no longer needed. Instead, the compiled model will be detected and used automatically. This can be seen by having EF log whenever it is building the model. Running a simple application then shows EF building the model when the application starts:
+
+```output
+Starting application...
+>> EF is building the model...
+Model loaded model with 2 entity types.
+```
+
+The output from running `dotnet ef dbcontext optimize` on the model project is:
+
+```output
+PS D:\code\EntityFramework.Docs\samples\core\Miscellaneous\NewInEFCore9.CompiledModels\Model> dotnet ef dbcontext optimize
+
+Build succeeded in 0.3s
+
+Build succeeded in 0.3s
+Build started...
+Build succeeded.
+>> EF is building the model...
+>> EF is building the model...
+Successfully generated a compiled model, it will be discovered automatically, but you can also call 'options.UseModel(BlogsContextModel.Instance)'. Run this command again when the model is modified.
+PS D:\code\EntityFramework.Docs\samples\core\Miscellaneous\NewInEFCore9.CompiledModels\Model> 
+```
+
+Notice that the log output indicates that the _model was built when running the command_. If we now run the application again, after rebuilding but without making any code changes, then the output is:
+
+```output
+Starting application...
+Model loaded model with 2 entity types.
+```
+
+Notice that the model was not built when starting the application because the compiled model was detected and used automatically.
+
+### MSBuild integration
+
+With the above approach, the compiled model still needs to be regenerated manually when the entity types or `DbContext` configuration is changed. However, EF9 ships with MSBuild and targets package that can automatically update the compiled model when the model project is built! To get started, install the [Microsoft.EntityFrameworkCore.Tasks](https://www.nuget.org/packages/Microsoft.EntityFrameworkCore.Tasks/) NuGet package. For example:
+
+```dotnetcli
+dotnet add package Microsoft.EntityFrameworkCore.Tasks --version 9.0.0-preview.4.24205.3
+```
+
+> [!TIP]
+> Use the package version in the command above that matches the version of EF Core that you are using.
+
+Then enable the integration by setting the `EFOptimizeContext` property to your `.csproj` file. For example:
+
+```xml
+<PropertyGroup>
+    <EFOptimizeContext>true</EFOptimizeContext>
+</PropertyGroup>
+```
+
+There are additional, optional, MSBuild properties for controlling how the model is built, equivalent to the options passed on the command line to `dotnet ef dbcontext optimize`. These include:
+
+| MSBuild property   | Description                                                                                                                                                                                                     |
+|--------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| EFOptimizeContext  | Set to `true` to enable auto-compiled models.                                                                                                                                                                   |
+| DbContextName      | The DbContext class to use. Class name only or fully qualified with namespaces. If this option is omitted, EF Core will find the context class. If there are multiple context classes, this option is required. |
+| EFStartupProject   | Relative path to the project folder of the startup project. Default value is the current folder.                                                                                                                |
+| EFTargetNamespace  | The namespace to use for all generated classes. Defaults to generated from the root namespace and the output directory plus CompiledModels.                                                                     |
+
+In our example, we need to specify the startup project:
+
+```xml
+<PropertyGroup>
+  <EFOptimizeContext>true</EFOptimizeContext>
+  <EFStartupProject>..\App\App.csproj</EFStartupProject>
+</PropertyGroup>
+```
+
+Now, if we build the project, we can see logging at build time indicating that the compiled model is being built:
+
+```output
+Optimizing DbContext...
+dotnet exec --depsfile D:\code\EntityFramework.Docs\samples\core\Miscellaneous\NewInEFCore9.CompiledModels\App\bin\Release\net8.0\App.deps.json
+  --additionalprobingpath G:\packages 
+  --additionalprobingpath "C:\Program Files (x86)\Microsoft Visual Studio\Shared\NuGetPackages" 
+  --runtimeconfig D:\code\EntityFramework.Docs\samples\core\Miscellaneous\NewInEFCore9.CompiledModels\App\bin\Release\net8.0\App.runtimeconfig.json G:\packages\microsoft.entityframeworkcore.tasks\9.0.0-preview.4.24205.3\tasks\net8.0\..\..\tools\netcoreapp2.0\ef.dll dbcontext optimize --output-dir D:\code\EntityFramework.Docs\samples\core\Miscellaneous\NewInEFCore9.CompiledModels\Model\obj\Release\net8.0\ 
+  --namespace NewInEfCore9 
+  --suffix .g 
+  --assembly D:\code\EntityFramework.Docs\samples\core\Miscellaneous\NewInEFCore9.CompiledModels\Model\bin\Release\net8.0\Model.dll --startup-assembly D:\code\EntityFramework.Docs\samples\core\Miscellaneous\NewInEFCore9.CompiledModels\App\bin\Release\net8.0\App.dll 
+  --project-dir D:\code\EntityFramework.Docs\samples\core\Miscellaneous\NewInEFCore9.CompiledModels\Model 
+  --root-namespace NewInEfCore9 
+  --language C# 
+  --nullable 
+  --working-dir D:\code\EntityFramework.Docs\samples\core\Miscellaneous\NewInEFCore9.CompiledModels\App 
+  --verbose 
+  --no-color 
+  --prefix-output 
+```
+
+And running the application shows that the compiled model has been detected and hence the model is not built again:
+
+```output
+Starting application...
+Model loaded model with 2 entity types.
+```
+
+Now, whenever the model changes, the compiled model will be automatically rebuilt as soon as the project is built.
+
+> [NOTE!]
+> We are working through some performance issues with changes made to the compiled model in EF8 and EF9. See [Issue 33483#](https://github.com/dotnet/efcore/issues/33483) for more information.
+
 <a name="sequence-caching"></a>
 
 ### Specify caching for sequences
