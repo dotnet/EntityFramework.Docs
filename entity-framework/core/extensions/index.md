@@ -41,7 +41,7 @@ Entity Developer is a powerful O/RM designer for ADO.NET Entity Framework, NHibe
 
 ### DevMagic EF Core Sidekick
 
-EF Core Sidekick is a Visual Studio extension that enhances the power of auto code generation in Visual Studio. It provides a set of tools and templates for generating EF Core entities and derived DbContext from existing database, and then generating services and REST APIs from the entities. For EF Core: 6-7.
+EF Core Sidekick is a Visual Studio extension that enhances the power of auto code generation in Visual Studio. It provides a set of tools and templates for generating EF Core entities and derived DbContext from existing database, and then generating services and REST APIs from the entities. For EF Core: 6-8.
 
 [Visual Studio Marketplace](https://marketplace.visualstudio.com/items?itemName=devmagic.efsidekick) |
 [Website](https://www.devmagic.com/)
@@ -66,7 +66,7 @@ efmig is a multi-platform GUI application that speeds up daily development when 
 
 ### EFCore.Visualizer
 
-With Entity Framework Core query plan debugger visualizer, you can view the query plan of your queries directly inside Visual Studio. Currently, the visualizer supports SQL Server and PostgreSQL. For EF Core 7-8.
+With Entity Framework Core query plan debugger visualizer, you can view the query plan of your queries directly inside Visual Studio. Currently, the visualizer supports SQL Server and PostgreSQL. For EF Core: 7-8.
 
 [Visual Studio Marketplace](https://marketplace.visualstudio.com/items?itemName=GiorgiDalakishvili.EFCoreVisualizer)
 
@@ -92,7 +92,7 @@ Allows customization of classes reverse engineered from an existing database usi
 
 ### NeinLinq.EntityFrameworkCore
 
-NeinLinq extends LINQ providers such as Entity Framework to enable reusing functions, rewriting queries, and building dynamic queries using translatable predicates and selectors. For EF Core: 2-7.
+NeinLinq extends LINQ providers such as Entity Framework to enable reusing functions, rewriting queries, and building dynamic queries using translatable predicates and selectors. For EF Core: 3-8.
 
 [GitHub repository](https://github.com/axelheer/nein-linq) | [NuGet](https://www.nuget.org/packages/NeinLinq.EntityFrameworkCore)
 
@@ -122,7 +122,7 @@ Provides a wrapper around [SQL Server Express LocalDB](/sql/database-engine/conf
 
 ### EntityFrameworkCore.Projectables
 
-Flexible projection magic for EF Core. Use properties, methods, and extension methods in your query without client evaluation. For EF Core: 3-6.
+Flexible projection magic for EF Core. Use properties, methods, and extension methods in your query without client evaluation. For EF Core: 3-6, 8.
 
 [GitHub repository](https://github.com/koenbeuk/EntityFrameworkCore.Projectables) | [NuGet](https://www.nuget.org/packages/EntityFrameworkCore.Projectables)
 
@@ -152,7 +152,7 @@ Add support for calling extension methods in LINQ lambdas. For EF Core: 3-6.
 
 ### EntityLinq
 
-Alternative (not MS based) Language Integrated Query (LINQ) technology for relational databases. It allows you to use C# to write strongly typed SQL queries. For EF Core: 3-6.
+Alternative (not MS based) Language Integrated Query (LINQ) technology for relational databases. It allows you to use C# to write strongly typed SQL queries. For EF Core: 3-8.
 
 - Full C# support for query creation: multiple statements inside lambda, variables, functions, etc.
 - No semantic gap with SQL. EntityLinq declares SQL statements (like `SELECT`, `FROM`, `WHERE`) as first class C# methods, combining familiar syntax with intellisense, type safety and refactoring.
@@ -181,6 +181,9 @@ Adds native support to EntityFrameworkCore for SQL Server for the NodaTime types
 
 ### EntityFrameworkCore.SqlServer.HierarchyId
 
+> [!NOTE]
+> The SQL Server hierarchyid data type is supported directly within EF Core as of [EF Core 8](/ef/core/what-is-new/ef-core-8.0/whatsnew#hierarchyid-in-net-and-ef-core).
+
 Adds hierarchyid support to the SQL Server EF Core provider. For EF Core: 3-7.
 
 [GitHub repository](https://github.com/efcore/EFCore.SqlServer.HierarchyId) | [NuGet](https://www.nuget.org/packages/EntityFrameworkCore.SqlServer.HierarchyId)
@@ -207,7 +210,7 @@ Extends EF Core to resolve connection strings from App.config. For EF Core: 3-8.
 
 ### Detached Mapper
 
-A DTO-Entity mapper with composition/aggregation handling (similar to GraphDiff). For EF Core: 3-6.
+A DTO-Entity mapper with composition/aggregation handling (similar to GraphDiff). For EF Core: 3-8.
 
 [GitHub repository](https://github.com/leonardoporro/Detached-Mapper) | [NuGet](https://www.nuget.org/packages/Detached.Mappers.EntityFramework)
 
@@ -231,11 +234,17 @@ Generate DGML (Graph) content that visualizes your DbContext. Adds the AsDgml() 
 
 ### ErikEJ.EntityFrameworkCore.SqlServer.SqlQuery
 
+> [!NOTE]
+> Raw SQL queries against unmapped types is supported directly within EF Core as of [EF Core 8](/ef/core/what-is-new/ef-core-8.0/whatsnew#raw-sql-queries-for-unmapped-types).
+
 Provides the `SqlQueryAsync<T>` and `SqlQueryValueAsync<T>` methods to help you populate arbitrary classes or a list of primitive types from a raw SQL query. For EF Core: 6-7.
 
 [GitHub repository](https://github.com/ErikEJ/EFCorePowerTools/tree/master/src/GUI/ErikEJ.EntityFrameworkCore.6.SqlServer.SqlQuery) | [NuGet](https://www.nuget.org/packages/ErikEJ.EntityFrameworkCore.SqlServer.SqlQuery)
 
 ### ErikEJ.EntityFrameworkCore.SqlServer.DateOnlyTimeOnly
+
+> [!NOTE]
+> SQL Server `DateOnly` and `TimeOnly` mapping is supported directly within EF Core as of [EF Core 8](/ef/core/what-is-new/ef-core-8.0/whatsnew#dateonlytimeonly-supported-on-sql-server).
 
 Use the `DateOnly` and `TimeOnly` .NET types with the EF Core SQL Server provider. For EF Core: 6-7.
 
@@ -245,7 +254,7 @@ Use the `DateOnly` and `TimeOnly` .NET types with the EF Core SQL Server provide
 
 When using Entity Framework Core all database exceptions are wrapped in DbUpdateException. EntityFramework.Exceptions handles all the database-specific details to find which constraint was violated and allows you to use typed exceptions such as `UniqueConstraintException`, `CannotInsertNullException`, `MaxLengthExceededException`, `NumericOverflowException`, `ReferenceConstraintException` when your query violates database constraints.
 
-Supports SQL Server, Postgres, MySql, SQLite and Oracle. For EF Core: 3-6.
+Supports SQL Server, Postgres, MySql, SQLite and Oracle. For EF Core: 3-8.
 
 [GitHub Repository](https://github.com/Giorgi/EntityFramework.Exceptions)
 
@@ -282,7 +291,7 @@ Fluent API to declare triggers in `Context.OnModelCreating` which are later buil
 
 ### EntityCloner.Microsoft.EntityFrameworkCore
 
-Cloning entities using EF Core configuration. You can use the `Include` method to specify related data to be cloned. For EF Core: 5-7.
+Cloning entities using EF Core configuration. You can use the `Include` method to specify related data to be cloned. For EF Core: 5-8.
 
 [GitHub repository](https://github.com/HenkKin/EntityCloner.Microsoft.EntityFrameworkCore) | [NuGet](https://www.nuget.org/packages/EntityCloner.Microsoft.EntityFrameworkCore)
 
@@ -360,7 +369,7 @@ Add Entity Framework `IQueryable` support to GraphQL. For EF Core: 6-8.
 
 ### EntityGraphQL
 
-GraphQL server with tight EntityFramework integration. For EF Core: 5-7.
+GraphQL server with tight EntityFramework integration. For EF Core: 5-8.
 
 [GitHub repository](https://github.com/EntityGraphQL/EntityGraphQL) | [NuGet](https://www.nuget.org/packages/EntityGraphQL)
 
