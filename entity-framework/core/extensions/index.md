@@ -338,7 +338,7 @@ For EF Core: 8.
 
 ### Reconciler
 
-Update an entity graph in store to a given one by inserting, updating and removing the respective entities.
+Update an entity graph in store to a given one by inserting, updating and removing the respective entities. For EF Core: 3-7.
 
 [GitHub repository](https://github.com/jtheisen/reconciler)
 
