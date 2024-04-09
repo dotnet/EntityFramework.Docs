@@ -336,6 +336,12 @@ For EF Core: 8.
 
 [GitHub repository](https://github.com/thliborius/EfCoreNexus) | [NuGet](https://www.nuget.org/packages/EfCoreNexus.Framework/)
 
+### Reconciler
+
+Update an entity graph in store to a given one by inserting, updating and removing the respective entities.
+
+[GitHub repository](https://github.com/jtheisen/reconciler)
+
 ## API Integrations
 
 These packages are designed to integrate directly with EF Core to expose various APIs.
