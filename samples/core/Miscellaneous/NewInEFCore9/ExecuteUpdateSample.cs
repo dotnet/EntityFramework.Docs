@@ -214,10 +214,19 @@ public static class ExecuteUpdateSample
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
             => (UseSqlite
-                    ? optionsBuilder.UseSqlite(@$"DataSource={GetType().Name}.db")
+                    ? optionsBuilder.UseSqlite(@$"DataSource={GetType().Name}.db",
+                        sqliteOptionsBuilder =>
+                        {
+                            sqliteOptionsBuilder.UseNetTopologySuite();
+                            sqliteOptionsBuilder.CommandTimeout(0);
+                        })
                     : optionsBuilder.UseSqlServer(
                         @$"Server=(localdb)\mssqllocaldb;Database={GetType().Name};ConnectRetryCount=0",
-                        sqlServerOptionsBuilder => sqlServerOptionsBuilder.UseNetTopologySuite()))
+                        sqlServerOptionsBuilder =>
+                        {
+                            sqlServerOptionsBuilder.UseNetTopologySuite();
+                            sqlServerOptionsBuilder.CommandTimeout(0);
+                        }))
                 .EnableSensitiveDataLogging()
                 .LogTo(Console.WriteLine, LogLevel.Information);
 
