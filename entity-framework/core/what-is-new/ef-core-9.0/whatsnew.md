@@ -577,12 +577,12 @@ dotnet ef dbcontext optimize
 
 After running the command, a line like, `.UseModel(MyCompiledModels.BlogsContextModel.Instance)` must be added to `OnConfiguring` to tell EF Core to use the compiled model.
 
-Starting with EF9, this `.UseModel` line is no longer needed. Instead, the compiled model will be detected and used automatically. This can be seen by having EF log whenever it is building the model. Running a simple application then shows EF building the model when the application starts:
+Starting with EF9, this `.UseModel` line is no longer needed when the application's `DbContext` type is in the same project/assembly as the compiled model. Instead, the compiled model will be detected and used automatically. This can be seen by having EF log whenever it is building the model. Running a simple application then shows EF building the model when the application starts:
 
 ```output
 Starting application...
 >> EF is building the model...
-Model loaded model with 2 entity types.
+Model loaded with 2 entity types.
 ```
 
 The output from running `dotnet ef dbcontext optimize` on the model project is:
@@ -605,7 +605,7 @@ Notice that the log output indicates that the _model was built when running the 
 
 ```output
 Starting application...
-Model loaded model with 2 entity types.
+Model loaded with 2 entity types.
 ```
 
 Notice that the model was not built when starting the application because the compiled model was detected and used automatically.
@@ -635,7 +635,7 @@ There are additional, optional, MSBuild properties for controlling how the model
 |--------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | EFOptimizeContext  | Set to `true` to enable auto-compiled models.                                                                                                                                                                   |
 | DbContextName      | The DbContext class to use. Class name only or fully qualified with namespaces. If this option is omitted, EF Core will find the context class. If there are multiple context classes, this option is required. |
-| EFStartupProject   | Relative path to the project folder of the startup project. Default value is the current folder.                                                                                                                |
+| EFStartupProject   | Relative path to the startup project. Default value is the current folder.                                                                                                                |
 | EFTargetNamespace  | The namespace to use for all generated classes. Defaults to generated from the root namespace and the output directory plus CompiledModels.                                                                     |
 
 In our example, we need to specify the startup project:
@@ -672,7 +672,7 @@ And running the application shows that the compiled model has been detected and 
 
 ```output
 Starting application...
-Model loaded model with 2 entity types.
+Model loaded with 2 entity types.
 ```
 
 Now, whenever the model changes, the compiled model will be automatically rebuilt as soon as the project is built.

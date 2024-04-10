@@ -8,6 +8,6 @@ public class Program
 
         using var context = new BlogsContext();
 
-        Console.WriteLine($"Model loaded model with {context.Model.GetEntityTypes().Count()} entity types.");
+        Console.WriteLine($"Model loaded with {context.Model.GetEntityTypes().Count()} entity types.");
     }
 }
