@@ -16,6 +16,7 @@ The .NET Data Community Standups are live-streamed every other Wednesday to Twit
 
 | Date         | Area                  | Title                                                                                  |
 |--------------|-----------------------|----------------------------------------------------------------------------------------|
+| Apr 17, 2024 | EF Core mapping       | [All about EF Core property mapping](#Apr17_2024)                                      |
 | Mar 20, 2024 | GraphQL               | [Distributed Applications with Hot Chocolate 14, Aspire, and EF Core](#Mar20_2024)     |
 | Mar 6, 2024  | Value generation      | [EF Core keys and value generation](#value-generation)                                 |
 | Feb 21, 2024 | SQL translation       | [Window and binary functions using Zomp EF Core extensions](#window-functions)         |
@@ -94,6 +95,31 @@ The .NET Data Community Standups are live-streamed every other Wednesday to Twit
 | May 6, 2020  | Welcome!              | [Introducing the EF Core Community Standup](#one)                                      |
 
 ## 2024
+
+<a name="Apr17_2024"></a>
+
+### Apr 17: [All about EF Core property mapping](https://www.youtube.com/live/ouGIWUtzxRQ?si=qtZ1xqKjKe_E1MhI)
+
+In this episode, Arthur Vickers and Jiri Cincura from the EF team discuss everything about mapping properties in EF Core. We’ll look at:
+
+- The differences between properties and navigations.
+- How EF decides to map a property, and whether it is mapped to a nullable column, has a max length defined, etc.
+- When backing fields are used, and mapping fields directly.
+- Shadow properties.
+- Indexer properties.
+
+And if we get time, we’ll look at how value converters influence all this!
+
+Featuring:
+
+- [Arthur Vickers](https://github.com/ajcvickers) (Host)
+- [Jiri Cincura](https://github.com/cincuranet) (Host)
+
+Links:
+
+- GitHub: [Code from the standup](https://github.com/ajcvickers/PropertyMapping)
+- Docs: [What's new in EF9, with runnable samples](https://aka.ms/ef9-new)
+- Docs: [EF Core daily builds](https://aka.ms/ef-daily-builds)
 
 <a name="Mar20_2024"></a>
 
