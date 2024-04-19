@@ -82,7 +82,7 @@ For example, the following line configures the SQL Server provider with the pass
 
 ```csharp
 optionsBuilder.UseSqlServer(
-    "Server=(localdb)\mssqllocaldb;Database=MyDatabase;Trusted_Connection=True;");
+    @"Server=(localdb)\mssqllocaldb;Database=MyDatabase;Trusted_Connection=True;");
 ```
 
 Database providers can extend EF Core to enable functionality unique to specific databases. Some concepts are common to most databases, and are included in the primary EF Core components. Such concepts include expressing queries in LINQ, transactions, and tracking changes to objects once they are loaded from the database.
