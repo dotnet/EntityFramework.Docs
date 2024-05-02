@@ -185,7 +185,7 @@ public abstract class BlogsContext : DbContext
         => (UseSqlite
                 ? optionsBuilder.UseSqlite(@$"DataSource={GetType().Name}.db")
                 : optionsBuilder.UseSqlServer(
-                    @$"Server=(localdb)\mssqllocaldb;Database={GetType().Name}",
+                    @$"Server=(localdb)\mssqllocaldb;Database={GetType().Name};ConnectRetryCount=0",
                     sqlServerOptionsBuilder => sqlServerOptionsBuilder.UseNetTopologySuite()))
             .EnableSensitiveDataLogging()
             .LogTo(

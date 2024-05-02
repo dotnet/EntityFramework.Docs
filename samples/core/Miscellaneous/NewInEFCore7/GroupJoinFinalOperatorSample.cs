@@ -104,7 +104,7 @@ public static class GroupJoinFinalOperatorSample
     {
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
             => base.OnConfiguring(
-                optionsBuilder.UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=Customers"));
+                optionsBuilder.UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=Customers;ConnectRetryCount=0"));
     }
 
     public class GroupJoinContextSqlite : GroupJoinContext

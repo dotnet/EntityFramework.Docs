@@ -23,7 +23,7 @@ public class Startup
 
         services.AddDbContext<BloggingContext>(
             b => b.UseSqlServer(
-                @"Server=(localdb)\mssqllocaldb;Database=EFTestSample;Trusted_Connection=True"));
+                @"Server=(localdb)\mssqllocaldb;Database=EFTestSample;Trusted_Connection=True;ConnectRetryCount=0"));
 
         #region RegisterRepositoryInDI
         services.AddScoped<IBloggingRepository, BloggingRepository>();

@@ -397,7 +397,7 @@ public static class TpcInheritanceSample
         {
             optionsBuilder
                 .EnableSensitiveDataLogging()
-                .UseSqlServer(@$"Server=(localdb)\mssqllocaldb;Database={GetType().Name}");
+                .UseSqlServer(@$"Server=(localdb)\mssqllocaldb;Database={GetType().Name};ConnectRetryCount=0");
 
             optionsBuilder.LogTo(Console.WriteLine, LogLevel.Information);
         }

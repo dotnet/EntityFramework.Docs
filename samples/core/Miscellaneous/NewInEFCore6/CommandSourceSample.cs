@@ -23,7 +23,7 @@ public static class CommandSourceSample
             });
 
         context.SaveChanges();
-        
+
         context.ChangeTracker.Clear();
 
         var customers = context.Customers.ToList();
@@ -64,7 +64,7 @@ public static class CommandSourceSample
             optionsBuilder
                 .EnableSensitiveDataLogging()
                 .AddInterceptors(new CommandSourceInterceptor())
-                .UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=EFCoreSample");
+                .UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=EFCoreSample;ConnectRetryCount=0");
         }
     }
 }

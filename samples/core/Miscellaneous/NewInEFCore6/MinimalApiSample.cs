@@ -7,10 +7,10 @@ public static class MinimalApiSample
     public static void Add_a_DbContext_and_provider()
     {
         Console.WriteLine($">>>> Sample: {nameof(Add_a_DbContext_and_provider)}");
-        
+
         SqliteMinimal(null);
         SqliteNormal(null);
-        
+
         SqlServerMinimal(null);
         SqlServerNormal(null);
     }
@@ -49,7 +49,7 @@ public static class MinimalApiSample
         var builder = WebApplication.CreateBuilder(args);
 
         builder.Services.AddDbContext<MyDbContext>(
-            options => options.UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=MyDatabase"));
+            options => options.UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=MyDatabase;ConnectRetryCount=0"));
         #endregion
     }
 

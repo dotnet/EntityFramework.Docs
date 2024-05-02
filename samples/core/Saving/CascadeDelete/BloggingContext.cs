@@ -32,7 +32,7 @@ public sealed class BloggingContext : DbContext
             .ReplaceService<IModelCacheKeyFactory, DeleteBehaviorCacheKeyFactory>()
             .EnableSensitiveDataLogging()
             .UseSqlServer(
-                @"Server=(localdb)\mssqllocaldb;Database=EFSaving.CascadeDelete;Trusted_Connection=True",
+                @"Server=(localdb)\mssqllocaldb;Database=EFSaving.CascadeDelete;Trusted_Connection=True;ConnectRetryCount=0",
                 b => b.MaxBatchSize(1));
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)

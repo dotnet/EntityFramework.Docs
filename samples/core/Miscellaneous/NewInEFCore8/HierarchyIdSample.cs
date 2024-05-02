@@ -230,7 +230,7 @@ public static class HierarchyIdSample
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
             => optionsBuilder.UseSqlServer(
-                    @$"Server=(localdb)\mssqllocaldb;Database={GetType().Name}",
+                    @$"Server=(localdb)\mssqllocaldb;Database={GetType().Name};ConnectRetryCount=0",
                     sqlServerOptionsBuilder => sqlServerOptionsBuilder.UseHierarchyId())
                 .EnableSensitiveDataLogging()
                 .LogTo(

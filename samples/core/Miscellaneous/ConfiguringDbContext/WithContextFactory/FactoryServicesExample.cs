@@ -11,7 +11,7 @@ public class FactoryServicesExample
     {
         services.AddDbContextFactory<ApplicationDbContext>(
             options =>
-                options.UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=Test"));
+                options.UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=Test;ConnectRetryCount=0"));
     }
     #endregion
 }

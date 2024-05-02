@@ -9,7 +9,7 @@ public class ApplicationDbContext : DbContext
     {
         optionsBuilder
             .EnableSensitiveDataLogging()
-            .UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=Test");
+            .UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=Test;ConnectRetryCount=0");
     }
 }
 #endregion

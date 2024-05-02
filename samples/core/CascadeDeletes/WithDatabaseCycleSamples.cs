@@ -169,7 +169,7 @@ public class BlogsContext : DbContext
     {
         optionsBuilder
             .EnableSensitiveDataLogging()
-            .UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=Scratch;Trusted_Connection=True");
+            .UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=Scratch;Trusted_Connection=True;ConnectRetryCount=0");
         //.UseSqlite("DataSource=test.db");
 
         if (!_quiet)

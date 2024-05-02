@@ -26,7 +26,7 @@ public class MetadataAPIContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         => optionsBuilder.UseSqlServer(
-                @"Server=(localdb)\mssqllocaldb;Database=EFModeling.BulkConfiguration;Trusted_Connection=True")
+                @"Server=(localdb)\mssqllocaldb;Database=EFModeling.BulkConfiguration;Trusted_Connection=True;ConnectRetryCount=0")
             .LogTo(Console.WriteLine, minimumLevel: Microsoft.Extensions.Logging.LogLevel.Information)
             .EnableSensitiveDataLogging();
 }

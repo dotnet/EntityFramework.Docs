@@ -6,7 +6,7 @@ namespace EF.Testing.IntegrationTests;
 #region TestDatabaseFixture
 public class TestDatabaseFixture
 {
-    private const string ConnectionString = @"Server=(localdb)\mssqllocaldb;Database=EFTestSample;Trusted_Connection=True";
+    private const string ConnectionString = @"Server=(localdb)\mssqllocaldb;Database=EFTestSample;Trusted_Connection=True;ConnectRetryCount=0";
 
     private static readonly object _lock = new();
     private static bool _databaseInitialized;

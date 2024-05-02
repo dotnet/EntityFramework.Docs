@@ -15,7 +15,7 @@ public static class QueryStatisticsLoggerSample
         var serviceProvider = new ServiceCollection()
             .AddDbContext<CustomerContext>(
                 b => b.UseLoggerFactory(loggerFactory)
-                    .UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=ConsumedDataReaderSample"))
+                    .UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=ConsumedDataReaderSample;ConnectRetryCount=0"))
             .BuildServiceProvider();
 
         using (var scope = serviceProvider.CreateScope())

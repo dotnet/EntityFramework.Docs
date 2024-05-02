@@ -273,7 +273,7 @@ public class LaundryContext : DbContext
     public DbSet<LaundryBasket> LaundryBaskets => Set<LaundryBasket>();
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        => optionsBuilder.UseSqlServer(@$"Server=(localdb)\mssqllocaldb;Database={GetType().Name}");
+        => optionsBuilder.UseSqlServer(@$"Server=(localdb)\mssqllocaldb;Database={GetType().Name};ConnectRetryCount=0");
 
     #region ReplaceConvention
     protected override void ConfigureConventions(ModelConfigurationBuilder configurationBuilder)

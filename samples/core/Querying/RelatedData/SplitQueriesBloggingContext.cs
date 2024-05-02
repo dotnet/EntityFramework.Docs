@@ -9,7 +9,7 @@ public class SplitQueriesBloggingContext : BloggingContext
     {
         optionsBuilder
             .UseSqlServer(
-                @"Server=(localdb)\mssqllocaldb;Database=EFQuerying;Trusted_Connection=True",
+                @"Server=(localdb)\mssqllocaldb;Database=EFQuerying;Trusted_Connection=True;ConnectRetryCount=0",
                 o => o.UseQuerySplittingBehavior(QuerySplittingBehavior.SplitQuery));
     }
     #endregion

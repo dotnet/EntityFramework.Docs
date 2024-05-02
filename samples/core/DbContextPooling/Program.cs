@@ -38,7 +38,7 @@ public class BlogController
 public class Startup
 {
     private const string ConnectionString
-        = @"Server=(localdb)\mssqllocaldb;Database=Demo.ContextPooling;Trusted_Connection=True";
+        = @"Server=(localdb)\mssqllocaldb;Database=Demo.ContextPooling;Trusted_Connection=True;ConnectRetryCount=0";
 
     public void ConfigureServices(IServiceCollection services)
     {

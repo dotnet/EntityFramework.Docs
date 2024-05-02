@@ -12,7 +12,7 @@ public static class DbContextFactorySample
 
         var services = new ServiceCollection()
             .AddDbContextFactory<SomeDbContext>(
-                builder => builder.UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=EFCoreSample"))
+                builder => builder.UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=EFCoreSample;ConnectRetryCount=0"))
             .BuildServiceProvider();
 
         var factory = services.GetService<IDbContextFactory<SomeDbContext>>();
@@ -32,7 +32,7 @@ public static class DbContextFactorySample
         #region Registration
         var container = services
             .AddDbContextFactory<SomeDbContext>(
-                builder => builder.UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=EFCoreSample"))
+                builder => builder.UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=EFCoreSample;ConnectRetryCount=0"))
             .BuildServiceProvider();
         #endregion
 
@@ -93,7 +93,7 @@ public static class DbContextFactorySample
 
             var results1 = context1.Blogs.ToList();
             var results2 = context2.Blogs.ToList();
-            
+
             // Contexts obtained from the factory must be explicitly disposed
         }
     }
@@ -115,7 +115,7 @@ public static class DbContextFactorySample
             : base(options)
         {
         }
-        
+
         public DbSet<Blog> Blogs { get; set; }
     }
     #endregion

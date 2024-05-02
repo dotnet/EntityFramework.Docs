@@ -147,7 +147,7 @@ END");
     {
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
             => base.OnConfiguring(
-                optionsBuilder.UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=SaveChangesPerf"));
+                optionsBuilder.UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=SaveChangesPerf;ConnectRetryCount=0"));
     }
 
     public class PerfContextSqlite : PerfContext

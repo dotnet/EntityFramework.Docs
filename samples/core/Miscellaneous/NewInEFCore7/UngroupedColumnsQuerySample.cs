@@ -72,7 +72,7 @@ public static class UngroupedColumnsQuerySample
     {
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
             => base.OnConfiguring(
-                optionsBuilder.UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=Invoices"));
+                optionsBuilder.UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=Invoices;ConnectRetryCount=0"));
     }
 
     public class InvoiceContextSqlite : InvoiceContext

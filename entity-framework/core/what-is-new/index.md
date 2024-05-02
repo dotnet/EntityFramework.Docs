@@ -48,4 +48,4 @@ See the [release planning process](xref:core/what-is-new/release-planning) for m
 
 The next planned stable release is **EF Core 9.0**, or just **EF9**, scheduled for **November 2024**.
 
-See the [high-level plan for EF9](xref:core/what-is-new/ef-core-9.0/plan) for more information.
+See the [What's New in EF9](xref:core/what-is-new/ef-core-9.0/whatsnew) for more information.

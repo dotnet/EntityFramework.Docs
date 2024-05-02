@@ -183,7 +183,7 @@ public abstract class BlogsContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         => (optionsBuilder.UseSqlServer(
-                    @$"Server=(localdb)\mssqllocaldb;Database=EFModeling.BulkConfiguration.{GetType().Name}"))
+                    @$"Server=(localdb)\mssqllocaldb;Database=EFModeling.BulkConfiguration.{GetType().Name};ConnectRetryCount=0"))
             .EnableSensitiveDataLogging()
             .LogTo(
                 s =>

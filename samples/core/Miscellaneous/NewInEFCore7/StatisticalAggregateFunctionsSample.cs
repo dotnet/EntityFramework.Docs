@@ -60,7 +60,7 @@ public static class StatisticalAggregateFunctionsSample
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
             => optionsBuilder
-                .UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=Downloads")
+                .UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=Downloads;ConnectRetryCount=0")
                 .LogTo(Console.WriteLine, LogLevel.Information)
                 .EnableSensitiveDataLogging();
     }

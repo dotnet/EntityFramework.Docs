@@ -214,7 +214,7 @@ internal class Program
 
         using (var context = new PooledBloggingContext(
                    new DbContextOptionsBuilder()
-                       .UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=Blogging;Trusted_Connection=True")
+                       .UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=Blogging;Trusted_Connection=True;ConnectRetryCount=0")
                        .Options))
         {
             context.Database.EnsureDeleted();
@@ -223,7 +223,7 @@ internal class Program
 
         #region DbContextPoolingWithoutDI
         var options = new DbContextOptionsBuilder<PooledBloggingContext>()
-            .UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=Blogging;Trusted_Connection=True")
+            .UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=Blogging;Trusted_Connection=True;ConnectRetryCount=0")
             .Options;
 
         var factory = new PooledDbContextFactory<PooledBloggingContext>(options);

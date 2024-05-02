@@ -580,7 +580,7 @@ public static class OptionalDependentsSample
         {
             optionsBuilder
                 .EnableSensitiveDataLogging()
-                .UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=EFCoreSample");
+                .UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=EFCoreSample;ConnectRetryCount=0");
 
             if (!_quiet)
             {

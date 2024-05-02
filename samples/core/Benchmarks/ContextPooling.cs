@@ -17,7 +17,7 @@ public class ContextPooling
     public void Setup()
     {
         _options = new DbContextOptionsBuilder<BloggingContext>()
-            .UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=Blogging;Trusted_Connection=True")
+            .UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=Blogging;Trusted_Connection=True;ConnectRetryCount=0")
             .Options;
 
         using var context = new BloggingContext(_options);

@@ -31,7 +31,7 @@ public static class ManyToManyConfigurationSample
 
             Console.WriteLine(context.Model.ToDebugString());
             Console.WriteLine();
-            
+
             context.Log = true;
             context.Database.EnsureCreated();
             context.Log = false;
@@ -50,7 +50,7 @@ public static class ManyToManyConfigurationSample
 
             context.SaveChanges();
         }
-        
+
         Console.WriteLine();
 
         using (var context = new TContext())
@@ -77,7 +77,7 @@ public static class ManyToManyConfigurationSample
         public string Name { get; set; }
         public ICollection<Cat> Cats { get; } = new List<Cat>();
     }
-    
+
     public class CatHuman
     {
         public int CatsId { get; set; }
@@ -168,7 +168,7 @@ public static class ManyToManyConfigurationSample
         {
             optionsBuilder
                 .EnableSensitiveDataLogging()
-                .UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=EFCoreSample");
+                .UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=EFCoreSample;ConnectRetryCount=0");
 
             optionsBuilder.LogTo(
                 s =>
