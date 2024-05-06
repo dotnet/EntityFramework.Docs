@@ -38,7 +38,7 @@ public static class CosmosDiagnosticsSample
         Console.WriteLine();
 
         #region QueryEvents
-        var equilateral = context.Triangles.Single(e => e.Name == "Equilateral");
+        Triangle equilateral = context.Triangles.Single(e => e.Name == "Equilateral");
         #endregion
 
         Console.WriteLine();
@@ -46,7 +46,7 @@ public static class CosmosDiagnosticsSample
         Console.WriteLine();
 
         #region FindEvents
-        var isosceles = context.Triangles.Find("Isosceles", "TrianglesPartition");
+        Triangle isosceles = context.Triangles.Find("Isosceles", "TrianglesPartition");
         #endregion
 
         Console.WriteLine();
@@ -113,17 +113,12 @@ public static class CosmosDiagnosticsSample
     {
         public DbSet<Triangle> Triangles { get; set; }
 
-        private readonly bool _quiet;
+        readonly bool _quiet;
 
-        public ShapesContext(bool quiet = false)
-        {
-            _quiet = quiet;
-        }
+        public ShapesContext(bool quiet = false) => _quiet = quiet;
 
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            modelBuilder.Entity<Triangle>(
-                b =>
+        protected override void OnModelCreating(ModelBuilder modelBuilder) =>
+            modelBuilder.Entity<Triangle>(b =>
                 {
                     b.ToContainer("Shapes");
                     b.HasPartitionKey(e => e.PartitionKey);
@@ -131,7 +126,6 @@ public static class CosmosDiagnosticsSample
                     b.Property(c => c.Name).ToJsonProperty("id");
                     b.Property(c => c.PartitionKey).ToJsonProperty("pk");
                 });
-        }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

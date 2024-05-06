@@ -16,7 +16,7 @@ public static class JsonColumnsSample
         return JsonColumnsTest<JsonBlogsContextSqlite>();
     }
 
-    private static async Task JsonColumnsTest<TContext>()
+    static async Task JsonColumnsTest<TContext>()
         where TContext : BlogsContext, new()
     {
         await using var context = new TContext();
@@ -29,7 +29,7 @@ public static class JsonColumnsSample
 
         #region CollectionIndexPredicate
         var cutoff = DateOnly.FromDateTime(DateTime.UtcNow - TimeSpan.FromDays(365));
-        var updatedPosts = await context.Posts
+        List<Post> updatedPosts = await context.Posts
             .Where(
                 p => p.Metadata!.Updates[0].UpdatedOn < cutoff
                      && p.Metadata!.Updates[1].UpdatedOn < cutoff)
@@ -37,16 +37,16 @@ public static class JsonColumnsSample
         #endregion
 
         Console.WriteLine();
-        foreach (var post in updatedPosts)
+        foreach (Post post in updatedPosts)
         {
-            Console.WriteLine($"Post '{post.Title.Substring(0, 10)}...' with updates on {post.Metadata!.Updates[0].UpdatedOn} and {post.Metadata.Updates[1].UpdatedOn}.");
+            Console.WriteLine($"Post '{post.Title[..10]}...' with updates on {post.Metadata!.Updates[0].UpdatedOn} and {post.Metadata.Updates[1].UpdatedOn}.");
         }
 
         Console.WriteLine();
 
         #region CollectionIndexNestedPredicate
         var twentyTen = DateOnly.FromDateTime(new DateTime(2010, 1, 1));
-        var postsWithFirstCommit = await context.Posts
+        List<Post> postsWithFirstCommit = await context.Posts
             .Where(
                 p => p.Metadata!.Updates[0].UpdatedOn > twentyTen
                      && p.Metadata!.Updates[0].Commits[0].Comment == "Commit #1")
@@ -54,9 +54,9 @@ public static class JsonColumnsSample
         #endregion
 
         Console.WriteLine();
-        foreach (var post in postsWithFirstCommit)
+        foreach (Post post in postsWithFirstCommit)
         {
-            Console.WriteLine($"Post '{post.Title.Substring(0, 10)}...' with first commit on {post.Metadata!.Updates[0].Commits[0].CommittedOn}.");
+            Console.WriteLine($"Post '{post.Title[..10]}...' with first commit on {post.Metadata!.Updates[0].Commits[0].CommittedOn}.");
         }
 
         Console.WriteLine();
@@ -75,16 +75,13 @@ public static class JsonColumnsSample
         Console.WriteLine();
         foreach (var post in postsAndRecentUpdatesNullable)
         {
-            Console.WriteLine($"Post '{post.Title.Substring(0, 10)}...' with updates on {post.LatestUpdate?.ToString() ?? "<none>"} and {post.SecondLatestUpdate?.ToString() ?? "<none>"}.");
+            Console.WriteLine($"Post '{post.Title[..10]}...' with updates on {post.LatestUpdate?.ToString() ?? "<none>"} and {post.SecondLatestUpdate?.ToString() ?? "<none>"}.");
         }
 
         Console.WriteLine();
 
-#pragma warning disable CS8073
         #region CollectionIndexProjection
         var postsAndRecentUpdates = await context.Posts
-            .Where(p => p.Metadata!.Updates[0].UpdatedOn != null
-                        && p.Metadata!.Updates[1].UpdatedOn != null)
             .Select(p => new
             {
                 p.Title,
@@ -93,12 +90,11 @@ public static class JsonColumnsSample
             })
             .ToListAsync();
         #endregion
-#pragma warning restore CS8073
 
         Console.WriteLine();
         foreach (var post in postsAndRecentUpdates)
         {
-            Console.WriteLine($"Post '{post.Title.Substring(0, 10)}...' with updates on {post.LatestUpdate} and {post.SecondLatestUpdate}.");
+            Console.WriteLine($"Post '{post.Title[..10]}...' with updates on {post.LatestUpdate} and {post.SecondLatestUpdate}.");
         }
 
         Console.WriteLine();
@@ -116,19 +112,19 @@ public static class JsonColumnsSample
         Console.WriteLine();
         foreach (var post in postsAndFirstCommit)
         {
-            Console.WriteLine($"Post '{post.Title.Substring(0, 10)}...' with commit '{post.CommitComment?.ToString() ?? "<none>"}'.");
+            Console.WriteLine($"Post '{post.Title[..10]}...' with commit '{post.CommitComment?.ToString() ?? "<none>"}'.");
         }
 
         Console.WriteLine();
 
         #region AuthorsInChigley
-        var authorsInChigley = await context.Authors
+        List<Author> authorsInChigley = await context.Authors
             .Where(author => author.Contact.Address.City == "Chigley")
             .ToListAsync();
         #endregion
 
         Console.WriteLine();
-        foreach (var author in authorsInChigley)
+        foreach (Author author in authorsInChigley)
         {
             Console.WriteLine($"{author.Name} lives at '{author.Contact.Address.Street}' in Chigley.");
         }
@@ -136,7 +132,7 @@ public static class JsonColumnsSample
         Console.WriteLine();
 
         #region PostcodesInChigley
-        var postcodesInChigley = await context.Authors
+        List<string> postcodesInChigley = await context.Authors
             .Where(author => author.Contact.Address.City == "Chigley")
             .Select(author => author.Contact.Address.Postcode)
             .ToListAsync();
@@ -147,11 +143,11 @@ public static class JsonColumnsSample
         Console.WriteLine();
 
         #region OrderedAddresses
-        var orderedAddresses = await context.Authors
+        List<string> orderedAddresses = await context.Authors
             .Where(
                 author => (author.Contact.Address.City == "Chigley"
                            && author.Contact.Phone != null)
-                          || author.Name.StartsWith("D"))
+                          || author.Name.StartsWith('D'))
             .OrderBy(author => author.Contact.Phone)
             .Select(
                 author => author.Name + " (" + author.Contact.Address.Street
@@ -168,7 +164,7 @@ public static class JsonColumnsSample
 
         Console.WriteLine();
 
-        var authorsInChigleyWithPosts = await context.Authors
+        List<Author> authorsInChigleyWithPosts = await context.Authors
             .Where(
                 author => author.Contact.Address.City == "Chigley"
                           && author.Posts.Count > 1)
@@ -176,7 +172,7 @@ public static class JsonColumnsSample
             .ToListAsync();
 
         Console.WriteLine();
-        foreach (var author in authorsInChigleyWithPosts)
+        foreach (Author author in authorsInChigleyWithPosts)
         {
             Console.WriteLine($"{author.Name} has {author.Posts.Count} posts");
         }
@@ -189,7 +185,10 @@ public static class JsonColumnsSample
             .Select(
                 post => new
                 {
-                    post.Author!.Name, post.Metadata!.Views, Searches = post.Metadata.TopSearches, Commits = post.Metadata.Updates
+                    post.Author!.Name,
+                    post.Metadata!.Views,
+                    Searches = post.Metadata.TopSearches,
+                    Commits = post.Metadata.Updates
                 })
             .ToListAsync();
         #endregion
@@ -206,13 +205,13 @@ public static class JsonColumnsSample
         #region PostsWithSearchTerms
         var searchTerms = new[] { "Search #2", "Search #3", "Search #5", "Search #8", "Search #13", "Search #21", "Search #34" };
 
-        var postsWithSearchTerms = await context.Posts
+        List<Post> postsWithSearchTerms = await context.Posts
             .Where(post => post.Metadata!.TopSearches.Any(s => searchTerms.Contains(s.Term)))
             .ToListAsync();
         #endregion
 
         Console.WriteLine();
-        foreach (var postWithTerm in postsWithSearchTerms)
+        foreach (Post postWithTerm in postsWithSearchTerms)
         {
             Console.WriteLine(
                 $"Post {postWithTerm.Id} with terms '{string.Join("', '", postWithTerm.Metadata!.TopSearches.Select(s => s.Term))}'");
@@ -226,7 +225,7 @@ public static class JsonColumnsSample
         Console.WriteLine();
 
         #region UpdateDocument
-        var jeremy = await context.Authors.SingleAsync(author => author.Name.StartsWith("Jeremy"));
+        Author jeremy = await context.Authors.SingleAsync(author => author.Name.StartsWith("Jeremy"));
 
         jeremy.Contact = new() { Address = new("2 Riverside", "Trimbridge", "TB1 5ZS", "UK"), Phone = "01632 88346" };
 
@@ -239,7 +238,7 @@ public static class JsonColumnsSample
         Console.WriteLine();
 
         #region UpdateSubDocument
-        var brice = await context.Authors.SingleAsync(author => author.Name.StartsWith("Brice"));
+        Author brice = await context.Authors.SingleAsync(author => author.Name.StartsWith("Brice"));
 
         brice.Contact.Address = new("4 Riverside", "Trimbridge", "TB1 5ZS", "UK");
 
@@ -253,7 +252,7 @@ public static class JsonColumnsSample
         Console.WriteLine();
 
         #region UpdateProperty
-        var arthur = await context.Authors.SingleAsync(author => author.Name.StartsWith("Arthur"));
+        Author arthur = await context.Authors.SingleAsync(author => author.Name.StartsWith("Arthur"));
 
         arthur.Contact.Address.Country = "United Kingdom";
 
@@ -264,7 +263,7 @@ public static class JsonColumnsSample
 
         context.ChangeTracker.Clear();
 
-        var hackingPost = await context.Posts.SingleAsync(post => post.Title.StartsWith("Hacking"));
+        Post hackingPost = await context.Posts.SingleAsync(post => post.Title.StartsWith("Hacking"));
 
         hackingPost.Metadata!.Updates.Add(new PostUpdate(IPAddress.Broadcast, DateOnly.FromDateTime(DateTime.UtcNow)) { UpdatedBy = "User" });
         hackingPost.Metadata!.TopGeographies.Clear();
@@ -272,7 +271,7 @@ public static class JsonColumnsSample
         await context.SaveChangesAsync();
     }
 
-    private static void PrintSampleName([CallerMemberName] string? methodName = null)
+    static void PrintSampleName([CallerMemberName] string? methodName = null)
     {
         Console.WriteLine($">>>> Sample: {methodName}");
         Console.WriteLine();
@@ -312,9 +311,7 @@ public abstract class JsonBlogsContextBase : BlogsContext
     }
 }
 
-public class JsonBlogsContext : JsonBlogsContextBase
-{
-}
+public class JsonBlogsContext : JsonBlogsContextBase;
 
 public class JsonBlogsContextSqlite : JsonBlogsContextBase
 {

@@ -3,16 +3,14 @@ using Microsoft.EntityFrameworkCore;
 
 namespace EFModeling.EntityProperties.FluentAPI.IgnoreProperty;
 
-internal class MyContext : DbContext
+class MyContext : DbContext
 {
     public DbSet<Blog> Blogs { get; set; }
 
     #region IgnoreProperty
-    protected override void OnModelCreating(ModelBuilder modelBuilder)
-    {
+    protected override void OnModelCreating(ModelBuilder modelBuilder) =>
         modelBuilder.Entity<Blog>()
             .Ignore(b => b.LoadedFromDatabase);
-    }
     #endregion
 }
 

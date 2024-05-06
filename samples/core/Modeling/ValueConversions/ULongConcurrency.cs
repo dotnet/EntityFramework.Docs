@@ -10,7 +10,7 @@ namespace EFModeling.ValueConversions;
 
 public class ULongConcurrency : Program
 {
-    public void Run()
+    public static void Run()
     {
         ConsoleWriteLines("Sample showing how to map rowversion to ulong...");
 
@@ -32,7 +32,7 @@ public class ULongConcurrency : Program
         {
             ConsoleWriteLines("Read the entity back in one context...");
 
-            var blog = context.Set<Blog>().Single();
+            Blog blog = context.Set<Blog>().Single();
             blog.Name = "TwoUnicorns";
 
             using (var context2 = new SampleDbContext())
@@ -53,7 +53,7 @@ public class ULongConcurrency : Program
             {
                 ConsoleWriteLines($"{e.GetType().FullName}: {e.Message}");
 
-                var databaseValues = context.Entry(blog).GetDatabaseValues();
+                Microsoft.EntityFrameworkCore.ChangeTracking.PropertyValues databaseValues = context.Entry(blog).GetDatabaseValues();
                 context.Entry(blog).OriginalValues.SetValues(databaseValues);
 
                 ConsoleWriteLines("Refresh original values and save again...");
@@ -67,18 +67,16 @@ public class ULongConcurrency : Program
 
     public class SampleDbContext : DbContext
     {
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            #region ConfigureULongConcurrency
+        protected override void OnModelCreating(ModelBuilder modelBuilder) =>
+        #region ConfigureULongConcurrency
             modelBuilder.Entity<Blog>()
                 .Property(e => e.Version)
                 .IsRowVersion()
                 .HasConversion<byte[]>();
-            #endregion
-        }
+        #endregion
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-            => optionsBuilder
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) =>
+            optionsBuilder
                 .LogTo(Console.WriteLine, new[] { RelationalEventId.CommandExecuted })
                 .UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=ULongConcurrency;Trusted_Connection=True")
                 .EnableSensitiveDataLogging();

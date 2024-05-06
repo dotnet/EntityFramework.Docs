@@ -4,9 +4,9 @@ using System.Data.Common;
 
 public class CachedDailyMessageDataReader : DbDataReader
 {
-    private readonly int _id;
-    private readonly string _message;
-    private bool _read;
+    readonly int _id;
+    readonly string _message;
+    bool _read;
 
     public CachedDailyMessageDataReader(int id, string message)
     {

@@ -256,7 +256,7 @@ public static class ExplicitKeysSamples
 
         using var context = new BlogsContext();
 
-        var post = GetDisconnectedPost();
+        Post post = GetDisconnectedPost();
 
         #region Deleting_dependent_child_entities_1
         context.Attach(post);
@@ -273,7 +273,7 @@ public static class ExplicitKeysSamples
 
         Console.WriteLine();
 
-        Post GetDisconnectedPost()
+        static Post GetDisconnectedPost()
         {
             using var tempContext = new BlogsContext();
             return tempContext.Posts.Find(2);
@@ -290,7 +290,7 @@ public static class ExplicitKeysSamples
 
         using var context = new BlogsContext();
 
-        var blog = GetDisconnectedBlogAndPosts();
+        Blog blog = GetDisconnectedBlogAndPosts();
 
         #region Deleting_dependent_child_entities_2
         // Attach a blog and associated posts
@@ -310,7 +310,7 @@ public static class ExplicitKeysSamples
 
         Console.WriteLine();
 
-        Blog GetDisconnectedBlogAndPosts()
+        static Blog GetDisconnectedBlogAndPosts()
         {
             using var tempContext = new BlogsContext();
             return tempContext.Blogs.Include(e => e.Posts).Single();
@@ -327,7 +327,7 @@ public static class ExplicitKeysSamples
 
         using var context = new BlogsContext();
 
-        var blog = GetDisconnectedBlogAndPosts();
+        Blog blog = GetDisconnectedBlogAndPosts();
 
         #region Deleting_principal_parent_entities_1
         // Attach a blog and associated posts
@@ -347,7 +347,7 @@ public static class ExplicitKeysSamples
 
         Console.WriteLine();
 
-        Blog GetDisconnectedBlogAndPosts()
+        static Blog GetDisconnectedBlogAndPosts()
         {
             using var tempContext = new BlogsContext();
             return tempContext.Blogs.Include(e => e.Posts).Single();
@@ -421,12 +421,9 @@ public class Post
 
 public class BlogsContext : DbContext
 {
-    private readonly bool _quiet;
+    readonly bool _quiet;
 
-    public BlogsContext(bool quiet = false)
-    {
-        _quiet = quiet;
-    }
+    public BlogsContext(bool quiet = false) => _quiet = quiet;
 
     public DbSet<Blog> Blogs { get; set; }
     public DbSet<Post> Posts { get; set; }

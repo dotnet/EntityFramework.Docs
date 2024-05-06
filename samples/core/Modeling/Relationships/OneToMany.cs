@@ -55,28 +55,24 @@ public class OneToMany
         public class BlogContext1 : BlogContext0
         {
             #region OneToManyRequiredFromPrincipal
-            protected override void OnModelCreating(ModelBuilder modelBuilder)
-            {
+            protected override void OnModelCreating(ModelBuilder modelBuilder) =>
                 modelBuilder.Entity<Blog>()
                     .HasMany(e => e.Posts)
                     .WithOne(e => e.Blog)
                     .HasForeignKey(e => e.BlogId)
                     .IsRequired();
-            }
             #endregion
         }
 
         public class BlogContext2 : BlogContext0
         {
             #region OneToManyRequiredFromDependent
-            protected override void OnModelCreating(ModelBuilder modelBuilder)
-            {
+            protected override void OnModelCreating(ModelBuilder modelBuilder) =>
                 modelBuilder.Entity<Post>()
                     .HasOne(e => e.Blog)
                     .WithMany(e => e.Posts)
                     .HasForeignKey(e => e.BlogId)
                     .IsRequired();
-            }
             #endregion
         }
     }
@@ -127,28 +123,24 @@ public class OneToMany
         public class BlogContext1 : BlogContext0
         {
             #region OneToManyOptionalFromPrincipal
-            protected override void OnModelCreating(ModelBuilder modelBuilder)
-            {
+            protected override void OnModelCreating(ModelBuilder modelBuilder) =>
                 modelBuilder.Entity<Blog>()
                     .HasMany(e => e.Posts)
                     .WithOne(e => e.Blog)
                     .HasForeignKey(e => e.BlogId)
                     .IsRequired(false);
-            }
             #endregion
         }
 
         public class BlogContext2 : BlogContext0
         {
             #region OneToManyOptionalFromDependent
-            protected override void OnModelCreating(ModelBuilder modelBuilder)
-            {
+            protected override void OnModelCreating(ModelBuilder modelBuilder) =>
                 modelBuilder.Entity<Post>()
                     .HasOne(e => e.Blog)
                     .WithMany(e => e.Posts)
                     .HasForeignKey(e => e.BlogId)
                     .IsRequired(false);
-            }
             #endregion
         }
     }
@@ -195,41 +187,35 @@ public class OneToMany
                 => optionsBuilder.UseSqlite($"DataSource = RequiredShadow{GetType().Name}.db");
 
             #region OneToManyRequiredShadowConfig
-            protected override void OnModelCreating(ModelBuilder modelBuilder)
-            {
+            protected override void OnModelCreating(ModelBuilder modelBuilder) =>
                 modelBuilder.Entity<Blog>()
                     .HasMany(e => e.Posts)
                     .WithOne(e => e.Blog)
                     .IsRequired();
-            }
             #endregion
         }
 
         public class BlogContext1 : BlogContext0
         {
             #region OneToManyRequiredShadowFromPrincipal
-            protected override void OnModelCreating(ModelBuilder modelBuilder)
-            {
+            protected override void OnModelCreating(ModelBuilder modelBuilder) =>
                 modelBuilder.Entity<Blog>()
                     .HasMany(e => e.Posts)
                     .WithOne(e => e.Blog)
                     .HasForeignKey("BlogId")
                     .IsRequired();
-            }
             #endregion
         }
 
         public class BlogContext2 : BlogContext0
         {
             #region OneToManyRequiredShadowFromDependent
-            protected override void OnModelCreating(ModelBuilder modelBuilder)
-            {
+            protected override void OnModelCreating(ModelBuilder modelBuilder) =>
                 modelBuilder.Entity<Post>()
                     .HasOne(e => e.Blog)
                     .WithMany(e => e.Posts)
                     .HasForeignKey("BlogId")
                     .IsRequired();
-            }
             #endregion
         }
     }
@@ -279,28 +265,24 @@ public class OneToMany
         public class BlogContext1 : BlogContext0
         {
             #region OneToManyOptionalShadowFromPrincipal
-            protected override void OnModelCreating(ModelBuilder modelBuilder)
-            {
+            protected override void OnModelCreating(ModelBuilder modelBuilder) =>
                 modelBuilder.Entity<Blog>()
                     .HasMany(e => e.Posts)
                     .WithOne(e => e.Blog)
                     .HasForeignKey("BlogId")
                     .IsRequired(false);
-            }
             #endregion
         }
 
         public class BlogContext2 : BlogContext0
         {
             #region OneToManyOptionalShadowFromDependent
-            protected override void OnModelCreating(ModelBuilder modelBuilder)
-            {
+            protected override void OnModelCreating(ModelBuilder modelBuilder) =>
                 modelBuilder.Entity<Post>()
                     .HasOne(e => e.Blog)
                     .WithMany(e => e.Posts)
                     .HasForeignKey("BlogId")
                     .IsRequired(false);
-            }
             #endregion
         }
     }
@@ -350,28 +332,24 @@ public class OneToMany
         public class BlogContext1 : BlogContext0
         {
             #region OneToManyRequiredFromPrincipalNoNavigationToPrincipal
-            protected override void OnModelCreating(ModelBuilder modelBuilder)
-            {
+            protected override void OnModelCreating(ModelBuilder modelBuilder) =>
                 modelBuilder.Entity<Blog>()
                     .HasMany(e => e.Posts)
                     .WithOne()
                     .HasForeignKey(e => e.BlogId)
                     .IsRequired();
-            }
             #endregion
         }
 
         public class BlogContext2 : BlogContext0
         {
             #region OneToManyRequiredFromDependentNoNavigationToPrincipal
-            protected override void OnModelCreating(ModelBuilder modelBuilder)
-            {
+            protected override void OnModelCreating(ModelBuilder modelBuilder) =>
                 modelBuilder.Entity<Post>()
                     .HasOne<Blog>()
                     .WithMany(e => e.Posts)
                     .HasForeignKey(e => e.BlogId)
                     .IsRequired();
-            }
             #endregion
         }
     }
@@ -421,28 +399,24 @@ public class OneToMany
         public class BlogContext1 : BlogContext0
         {
             #region OneToManyOptionalFromPrincipalNoNavigationToPrincipal
-            protected override void OnModelCreating(ModelBuilder modelBuilder)
-            {
+            protected override void OnModelCreating(ModelBuilder modelBuilder) =>
                 modelBuilder.Entity<Blog>()
                     .HasMany(e => e.Posts)
                     .WithOne()
                     .HasForeignKey(e => e.BlogId)
                     .IsRequired(false);
-            }
             #endregion
         }
 
         public class BlogContext2 : BlogContext0
         {
             #region OneToManyOptionalFromDependentNoNavigationToPrincipal
-            protected override void OnModelCreating(ModelBuilder modelBuilder)
-            {
+            protected override void OnModelCreating(ModelBuilder modelBuilder) =>
                 modelBuilder.Entity<Post>()
                     .HasOne<Blog>()
                     .WithMany(e => e.Posts)
                     .HasForeignKey(e => e.BlogId)
                     .IsRequired(false);
-            }
             #endregion
         }
     }
@@ -488,41 +462,35 @@ public class OneToMany
                 => optionsBuilder.UseSqlite($"DataSource = RequiredShadowNoNavigationToPrincipal{GetType().Name}.db");
 
             #region OneToManyRequiredShadowNoNavigationToPrincipalConfig
-            protected override void OnModelCreating(ModelBuilder modelBuilder)
-            {
+            protected override void OnModelCreating(ModelBuilder modelBuilder) =>
                 modelBuilder.Entity<Blog>()
                     .HasMany(e => e.Posts)
                     .WithOne()
                     .IsRequired();
-            }
             #endregion
         }
 
         public class BlogContext1 : BlogContext0
         {
             #region OneToManyRequiredShadowFromPrincipalNoNavigationToPrincipal
-            protected override void OnModelCreating(ModelBuilder modelBuilder)
-            {
+            protected override void OnModelCreating(ModelBuilder modelBuilder) =>
                 modelBuilder.Entity<Blog>()
                     .HasMany(e => e.Posts)
                     .WithOne()
                     .HasForeignKey("BlogId")
                     .IsRequired();
-            }
             #endregion
         }
 
         public class BlogContext2 : BlogContext0
         {
             #region OneToManyRequiredShadowFromDependentNoNavigationToPrincipal
-            protected override void OnModelCreating(ModelBuilder modelBuilder)
-            {
+            protected override void OnModelCreating(ModelBuilder modelBuilder) =>
                 modelBuilder.Entity<Post>()
                     .HasOne<Blog>()
                     .WithMany(e => e.Posts)
                     .HasForeignKey("BlogId")
                     .IsRequired();
-            }
             #endregion
         }
     }
@@ -571,28 +539,24 @@ public class OneToMany
         public class BlogContext1 : BlogContext0
         {
             #region OneToManyOptionalShadowFromPrincipalNoNavigationToPrincipal
-            protected override void OnModelCreating(ModelBuilder modelBuilder)
-            {
+            protected override void OnModelCreating(ModelBuilder modelBuilder) =>
                 modelBuilder.Entity<Blog>()
                     .HasMany(e => e.Posts)
                     .WithOne()
                     .HasForeignKey("BlogId")
                     .IsRequired(false);
-            }
             #endregion
         }
 
         public class BlogContext2 : BlogContext0
         {
             #region OneToManyOptionalShadowFromDependentNoNavigationToPrincipal
-            protected override void OnModelCreating(ModelBuilder modelBuilder)
-            {
+            protected override void OnModelCreating(ModelBuilder modelBuilder) =>
                 modelBuilder.Entity<Post>()
                     .HasOne<Blog>()
                     .WithMany(e => e.Posts)
                     .HasForeignKey("BlogId")
                     .IsRequired(false);
-            }
             #endregion
         }
     }
@@ -642,28 +606,24 @@ public class OneToMany
         public class BlogContext1 : BlogContext0
         {
             #region OneToManyRequiredFromPrincipalNoNavigationToDependents
-            protected override void OnModelCreating(ModelBuilder modelBuilder)
-            {
+            protected override void OnModelCreating(ModelBuilder modelBuilder) =>
                 modelBuilder.Entity<Blog>()
                     .HasMany<Post>()
                     .WithOne(e => e.Blog)
                     .HasForeignKey(e => e.BlogId)
                     .IsRequired();
-            }
             #endregion
         }
 
         public class BlogContext2 : BlogContext0
         {
             #region OneToManyRequiredFromDependentNoNavigationToDependents
-            protected override void OnModelCreating(ModelBuilder modelBuilder)
-            {
+            protected override void OnModelCreating(ModelBuilder modelBuilder) =>
                 modelBuilder.Entity<Post>()
                     .HasOne(e => e.Blog)
                     .WithMany()
                     .HasForeignKey(e => e.BlogId)
                     .IsRequired();
-            }
             #endregion
         }
     }
@@ -713,28 +673,24 @@ public class OneToMany
         public class BlogContext1 : BlogContext0
         {
             #region OneToManyOptionalFromPrincipalNoNavigationToDependents
-            protected override void OnModelCreating(ModelBuilder modelBuilder)
-            {
+            protected override void OnModelCreating(ModelBuilder modelBuilder) =>
                 modelBuilder.Entity<Blog>()
                     .HasMany<Post>()
                     .WithOne(e => e.Blog)
                     .HasForeignKey(e => e.BlogId)
                     .IsRequired(false);
-            }
             #endregion
         }
 
         public class BlogContext2 : BlogContext0
         {
             #region OneToManyOptionalFromDependentNoNavigationToDependents
-            protected override void OnModelCreating(ModelBuilder modelBuilder)
-            {
+            protected override void OnModelCreating(ModelBuilder modelBuilder) =>
                 modelBuilder.Entity<Post>()
                     .HasOne(e => e.Blog)
                     .WithMany()
                     .HasForeignKey(e => e.BlogId)
                     .IsRequired(false);
-            }
             #endregion
         }
     }
@@ -783,28 +739,24 @@ public class OneToMany
         public class BlogContext1 : BlogContext0
         {
             #region OneToManyRequiredShadowFromPrincipalNoNavigationToDependents
-            protected override void OnModelCreating(ModelBuilder modelBuilder)
-            {
+            protected override void OnModelCreating(ModelBuilder modelBuilder) =>
                 modelBuilder.Entity<Blog>()
                     .HasMany<Post>()
                     .WithOne(e => e.Blog)
                     .HasForeignKey("BlogId")
                     .IsRequired();
-            }
             #endregion
         }
 
         public class BlogContext2 : BlogContext0
         {
             #region OneToManyRequiredShadowFromDependentNoNavigationToDependents
-            protected override void OnModelCreating(ModelBuilder modelBuilder)
-            {
+            protected override void OnModelCreating(ModelBuilder modelBuilder) =>
                 modelBuilder.Entity<Post>()
                     .HasOne(e => e.Blog)
                     .WithMany()
                     .HasForeignKey("BlogId")
                     .IsRequired();
-            }
             #endregion
         }
     }
@@ -853,28 +805,24 @@ public class OneToMany
         public class BlogContext1 : BlogContext0
         {
             #region OneToManyOptionalShadowFromPrincipalNoNavigationToDependents
-            protected override void OnModelCreating(ModelBuilder modelBuilder)
-            {
+            protected override void OnModelCreating(ModelBuilder modelBuilder) =>
                 modelBuilder.Entity<Blog>()
                     .HasMany<Post>()
                     .WithOne(e => e.Blog)
                     .HasForeignKey("BlogId")
                     .IsRequired(false);
-            }
             #endregion
         }
 
         public class BlogContext2 : BlogContext0
         {
             #region OneToManyOptionalShadowFromDependentNoNavigationToDependents
-            protected override void OnModelCreating(ModelBuilder modelBuilder)
-            {
+            protected override void OnModelCreating(ModelBuilder modelBuilder) =>
                 modelBuilder.Entity<Post>()
                     .HasOne(e => e.Blog)
                     .WithMany()
                     .HasForeignKey("BlogId")
                     .IsRequired(false);
-            }
             #endregion
         }
     }
@@ -920,40 +868,34 @@ public class OneToMany
                 => optionsBuilder.UseSqlite($"DataSource = RequiredNoNavigations{GetType().Name}.db");
 
             #region OneToManyRequiredNoNavigationsConfig
-            protected override void OnModelCreating(ModelBuilder modelBuilder)
-            {
+            protected override void OnModelCreating(ModelBuilder modelBuilder) =>
                 modelBuilder.Entity<Blog>()
                     .HasMany<Post>()
                     .WithOne();
-            }
             #endregion
         }
 
         public class BlogContext1 : BlogContext0
         {
             #region OneToManyRequiredFromPrincipalNoNavigations
-            protected override void OnModelCreating(ModelBuilder modelBuilder)
-            {
+            protected override void OnModelCreating(ModelBuilder modelBuilder) =>
                 modelBuilder.Entity<Blog>()
                     .HasMany<Post>()
                     .WithOne()
                     .HasForeignKey(e => e.BlogId)
                     .IsRequired();
-            }
             #endregion
         }
 
         public class BlogContext2 : BlogContext0
         {
             #region OneToManyRequiredFromDependentNoNavigations
-            protected override void OnModelCreating(ModelBuilder modelBuilder)
-            {
+            protected override void OnModelCreating(ModelBuilder modelBuilder) =>
                 modelBuilder.Entity<Post>()
                     .HasOne<Blog>()
                     .WithMany()
                     .HasForeignKey(e => e.BlogId)
                     .IsRequired();
-            }
             #endregion
         }
     }
@@ -999,40 +941,34 @@ public class OneToMany
                 => optionsBuilder.UseSqlite($"DataSource = OptionalNoNavigations{GetType().Name}.db");
 
             #region OneToManyOptionalNoNavigationsConfig
-            protected override void OnModelCreating(ModelBuilder modelBuilder)
-            {
+            protected override void OnModelCreating(ModelBuilder modelBuilder) =>
                 modelBuilder.Entity<Blog>()
                     .HasMany<Post>()
                     .WithOne();
-            }
             #endregion
         }
 
         public class BlogContext1 : BlogContext0
         {
             #region OneToManyOptionalFromPrincipalNoNavigations
-            protected override void OnModelCreating(ModelBuilder modelBuilder)
-            {
+            protected override void OnModelCreating(ModelBuilder modelBuilder) =>
                 modelBuilder.Entity<Blog>()
                     .HasMany<Post>()
                     .WithOne()
                     .HasForeignKey(e => e.BlogId)
                     .IsRequired(false);
-            }
             #endregion
         }
 
         public class BlogContext2 : BlogContext0
         {
             #region OneToManyOptionalFromDependentNoNavigations
-            protected override void OnModelCreating(ModelBuilder modelBuilder)
-            {
+            protected override void OnModelCreating(ModelBuilder modelBuilder) =>
                 modelBuilder.Entity<Post>()
                     .HasOne<Blog>()
                     .WithMany()
                     .HasForeignKey(e => e.BlogId)
                     .IsRequired(false);
-            }
             #endregion
         }
     }
@@ -1077,41 +1013,35 @@ public class OneToMany
                 => optionsBuilder.UseSqlite($"DataSource = RequiredShadowNoNavigations{GetType().Name}.db");
 
             #region OneToManyRequiredShadowNoNavigationsConfig
-            protected override void OnModelCreating(ModelBuilder modelBuilder)
-            {
+            protected override void OnModelCreating(ModelBuilder modelBuilder) =>
                 modelBuilder.Entity<Blog>()
                     .HasMany<Post>()
                     .WithOne()
                     .IsRequired();
-            }
             #endregion
         }
 
         public class BlogContext1 : BlogContext0
         {
             #region OneToManyRequiredShadowFromPrincipalNoNavigations
-            protected override void OnModelCreating(ModelBuilder modelBuilder)
-            {
+            protected override void OnModelCreating(ModelBuilder modelBuilder) =>
                 modelBuilder.Entity<Blog>()
                     .HasMany<Post>()
                     .WithOne()
                     .HasForeignKey("BlogId")
                     .IsRequired();
-            }
             #endregion
         }
 
         public class BlogContext2 : BlogContext0
         {
             #region OneToManyRequiredShadowFromDependentNoNavigations
-            protected override void OnModelCreating(ModelBuilder modelBuilder)
-            {
+            protected override void OnModelCreating(ModelBuilder modelBuilder) =>
                 modelBuilder.Entity<Post>()
                     .HasOne<Blog>()
                     .WithMany()
                     .HasForeignKey("BlogId")
                     .IsRequired();
-            }
             #endregion
         }
     }
@@ -1156,40 +1086,34 @@ public class OneToMany
                 => optionsBuilder.UseSqlite($"DataSource = OptionalShadow{GetType().Name}.db");
 
             #region OneToManyOptionalShadowNoNavigationsConfig
-            protected override void OnModelCreating(ModelBuilder modelBuilder)
-            {
+            protected override void OnModelCreating(ModelBuilder modelBuilder) =>
                 modelBuilder.Entity<Blog>()
                     .HasMany<Post>()
                     .WithOne();
-            }
             #endregion
         }
 
         public class BlogContext1 : BlogContext0
         {
             #region OneToManyOptionalShadowFromPrincipalNoNavigations
-            protected override void OnModelCreating(ModelBuilder modelBuilder)
-            {
+            protected override void OnModelCreating(ModelBuilder modelBuilder) =>
                 modelBuilder.Entity<Blog>()
                     .HasMany<Post>()
                     .WithOne()
                     .HasForeignKey("BlogId")
                     .IsRequired(false);
-            }
             #endregion
         }
 
         public class BlogContext2 : BlogContext0
         {
             #region OneToManyOptionalShadowFromDependentNoNavigations
-            protected override void OnModelCreating(ModelBuilder modelBuilder)
-            {
+            protected override void OnModelCreating(ModelBuilder modelBuilder) =>
                 modelBuilder.Entity<Post>()
                     .HasOne<Blog>()
                     .WithMany()
                     .HasForeignKey("BlogId")
                     .IsRequired(false);
-            }
             #endregion
         }
     }
@@ -1238,43 +1162,37 @@ public class OneToMany
                 => optionsBuilder.UseSqlite($"DataSource = RequiredWithAlternateKey{GetType().Name}.db");
 
             #region OneToManyRequiredWithAlternateKeyConfig
-            protected override void OnModelCreating(ModelBuilder modelBuilder)
-            {
+            protected override void OnModelCreating(ModelBuilder modelBuilder) =>
                 modelBuilder.Entity<Blog>()
                     .HasMany(e => e.Posts)
                     .WithOne(e => e.Blog)
                     .HasPrincipalKey(e => e.AlternateId);
-            }
             #endregion
         }
 
         public class BlogContext1 : BlogContext0
         {
             #region OneToManyRequiredFromPrincipalWithAlternateKey
-            protected override void OnModelCreating(ModelBuilder modelBuilder)
-            {
+            protected override void OnModelCreating(ModelBuilder modelBuilder) =>
                 modelBuilder.Entity<Blog>()
                     .HasMany(e => e.Posts)
                     .WithOne(e => e.Blog)
                     .HasPrincipalKey(e => e.AlternateId)
                     .HasForeignKey(e => e.BlogId)
                     .IsRequired();
-            }
             #endregion
         }
 
         public class BlogContext2 : BlogContext0
         {
             #region OneToManyRequiredFromDependentWithAlternateKey
-            protected override void OnModelCreating(ModelBuilder modelBuilder)
-            {
+            protected override void OnModelCreating(ModelBuilder modelBuilder) =>
                 modelBuilder.Entity<Post>()
                     .HasOne(e => e.Blog)
                     .WithMany(e => e.Posts)
                     .HasPrincipalKey(e => e.AlternateId)
                     .HasForeignKey(e => e.BlogId)
                     .IsRequired();
-            }
             #endregion
         }
     }
@@ -1323,43 +1241,37 @@ public class OneToMany
                 => optionsBuilder.UseSqlite($"DataSource = OptionalWithAlternateKey{GetType().Name}.db");
 
             #region OneToManyOptionalWithAlternateKeyConfig
-            protected override void OnModelCreating(ModelBuilder modelBuilder)
-            {
+            protected override void OnModelCreating(ModelBuilder modelBuilder) =>
                 modelBuilder.Entity<Blog>()
                     .HasMany(e => e.Posts)
                     .WithOne(e => e.Blog)
                     .HasPrincipalKey(e => e.AlternateId);
-            }
             #endregion
         }
 
         public class BlogContext1 : BlogContext0
         {
             #region OneToManyOptionalFromPrincipalWithAlternateKey
-            protected override void OnModelCreating(ModelBuilder modelBuilder)
-            {
+            protected override void OnModelCreating(ModelBuilder modelBuilder) =>
                 modelBuilder.Entity<Blog>()
                     .HasMany(e => e.Posts)
                     .WithOne(e => e.Blog)
                     .HasPrincipalKey(e => e.AlternateId)
                     .HasForeignKey(e => e.BlogId)
                     .IsRequired(false);
-            }
             #endregion
         }
 
         public class BlogContext2 : BlogContext0
         {
             #region OneToManyOptionalFromDependentWithAlternateKey
-            protected override void OnModelCreating(ModelBuilder modelBuilder)
-            {
+            protected override void OnModelCreating(ModelBuilder modelBuilder) =>
                 modelBuilder.Entity<Post>()
                     .HasOne(e => e.Blog)
                     .WithMany(e => e.Posts)
                     .HasPrincipalKey(e => e.AlternateId)
                     .HasForeignKey(e => e.BlogId)
                     .IsRequired(false);
-            }
             #endregion
         }
     }
@@ -1407,44 +1319,38 @@ public class OneToMany
                 => optionsBuilder.UseSqlite($"DataSource = RequiredShadowWithAlternateKey{GetType().Name}.db");
 
             #region OneToManyRequiredShadowWithAlternateKeyConfig
-            protected override void OnModelCreating(ModelBuilder modelBuilder)
-            {
+            protected override void OnModelCreating(ModelBuilder modelBuilder) =>
                 modelBuilder.Entity<Blog>()
                     .HasMany(e => e.Posts)
                     .WithOne(e => e.Blog)
                     .HasPrincipalKey(e => e.AlternateId)
                     .IsRequired();
-            }
             #endregion
         }
 
         public class BlogContext1 : BlogContext0
         {
             #region OneToManyRequiredShadowFromPrincipalWithAlternateKey
-            protected override void OnModelCreating(ModelBuilder modelBuilder)
-            {
+            protected override void OnModelCreating(ModelBuilder modelBuilder) =>
                 modelBuilder.Entity<Blog>()
                     .HasMany(e => e.Posts)
                     .WithOne(e => e.Blog)
                     .HasPrincipalKey(e => e.AlternateId)
                     .HasForeignKey("BlogAlternateId")
                     .IsRequired();
-            }
             #endregion
         }
 
         public class BlogContext2 : BlogContext0
         {
             #region OneToManyRequiredShadowFromDependentWithAlternateKey
-            protected override void OnModelCreating(ModelBuilder modelBuilder)
-            {
+            protected override void OnModelCreating(ModelBuilder modelBuilder) =>
                 modelBuilder.Entity<Post>()
                     .HasOne(e => e.Blog)
                     .WithMany(e => e.Posts)
                     .HasPrincipalKey(e => e.AlternateId)
                     .HasForeignKey("BlogAlternateId")
                     .IsRequired();
-            }
             #endregion
         }
     }
@@ -1492,43 +1398,37 @@ public class OneToMany
                 => optionsBuilder.UseSqlite($"DataSource = OptionalShadowWithAlternateKey{GetType().Name}.db");
 
             #region OneToManyOptionalShadowWithAlternateKeyConfig
-            protected override void OnModelCreating(ModelBuilder modelBuilder)
-            {
+            protected override void OnModelCreating(ModelBuilder modelBuilder) =>
                 modelBuilder.Entity<Blog>()
                     .HasMany(e => e.Posts)
                     .WithOne(e => e.Blog)
                     .HasPrincipalKey(e => e.AlternateId);
-            }
             #endregion
         }
 
         public class BlogContext1 : BlogContext0
         {
             #region OneToManyOptionalShadowFromPrincipalWithAlternateKey
-            protected override void OnModelCreating(ModelBuilder modelBuilder)
-            {
+            protected override void OnModelCreating(ModelBuilder modelBuilder) =>
                 modelBuilder.Entity<Blog>()
                     .HasMany(e => e.Posts)
                     .WithOne(e => e.Blog)
                     .HasPrincipalKey(e => e.AlternateId)
                     .HasForeignKey("BlogAlternateId")
                     .IsRequired(false);
-            }
             #endregion
         }
 
         public class BlogContext2 : BlogContext0
         {
             #region OneToManyOptionalShadowFromDependentWithAlternateKey
-            protected override void OnModelCreating(ModelBuilder modelBuilder)
-            {
+            protected override void OnModelCreating(ModelBuilder modelBuilder) =>
                 modelBuilder.Entity<Post>()
                     .HasOne(e => e.Blog)
                     .WithMany(e => e.Posts)
                     .HasPrincipalKey(e => e.AlternateId)
                     .HasForeignKey("BlogAlternateId")
                     .IsRequired(false);
-            }
             #endregion
         }
     }
@@ -1578,19 +1478,16 @@ public class OneToMany
                 => optionsBuilder.UseSqlite($"DataSource = RequiredWithCompositeKey{GetType().Name}.db");
 
             #region OneToManyRequiredWithCompositeKeyConfig
-            protected override void OnModelCreating(ModelBuilder modelBuilder)
-            {
+            protected override void OnModelCreating(ModelBuilder modelBuilder) =>
                 modelBuilder.Entity<Blog>()
                     .HasKey(e => new { e.Id1, e.Id2 });
-            }
             #endregion
         }
 
         public class BlogContext1 : BlogContext0
         {
             #region OneToManyRequiredFromPrincipalWithCompositeKey
-            protected override void OnModelCreating(ModelBuilder modelBuilder)
-            {
+            protected override void OnModelCreating(ModelBuilder modelBuilder) =>
                 modelBuilder.Entity<Blog>(
                     nestedBuilder =>
                     {
@@ -1602,7 +1499,6 @@ public class OneToMany
                             .HasForeignKey(e => new { e.BlogId1, e.BlogId2 })
                             .IsRequired();
                     });
-            }
             #endregion
         }
 
@@ -1670,19 +1566,16 @@ public class OneToMany
                 => optionsBuilder.UseSqlite($"DataSource = OptionalWithCompositeKey{GetType().Name}.db");
 
             #region OneToManyOptionalWithCompositeKeyConfig
-            protected override void OnModelCreating(ModelBuilder modelBuilder)
-            {
+            protected override void OnModelCreating(ModelBuilder modelBuilder) =>
                 modelBuilder.Entity<Blog>()
                     .HasKey(e => new { e.Id1, e.Id2 });
-            }
             #endregion
         }
 
         public class BlogContext1 : BlogContext0
         {
             #region OneToManyOptionalFromPrincipalWithCompositeKey
-            protected override void OnModelCreating(ModelBuilder modelBuilder)
-            {
+            protected override void OnModelCreating(ModelBuilder modelBuilder) =>
                 modelBuilder.Entity<Blog>(
                     b =>
                     {
@@ -1694,7 +1587,6 @@ public class OneToMany
                             .HasForeignKey(e => new { e.BlogId1, e.BlogId2 })
                             .IsRequired(false);
                     });
-            }
             #endregion
         }
 
@@ -1760,19 +1652,16 @@ public class OneToMany
                 => optionsBuilder.UseSqlite($"DataSource = RequiredShadowWithCompositeKey{GetType().Name}.db");
 
             #region OneToManyRequiredShadowWithCompositeKeyConfig
-            protected override void OnModelCreating(ModelBuilder modelBuilder)
-            {
+            protected override void OnModelCreating(ModelBuilder modelBuilder) =>
                 modelBuilder.Entity<Blog>()
                     .HasKey(e => new { e.Id1, e.Id2 });
-            }
             #endregion
         }
 
         public class BlogContext1 : BlogContext0
         {
             #region OneToManyRequiredShadowFromPrincipalWithCompositeKey
-            protected override void OnModelCreating(ModelBuilder modelBuilder)
-            {
+            protected override void OnModelCreating(ModelBuilder modelBuilder) =>
                 modelBuilder.Entity<Blog>(
                     b =>
                     {
@@ -1784,7 +1673,6 @@ public class OneToMany
                             .HasForeignKey("BlogId1", "BlogId2")
                             .IsRequired();
                     });
-            }
             #endregion
         }
 
@@ -1850,19 +1738,16 @@ public class OneToMany
                 => optionsBuilder.UseSqlite($"DataSource = OptionalShadowWithCompositeKey{GetType().Name}.db");
 
             #region OneToManyOptionalShadowWithCompositeKeyConfig
-            protected override void OnModelCreating(ModelBuilder modelBuilder)
-            {
+            protected override void OnModelCreating(ModelBuilder modelBuilder) =>
                 modelBuilder.Entity<Blog>()
                     .HasKey(e => new { e.Id1, e.Id2 });
-            }
             #endregion
         }
 
         public class BlogContext1 : BlogContext0
         {
             #region OneToManyOptionalShadowFromPrincipalWithCompositeKey
-            protected override void OnModelCreating(ModelBuilder modelBuilder)
-            {
+            protected override void OnModelCreating(ModelBuilder modelBuilder) =>
                 modelBuilder.Entity<Blog>(
                     b =>
                     {
@@ -1874,7 +1759,6 @@ public class OneToMany
                             .HasForeignKey("BlogId1", "BlogId2")
                             .IsRequired(false);
                     });
-            }
             #endregion
         }
 
@@ -1933,14 +1817,12 @@ public class OneToMany
         public class EmployeeContext1 : EmployeeContext0
         {
             #region SelfReferencingConfig
-            protected override void OnModelCreating(ModelBuilder modelBuilder)
-            {
+            protected override void OnModelCreating(ModelBuilder modelBuilder) =>
                 modelBuilder.Entity<Employee>()
                     .HasOne(e => e.Manager)
                     .WithMany(e => e.Reports)
                     .HasForeignKey(e => e.ManagerId)
                     .IsRequired(false);
-            }
             #endregion
         }
     }
@@ -1988,43 +1870,37 @@ public class OneToMany
                 => optionsBuilder.UseSqlite($"DataSource = Required{GetType().Name}.db");
 
             #region RequiredWithoutCascadeDeleteConfig
-            protected override void OnModelCreating(ModelBuilder modelBuilder)
-            {
+            protected override void OnModelCreating(ModelBuilder modelBuilder) =>
                 modelBuilder.Entity<Blog>()
                     .HasMany(e => e.Posts)
                     .WithOne(e => e.Blog)
                     .OnDelete(DeleteBehavior.Restrict);
-            }
             #endregion
         }
 
         public class BlogContext1 : BlogContext0
         {
             #region RequiredWithoutCascadeDeleteFromPrincipal
-            protected override void OnModelCreating(ModelBuilder modelBuilder)
-            {
+            protected override void OnModelCreating(ModelBuilder modelBuilder) =>
                 modelBuilder.Entity<Blog>()
                     .HasMany(e => e.Posts)
                     .WithOne(e => e.Blog)
                     .HasForeignKey(e => e.BlogId)
                     .IsRequired()
                     .OnDelete(DeleteBehavior.Restrict);
-            }
             #endregion
         }
 
         public class BlogContext2 : BlogContext0
         {
             #region RequiredWithoutCascadeDeleteFromDependent
-            protected override void OnModelCreating(ModelBuilder modelBuilder)
-            {
+            protected override void OnModelCreating(ModelBuilder modelBuilder) =>
                 modelBuilder.Entity<Post>()
                     .HasOne(e => e.Blog)
                     .WithMany(e => e.Posts)
                     .HasForeignKey(e => e.BlogId)
                     .IsRequired()
                     .OnDelete(DeleteBehavior.Restrict);
-            }
             #endregion
         }
     }

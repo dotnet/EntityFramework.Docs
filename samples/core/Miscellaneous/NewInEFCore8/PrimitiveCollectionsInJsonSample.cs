@@ -14,7 +14,7 @@ public static class PrimitiveCollectionsInJsonSample
         return ContainsTest<PubsAndWalksContextSqlite>();
     }
 
-    private static async Task ContainsTest<TContext>()
+    static async Task ContainsTest<TContext>()
         where TContext : PubsAndWalksContextBase, new()
     {
         await using var context = new TContext();
@@ -26,8 +26,8 @@ public static class PrimitiveCollectionsInJsonSample
         context.ChangeTracker.Clear();
 
         #region WalksWithTerrain
-        var terrains = new[] { Terrain.River, Terrain.Beach, Terrain.Park };
-        var walksWithTerrain = await context.Walks
+        Terrain[] terrains = [Terrain.River, Terrain.Beach, Terrain.Park];
+        List<string> walksWithTerrain = await context.Walks
             .Where(e => terrains.Contains(e.Terrain))
             .Select(e => e.Name)
             .ToListAsync();
@@ -36,8 +36,8 @@ public static class PrimitiveCollectionsInJsonSample
         Console.WriteLine($"\nWalks with given terrain are {string.Join(", ", walksWithTerrain.Select(w => $"\"{w}\""))}");
 
         #region PubsWithHeineken
-        var beer = "Heineken";
-        var pubsWithHeineken = await context.Pubs
+        const string beer = "Heineken";
+        List<string> pubsWithHeineken = await context.Pubs
             .Where(e => e.Beers.Beers.Contains(beer))
             .Select(e => e.Name)
             .ToListAsync();
@@ -47,7 +47,7 @@ public static class PrimitiveCollectionsInJsonSample
 
         #region PubsWithLager
         var beers = new[] { "Carling", "Heineken", "Stella Artois", "Carlsberg" };
-        var pubsWithLager = await context.Pubs
+        List<string> pubsWithLager = await context.Pubs
             .Where(e => beers.Any(b => e.Beers.Beers.Contains(b)))
             .Select(e => e.Name)
             .ToListAsync();
@@ -57,7 +57,7 @@ public static class PrimitiveCollectionsInJsonSample
 
         #region PubsVisitedThisYear
         var thisYear = DateTime.Now.Year;
-        var pubsVisitedThisYear = await context.Pubs
+        List<string> pubsVisitedThisYear = await context.Pubs
             .Where(e => e.Visits.DaysVisited.Any(v => v.Year == thisYear))
             .Select(e => e.Name)
             .ToListAsync();
@@ -102,7 +102,7 @@ public static class PrimitiveCollectionsInJsonSample
         }
     }
 
-    private static void PrintSampleName([CallerMemberName] string? methodName = null)
+    static void PrintSampleName([CallerMemberName] string? methodName = null)
     {
         Console.WriteLine($">>>> Sample: {methodName}");
         Console.WriteLine();
@@ -111,10 +111,7 @@ public static class PrimitiveCollectionsInJsonSample
     #region DogWalk
     public class DogWalk
     {
-        public DogWalk(string name)
-        {
-            Name = name;
-        }
+        public DogWalk(string name) => Name = name;
 
         public int Id { get; set; }
         public string Name { get; set; }
@@ -137,10 +134,7 @@ public static class PrimitiveCollectionsInJsonSample
     #region Pub
     public class Pub
     {
-        public Pub(string name)
-        {
-            Name = name;
-        }
+        public Pub(string name) => Name = name;
 
         public int Id { get; set; }
         public string Name { get; set; }
@@ -160,10 +154,7 @@ public static class PrimitiveCollectionsInJsonSample
         public string[] Beers { get; set; } = null!;
     }
 
-
-    public class PubsAndWalksContext : PubsAndWalksContextBase
-    {
-    }
+    public class PubsAndWalksContext : PubsAndWalksContextBase;
 
     public class PubsAndWalksContextSqlite : PubsAndWalksContextBase
     {
@@ -175,10 +166,7 @@ public static class PrimitiveCollectionsInJsonSample
 
     public abstract class PubsAndWalksContextBase : DbContext
     {
-        protected PubsAndWalksContextBase(bool useSqlite = false)
-        {
-            UseSqlite = useSqlite;
-        }
+        protected PubsAndWalksContextBase(bool useSqlite = false) => UseSqlite = useSqlite;
 
         public bool UseSqlite { get; }
         public bool LoggingEnabled { get; set; }
@@ -188,7 +176,7 @@ public static class PrimitiveCollectionsInJsonSample
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
             => (UseSqlite
-                    ? optionsBuilder.UseSqlite(@$"DataSource={GetType().Name}.db")
+                    ? optionsBuilder.UseSqlite($"DataSource={GetType().Name}.db")
                     : optionsBuilder.UseSqlServer(
                         @$"Server=(localdb)\mssqllocaldb;Database={GetType().Name}"))
                 //sqlServerOptionsBuilder => sqlServerOptionsBuilder.UseCompatibilityLevel(120)))
@@ -218,30 +206,30 @@ public static class PrimitiveCollectionsInJsonSample
         {
             var oak = new Pub("The Royal Oak")
             {
-                Beers = new BeerData { Beers = new[] { "Oakham", "Carling", "Guinness", "John Smiths", "Bathams", "Tennents" } },
+                Beers = new BeerData { Beers = ["Oakham", "Carling", "Guinness", "John Smiths", "Bathams", "Tennents"] },
                 Visits = new Visits
                 {
                     LocationTag = "Pub visit",
-                    DaysVisited = new()
-                    {
+                    DaysVisited =
+                    [
                         new(2021, 1, 2),
                         new(2021, 8, 7),
                         new(2023, 3, 22),
                         new(2022, 4, 22),
                         new(2022, 7, 21),
                         new(2022, 6, 21),
-                    }
+                    ]
                 }
             };
 
             var feathers = new Pub("The Prince of Wales Feathers")
             {
-                Beers = new BeerData { Beers = new[] { "Heineken", "John Smiths", "Stella Artois", "Carlsberg" } },
+                Beers = new BeerData { Beers = ["Heineken", "John Smiths", "Stella Artois", "Carlsberg"] },
                 Visits = new Visits
                 {
                     LocationTag = "Pub visit",
-                    DaysVisited = new()
-                    {
+                    DaysVisited =
+                    [
                         new(2022, 11, 17),
                         new(2021, 9, 25),
                         new(2022, 12, 21),
@@ -253,18 +241,18 @@ public static class PrimitiveCollectionsInJsonSample
                         new(2022, 2, 28),
                         new(2021, 5, 10),
                         new(2021, 6, 25),
-                    }
+                    ]
                 }
             };
 
             var swan = new Pub("The White Swan")
             {
-                Beers = new BeerData { Beers = new[] { "Oakham", "Carling", "Guinness", "Heineken", "Stella Artois", "Carlsberg", "Bathams" } },
+                Beers = new BeerData { Beers = ["Oakham", "Carling", "Guinness", "Heineken", "Stella Artois", "Carlsberg", "Bathams"] },
                 Visits = new Visits
                 {
                     LocationTag = "Pub visit",
-                    DaysVisited = new()
-                    {
+                    DaysVisited =
+                    [
                         new(2021, 2, 24),
                         new(2022, 8, 3),
                         new(2022, 9, 14),
@@ -272,18 +260,18 @@ public static class PrimitiveCollectionsInJsonSample
                         new(2022, 7, 13),
                         new(2021, 7, 18),
                         new(2021, 7, 23),
-                    }
+                    ]
                 }
             };
 
             var fbi = new Pub("Farr Bay Inn")
             {
-                Beers = new BeerData { Beers = new[] { "Guinness", "Heineken", "Carlsberg", "Bathams", "Tennents" } },
+                Beers = new BeerData { Beers = ["Guinness", "Heineken", "Carlsberg", "Bathams", "Tennents"] },
                 Visits = new Visits
                 {
                     LocationTag = "Pub visit",
-                    DaysVisited = new()
-                    {
+                    DaysVisited =
+                    [
                         new(2022, 11, 30),
                         new(2022, 2, 15),
                         new(2021, 12, 9),
@@ -298,7 +286,7 @@ public static class PrimitiveCollectionsInJsonSample
                         new(2021, 9, 6),
                         new(2023, 2, 22),
                         new(2022, 1, 25),
-                    }
+                    ]
                 }
             };
 
@@ -306,24 +294,24 @@ public static class PrimitiveCollectionsInJsonSample
             {
                 Beers = new BeerData
                 {
-                    Beers = new[]
-                    {
+                    Beers =
+                    [
                         "Oakham", "Carling", "Guinness", "Heineken", "John Smiths", "Stella Artois", "Carlsberg", "Bathams",
                         "Tennents"
-                    }
+                    ]
                 },
                 Visits = new Visits
                 {
                     LocationTag = "Pub visit",
-                    DaysVisited = new()
-                    {
+                    DaysVisited =
+                    [
                         new(2022, 6, 19),
                         new(2021, 1, 15),
                         new(2022, 3, 24),
                         new(2023, 2, 26),
                         new(2021, 1, 11),
                         new(2022, 3, 19),
-                    }
+                    ]
                 }
             };
 
@@ -335,8 +323,8 @@ public static class PrimitiveCollectionsInJsonSample
                     Visits = new Visits
                     {
                         LocationTag = "Walk",
-                        DaysVisited = new()
-                        {
+                        DaysVisited =
+                        [
                             new(2022, 11, 17),
                             new(2021, 9, 25),
                             new(2022, 12, 21),
@@ -345,7 +333,7 @@ public static class PrimitiveCollectionsInJsonSample
                             new(2021, 7, 21),
                             new(2022, 1, 15),
                             new(2022, 9, 29),
-                        }
+                        ]
                     }
                 },
 
@@ -356,8 +344,8 @@ public static class PrimitiveCollectionsInJsonSample
                     Visits = new Visits
                     {
                         LocationTag = "Walk",
-                        DaysVisited = new()
-                        {
+                        DaysVisited =
+                        [
                             new(2022, 3, 10),
                             new(2021, 6, 5),
                             new(2021, 12, 1),
@@ -367,7 +355,7 @@ public static class PrimitiveCollectionsInJsonSample
                             new(2022, 2, 28),
                             new(2021, 5, 10),
                             new(2021, 6, 25),
-                        }
+                        ]
                     }
                 },
                 new DogWalk("Ferry Meadows")
@@ -377,8 +365,8 @@ public static class PrimitiveCollectionsInJsonSample
                     Visits = new Visits
                     {
                         LocationTag = "Walk",
-                        DaysVisited = new()
-                        {
+                        DaysVisited =
+                        [
                             new(2021, 1, 2),
                             new(2021, 8, 7),
                             new(2023, 3, 22),
@@ -387,7 +375,7 @@ public static class PrimitiveCollectionsInJsonSample
                             new(2022, 4, 22),
                             new(2022, 7, 21),
                             new(2022, 6, 21),
-                        }
+                        ]
                     }
                 },
                 new DogWalk("Woodnewton")
@@ -397,8 +385,8 @@ public static class PrimitiveCollectionsInJsonSample
                     Visits = new Visits
                     {
                         LocationTag = "Walk",
-                        DaysVisited = new()
-                        {
+                        DaysVisited =
+                        [
                             new(2021, 2, 24),
                             new(2023, 4, 4),
                             new(2021, 2, 19),
@@ -408,7 +396,7 @@ public static class PrimitiveCollectionsInJsonSample
                             new(2022, 7, 13),
                             new(2021, 7, 18),
                             new(2021, 7, 23),
-                        }
+                        ]
                     }
                 },
                 new DogWalk("Eltisley")
@@ -418,8 +406,8 @@ public static class PrimitiveCollectionsInJsonSample
                     Visits = new Visits
                     {
                         LocationTag = "Walk",
-                        DaysVisited = new()
-                        {
+                        DaysVisited =
+                        [
                             new(2022, 6, 19),
                             new(2021, 1, 15),
                             new(2021, 9, 29),
@@ -428,7 +416,7 @@ public static class PrimitiveCollectionsInJsonSample
                             new(2023, 2, 26),
                             new(2021, 1, 11),
                             new(2022, 3, 19),
-                        }
+                        ]
                     }
                 },
                 new DogWalk("Farr Beach")
@@ -438,8 +426,8 @@ public static class PrimitiveCollectionsInJsonSample
                     Visits = new Visits
                     {
                         LocationTag = "Walk",
-                        DaysVisited = new()
-                        {
+                        DaysVisited =
+                        [
                             new(2022, 11, 30),
                             new(2021, 10, 28),
                             new(2022, 2, 15),
@@ -451,7 +439,7 @@ public static class PrimitiveCollectionsInJsonSample
                             new(2022, 12, 20),
                             new(2021, 6, 5),
                             new(2021, 6, 25),
-                        }
+                        ]
                     }
                 },
                 new DogWalk("Newlands")
@@ -461,8 +449,8 @@ public static class PrimitiveCollectionsInJsonSample
                     Visits = new Visits
                     {
                         LocationTag = "Walk",
-                        DaysVisited = new()
-                        {
+                        DaysVisited =
+                        [
                             new(2021, 2, 27),
                             new(2021, 6, 17),
                             new(2021, 8, 6),
@@ -472,7 +460,7 @@ public static class PrimitiveCollectionsInJsonSample
                             new(2021, 9, 6),
                             new(2023, 2, 22),
                             new(2022, 1, 25),
-                        }
+                        ]
                     }
                 });
 

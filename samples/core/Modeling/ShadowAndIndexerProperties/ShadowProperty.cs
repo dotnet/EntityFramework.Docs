@@ -4,15 +4,13 @@ using Microsoft.EntityFrameworkCore;
 namespace EFModeling.ShadowAndIndexerProperties.ShadowProperty;
 
 #region ShadowProperty
-internal class MyContext : DbContext
+class MyContext : DbContext
 {
     public DbSet<Blog> Blogs { get; set; }
 
-    protected override void OnModelCreating(ModelBuilder modelBuilder)
-    {
+    protected override void OnModelCreating(ModelBuilder modelBuilder) =>
         modelBuilder.Entity<Blog>()
             .Property<DateTime>("LastUpdated");
-    }
 }
 
 public class Blog

@@ -16,7 +16,7 @@ public static class UnicodeAttributeSample
 
         using var context = new BooksContext();
 
-        var book = context.Books.Single(e => e.Id == 1);
+        Book book = context.Books.Single(e => e.Id == 1);
 
         Console.WriteLine();
     }
@@ -58,12 +58,9 @@ public static class UnicodeAttributeSample
     {
         public DbSet<Book> Books { get; set; }
 
-        private readonly bool _quiet;
+        readonly bool _quiet;
 
-        public BooksContext(bool quiet = false)
-        {
-            _quiet = quiet;
-        }
+        public BooksContext(bool quiet = false) => _quiet = quiet;
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

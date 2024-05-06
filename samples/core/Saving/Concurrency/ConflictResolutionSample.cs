@@ -22,7 +22,7 @@ public class ConflictResolutionSample
         #region ConcurrencyHandlingCode
         using var context = new PersonContext();
         // Fetch a person from database and change phone number
-        var person = context.People.Single(p => p.PersonId == 1);
+        Person person = context.People.Single(p => p.PersonId == 1);
         person.PhoneNumber = "555-555-5555";
 
         // Change the person's name in the database to simulate a concurrency conflict
@@ -40,14 +40,14 @@ public class ConflictResolutionSample
             }
             catch (DbUpdateConcurrencyException ex)
             {
-                foreach (var entry in ex.Entries)
+                foreach (Microsoft.EntityFrameworkCore.ChangeTracking.EntityEntry entry in ex.Entries)
                 {
                     if (entry.Entity is Person)
                     {
-                        var proposedValues = entry.CurrentValues;
-                        var databaseValues = entry.GetDatabaseValues();
+                        Microsoft.EntityFrameworkCore.ChangeTracking.PropertyValues proposedValues = entry.CurrentValues;
+                        Microsoft.EntityFrameworkCore.ChangeTracking.PropertyValues databaseValues = entry.GetDatabaseValues();
 
-                        foreach (var property in proposedValues.Properties)
+                        foreach (Microsoft.EntityFrameworkCore.Metadata.IProperty property in proposedValues.Properties)
                         {
                             var proposedValue = proposedValues[property];
                             var databaseValue = databaseValues[property];
@@ -75,12 +75,10 @@ public class ConflictResolutionSample
     {
         public DbSet<Person> People { get; set; }
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) =>
             // Requires NuGet package Microsoft.EntityFrameworkCore.SqlServer
             optionsBuilder.UseSqlServer(
                 @"Server=(localdb)\mssqllocaldb;Database=EFSaving.Concurrency;Trusted_Connection=True");
-        }
     }
 
     public class Person

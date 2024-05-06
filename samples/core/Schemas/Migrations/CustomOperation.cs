@@ -13,7 +13,7 @@ public class CreateUserOperation : MigrationOperation
 }
 #endregion
 
-internal static class MigrationBuilderExtensions
+static class MigrationBuilderExtensions
 {
     #region snippet_MigrationBuilderExtension
     public static OperationBuilder<CreateUserOperation> CreateUser(
@@ -54,12 +54,12 @@ public class MyMigrationsSqlGenerator : SqlServerMigrationsSqlGenerator
         }
     }
 
-    private void Generate(
+    void Generate(
         CreateUserOperation operation,
         MigrationCommandListBuilder builder)
     {
-        var sqlHelper = Dependencies.SqlGenerationHelper;
-        var stringMapping = Dependencies.TypeMappingSource.FindMapping(typeof(string));
+        Microsoft.EntityFrameworkCore.Storage.ISqlGenerationHelper sqlHelper = Dependencies.SqlGenerationHelper;
+        Microsoft.EntityFrameworkCore.Storage.RelationalTypeMapping stringMapping = Dependencies.TypeMappingSource.FindMapping(typeof(string));
 
         builder
             .Append("CREATE USER ")
@@ -72,9 +72,9 @@ public class MyMigrationsSqlGenerator : SqlServerMigrationsSqlGenerator
 }
 #endregion
 
-internal class CustomOperationContext : DbContext
+class CustomOperationContext : DbContext
 {
-    private readonly string _connectionString = @"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=Sample";
+    readonly string _connectionString = @"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=Sample";
 
     #region snippet_OnConfiguring
     protected override void OnConfiguring(DbContextOptionsBuilder options)

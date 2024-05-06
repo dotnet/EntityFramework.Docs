@@ -7,15 +7,15 @@ public static class CosmosMinimalApiSample
     public static void Add_a_DbContext_and_provider()
     {
         Console.WriteLine($">>>> Sample: {nameof(Add_a_DbContext_and_provider)}");
-        
+
         CosmosMinimal(null);
         CosmosNormal(null);
     }
 
-    private static void CosmosMinimal(string[] args)
+    static void CosmosMinimal(string[] args)
     {
         #region CosmosMinimal
-        var builder = WebApplication.CreateBuilder(args);
+        FakeWebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
         builder.Services.AddCosmos<MyDbContext>(
             "https://localhost:8081",
@@ -23,10 +23,10 @@ public static class CosmosMinimalApiSample
         #endregion
     }
 
-    private static void CosmosNormal(string[] args)
+    static void CosmosNormal(string[] args)
     {
         #region CosmosNormal
-        var builder = WebApplication.CreateBuilder(args);
+        FakeWebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
         builder.Services.AddDbContext<MyDbContext>(
             options => options.UseCosmos(
@@ -36,13 +36,13 @@ public static class CosmosMinimalApiSample
     }
 
     // This is a fake implementation of WebApplicationBuilder  uses to show the EF Core minimal APIs
-    private class FakeWebApplicationBuilder
+    class FakeWebApplicationBuilder
     {
         public ServiceCollection Services { get; } = new();
     }
 
     // This is a fake implementation of WebApplication uses to show the EF Core minimal APIs
-    private static class WebApplication
+    static class WebApplication
     {
         public static FakeWebApplicationBuilder CreateBuilder(string[] args)
             => new();

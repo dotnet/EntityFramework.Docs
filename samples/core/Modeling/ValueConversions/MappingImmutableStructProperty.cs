@@ -7,7 +7,7 @@ namespace EFModeling.ValueConversions;
 
 public class MappingImmutableStructProperty : Program
 {
-    public void Run()
+    public static void Run()
     {
         ConsoleWriteLines("Sample showing value conversions for a simple immutable struct...");
 
@@ -33,7 +33,7 @@ public class MappingImmutableStructProperty : Program
         {
             ConsoleWriteLines("Read the entity back...");
 
-            var entity = context.Set<EntityType>().Single();
+            EntityType entity = context.Set<EntityType>().Single();
 
             Debug.Assert(entity.MyProperty.Value == 66);
         }
@@ -43,24 +43,22 @@ public class MappingImmutableStructProperty : Program
 
     public class SampleDbContext : DbContext
     {
-        private static readonly ILoggerFactory
-            Logger = LoggerFactory.Create(x => x.AddConsole()); //.SetMinimumLevel(LogLevel.Debug));
+        static readonly ILoggerFactory
+            _logger = LoggerFactory.Create(x => x.AddConsole()); //.SetMinimumLevel(LogLevel.Debug));
 
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            #region ConfigureImmutableStructProperty
+        protected override void OnModelCreating(ModelBuilder modelBuilder) =>
+        #region ConfigureImmutableStructProperty
             modelBuilder
                 .Entity<EntityType>()
                 .Property(e => e.MyProperty)
                 .HasConversion(
                     v => v.Value,
                     v => new ImmutableStruct(v));
-            #endregion
-        }
+        #endregion
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-            => optionsBuilder
-                .UseLoggerFactory(Logger)
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) =>
+            optionsBuilder
+                .UseLoggerFactory(_logger)
                 .UseSqlite("DataSource=test.db")
                 .EnableSensitiveDataLogging();
     }
@@ -74,10 +72,7 @@ public class MappingImmutableStructProperty : Program
     #region SimpleImmutableStruct
     public readonly struct ImmutableStruct
     {
-        public ImmutableStruct(int value)
-        {
-            Value = value;
-        }
+        public ImmutableStruct(int value) => Value = value;
 
         public int Value { get; }
     }

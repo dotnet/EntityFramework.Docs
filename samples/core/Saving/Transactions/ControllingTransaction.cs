@@ -16,7 +16,7 @@ public class ControllingTransaction
 
         #region Transaction
         using var context = new BloggingContext();
-        using var transaction = context.Database.BeginTransaction();
+        using Microsoft.EntityFrameworkCore.Storage.IDbContextTransaction transaction = context.Database.BeginTransaction();
 
         try
         {
@@ -45,11 +45,9 @@ public class ControllingTransaction
     {
         public DbSet<Blog> Blogs { get; set; }
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) =>
             optionsBuilder.UseSqlServer(
                 @"Server=(localdb)\mssqllocaldb;Database=EFSaving.Transactions;Trusted_Connection=True");
-        }
     }
 
     public class Blog

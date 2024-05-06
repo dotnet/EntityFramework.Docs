@@ -7,8 +7,8 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 [MemoryDiagnoser]
 public class ContextPooling
 {
-    private DbContextOptions<BloggingContext> _options;
-    private PooledDbContextFactory<BloggingContext> _poolingFactory;
+    DbContextOptions<BloggingContext> _options;
+    PooledDbContextFactory<BloggingContext> _poolingFactory;
 
     [Params(1)]
     public int NumBlogs { get; set; }
@@ -33,13 +33,13 @@ public class ContextPooling
     {
         using var context = new BloggingContext(_options);
 
-        return context.Blogs.ToList();
+        return [.. context.Blogs];
     }
 
     [Benchmark]
     public List<Blog> WithContextPooling()
     {
-        using var context = _poolingFactory.CreateDbContext();
+        using BloggingContext context = _poolingFactory.CreateDbContext();
 
         return context.Blogs.ToList();
     }
@@ -48,11 +48,11 @@ public class ContextPooling
     {
         public DbSet<Blog> Blogs { get; set; }
 
-        public BloggingContext(DbContextOptions options) : base(options) {}
+        public BloggingContext(DbContextOptions options) : base(options) { }
 
         public void SeedData(int numBlogs)
         {
-            Blogs.AddRange(Enumerable.Range(0, numBlogs).Select(i => new Blog { Url = $"http://www.someblog{i}.com"}));
+            Blogs.AddRange(Enumerable.Range(0, numBlogs).Select(i => new Blog { Url = $"http://www.someblog{i}.com" }));
             SaveChanges();
         }
     }

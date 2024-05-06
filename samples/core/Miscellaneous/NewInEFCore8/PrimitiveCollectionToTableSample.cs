@@ -14,7 +14,7 @@ public static class PrimitiveCollectionToTableSample
         return ContainsTest<PubsAndWalksContextSqlite>();
     }
 
-    private static async Task ContainsTest<TContext>()
+    static async Task ContainsTest<TContext>()
         where TContext : PubsAndWalksContextBase, new()
     {
         await using var context = new TContext();
@@ -26,8 +26,8 @@ public static class PrimitiveCollectionToTableSample
         context.ChangeTracker.Clear();
 
         #region PubsWithHeineken
-        var beer = "Heineken";
-        var pubsWithHeineken = await context.Pubs
+        const string beer = "Heineken";
+        List<string> pubsWithHeineken = await context.Pubs
             .Where(e => e.Beers.Any(e => e.Name == beer))
             .Select(e => e.Name)
             .ToListAsync();
@@ -37,7 +37,7 @@ public static class PrimitiveCollectionToTableSample
 
         #region PubsWithLager
         var beers = new[] { "Carling", "Heineken", "Stella Artois", "Carlsberg" };
-        var pubsWithLager = await context.Pubs
+        List<string> pubsWithLager = await context.Pubs
             .Where(e => beers.Any(b => e.Beers.Any(t => t.Name == b)))
             .Select(e => e.Name)
             .ToListAsync();
@@ -46,7 +46,7 @@ public static class PrimitiveCollectionToTableSample
         Console.WriteLine($"\nPubs with lager are {string.Join(", ", pubsWithLager)}");
     }
 
-    private static void PrintSampleName([CallerMemberName] string? methodName = null)
+    static void PrintSampleName([CallerMemberName] string? methodName = null)
     {
         Console.WriteLine($">>>> Sample: {methodName}");
         Console.WriteLine();
@@ -55,15 +55,12 @@ public static class PrimitiveCollectionToTableSample
     #region Pub
     public class Pub
     {
-        public Pub(string name)
-        {
-            Name = name;
-        }
+        public Pub(string name) => Name = name;
 
         public int Id { get; set; }
         public string Name { get; set; }
-        public List<Beer> Beers { get; set; } = new();
-        public List<DateOnly> DaysVisited { get; private set; } = new();
+        public List<Beer> Beers { get; set; } = [];
+        public List<DateOnly> DaysVisited { get; } = [];
     }
     #endregion
 
@@ -71,18 +68,13 @@ public static class PrimitiveCollectionToTableSample
     [Owned]
     public class Beer
     {
-        public Beer(string name)
-        {
-            Name = name;
-        }
+        public Beer(string name) => Name = name;
 
-        public string Name { get; private set; }
+        public string Name { get; }
     }
     #endregion
 
-    public class PubsAndWalksContext : PubsAndWalksContextBase
-    {
-    }
+    public class PubsAndWalksContext : PubsAndWalksContextBase;
 
     public class PubsAndWalksContextSqlite : PubsAndWalksContextBase
     {
@@ -94,10 +86,7 @@ public static class PrimitiveCollectionToTableSample
 
     public abstract class PubsAndWalksContextBase : DbContext
     {
-        protected PubsAndWalksContextBase(bool useSqlite = false)
-        {
-            UseSqlite = useSqlite;
-        }
+        protected PubsAndWalksContextBase(bool useSqlite = false) => UseSqlite = useSqlite;
 
         public bool UseSqlite { get; }
         public bool LoggingEnabled { get; set; }
@@ -106,7 +95,7 @@ public static class PrimitiveCollectionToTableSample
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
             => (UseSqlite
-                    ? optionsBuilder.UseSqlite(@$"DataSource={GetType().Name}.db")
+                    ? optionsBuilder.UseSqlite($"DataSource={GetType().Name}.db")
                     : optionsBuilder.UseSqlServer(
                         @$"Server=(localdb)\mssqllocaldb;Database={GetType().Name}"))
                 .EnableSensitiveDataLogging()

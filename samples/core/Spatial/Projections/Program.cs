@@ -1,5 +1,6 @@
 ﻿using System;
 using NetTopologySuite.Geometries;
+using Projections;
 
 #region snippet_ProjectTo
 var seattle = new Point(-122.333056, 47.609722) { SRID = 4326 };

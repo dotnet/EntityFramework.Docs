@@ -20,7 +20,7 @@ public class RepositoryBloggingControllerTest
         var controller = new BloggingControllerWithRepository(repositoryMock.Object);
 
         // Act
-        var blog = controller.GetBlog("Blog2");
+        Blog blog = controller.GetBlog("Blog2");
 
         // Assert
         repositoryMock.Verify(r => r.GetBlogByName("Blog2"));
@@ -44,7 +44,7 @@ public class RepositoryBloggingControllerTest
         var controller = new BloggingControllerWithRepository(repositoryMock.Object);
 
         // Act
-        var blogs = controller.GetAllBlogs().Value;
+        Blog[] blogs = controller.GetAllBlogs().Value;
 
         // Assert
         repositoryMock.Verify(r => r.GetAllBlogs());

@@ -23,10 +23,10 @@ public static class HierarchyIdSample
         while (true)
         {
             #region GetLevel
-            var generation = await context.Halflings.Where(halfling => halfling.PathFromPatriarch.GetLevel() == level).ToListAsync();
+            List<Halfling> generation = await context.Halflings.Where(halfling => halfling.PathFromPatriarch.GetLevel() == level).ToListAsync();
             #endregion
 
-            if (!generation.Any())
+            if (generation.Count == 0)
             {
                 break;
             }
@@ -35,7 +35,7 @@ public static class HierarchyIdSample
 
             for (var i = 0; i < generation.Count; i++)
             {
-                var halfling = generation[i];
+                Halfling halfling = generation[i];
                 Console.Write($"{halfling.Name}");
                 if (i < generation.Count - 1)
                 {
@@ -51,7 +51,7 @@ public static class HierarchyIdSample
         Console.WriteLine();
         context.LoggingEnabled = true;
 
-        var directAncestor = (await FindDirectAncestor("Bilbo"))!;
+        Halfling directAncestor = (await FindDirectAncestor("Bilbo"))!;
         Console.WriteLine();
         Console.WriteLine($"The direct ancestor of Bilbo is {directAncestor.Name}");
 
@@ -65,11 +65,11 @@ public static class HierarchyIdSample
         #endregion
 
         Console.WriteLine();
-        var ancestors = await FindAllAncestors("Bilbo").AsNoTracking().ToListAsync();
+        List<Halfling> ancestors = await FindAllAncestors("Bilbo").AsNoTracking().ToListAsync();
 
         Console.WriteLine();
         Console.WriteLine("Ancestors of Bilbo are:");
-        foreach (var halfling in ancestors)
+        foreach (Halfling halfling in ancestors)
         {
             Console.WriteLine($"  {halfling.Name}");
         }
@@ -87,11 +87,11 @@ public static class HierarchyIdSample
         #endregion
 
         Console.WriteLine();
-        var directDescendents = await FindDirectDescendents("Mungo").AsNoTracking().ToListAsync();
+        List<Halfling> directDescendents = await FindDirectDescendents("Mungo").AsNoTracking().ToListAsync();
 
         Console.WriteLine();
         Console.WriteLine("Direct descendents of Mungo:");
-        foreach (var descendent in directDescendents)
+        foreach (Halfling descendent in directDescendents)
         {
             Console.WriteLine($"  {descendent.Name}");
         }
@@ -104,11 +104,11 @@ public static class HierarchyIdSample
         #endregion
 
         Console.WriteLine();
-        var descendents = await FindAllDescendents("Mungo").AsNoTracking().ToListAsync();
+        List<Halfling> descendents = await FindAllDescendents("Mungo").AsNoTracking().ToListAsync();
 
         Console.WriteLine();
         Console.WriteLine("All descendents of Mungo:");
-        foreach (var descendent in descendents)
+        foreach (Halfling descendent in descendents)
         {
             Console.WriteLine($"  {descendent.Name}");
         }
@@ -130,16 +130,16 @@ public static class HierarchyIdSample
 
         Console.WriteLine();
         Console.WriteLine("All descendents of Ponto:");
-        foreach (var descendent in await FindAllDescendents("Ponto").AsNoTracking().ToListAsync())
+        foreach (Halfling? descendent in await FindAllDescendents("Ponto").AsNoTracking().ToListAsync())
         {
             Console.WriteLine($"  {descendent.Name}");
         }
 
-        var mungo = await context.Halflings.SingleAsync(halfling => halfling.Name == "Mungo");
-        var ponto = await context.Halflings.SingleAsync(halfling => halfling.Name == "Ponto" && halfling.YearOfBirth == 1216);
+        Halfling mungo = await context.Halflings.SingleAsync(halfling => halfling.Name == "Mungo");
+        Halfling ponto = await context.Halflings.SingleAsync(halfling => halfling.Name == "Ponto" && halfling.YearOfBirth == 1216);
 
         #region LongoAndDescendents
-        var longoAndDescendents = await context.Halflings.Where(
+        List<Halfling> longoAndDescendents = await context.Halflings.Where(
                 descendent => descendent.PathFromPatriarch.IsDescendantOf(
                     context.Halflings.Single(ancestor => ancestor.Name == "Longo").PathFromPatriarch))
             .ToListAsync();
@@ -152,7 +152,7 @@ public static class HierarchyIdSample
         context.LoggingEnabled = true;
 
         #region GetReparentedValue
-        foreach (var descendent in longoAndDescendents)
+        foreach (Halfling descendent in longoAndDescendents)
         {
             descendent.PathFromPatriarch
                 = descendent.PathFromPatriarch.GetReparentedValue(
@@ -166,14 +166,14 @@ public static class HierarchyIdSample
 
         Console.WriteLine();
         Console.WriteLine("All descendents of Mungo:");
-        foreach (var descendent in await FindAllDescendents("Mungo").AsNoTracking().ToListAsync())
+        foreach (Halfling? descendent in await FindAllDescendents("Mungo").AsNoTracking().ToListAsync())
         {
             Console.WriteLine($"  {descendent.Name}");
         }
 
         Console.WriteLine();
         Console.WriteLine("All descendents of Ponto:");
-        foreach (var descendent in await FindAllDescendents("Ponto").AsNoTracking().ToListAsync())
+        foreach (Halfling? descendent in await FindAllDescendents("Ponto").AsNoTracking().ToListAsync())
         {
             Console.WriteLine($"  {descendent.Name}");
         }
@@ -181,10 +181,10 @@ public static class HierarchyIdSample
         Console.WriteLine();
         context.LoggingEnabled = true;
 
-        var bilbo = await context.Halflings.SingleAsync(halfling => halfling.Name == "Bilbo");
-        var frodo = await context.Halflings.SingleAsync(halfling => halfling.Name == "Frodo");
+        Halfling bilbo = await context.Halflings.SingleAsync(halfling => halfling.Name == "Bilbo");
+        Halfling frodo = await context.Halflings.SingleAsync(halfling => halfling.Name == "Frodo");
 
-        var commonAncestor = (await FindCommonAncestor(bilbo, frodo))!;
+        Halfling commonAncestor = (await FindCommonAncestor(bilbo, frodo))!;
         Console.WriteLine();
         Console.WriteLine($"The common ancestor of Bilbo and Frodo is {commonAncestor.Name}");
 
@@ -199,7 +199,7 @@ public static class HierarchyIdSample
         #endregion
     }
 
-    private static void PrintSampleName([CallerMemberName] string? methodName = null)
+    static void PrintSampleName([CallerMemberName] string? methodName = null)
     {
         Console.WriteLine($">>>> Sample: {methodName}");
         Console.WriteLine();
@@ -215,7 +215,7 @@ public static class HierarchyIdSample
             YearOfBirth = yearOfBirth;
         }
 
-        public int Id { get; private set; }
+        public int Id { get; }
         public HierarchyId PathFromPatriarch { get; set; }
         public string Name { get; set; }
         public int? YearOfBirth { get; set; }
@@ -228,8 +228,8 @@ public static class HierarchyIdSample
 
         public DbSet<Halfling> Halflings => Set<Halfling>();
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-            => optionsBuilder.UseSqlServer(
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) =>
+            optionsBuilder.UseSqlServer(
                     @$"Server=(localdb)\mssqllocaldb;Database={GetType().Name}",
                     sqlServerOptionsBuilder => sqlServerOptionsBuilder.UseHierarchyId())
                 .EnableSensitiveDataLogging()

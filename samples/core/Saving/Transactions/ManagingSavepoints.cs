@@ -15,7 +15,7 @@ public class ManagingSavepoints
 
         #region Savepoints
         using var context = new BloggingContext();
-        using var transaction = context.Database.BeginTransaction();
+        using Microsoft.EntityFrameworkCore.Storage.IDbContextTransaction transaction = context.Database.BeginTransaction();
 
         try
         {
@@ -44,11 +44,9 @@ public class ManagingSavepoints
     {
         public DbSet<Blog> Blogs { get; set; }
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) =>
             optionsBuilder.UseSqlServer(
                 @"Server=(localdb)\mssqllocaldb;Database=EFSaving.Transactions;Trusted_Connection=True");
-        }
     }
 
     public class Blog

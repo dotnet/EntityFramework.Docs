@@ -3,9 +3,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace EFQuerying.Tracking;
 
-internal class Program
+class Program
 {
-    private static void Main(string[] args)
+    static void Main()
     {
         using (var context = new BloggingContext())
         {
@@ -24,7 +24,7 @@ internal class Program
         using (var context = new BloggingContext())
         {
             #region Tracking
-            var blog = context.Blogs.SingleOrDefault(b => b.BlogId == 1);
+            Blog blog = context.Blogs.SingleOrDefault(b => b.BlogId == 1);
             blog.Rating = 5;
             context.SaveChanges();
             #endregion
@@ -63,7 +63,7 @@ internal class Program
             var blog = context.Blogs
                 .Select(
                     b =>
-                        new { Blog = b, PostCount = b.Posts.Count() });
+                        new { Blog = b, PostCount = b.Posts.Count });
             #endregion
         }
 

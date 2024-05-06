@@ -6,12 +6,9 @@ namespace NewInEfCore7;
 #region BlogsModel
 public class Blog
 {
-    public Blog(string name)
-    {
-        Name = name;
-    }
+    public Blog(string name) => Name = name;
 
-    public int Id { get; private set; }
+    public int Id { get; }
     public string Name { get; set; }
     public List<Post> Posts { get; } = new();
 }
@@ -25,7 +22,7 @@ public class Post
         PublishedOn = publishedOn;
     }
 
-    public int Id { get; private set; }
+    public int Id { get; }
     public string Title { get; set; }
     public string Content { get; set; }
     public DateTime PublishedOn { get; set; }
@@ -38,10 +35,7 @@ public class Post
 public class FeaturedPost : Post
 {
     public FeaturedPost(string title, string content, DateTime publishedOn, string promoText)
-        : base(title, content, publishedOn)
-    {
-        PromoText = promoText;
-    }
+        : base(title, content, publishedOn) => PromoText = promoText;
 
     public string PromoText { get; set; }
 }
@@ -54,19 +48,16 @@ public class Tag
         Text = text;
     }
 
-    public string Id { get; private set; }
+    public string Id { get; }
     public string Text { get; set; }
     public List<Post> Posts { get; } = new();
 }
 
 public class Author
 {
-    public Author(string name)
-    {
-        Name = name;
-    }
+    public Author(string name) => Name = name;
 
-    public int Id { get; private set; }
+    public int Id { get; }
     public string Name { get; set; }
     public ContactDetails Contact { get; set; } = null!;
     public List<Post> Posts { get; } = new();
@@ -100,10 +91,7 @@ public class Address
 #region PostMetadataAggregate
 public class PostMetadata
 {
-    public PostMetadata(int views)
-    {
-        Views = views;
-    }
+    public PostMetadata(int views) => Views = views;
 
     public int Views { get; set; }
     public List<SearchTerm> TopSearches { get; } = new();
@@ -119,8 +107,8 @@ public class SearchTerm
         Count = count;
     }
 
-    public string Term { get; private set; }
-    public int Count { get; private set; }
+    public string Term { get; }
+    public int Count { get; }
 }
 
 public class Visits
@@ -132,9 +120,9 @@ public class Visits
         Count = count;
     }
 
-    public double Latitude { get; private set; }
-    public double Longitude { get; private set; }
-    public int Count { get; private set; }
+    public double Latitude { get; }
+    public double Longitude { get; }
+    public int Count { get; }
     public List<string>? Browsers { get; set; }
 }
 
@@ -146,9 +134,9 @@ public class PostUpdate
         UpdatedOn = updatedOn;
     }
 
-    public IPAddress PostedFrom { get; private set; }
+    public IPAddress PostedFrom { get; }
     public string? UpdatedBy { get; init; }
-    public DateTime UpdatedOn { get; private set; }
+    public DateTime UpdatedOn { get; }
     public List<Commit> Commits { get; } = new();
 }
 
@@ -160,17 +148,14 @@ public class Commit
         Comment = comment;
     }
 
-    public DateTime CommittedOn { get; private set; }
+    public DateTime CommittedOn { get; }
     public string Comment { get; set; }
 }
 #endregion
 
 public abstract class BlogsContext : DbContext
 {
-    protected BlogsContext(bool useSqlite = false)
-    {
-        UseSqlite = useSqlite;
-    }
+    protected BlogsContext(bool useSqlite = false) => UseSqlite = useSqlite;
 
     public bool UseSqlite { get; }
     public bool LoggingEnabled { get; set; }
@@ -183,7 +168,7 @@ public abstract class BlogsContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         => (UseSqlite
-                ? optionsBuilder.UseSqlite(@$"DataSource={GetType().Name}.db")
+                ? optionsBuilder.UseSqlite($"DataSource={GetType().Name}.db")
                 : optionsBuilder.UseSqlServer(
                     @$"Server=(localdb)\mssqllocaldb;Database={GetType().Name}",
                     sqlServerOptionsBuilder => sqlServerOptionsBuilder.UseNetTopologySuite()))
@@ -197,10 +182,8 @@ public abstract class BlogsContext : DbContext
                     }
                 }, LogLevel.Information);
 
-    protected override void OnModelCreating(ModelBuilder modelBuilder)
-    {
+    protected override void OnModelCreating(ModelBuilder modelBuilder) =>
         modelBuilder.Entity<FeaturedPost>();
-    }
 
     protected override void ConfigureConventions(ModelConfigurationBuilder configurationBuilder)
     {
@@ -209,7 +192,7 @@ public abstract class BlogsContext : DbContext
         base.ConfigureConventions(configurationBuilder);
     }
 
-    private class StringListConverter : ValueConverter<List<string>, string>
+    class StringListConverter : ValueConverter<List<string>, string>
     {
         public StringListConverter()
             : base(v => string.Join(", ", v!), v => v.Split(',', StringSplitOptions.TrimEntries).ToList())
@@ -378,7 +361,7 @@ public abstract class BlogsContext : DbContext
         await AddRangeAsync(blogs);
         await SaveChangesAsync();
 
-        PostMetadata BuildPostMetadata()
+        static PostMetadata BuildPostMetadata()
         {
             var random = new Random(Guid.NewGuid().GetHashCode());
 
@@ -401,7 +384,7 @@ public abstract class BlogsContext : DbContext
 
             for (var i = 0; i < random.Next(5); i++)
             {
-                metadata.TopSearches.Add(new($"Search #{i + 1}", 10000 - random.Next(i * 1000, i * 1000 + 900)));
+                metadata.TopSearches.Add(new($"Search #{i + 1}", 10000 - random.Next(i * 1000, (i * 1000) + 900)));
             }
 
             for (var i = 0; i < random.Next(5); i++)
@@ -412,7 +395,8 @@ public abstract class BlogsContext : DbContext
                         // new Point(115.7930 + 20 - random.Next(40), 37.2431 + 10 - random.Next(20)) { SRID = 4326 },
                         115.7930 + 20 - random.Next(40),
                         37.2431 + 10 - random.Next(20),
-                        1000 - random.Next(i * 100, i * 100 + 90)) { Browsers = new() { "Firefox", "Netscape" } });
+                        1000 - random.Next(i * 100, (i * 100) + 90))
+                    { Browsers = new() { "Firefox", "Netscape" } });
             }
 
             return metadata;

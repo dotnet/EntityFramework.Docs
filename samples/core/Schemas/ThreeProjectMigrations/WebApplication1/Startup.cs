@@ -11,10 +11,7 @@ namespace WebApplication1;
 
 public class Startup
 {
-    public Startup(IConfiguration configuration)
-    {
-        Configuration = configuration;
-    }
+    public Startup(IConfiguration configuration) => Configuration = configuration;
 
     public IConfiguration Configuration { get; }
 
@@ -57,6 +54,6 @@ public class Startup
         app.UseAuthentication();
         app.UseAuthorization();
 
-        app.UseEndpoints(endpoints => { endpoints.MapRazorPages(); });
+        app.UseEndpoints(endpoints => endpoints.MapRazorPages());
     }
 }

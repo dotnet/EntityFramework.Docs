@@ -23,13 +23,13 @@ public static class SimpleMaterializationSample
         #region QueryCustomer
         await using (var context = new CustomerContext())
         {
-            var customer = await context.Customers.SingleAsync(e => e.Name == "Alice");
+            Customer customer = await context.Customers.SingleAsync(e => e.Name == "Alice");
             Console.WriteLine($"Customer '{customer.Name}' was retrieved at '{customer.Retrieved.ToLocalTime()}'");
         }
         #endregion
     }
 
-    private static void PrintSampleName([CallerMemberName] string? methodName = null)
+    static void PrintSampleName([CallerMemberName] string? methodName = null)
     {
         Console.WriteLine($">>>> Sample: {methodName}");
         Console.WriteLine();
@@ -38,13 +38,13 @@ public static class SimpleMaterializationSample
     #region CustomerContext
     public class CustomerContext : DbContext
     {
-        private static readonly SetRetrievedInterceptor _setRetrievedInterceptor = new();
+        static readonly SetRetrievedInterceptor _setRetrievedInterceptor = new();
 
         public DbSet<Customer> Customers
             => Set<Customer>();
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-            => optionsBuilder
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) =>
+            optionsBuilder
                 .AddInterceptors(_setRetrievedInterceptor)
                 .UseSqlite("Data Source = customers.db");
     }

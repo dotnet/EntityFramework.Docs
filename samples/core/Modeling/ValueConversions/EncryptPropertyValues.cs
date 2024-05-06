@@ -10,7 +10,7 @@ namespace EFModeling.ValueConversions;
 
 public class EncryptPropertyValues : Program
 {
-    public void Run()
+    public static void Run()
     {
         ConsoleWriteLines("Sample showing value conversions for encrypting property values...");
 
@@ -28,7 +28,7 @@ public class EncryptPropertyValues : Program
         {
             ConsoleWriteLines("Read the entity back...");
 
-            var user = context.Set<User>().Single();
+            User user = context.Set<User>().Single();
 
             ConsoleWriteLines($"User {user.Name} has password '{user.Password}'");
         }
@@ -38,17 +38,15 @@ public class EncryptPropertyValues : Program
 
     public class SampleDbContext : DbContext
     {
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            #region ConfigureEncryptPropertyValues
+        protected override void OnModelCreating(ModelBuilder modelBuilder) =>
+        #region ConfigureEncryptPropertyValues
             modelBuilder.Entity<User>().Property(e => e.Password).HasConversion(
                 v => new string(v.Reverse().ToArray()),
                 v => new string(v.Reverse().ToArray()));
-            #endregion
-        }
+        #endregion
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-            => optionsBuilder
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) =>
+            optionsBuilder
                 .LogTo(Console.WriteLine, new[] { RelationalEventId.CommandExecuted })
                 .UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=EncryptPropertyValues;Trusted_Connection=True")
                 .EnableSensitiveDataLogging();

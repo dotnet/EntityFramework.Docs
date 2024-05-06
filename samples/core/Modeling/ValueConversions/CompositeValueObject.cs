@@ -12,7 +12,7 @@ namespace EFModeling.ValueConversions;
 
 public class CompositeValueObject : Program
 {
-    public void Run()
+    public static void Run()
     {
         ConsoleWriteLines("Sample showing value conversions for a composite value object...");
 
@@ -30,7 +30,7 @@ public class CompositeValueObject : Program
         {
             ConsoleWriteLines("Read the entity back...");
 
-            var order = context.Set<Order>().Single();
+            Order order = context.Set<Order>().Single();
 
             ConsoleWriteLines($"Order with price {order.Price.Amount} in {order.Price.Currency}.");
         }
@@ -40,19 +40,17 @@ public class CompositeValueObject : Program
 
     public class SampleDbContext : DbContext
     {
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            #region ConfigureCompositeValueObject
+        protected override void OnModelCreating(ModelBuilder modelBuilder) =>
+        #region ConfigureCompositeValueObject
             modelBuilder.Entity<Order>()
                 .Property(e => e.Price)
                 .HasConversion(
                     v => JsonSerializer.Serialize(v, (JsonSerializerOptions)null),
                     v => JsonSerializer.Deserialize<Money>(v, (JsonSerializerOptions)null));
-            #endregion
-        }
+        #endregion
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-            => optionsBuilder
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) =>
+            optionsBuilder
                 .LogTo(Console.WriteLine, new[] { RelationalEventId.CommandExecuted })
                 .UseSqlite("DataSource=test.db")
                 .EnableSensitiveDataLogging();

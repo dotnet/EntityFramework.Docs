@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Diagnostics;
 
 namespace Optional;
 
-public class Samples
+public static class Samples
 {
     public static void DbContext_versus_DbSet_methods_1()
     {
@@ -19,10 +19,10 @@ public class Samples
         #region DbContext_versus_DbSet_methods_1
         using var context = new BlogsContext();
 
-        var post = context.Posts.Single(e => e.Id == 3);
-        var tag = context.Tags.Single(e => e.Id == 1);
+        Post post = context.Posts.Single(e => e.Id == 3);
+        Tag tag = context.Tags.Single(e => e.Id == 1);
 
-        var joinEntitySet = context.Set<Dictionary<string, int>>("PostTag");
+        DbSet<Dictionary<string, int>> joinEntitySet = context.Set<Dictionary<string, int>>("PostTag");
         var joinEntity = new Dictionary<string, int> { ["PostId"] = post.Id, ["TagId"] = tag.Id };
         joinEntitySet.Add(joinEntity);
 
@@ -64,19 +64,17 @@ public class Samples
         Helpers.RecreateCleanDatabase();
 
         #region Temporary_values_2
-        var blogs = new List<Blog> { new Blog { Id = -1, Name = ".NET Blog" }, new Blog { Id = -2, Name = "Visual Studio Blog" } };
+        var blogs = new List<Blog> { new() { Id = -1, Name = ".NET Blog" }, new() { Id = -2, Name = "Visual Studio Blog" } };
 
         var posts = new List<Post>
         {
-            new Post
-            {
+            new() {
                 Id = -1,
                 BlogId = -1,
                 Title = "Announcing the Release of EF Core 5.0",
                 Content = "Announcing the release of EF Core 5.0, a full featured cross-platform..."
             },
-            new Post
-            {
+            new() {
                 Id = -2,
                 BlogId = -2,
                 Title = "Disassembly improvements for optimized managed debugging",
@@ -86,12 +84,12 @@ public class Samples
 
         using var context = new BlogsContext();
 
-        foreach (var blog in blogs)
+        foreach (Blog blog in blogs)
         {
             context.Add(blog).Property(e => e.Id).IsTemporary = true;
         }
 
-        foreach (var post in posts)
+        foreach (Post post in posts)
         {
             context.Add(post).Property(e => e.Id).IsTemporary = true;
         }
@@ -197,12 +195,9 @@ public class Tag
 
 public class BlogsContext : DbContext
 {
-    private readonly bool _quiet;
+    readonly bool _quiet;
 
-    public BlogsContext(bool quiet = false)
-    {
-        _quiet = quiet;
-    }
+    public BlogsContext(bool quiet = false) => _quiet = quiet;
 
     public DbSet<Blog> Blogs { get; set; }
     public DbSet<Post> Posts { get; set; }

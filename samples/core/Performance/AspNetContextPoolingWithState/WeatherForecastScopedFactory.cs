@@ -1,15 +1,14 @@
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Primitives;
 
 namespace Performance.AspNetContextPoolingWithState;
 
 #region WeatherForecastScopedFactory
 public class WeatherForecastScopedFactory : IDbContextFactory<WeatherForecastContext>
 {
-    private const int DefaultTenantId = -1;
+    const int DefaultTenantId = -1;
 
-    private readonly IDbContextFactory<WeatherForecastContext> _pooledFactory;
-    private readonly int _tenantId;
+    readonly IDbContextFactory<WeatherForecastContext> _pooledFactory;
+    readonly int _tenantId;
 
     public WeatherForecastScopedFactory(
         IDbContextFactory<WeatherForecastContext> pooledFactory,
@@ -21,7 +20,7 @@ public class WeatherForecastScopedFactory : IDbContextFactory<WeatherForecastCon
 
     public WeatherForecastContext CreateDbContext()
     {
-        var context = _pooledFactory.CreateDbContext();
+        WeatherForecastContext context = _pooledFactory.CreateDbContext();
         context.TenantId = _tenantId;
         return context;
     }

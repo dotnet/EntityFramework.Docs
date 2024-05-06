@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace EFSaving.CascadeDelete;
 
-public class Sample
+public static class Sample
 {
     public static void Run()
     {
@@ -30,7 +30,7 @@ public class Sample
         DeleteOrphansSample(DeleteBehavior.Restrict, false);
     }
 
-    private static void DeleteBehaviorSample(DeleteBehavior deleteBehavior, bool requiredRelationship)
+    static void DeleteBehaviorSample(DeleteBehavior deleteBehavior, bool requiredRelationship)
     {
         Console.WriteLine(
             $"Test using DeleteBehavior.{deleteBehavior} with {(requiredRelationship ? "required" : "optional")} relationship:");
@@ -40,7 +40,7 @@ public class Sample
         using var context = new BloggingContext(deleteBehavior, requiredRelationship);
 
         #region DeleteBehaviorVariations
-        var blog = context.Blogs.Include(b => b.Posts).First();
+        Blog blog = context.Blogs.Include(b => b.Posts).First();
         var posts = blog.Posts.ToList();
 
         DumpEntities("  After loading entities:", context, blog, posts);
@@ -73,7 +73,7 @@ public class Sample
         Console.WriteLine();
     }
 
-    private static void DeleteOrphansSample(DeleteBehavior deleteBehavior, bool requiredRelationship)
+    static void DeleteOrphansSample(DeleteBehavior deleteBehavior, bool requiredRelationship)
     {
         Console.WriteLine(
             $"Test deleting orphans with DeleteBehavior.{deleteBehavior} and {(requiredRelationship ? "a required" : "an optional")} relationship:");
@@ -83,7 +83,7 @@ public class Sample
         using var context = new BloggingContext(deleteBehavior, requiredRelationship);
 
         #region DeleteOrphansVariations
-        var blog = context.Blogs.Include(b => b.Posts).First();
+        Blog blog = context.Blogs.Include(b => b.Posts).First();
         var posts = blog.Posts.ToList();
 
         DumpEntities("  After loading entities:", context, blog, posts);
@@ -116,7 +116,7 @@ public class Sample
         Console.WriteLine();
     }
 
-    private static void InitializeDatabase(bool requiredRelationship)
+    static void InitializeDatabase(bool requiredRelationship)
     {
         using var context = new BloggingContext(DeleteBehavior.ClientSetNull, requiredRelationship);
         context.Database.EnsureDeleted();
@@ -126,24 +126,24 @@ public class Sample
             new Blog
             {
                 Url = "http://sample.com",
-                Posts = new List<Post> { new Post { Title = "Saving Data with EF" }, new Post { Title = "Cascade Delete with EF" } }
+                Posts = [new() { Title = "Saving Data with EF" }, new() { Title = "Cascade Delete with EF" }]
             });
 
         context.SaveChanges();
     }
 
-    private static void DumpEntities(string message, BloggingContext context, Blog blog, IList<Post> posts)
+    static void DumpEntities(string message, BloggingContext context, Blog blog, IList<Post> posts)
     {
         Console.WriteLine();
         Console.WriteLine(message);
 
-        var blogEntry = context.Entry(blog);
+        Microsoft.EntityFrameworkCore.ChangeTracking.EntityEntry<Blog> blogEntry = context.Entry(blog);
 
         Console.WriteLine($"    Blog '{blog.BlogId}' is in state {blogEntry.State} with {posts.Count} posts referenced.");
 
-        foreach (var post in posts)
+        foreach (Post post in posts)
         {
-            var postEntry = context.Entry(post);
+            Microsoft.EntityFrameworkCore.ChangeTracking.EntityEntry<Post> postEntry = context.Entry(post);
 
             Console.WriteLine(
                 $"      Post '{post.PostId}' is in state {postEntry.State} " +
@@ -151,7 +151,7 @@ public class Sample
         }
     }
 
-    private static void DumpSql()
+    static void DumpSql()
     {
         foreach (var logMessage in BloggingContext.LogMessages)
         {

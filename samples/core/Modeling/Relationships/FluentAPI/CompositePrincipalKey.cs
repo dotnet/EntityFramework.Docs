@@ -5,18 +5,16 @@ using Microsoft.EntityFrameworkCore;
 namespace EFModeling.Relationships.FluentAPI.CompositePrincipalKey;
 
 #region CompositePrincipalKey
-internal class MyContext : DbContext
+class MyContext : DbContext
 {
     public DbSet<Car> Cars { get; set; }
 
-    protected override void OnModelCreating(ModelBuilder modelBuilder)
-    {
+    protected override void OnModelCreating(ModelBuilder modelBuilder) =>
         modelBuilder.Entity<RecordOfSale>()
             .HasOne(s => s.Car)
             .WithMany(c => c.SaleHistory)
             .HasForeignKey(s => new { s.CarState, s.CarLicensePlate })
             .HasPrincipalKey(c => new { c.State, c.LicensePlate });
-    }
 }
 
 public class Car

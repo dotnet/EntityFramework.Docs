@@ -73,17 +73,12 @@ public static class CosmosPrimitiveTypesSample
     {
         public DbSet<Book> Books { get; set; }
 
-        private readonly bool _quiet;
+        readonly bool _quiet;
 
-        public BooksContext(bool quiet = false)
-        {
-            _quiet = quiet;
-        }
+        public BooksContext(bool quiet = false) => _quiet = quiet;
 
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
+        protected override void OnModelCreating(ModelBuilder modelBuilder) =>
             modelBuilder.Entity<Book>().ToContainer("Shapes");
-        }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -94,16 +89,13 @@ public static class CosmosPrimitiveTypesSample
                     "https://localhost:8081",
                     "C2y6yDjf5/R+ob0N8A7Cgv30VRDJIWEHLM+4QDU5DE2nQ9nDuVTqobD4b8mGGyPMbIZnqyMsEcaGQy67XIw/Jw==",
                     "PrimitiveCollections",
-                    cosmosOptionsBuilder =>
-                    {
-                        cosmosOptionsBuilder.HttpClientFactory(
+                    cosmosOptionsBuilder => cosmosOptionsBuilder.HttpClientFactory(
                             () => new HttpClient(
                                 new HttpClientHandler
                                 {
                                     ServerCertificateCustomValidationCallback =
                                         HttpClientHandler.DangerousAcceptAnyServerCertificateValidator
-                                }));
-                    });
+                                })));
             #endregion
 
             if (!_quiet)

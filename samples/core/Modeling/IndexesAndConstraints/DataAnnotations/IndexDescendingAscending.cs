@@ -2,13 +2,13 @@
 
 namespace EFModeling.IndexesAndConstraints.DataAnnotations.IndexDescendingAscending;
 
-internal class MyContext : DbContext
+class MyContext : DbContext
 {
     public DbSet<Blog> Blogs { get; set; }
 }
 
 #region IndexDescendingAscending
-[Index(nameof(Url), nameof(Rating), IsDescending = new[] { false, true })]
+[Index(nameof(Url), nameof(Rating), IsDescending = [false, true])]
 public class Blog
 {
     public int BlogId { get; set; }

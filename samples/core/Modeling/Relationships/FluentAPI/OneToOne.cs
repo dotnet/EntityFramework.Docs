@@ -3,18 +3,16 @@
 namespace EFModeling.Relationships.FluentAPI.OneToOne;
 
 #region OneToOne
-internal class MyContext : DbContext
+class MyContext : DbContext
 {
     public DbSet<Blog> Blogs { get; set; }
     public DbSet<BlogImage> BlogImages { get; set; }
 
-    protected override void OnModelCreating(ModelBuilder modelBuilder)
-    {
+    protected override void OnModelCreating(ModelBuilder modelBuilder) =>
         modelBuilder.Entity<Blog>()
             .HasOne(b => b.BlogImage)
             .WithOne(i => i.Blog)
             .HasForeignKey<BlogImage>(b => b.BlogForeignKey);
-    }
 }
 
 public class Blog

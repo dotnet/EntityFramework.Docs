@@ -14,7 +14,7 @@ public static class ImmutableComplexTypesSample
         return ComplexTypeTest<CustomerContextSqlite>();
     }
 
-    private static async Task ComplexTypeTest<TContext>()
+    static async Task ComplexTypeTest<TContext>()
         where TContext : CustomerContextBase, new()
     {
         await using var context = new TContext();
@@ -36,7 +36,7 @@ public static class ImmutableComplexTypesSample
         await context.SaveChangesAsync();
 
         #region ChangeImmutableAddress
-        var currentAddress = customer.Address;
+        Address currentAddress = customer.Address;
         customer.Address = new Address(
             "Peacock Lodge", currentAddress.Line2, currentAddress.City, currentAddress.Country, currentAddress.PostCode);
 
@@ -44,7 +44,7 @@ public static class ImmutableComplexTypesSample
         #endregion
     }
 
-    private static void PrintSampleName([CallerMemberName] string? methodName = null)
+    static void PrintSampleName([CallerMemberName] string? methodName = null)
     {
         Console.WriteLine($">>>> Sample: {methodName}");
         Console.WriteLine();
@@ -55,7 +55,7 @@ public static class ImmutableComplexTypesSample
         public int Id { get; set; }
         public required string Name { get; set; }
         public required Address Address { get; set; }
-        public List<Order> Orders { get; } = new();
+        public List<Order> Orders { get; } = [];
     }
 
     public class Order
@@ -76,9 +76,7 @@ public static class ImmutableComplexTypesSample
         public string PostCode { get; } = postCode;
     }
 
-    public class CustomerContext : CustomerContextBase
-    {
-    }
+    public class CustomerContext : CustomerContextBase;
 
     public class CustomerContextSqlite : CustomerContextBase
     {
@@ -98,7 +96,7 @@ public static class ImmutableComplexTypesSample
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
             => (UseSqlite
-                    ? optionsBuilder.UseSqlite(@$"DataSource={GetType().Name}.db")
+                    ? optionsBuilder.UseSqlite($"DataSource={GetType().Name}.db")
                     : optionsBuilder.UseSqlServer(
                         @$"Server=(localdb)\mssqllocaldb;Database={GetType().Name}"))
                 //sqlServerOptionsBuilder => sqlServerOptionsBuilder.UseCompatibilityLevel(120)))
@@ -148,9 +146,6 @@ public static class ImmutableComplexTypesSample
             });
         }
 
-        public async Task Seed()
-        {
-            await SaveChangesAsync();
-        }
+        public async Task Seed() => await SaveChangesAsync();
     }
 }

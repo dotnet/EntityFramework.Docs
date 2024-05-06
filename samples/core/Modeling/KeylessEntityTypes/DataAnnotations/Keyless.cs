@@ -1,8 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 
-namespace EFModeling.KeylessEntityTypes.DataAnnotations.Keyless;
+namespace EFModeling.KeylessEntityTypes.DataAnnotations;
 
-internal class BlogsContext : DbContext
+class BlogsContext : DbContext
 {
     public DbSet<BlogPostsCount> BlogPostCounts { get; set; }
 }

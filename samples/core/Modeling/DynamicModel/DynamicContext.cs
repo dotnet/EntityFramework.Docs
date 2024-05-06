@@ -10,8 +10,8 @@ public class DynamicContext : DbContext
     public DbSet<ConfigurableEntity> Entities { get; set; }
 
     #region OnConfiguring
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        => optionsBuilder
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) =>
+        optionsBuilder
             .UseInMemoryDatabase("DynamicContext")
             .ReplaceService<IModelCacheKeyFactory, DynamicModelCacheKeyFactory>();
     #endregion

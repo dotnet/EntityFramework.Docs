@@ -3,15 +3,13 @@ using Microsoft.EntityFrameworkCore;
 
 namespace EFModeling.EntityTypes.FluentAPI.IgnoreType;
 
-internal class MyContext : DbContext
+class MyContext : DbContext
 {
     public DbSet<Blog> Blogs { get; set; }
 
     #region IgnoreType
-    protected override void OnModelCreating(ModelBuilder modelBuilder)
-    {
+    protected override void OnModelCreating(ModelBuilder modelBuilder) =>
         modelBuilder.Ignore<BlogMetadata>();
-    }
     #endregion
 }
 

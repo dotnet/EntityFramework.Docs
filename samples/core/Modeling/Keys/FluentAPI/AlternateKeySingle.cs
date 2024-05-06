@@ -2,20 +2,18 @@
 
 namespace EFModeling.Keys.FluentAPI.AlternateKeySingle;
 
-internal class MyContext : DbContext
+class MyContext : DbContext
 {
     public DbSet<Car> Cars { get; set; }
 
     #region AlternateKeySingle
-    protected override void OnModelCreating(ModelBuilder modelBuilder)
-    {
+    protected override void OnModelCreating(ModelBuilder modelBuilder) =>
         modelBuilder.Entity<Car>()
             .HasAlternateKey(c => c.LicensePlate);
-    }
     #endregion
 }
 
-internal class Car
+class Car
 {
     public int CarId { get; set; }
     public string LicensePlate { get; set; }

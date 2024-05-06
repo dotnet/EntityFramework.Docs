@@ -16,17 +16,14 @@ public static class ScaffoldingSample
         context.Database.EnsureDeleted();
         context.Database.EnsureCreated();
     }
-    
+
     // The code below was scaffolded from an existing database.
     // To replicate this, run this sample to create the database and then use the command line as documented in the text.
 
     #region Blog
-    public partial class Blog
+    public class Blog
     {
-        public Blog()
-        {
-            Posts = new HashSet<Post>();
-        }
+        public Blog() => Posts = new HashSet<Post>();
 
         public int Id { get; set; }
         public string Name { get; set; } = null!;
@@ -36,12 +33,9 @@ public static class ScaffoldingSample
     #endregion
 
     #region Post
-    public partial class Post
+    public class Post
     {
-        public Post()
-        {
-            Tags = new HashSet<Tag>();
-        }
+        public Post() => Tags = new HashSet<Tag>();
 
         public int Id { get; set; }
         public string Title { get; set; } = null!;
@@ -57,12 +51,9 @@ public static class ScaffoldingSample
     #endregion
 
     #region Tag
-    public partial class Tag
+    public class Tag
     {
-        public Tag()
-        {
-            Posts = new HashSet<Post>();
-        }
+        public Tag() => Posts = new HashSet<Post>();
 
         public int Id { get; set; }
         public string Name { get; set; } = null!;
@@ -72,7 +63,7 @@ public static class ScaffoldingSample
     }
     #endregion
 
-    public partial class BloggingWithNRTsContext : DbContext
+    public class BloggingWithNRTsContext : DbContext
     {
         public BloggingWithNRTsContext()
         {
@@ -93,15 +84,13 @@ public static class ScaffoldingSample
         {
             if (!optionsBuilder.IsConfigured)
             {
-// #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
+                // #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
                 optionsBuilder.UseSqlServer("Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=BloggingWithNRTs");
             }
         }
 
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            modelBuilder.Entity<Post>(
-                entity =>
+        protected override void OnModelCreating(ModelBuilder modelBuilder) =>
+            modelBuilder.Entity<Post>(entity =>
                     {
                         entity.HasIndex(e => e.BlogId, "IX_Posts_BlogId");
 
@@ -125,10 +114,5 @@ public static class ScaffoldingSample
                                     });
                         #endregion
                     });
-
-            OnModelCreatingPartial(modelBuilder);
-        }
-
-        partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
     }
 }

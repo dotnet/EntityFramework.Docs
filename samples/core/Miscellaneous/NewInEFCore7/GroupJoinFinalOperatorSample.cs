@@ -20,7 +20,7 @@ public static class GroupJoinFinalOperatorSample
         return QueryTest<GroupJoinContextInMemory>();
     }
 
-    private static async Task QueryTest<TContext>()
+    static async Task QueryTest<TContext>()
         where TContext : GroupJoinContext, new()
     {
         await using (var context = new TContext())
@@ -71,19 +71,19 @@ public static class GroupJoinFinalOperatorSample
 
         await using (var context = new TContext())
         {
-            var query =
+            IQueryable<CustomerWithNavigationProperties> query =
                 from customer in context.Customers
                 join order in context.Orders on customer.Id equals order.CustomerId into orderDetails
                 select new CustomerWithNavigationProperties { Customer = customer, Orders = orderDetails.ToList() };
 
-            await foreach (var group in query.AsAsyncEnumerable())
+            await foreach (CustomerWithNavigationProperties? group in query.AsAsyncEnumerable())
             {
-                Console.WriteLine($"Customer: {group.Customer.Name}; Count = {group.Orders.Count()}");
+                Console.WriteLine($"Customer: {group.Customer.Name}; Count = {group.Orders.Count}");
             }
         }
     }
 
-    private static void PrintSampleName([CallerMemberName] string? methodName = null)
+    static void PrintSampleName([CallerMemberName] string? methodName = null)
     {
         Console.WriteLine($">>>> Sample: {methodName}");
         Console.WriteLine();
@@ -94,8 +94,8 @@ public static class GroupJoinFinalOperatorSample
         public DbSet<Customer> Customers => Set<Customer>();
         public DbSet<Order> Orders => Set<Order>();
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-            => optionsBuilder
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) =>
+            optionsBuilder
                 .LogTo(Console.WriteLine, LogLevel.Information)
                 .EnableSensitiveDataLogging();
     }

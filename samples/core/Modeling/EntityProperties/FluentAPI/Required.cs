@@ -2,17 +2,15 @@
 
 namespace EFModeling.EntityProperties.FluentAPI.Required;
 
-internal class MyContext : DbContext
+class MyContext : DbContext
 {
     public DbSet<Blog> Blogs { get; set; }
 
     #region Required
-    protected override void OnModelCreating(ModelBuilder modelBuilder)
-    {
+    protected override void OnModelCreating(ModelBuilder modelBuilder) =>
         modelBuilder.Entity<Blog>()
             .Property(b => b.Url)
             .IsRequired();
-    }
     #endregion
 }
 

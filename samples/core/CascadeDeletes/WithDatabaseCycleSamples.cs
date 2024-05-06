@@ -19,8 +19,8 @@ public static class WithDatabaseCycleSamples
         #region Database_cascade_limitations_1
         using var context = new BlogsContext();
 
-        var owner = context.People.Single(e => e.Name == "ajcvickers");
-        var blog = context.Blogs.Single(e => e.Owner == owner);
+        Person owner = context.People.Single(e => e.Name == "ajcvickers");
+        Blog blog = context.Blogs.Single(e => e.Owner == owner);
 
         context.Remove(owner);
 
@@ -43,7 +43,7 @@ public static class WithDatabaseCycleSamples
             #region Database_cascade_limitations_2
             using var context = new BlogsContext();
 
-            var owner = context.People.Single(e => e.Name == "ajcvickers");
+            Person owner = context.People.Single(e => e.Name == "ajcvickers");
 
             context.Remove(owner);
 
@@ -143,26 +143,21 @@ public class Person
 
 public class BlogsContext : DbContext
 {
-    private readonly bool _quiet;
+    readonly bool _quiet;
 
-    public BlogsContext(bool quiet = false)
-    {
-        _quiet = quiet;
-    }
+    public BlogsContext(bool quiet = false) => _quiet = quiet;
 
     public DbSet<Blog> Blogs { get; set; }
     public DbSet<Post> Posts { get; set; }
     public DbSet<Person> People { get; set; }
 
     #region OnModelCreating
-    protected override void OnModelCreating(ModelBuilder modelBuilder)
-    {
+    protected override void OnModelCreating(ModelBuilder modelBuilder) =>
         modelBuilder
             .Entity<Blog>()
             .HasOne(e => e.Owner)
             .WithOne(e => e.OwnedBlog)
             .OnDelete(DeleteBehavior.ClientCascade);
-    }
     #endregion
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

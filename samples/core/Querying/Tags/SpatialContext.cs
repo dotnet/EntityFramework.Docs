@@ -7,8 +7,7 @@ public class SpatialContext : DbContext
 {
     public DbSet<Person> People { get; set; }
 
-    protected override void OnModelCreating(ModelBuilder modelBuilder)
-    {
+    protected override void OnModelCreating(ModelBuilder modelBuilder) =>
         modelBuilder.Entity<Person>(
             b =>
             {
@@ -19,12 +18,9 @@ public class SpatialContext : DbContext
                     new Person { Id = 2, Location = new Point(2, 1) },
                     new Person { Id = 3, Location = new Point(4, 5) });
             });
-    }
 
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-    {
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) =>
         optionsBuilder.UseSqlServer(
             @"Server=(localdb)\mssqllocaldb;Database=EFQuerying.Tags;Trusted_Connection=True",
             b => b.UseNetTopologySuite());
-    }
 }

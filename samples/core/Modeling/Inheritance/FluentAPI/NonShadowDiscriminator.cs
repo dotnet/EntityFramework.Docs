@@ -16,7 +16,7 @@ public class MyContext : DbContext
             .Property(e => e.BlogType)
             .HasMaxLength(200)
             .HasColumnName("blog_type");
-            
+
         modelBuilder.Entity<RssBlog>();
     }
     #endregion

@@ -16,7 +16,7 @@ public static class EntityTypeConfigurationAttributeSample
 
         using var context = new BooksContext();
 
-        var book = context.Books.Single(e => e.Id == 1);
+        Book book = context.Books.Single(e => e.Id == 1);
 
         Console.WriteLine();
     }
@@ -55,13 +55,10 @@ public static class EntityTypeConfigurationAttributeSample
     #region BookConfiguration
     public class BookConfiguration : IEntityTypeConfiguration<Book>
     {
-        public void Configure(EntityTypeBuilder<Book> builder)
-        {
-            builder
+        public void Configure(EntityTypeBuilder<Book> builder) => builder
                 .Property(e => e.Isbn)
                 .IsUnicode(false)
                 .HasMaxLength(22);
-        }
     }
     #endregion
 
@@ -73,12 +70,9 @@ public static class EntityTypeConfigurationAttributeSample
         //...
         #endregion
 
-        private readonly bool _quiet;
+        readonly bool _quiet;
 
-        public BooksContext(bool quiet = false)
-        {
-            _quiet = quiet;
-        }
+        public BooksContext(bool quiet = false) => _quiet = quiet;
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

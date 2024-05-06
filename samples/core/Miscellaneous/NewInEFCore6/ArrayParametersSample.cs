@@ -21,7 +21,8 @@ public static class ArrayParametersSample
                 "SELECT * FROM Blogs WHERE Data = {0}",
                 new SqlParameter
                 {
-                    DbType = DbType.String, Value = new[] { "First", "Second", "Third", "Fourth", "Fifth", "Sixth", "Seventh" }
+                    DbType = DbType.String,
+                    Value = new[] { "First", "Second", "Third", "Fourth", "Fifth", "Sixth", "Seventh" }
                 });
         }
         catch
@@ -50,12 +51,9 @@ public static class ArrayParametersSample
 
     public class SomeDbContext : DbContext
     {
-        private readonly bool _quiet;
+        readonly bool _quiet;
 
-        public SomeDbContext(bool quiet = false)
-        {
-            _quiet = quiet;
-        }
+        public SomeDbContext(bool quiet = false) => _quiet = quiet;
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

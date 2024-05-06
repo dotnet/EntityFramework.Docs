@@ -2,17 +2,15 @@
 
 namespace EFModeling.EntityProperties.FluentAPI.ColumnComment;
 
-internal class MyContext : DbContext
+class MyContext : DbContext
 {
     public DbSet<Blog> Blogs { get; set; }
 
     #region ColumnComment
-    protected override void OnModelCreating(ModelBuilder modelBuilder)
-    {
+    protected override void OnModelCreating(ModelBuilder modelBuilder) =>
         modelBuilder.Entity<Blog>()
             .Property(b => b.Url)
             .HasComment("The URL of the blog");
-    }
     #endregion
 }
 

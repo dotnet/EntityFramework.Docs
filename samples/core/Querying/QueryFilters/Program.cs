@@ -5,9 +5,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace EFQuerying.QueryFilters;
 
-internal class Program
+class Program
 {
-    private static void Main(string[] args)
+    static void Main()
     {
         QueryFiltersBasicExample();
         QueryFiltersWithNavigationsExample();
@@ -15,7 +15,7 @@ internal class Program
         QueryFiltersUsingNavigationExample();
     }
 
-    private static void QueryFiltersBasicExample()
+    static void QueryFiltersBasicExample()
     {
         using (var db = new BloggingContext("diego"))
         {
@@ -25,24 +25,24 @@ internal class Program
                     new Blog
                     {
                         Url = "http://sample.com/blogs/fish",
-                        Posts = new List<Post>
-                        {
-                            new Post { Title = "Fish care 101" },
-                            new Post { Title = "Caring for tropical fish" },
-                            new Post { Title = "Types of ornamental fish" }
-                        }
+                        Posts =
+                        [
+                            new() { Title = "Fish care 101" },
+                            new() { Title = "Caring for tropical fish" },
+                            new() { Title = "Types of ornamental fish" }
+                        ]
                     });
 
                 db.Blogs.Add(
                     new Blog
                     {
                         Url = "http://sample.com/blogs/cats",
-                        Posts = new List<Post>
-                        {
-                            new Post { Title = "Cat care 101" },
-                            new Post { Title = "Caring for tropical cats" },
-                            new Post { Title = "Types of ornamental cats" }
-                        }
+                        Posts =
+                        [
+                            new() { Title = "Cat care 101" },
+                            new() { Title = "Caring for tropical cats" },
+                            new() { Title = "Types of ornamental cats" }
+                        ]
                     });
 
                 db.SaveChanges();
@@ -53,10 +53,10 @@ internal class Program
                         new Blog
                         {
                             Url = "http://sample.com/blogs/catfish",
-                            Posts = new List<Post>
-                            {
-                                new Post { Title = "Catfish care 101" }, new Post { Title = "History of the catfish name" }
-                            }
+                            Posts =
+                            [
+                                new() { Title = "Catfish care 101" }, new() { Title = "History of the catfish name" }
+                            ]
                         });
 
                     andrewDb.SaveChanges();
@@ -79,12 +79,12 @@ internal class Program
                 .Include(b => b.Posts)
                 .ToList();
 
-            foreach (var blog in blogs)
+            foreach (Blog blog in blogs)
             {
                 Console.WriteLine(
                     $"{blog.Url,-33} [Tenant: {db.Entry(blog).Property("_tenantId").CurrentValue}]");
 
-                foreach (var post in blog.Posts)
+                foreach (Post post in blog.Posts)
                 {
                     Console.WriteLine($" - {post.Title,-30} [IsDeleted: {post.IsDeleted}]");
                 }
@@ -99,12 +99,12 @@ internal class Program
                 .ToList();
             #endregion
 
-            foreach (var blog in blogs)
+            foreach (Blog blog in blogs)
             {
                 Console.WriteLine(
                     $"{blog.Url,-33} [Tenant: {db.Entry(blog).Property("_tenantId").CurrentValue}]");
 
-                foreach (var post in blog.Posts)
+                foreach (Post post in blog.Posts)
                 {
                     Console.WriteLine($" - {post.Title,-30} [IsDeleted: {post.IsDeleted}]");
                 }
@@ -112,7 +112,7 @@ internal class Program
         }
     }
 
-    private static void QueryFiltersWithNavigationsExample()
+    static void QueryFiltersWithNavigationsExample()
     {
         using (var animalContext = new AnimalContext())
         {
@@ -179,12 +179,12 @@ internal class Program
 
         static void DisplayResults(List<Person> people)
         {
-            foreach (var person in people)
+            foreach (Person person in people)
             {
                 Console.WriteLine($"{person.Name}");
                 if (person.Pets != null)
                 {
-                    foreach (var pet in person.Pets)
+                    foreach (Animal pet in person.Pets)
                     {
                         Console.Write($" - {pet.Name} [{pet.GetType().Name}] ");
                         if (pet is Cat cat)
@@ -203,7 +203,7 @@ internal class Program
         }
     }
 
-    private static void QueryFiltersWithRequiredNavigationExample()
+    static void QueryFiltersWithRequiredNavigationExample()
     {
         using (var db = new FilteredBloggingContextRequired())
         {
@@ -215,24 +215,24 @@ internal class Program
                 new Blog
                 {
                     Url = "http://sample.com/blogs/fish",
-                    Posts = new List<Post>
-                    {
-                        new Post { Title = "Fish care 101" },
-                        new Post { Title = "Caring for tropical fish" },
-                        new Post { Title = "Types of ornamental fish" }
-                    }
+                    Posts =
+                    [
+                        new() { Title = "Fish care 101" },
+                        new() { Title = "Caring for tropical fish" },
+                        new() { Title = "Types of ornamental fish" }
+                    ]
                 });
 
             db.Blogs.Add(
                 new Blog
                 {
                     Url = "http://sample.com/blogs/cats",
-                    Posts = new List<Post>
-                    {
-                        new Post { Title = "Cat care 101" },
-                        new Post { Title = "Caring for tropical cats" },
-                        new Post { Title = "Types of ornamental cats" }
-                    }
+                    Posts =
+                    [
+                        new() { Title = "Cat care 101" },
+                        new() { Title = "Caring for tropical cats" },
+                        new() { Title = "Types of ornamental cats" }
+                    ]
                 });
             #endregion
 
@@ -260,7 +260,7 @@ internal class Program
         }
     }
 
-    private static void QueryFiltersUsingNavigationExample()
+    static void QueryFiltersUsingNavigationExample()
     {
         using (var db = new FilteredBloggingContextRequired())
         {
@@ -272,34 +272,34 @@ internal class Program
                 new Blog
                 {
                     Url = "http://sample.com/blogs/fish",
-                    Posts = new List<Post>
-                    {
-                        new Post { Title = "Fish care 101" },
-                        new Post { Title = "Caring for tropical fish" },
-                        new Post { Title = "Types of ornamental fish" }
-                    }
+                    Posts =
+                    [
+                        new() { Title = "Fish care 101" },
+                        new() { Title = "Caring for tropical fish" },
+                        new() { Title = "Types of ornamental fish" }
+                    ]
                 });
 
             db.Blogs.Add(
                 new Blog
                 {
                     Url = "http://sample.com/blogs/cats",
-                    Posts = new List<Post>
-                    {
-                        new Post { Title = "Cat care 101" },
-                        new Post { Title = "Caring for tropical cats" },
-                        new Post { Title = "Types of ornamental cats" }
-                    }
+                    Posts =
+                    [
+                        new() { Title = "Cat care 101" },
+                        new() { Title = "Caring for tropical cats" },
+                        new() { Title = "Types of ornamental cats" }
+                    ]
                 });
 
             db.Blogs.Add(
                 new Blog
                 {
                     Url = "http://sample.com/blogs/catfish",
-                    Posts = new List<Post>
-                    {
-                        new Post { Title = "Catfish care 101" }, new Post { Title = "History of the catfish name" }
-                    }
+                    Posts =
+                    [
+                        new() { Title = "Catfish care 101" }, new() { Title = "History of the catfish name" }
+                    ]
                 });
             #endregion
 

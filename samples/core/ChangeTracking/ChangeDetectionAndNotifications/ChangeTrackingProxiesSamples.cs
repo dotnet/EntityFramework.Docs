@@ -19,7 +19,7 @@ public class ChangeTrackingProxiesSamples
 
         #region Change_tracking_proxies_1
         using var context = new BlogsContext();
-        var blog = context.Blogs.Include(e => e.Posts).First(e => e.Name == ".NET Blog");
+        Blog blog = context.Blogs.Include(e => e.Posts).First(e => e.Name == ".NET Blog");
 
         // Change a property value
         blog.Name = ".NET Blog (Updated!)";
@@ -122,19 +122,16 @@ public class Post
 public class BlogsContextBase : DbContext
 {
     #region OnConfiguring
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        => optionsBuilder.UseChangeTrackingProxies();
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) =>
+        optionsBuilder.UseChangeTrackingProxies();
     #endregion
 }
 
 public class BlogsContext : BlogsContextBase
 {
-    private readonly bool _quiet;
+    readonly bool _quiet;
 
-    public BlogsContext(bool quiet = false)
-    {
-        _quiet = quiet;
-    }
+    public BlogsContext(bool quiet = false) => _quiet = quiet;
 
     public DbSet<Blog> Blogs { get; set; }
     public DbSet<Post> Posts { get; set; }

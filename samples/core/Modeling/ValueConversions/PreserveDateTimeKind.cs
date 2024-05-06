@@ -10,7 +10,7 @@ namespace EFModeling.ValueConversions;
 
 public class PreserveDateTimeKind : Program
 {
-    public void Run()
+    public static void Run()
     {
         ConsoleWriteLines("Sample showing value conversions for preserving/setting DateTime.Kind...");
 
@@ -42,11 +42,11 @@ public class PreserveDateTimeKind : Program
         {
             ConsoleWriteLines("Read the entities back...");
 
-            var blog1 = context.Set<Post>().Single(e => e.Title == "Post 1");
+            Post blog1 = context.Set<Post>().Single(e => e.Title == "Post 1");
 
             ConsoleWriteLines($"Blog 1: PostedOn.Kind = {blog1.PostedOn.Kind} LastUpdated.Kind = {blog1.LastUpdated.Kind} DeletedOn.Kind = {blog1.DeletedOn.Kind}");
 
-            var blog2 = context.Set<Post>().Single(e => e.Title == "Post 2");
+            Post blog2 = context.Set<Post>().Single(e => e.Title == "Post 2");
 
             ConsoleWriteLines($"Blog 2: PostedOn.Kind = {blog2.PostedOn.Kind} LastUpdated.Kind = {blog2.LastUpdated.Kind} DeletedOn.Kind = {blog2.DeletedOn.Kind}");
         }
@@ -81,8 +81,8 @@ public class PreserveDateTimeKind : Program
             #endregion
         }
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-            => optionsBuilder
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) =>
+            optionsBuilder
                 .LogTo(Console.WriteLine, new[] { RelationalEventId.CommandExecuted })
                 .UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=PreserveDateTimeKind;Trusted_Connection=True")
                 .EnableSensitiveDataLogging();

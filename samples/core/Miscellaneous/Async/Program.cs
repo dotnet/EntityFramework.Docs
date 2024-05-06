@@ -6,7 +6,7 @@ namespace EFAsync;
 
 public class Program
 {
-    public static async Task Main(string[] args)
+    public static async Task Main()
     {
         await using var context = new BloggingContext();
         await context.Database.EnsureDeletedAsync();
@@ -19,7 +19,7 @@ public class Program
         #endregion
 
         #region ToListAsync
-        var blogs = await context.Blogs.Where(b => b.Rating > 3).ToListAsync();
+        System.Collections.Generic.List<Blog> blogs = await context.Blogs.Where(b => b.Rating > 3).ToListAsync();
         #endregion
     }
 }
@@ -28,10 +28,8 @@ public class BloggingContext : DbContext
 {
     public DbSet<Blog> Blogs { get; set; }
 
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-    {
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) =>
         optionsBuilder.UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=EFAsync;Trusted_Connection=True");
-    }
 }
 
 public class Blog

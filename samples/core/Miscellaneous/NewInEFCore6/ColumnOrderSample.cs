@@ -142,12 +142,9 @@ public static class ColumnOrderSample
 
     public class EmployeeContext : DbContext
     {
-        private readonly bool _quiet;
+        readonly bool _quiet;
 
-        public EmployeeContext(bool quiet = false)
-        {
-            _quiet = quiet;
-        }
+        public EmployeeContext(bool quiet = false) => _quiet = quiet;
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -165,9 +162,8 @@ public static class ColumnOrderSample
         public DbSet<WithOrdering.Employee> EmployeesWithOrdering { get; set; }
         public DbSet<UsingModelBuilder.Employee> EmployeesOrderedInModelBuilder { get; set; }
 
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            #region UsingModelBuilder
+        protected override void OnModelCreating(ModelBuilder modelBuilder) =>
+        #region UsingModelBuilder
             modelBuilder.Entity<UsingModelBuilder.Employee>(
                 entityBuilder =>
                 {
@@ -190,7 +186,7 @@ public static class ColumnOrderSample
                     entityBuilder.Property(e => e.UpdatedOn).HasColumnOrder(10);
                     entityBuilder.Property(e => e.CreatedOn).HasColumnOrder(11);
                 });
-            #endregion
-        }
+        #endregion
+
     }
 }

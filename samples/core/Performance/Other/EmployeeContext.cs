@@ -2,18 +2,16 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
-namespace Performance;
+namespace Performance.Other;
 
 public class EmployeeContext : DbContext
 {
     public DbSet<Employee> Employees { get; set; }
 
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-    {
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) =>
         optionsBuilder
             .UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=Blogging;Trusted_Connection=True")
             .LogTo(Console.WriteLine, LogLevel.Information);
-    }
 }
 
 public class Employee

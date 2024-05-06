@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace EFModeling.EntityProperties.DataAnnotations.ColumnOrder;
 
-internal class MyContext : DbContext
+class MyContext : DbContext
 {
     public DbSet<Employee> Employees { get; set; }
 }

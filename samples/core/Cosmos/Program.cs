@@ -5,7 +5,7 @@ namespace Cosmos;
 
 public class Program
 {
-    private static async Task Main()
+    static async Task Main()
     {
         await Sample.Run();
         await UnstructuredData.Sample.Run();

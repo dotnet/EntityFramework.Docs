@@ -28,9 +28,12 @@ public class BloggingContext : DbContext
             .HasData(
                 new Blog
                 {
-                    BlogId = 1, Url = @"https://devblogs.microsoft.com/dotnet", Rating = 5, OwnerId = 1,
+                    BlogId = 1,
+                    Url = "https://devblogs.microsoft.com/dotnet",
+                    Rating = 5,
+                    OwnerId = 1,
                 },
-                new Blog { BlogId = 2, Url = @"https://mytravelblog.com/", Rating = 4, OwnerId = 3 });
+                new Blog { BlogId = 2, Url = "https://mytravelblog.com/", Rating = 4, OwnerId = 3 });
 
         modelBuilder.Entity<Post>()
             .HasData(
@@ -79,9 +82,9 @@ public class BloggingContext : DbContext
 
         modelBuilder.Entity<PersonPhoto>()
             .HasData(
-                new PersonPhoto { PersonPhotoId = 1, Caption = "SN", Photo = new byte[] { 0x00, 0x01 } },
-                new PersonPhoto { PersonPhotoId = 2, Caption = "PF", Photo = new byte[] { 0x01, 0x02, 0x03 } },
-                new PersonPhoto { PersonPhotoId = 3, Caption = "JD", Photo = new byte[] { 0x01, 0x01, 0x01 } });
+                new PersonPhoto { PersonPhotoId = 1, Caption = "SN", Photo = [0x00, 0x01] },
+                new PersonPhoto { PersonPhotoId = 2, Caption = "PF", Photo = [0x01, 0x02, 0x03] },
+                new PersonPhoto { PersonPhotoId = 3, Caption = "JD", Photo = [0x01, 0x01, 0x01] });
 
         modelBuilder.Entity<Tag>()
             .HasData(
@@ -100,9 +103,7 @@ public class BloggingContext : DbContext
                 new PostTag { PostTagId = 6, PostId = 4, TagId = "informative" });
     }
 
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-    {
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) =>
         optionsBuilder.UseSqlServer(
             @"Server=(localdb)\mssqllocaldb;Database=EFQuerying.ComplexQuery;Trusted_Connection=True");
-    }
 }

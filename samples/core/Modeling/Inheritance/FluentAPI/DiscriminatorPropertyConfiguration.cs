@@ -7,12 +7,10 @@ public class MyContext : DbContext
     public DbSet<Blog> Blogs { get; set; }
 
     #region DiscriminatorPropertyConfiguration
-    protected override void OnModelCreating(ModelBuilder modelBuilder)
-    {
+    protected override void OnModelCreating(ModelBuilder modelBuilder) =>
         modelBuilder.Entity<Blog>()
             .Property("Discriminator")
             .HasMaxLength(200);
-    }
     #endregion
 }
 

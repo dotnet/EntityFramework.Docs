@@ -30,7 +30,7 @@ public static class GroupBySample
 
             Console.WriteLine();
 
-            foreach (var person in people)
+            foreach (Person person in people)
             {
                 Console.WriteLine($"{person.FirstName} {person.MiddleInitial} {person.LastName} has {person.Shoes.Count} pairs of shoes.");
             }
@@ -154,7 +154,7 @@ public static class GroupBySample
         using (var context = new ShoesContext())
         {
             #region GroupBy7
-            var size = 11;
+            const int size = 11;
             var results
                 = context.People
                     .Where(
@@ -298,7 +298,7 @@ public static class GroupBySample
             #region GroupBy11
             var grouping = context.People
                 .GroupBy(i => i.LastName)
-                .Select(g => new { LastName = g.Key, Count = g.Count() , First = g.FirstOrDefault(), Take = g.Take(2)})
+                .Select(g => new { LastName = g.Key, Count = g.Count(), First = g.FirstOrDefault(), Take = g.Take(2) })
                 .OrderByDescending(e => e.LastName)
                 .ToList();
             #endregion
@@ -309,7 +309,7 @@ public static class GroupBySample
             {
                 Console.WriteLine($"LastName: {group.LastName} Count: {group.Count} First: {group.First.FirstName} {group.First.MiddleInitial} {group.First.LastName}");
 
-                foreach (var person in group.Take)
+                foreach (Person person in group.Take)
                 {
                     Console.WriteLine($"    {person.FirstName} {person.MiddleInitial} {person.LastName}");
                 }
@@ -327,7 +327,7 @@ public static class GroupBySample
                 .OrderBy(e => e.FirstName)
                 .ThenBy(e => e.LastName)
                 .GroupBy(e => e.FirstName)
-                .Select(g => new { Name = g.Key, People = g.ToList()})
+                .Select(g => new { Name = g.Key, People = g.ToList() })
                 .ToList();
             #endregion
 
@@ -335,7 +335,7 @@ public static class GroupBySample
 
             foreach (var group in grouping)
             {
-                foreach (var person in group.People)
+                foreach (Person person in group.People)
                 {
                     Console.WriteLine($"{person.FirstName} {person.LastName} has {person.Shoes.Count} pairs of shoes.");
                 }
@@ -349,10 +349,10 @@ public static class GroupBySample
         {
             #region GroupBy13
             var grouping = context.People
-                .GroupBy(m => new {m.FirstName, m.MiddleInitial })
+                .GroupBy(m => new { m.FirstName, m.MiddleInitial })
                 .Select(am => new
                 {
-                    Key = am.Key,
+                    am.Key,
                     Items = am.ToList()
                 })
                 .ToList();
@@ -364,7 +364,7 @@ public static class GroupBySample
             {
                 Console.WriteLine($"Group: {group.Key}");
 
-                foreach (var person in group.Items)
+                foreach (Person person in group.Items)
                 {
                     Console.WriteLine($"    {person.FirstName} {person.MiddleInitial} {person.LastName}");
                 }
@@ -536,12 +536,9 @@ public static class GroupBySample
         public DbSet<Shoes> Shoes { get; set; }
         public DbSet<Feet> Feet { get; set; }
 
-        private readonly bool _quiet;
+        readonly bool _quiet;
 
-        public ShoesContext(bool quiet = false)
-        {
-            _quiet = quiet;
-        }
+        public ShoesContext(bool quiet = false) => _quiet = quiet;
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -555,9 +552,7 @@ public static class GroupBySample
             }
         }
 
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
+        protected override void OnModelCreating(ModelBuilder modelBuilder) =>
             modelBuilder.Entity<Feet>().HasOne(e => e.Person).WithOne(e => e.Feet).HasForeignKey<Feet>();
-        }
     }
 }

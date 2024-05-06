@@ -14,7 +14,7 @@ public static class LazyLoadingSample
         return LazyLoadingTest<LazyLoadingBlogsContextSqlite>();
     }
 
-    private static async Task LazyLoadingTest<TContext>()
+    static async Task LazyLoadingTest<TContext>()
         where TContext : BlogsContext, new()
     {
         await using var context = new TContext();
@@ -27,7 +27,7 @@ public static class LazyLoadingSample
         var x = 1;
 
         #region NoTrackingForBlogs
-        var blogs = await context.Blogs.AsNoTracking().ToListAsync();
+        List<Blog> blogs = await context.Blogs.AsNoTracking().ToListAsync();
         #endregion
 
         Console.WriteLine("Blogs:");
@@ -42,7 +42,7 @@ public static class LazyLoadingSample
         if (int.TryParse(ReadLine(), out var blogId))
         {
             Console.WriteLine("Posts:");
-            foreach (var post in blogs[blogId - 1].Posts)
+            foreach (Post post in blogs[blogId - 1].Posts)
             {
                 Console.WriteLine($"  {post.Title}");
             }
@@ -53,19 +53,19 @@ public static class LazyLoadingSample
         Console.Write("Choose another blog: ");
         if (int.TryParse(ReadLine(), out blogId))
         {
-            var blog = blogs[blogId - 1];
+            Blog blog = blogs[blogId - 1];
             #region ExplicitLoad
             await context.Entry(blog).Collection(e => e.Posts).LoadAsync();
             #endregion
             Console.WriteLine("Posts:");
-            foreach (var post in blog.Posts)
+            foreach (Post post in blog.Posts)
             {
                 Console.WriteLine($"  {post.Title}");
             }
         }
 
         #region IsLoaded
-        foreach (var blog in blogs)
+        foreach (Blog blog in blogs)
         {
             if (context.Entry(blog).Collection(e => e.Posts).IsLoaded)
             {
@@ -74,13 +74,10 @@ public static class LazyLoadingSample
         }
         #endregion
 
-        string ReadLine()
-        {
-            return (x++).ToString(); // Console.ReadLine();
-        }
+        string ReadLine() => x++.ToString(); // Console.ReadLine();
     }
 
-    private static void PrintSampleName([CallerMemberName] string? methodName = null)
+    static void PrintSampleName([CallerMemberName] string? methodName = null)
     {
         Console.WriteLine($">>>> Sample: {methodName}");
         Console.WriteLine();
@@ -116,9 +113,7 @@ public class LazyLoadingBlogsContextBase : JsonBlogsContextBase
     }
 }
 
-public class LazyLoadingBlogsContext : LazyLoadingBlogsContextBase
-{
-}
+public class LazyLoadingBlogsContext : LazyLoadingBlogsContextBase;
 
 public class LazyLoadingBlogsContextSqlite : LazyLoadingBlogsContextBase
 {

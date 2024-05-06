@@ -6,10 +6,10 @@ namespace EF.Testing.IntegrationTests;
 #region TestDatabaseFixture
 public class TestDatabaseFixture
 {
-    private const string ConnectionString = @"Server=(localdb)\mssqllocaldb;Database=EFTestSample;Trusted_Connection=True";
+    const string ConnectionString = @"Server=(localdb)\mssqllocaldb;Database=EFTestSample;Trusted_Connection=True";
 
-    private static readonly object _lock = new();
-    private static bool _databaseInitialized;
+    static readonly object _lock = new();
+    static bool _databaseInitialized;
 
     public TestDatabaseFixture()
     {
@@ -17,7 +17,7 @@ public class TestDatabaseFixture
         {
             if (!_databaseInitialized)
             {
-                using (var context = CreateContext())
+                using (BloggingContext context = CreateContext())
                 {
                     context.Database.EnsureDeleted();
                     context.Database.EnsureCreated();
@@ -33,8 +33,8 @@ public class TestDatabaseFixture
         }
     }
 
-    public BloggingContext CreateContext()
-        => new BloggingContext(
+    public static BloggingContext CreateContext()
+        => new(
             new DbContextOptionsBuilder<BloggingContext>()
                 .UseSqlServer(ConnectionString)
                 .Options);

@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore.Migrations.Operations;
 using Microsoft.EntityFrameworkCore.Migrations.Operations.Builders;
 
-internal static class SqlMigrationBuilderExtensions
+static class SqlMigrationBuilderExtensions
 {
     #region snippet_CustomOperationSql
     public static OperationBuilder<SqlOperation> CreateUser(

@@ -5,7 +5,7 @@ namespace EFModeling.DynamicModel;
 
 public class Program
 {
-    private static void Main()
+    static void Main()
     {
         // Note that because this sample uses InMemory as its provider, each model gets it's own separate store.
 
@@ -23,7 +23,7 @@ public class Program
 
         using (var context = new DynamicContext { UseIntProperty = true })
         {
-            var entity = context.Entities.Single();
+            ConfigurableEntity entity = context.Entities.Single();
 
             // Writes 44 and an empty string
             Console.WriteLine($"{entity.IntProperty} {entity.StringProperty}");
@@ -31,7 +31,7 @@ public class Program
 
         using (var context = new DynamicContext { UseIntProperty = false })
         {
-            var entity = context.Entities.Single();
+            ConfigurableEntity entity = context.Entities.Single();
 
             // Writes 0 and an "Hola"
             Console.WriteLine($"{entity.IntProperty} {entity.StringProperty}");

@@ -5,7 +5,7 @@ namespace EFCollations;
 
 public class Program
 {
-    public static void Main(string[] args)
+    public static void Main()
     {
         using (var db = new CustomerContext())
         {
@@ -13,14 +13,12 @@ public class Program
             db.Database.EnsureCreated();
         }
 
-        using (var context = new CustomerContext())
-        {
-            #region SimpleQueryCollation
-            var customers = context.Customers
-                .Where(c => EF.Functions.Collate(c.Name, "SQL_Latin1_General_CP1_CS_AS") == "John")
-                .ToList();
-            #endregion
-        }
+        using var context = new CustomerContext();
+        #region SimpleQueryCollation
+        var customers = context.Customers
+            .Where(c => EF.Functions.Collate(c.Name, "SQL_Latin1_General_CP1_CS_AS") == "John")
+            .ToList();
+        #endregion
     }
 }
 
@@ -28,10 +26,8 @@ public class CustomerContext : DbContext
 {
     public DbSet<Customer> Customers { get; set; }
 
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-    {
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) =>
         optionsBuilder.UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=EFCollations;Trusted_Connection=True");
-    }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 
@@ -80,12 +79,9 @@ public static class MathFTranslationSample
     {
         public DbSet<Review> Reviews { get; set; }
 
-        private readonly bool _quiet;
+        readonly bool _quiet;
 
-        public CustomersContext(bool quiet = false)
-        {
-            _quiet = quiet;
-        }
+        public CustomersContext(bool quiet = false) => _quiet = quiet;
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

@@ -19,11 +19,11 @@ public static class GeneratedKeysSamples
         #region Simple_query_and_update_1
         using var context = new BlogsContext();
 
-        var blog = context.Blogs.Include(e => e.Posts).First(e => e.Name == ".NET Blog");
+        Blog blog = context.Blogs.Include(e => e.Posts).First(e => e.Name == ".NET Blog");
 
         blog.Name = ".NET Blog (Updated!)";
 
-        foreach (var post in blog.Posts.Where(e => !e.Title.Contains("5.0")))
+        foreach (Post post in blog.Posts.Where(e => !e.Title.Contains("5.0")))
         {
             post.Title = post.Title.Replace("5", "5.0");
         }
@@ -44,11 +44,11 @@ public static class GeneratedKeysSamples
 
         using var context = new BlogsContext();
 
-        var blog = context.Blogs.Include(e => e.Posts).First(e => e.Name == ".NET Blog");
+        Blog blog = context.Blogs.Include(e => e.Posts).First(e => e.Name == ".NET Blog");
 
         blog.Name = ".NET Blog (Updated!)";
 
-        foreach (var post in blog.Posts.Where(e => !e.Title.Contains("5.0")))
+        foreach (Post post in blog.Posts.Where(e => !e.Title.Contains("5.0")))
         {
             post.Title = post.Title.Replace("5", "5.0");
         }
@@ -74,7 +74,7 @@ public static class GeneratedKeysSamples
         #region Query_then_insert_update_and_delete_1
         using var context = new BlogsContext();
 
-        var blog = context.Blogs.Include(e => e.Posts).First(e => e.Name == ".NET Blog");
+        Blog blog = context.Blogs.Include(e => e.Posts).First(e => e.Name == ".NET Blog");
 
         // Modify property values
         blog.Name = ".NET Blog (Updated!)";
@@ -83,11 +83,12 @@ public static class GeneratedKeysSamples
         blog.Posts.Add(
             new Post
             {
-                Title = "What’s next for System.Text.Json?", Content = ".NET 5.0 was released recently and has come with many..."
+                Title = "What’s next for System.Text.Json?",
+                Content = ".NET 5.0 was released recently and has come with many..."
             });
 
         // Mark an existing Post as Deleted
-        var postToDelete = blog.Posts.Single(e => e.Title == "Announcing F# 5");
+        Post postToDelete = blog.Posts.Single(e => e.Title == "Announcing F# 5");
         context.Remove(postToDelete);
 
         context.ChangeTracker.DetectChanges();
@@ -248,7 +249,7 @@ public static class GeneratedKeysSamples
 
         using var context = new BlogsContext();
 
-        var blog = context.Blogs.AsNoTracking().Include(e => e.Posts).Single(e => e.Name == ".NET Blog");
+        Blog blog = context.Blogs.AsNoTracking().Include(e => e.Posts).Single(e => e.Name == ".NET Blog");
 
         #region Custom_tracking_with_TrackGraph_1a
         blog.Posts.Add(
@@ -259,7 +260,7 @@ public static class GeneratedKeysSamples
             }
         );
 
-        var toDelete = blog.Posts.Single(e => e.Title == "Announcing F# 5");
+        Post toDelete = blog.Posts.Single(e => e.Title == "Announcing F# 5");
         toDelete.Id = -toDelete.Id;
         #endregion
 
@@ -276,7 +277,7 @@ public static class GeneratedKeysSamples
         context.ChangeTracker.TrackGraph(
             blog, node =>
             {
-                var propertyEntry = node.Entry.Property("Id");
+                Microsoft.EntityFrameworkCore.ChangeTracking.PropertyEntry propertyEntry = node.Entry.Property("Id");
                 var keyValue = (int)propertyEntry.CurrentValue;
 
                 if (keyValue == 0)
@@ -360,12 +361,9 @@ public class Post
 
 public class BlogsContext : DbContext
 {
-    private readonly bool _quiet;
+    readonly bool _quiet;
 
-    public BlogsContext(bool quiet = false)
-    {
-        _quiet = quiet;
-    }
+    public BlogsContext(bool quiet = false) => _quiet = quiet;
 
     public DbSet<Blog> Blogs { get; set; }
     public DbSet<Post> Posts { get; set; }

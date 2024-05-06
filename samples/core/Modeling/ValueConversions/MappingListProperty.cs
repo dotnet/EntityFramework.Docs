@@ -11,7 +11,7 @@ namespace EFModeling.ValueConversions;
 
 public class MappingListProperty : Program
 {
-    public void Run()
+    public static void Run()
     {
         ConsoleWriteLines("Sample showing value conversions for a List<int>...");
 
@@ -21,7 +21,7 @@ public class MappingListProperty : Program
 
             ConsoleWriteLines("Save a new entity...");
 
-            var entity = new EntityType { MyListProperty = new List<int> { 1, 2, 3 } };
+            var entity = new EntityType { MyListProperty = [1, 2, 3] };
             context.Add(entity);
             context.SaveChanges();
 
@@ -37,7 +37,7 @@ public class MappingListProperty : Program
         {
             ConsoleWriteLines("Read the entity back...");
 
-            var entity = context.Set<EntityType>().Single();
+            EntityType entity = context.Set<EntityType>().Single();
 
             Debug.Assert(entity.MyListProperty.SequenceEqual(new List<int> { 1, 2, 3, 4 }));
         }
@@ -47,12 +47,11 @@ public class MappingListProperty : Program
 
     public class SampleDbContext : DbContext
     {
-        private static readonly ILoggerFactory
-            Logger = LoggerFactory.Create(x => x.AddConsole()); //.SetMinimumLevel(LogLevel.Debug));
+        static readonly ILoggerFactory
+            _logger = LoggerFactory.Create(x => x.AddConsole()); //.SetMinimumLevel(LogLevel.Debug));
 
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            #region ConfigureListProperty
+        protected override void OnModelCreating(ModelBuilder modelBuilder) =>
+        #region ConfigureListProperty
             modelBuilder
                 .Entity<EntityType>()
                 .Property(e => e.MyListProperty)
@@ -63,12 +62,11 @@ public class MappingListProperty : Program
                         (c1, c2) => c1.SequenceEqual(c2),
                         c => c.Aggregate(0, (a, v) => HashCode.Combine(a, v.GetHashCode())),
                         c => c.ToList()));
-            #endregion
-        }
+        #endregion
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-            => optionsBuilder
-                .UseLoggerFactory(Logger)
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) =>
+            optionsBuilder
+                .UseLoggerFactory(_logger)
                 .UseSqlite("DataSource=test.db")
                 .EnableSensitiveDataLogging();
     }

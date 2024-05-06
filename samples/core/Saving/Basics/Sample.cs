@@ -24,7 +24,7 @@ public class Sample
         #region Update
         using (var context = new BloggingContext())
         {
-            var blog = context.Blogs.Single(b => b.Url == "http://example.com");
+            Blog blog = context.Blogs.Single(b => b.Url == "http://example.com");
             blog.Url = "http://example.com/blog";
             context.SaveChanges();
         }
@@ -33,7 +33,7 @@ public class Sample
         #region Remove
         using (var context = new BloggingContext())
         {
-            var blog = context.Blogs.Single(b => b.Url == "http://example.com/blog");
+            Blog blog = context.Blogs.Single(b => b.Url == "http://example.com/blog");
             context.Blogs.Remove(blog);
             context.SaveChanges();
         }
@@ -55,11 +55,11 @@ public class Sample
             context.Blogs.Add(new Blog { Url = "http://example.com/blog_two" });
 
             // update
-            var firstBlog = context.Blogs.First();
+            Blog firstBlog = context.Blogs.First();
             firstBlog.Url = "";
 
             // remove
-            var lastBlog = context.Blogs.OrderBy(e => e.BlogId).Last();
+            Blog lastBlog = context.Blogs.OrderBy(e => e.BlogId).Last();
             context.Blogs.Remove(lastBlog);
 
             context.SaveChanges();

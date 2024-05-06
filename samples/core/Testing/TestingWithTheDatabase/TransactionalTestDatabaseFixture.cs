@@ -7,27 +7,27 @@ namespace EF.Testing.IntegrationTests;
 #region TransactionalTestDatabaseFixture
 public class TransactionalTestDatabaseFixture
 {
-    private const string ConnectionString = @"Server=(localdb)\mssqllocaldb;Database=EFTransactionalTestSample;Trusted_Connection=True";
+    const string ConnectionString = @"Server=(localdb)\mssqllocaldb;Database=EFTransactionalTestSample;Trusted_Connection=True";
 
-    public BloggingContext CreateContext()
-        => new BloggingContext(
+    public static BloggingContext CreateContext()
+        => new(
             new DbContextOptionsBuilder<BloggingContext>()
                 .UseSqlServer(ConnectionString)
                 .Options);
 
     public TransactionalTestDatabaseFixture()
     {
-        using var context = CreateContext();
+        using BloggingContext context = CreateContext();
         context.Database.EnsureDeleted();
         context.Database.EnsureCreated();
 
         Cleanup();
     }
 
-    public void Cleanup()
+    public static void Cleanup()
     {
         #region Cleanup
-        using var context = CreateContext();
+        using BloggingContext context = CreateContext();
 
         context.Blogs.RemoveRange(context.Blogs);
 
@@ -42,7 +42,5 @@ public class TransactionalTestDatabaseFixture
 
 #region CollectionDefinition
 [CollectionDefinition("TransactionalTests")]
-public class TransactionalTestsCollection : ICollectionFixture<TransactionalTestDatabaseFixture>
-{
-}
+public class TransactionalTestsCollection : ICollectionFixture<TransactionalTestDatabaseFixture>;
 #endregion

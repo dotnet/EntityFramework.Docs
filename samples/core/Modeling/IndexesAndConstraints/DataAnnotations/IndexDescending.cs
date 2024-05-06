@@ -2,7 +2,7 @@
 
 namespace EFModeling.IndexesAndConstraints.DataAnnotations.IndexDescending;
 
-internal class MyContext : DbContext
+class MyContext : DbContext
 {
     public DbSet<Blog> Blogs { get; set; }
 }

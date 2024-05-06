@@ -9,7 +9,7 @@ public class NullSemanticsContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-        var relationalNulls = false;
+        const bool relationalNulls = false;
         if (relationalNulls)
         {
             #region UseRelationalNulls
@@ -21,8 +21,7 @@ public class NullSemanticsContext : DbContext
             @"Server=(localdb)\mssqllocaldb;Database=NullSemanticsSample;Trusted_Connection=True;MultipleActiveResultSets=true");
     }
 
-    protected override void OnModelCreating(ModelBuilder modelBuilder)
-    {
+    protected override void OnModelCreating(ModelBuilder modelBuilder) =>
         modelBuilder.Entity<NullSemanticsEntity>().HasData(
             new NullSemanticsEntity
             {
@@ -64,5 +63,4 @@ public class NullSemanticsContext : DbContext
                 String1 = null,
                 String2 = null
             });
-    }
 }

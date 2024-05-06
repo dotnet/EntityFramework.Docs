@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 namespace EFModeling.Inheritance.InheritanceDbSets;
 
 #region InheritanceDbSets
-internal class MyContext : DbContext
+class MyContext : DbContext
 {
     public DbSet<Blog> Blogs { get; set; }
     public DbSet<RssBlog> RssBlogs { get; set; }
