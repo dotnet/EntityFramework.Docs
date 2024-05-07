@@ -24,7 +24,7 @@ public class SpatialContext : DbContext
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         optionsBuilder.UseSqlServer(
-            @"Server=(localdb)\mssqllocaldb;Database=EFQuerying.Tags;Trusted_Connection=True",
+            @"Server=(localdb)\mssqllocaldb;Database=EFQuerying.Tags;Trusted_Connection=True;ConnectRetryCount=0",
             b => b.UseNetTopologySuite());
     }
 }

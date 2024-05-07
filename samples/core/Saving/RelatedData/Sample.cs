@@ -75,7 +75,7 @@ public class Sample
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseSqlServer(
-                @"Server=(localdb)\mssqllocaldb;Database=EFSaving.RelatedData;Trusted_Connection=True");
+                @"Server=(localdb)\mssqllocaldb;Database=EFSaving.RelatedData;Trusted_Connection=True;ConnectRetryCount=0");
         }
     }
 

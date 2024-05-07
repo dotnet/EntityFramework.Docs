@@ -2,7 +2,7 @@
 title: What's New in EF Core 9
 description: Overview of new features in EF Core 9
 author: ajcvickers
-ms.date: 03/07/2024
+ms.date: 05/02/2024
 uid: core/what-is-new/ef-core-9.0/whatsnew
 ---
 
@@ -15,14 +15,112 @@ EF9 is available as [daily builds](https://github.com/dotnet/efcore/blob/main/do
 > [!TIP]
 > You can run and debug into the samples by [downloading the sample code from GitHub](https://github.com/dotnet/EntityFramework.Docs). Each section below links to the source code specific to that section.
 
-EF9 targets .NET 8, and can therefore be used with either [.NET 8 (LTS)](https://dotnet.microsoft.com/download/dotnet/8.0) or a .NET 9 preview.
+EF9 targets .NET 8, and can therefore be used with either [.NET 8 (LTS)](https://dotnet.microsoft.com/download/dotnet/8.0) or a [.NET 9 preview](https://dotnet.microsoft.com/download/dotnet/9.0).
 
 > [!TIP]
 > The _What's New_ docs are updated for each preview. All the samples are set up to use the [EF9 daily builds](https://github.com/dotnet/efcore/blob/main/docs/DailyBuilds.md), which usually have several additional weeks of completed work compared to the latest preview. We strongly encourage use of the daily builds when testing new features so that you're not doing your testing against stale bits.
 
+<a name="cosmos"></a>
+
+## Azure Cosmos DB for NoSQL
+
+We are working on significant updates in EF9 to the EF Core database provider for Azure Cosmos DB for NoSQL.
+
+### Role-based access
+
+Azure Cosmos DB for NoSQL includes a [built-in role-based access control (RBAC) system](/azure/cosmos-db/role-based-access-control). This is now supported by EF9 for both management and use of containers. No changes are required to application code. See [Issue #32197](https://github.com/dotnet/efcore/issues/32197) for more information.
+
+### Synchronous access blocked by default
+
+> [!TIP]
+> The code shown here comes from [CosmosSyncApisSample.cs](https://github.com/dotnet/EntityFramework.Docs/tree/main/samples/core/Miscellaneous/NewInEFCore9.Cosmos/CosmosSyncApisSample.cs).
+
+Azure Cosmos DB for NoSQL does not support synchronous (blocking) access from application code. Previously, EF masked this by default by blocking for you on async calls. However, this both encourages sync use, which is bad practice, and [may cause deadlocks](https://blog.stephencleary.com/2012/07/dont-block-on-async-code.html). Therefore, starting with EF9, an exception is thrown when synchronous access is attempted. For example:
+
+```output
+System.InvalidOperationException: An error was generated for warning 'Microsoft.EntityFrameworkCore.Database.SyncNotSupported':
+ Azure Cosmos DB does not support synchronous I/O. Make sure to use and correctly await only async methods when using
+ Entity Framework Core to access Azure Cosmos DB. See https://aka.ms/ef-cosmos-nosync for more information.
+ This exception can be suppressed or logged by passing event ID 'CosmosEventId.SyncNotSupported' to the 'ConfigureWarnings'
+ method in 'DbContext.OnConfiguring' or 'AddDbContext'.
+   at Microsoft.EntityFrameworkCore.Diagnostics.EventDefinition.Log[TLoggerCategory](IDiagnosticsLogger`1 logger, Exception exception)
+   at Microsoft.EntityFrameworkCore.Cosmos.Diagnostics.Internal.CosmosLoggerExtensions.SyncNotSupported(IDiagnosticsLogger`1 diagnostics)
+   at Microsoft.EntityFrameworkCore.Cosmos.Storage.Internal.CosmosClientWrapper.DeleteDatabase()
+   at Microsoft.EntityFrameworkCore.Cosmos.Storage.Internal.CosmosDatabaseCreator.EnsureDeleted()
+   at Microsoft.EntityFrameworkCore.Infrastructure.DatabaseFacade.EnsureDeleted()
+```
+
+As the exception says, sync access can still be used for now by configuring the warning level appropriately. For example, in `OnConfiguring` on your `DbContext` type:
+
+```csharp
+protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    => optionsBuilder.ConfigureWarnings(b => b.Ignore(CosmosEventId.SyncNotSupported));
+```
+
+Note, however, that we plan to fully remove sync support in EF11, so start updating to use async methods like `ToListAsync` and `SaveChangesAsync` as soon as possible!
+
+### Enhanced primitive collections
+
+> [!TIP]
+> The code shown here comes from [CosmosPrimitiveTypesSample.cs](https://github.com/dotnet/EntityFramework.Docs/tree/main/samples/core/Miscellaneous/NewInEFCore9.Cosmos/CosmosPrimitiveTypesSample.cs).
+
+The Cosmos DB provider has supported primitive collections in a limited form since EF Core 6. This is support is being enhanced in EF9, starting with consolidation of the metadata and API surfaces for primitive collections in document databases to align with primitive collections in relational databases. This means that primitive collections can now be explicitly mapped using the model building API, allowing for facets of the element type to be configured. For example, to map a list of required (i.e. non-null) strings:
+
+<!--
+            modelBuilder.Entity<Book>()
+                .PrimitiveCollection(e => e.Quotes)
+                .ElementType(b => b.IsRequired());
+-->
+[!code-csharp[ConfigureCollection](../../../../samples/core/Miscellaneous/NewInEFCore9.Cosmos/CosmosPrimitiveTypesSample.cs?name=ConfigureCollection)]
+
+See [What's new in EF8: primitive collections](xref:core/what-is-new/ef-core-8.0/whatsnew#primitive-collections) for more information on the model building API.
+
+## AOT and pre-compiled queries
+
+As mentioned in the introduction, there is a lot of work going on behind the scenes to allow EF Core to run without just-in-time (JIT) compilation. Instead, EF compile ahead-of-time (AOT) everything needed to run queries in the application. This AOT compilation and related processing will happen as part of building and publishing the application. At this point in the EF9 release, there is not much available that can be used by you, the app developer. However, for those interested, the completed issues in EF9 that support AOT and pre-compiled queries are:
+
+- [Compiled model: Use static binding instead of reflection for properties and fields](https://github.com/dotnet/efcore/issues/24900)
+- [Compiled model: Generate lambdas used in change tracking](https://github.com/dotnet/efcore/issues/24904)
+- [Make change tracking and the update pipeline compatible with AOT/trimming](https://github.com/dotnet/efcore/issues/29761)
+- [Use interceptors to redirect the query to precompiled code](https://github.com/dotnet/efcore/issues/31331)
+- [Make all SQL expression nodes quotable](https://github.com/dotnet/efcore/issues/33008)
+- [Generate the compiled model during build](https://github.com/dotnet/efcore/issues/24894)
+- [Discover the compiled model automatically](https://github.com/dotnet/efcore/issues/24893)
+- [Make ParameterExtractingExpressionVisitor capable of extracting paths to evaluatable fragments in the tree](https://github.com/dotnet/efcore/issues/32999)
+- [Generate expression trees in compiled models (query filters, value converters)](https://github.com/dotnet/efcore/issues/29924)
+- [Make LinqToCSharpSyntaxTranslator more resilient to multiple declaration of the same variable in nested scopes](https://github.com/dotnet/efcore/issues/32716)
+- [Optimize ParameterExtractingExpressionVisitor](https://github.com/dotnet/efcore/issues/32698)
+
+Check back here for examples of how to use pre-compiled queries as the experience comes together.
+
 ## LINQ and SQL translation
 
 The team is working on some significant architecture changes to the query pipeline in EF Core 9 as part of our continued improvements to JSON mapping and document databases. This means we need to get **people like you** to run your code on these new internals. (If you're reading a "What's New" doc at this point in the release, then you're a really engaged part of the community; thank you!) We have over 120,000 tests, but it's not enough! We need you, people running real code on our bits, in order to find issues and ship a solid release!
+
+<a name="groupby-complex-types"></a>
+
+### GroupBy complex types
+
+> [!TIP]
+> The code shown here comes from [ComplexTypesSample.cs](https://github.com/dotnet/EntityFramework.Docs/tree/main/samples/core/Miscellaneous/NewInEFCore9/ComplexTypesSample.cs).
+
+EF9 supports grouping by a complex type instance. For example:
+
+<!--
+        var groupedAddresses = await context.Stores
+            .GroupBy(b => b.StoreAddress)
+            .Select(g => new { g.Key, Count = g.Count() })
+            .ToListAsync();
+-->
+[!code-csharp[GroupByComplexType](../../../../samples/core/Miscellaneous/NewInEFCore9/ComplexTypesSample.cs?name=GroupByComplexType)]
+
+EF translates this as grouping by each member of the complex type, which aligns with the semantics of complex types as value objects. For example, on Azure SQL:
+
+```sql
+SELECT [s].[StoreAddress_City], [s].[StoreAddress_Country], [s].[StoreAddress_Line1], [s].[StoreAddress_Line2], [s].[StoreAddress_PostCode], COUNT(*) AS [Count]
+FROM [Stores] AS [s]
+GROUP BY [s].[StoreAddress_City], [s].[StoreAddress_Country], [s].[StoreAddress_Line1], [s].[StoreAddress_Line2], [s].[StoreAddress_PostCode]
+```
 
 <a name="prune"></a>
 
@@ -680,6 +778,66 @@ Now, whenever the model changes, the compiled model will be automatically rebuil
 > [NOTE!]
 > We are working through some performance issues with changes made to the compiled model in EF8 and EF9. See [Issue 33483#](https://github.com/dotnet/efcore/issues/33483) for more information.
 
+<a name="read-only-primitives"></a>
+
+### Read-only primitive collections
+
+> [!TIP]
+> The code shown here comes from [PrimitiveCollectionsSample.cs](https://github.com/dotnet/EntityFramework.Docs/tree/main/samples/core/Miscellaneous/NewInEFCore9/PrimitiveCollectionsSample.cs).
+
+EF8 introduced support for [mapping arrays and mutable lists of primitive types](xref:core/what-is-new/ef-core-8.0/whatsnew#primitive-collections). This has been expanded in EF9 to include read-only collections/lists. Specifically, EF9 supports collections typed as `IReadOnlyList`, `IReadOnlyCollection`, or `ReadOnlyCollection`. For example, in the following code, `DaysVisited` will be mapped by convention as a primitive collection of dates:
+
+```csharp
+public class DogWalk
+{
+    public int Id { get; set; }
+    public string Name { get; set; }
+    public ReadOnlyCollection<DateOnly> DaysVisited { get; set; }
+}
+```
+
+The read-only collection can be backed by a normal, mutable collection if desired. For example, in the following code, `DaysVisited` can be mapped as a primitive collection of dates, while still allowing code in the class to manipulate the underlying list.
+
+```csharp
+    public class Pub
+    {
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public IReadOnlyCollection<string> Beers { get; set; }
+
+        private List<DateOnly> _daysVisited = new();
+        public IReadOnlyList<DateOnly> DaysVisited => _daysVisited;
+    }
+```
+
+These collections can then be used in queries in the normal way. For example, this LINQ query:
+
+<!--
+        var walksWithADrink = await context.Walks.Select(
+            w => new
+            {
+                WalkName = w.Name,
+                PubName = w.ClosestPub.Name,
+                Count = w.DaysVisited.Count(v => w.ClosestPub.DaysVisited.Contains(v)),
+                TotalCount = w.DaysVisited.Count
+            }).ToListAsync();
+-->
+[!code-csharp[WalksWithADrink](../../../../samples/core/Miscellaneous/NewInEFCore9/PrimitiveCollectionsSample.cs?name=WalksWithADrink)]
+
+Which translates to the following SQL on SQLite:
+
+```sql
+SELECT "w"."Name" AS "WalkName", "p"."Name" AS "PubName", (
+    SELECT COUNT(*)
+    FROM json_each("w"."DaysVisited") AS "d"
+    WHERE "d"."value" IN (
+        SELECT "d0"."value"
+        FROM json_each("p"."DaysVisited") AS "d0"
+    )) AS "Count", json_array_length("w"."DaysVisited") AS "TotalCount"
+FROM "Walks" AS "w"
+INNER JOIN "Pubs" AS "p" ON "w"."ClosestPubId" = "p"."Id"
+```
+
 <a name="sequence-caching"></a>
 
 ### Specify caching for sequences
@@ -769,9 +927,6 @@ ALTER TABLE [User] ADD CONSTRAINT [PK_User] PRIMARY KEY ([Id]) WITH (FILLFACTOR 
 CREATE INDEX [IX_User_Name] ON [User] ([Name]) WITH (FILLFACTOR = 80);
 CREATE INDEX [IX_User_Region_Tag] ON [User] ([Region], [Tag]) WITH (FILLFACTOR = 80);
 ```
-
-> [!NOTE]
-> There is currently a bug in preview 2 where the fill-factors are not included when the table is created for the first time. This is tracked by [Issue #33269](https://github.com/dotnet/efcore/issues/33269)
 
 This enhancement was contributed by [@deano-hunter](https://github.com/deano-hunter). Many thanks!
 

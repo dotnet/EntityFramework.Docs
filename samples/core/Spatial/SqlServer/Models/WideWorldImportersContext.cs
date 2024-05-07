@@ -13,7 +13,7 @@ internal class WideWorldImportersContext : DbContext
     protected override void OnConfiguring(DbContextOptionsBuilder options) =>
         #region snippet_UseNetTopologySuite
         options.UseSqlServer(
-            @"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=WideWorldImporters",
+            @"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=WideWorldImporters;ConnectRetryCount=0",
             x => x.UseNetTopologySuite());
     #endregion
 }

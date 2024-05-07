@@ -75,7 +75,7 @@ public static class GroupByFinalOperatorSample
     {
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
             => base.OnConfiguring(
-                optionsBuilder.UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=Books"));
+                optionsBuilder.UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=Books;ConnectRetryCount=0"));
     }
 
     public class BookContextSqlite : BookContext

@@ -130,7 +130,7 @@ public class BloggingContext : DbContext
     {
         optionsBuilder
             .UseSqlServer(
-                @"Server=(localdb)\mssqllocaldb;Database=EFMiscellanous.ConnectionResiliency;Trusted_Connection=True",
+                @"Server=(localdb)\mssqllocaldb;Database=EFMiscellanous.ConnectionResiliency;Trusted_Connection=True;ConnectRetryCount=0",
                 options => options.EnableRetryOnFailure());
     }
     #endregion

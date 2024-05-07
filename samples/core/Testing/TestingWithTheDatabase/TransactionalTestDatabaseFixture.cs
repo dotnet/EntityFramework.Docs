@@ -7,7 +7,7 @@ namespace EF.Testing.IntegrationTests;
 #region TransactionalTestDatabaseFixture
 public class TransactionalTestDatabaseFixture
 {
-    private const string ConnectionString = @"Server=(localdb)\mssqllocaldb;Database=EFTransactionalTestSample;Trusted_Connection=True";
+    private const string ConnectionString = @"Server=(localdb)\mssqllocaldb;Database=EFTransactionalTestSample;Trusted_Connection=True;ConnectRetryCount=0";
 
     public BloggingContext CreateContext()
         => new BloggingContext(

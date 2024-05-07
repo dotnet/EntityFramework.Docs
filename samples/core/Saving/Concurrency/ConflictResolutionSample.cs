@@ -79,7 +79,7 @@ public class ConflictResolutionSample
         {
             // Requires NuGet package Microsoft.EntityFrameworkCore.SqlServer
             optionsBuilder.UseSqlServer(
-                @"Server=(localdb)\mssqllocaldb;Database=EFSaving.Concurrency;Trusted_Connection=True");
+                @"Server=(localdb)\mssqllocaldb;Database=EFSaving.Concurrency;Trusted_Connection=True;ConnectRetryCount=0");
         }
     }
 

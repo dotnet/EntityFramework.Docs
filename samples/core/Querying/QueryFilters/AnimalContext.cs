@@ -12,7 +12,7 @@ public class AnimalContext : DbContext
     {
         optionsBuilder
             .UseSqlServer(
-                @"Server=(localdb)\mssqllocaldb;Database=Querying.QueryFilters.Animals;Trusted_Connection=True");
+                @"Server=(localdb)\mssqllocaldb;Database=Querying.QueryFilters.Animals;Trusted_Connection=True;ConnectRetryCount=0");
     }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)

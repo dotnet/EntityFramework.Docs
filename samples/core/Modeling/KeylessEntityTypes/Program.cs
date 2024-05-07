@@ -101,7 +101,7 @@ public class BloggingContext : DbContext
     {
         optionsBuilder
             .UseSqlServer(
-                @"Server=(localdb)\mssqllocaldb;Database=Sample.KeylessEntityTypes;Trusted_Connection=True")
+                @"Server=(localdb)\mssqllocaldb;Database=Sample.KeylessEntityTypes;Trusted_Connection=True;ConnectRetryCount=0")
             .UseLoggerFactory(_loggerFactory);
     }
 

@@ -50,7 +50,7 @@ public class EncryptPropertyValues : Program
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
             => optionsBuilder
                 .LogTo(Console.WriteLine, new[] { RelationalEventId.CommandExecuted })
-                .UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=EncryptPropertyValues;Trusted_Connection=True")
+                .UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=EncryptPropertyValues;Trusted_Connection=True;ConnectRetryCount=0")
                 .EnableSensitiveDataLogging();
     }
 

@@ -12,7 +12,7 @@ public static class PublicPooledDbContextFactorySample
         #region CreatePool
         var options = new DbContextOptionsBuilder<SomeDbContext>()
             .EnableSensitiveDataLogging()
-            .UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=EFCoreSample")
+            .UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=EFCoreSample;ConnectRetryCount=0")
             .Options;
 
         var factory = new PooledDbContextFactory<SomeDbContext>(options);

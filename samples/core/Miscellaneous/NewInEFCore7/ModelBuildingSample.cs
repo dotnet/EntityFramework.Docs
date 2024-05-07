@@ -305,7 +305,7 @@ public static class ModelBuildingSample
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
             => optionsBuilder
-                .UseSqlServer(@$"Server=(localdb)\mssqllocaldb;Database=Blogs")
+                .UseSqlServer(@$"Server=(localdb)\mssqllocaldb;Database=Blogs;ConnectRetryCount=0")
                 .LogTo(Console.WriteLine, LogLevel.Information)
                 .EnableSensitiveDataLogging();
 
@@ -401,7 +401,7 @@ public static class ModelBuildingSample
     {
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
             => optionsBuilder
-                .UseSqlServer(@$"Server=(localdb)\mssqllocaldb;Database=AnimalsTpt")
+                .UseSqlServer(@$"Server=(localdb)\mssqllocaldb;Database=AnimalsTpt;ConnectRetryCount=0")
                 .LogTo(Console.WriteLine, LogLevel.Information)
                 .EnableSensitiveDataLogging();
 
@@ -427,7 +427,7 @@ public static class ModelBuildingSample
     {
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
             => optionsBuilder
-                .UseSqlServer(@$"Server=(localdb)\mssqllocaldb;Database=AnimalsTpc")
+                .UseSqlServer(@$"Server=(localdb)\mssqllocaldb;Database=AnimalsTpc;ConnectRetryCount=0")
                 .LogTo(Console.WriteLine, LogLevel.Information)
                 .EnableSensitiveDataLogging();
 
@@ -485,7 +485,7 @@ public static class ModelBuildingSample
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
             => optionsBuilder
-                .UseSqlServer(@$"Server=(localdb)\mssqllocaldb;Database=Images")
+                .UseSqlServer(@$"Server=(localdb)\mssqllocaldb;Database=Images;ConnectRetryCount=0")
                 .LogTo(Console.WriteLine, LogLevel.Information)
                 .EnableSensitiveDataLogging();
 

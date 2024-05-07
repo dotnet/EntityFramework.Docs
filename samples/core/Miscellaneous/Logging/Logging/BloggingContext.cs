@@ -17,7 +17,7 @@ public class BloggingContext : DbContext
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         => optionsBuilder
             .UseLoggerFactory(MyLoggerFactory)
-            .UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=EFLogging;Trusted_Connection=True");
+            .UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=EFLogging;Trusted_Connection=True;ConnectRetryCount=0");
     #endregion
 }
 

@@ -30,7 +30,7 @@ public class BloggingContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-        optionsBuilder.UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=EFAsync;Trusted_Connection=True");
+        optionsBuilder.UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=EFAsync;Trusted_Connection=True;ConnectRetryCount=0");
     }
 }
 

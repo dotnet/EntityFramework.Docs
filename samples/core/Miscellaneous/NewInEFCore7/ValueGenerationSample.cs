@@ -47,7 +47,7 @@ public static class ValueGenerationSample
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
             => optionsBuilder
-                .UseSqlServer(@$"Server=(localdb)\mssqllocaldb;Database=Products")
+                .UseSqlServer(@$"Server=(localdb)\mssqllocaldb;Database=Products;ConnectRetryCount=0")
                 .LogTo(Console.WriteLine, LogLevel.Information)
                 .EnableSensitiveDataLogging();
 

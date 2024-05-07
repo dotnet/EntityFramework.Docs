@@ -18,7 +18,7 @@ public class NonTrackingBloggingContext : DbContext
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         optionsBuilder
-            .UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=EFQuerying.Tracking;Trusted_Connection=True")
+            .UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=EFQuerying.Tracking;Trusted_Connection=True;ConnectRetryCount=0")
             .UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
     }
     #endregion

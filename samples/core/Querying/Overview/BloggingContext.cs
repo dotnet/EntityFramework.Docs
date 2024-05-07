@@ -17,6 +17,6 @@ public class BloggingContext : DbContext
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         optionsBuilder.UseSqlServer(
-            @"Server=(localdb)\mssqllocaldb;Database=EFQuerying.Overview;Trusted_Connection=True");
+            @"Server=(localdb)\mssqllocaldb;Database=EFQuerying.Overview;Trusted_Connection=True;ConnectRetryCount=0");
     }
 }

@@ -64,7 +64,7 @@ public class FixedLengthStrings : Program
             var converter = new ValueConverter<string, string>(
                 v => v,
                 v => v.Trim());
-                
+
             var comparer = new ValueComparer<string>(
                 (l, r) => string.Equals(l, r, StringComparison.OrdinalIgnoreCase),
                 v => v.ToUpper().GetHashCode(),
@@ -87,7 +87,7 @@ public class FixedLengthStrings : Program
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
             => optionsBuilder
                 .LogTo(Console.WriteLine, new[] { RelationalEventId.CommandExecuted })
-                .UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=FixedLengthStrings;Trusted_Connection=True")
+                .UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=FixedLengthStrings;Trusted_Connection=True;ConnectRetryCount=0")
                 .EnableSensitiveDataLogging();
     }
 

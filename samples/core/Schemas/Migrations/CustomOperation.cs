@@ -74,7 +74,7 @@ public class MyMigrationsSqlGenerator : SqlServerMigrationsSqlGenerator
 
 internal class CustomOperationContext : DbContext
 {
-    private readonly string _connectionString = @"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=Sample";
+    private readonly string _connectionString = @"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=Sample;ConnectRetryCount=0";
 
     #region snippet_OnConfiguring
     protected override void OnConfiguring(DbContextOptionsBuilder options)

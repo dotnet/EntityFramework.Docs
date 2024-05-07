@@ -84,7 +84,7 @@ public class PreserveDateTimeKind : Program
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
             => optionsBuilder
                 .LogTo(Console.WriteLine, new[] { RelationalEventId.CommandExecuted })
-                .UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=PreserveDateTimeKind;Trusted_Connection=True")
+                .UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=PreserveDateTimeKind;Trusted_Connection=True;ConnectRetryCount=0")
                 .EnableSensitiveDataLogging();
     }
 

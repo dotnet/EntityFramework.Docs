@@ -110,7 +110,7 @@ public static class ComplexTypesSample
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
             => (UseSqlite
                     ? optionsBuilder.UseSqlite(@$"DataSource={GetType().Name}.db")
-                    : optionsBuilder.UseSqlServer(@$"Server=(localdb)\mssqllocaldb;Database={GetType().Name}"))
+                    : optionsBuilder.UseSqlServer(@$"Server=(localdb)\mssqllocaldb;Database={GetType().Name};ConnectRetryCount=0"))
                 .EnableSensitiveDataLogging()
                 .LogTo(
                     s =>

@@ -18,7 +18,7 @@ public class NullSemanticsContext : DbContext
         }
 
         optionsBuilder.UseSqlServer(
-            @"Server=(localdb)\mssqllocaldb;Database=NullSemanticsSample;Trusted_Connection=True;MultipleActiveResultSets=true");
+            @"Server=(localdb)\mssqllocaldb;Database=NullSemanticsSample;Trusted_Connection=True;MultipleActiveResultSets=true;ConnectRetryCount=0");
     }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
