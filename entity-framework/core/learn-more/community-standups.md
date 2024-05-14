@@ -16,6 +16,7 @@ The .NET Data Community Standups are live-streamed every other Wednesday to Twit
 
 | Date         | Area                  | Title                                                                                  |
 |--------------|-----------------------|----------------------------------------------------------------------------------------|
+| May 15, 2024 | Firebird              | [Harnessing the Power of Firebird in .NET](#May15_2024)                                |
 | Apr 17, 2024 | EF Core mapping       | [All about EF Core property mapping](#Apr17_2024)                                      |
 | Mar 20, 2024 | GraphQL               | [Distributed Applications with Hot Chocolate 14, Aspire, and EF Core](#Mar20_2024)     |
 | Mar 6, 2024  | Value generation      | [EF Core keys and value generation](#value-generation)                                 |
@@ -95,6 +96,30 @@ The .NET Data Community Standups are live-streamed every other Wednesday to Twit
 | May 6, 2020  | Welcome!              | [Introducing the EF Core Community Standup](#one)                                      |
 
 ## 2024
+
+<a name="May15_2024"></a>
+
+### May 15: [Harnessing the Power of Firebird in .NET](https://www.youtube.com/live/ouGIWUtzxRQ?si=qtZ1xqKjKe_E1MhI)
+
+In this community talk, we delve into the integration of Firebird, an open-source SQL relational database management system, with .NET, a free, cross-platform, open-source developer platform. This session aims to provide an understanding of how these two powerful technologies can be combined to create robust, scalable, and efficient applications.
+
+This talk is designed for developers of all levels interested in expanding their knowledge on database management and .NET development. Whether you're a seasoned developer or a beginner looking to broaden your skill set, this talk will provide valuable insights into the effective use of Firebird with .NET.
+
+Join us for this enlightening session and discover how you can harness the power of Firebird in .NET to take your applications to the next level.
+
+Featuring:
+
+- [Jiri Cincura](https://github.com/cincuranet) (Host)
+- [Arthur Vickers](https://github.com/ajcvickers) (Host)
+- [Shay Rojansky](https://github.com/roji) (Host)
+
+Links:
+
+- Product: [Firebird](https://firebirdsql.org/)
+- NuGet: [FirebirdSql.Data.FirebirdClient](https://www.nuget.org/packages/FirebirdSql.Data.FirebirdClient)
+- Blog: [FbNetExternalEngine](https://www.tabsoverspaces.com/tools/fb-net-external-engine)
+- Docs: [What's new in EF9, with runnable samples](https://aka.ms/ef9-new)
+- Docs: [EF Core daily builds](https://aka.ms/ef-daily-builds)
 
 <a name="Apr17_2024"></a>
 
