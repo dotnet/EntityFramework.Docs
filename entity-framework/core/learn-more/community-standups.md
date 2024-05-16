@@ -118,6 +118,7 @@ Links:
 - Product: [Firebird](https://firebirdsql.org/)
 - NuGet: [FirebirdSql.Data.FirebirdClient](https://www.nuget.org/packages/FirebirdSql.Data.FirebirdClient)
 - Blog: [FbNetExternalEngine](https://www.tabsoverspaces.com/tools/fb-net-external-engine)
+- Tool used in the stream: [Database.NET](https://fishcodelib.com/database.htm)
 - Docs: [What's new in EF9, with runnable samples](https://aka.ms/ef9-new)
 - Docs: [EF Core daily builds](https://aka.ms/ef-daily-builds)
 
