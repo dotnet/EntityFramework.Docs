@@ -2,7 +2,7 @@
 title: What's new - EF6
 description: What's new in Entity Framework 6
 author: ajcvickers
-ms.date: 09/12/2019
+ms.date: 05/17/2024
 uid: ef6/what-is-new/index
 ---
 # What's new in EF6
@@ -10,6 +10,14 @@ uid: ef6/what-is-new/index
 We highly recommend that you use the latest released version of Entity Framework to ensure you get the latest features and the highest stability.
 However, we realize that you may need to use a previous version, or that you may want to experiment with new improvements in the latest pre-release.
 To install specific versions of EF, see [Get Entity Framework](xref:ef6/fundamentals/install).
+
+## EF 6.5.0
+
+The EF 6.5.0 runtime was released to NuGet in June 2024. The primary goal of EF 6.5 is to include a new SQL Server / Azure SQL Database provider. See [list of important fixes](https://github.com/dotnet/ef6/milestone/17?closed=1) on Github. Here are some of the more notable ones:
+
+- New SQL Server / Azure SQL Database provider (contributed by the community) - [Microsoft.EntityFramework.SqlServer](https://www.nuget.org/packages/Microsoft.EntityFramework.SqlServer/). This new provider uses the modern SQL Server client [Microsoft.Data.SqlClient](https://www.nuget.org/packages/Microsoft.Data.SqlClient).
+- The `ef6` utility was updated to only support .NET 6 and newer. It was also updated to support reading from app.config files, and support Windows ARM64.
+- The System.Data.SqlClient driver was updated to version 4.8.6.
 
 ## EF 6.4.0
 
