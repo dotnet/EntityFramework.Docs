@@ -21,7 +21,7 @@ The EF 6.5.0 runtime was released to NuGet in June 2024. The primary goal of EF 
 
 ## EF 6.4.0
 
-The EF 6.4.0 runtime was released to NuGet in December  2019. The primary goal of EF 6.4 is to polish the features and scenarios that was delivered in EF 6.3. See [list of important fixes](https://github.com/dotnet/ef6/milestone/14?closed=1) on Github.
+The EF 6.4.0 runtime was released to NuGet in December 2019. The primary goal of EF 6.4 is to polish the features and scenarios that was delivered in EF 6.3. See [list of important fixes](https://github.com/dotnet/ef6/milestone/14?closed=1) on Github.
 
 ## EF 6.3.0
 
