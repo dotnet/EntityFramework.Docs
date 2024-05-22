@@ -119,12 +119,12 @@ Since the expression trees contains different constants, the expression tree dif
 
 ```sql
 SELECT TOP(1) [b].[Id], [b].[Name]
-FROM [Blogs] AS [b]
-WHERE [b].[Name] = N'blog1'
+FROM [Posts] AS [b]
+WHERE [b].[Name] = N'post1'
 
 SELECT TOP(1) [b].[Id], [b].[Name]
-FROM [Blogs] AS [b]
-WHERE [b].[Name] = N'blog2'
+FROM [Posts] AS [b]
+WHERE [b].[Name] = N'post2'
 ```
 
 Because the SQL differs, your database server will likely also need to produce a query plan for both queries, rather than reusing the same plan.
@@ -137,8 +137,8 @@ Since the blog name is now *parameterized*, both queries have the same tree shap
 
 ```sql
 SELECT TOP(1) [b].[Id], [b].[Name]
-FROM [Blogs] AS [b]
-WHERE [b].[Name] = @__blogName_0
+FROM [Posts] AS [b]
+WHERE [b].[Name] = @__postTitle_0
 ```
 
 Note that there is no need to parameterize each and every query: it's perfectly fine to have some queries with constants, and indeed, databases (and EF) can sometimes perform certain optimization around constants which aren't possible when the query is parameterized. See the section on [dynamically-constructed queries](#dynamically-constructed-queries) for an example where proper parameterization is crucial.
