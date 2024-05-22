@@ -2,7 +2,7 @@
 title: Tools & Extensions - EF Core
 description: External tools and extensions for Entity Framework Core
 author: ErikEJ
-ms.date: 07/21/2023
+ms.date: 05/22/2024
 uid: core/extensions/index
 ---
 
@@ -354,6 +354,12 @@ Update an entity graph in store to a given one by inserting, updating and removi
 ## API Integrations
 
 These packages are designed to integrate directly with EF Core to expose various APIs.
+
+### .NET Aspire
+
+Enhance the local development experience by simplifying the management of your cloud-native app's configuration and interconnections. For EF Core: 8.
+
+[Website](https://learn.microsoft.com/dotnet/aspire/get-started/aspire-overview) | [GitHub repository](https://github.com/dotnet/aspire) | [NuGet](https://www.nuget.org/profiles/aspire)
 
 ### HotChocolate
 
