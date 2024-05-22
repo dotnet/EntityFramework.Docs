@@ -2,7 +2,7 @@
 title: Entity Framework Support Policies
 description: Support policies for every evolution of Entity Framework
 author: ajcvickers
-ms.date: 02/16/2022
+ms.date: 05/22/2024
 uid: efcore-and-ef6/support
 ---
 
@@ -12,7 +12,7 @@ Entity Framework was first released in 2008 as part of the .NET Framework. Since
 
 - The first version of Entity Framework and Entity Framework 4 are fully contained in the .NET Framework
 - Entity Framework 4.1, 4.2, 4.3, and 5.0 have some code in the .NET Framework, and some code shipped as NuGet packages
-- Entity Framework 6.0, 6.1, 6.2, 6.3, and 6.4 are shipped entirely as NuGet packages
+- Entity Framework 6.0, 6.1, 6.2, 6.3, 6.4, and 6.5 are shipped entirely as NuGet packages
 - Entity Framework Core (all versions) is an entirely separate codebase and ships as NuGet packages
 
 Support policies for each of these variations is described in this document. In all cases, the support policy applies to the latest patch of the given versions.
@@ -23,10 +23,10 @@ New versions of Entity Framework Core are shipped at the same time as new .NET v
 
 Entity Framework Core is the only actively developed version of Entity Framework and we recommend using it for all new code.
 
-## Entity Framework 6.0, 6.1, 6.2, 6.3, and 6.4
+## Entity Framework 6.0, 6.1, 6.2, 6.3, 6.4, and 6.5
 
-Entity Framework 6.x follows the [Modern Lifecycle Policy](/lifecycle/policies/modern). This means that only the latest patch of the latest released version is supported. At this time the latest version is 6.4.4. This version can always [be found on NuGet](https://www.nuget.org/packages/EntityFramework/).
-Versions 6.0, 6.1, 6.2, and 6.3 are no longer supported.
+Entity Framework 6.x follows the [Modern Lifecycle Policy](/lifecycle/policies/modern). This means that only the latest patch of the latest released version is supported. At this time the latest version is 6.5. This version can always [be found on NuGet](https://www.nuget.org/packages/EntityFramework/).
+Versions 6.0, 6.1, 6.2, 6.3, and 6.4 are no longer supported.
 
 Although Entity Framework 6.x is still supported, it is no longer being developed and will only receive fixes for security issues. The Entity Framework 6.x codebase is very stable, and it is a priority to preserve this stability by not making any unnecessary changes to the code. It is strongly encouraged that new applications and existing applications that are in active development [use Entity Framework Core](xref:efcore-and-ef6/index).
 
