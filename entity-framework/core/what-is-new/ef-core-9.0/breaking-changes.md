@@ -20,10 +20,11 @@ EF Core 9 targets .NET 8. This means that existing applications that target .NET
 
 ## Summary
 
-| **Breaking change**                                                                | **Impact** |
-|:-----------------------------------------------------------------------------------|------------|
-| [Sync I/O via the Azure Cosmos DB provider is no longer supported](#cosmos-nosync) | Medium     |
-| [EF.Functions.Unhex() now returns `byte[]?`](#unhex)                               | Low        |
+| **Breaking change**                                                                                  | **Impact** |
+|:-----------------------------------------------------------------------------------------------------|------------|
+| [Sync I/O via the Azure Cosmos DB provider is no longer supported](#cosmos-nosync)                   | Medium     |
+| [EF.Functions.Unhex() now returns `byte[]?`](#unhex)                                                 | Low        |
+| [SqlFunctionExpression's nullability arguments' arity validated](#sqlfunctionexpression-nullability) | Low        |
 
 ## Medium-impact changes
 
@@ -87,3 +88,25 @@ var binaryData = await context.Blogs.Select(b => EF.Functions.Unhex(b.HexString)
 ```
 
 Otherwise, add runtime checks for null on the return value of Unhex().
+
+<a name="sqlfunctionexpression-nullability"></a>
+
+### SqlFunctionExpression's nullability arguments' arity validated
+
+[Tracking Issue #33852](https://github.com/dotnet/efcore/issues/33852)
+
+#### Old behavior
+
+Previously it was possible to create a `SqlFunctionExpression` with a different number of arguments and nullability propagation arguments.
+
+#### New behavior
+
+Starting with EF Core 9.0, EF now throws if the number of arguments and nullability propagation arguments do not match.
+
+#### Why
+
+Not having matching number of arguments and nullability propagation arguments can lead to unexpected behavior.
+
+#### Mitigations
+
+Make sure the `argumentsPropagateNullability` has same number of elements as the `arguments`. When in doubt use `false` for nullability argument.
