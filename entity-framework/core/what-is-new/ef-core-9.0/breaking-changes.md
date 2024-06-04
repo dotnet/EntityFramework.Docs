@@ -23,6 +23,7 @@ EF Core 9 targets .NET 8. This means that existing applications that target .NET
 | **Breaking change**                                                                | **Impact** |
 |:-----------------------------------------------------------------------------------|------------|
 | [Sync I/O via the Azure Cosmos DB provider is no longer supported](#cosmos-nosync) | Medium     |
+| [EF.Functions.Unhex() now returns `byte[]?`](#unhex)                               | Low        |
 
 ## Medium-impact changes
 
@@ -56,3 +57,33 @@ protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 ```
 
 That being said, applications should stop using sync APIs with Azure Cosmos DB since this is not supported by the Azure Cosmos DB SDK. The ability to suppress the exception will be removed in a future release of EF Core, after which the only option will be to use async APIs.
+
+## Low-impact changes
+
+<a name="unhex"></a>
+
+### EF.Functions.Unhex() now returns `byte[]?`
+
+[Tracking Issue #33864](https://github.com/dotnet/efcore/issues/33864)
+
+#### Old behavior
+
+The EF.Functions.Unhex() function was previously annotated to return `byte[]`.
+
+#### New behavior
+
+Starting with EF Core 9.0, Unhex() is now annotated to return `byte[]?`.
+
+#### Why
+
+Unhex() is translated to the SQLite `unhex` function, which returns NULL for invalid inputs. As a result, Unhex() returned `null` for those cases, in violation of the annotation.
+
+#### Mitigations
+
+If you are sure that the text content passed to Unhex() represents a valid, hexadecimal string, you can simply add the null-forgiving operator as an assertion that the invocation will never return null:
+
+```c#
+var binaryData = await context.Blogs.Select(b => EF.Functions.Unhex(b.HexString)!).ToListAsync();
+```
+
+Otherwise, add runtime checks for null on the return value of Unhex().
