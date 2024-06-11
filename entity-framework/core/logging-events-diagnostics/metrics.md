@@ -18,7 +18,7 @@ Entity Framework Core (EF Core) exposes continuous numeric metrics which can pro
 
 ## Metrics
 
-EF Core reports metrics via the standard <xref:System.Diagnostics.Metrics?displayProperty=nameWithType> API. `Microsoft.EntityFrameworkCore` is the name of the meter.
+EF Core reports metrics via the standard <xref:System.Diagnostics.Metrics?displayProperty=nameWithType> API. `Microsoft.EntityFrameworkCore` is the name of the meter. It's recommended to read [.NET documentation on metrics](/dotnet/core/diagnostics/metrics).
 
 > [!NOTE]
 > This feature is being introduced in EF Core 9.0 (in preview). [See event counters below](#event-counters-legacy) for older versions of EF Core.
@@ -79,10 +79,6 @@ Available starting in: Entity Framework Core 9.0.
 | `microsoft.entityframeworkcore.optimistic_concurrency_failures` | ObservableCounter | `{failure}` | Cumulative number of optimistic concurrency failures. |
 
 Available starting in: Entity Framework Core 9.0.
-
-### Additional resources
-
-* [.NET documentation on metrics](/dotnet/core/diagnostics/metrics)
 
 ## Event Counters (legacy)
 
