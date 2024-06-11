@@ -309,7 +309,7 @@ EF Core 5.0 exposes [event counters](https://devblogs.microsoft.com/dotnet/intro
     SaveChanges (Total)                                             1
 ```
 
-For further information, [see the full documentation on event counters](xref:core/logging-events-diagnostics/event-counters).
+For further information, [see the full documentation on event counters](xref:core/logging-events-diagnostics/metrics#event-counters-legacy).
 
 ## Other features
 
