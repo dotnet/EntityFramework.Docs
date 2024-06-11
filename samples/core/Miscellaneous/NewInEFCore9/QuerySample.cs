@@ -96,6 +96,16 @@ public static class QuerySample
             .Where(p => p.Tags.Count > 3)
             .ToHashSetAsync(ReferenceEqualityComparer.Instance);
         #endregion
+
+        Console.WriteLine();
+        Console.WriteLine("Normalize Count != 0:");
+        Console.WriteLine();
+
+        #region NormalizeCount
+        var blogsWithPost = await context.Blogs
+            .Where(b => b.Posts.Count > 0)
+            .ToListAsync();
+        #endregion
     }
 
     private static void PrintSampleName([CallerMemberName] string? methodName = null)

@@ -7,7 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Cosmos" Version="9.0.0-preview.5.24251.2" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Cosmos" Version="9.0.0-preview.6.24304.2" />
   </ItemGroup>
 
 </Project>
