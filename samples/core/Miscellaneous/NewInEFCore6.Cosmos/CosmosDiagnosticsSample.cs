@@ -1,18 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 
 public static class CosmosDiagnosticsSample
 {
-    public static void Cosmos_diagnostics()
+    public static async Task Cosmos_diagnostics()
     {
         Console.WriteLine($">>>> Sample: {nameof(Cosmos_diagnostics)}");
         Console.WriteLine();
 
-        Helpers.RecreateCleanDatabase();
-        Helpers.PopulateDatabase();
+        await Helpers.RecreateCleanDatabase();
+        await Helpers.PopulateDatabase();
 
         using var context = new ShapesContext();
 
@@ -30,7 +30,7 @@ public static class CosmosDiagnosticsSample
             InsertedOn = DateTime.UtcNow
         };
         context.Add(triangle);
-        context.SaveChanges();
+        await context.SaveChangesAsync();
         #endregion
 
         Console.WriteLine();
@@ -38,7 +38,7 @@ public static class CosmosDiagnosticsSample
         Console.WriteLine();
 
         #region QueryEvents
-        var equilateral = context.Triangles.Single(e => e.Name == "Equilateral");
+        var equilateral = await context.Triangles.SingleAsync(e => e.Name == "Equilateral");
         #endregion
 
         Console.WriteLine();
@@ -46,7 +46,7 @@ public static class CosmosDiagnosticsSample
         Console.WriteLine();
 
         #region FindEvents
-        var isosceles = context.Triangles.Find("Isosceles", "TrianglesPartition");
+        var isosceles = await context.Triangles.FindAsync("Isosceles", "TrianglesPartition");
         #endregion
 
         Console.WriteLine();
@@ -55,7 +55,7 @@ public static class CosmosDiagnosticsSample
 
         #region UpdateEvents
         triangle.Angle2 = 89;
-        context.SaveChanges();
+        await context.SaveChangesAsync();
         #endregion
 
         Console.WriteLine();
@@ -64,7 +64,7 @@ public static class CosmosDiagnosticsSample
 
         #region DeleteEvents
         context.Remove(triangle);
-        context.SaveChanges();
+        await context.SaveChangesAsync();
         #endregion
 
         Console.WriteLine();
@@ -72,15 +72,15 @@ public static class CosmosDiagnosticsSample
 
     public static class Helpers
     {
-        public static void RecreateCleanDatabase()
+        public static async Task RecreateCleanDatabase()
         {
             using var context = new ShapesContext(quiet: true);
 
-            context.Database.EnsureDeleted();
-            context.Database.EnsureCreated();
+            await context.Database.EnsureDeletedAsync();
+            await context.Database.EnsureCreatedAsync();
         }
 
-        public static void PopulateDatabase()
+        public static async Task PopulateDatabase()
         {
             using var context = new ShapesContext(quiet: true);
 
@@ -94,7 +94,7 @@ public static class CosmosDiagnosticsSample
             };
 
             context.AddRange(triangles);
-            context.SaveChanges();
+            await context.SaveChangesAsync();
         }
     }
 

@@ -2,20 +2,21 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json.Serialization;
+using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 
 public static class CosmosImplicitOwnershipSample
 {
-    public static void Cosmos_models_use_implicit_ownership_by_default()
+    public static async Task Cosmos_models_use_implicit_ownership_by_default()
     {
         Console.WriteLine($">>>> Sample: {nameof(Cosmos_models_use_implicit_ownership_by_default)}");
         Console.WriteLine();
 
         using (var context = new FamilyContext())
         {
-            context.Database.EnsureDeleted();
-            context.Database.EnsureCreated();
+            await context.Database.EnsureDeletedAsync();
+            await context.Database.EnsureCreatedAsync();
 
             context.AddRange(
                 new Family
@@ -44,7 +45,7 @@ public static class CosmosImplicitOwnershipSample
                     LastName = "Wakefield",
                     Parents =
                     {
-                        new() { FamilyName = "Wakefield", FirstName = "Robin" }, 
+                        new() { FamilyName = "Wakefield", FirstName = "Robin" },
                         new() { FamilyName = "Miller", FirstName = "Ben" }
                     },
                     Children =
@@ -69,14 +70,14 @@ public static class CosmosImplicitOwnershipSample
                     IsRegistered = true
                 });
 
-            context.SaveChanges();
+            await context.SaveChangesAsync();
         }
 
         Console.WriteLine();
 
         using (var context = new FamilyContext())
         {
-            var families = context.Families.ToList();
+            var families = await context.Families.ToListAsync();
 
             Console.WriteLine();
 
@@ -96,10 +97,10 @@ public static class CosmosImplicitOwnershipSample
     {
         [JsonPropertyName("id")]
         public string Id { get; set; }
-        
+
         public string LastName { get; set; }
         public bool IsRegistered { get; set; }
-        
+
         public Address Address { get; set; }
 
         public IList<Parent> Parents { get; } = new List<Parent>();
@@ -153,7 +154,7 @@ public static class CosmosImplicitOwnershipSample
             modelBuilder.Entity<Family>().HasPartitionKey(e => e.LastName);
             #endregion
         }
-        
+
         // Never called; just for documentation.
         private void OldOnModelCreating(ModelBuilder modelBuilder)
         {
@@ -167,7 +168,7 @@ public static class CosmosImplicitOwnershipSample
                 .OwnsMany(c => c.Pets);
 
             modelBuilder.Entity<Family>()
-                .OwnsOne(f => f.Address);        
+                .OwnsOne(f => f.Address);
             #endregion
         }
 

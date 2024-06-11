@@ -1,17 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Net.Http;
+using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 
 public static class CosmosPrimitiveTypesSample
 {
-    public static void Collections_and_dictionaries_of_primitive_types()
+    public static async Task Collections_and_dictionaries_of_primitive_types()
     {
         Console.WriteLine($">>>> Sample: {nameof(Collections_and_dictionaries_of_primitive_types)}");
         Console.WriteLine();
 
-        Helpers.RecreateCleanDatabase();
+        await Helpers.RecreateCleanDatabase();
 
         #region Insert
         using var context = new BooksContext();
@@ -35,14 +36,14 @@ public static class CosmosPrimitiveTypesSample
         };
 
         context.Add(book);
-        context.SaveChanges();
+        await context.SaveChangesAsync();
         #endregion
 
         #region Updates
         book.Quotes.Add("Pressing the emergency button lowered the rods again.");
         book.Notes["48"] = "Chiesa d'Oro";
 
-        context.SaveChanges();
+        await context.SaveChangesAsync();
         #endregion
 
         Console.WriteLine();
@@ -50,12 +51,12 @@ public static class CosmosPrimitiveTypesSample
 
     public static class Helpers
     {
-        public static void RecreateCleanDatabase()
+        public static async Task RecreateCleanDatabase()
         {
             using var context = new BooksContext(quiet: true);
 
-            context.Database.EnsureDeleted();
-            context.Database.EnsureCreated();
+            await context.Database.EnsureDeletedAsync();
+            await context.Database.EnsureCreatedAsync();
         }
     }
 
