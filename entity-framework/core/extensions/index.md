@@ -359,7 +359,7 @@ These packages are designed to integrate directly with EF Core to expose various
 
 Enhance the local development experience by simplifying the management of your cloud-native app's configuration and interconnections. For EF Core: 8.
 
-[Website](https://learn.microsoft.com/dotnet/aspire/get-started/aspire-overview) | [GitHub repository](https://github.com/dotnet/aspire) | [NuGet](https://www.nuget.org/profiles/aspire)
+[Website](/dotnet/aspire/get-started/aspire-overview) | [GitHub repository](https://github.com/dotnet/aspire) | [NuGet](https://www.nuget.org/profiles/aspire)
 
 ### HotChocolate
 

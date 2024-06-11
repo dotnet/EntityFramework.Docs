@@ -1591,7 +1591,6 @@ Featuring:
 Links:
 
 - Blog: [Oracle EF Core 3.1 Production Release](https://medium.com/oracledevs/oracle-ef-core-3-1-production-release-9e470eaf3d03)
-- Blog: [Seeding data in EF Core using SQL scripts](https://dejanstojanovic.net/aspnet/2020/september/seeding-data-in-ef-core-using-sql-scripts/)
 - Blog: [Announcing Entity Framework Core (EFCore) 5.0 RC1](https://devblogs.microsoft.com/dotnet/announcing-entity-framework-core-efcore-5-0-rc1/)
 - Docs: [Migrations Overview](xref: core/managing-schemas/migrations/index)
 - Docs: [EF Core daily builds](https://aka.ms/ef-daily-builds)
