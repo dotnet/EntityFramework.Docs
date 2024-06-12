@@ -81,11 +81,11 @@ While the above information is specific to SQL Server, other databases typically
 > [!IMPORTANT]
 > Databases sometimes generate different query plans depending on actual data in the database. For example, if a table contains only a few rows, a database may choose not to use an index on that table, but to perform a full table scan instead. If analyzing query plans on a test database, always make sure it contains data that is similar to your production system.
 
-## Event counters
+## Metrics
 
-The above sections focused on how to get information about your commands, and how these commands are executed in the database. In addition to that, EF exposes a set of *event counters* which provide more lower-level information on what's happening inside EF itself, and how your application is using it. These counters can be very useful for diagnosing specific performance issues and performance anomalies, such as [query caching issues](xref:core/performance/advanced-performance-topics#dynamically-constructed-queries) which cause constant recompilation, undisposed DbContext leaks, and others.
+The above sections focused on how to get information about your commands, and how these commands are executed in the database. In addition to that, EF exposes a set of *metrics* which provide more lower-level information on what's happening inside EF itself, and how your application is using it. These metrics can be very useful for diagnosing specific performance issues and performance anomalies, such as [query caching issues](xref:core/performance/advanced-performance-topics#dynamically-constructed-queries) which cause constant recompilation, undisposed DbContext leaks, and others.
 
-See the dedicated page on [EF's event counters](xref:core/logging-events-diagnostics/event-counters) for more information.
+See the dedicated page on [EF's metrics](xref:core/logging-events-diagnostics/metrics) for more information.
 
 ## Benchmarking with EF Core
 

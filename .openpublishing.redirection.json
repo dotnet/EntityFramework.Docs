@@ -474,6 +474,11 @@
             "source_path": "entity-framework/core/modeling/concurrency.md",
             "redirect_url": "/ef/core/saving/concurrency",
             "redirect_document_id": false
+        },
+        {
+            "source_path": "entity-framework/core/logging-events-diagnostics/event-counters.md",
+            "redirect_url": "/ef/core/logging-events-diagnostics/metrics",
+            "redirect_document_id": false
         }
     ]
 }
