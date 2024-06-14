@@ -482,6 +482,8 @@
         href: ef6/what-is-new/upgrading-to-ef6.md
       - name: Visual Studio Releases
         href: ef6/what-is-new/visual-studio.md
+      - name: Microsoft.Data.SqlClient support
+        href: ef6/what-is-new/microsoft-ef6-sqlserver.md
     - name: Get started
       href: ef6/get-started.md
     - name: Fundamentals
