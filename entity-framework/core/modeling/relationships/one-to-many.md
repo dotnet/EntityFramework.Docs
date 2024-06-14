@@ -463,7 +463,7 @@ This relationship is not discovered by convention, since EF will always, by conv
 
 ## One-to-many with composite foreign key
 
-In all the examples so far, the primary or alternate key property of the principal consisted of a single property. Primary or alternate keys can also be formed form more than one property--these are known as ["composite keys"](xref:core/modeling/keys). When the principal of a relationship has a composite key, then the foreign key of the dependent must also be a composite key with the same number of properties. For example:
+In all the examples so far, the primary or alternate key property of the principal consisted of a single property. Primary or alternate keys can also be formed from more than one property--these are known as ["composite keys"](xref:core/modeling/keys). When the principal of a relationship has a composite key, then the foreign key of the dependent must also be a composite key with the same number of properties. For example:
 
 <!--
         // Principal (parent)
