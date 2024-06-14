@@ -8,7 +8,7 @@ uid: ef6/what-is-new/microsoft-ef6-sqlserver
 
 # Entity Framework 6 SQL Server provider based on Microsoft.Data.SqlClient
 
-This Entity Framework 6 provider is a replacement provider for the built-in SQL Server provider. 
+This Entity Framework 6 provider is a replacement provider for the built-in SQL Server provider.
 
 This provider depends on the modern [Microsoft.Data.SqlClient](https://github.com/dotnet/SqlClient) ADO.NET provider, which includes the following advantages over the currently used driver:
 
@@ -38,19 +38,24 @@ public class SchoolContext : DbContext
     public DbSet<Student> Students { get; set; }
 }
 ````
+
 If you have multiple classes inheriting from DbContext in your solution, add the DbConfigurationType attribute to all of them.
 
 Or you can use the SetConfiguration method before any data access calls:
+
 ````csharp
  DbConfiguration.SetConfiguration(new MicrosoftSqlDbConfiguration());
 ````
+
 Or add the following lines to your existing derived DbConfiguration class:
+
 ````csharp
 SetProviderFactory(MicrosoftSqlProviderServices.ProviderInvariantName, Microsoft.Data.SqlClient.SqlClientFactory.Instance);
 SetProviderServices(MicrosoftSqlProviderServices.ProviderInvariantName, MicrosoftSqlProviderServices.Instance);
 // Optional
 SetExecutionStrategy(MicrosoftSqlProviderServices.ProviderInvariantName, () => new MicrosoftSqlAzureExecutionStrategy());
 ````
+
 You can also use App.Config based configuration:
 
 ````xml
@@ -60,7 +65,7 @@ You can also use App.Config based configuration:
         <section name="entityFramework" type="System.Data.Entity.Internal.ConfigFile.EntityFrameworkSection, EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" requirePermission="false" />    
     </configSections>
     <entityFramework>
-        <providers>		
+        <providers>
             <provider invariantName="Microsoft.Data.SqlClient" type="System.Data.Entity.SqlServer.MicrosoftSqlProviderServices, Microsoft.EntityFramework.SqlServer" />
         </providers>
     </entityFramework>
@@ -74,6 +79,7 @@ You can also use App.Config based configuration:
     </system.data>
 </configuration>
 ````
+
 If you use App.Config with a .NET 6 or later app, you must remove the `<system.data>` section above and register the DbProviderFactory in code once:
 
 ````csharp
@@ -131,7 +137,7 @@ The following classes have been renamed to avoid conflicts with classes that use
 
 **Azure App Service with .NET Framework and connection strings configuration**
 
-If you use Azure App Service with .NET Framework and the [connection strings configuration feature](https://learn.microsoft.com/azure/app-service/configure-common?tabs=portal#configure-connection-strings), you can encounter runtime issues, as the `ProviderName` connection string setting in this scenario is hardcoded to `System.Data.SqlClient`.
+If you use Azure App Service with .NET Framework and the [connection strings configuration feature](/azure/app-service/configure-common?tabs=portal#configure-connection-strings), you can encounter runtime issues, as the `ProviderName` connection string setting in this scenario is hardcoded to `System.Data.SqlClient`.
 
 Solution is to use a derived MicrosoftSqlDbConfiguration class like this:
 
