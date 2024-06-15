@@ -201,7 +201,7 @@ info: 6/10/2024 19:06:00.017 CosmosEventId.ExecutingSqlQuery[30100] (Microsoft.E
 Notice that the partition key comparisons have been removed from the `WHERE` clause, and are instead passed directly to the Cosmos API as partition key `["Microsoft","99a410d7-e467-4cc5-92de-148f3fc53f4c",7.0]`.
 
 > [!IMPORTANT]
-> Because the query includes values for all parts of the partition key, this that the query us routed to the single partition that contains the data for the specified values of `TenantId`, `UserId`, and `SessionId`. This is more efficient than the queries below which only use none, or only some, of the partition key values.
+> Because the query includes values for all parts of the partition key, the query is routed to the single partition that contains the data for the specified values of `TenantId`, `UserId`, and `SessionId`. This is more efficient than the queries below which only use none, or only some, of the partition key values.
 
 With hierarchical partitions, more efficient queries can still be generated when only the top partition key hierarchy is known. For example, the following LINQ query uses the top two parts of the partition key--that is, `TenantId` and `UserId`:
 
