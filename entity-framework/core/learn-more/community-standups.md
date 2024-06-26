@@ -14,88 +14,112 @@ The .NET Data Community Standups are live-streamed every other Wednesday to Twit
 
 ## Summary
 
-| Date         | Area                  | Title                                                                                  |
-|--------------|-----------------------|----------------------------------------------------------------------------------------|
-| May 15, 2024 | Firebird              | [Harnessing the Power of Firebird in .NET](#May15_2024)                                |
-| Apr 17, 2024 | EF Core mapping       | [All about EF Core property mapping](#Apr17_2024)                                      |
-| Mar 20, 2024 | GraphQL               | [Distributed Applications with Hot Chocolate 14, Aspire, and EF Core](#Mar20_2024)     |
-| Mar 6, 2024  | Value generation      | [EF Core keys and value generation](#value-generation)                                 |
-| Feb 21, 2024 | SQL translation       | [Window and binary functions using Zomp EF Core extensions](#window-functions)         |
-| Feb 7, 2024  | Database concurrency  | [Database concurrency and EF Core: Beyond optimistic concurrency](#concurrency3)       |
-| Jan 24, 2024 | Database concurrency  | [Database concurrency and EF Core: ASP.NET and Blazor](#concurrency2)                  |
-| Jan 10, 2024 | Database concurrency  | [Database concurrency and EF Core](#concurrency1)                                      |
-| Nov 29, 2023 | New features          | [A tour of what's new in EF8](#new8)                                                   |
-| Oct 18, 2023 | Document databases    | [Introducing the MongoDB provider for EF Core](#mongo)                                 |
-| Oct 4, 2023  | New features          | [Size doesn't matter: Smaller features in EF8](#smaller)                               |
-| Sep 20, 2023 | Complex types/DDD     | [Complex types as value objects in EF8](#complextypes)                                 |
-| Jun 14, 2023 | SQLite                | [Synchronizing data between the cloud and the client (using SQLite)](#zumero)          |
-| May 31, 2023 | Power Tools           | [New CLI edition of EF Core Power Tools](#power-tools)                                 |
-| May 17, 2023 | Primitive collections | [Collections of primitive values in EF Core](#primitive-collections)                   |
-| Apr 19, 2023 | EF internals          | [EF Core Internals – Model Building](#internals-models)                                |
-| Mar 22, 2023 | HierarchyId           | [Using hierarchical data in SQL Server and PostgreSQL with EF Core](#hierarchyid)      |
-| Mar 8, 2023  | EF internals          | [EF Core internals: IQueryable, LINQ and the EF Core query pipeline](#internals-query) |
-| Feb 22, 2023 | MySQL                 | [MySQL and .NET: MySqlConnector and the Pomelo EF Core Provider](#mysql)               |
-| Feb 8, 2023  | SQLite                | [SQLite with .NET and EF Core](#sqlite)                                                |
-| Jan 11, 2023 | FAQ                   | [Entity Framework Core FAQs](#faq)                                                     |
-| Dec 14, 2022 | EF Core plans         | [The Plan for Entity Framework Core 8](#plan8)                                         |
-| Nov 16, 2022 | New features          | [A Whirlwind Tour of EF7](#new-ef7)                                                    |
-| Nov 7, 2022  | Model building        | [EF7 Custom Model Conventions](#conventions)                                           |
-| Oct 19, 2022 | Bulk updates          | [New EF Core 7.0 APIs (Bulk Update)](#bulkcud)                                         |
-| Oct 5, 2022  | JSON mapping          | [JSON Columns](#json)                                                                  |
-| Sep 21, 2022 | Azure Mobile Apps     | [Azure Mobile Apps and offline sync](#offline-sync)                                    |
-| Aug 24, 2022 | SQL translation       | [New aggregate function support in EF Core 7](#ef7aggs)                                |
-| Aug 10, 2022 | WCF                   | [CoreWCF: Roadmap and Q&A](#wcf)                                                       |
-| Jul 27, 2022 | ADO.NET               | [DbDataSource, a new System.Data abstraction](#dbdatasource)                           |
-| Jul 13, 2022 | EF Interceptors       | [Intercept this EF7 Preview 6 Event](#ef7interceptors)                                 |
-| Jun 29, 2022 | EF internals          | [DbContext Configuration and Lifetime - EF Core Architecture Part 2](#lifetimes)       |
-| Jun 15, 2022 | TPH/TPT/TPC           | [TPH, TPT, and TPC Inheritance mapping with EF Core](#inheritance)                     |
-| Jun 1, 2022  | EF internals          | [EF Core Architecture: Internal Dependency Injection](#internal-di)                    |
-| May 18, 2022 | Testing               | [Testing EF Core Apps (part 2)](#testing2)                                             |
-| May 4, 2022  | Pagination            | [Database Pagination](#pagination)                                                     |
-| Apr 20, 2022 | SaveChanges           | [Performance Improvements to the EF7 Update Pipeline](#update-perf)                    |
-| Apr 6, 2022  | Scaffolding           | [Database-first with T4 Templates in EF7: Early look](#t4)                             |
-| Mar 9, 2022  | GraphQL/OData         | [GraphQL and OData: An In-Depth Discussion](#graphql-odata)                            |
-| Feb 23, 2022 | Entity Framework      | [Celebrating 20 Years of .NET: Entity Framework](#20years)                             |
-| Feb 9, 2022  | Versioning            | [Software version and "stuff"](#stuff)                                                 |
-| Jan 26, 2022 | Testing               | [Testing EF Core Apps](#testing1)                                                      |
-| Jan 12, 2022 | EF Core plans         | [The EF7 Plan](#ef7plan)                                                               |
-| Dec 1, 2021  | GraphQL               | [Hot Chocolate 12 and GraphQL 2021](#hotchoc12)                                        |
-| Nov 17, 2021 | New features          | [Make History and Explore the Cosmos, an EF Core 6 Retrospective](#retro6)             |
-| Nov 3, 2021  | Noda Time             | [Noda Time](#nodatime)                                                                 |
-| Oct 6, 2021  | Temporal tables       | [SQL Server Temporal Tables and EF Core 6](#temporal)                                  |
-| Oct 20, 2021 | Docs                  | [EF Core and ASP.NET Core from the ASP.NET documentation team](#aspnet)                |
-| Sep 22, 2021 | PostgreSQL            | [PostgreSQL and EF Core](#npgsql)                                                      |
-| Aug 25, 2021 | Dapper                | [Dapper](#dapper)                                                                      |
-| Aug 11, 2021 | SQL translation       | [EF Core's Global Query Filter](#query-filters)                                        |
-| Jul 28, 2021 | OData                 | [OData](#odata)                                                                        |
-| Jul 14, 2021 | SQL translation       | [Visualizing database query plans](#query-plans)                                       |
-| Jun 16, 2021 | Azure Cosmos DB       | [Azure Cosmos DB and EF Core](#cosmos6)                                                |
-| Jun 2, 2021  | Model building        | [Introducing EF Core Compiled Models](#compiled-models)                                |
-| May 19, 2021 | GraphQL               | [Building Modern Apps with GraphQL](#graphql1)                                         |
-| May 5, 2021  | Triggers              | [Triggers for EF Core](#triggers)                                                      |
-| Apr 21, 2021 | Open source           | [Open Source Contributions: How to Add a Feature to EF Core](#contributing)            |
-| Apr 7, 2021  | Azure SQL             | [Azure SQL for Cloud-Born Applications and Developers](#davide)                        |
-| Mar 24, 2021 | EF Core Power Tools   | [EF Core Power Tools: the New Batch](#newbatch)                                        |
-| Mar 10, 2021 | AMA                   | [Julie Lerman and EF Core Ask Me Anything (AMA)](#julie)                               |
-| Feb 24, 2021 | Performance           | [Performance Tuning an EF Core App](#jonp1)                                            |
-| Feb 10, 2021 | Exception handling    | [Typed Exceptions for Entity Framework Core](#typed-exceptions)                        |
-| Jan 27, 2021 | Database projects     | [Introducing MSBuild.Sdk.SqlProj](#sqlproj)                                            |
-| Jan 13, 2021 | Survey                | [EF Core 6.0 Survey Results](#survey)                                                  |
-| Dec 2, 2020  | LLBLGen Pro           | [LLBLGen designer and .NET data history](#frans)                                       |
-| Nov 18, 2020 | New features          | [Special EF Core 5.0 Community Panel](#efcore5)                                        |
-| Oct 28, 2020 | Collations            | [EF Core 5.0 Collations](#collations)                                                  |
-| Oct 14, 2020 | Azure Cosmos DB       | [Cosmos DB: Repository Pattern .NET Wrapper SDK](#repository)                          |
-| Sep 20, 2020 | Spatial types         | [Geographic Data with NetTopologySuite](#geo-nts)                                      |
-| Sep 16, 2020 | Migrations            | [What's New with Migrations in EF Core 5.0](#migrations5)                              |
-| Sep 2, 2020  | Offline sync          | [Sync your database with DotMim.Sync](#dotmin-sync)                                    |
-| Aug 19, 2020 | Many-to-many          | [Many-to-Many in EF Core 5.0](#many-to-many)                                           |
-| Aug 5, 2020  | EF in-depth           | [EF Core In Depth Video Series](#depth)                                                |
-| Jul 22, 2020 | Scaffolding           | [Using Scaffolding with Handlebars](#handlebars)                                       |
-| Jun 24, 2020 | Blazor                | [EF Core in Blazor](#blazor)                                                           |
-| Jun 10, 2020 | EF Core Power Tools   | [EF Core Power Tools](#power-tools1)                                                   |
-| May 6, 2020  | Welcome!              | [Introducing the EF Core Community Standup](#one)                                      |
+| Date         | Area                  | Title                                                                                    |
+|--------------|-----------------------|------------------------------------------------------------------------------------------|
+| Jun 26, 2024 | SQL schemas           | [Improve your SQL schema and scripts with .NET based static code analysis](#June26_2024) |
+| May 15, 2024 | Firebird              | [Harnessing the Power of Firebird in .NET](#May15_2024)                                  |
+| Apr 17, 2024 | EF Core mapping       | [All about EF Core property mapping](#Apr17_2024)                                        |
+| Mar 20, 2024 | GraphQL               | [Distributed Applications with Hot Chocolate 14, Aspire, and EF Core](#Mar20_2024)       |
+| Mar 6, 2024  | Value generation      | [EF Core keys and value generation](#value-generation)                                   |
+| Feb 21, 2024 | SQL translation       | [Window and binary functions using Zomp EF Core extensions](#window-functions)           |
+| Feb 7, 2024  | Database concurrency  | [Database concurrency and EF Core: Beyond optimistic concurrency](#concurrency3)         |
+| Jan 24, 2024 | Database concurrency  | [Database concurrency and EF Core: ASP.NET and Blazor](#concurrency2)                    |
+| Jan 10, 2024 | Database concurrency  | [Database concurrency and EF Core](#concurrency1)                                        |
+| Nov 29, 2023 | New features          | [A tour of what's new in EF8](#new8)                                                     |
+| Oct 18, 2023 | Document databases    | [Introducing the MongoDB provider for EF Core](#mongo)                                   |
+| Oct 4, 2023  | New features          | [Size doesn't matter: Smaller features in EF8](#smaller)                                 |
+| Sep 20, 2023 | Complex types/DDD     | [Complex types as value objects in EF8](#complextypes)                                   |
+| Jun 14, 2023 | SQLite                | [Synchronizing data between the cloud and the client (using SQLite)](#zumero)            |
+| May 31, 2023 | Power Tools           | [New CLI edition of EF Core Power Tools](#power-tools)                                   |
+| May 17, 2023 | Primitive collections | [Collections of primitive values in EF Core](#primitive-collections)                     |
+| Apr 19, 2023 | EF internals          | [EF Core Internals – Model Building](#internals-models)                                  |
+| Mar 22, 2023 | HierarchyId           | [Using hierarchical data in SQL Server and PostgreSQL with EF Core](#hierarchyid)        |
+| Mar 8, 2023  | EF internals          | [EF Core internals: IQueryable, LINQ and the EF Core query pipeline](#internals-query)   |
+| Feb 22, 2023 | MySQL                 | [MySQL and .NET: MySqlConnector and the Pomelo EF Core Provider](#mysql)                 |
+| Feb 8, 2023  | SQLite                | [SQLite with .NET and EF Core](#sqlite)                                                  |
+| Jan 11, 2023 | FAQ                   | [Entity Framework Core FAQs](#faq)                                                       |
+| Dec 14, 2022 | EF Core plans         | [The Plan for Entity Framework Core 8](#plan8)                                           |
+| Nov 16, 2022 | New features          | [A Whirlwind Tour of EF7](#new-ef7)                                                      |
+| Nov 7, 2022  | Model building        | [EF7 Custom Model Conventions](#conventions)                                             |
+| Oct 19, 2022 | Bulk updates          | [New EF Core 7.0 APIs (Bulk Update)](#bulkcud)                                           |
+| Oct 5, 2022  | JSON mapping          | [JSON Columns](#json)                                                                    |
+| Sep 21, 2022 | Azure Mobile Apps     | [Azure Mobile Apps and offline sync](#offline-sync)                                      |
+| Aug 24, 2022 | SQL translation       | [New aggregate function support in EF Core 7](#ef7aggs)                                  |
+| Aug 10, 2022 | WCF                   | [CoreWCF: Roadmap and Q&A](#wcf)                                                         |
+| Jul 27, 2022 | ADO.NET               | [DbDataSource, a new System.Data abstraction](#dbdatasource)                             |
+| Jul 13, 2022 | EF Interceptors       | [Intercept this EF7 Preview 6 Event](#ef7interceptors)                                   |
+| Jun 29, 2022 | EF internals          | [DbContext Configuration and Lifetime - EF Core Architecture Part 2](#lifetimes)         |
+| Jun 15, 2022 | TPH/TPT/TPC           | [TPH, TPT, and TPC Inheritance mapping with EF Core](#inheritance)                       |
+| Jun 1, 2022  | EF internals          | [EF Core Architecture: Internal Dependency Injection](#internal-di)                      |
+| May 18, 2022 | Testing               | [Testing EF Core Apps (part 2)](#testing2)                                               |
+| May 4, 2022  | Pagination            | [Database Pagination](#pagination)                                                       |
+| Apr 20, 2022 | SaveChanges           | [Performance Improvements to the EF7 Update Pipeline](#update-perf)                      |
+| Apr 6, 2022  | Scaffolding           | [Database-first with T4 Templates in EF7: Early look](#t4)                               |
+| Mar 9, 2022  | GraphQL/OData         | [GraphQL and OData: An In-Depth Discussion](#graphql-odata)                              |
+| Feb 23, 2022 | Entity Framework      | [Celebrating 20 Years of .NET: Entity Framework](#20years)                               |
+| Feb 9, 2022  | Versioning            | [Software version and "stuff"](#stuff)                                                   |
+| Jan 26, 2022 | Testing               | [Testing EF Core Apps](#testing1)                                                        |
+| Jan 12, 2022 | EF Core plans         | [The EF7 Plan](#ef7plan)                                                                 |
+| Dec 1, 2021  | GraphQL               | [Hot Chocolate 12 and GraphQL 2021](#hotchoc12)                                          |
+| Nov 17, 2021 | New features          | [Make History and Explore the Cosmos, an EF Core 6 Retrospective](#retro6)               |
+| Nov 3, 2021  | Noda Time             | [Noda Time](#nodatime)                                                                   |
+| Oct 6, 2021  | Temporal tables       | [SQL Server Temporal Tables and EF Core 6](#temporal)                                    |
+| Oct 20, 2021 | Docs                  | [EF Core and ASP.NET Core from the ASP.NET documentation team](#aspnet)                  |
+| Sep 22, 2021 | PostgreSQL            | [PostgreSQL and EF Core](#npgsql)                                                        |
+| Aug 25, 2021 | Dapper                | [Dapper](#dapper)                                                                        |
+| Aug 11, 2021 | SQL translation       | [EF Core's Global Query Filter](#query-filters)                                          |
+| Jul 28, 2021 | OData                 | [OData](#odata)                                                                          |
+| Jul 14, 2021 | SQL translation       | [Visualizing database query plans](#query-plans)                                         |
+| Jun 16, 2021 | Azure Cosmos DB       | [Azure Cosmos DB and EF Core](#cosmos6)                                                  |
+| Jun 2, 2021  | Model building        | [Introducing EF Core Compiled Models](#compiled-models)                                  |
+| May 19, 2021 | GraphQL               | [Building Modern Apps with GraphQL](#graphql1)                                           |
+| May 5, 2021  | Triggers              | [Triggers for EF Core](#triggers)                                                        |
+| Apr 21, 2021 | Open source           | [Open Source Contributions: How to Add a Feature to EF Core](#contributing)              |
+| Apr 7, 2021  | Azure SQL             | [Azure SQL for Cloud-Born Applications and Developers](#davide)                          |
+| Mar 24, 2021 | EF Core Power Tools   | [EF Core Power Tools: the New Batch](#newbatch)                                          |
+| Mar 10, 2021 | AMA                   | [Julie Lerman and EF Core Ask Me Anything (AMA)](#julie)                                 |
+| Feb 24, 2021 | Performance           | [Performance Tuning an EF Core App](#jonp1)                                              |
+| Feb 10, 2021 | Exception handling    | [Typed Exceptions for Entity Framework Core](#typed-exceptions)                          |
+| Jan 27, 2021 | Database projects     | [Introducing MSBuild.Sdk.SqlProj](#sqlproj)                                              |
+| Jan 13, 2021 | Survey                | [EF Core 6.0 Survey Results](#survey)                                                    |
+| Dec 2, 2020  | LLBLGen Pro           | [LLBLGen designer and .NET data history](#frans)                                         |
+| Nov 18, 2020 | New features          | [Special EF Core 5.0 Community Panel](#efcore5)                                          |
+| Oct 28, 2020 | Collations            | [EF Core 5.0 Collations](#collations)                                                    |
+| Oct 14, 2020 | Azure Cosmos DB       | [Cosmos DB: Repository Pattern .NET Wrapper SDK](#repository)                            |
+| Sep 20, 2020 | Spatial types         | [Geographic Data with NetTopologySuite](#geo-nts)                                        |
+| Sep 16, 2020 | Migrations            | [What's New with Migrations in EF Core 5.0](#migrations5)                                |
+| Sep 2, 2020  | Offline sync          | [Sync your database with DotMim.Sync](#dotmin-sync)                                      |
+| Aug 19, 2020 | Many-to-many          | [Many-to-Many in EF Core 5.0](#many-to-many)                                             |
+| Aug 5, 2020  | EF in-depth           | [EF Core In Depth Video Series](#depth)                                                  |
+| Jul 22, 2020 | Scaffolding           | [Using Scaffolding with Handlebars](#handlebars)                                         |
+| Jun 24, 2020 | Blazor                | [EF Core in Blazor](#blazor)                                                             |
+| Jun 10, 2020 | EF Core Power Tools   | [EF Core Power Tools](#power-tools1)                                                     |
+| May 6, 2020  | Welcome!              | [Introducing the EF Core Community Standup](#one)                                        |
 
 ## 2024
+
+<a name="June26_2024"></a>
+
+### June 26: [Improve your SQL schema and scripts with .NET based static code analysis](https://www.youtube.com/live/yIOFMHzaKGs?si=YuvPQNKpKomd0wue)
+
+By harnessing the power of the .NET DacFX framework and the related .NET T-SQL parser, you can improve the quality of your database schema and scripts with static T-SQL analysis.
+
+[@ErikEJ](https://github.com/ErikEJ) has recently revived this 15-year-old technology with support for .NET 6 and later, and has brought a number of third-party rules back from the grave.
+
+In this EF Core community standup we will have a closer look - from generation of a simple HTML report with findings to managing and creating your own analyzer rules using modern .NET.
+
+Featuring:
+
+- [Erik Ejlskov Jensen](https://github.com/ErikEJ) (Special guest)
+- [Jiri Cincura](https://github.com/cincuranet) (Host)
+- [Arthur Vickers](https://github.com/ajcvickers) (Host)
+- [Shay Rojansky](https://github.com/roji) (Host)
+
+Links:
+
+- Blog: [How to: Code analyze your SQL Server T-SQL scripts in Visual Studio](https://erikej.github.io/dacfx/codeanalysis/sqlserver/2024/04/02/dacfx-codeanalysis.html)
+- Blog: [Create a Custom Static Code Analysis Rule for Azure SQL Database / SQL Server with .NET](https://erikej.github.io/dacfx/dotnet/2024/04/04/dacfx-rules.html)
+- Product: [EF Core Power Tools - Visual Studio Marketplace](https://marketplace.visualstudio.com/items?itemName=ErikEJ.EFCorePowerTools&ssr=false#overview)
 
 <a name="May15_2024"></a>
 
