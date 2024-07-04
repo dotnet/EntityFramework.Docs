@@ -431,7 +431,7 @@ Previously, the relational model was computed at run-time even when using a comp
 
 #### New behavior
 
-Starting with EF Core 8.0, the relational model is part of the generated compied model. However, for particularly large models the generated file may fail to compile.
+Starting with EF Core 8.0, the relational model is part of the generated compiled model. However, for particularly large models the generated file may fail to compile.
 
 #### Why
 
