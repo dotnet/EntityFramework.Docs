@@ -431,7 +431,7 @@ Previously, the relational model was computed at run-time even when using a comp
 
 #### New behavior
 
-Starting with EF Core 8.0, the relational model is part of the generated compied model. However, for particularly large models the generated file may fail to compile.
+Starting with EF Core 8.0, the relational model is part of the generated compiled model. However, for particularly large models the generated file may fail to compile.
 
 #### Why
 
@@ -475,7 +475,7 @@ Previously, discriminator columns created for [TPH inheritance mapping](xref:cor
 
 #### New behavior
 
-Starting with EF Core 8.0, discriminator columns are created with a max length that covers all the known discriminator values. EF will generate a migration to make this change. However, if the discriminator column is constrained in some way--for example, as part of an index--then the `AlterColumn` created by Migrations may fail.
+Starting with EF Core 8.0, discriminator columns are created with a max length that covers all the known discriminator values. EF will generate a migration to make this change. However, if the discriminator column is constrained in some way -- for example, as part of an index -- then the `AlterColumn` created by Migrations may fail.
 
 #### Why
 
