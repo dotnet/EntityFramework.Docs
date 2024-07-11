@@ -138,7 +138,7 @@ WHERE "Id" = @p1;
 SELECT changes();
 ```
 
-The [change tracker debug view](xref:core/change-tracking/debug-views) is a great way visualize which entities are being tracked and what their states are. For example, inserting the following code into the sample above before calling SaveChanges:
+The [change tracker debug view](xref:core/change-tracking/debug-views) is a great way to visualize which entities are being tracked and what their states are. For example, inserting the following code into the sample above before calling SaveChanges:
 
 <!--
                 context.ChangeTracker.DetectChanges();
