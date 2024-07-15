@@ -2588,7 +2588,6 @@ SQL Server automatic [optimistic concurrency](xref:core/saving/concurrency) is h
 ```csharp
 modelBuilder.Entity<Blog>()
     .Property(e => e.RowVersion)
-    .HasConversion<byte[]>()
     .IsRowVersion();
 ```
 
