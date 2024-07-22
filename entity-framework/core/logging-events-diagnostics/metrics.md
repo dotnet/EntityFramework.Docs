@@ -26,7 +26,8 @@ EF Core reports metrics via the standard <xref:System.Diagnostics.Metrics?displa
 * [`microsoft.entityframeworkcore.active_dbcontexts`](#metric-microsoftentityframeworkcoreactive_dbcontexts)
 * [`microsoft.entityframeworkcore.queries`](#metric-microsoftentityframeworkcorequeries)
 * [`microsoft.entityframeworkcore.savechanges`](#metric-microsoftentityframeworkcoresavechanges)
-* [`microsoft.entityframeworkcore.compiled_query_cache_hit_rate`](#metric-microsoftentityframeworkcorecompiled_query_cache_hit_rate)
+* [`microsoft.entityframeworkcore.compiled_query_cache_hits`](#metric-microsoftentityframeworkcorecompiled_query_cache_hits)
+* [`microsoft.entityframeworkcore.compiled_query_cache_misses`](#metric-microsoftentityframeworkcorecompiled_query_cache_misses)
 * [`microsoft.entityframeworkcore.execution_strategy_operation_failures`](#metric-microsoftentityframeworkcoreexecution_strategy_operation_failures)
 * [`microsoft.entityframeworkcore.optimistic_concurrency_failures`](#metric-microsoftentityframeworkcoreoptimistic_concurrency_failures)
 
@@ -54,11 +55,19 @@ Available starting in: Entity Framework Core 9.0.
 
 Available starting in: Entity Framework Core 9.0.
 
-#### Metric: `microsoft.entityframeworkcore.compiled_query_cache_hit_rate`
+#### Metric: `microsoft.entityframeworkcore.compiled_query_cache_hits`
 
 | Name     | Instrument Type | Unit (UCUM) | Description    |
 | -------- | --------------- | ----------- | -------------- |
-| `microsoft.entityframeworkcore.compiled_query_cache_hit_rate` | ObservableGauge | `%` | Hit rate - since last observation - for the compiled query cache. |
+| `microsoft.entityframeworkcore.compiled_query_cache_hits` | ObservableCounter | `{hits}` | Cumulative count of hits for the compiled query cache. |
+
+Available starting in: Entity Framework Core 9.0.
+
+#### Metric: `microsoft.entityframeworkcore.compiled_query_cache_misses`
+
+| Name     | Instrument Type | Unit (UCUM) | Description    |
+| -------- | --------------- | ----------- | -------------- |
+| `microsoft.entityframeworkcore.compiled_query_cache_misses` | ObservableCounter | `{misses}` | Cumulative count of misses for the compiled query cache. |
 
 Available starting in: Entity Framework Core 9.0.
 
