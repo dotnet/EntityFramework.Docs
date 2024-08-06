@@ -13,9 +13,23 @@ public class Blog
 
     public int Id { get; private set; }
     public string Name { get; set; }
+    public Language Language { get; set; }
+
     public virtual Uri SiteUri { get; set; } = null!;
     public virtual Website Site { get; set; } = null!;
     public virtual List<Post> Posts { get; } = new();
+}
+
+
+public enum Language
+{
+    English,
+    MandarinChinese,
+    Hindi,
+    Spanish,
+    French,
+    ModernStandardArabic,
+    Other,
 }
 
 public class Website
@@ -34,11 +48,12 @@ public class Website
 
 public class Post
 {
-    public Post(string title, string content, DateOnly publishedOn)
+    public Post(string title, string content, DateOnly publishedOn, decimal rating)
     {
         Title = title;
         Content = content;
         PublishedOn = publishedOn;
+        Rating = rating;
     }
 
     public int Id { get; private set; }
@@ -47,6 +62,7 @@ public class Post
     public DateOnly PublishedOn { get; set; }
     public bool Archived { get; set; }
     public int BlogId { get; set; }
+    public decimal Rating { get; set; }
     public virtual Blog Blog { get; set; } = null!;
     public virtual List<Tag> Tags { get; } = new();
     public virtual Author? Author { get; set; }
@@ -55,8 +71,8 @@ public class Post
 
 public class FeaturedPost : Post
 {
-    public FeaturedPost(string title, string content, DateOnly publishedOn, string promoText)
-        : base(title, content, publishedOn)
+    public FeaturedPost(string title, string content, DateOnly publishedOn, decimal rating, string promoText)
+        : base(title, content, publishedOn, rating)
     {
         PromoText = promoText;
     }
@@ -299,13 +315,16 @@ public abstract class BlogsContext : DbContext
                     new Post(
                         "Productivity comes to .NET MAUI in Visual Studio 2022",
                         "Visual Studio 2022 17.3 is now available and...",
-                        new DateOnly(2022, 8, 9)) { Tags = { tagDotNetMaui, tagDotNet }, Author = maddy, Metadata = BuildPostMetadata() },
+                        new DateOnly(2022, 8, 9),
+                        4.0M) { Tags = { tagDotNetMaui, tagDotNet }, Author = maddy, Metadata = BuildPostMetadata() },
                     new Post(
                         "Announcing .NET 7 Preview 7", ".NET 7 Preview 7 is now available with improvements to System.LINQ, Unix...",
-                        new DateOnly(2022, 8, 9)) { Tags = { tagDotNet }, Author = jeremy, Metadata = BuildPostMetadata() },
+                        new DateOnly(2022, 8, 9),
+                        4.2M) { Tags = { tagDotNet }, Author = jeremy, Metadata = BuildPostMetadata() },
                     new Post(
                         "ASP.NET Core updates in .NET 7 Preview 7", ".NET 7 Preview 7 is now available! Check out what's new in...",
-                        new DateOnly(2022, 8, 9))
+                        new DateOnly(2022, 8, 9),
+                        4.1M)
                     {
                         Tags = { tagDotNet, tagAspDotNet, tagAspDotNetCore }, Author = dan, Metadata = BuildPostMetadata()
                     },
@@ -313,12 +332,14 @@ public abstract class BlogsContext : DbContext
                         "Announcing Entity Framework 7 Preview 7: Interceptors!",
                         "Announcing EF7 Preview 7 with new and improved interceptors, and...",
                         new DateOnly(2022, 8, 9),
+                        4.5M,
                         "Loads of runnable code!")
                     {
                         Tags = { tagEntityFramework, tagDotNet, tagDotNetCore }, Author = arthur, Metadata = BuildPostMetadata()
                     }
                 },
-                Site = new(new("https://devblogs.microsoft.com/dotnet/"), "dotnet@example.com")
+                Site = new(new("https://devblogs.microsoft.com/dotnet/"), "dotnet@example.com"),
+                Language = Language.English,
             },
             new("1unicorn2")
             {
@@ -327,20 +348,25 @@ public abstract class BlogsContext : DbContext
                     new Post(
                         "Hacking my Sixth Form College network in 1991",
                         "Back in 1991 I was a student at Franklin Sixth Form College...",
-                        new DateOnly(2020, 4, 10)) { Tags = { tagHacking }, Author = arthur, Metadata = BuildPostMetadata() },
+                        new DateOnly(2020, 4, 10),
+                        4.5M) { Tags = { tagHacking }, Author = arthur, Metadata = BuildPostMetadata() },
                     new FeaturedPost(
                         "All your versions are belong to us",
                         "Totally made up conversations about choosing Entity Framework version numbers...",
                         new DateOnly(2020, 3, 26),
+                        3.9M,
                         "Way funny!") { Tags = { tagEntityFramework }, Author = arthur, Metadata = BuildPostMetadata() },
                     new Post(
                         "Moving to Linux", "A few weeks ago, I decided to move from Windows to Linux as...",
-                        new DateOnly(2020, 3, 7)) { Tags = { tagLinux }, Author = arthur, Metadata = BuildPostMetadata(), Archived = true },
+                        new DateOnly(2020, 3, 7),
+                        3.5M) { Tags = { tagLinux }, Author = arthur, Metadata = BuildPostMetadata(), Archived = true },
                     new Post(
                         "Welcome to One Unicorn 2.0!", "I created my first blog back in 2011..",
-                        new DateOnly(2020, 2, 29)) { Tags = { tagEntityFramework }, Author = arthur, Metadata = BuildPostMetadata() }
+                        new DateOnly(2020, 2, 29),
+                        4.8M) { Tags = { tagEntityFramework }, Author = arthur, Metadata = BuildPostMetadata() }
                 },
-                Site = new(new("https://blog.oneunicorn.com/"), "unicorn@example.com")
+                Site = new(new("https://blog.oneunicorn.com/"), "unicorn@example.com"),
+                Language = Language.English,
             },
             new("Brice's Blog")
             {
@@ -348,25 +374,29 @@ public abstract class BlogsContext : DbContext
                 {
                     new FeaturedPost(
                         "SQLite in Visual Studio 2022", "A couple of years ago, I was thinking of ways...",
-                        new DateOnly(2022, 7, 26), "Love for VS!")
+                        new DateOnly(2022, 7, 26), 4.5M, "Love for VS!")
                     {
                         Tags = { tagSqlite, tagVisualStudio }, Author = brice, Metadata = BuildPostMetadata()
                     },
                     new Post(
                         "On .NET - Entity Framework Migrations Explained",
                         "This week, @JamesMontemagno invited me onto the On .NET show...",
-                        new DateOnly(2022, 5, 4))
+                        new DateOnly(2022, 5, 4),
+                        4.7M)
                     {
                         Tags = { tagEntityFramework, tagDotNet }, Author = brice, Metadata = BuildPostMetadata()
                     },
                     new Post(
                         "Dear DBA: A silly idea", "We have fun on the Entity Framework team...",
-                        new DateOnly(2022, 3, 31)) { Tags = { tagEntityFramework }, Author = brice, Metadata = BuildPostMetadata(), Archived = true },
+                        new DateOnly(2022, 3, 31),
+                        3.5M) { Tags = { tagEntityFramework }, Author = brice, Metadata = BuildPostMetadata(), Archived = true },
                     new Post(
                         "Microsoft.Data.Sqlite 6", "It’s that time of year again. Microsoft.Data.Sqlite version...",
-                        new DateOnly(2021, 11, 8)) { Tags = { tagSqlite, tagDotNet }, Author = brice, Metadata = BuildPostMetadata() }
+                        new DateOnly(2021, 11, 8),
+                        4.2M) { Tags = { tagSqlite, tagDotNet }, Author = brice, Metadata = BuildPostMetadata() }
                 },
-                Site = new(new("https://www.bricelam.net/"), "brice@example.com")
+                Site = new(new("https://www.bricelam.net/"), "brice@example.com"),
+                Language = Language.English,
             },
             new("Developer for Life")
             {
@@ -374,7 +404,7 @@ public abstract class BlogsContext : DbContext
                 {
                     new Post(
                         "GraphQL for .NET Developers", "A comprehensive overview of GraphQL as...",
-                        new DateOnly(2021, 7, 1))
+                        new DateOnly(2021, 7, 1), 4.1M)
                     {
                         Tags = { tagDotNet, tagGraphQl, tagAspDotNetCore }, Author = jeremy, Metadata = BuildPostMetadata()
                     },
@@ -382,6 +412,7 @@ public abstract class BlogsContext : DbContext
                         "Azure Cosmos DB With EF Core on Blazor Server",
                         "Learn how to build Azure Cosmos DB apps using Entity Framework Core...",
                         new DateOnly(2021, 5, 16),
+                        4.5M,
                         "Blazor FTW!")
                     {
                         Tags =
@@ -398,7 +429,8 @@ public abstract class BlogsContext : DbContext
                     new Post(
                         "Multi-tenancy with EF Core in Blazor Server Apps",
                         "Learn several ways to implement multi-tenant databases in Blazor Server apps...",
-                        new DateOnly(2021, 4, 29))
+                        new DateOnly(2021, 4, 29),
+                        3.8M)
                     {
                         Tags = { tagDotNet, tagEntityFramework, tagAspDotNetCore, tagBlazor },
                         Author = jeremy,
@@ -406,13 +438,15 @@ public abstract class BlogsContext : DbContext
                     },
                     new Post(
                         "An Easier Blazor Debounce", "Where I propose a simple method to debounce input without...",
-                        new DateOnly(2021, 4, 12))
+                        new DateOnly(2021, 4, 12),
+                        4.5M)
                     {
                         Tags = { tagDotNet, tagAspDotNetCore, tagBlazor }, Author = jeremy, Metadata = BuildPostMetadata()
                     }
                 },
-                Site = new(new("https://blog.jeremylikness.com/"), "jeremy@example.com")
-            }
+                Site = new(new("https://blog.jeremylikness.com/"), "jeremy@example.com"),
+                Language = Language.English,
+           }
         };
 
         await AddRangeAsync(blogs);
