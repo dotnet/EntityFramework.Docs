@@ -351,6 +351,12 @@ Update an entity graph in store to a given one by inserting, updating and removi
 
 [GitHub repository](https://github.com/jtheisen/reconciler)
 
+### AutoCompute
+
+Persisted computed properties in EF Core that update automatically on save changes. For EF Core: 8.
+
+[GitHub repository](https://github.com/lucaslorentz/auto-compute) | [NuGet](https://www.nuget.org/packages/LLL.AutoCompute.EFCore)
+
 ## API Integrations
 
 These packages are designed to integrate directly with EF Core to expose various APIs.
