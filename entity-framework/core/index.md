@@ -24,7 +24,7 @@ With EF Core, data access is performed using a model. A model is made up of enti
 EF supports the following model development approaches:
 
 * Generate a model from an existing database.
-* Hand code a model to match the database.
+* Hand-code a model to match the database.
 * Once a model is created, use [EF Migrations](xref:core/managing-schemas/migrations/index) to create a database from the model. Migrations allow evolving the database as the model changes.
 
 [!code-csharp[Main](../../samples/core/Intro/Model.cs)]
