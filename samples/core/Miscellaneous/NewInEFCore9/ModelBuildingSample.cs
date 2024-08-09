@@ -56,22 +56,6 @@ public static class ModelBuildingSample
                 .HasFillFactor(80);
             #endregion
 
-            #region UseCache
-            modelBuilder.HasSequence<int>("MyCachedSequence")
-                .HasMin(10).HasMax(255000)
-                .IsCyclic()
-                .StartsAt(11).IncrementsBy(2)
-                .UseCache(3);
-            #endregion
-
-            #region UseNoCache
-            modelBuilder.HasSequence<int>("MyUncachedSequence")
-                .HasMin(10).HasMax(255000)
-                .IsCyclic()
-                .StartsAt(11).IncrementsBy(2)
-                .UseNoCache();
-            #endregion
-
             #region DefaultCache
             modelBuilder.HasSequence<int>("MySequence")
                 .HasMin(10).HasMax(255000)
