@@ -132,11 +132,70 @@ The following example uses a SQL query that selects from a Table-Valued Function
 
 While <xref:Microsoft.EntityFrameworkCore.RelationalQueryableExtensions.FromSql%2A> is useful for querying entities defined in your model, <xref:Microsoft.EntityFrameworkCore.RelationalDatabaseFacadeExtensions.SqlQuery%2A> allows you to easily query for scalar, non-entity types via SQL, without needing to drop down to lower-level data access APIs. For example, the following query fetches all the IDs from the `Blogs` table:
 
-[!code-csharp[Main](../../../samples/core/Querying/SqlQueries/Program.cs#SqlQuery)]
+### [SQL Server](#tab/sqlserver)
+
+```c#
+var ids = context.Database
+    .SqlQuery<int>($"SELECT [BlogId] FROM [Blogs]")
+    .ToList();
+```
+
+### [SQLite](#tab/sqlite)
+
+```c#
+var ids = context.Database
+    .SqlQuery<int>($"""
+                    SELECT "BlogId" FROM "Blogs"
+                    """)
+    .ToList();
+```
+
+### [PostgreSQL](#tab/postgres)
+
+```c#
+var ids = context.Database
+    .SqlQuery<int>($"""
+                    SELECT "BlogId" FROM "Blogs"
+                    """)
+    .ToList();
+```
+
+***
 
 You can also compose LINQ operators over your SQL query. However, since your SQL becomes a subquery whose output column needs to be referenced by the SQL EF adds, you must name the output column `Value`. For example, the following query returns the IDs which are above the ID average:
 
-[!code-csharp[Main](../../../samples/core/Querying/SqlQueries/Program.cs#SqlQueryComposed)]
+### [SQL Server](#tab/sqlserver)
+
+```c#
+var overAverageIds = context.Database
+    .SqlQuery<int>($"SELECT [BlogId] AS [Value] FROM [Blogs]")
+    .Where(id => id > context.Blogs.Average(b => b.BlogId))
+    .ToList();
+```
+
+### [SQLite](#tab/sqlite)
+
+```c#
+var overAverageIds = context.Database
+    .SqlQuery<int>($"""
+                    SELECT "BlogId" AS "Value" FROM "Blogs"
+                    """)
+    .Where(id => id > context.Blogs.Average(b => b.BlogId))
+    .ToList();
+```
+
+### [PostgreSQL](#tab/postgres)
+
+```c#
+var overAverageIds = context.Database
+    .SqlQuery<int>($"""
+                    SELECT "BlogId" AS "Value" FROM "Blogs"
+                    """)
+    .Where(id => id > context.Blogs.Average(b => b.BlogId))
+    .ToList();
+```
+
+***
 
 <xref:Microsoft.EntityFrameworkCore.RelationalQueryableExtensions.FromSql%2A> can be used with any scalar type supported by your database provider. If you'd like to use a type not supported by your database provider, you can use [pre-convention configuration](xref:core/modeling/bulk-configuration#pre-convention-configuration) to define a value conversion for it.
 
