@@ -2,10 +2,14 @@
 title: MSL Specification - EF6
 description: MSL Specification in Entity Framework 6
 author: ajcvickers
-ms.date: 10/23/2016
+ms.date: 08/23/2024
 uid: ef6/modeling/designer/advanced/edmx/msl-spec
 ---
 # MSL Specification
+
+> [!NOTE]
+> MSL v1 is unsupported, please update to V3
+
 Mapping specification language (MSL) is an XML-based language that describes the mapping between the conceptual model and storage model of an Entity Framework application.
 
 In an Entity Framework application, mapping metadata is loaded from an .msl file (written in MSL) at build time. Entity Framework uses mapping metadata at runtime to translate queries against the conceptual model to store-specific commands.
@@ -20,7 +24,7 @@ Versions of MSL are differentiated by XML namespaces.
 |:------------|:-----------------------------------------------------|
 | MSL v1      | urn:schemas-microsoft-com:windows:storage:mapping:CS |
 | MSL v2      | `https://schemas.microsoft.com/ado/2008/09/mapping/cs` |
-| MSL v3      | `https://schemas.microsoft.com/ado/2009/11/mapping/cs`  |
+| MSL v3      | `https://schemas.microsoft.com/ado/2009/11/mapping/cs` |
 
 ## Alias Element (MSL)
 
