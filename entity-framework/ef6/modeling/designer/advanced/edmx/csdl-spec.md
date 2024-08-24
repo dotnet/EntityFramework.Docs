@@ -2,10 +2,14 @@
 title: CSDL Specification - EF6
 description: CSDL Specification in Entity Framework 6
 author: ajcvickers
-ms.date: 10/23/2016
+ms.date: 08/23/2024
 uid: ef6/modeling/designer/advanced/edmx/csdl-spec
 ---
 # CSDL Specification
+
+> [!NOTE]
+> CSDL v1 is unsupported, please update to V3
+
 Conceptual schema definition language (CSDL) is an XML-based language that describes the entities, relationships, and functions that make up a conceptual model of a data-driven application. This conceptual model can be used by the Entity Framework or WCF Data Services. The metadata that is described with CSDL is used by the Entity Framework to map entities and relationships that are defined in a conceptual model to a data source. For more information, see [SSDL Specification](xref:ef6/modeling/designer/advanced/edmx/ssdl-spec) and [MSL Specification](xref:ef6/modeling/designer/advanced/edmx/msl-spec).
 
 CSDL is the Entity Framework's implementation of the Entity Data Model.
@@ -22,7 +26,6 @@ Versions of CSDL are differentiated by XML namespaces.
 | CSDL v2      | `https://schemas.microsoft.com/ado/2008/09/edm` |
 | CSDL v3      | `https://schemas.microsoft.com/ado/2009/11/edm` |
 
- 
 ## Association Element (CSDL)
 
 An **Association** element defines a relationship between two entity types. An association must specify the entity types that are involved in the relationship and the possible number of entity types at each end of the relationship, which is known as the multiplicity. The multiplicity of an association end can have a value of one (1), zero or one (0..1), or many (\*). This information is specified in two child End elements.

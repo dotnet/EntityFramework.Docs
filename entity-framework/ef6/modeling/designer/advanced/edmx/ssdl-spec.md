@@ -2,10 +2,14 @@
 title: SSDL Specification - EF6
 description: SSDL Specification in Entity Framework 6
 author: ajcvickers
-ms.date: 10/23/2016
+ms.date: 08/23/2024
 uid: ef6/modeling/designer/advanced/edmx/ssdl-spec
 ---
 # SSDL Specification
+
+> [!NOTE]
+> SSDL v1 is unsupported, please update to V3
+
 Store schema definition language (SSDL) is an XML-based language that describes the storage model of an Entity Framework application.
 
 In an Entity Framework application, storage model metadata is loaded from a .ssdl file (written in SSDL) into an instance of the System.Data.Metadata.Edm.StoreItemCollection and is accessible by using methods in the System.Data.Metadata.Edm.MetadataWorkspace class. Entity Framework uses storage model metadata to translate queries against the conceptual model to store-specific commands.
