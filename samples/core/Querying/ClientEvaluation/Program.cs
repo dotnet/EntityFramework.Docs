@@ -10,7 +10,7 @@ internal class Program
     {
         url = url.ToLower();
 
-        if (!url.StartsWith("http://"))
+        if (!url.StartsWith("http://") && !url.StartsWith("https://"))
         {
             url = string.Concat("http://", url);
         }
