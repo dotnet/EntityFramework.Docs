@@ -106,6 +106,56 @@ public static class QuerySample
             .Where(b => b.Posts.Count > 0)
             .ToListAsync();
         #endregion
+
+        if (!context.UseSqlite)
+        {
+            #region PatIndexExample
+            var patIndexExample = await context.Posts.Select(p => new
+            {
+                p.Id,
+                Index = EF.Functions.PatIndex("%.NET%", p.Content)
+            }).ToListAsync();
+            #endregion
+        }
+
+        #region CaseTranslationImprovements
+        var caseSimplification = await context.Blogs
+            .Select(b => !(b.Id > 5 ? false : true))
+            .ToListAsync();
+        #endregion
+
+        if (context.UseSqlite)
+        {
+            #region NegatedContainsImprovements
+            var negatedContainsSimplification = await context.Posts
+                .Where(p => !p.Content.Contains("Announcing"))
+                .Select(p => new { p.Content }).ToListAsync();
+            #endregion
+        }
+
+        #region XorBoolProjection
+        var negatedBoolProjection = await context.Posts.Select(x => new { x.Title, Active = !x.Archived }).ToListAsync();
+        #endregion
+
+        #region EnumToString
+        var englishAndSpanishBlogs = await context.Blogs
+            .Where(x => x.Language.ToString().EndsWith("ish"))
+            .Select(x => x.Name).ToListAsync();
+        #endregion
+
+        #region AverageOnDecimal
+        var averagePostRating = await context.Blogs.Select(x => new
+        {
+            x.Name,
+            AveragePostRating = x.Posts.Average(xx => xx.Rating)
+        }).ToListAsync();
+        #endregion
+
+        #region ConvertFromObject
+        var blogWithConversion = await context.Blogs
+            .Where(x => Convert.ToDecimal((object)Convert.ToString(x.Id)) == 1.0M)
+            .ToListAsync();
+        #endregion
     }
 
     private static void PrintSampleName([CallerMemberName] string? methodName = null)

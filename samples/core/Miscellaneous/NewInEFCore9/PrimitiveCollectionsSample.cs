@@ -308,7 +308,7 @@ public static class PrimitiveCollectionsSample
                     Booleans = new() { true, false, true },
                     Urls = new() { new("https://127.0.0.1/"), new("http://192.168.0.1/"), new("https://devblogs.microsoft.com/dotnet/") },
                     SomeInts = new() { 1, 2, 3 },
-                    DddIds = new() { new(1), new(2), new(3) }
+                    DddIds = new() { new(1), new(2), new(3) },
                 });
 
             var oak = new Pub("The Royal Oak", new[] { "Oakham", "Carling", "Guinness", "John Smiths", "Bathams", "Tennents" });

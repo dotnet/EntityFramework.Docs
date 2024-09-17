@@ -730,6 +730,260 @@ WHERE CAST([s].[LastVisited] AS time) >= @__visitedTime_0
 
 `FromTimeSpan` is translated in a similar manner.
 
+### Added translation for `PATINDEX` function on SQL Server
+
+We added support for PATINDEX function on SQL Server which returns the starting position of the first occurrence of a pattern in a specified expression. The function can be accessed in the following way:
+
+<!--
+var patIndexExample = await context.Posts.Select(p => new
+{
+    p.Id,
+    Index = EF.Functions.PatIndex("%.NET%", p.Content)
+}).ToListAsync();
+-->
+[!code-csharp[PatIndexExample](../../../../samples/core/Miscellaneous/NewInEFCore9/QuerySample.cs?name=PatIndexExample)]
+
+The result translates directly into `PATINDEX` function on SQL Server:
+
+```sql
+SELECT [p].[Id], PATINDEX(N'%.NET%', [p].[Content]) AS [Index]
+FROM [Posts] AS [p]
+```
+
+This enhancement was contributed by [@smnsht](https://github.com/smnsht). Many thanks!
+
+### Added translation for `ToString()` on enums
+
+In EF9 we enabled translation of `ToString()` on an enum. It translates to a `CASE` block listing all the enum values. Below is an example of a query that uses pattern matching on the the enum names:
+
+<!--
+var englishAndSpanishBlogs = await context.Blogs
+    .Where(x => x.Language.ToString().EndsWith("ish"))
+    .Select(x => x.Name).ToListAsync();
+-->
+[!code-csharp[EnumToString](../../../../samples/core/Miscellaneous/NewInEFCore9/QuerySample.cs?name=EnumToString)]
+
+This translates to the following query on SQL Server:
+
+```sql
+SELECT [b].[Name]
+FROM [Blogs] AS [b]
+WHERE CASE [b].[Language]
+    WHEN 0 THEN N'English'
+    WHEN 1 THEN N'MandarinChinese'
+    WHEN 2 THEN N'Hindi'
+    WHEN 3 THEN N'Spanish'
+    WHEN 4 THEN N'French'
+    WHEN 5 THEN N'ModernStandardArabic'
+    WHEN 6 THEN N'Other'
+    ELSE CAST([b].[Language] AS nvarchar(max))
+END LIKE N'%ish'
+```
+
+This enhancement was contributed by [@Danevandy99](https://github.com/Danevandy99). Many thanks!
+
+### Added support for `Sum` and `Average` for decimal on Sqlite
+
+In EF9 it is possible to perform sum and average aggregation on decimal values using Sqlite database. A query below lists all blogs along with an average rating of all their posts:
+
+<!--
+var averagePostRating = await context.Blogs.Select(x => new
+{
+    x.Name,
+    AveragePostRating = x.Posts.Average(xx => xx.Rating)
+}).ToListAsync();
+-->
+[!code-csharp[AverageOnDecimal](../../../../samples/core/Miscellaneous/NewInEFCore9/QuerySample.cs?name=AverageOnDecimal)]
+
+This translates to the following SQL on Sqlite:
+
+```sql
+SELECT "b"."Name", (
+    SELECT ef_avg("p"."Rating")
+    FROM "Posts" AS "p"
+    WHERE "b"."Id" = "p"."BlogId") AS "AveragePostRating"
+FROM "Blogs" AS "b"
+```
+
+This enhancement was contributed by [@ranma42](https://github.com/ranma42). Many thanks!
+
+### C# semantics for comparison operations on nullable values
+
+In EF8 comparisons between nullable elements were not performed correctly for some scenarios. In C#, if one or both operands are null, the result of a comparison operation is false; otherwise, the contained values of operands are compared. In EF8 we used to translate comparisons using database null semantics. This would produce results different than similar query using Linq to Objects.
+Moreover, we would produce different results when comparison was done in filter vs projection. Some queris would also produce differet results between Sql Server and Sqlite/Postgres.
+
+For example, the query:
+
+<!--
+var negatedNullableComparisonFilter = await context.Entities
+    .Where(x => !(x.NullableIntOne > x.NullableIntTwo))
+    .Select(x => new { x.NullableIntOne, x.NullableIntTwo }).ToListAsync();
+-->
+[!code-csharp[NegatedNullableComparisonFilter](../../../../samples/core/Miscellaneous/NewInEFCore9/NullSemanticsSample.cs?name=NegatedNullableComparisonFilter)]
+
+would generate the following SQL:
+
+```sql
+SELECT [e].[NullableIntOne], [e].[NullableIntTwo]
+FROM [Entities] AS [e]
+WHERE NOT ([e].[NullableIntOne] > [e].[NullableIntTwo])
+```
+
+which filters out entities whose `NullableIntOne` or `NullableIntTwo` are set to null.
+
+In EF9 we produce:
+
+```sql
+SELECT [e].[NullableIntOne], [e].[NullableIntTwo]
+FROM [Entities] AS [e]
+WHERE CASE
+    WHEN [e].[NullableIntOne] > [e].[NullableIntTwo] THEN CAST(0 AS bit)
+    ELSE CAST(1 AS bit)
+END = CAST(1 AS bit)
+```
+
+Similar comparison performed in a projection:
+
+<!--
+var negatedNullableComparisonProjection = await context.Entities.Select(x => new
+{
+    x.NullableIntOne,
+    x.NullableIntTwo,
+    Operation = !(x.NullableIntOne > x.NullableIntTwo)
+}).ToListAsync();
+-->
+[!code-csharp[NegatedNullableComparisonProjection](../../../../samples/core/Miscellaneous/NewInEFCore9/NullSemanticsSample.cs?name=NegatedNullableComparisonProjection)]
+
+resulted in the following SQL:
+
+```sql
+SELECT [e].[NullableIntOne], [e].[NullableIntTwo], CASE
+    WHEN NOT ([e].[NullableIntOne] > [e].[NullableIntTwo]) THEN CAST(1 AS bit)
+    ELSE CAST(0 AS bit)
+END AS [Operation]
+FROM [Entities] AS [e]
+```
+
+which returns `false` for entities whose `NullableIntOne` or `NullableIntTwo` are set to null (rather than `true` expected in C#). Running the same scenario on Sqlite generated:
+
+```sql
+SELECT "e"."NullableIntOne", "e"."NullableIntTwo", NOT ("e"."NullableIntOne" > "e"."NullableIntTwo") AS "Operation"
+FROM "Entities" AS "e"
+```
+
+which results in `Nullable object must have a value` exception, as translation produces `null` value for cases where `NullableIntOne` or `NullableIntTwo` are null.
+
+EF9 now properly handles these scenarios, producing results consistent with Linq to Objects and across different providers.
+
+This enhancement was contributed by [@ranma42](https://github.com/ranma42). Many thanks!
+
+### Improved translation of logical negation operator (!)
+
+In EF9 we improved translation of some queries using logical negation.
+
+Here is an example of a query affected by these changes, specifically when using Sqlite:
+
+<!--
+var negatedContainsSimplification = await context.Posts
+    .Where(p => !p.Content.Contains("Announcing"))
+    .Select(p => new { p.Content }).ToListAsync();
+-->
+[!code-csharp[NegatedContainsImprovements](../../../../samples/core/Miscellaneous/NewInEFCore9/QuerySample.cs?name=NegatedContainsImprovements)]
+
+In EF8 we would produce the following query:
+
+```sql
+SELECT "p"."Content"
+FROM "Posts" AS "p"
+WHERE NOT (instr("p"."Content", 'Announcing') > 0)
+```
+
+In EF9 we "push" `NOT` operation into the comparison:
+
+```sql
+SELECT "p"."Content"
+FROM "Posts" AS "p"
+WHERE instr("p"."Content", 'Announcing') <= 0
+```
+
+Another example, applicable to SQL Server, is a negated conditional operation.
+
+<!--
+var caseSimplification = await context.Blogs
+    .Select(b => !(b.Id > 5 ? false : true))
+    .ToListAsync();
+-->
+[!code-csharp[CaseTranslationImprovements](../../../../samples/core/Miscellaneous/NewInEFCore9/QuerySample.cs?name=CaseTranslationImprovements)]
+
+In EF8 used to result in nested `CASE` blocks:
+
+```sql
+SELECT CASE
+    WHEN CASE
+        WHEN [b].[Id] > 5 THEN CAST(0 AS bit)
+        ELSE CAST(1 AS bit)
+    END = CAST(0 AS bit) THEN CAST(1 AS bit)
+    ELSE CAST(0 AS bit)
+END
+FROM [Blogs] AS [b]
+```
+
+In EF9 we removed the nesting:
+
+```sql
+SELECT CASE
+    WHEN [b].[Id] > 5 THEN CAST(1 AS bit)
+    ELSE CAST(0 AS bit)
+END
+FROM [Blogs] AS [b]
+```
+
+On SQL Server, when projecting a negated bool property:
+
+<!--
+var negatedBoolProjection = await context.Posts.Select(x => new { x.Title, Active = !x.Archived }).ToListAsync();
+-->
+[!code-csharp[XorBoolProjection](../../../../samples/core/Miscellaneous/NewInEFCore9/QuerySample.cs?name=XorBoolProjection)]
+
+ EF8 would generate a `CASE` block because comparisons can't appear in the projection directly in SQL Server queries:
+
+ ```sql
+SELECT [p].[Title], CASE
+    WHEN [p].[Archived] = CAST(0 AS bit) THEN CAST(1 AS bit)
+    ELSE CAST(0 AS bit)
+END AS [Active]
+FROM [Posts] AS [p]
+ ```
+
+ In EF9 this translation has been simplified and now uses exclusive or (`^`):
+
+```sql
+SELECT [p].[Title], [p].[Archived] ^ CAST(1 AS bit) AS [Active]
+FROM [Posts] AS [p]
+```
+
+These enhancements were contributed by [@ranma42](https://github.com/ranma42). Many thanks!
+
+### Improved translation for Contains used with HashSet and other collection types
+
+In EF8 we introduced support for primitive collections and changed how [some queries using primitive collection parameters are translated](xref:core/what-is-new/ef-core-8.0/whatsnew#queries-with-primitive-collections). In EF9 we extended this to support all `ICollection<T>` types.
+
+> [NOTE!]
+> This only applies to primitive collection parameters and inline collections. Primitive collections that are part of entities are still limited to arrays, lists and [in EF9 also read-only arrays/lists](#read-only-primitive-collections).
+
+### `Convert.To*` methods can now accept argument of type `object`
+
+In EF8 passing a parameter of type object to one of the methods on `System.Convert` class (e.g. `Convert.ToDouble`) would result in a translation error. In EF9 we allow converting from `object`:
+
+<!--
+var blogWithConversion = await context.Blogs
+    .Where(x => Convert.ToDecimal((object)Convert.ToString(x.Id)) == 1.0M)
+    .ToListAsync();
+-->
+[!code-csharp[ConvertFromObject](../../../../samples/core/Miscellaneous/NewInEFCore9/QuerySample.cs?name=ConvertFromObject)]
+
+These enhancements were contributed by [@imangd](https://github.com/imangd). Many thanks!
+
 ## ExecuteUpdate and ExecuteDelete
 
 <a name="executecomplex"></a>
@@ -1144,51 +1398,6 @@ INNER JOIN "Pubs" AS "p" ON "w"."ClosestPubId" = "p"."Id"
 ```
 
 <a name="sequence-caching"></a>
-
-### Specify caching for sequences
-
-> [!TIP]
-> The code shown here comes from [ModelBuildingSample.cs](https://github.com/dotnet/EntityFramework.Docs/tree/main/samples/core/Miscellaneous/NewInEFCore9/ModelBuildingSample.cs).
-
-EF9 allows setting the [caching options for database sequences](/sql/t-sql/statements/create-sequence-transact-sql) for any relational database provider that supports this. For example, `UseCache` can be used to explicitly turn on caching and set the cache size:
-
-<!--
-            #region UseCache
-            modelBuilder.HasSequence<int>("MyCachedSequence")
-                .HasMin(10).HasMax(255000)
-                .IsCyclic()
-                .StartsAt(11).IncrementsBy(2)
-                .UseCache(20);
--->
-[!code-csharp[UseCache](../../../../samples/core/Miscellaneous/NewInEFCore9/ModelBuildingSample.cs?name=UseCache)]
-
-This results in the following sequence definition when using SQL Server:
-
-```sql
-CREATE SEQUENCE [MyCachedSequence] AS int START WITH 11 INCREMENT BY 2 MINVALUE 10 MAXVALUE 255000 CYCLE CACHE 3;
-```
-
-Similarly, `UseNoCache` explicitly turns off caching:
-
-<!--
-            #region UseNoCache
-            modelBuilder.HasSequence<int>("MyUncachedSequence")
-                .HasMin(10).HasMax(255000)
-                .IsCyclic()
-                .StartsAt(11).IncrementsBy(2)
-                .UseNoCache();
--->
-[!code-csharp[UseNoCache](../../../../samples/core/Miscellaneous/NewInEFCore9/ModelBuildingSample.cs?name=UseNoCache)]
-
-```sql
-CREATE SEQUENCE [MyUncachedSequence] AS int START WITH 11 INCREMENT BY 2 MINVALUE 10 MAXVALUE 255000 CYCLE NO CACHE;
-```
-
-If neither `UseCache` or `UseNoCache` are called, then caching is not specified and the database will use whatever its default is. This may be a different default for different databases.
-
-This enhancement was contributed by [@bikbov](https://github.com/bikbov). Many thanks!
-
-<a name="fill-factor"></a>
 
 ### Specify fill-factor for keys and indexes
 
