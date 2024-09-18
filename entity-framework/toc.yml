@@ -428,12 +428,16 @@
         items:
         - name: Overview
           href: core/providers/cosmos/index.md
+        - name: Modeling
+          href: core/providers/cosmos/modeling.md
+        - name: Querying
+          href: core/providers/cosmos/querying.md
         - name: Work with unstructured data
           href: core/providers/cosmos/unstructured-data.md
+        - name: Vector search
+          href: core/providers/cosmos/vector-search.md
         - name: Azure Cosmos DB limitations
           href: core/providers/cosmos/limitations.md
-        - name: Function mappings
-          href: core/providers/cosmos/functions.md
         - name: End-to-end sample
           href: core/providers/cosmos/planetary-docs-sample.md
       - name: In-memory (not recommended)

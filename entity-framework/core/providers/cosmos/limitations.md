@@ -2,7 +2,7 @@
 title: Azure Cosmos DB Provider - Limitations - EF Core
 description: Limitations of the Entity Framework Core Azure Cosmos DB provider as compared to other providers
 author: AndriySvyryd
-ms.date: 02/14/2023
+ms.date: 09/26/2024
 uid: core/providers/cosmos/limitations
 ---
 # EF Core Azure Cosmos DB Provider Limitations
@@ -17,6 +17,8 @@ Common EF Core patterns that either do not apply, or are a pit-of-failure, when 
 - Loading graphs of related entities from different documents is not supported. Document databases are not designed to perform joins across many documents; doing so would be very inefficient. Instead, it is more common to denormalize data so that everything needed is in one, or a small number, of documents. However, there are some forms of cross-document relationships that could be handled--see [Limited Include support for Cosmos](https://github.com/dotnet/efcore/issues/16920#issuecomment-989721078).
 
 > [!WARNING]
-> Since there are no sync versions of the low level methods EF Core relies on, the corresponding functionality is currently implemented by calling `.Wait()` on the returned `Task`. This means that using methods like `SaveChanges`, or `ToList` instead of their async counterparts could lead to a deadlock in your application
+> The Cosmos SDK, which the EF provider uses, does not support synchronous I/O. As a result, synchronous EF APIs such as `ToList` or `SaveChanges` throw in version 9.0 and above; always use asynchronous
+> methods when using EF.
+> Previous versions of EF supported the synchronous APIs by calling `.Wait()` on the returned `Task`; this is known as "sync over async", and is a highly discouraged technique that can lead to deadlocks. See the EF 9.0 [breaking change note](xref:core/what-is-new/ef-core-9.0/breaking-changes#cosmos-nosync) for more information.
 
 Beyond the differences in relational and document databases, and limitations in the SDK, the EF Core provider for Azure Cosmos DB NoSQL does not include everything that _could_ be implemented using the combination of EF Core and the Cosmos SDK. Potential enhancements in this area are tracked by [issues in the EF Core GitHub repo marked with the label `area-cosmos`](https://github.com/dotnet/efcore/issues?q=is%3Aopen+is%3Aissue+label%3Aarea-cosmos+sort%3Areactions-%2B1-desc+label%3Atype-enhancement) The best way to indicate the importance of an issue is to vote (👍) for it. This data will then feed into the [planning process](xref:core/what-is-new/release-planning) for the next release.

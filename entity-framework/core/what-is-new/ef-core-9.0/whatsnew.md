@@ -24,18 +24,60 @@ EF9 targets .NET 8, and can therefore be used with either [.NET 8 (LTS)](https:/
 
 ## Azure Cosmos DB for NoSQL
 
-We are working on significant updates in EF9 to the EF Core database provider for Azure Cosmos DB for NoSQL.
+EF 9.0 brings substantial improvements to the EF Core provider for Azure Cosmos DB; significant parts of the provider have been rewritten to provide new functionality, allow new forms of queries, and better align the provider with Cosmos DB best practices. The main high-level improvements are listed below; for a full list, [see this epic issue](https://github.com/dotnet/efcore/issues/33033).
+
+> [!WARNING]
+> As part of the improvements going into the provider, a number of high-impact breaking changes had to be made; if you are upgrading an existing application, please read the [breaking changes section](xref:core/what-is-new/ef-core-9.0/breaking-changes#cosmos-breaking-changes) carefully.
+
+### Improvements querying with partition keys and document IDs
+
+Each document stored in the Cosmos database has a unique resource ID. In addition, each document can contain a "partition key" which determines the logical partitioning of data such that the database can be effectively scaled. More information on choosing partition keys can be found in [_Partitioning and horizontal scaling in Azure Cosmos DB_](/azure/cosmos-db/partitioning-overview).
+
+In EF 9.0, the Cosmos DB provider is significantly better at identifying partition key comparisons in your LINQ queries, and extracting them out to make your queries are only sent to the relevant partition; this can greatly improve the performance of your queries and reduce costs. For example:
+
+```csharp
+var sessions = await context.Sessions
+    .Where(b => b.PartitionKey == "someValue" && b.Username.StartsWith("x"))
+    .ToListAsync();
+```
+
+In this query, the provider automatically recognizes the comparison on `PartitionKey`; if we examine the logs, we'll see the following:
+
+```console
+Executed ReadNext (189.8434 ms, 2.8 RU) ActivityId='8cd669ed-2ca5-4f2b-8923-338899071361', Container='test', Partition='["someValue"]', Parameters=[]
+SELECT VALUE c
+FROM root c
+WHERE STARTSWITH(c["Username"], "x")
+```
+
+Note that the `WHERE` clause does not contain `PartitionKey`: that comparison has been "lifted" out and is used to execute the query only against the relevant partition. In previous versions, the comparison was left in the `WHERE` clause in many situations, causing the query to be executed against all partitions and resulting in increased costs and reduced performance.
+
+In addition, if your query also provides a value for the document's ID property, and doesn't include any other query operations, the provider can apply an additional optimization:
+
+```csharp
+var somePartitionKey = "someValue";
+var someId = 8;
+var sessions = await context.Sessions
+    .Where(b => b.PartitionKey == somePartitionKey && b.Id == someId)
+    .SingleAsync();
+```
+
+The logs show the following for this query:
+
+```console
+Executed ReadItem (73 ms, 1 RU) ActivityId='13f0f8b8-d481-47f0-bf41-67f7deb008b2', Container='test', Id='8', Partition='["someValue"]'
+```
+
+Here, no SQL query is sent at all. Instead, the provider performs an an extremely efficient _point read_ (`ReadItem` API), which directly fetches the document given the partition key and ID. This is the most efficient and cost-effective kind of read you can perform in Cosmos DB; [see the Cosmos DB documentation](/azure/cosmos-db/nosql/how-to-dotnet-read-item) for more information about point reads.
+
+To learn more about querying with partition keys and point reads, [see the querying documentation page](xref:core/providers/cosmos/querying).
 
 ### Hierarchical partition keys
 
 > [!TIP]
 > The code shown here comes from [HierarchicalPartitionKeysSample.cs](https://github.com/dotnet/EntityFramework.Docs/tree/main/samples/core/Miscellaneous/NewInEFCore9.Cosmos/HierarchicalPartitionKeysSample.cs).
 
-Each document stored in the Cosmos database has a unique resource ID. In addition, each document can contain a "partition key" which determines the logical partitioning of data such that the database can be effectively scaled. More information on choosing partition keys can be found in [_Partitioning and horizontal scaling in Azure Cosmos DB_](/azure/cosmos-db/partitioning-overview).
-
-Recent releases of Azure Cosmos DB for NoSQL (Cosmos SDK version 3.33.0 or later) have expanded partitioning capabilities to support [subpartitioning through the specification of up to three levels of hierarchy in the partition key](/azure/cosmos-db/hierarchical-partition-keys). EF Core 9 supports specification of hierarchical partition keys in the model, automatic extraction of these values from queries, and manual specification of a hierarchical partition key for a given query.
-
-#### Configuring hierarchical partition keys
+Azure Cosmos DB originally supported a single partition key, but has since expanded partitioning capabilities to support [subpartitioning through the specification of up to three levels of hierarchy in the partition key](/azure/cosmos-db/hierarchical-partition-keys). EF Core 9 brings full support for hierarchical partition keys, allowing you take advantage of the better performance and cost savings associated with this feature.
 
 Partition keys are specified using the model building API, typically in <xref:Microsoft.EntityFrameworkCore.DbContext.OnModelCreating%2A?displayProperty=nameWithType>. There must be a mapped property in the entity type for each level of the partition key. For example, consider a `UserSession` entity type:
 
@@ -70,108 +112,7 @@ The following code specifies a three-level partition key using the `TenantId`, `
 
 Notice how, starting with EF Core 9, properties of any mapped type can be used in the partition key. For `bool` and numeric types, like the `int SessionId` property, the value is used directly in the partition key. Other types, like the `Guid UserId` property, are automatically converted to strings.
 
-#### Saving documents with hierarchical partition keys
-
-Saving a new document with a hierarchical partition key is the same as saving any new document with EF Core. The primary key and partition key properties must have non-default values, or EF Core value generation can be used to create values. For example, the following code inserts `UserSession` documents where the `Id` property is generated by EF Core, and all the partition key properties have been set explicitly:
-
-<!--
-            #region Inserts
-            var tenantId = "Microsoft";
-            var sessionId = 7;
-
-            context.AddRange(
-                new UserSession
-                {
-                    TenantId = tenantId,
-                    UserId = new Guid("99A410D7-E467-4CC5-92DE-148F3FC53F4C"),
-                    SessionId = sessionId,
-                    Username = "mac"
-                },
-                new UserSession
-                {
-                    TenantId = tenantId,
-                    UserId = new Guid("ADAE5DDE-8A67-432D-9DEC-FD7EC86FD9F6"),
-                    SessionId = sessionId,
-                    Username = "toast"
-                },
-                new UserSession
-                {
-                    TenantId = tenantId,
-                    UserId = new Guid("61967254-AFF8-493A-B7F8-E62DA36D8367"),
-                    SessionId = sessionId,
-                    Username = "willow"
-                },
-                new UserSession
-                {
-                    TenantId = tenantId,
-                    UserId = new Guid("BC0150CF-5147-44B8-8823-865F4F2323E1"),
-                    SessionId = sessionId,
-                    Username = "alice"
-                });
-
-            await context.SaveChangesAsync();
--->
-[!code-csharp[Inserts](../../../../samples/core/Miscellaneous/NewInEFCore9.Cosmos/HierarchicalPartitionKeysSample.cs?name=Inserts)]
-
-The logs from calling `SaveChangesAsync` show in the following `CreateItem` calls:
-
-```output
-info: 6/10/2024 18:41:04.456 CosmosEventId.ExecutedCreateItem[30104] (Microsoft.EntityFrameworkCore.Database.Command) 
-      Executed CreateItem (167 ms, 7.81 RU) ActivityId='23891b55-7375-40e5-aa4b-2c57ca6a376e', Container='UserSessionContext', Id='UserSession|d5e2614b-71f2-4e6b-d41a-08dc89748055', Partition='["Microsoft","99a410d7-e467-4cc5-92de-148f3fc53f4c",7.0]'
-info: 6/10/2024 18:41:04.478 CosmosEventId.ExecutedCreateItem[30104] (Microsoft.EntityFrameworkCore.Database.Command) 
-      Executed CreateItem (14 ms, 7.81 RU) ActivityId='7fdcfb3e-455c-45dd-b444-02b66575a28f', Container='UserSessionContext', Id='UserSession|01cc0102-5212-4785-d41b-08dc89748055', Partition='["Microsoft","adae5dde-8a67-432d-9dec-fd7ec86fd9f6",7.0]'
-info: 6/10/2024 18:41:04.491 CosmosEventId.ExecutedCreateItem[30104] (Microsoft.EntityFrameworkCore.Database.Command) 
-      Executed CreateItem (13 ms, 7.81 RU) ActivityId='3f7e6026-8edf-4f2c-8918-09434dc039bf', Container='UserSessionContext', Id='UserSession|e5a467c0-bb1e-4ffe-d41c-08dc89748055', Partition='["Microsoft","61967254-aff8-493a-b7f8-e62da36d8367",7.0]'
-info: 6/10/2024 18:41:04.507 CosmosEventId.ExecutedCreateItem[30104] (Microsoft.EntityFrameworkCore.Database.Command) 
-      Executed CreateItem (15 ms, 7.81 RU) ActivityId='04c6f4b2-0ad0-4708-874e-dc8967726d18', Container='UserSessionContext', Id='UserSession|fd47726a-fb68-4c63-d41d-08dc89748055', Partition='["Microsoft","bc0150cf-5147-44b8-8823-865f4f2323e1",7.0]'
-```
-
-Notice that the partition key values have been extracted from the entity instance and included in the call to `CreateItem` to ensure maximum efficiency on the server.
-
-#### Point reads using hierarchical partition keys
-
-By convention, EF Core includes the partition key properties in the primary key definition for the entity type. For example, inspecting the [model debug view](xref:core/modeling/index#debug-view) shows the following mapping for the `UserSession` entity type:
-
-```output
-EntityType: UserSession
-  Properties: 
-    Id (Guid) Required PK AfterSave:Throw ValueGenerated.OnAdd
-    TenantId (string) Required PK AfterSave:Throw
-    UserId (Guid) Required PK AfterSave:Throw
-    SessionId (int) Required PK AfterSave:Throw
-    Discriminator (no field, string) Shadow Required AfterSave:Throw
-    Username (string)
-    __id (no field, string) Shadow Required AlternateKey AfterSave:Throw
-    __jObject (no field, JObject) Shadow BeforeSave:Ignore AfterSave:Ignore ValueGenerated.OnAddOrUpdate
-  Keys: 
-    Id, TenantId, UserId, SessionId PK
-    __id, TenantId, UserId, SessionId
-```
-
-Notice that the primary key definition is `Id, TenantId, UserId, SessionId`. This means that <xref:Microsoft.EntityFrameworkCore.DbSet%601.FindAsync%2A?displayProperty=nameWithType> can be used to lookup a document. For example:
-
-<!--
-            var tenantId = "Microsoft";
-            var sessionId = 7;
-            var userId = new Guid("99A410D7-E467-4CC5-92DE-148F3FC53F4C");
-
-            var session = await context.Sessions.FindAsync(
-                userSessionId, tenantId, userId, sessionId);
--->
-[!code-csharp[FindAsync](../../../../samples/core/Miscellaneous/NewInEFCore9.Cosmos/HierarchicalPartitionKeysSample.cs?name=FindAsync)]
-
-Logging from EF Core shows that a point-read (using `ReadItem`) is executed for maximum efficiency:
-
-```output
-info: 6/10/2024 18:41:04.651 CosmosEventId.ExecutingReadItem[30101] (Microsoft.EntityFrameworkCore.Database.Command) 
-      Reading resource 'UserSession|e5a467c0-bb1e-4ffe-d41c-08dc89748055' item from container 'UserSessionContext' in partition '["Microsoft","99a410d7-e467-4cc5-92de-148f3fc53f4c",7.0]'.
-info: 6/10/2024 18:41:04.668 CosmosEventId.ExecutedReadItem[30103] (Microsoft.EntityFrameworkCore.Database.Command) 
-      Executed ReadItem (8 ms, 1 RU) ActivityId='a016f26c-6bd0-4c66-953b-a8f1297df41a', Container='UserSessionContext', Id='UserSession|e5a467c0-bb1e-4ffe-d41c-08dc89748055', Partition='["Microsoft","99a410d7-e467-4cc5-92de-148f3fc53f4c",7.0]'
-```
-
-#### Queries using hierarchical partition keys
-
-EF Core will extract the partition key values from queries and apply them to the Cosmos query API to ensure the queries are constrained appropriately to the fewest number of partitions possible. For example, consider a LINQ query that supplies values for all levels of the partition key:
+When querying, EF automatically extracts the partition key values from queries and applies them to the Cosmos query API to ensure the queries are constrained appropriately to the fewest number of partitions possible. For example, consider the following LINQ query that supplies the partition key values:
 
 <!--
             var tenantId = "Microsoft";
@@ -198,153 +139,176 @@ info: 6/10/2024 19:06:00.017 CosmosEventId.ExecutingSqlQuery[30100] (Microsoft.E
       WHERE ((c["Discriminator"] = "UserSession") AND CONTAINS(c["Username"], "a"))
 ```
 
-Notice that the partition key comparisons have been removed from the `WHERE` clause, and are instead passed directly to the Cosmos API as partition key `["Microsoft","99a410d7-e467-4cc5-92de-148f3fc53f4c",7.0]`.
+Notice that the partition key comparisons have been removed from the `WHERE` clause, and are instead used as the partition key for efficient execution: `["Microsoft","99a410d7-e467-4cc5-92de-148f3fc53f4c",7.0]`.
 
-> [!IMPORTANT]
-> Because the query includes values for all parts of the partition key, the query is routed to the single partition that contains the data for the specified values of `TenantId`, `UserId`, and `SessionId`. This is more efficient than the queries below which only use none, or only some, of the partition key values.
+For more information, see the documentation on [querying with partition keys](xref:core/providers/cosmos/querying#partition-keys).
 
-With hierarchical partitions, more efficient queries can still be generated when only the top partition key hierarchy is known. For example, the following LINQ query uses the top two parts of the partition key--that is, `TenantId` and `UserId`:
+### Significantly improved LINQ querying capabilities
 
-<!--
-            var tenantId = "Microsoft";
-            var userId = new Guid("99A410D7-E467-4CC5-92DE-148F3FC53F4C");
+In EF 9.0, the LINQ translation capabilities of the the Cosmos DB provider have been greatly expanded, and the provider can now execute significantly more query types. The full list of query improvements is too long to list, but here are the main highlights:
 
-            var sessions = await context.Sessions
-                .Where(
-                    e => e.TenantId == tenantId
-                         && e.UserId == userId
-                         && e.Username.Contains("a"))
-                .ToListAsync();
--->
-[!code-csharp[TopTwoPartitionKey](../../../../samples/core/Miscellaneous/NewInEFCore9.Cosmos/HierarchicalPartitionKeysSample.cs?name=TopTwoPartitionKey)]
+* The Cosmos provider now fully supports EF's primitive collections, allowing you to perform LINQ querying on collections of e.g. ints or strings. See [What's new in EF8: primitive collections](xref:core/what-is-new/ef-core-8.0/whatsnew#primitive-collections) for more information.
+* Support for arbitrary querying over non-primitive collections has been added as well.
+* Lots of additional LINQ operators are now supported: indexing into collections, `Length`/`Count`, `ElementAt`, `Contains`, and many others.
+* Support for aggregate operators such as `Count` and `Sum` has been added.
+* Many function translations have added (see the [function mappings documentation](xref:core/providers/cosmos/querying#function-mappings) for the full list of supported translations):
+  * Translations for `DateTime` and `DateTimeOffset` component members (`DateTime.Year`, `DateTimeOffset.Month`...) have been added.
+  * `EF.Functions.IsDefined` and `EF.Functions.CoalesceUndefined` now allow dealing with `undefined` values.
+  * `string.Contains`, `StartsWith` and `EndsWith` now support `StringComparison.OrdinalIgnoreCase`.
 
-EF Core still extracts the partition key values when executing this query:
+For the full list of querying improvements, see [this issue](https://github.com/dotnet/efcore/issues/33033):
 
-```output
-info: 6/10/2024 19:24:46.581 CosmosEventId.ExecutingSqlQuery[30100] (Microsoft.EntityFrameworkCore.Database.Command)
-      Executing SQL query for container 'UserSessionContext' in partition '["Microsoft","99a410d7-e467-4cc5-92de-148f3fc53f4c"]' [Parameters=[]]
-      SELECT c
-      FROM root c
-      WHERE ((c["Discriminator"] = "UserSession") AND CONTAINS(c["Username"], "a"))
+### Improved modeling aligned to Cosmos and JSON standards
+
+EF 9.0 maps to Cosmos DB documents in ways which are more natural for a JSON-based document database, and help interoperate with other systems accessing your documents. Although this entails breaking changes, APIs exist which allow reverting back to the pre-9.0 behavior in all cases.
+
+#### Simplified `id` properties without discriminators
+
+First, previous versions of EF inserted the discriminator value into the JSON `id` property, producing documents such as the following:
+
+```json
+{
+    "id": "Blog|1099",
+    ...
+}
 ```
 
-This query does not include the `SessionId`, so it cannot target a single partition. However, it will still be a targeted, cross-partition query returning data for all sessions of a single tenant and user ID.
+This was done in order to allow for documents of different types (e.g. Blog and Post) and the same key value (1099) to exist within the same container partition. Starting with EF 9.0, the `id` property contains contains only the key value:
 
-Likewise, if only the top value in the hierarchy is specified, then it will be used on its own. For example:
-
-<!--
-            var tenantId = "Microsoft";
-
-            var sessions = await context.Sessions
-                .Where(
-                    e => e.TenantId == tenantId
-                         && e.Username.Contains("a"))
-                .ToListAsync();
--->
-[!code-csharp[TopOnePartitionKey](../../../../samples/core/Miscellaneous/NewInEFCore9.Cosmos/HierarchicalPartitionKeysSample.cs?name=TopOnePartitionKey)]
-
-Which results in the following logs:
-
-```output
-info: 6/11/2024 09:30:42.532 CosmosEventId.ExecutingSqlQuery[30100] (Microsoft.EntityFrameworkCore.Database.Command)
-      Executing SQL query for container 'UserSessionContext' in partition '["Microsoft"]' [Parameters=[]]
-      SELECT c
-      FROM root c
-      WHERE ((c["Discriminator"] = "UserSession") AND CONTAINS(c["Username"], "a"))
+```json
+{
+    "id": 1099,
+    ...
+}
 ```
 
-Since this query only contains the `TenantId` part of the partition key it cannot target a single partition. However, as with the previous example it will still be a targeted, cross-partition query returning data for all sessions and users in a single tenant.
+This is a more natural way to map to JSON, and makes it easier for external tools and systems to interact with EF-generated JSON documents; such external systems aren't generally aware of the EF discriminator values, which are by default derived from .NET types.
 
-It is important to understand that using the second and/or third values of the hierarchical partition key, without including the first value, will result in a query that covers all partitions. For example, consider a query including both `SessionId` and `UserId`, but not including `TenantId`:
+Note this is a breaking change, since EF will no longer be able to query existing documents with the old `id` format. An API has been introduced to revert to the previous behavior, see the [breaking change note](xref:core/what-is-new/ef-core-9.0/breaking-changes#cosmos-id-property-changes) and the [the documentation](xref:core/providers/cosmos/modeling#Discriminators) for more details.
 
-<!--
-            #region BottomTwoPartitionKey
-            var sessions3 = await context.Sessions
-                .Where(
-                    e => e.SessionId == sessionId
-                         && e.UserId == userId
-                         && e.Username.Contains("a"))
-                .ToListAsync();
--->
-[!code-csharp[BottomTwoPartitionKey](../../../../samples/core/Miscellaneous/NewInEFCore9.Cosmos/HierarchicalPartitionKeysSample.cs?name=BottomTwoPartitionKey)]
+#### Discriminator property renamed to `$type`
 
-The logs show that this is translated without a partition key, since the `TenantId` is missing:
+The default discriminator property was previously named `Discriminator`. EF 9.0 changes the default to `$type`:
 
-```output
-info: 6/11/2024 09:30:42.553 CosmosEventId.ExecutingSqlQuery[30100] (Microsoft.EntityFrameworkCore.Database.Command) 
-      Executing SQL query for container 'UserSessionContext' in partition 'None' [Parameters=[]]
-      SELECT c
-      FROM root c
-      WHERE (c["Discriminator"] = "UserSession")
+```json
+{
+    "id": 1099,
+    "$type": "Blog",
+    ...
+}
 ```
 
-> [!NOTE]
-> [Issue #33960](https://github.com/dotnet/efcore/issues/33960) is tracking a bug in this translation.
+This follows the emerging standard for JSON polymorphism, allowing better interoperability with other tools. For example, .NET's System.Text.Json also supports polymorphism, using `$type` as its default discriminator property name ([docs](/dotnet/standard/serialization/system-text-json/polymorphism#customize-the-type-discriminator-name)).
+
+Note this is a breaking change, since EF will no longer be able to query existing documents with the old discriminator property name. See the [breaking change note](xref:core/what-is-new/ef-core-9.0/breaking-changes#cosmos-discriminator-name-change) for details on how to revert to the previous naming.
+
+### Vector similarity search (preview)
+
+Azure Cosmos DB now offers preview support for vector similarity search. Vector search is a fundamental part of some application types, include AI, semantic search and others. The Cosmos DB support for vector search allows storing your data and vectors and performing your queries in a single database, which can considerably simplify your architecture and remove the need for an additional, dedicated vector database solution in your stack. To learn more about Cosmos DB vector search, [see the documentation](/azure/cosmos-db/nosql/vector-search).
+
+Once your Cosmos DB container is properly set up, using vector search via EF is a simple matter of adding a vector property and configuring it:
+
+```c#
+public class Blog
+{
+    ...
+
+    public float[] Vector { get; set; }
+}
+
+public class BloggingContext
+{
+    ...
+
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        modelBuilder.Entity<Blog>()
+            .Property(b => b.Embeddings)
+            .IsVector(DistanceFunction.Cosine, dimensions: 1536);
+    }
+}
+```
+
+Once that's done, use the `EF.Functions.VectorDistance()` function in LINQ queries to perform vector similarity search:
+
+```c#
+var blogs = await context.Blogs
+    .OrderBy(s => EF.Functions.VectorDistance(s.Vector, vector))
+    .Take(5)
+    .ToListAsync();
+```
+
+For more information, see the [documentation on vector search](xref:core/providers/cosmos/vector-search).
+
+### Pagination support
+
+The Cosmos DB provider now allows for paginating through query results via _continuation tokens_, which is far more efficient and cost-effective than the traditional use of `Skip` and `Take`:
+
+```c#
+var firstPage = await context.Posts
+    .OrderBy(p => p.Id)
+    .ToPageAsync(pageSize: 10, continuationToken: null);
+
+var continuationToken = page.ContinuationToken;
+foreach (var post in page.Values)
+{
+    // Display/send the posts to the user
+}
+```
+
+The new `ToPageAsync` operator returns a `CosmosPage`, which exposes a continuation token that can be used to efficiently resume the query at a later point, fetching the next 10 items:
+
+```c#
+var nextPage = await context.Sessions.OrderBy(s => s.Id).ToPageAsync(10, continuationToken);
+```
+
+For more information, [see the documentation section on pagination](xref:core/providers/cosmos/querying#pagination).
+
+### FromSql for safer SQL querying
+
+The Cosmos DB provider has allowed SQL querying via <xref:Microsoft.EntityFrameworkCore.CosmosQueryableExtensions.FromSqlRaw%2A>. However, that API can be susceptible to SQL injection attacks when user-provided data is interpolated or concatenated into the SQL. In EF 9.0, you can now use the new `FromSql` method, which always integrates parameterized data as a parameter outside the SQL:
+
+```c#
+var maxAngle = 8;
+_ = await context.Blogs
+    .FromSql($"SELECT VALUE c FROM root c WHERE c.Angle1 <= {maxAngle}")
+    .ToListAsync();
+```
+
+For more information, [see the documentation section on pagination](xref:core/providers/cosmos/querying#pagination).
 
 ### Role-based access
 
 Azure Cosmos DB for NoSQL includes a [built-in role-based access control (RBAC) system](/azure/cosmos-db/role-based-access-control). This is now supported by EF9 for both management and use of containers. No changes are required to application code. See [Issue #32197](https://github.com/dotnet/efcore/issues/32197) for more information.
 
-### Synchronous access blocked by default
+### Synchronous I/O is now blocked by default
 
-> [!TIP]
-> The code shown here comes from [CosmosSyncApisSample.cs](https://github.com/dotnet/EntityFramework.Docs/tree/main/samples/core/Miscellaneous/NewInEFCore9.Cosmos/CosmosSyncApisSample.cs).
+Azure Cosmos DB for NoSQL does not support synchronous (blocking) APIs from application code. Previously, EF masked this by blocking for you on async calls. However, this both encourages synchronous I/O use, which is bad practice, and [may cause deadlocks](https://blog.stephencleary.com/2012/07/dont-block-on-async-code.html). Therefore, starting with EF 9, an exception is thrown when synchronous access is attempted. For example:
 
-Azure Cosmos DB for NoSQL does not support synchronous (blocking) access from application code. Previously, EF masked this by default by blocking for you on async calls. However, this both encourages sync use, which is bad practice, and [may cause deadlocks](https://blog.stephencleary.com/2012/07/dont-block-on-async-code.html). Therefore, starting with EF9, an exception is thrown when synchronous access is attempted. For example:
-
-```output
-System.InvalidOperationException: An error was generated for warning 'Microsoft.EntityFrameworkCore.Database.SyncNotSupported':
- Azure Cosmos DB does not support synchronous I/O. Make sure to use and correctly await only async methods when using
- Entity Framework Core to access Azure Cosmos DB. See https://aka.ms/ef-cosmos-nosync for more information.
- This exception can be suppressed or logged by passing event ID 'CosmosEventId.SyncNotSupported' to the 'ConfigureWarnings'
- method in 'DbContext.OnConfiguring' or 'AddDbContext'.
-   at Microsoft.EntityFrameworkCore.Diagnostics.EventDefinition.Log[TLoggerCategory](IDiagnosticsLogger`1 logger, Exception exception)
-   at Microsoft.EntityFrameworkCore.Cosmos.Diagnostics.Internal.CosmosLoggerExtensions.SyncNotSupported(IDiagnosticsLogger`1 diagnostics)
-   at Microsoft.EntityFrameworkCore.Cosmos.Storage.Internal.CosmosClientWrapper.DeleteDatabase()
-   at Microsoft.EntityFrameworkCore.Cosmos.Storage.Internal.CosmosDatabaseCreator.EnsureDeleted()
-   at Microsoft.EntityFrameworkCore.Infrastructure.DatabaseFacade.EnsureDeleted()
-```
-
-As the exception says, sync access can still be used for now by configuring the warning level appropriately. For example, in `OnConfiguring` on your `DbContext` type:
+Synchronous I/O can still be used for now by configuring the warning level appropriately. For example, in `OnConfiguring` on your `DbContext` type:
 
 ```csharp
 protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     => optionsBuilder.ConfigureWarnings(b => b.Ignore(CosmosEventId.SyncNotSupported));
 ```
 
-Note, however, that we plan to fully remove sync support in EF11, so start updating to use async methods like `ToListAsync` and `SaveChangesAsync` as soon as possible!
-
-### Enhanced primitive collections
-
-> [!TIP]
-> The code shown here comes from [CosmosPrimitiveTypesSample.cs](https://github.com/dotnet/EntityFramework.Docs/tree/main/samples/core/Miscellaneous/NewInEFCore9.Cosmos/CosmosPrimitiveTypesSample.cs).
-
-The Cosmos DB provider has supported primitive collections in a limited form since EF Core 6. This is support is being enhanced in EF9, starting with consolidation of the metadata and API surfaces for primitive collections in document databases to align with primitive collections in relational databases. This means that primitive collections can now be explicitly mapped using the model building API, allowing for facets of the element type to be configured. For example, to map a list of required (i.e. non-null) strings:
-
-<!--
-            modelBuilder.Entity<Book>()
-                .PrimitiveCollection(e => e.Quotes)
-                .ElementType(b => b.IsRequired());
--->
-[!code-csharp[ConfigureCollection](../../../../samples/core/Miscellaneous/NewInEFCore9.Cosmos/CosmosPrimitiveTypesSample.cs?name=ConfigureCollection)]
-
-See [What's new in EF8: primitive collections](xref:core/what-is-new/ef-core-8.0/whatsnew#primitive-collections) for more information on the model building API.
+Note, however, that we plan to fully remove sync support in EF 11, so start updating to use async methods like `ToListAsync` and `SaveChangesAsync` as soon as possible!
 
 ## AOT and pre-compiled queries
 
 As mentioned in the introduction, there is a lot of work going on behind the scenes to allow EF Core to run without just-in-time (JIT) compilation. Instead, EF compile ahead-of-time (AOT) everything needed to run queries in the application. This AOT compilation and related processing will happen as part of building and publishing the application. At this point in the EF9 release, there is not much available that can be used by you, the app developer. However, for those interested, the completed issues in EF9 that support AOT and pre-compiled queries are:
 
-- [Compiled model: Use static binding instead of reflection for properties and fields](https://github.com/dotnet/efcore/issues/24900)
-- [Compiled model: Generate lambdas used in change tracking](https://github.com/dotnet/efcore/issues/24904)
-- [Make change tracking and the update pipeline compatible with AOT/trimming](https://github.com/dotnet/efcore/issues/29761)
-- [Use interceptors to redirect the query to precompiled code](https://github.com/dotnet/efcore/issues/31331)
-- [Make all SQL expression nodes quotable](https://github.com/dotnet/efcore/issues/33008)
-- [Generate the compiled model during build](https://github.com/dotnet/efcore/issues/24894)
-- [Discover the compiled model automatically](https://github.com/dotnet/efcore/issues/24893)
-- [Make ParameterExtractingExpressionVisitor capable of extracting paths to evaluatable fragments in the tree](https://github.com/dotnet/efcore/issues/32999)
-- [Generate expression trees in compiled models (query filters, value converters)](https://github.com/dotnet/efcore/issues/29924)
-- [Make LinqToCSharpSyntaxTranslator more resilient to multiple declaration of the same variable in nested scopes](https://github.com/dotnet/efcore/issues/32716)
-- [Optimize ParameterExtractingExpressionVisitor](https://github.com/dotnet/efcore/issues/32698)
+* [Compiled model: Use static binding instead of reflection for properties and fields](https://github.com/dotnet/efcore/issues/24900)
+* [Compiled model: Generate lambdas used in change tracking](https://github.com/dotnet/efcore/issues/24904)
+* [Make change tracking and the update pipeline compatible with AOT/trimming](https://github.com/dotnet/efcore/issues/29761)
+* [Use interceptors to redirect the query to precompiled code](https://github.com/dotnet/efcore/issues/31331)
+* [Make all SQL expression nodes quotable](https://github.com/dotnet/efcore/issues/33008)
+* [Generate the compiled model during build](https://github.com/dotnet/efcore/issues/24894)
+* [Discover the compiled model automatically](https://github.com/dotnet/efcore/issues/24893)
+* [Make ParameterExtractingExpressionVisitor capable of extracting paths to evaluatable fragments in the tree](https://github.com/dotnet/efcore/issues/32999)
+* [Generate expression trees in compiled models (query filters, value converters)](https://github.com/dotnet/efcore/issues/29924)
+* [Make LinqToCSharpSyntaxTranslator more resilient to multiple declaration of the same variable in nested scopes](https://github.com/dotnet/efcore/issues/32716)
+* [Optimize ParameterExtractingExpressionVisitor](https://github.com/dotnet/efcore/issues/32698)
 
 Check back here for examples of how to use pre-compiled queries as the experience comes together.
 
@@ -905,15 +869,15 @@ FROM [Posts] AS [p]
 
 ### Other query improvements
 
-- The primitive collections querying support [introduced in EF8](xref:core/what-is-new/ef-core-8.0/whatsnew#queries-with-primitive-collections) has been extended to support all `ICollection<T>` types. Note that this applies only to parameter and inline collections - primitive collections that are part of entities are still limited to arrays, lists and [in EF9 also read-only arrays/lists](#read-only-primitive-collections).
-- New `ToHashSetAsync` functions to return the results of a query as a `HashSet` ([#30033](https://github.com/dotnet/efcore/issues/30033), contributed by [@wertzui](https://github.com/wertzui)).
-- `TimeOnly.FromDateTime` and `FromTimeSpan` are now translated on SQL Server ([#33678](https://github.com/dotnet/efcore/issues/33678)).
-- `ToString` over enums is now translated ([#33706](https://github.com/dotnet/efcore/pull/33706), contributed by [@Danevandy99](https://github.com/Danevandy99)).
-- `string.Join` now translates to [CONCAT_WS](/sql/t-sql/functions/concat-ws-transact-sql) in non-aggregate context on SQL Server ([#28899](https://github.com/dotnet/efcore/issues/28899)).
-- `EF.Functions.PatIndex` now translates to the SQL Server [`PATINDEX`](/sql/t-sql/functions/patindex-transact-sql) function, which returns the starting position of the first occurrence of a pattern ([#33702](https://github.com/dotnet/efcore/issues/33702), [@smnsht](https://github.com/smnsht)).
-- `Sum` and `Average` now work for decimals on SQLite ([#33721](https://github.com/dotnet/efcore/pull/33721), contributed by [@ranma42](https://github.com/ranma42)).
-- Fixes and optimizations to `string.StartsWith` and `EndsWith` ([#31482](https://github.com/dotnet/efcore/pull/31482)).
-- `Convert.To*` methods can now accept argument of type `object` ([#33891](https://github.com/dotnet/efcore/pull/33891), contributed by [@imangd](https://github.com/imangd)).
+* The primitive collections querying support [introduced in EF8](xref:core/what-is-new/ef-core-8.0/whatsnew#queries-with-primitive-collections) has been extended to support all `ICollection<T>` types. Note that this applies only to parameter and inline collections - primitive collections that are part of entities are still limited to arrays, lists and [in EF9 also read-only arrays/lists](#read-only-primitive-collections).
+* New `ToHashSetAsync` functions to return the results of a query as a `HashSet` ([#30033](https://github.com/dotnet/efcore/issues/30033), contributed by [@wertzui](https://github.com/wertzui)).
+* `TimeOnly.FromDateTime` and `FromTimeSpan` are now translated on SQL Server ([#33678](https://github.com/dotnet/efcore/issues/33678)).
+* `ToString` over enums is now translated ([#33706](https://github.com/dotnet/efcore/pull/33706), contributed by [@Danevandy99](https://github.com/Danevandy99)).
+* `string.Join` now translates to [CONCAT_WS](/sql/t-sql/functions/concat-ws-transact-sql) in non-aggregate context on SQL Server ([#28899](https://github.com/dotnet/efcore/issues/28899)).
+* `EF.Functions.PatIndex` now translates to the SQL Server [`PATINDEX`](/sql/t-sql/functions/patindex-transact-sql) function, which returns the starting position of the first occurrence of a pattern ([#33702](https://github.com/dotnet/efcore/issues/33702), [@smnsht](https://github.com/smnsht)).
+* `Sum` and `Average` now work for decimals on SQLite ([#33721](https://github.com/dotnet/efcore/pull/33721), contributed by [@ranma42](https://github.com/ranma42)).
+* Fixes and optimizations to `string.StartsWith` and `EndsWith` ([#31482](https://github.com/dotnet/efcore/pull/31482)).
+* `Convert.To*` methods can now accept argument of type `object` ([#33891](https://github.com/dotnet/efcore/pull/33891), contributed by [@imangd](https://github.com/imangd)).
 
 The above were only some of the more important query improvements in EF9; see [this issue](https://github.com/dotnet/efcore/issues/34151) for a more complete listing.
 

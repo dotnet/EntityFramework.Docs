@@ -20,56 +20,25 @@ EF Core 9 targets .NET 8. This means that existing applications that target .NET
 
 ## Summary
 
+> [!NOTE]
+> If you are using Azure Cosmos DB, please see the [separate section below on Cosmos DB breaking changes](#cosmos-breaking-changes).
+
 | **Breaking change**                                                                                  | **Impact** |
 |:-----------------------------------------------------------------------------------------------------|------------|
-| [Sync I/O via the Azure Cosmos DB provider is no longer supported](#cosmos-nosync)                   | Medium     |
-| [EF.Functions.Unhex() now returns `byte[]?`](#unhex)                                                 | Low        |
+| [`EF.Functions.Unhex()` now returns `byte[]?`](#unhex)                                                 | Low        |
 | [SqlFunctionExpression's nullability arguments' arity validated](#sqlfunctionexpression-nullability) | Low        |
-
-## Medium-impact changes
-
-<a name="cosmos-nosync"></a>
-
-### Sync I/O via the Azure Cosmos DB provider is no longer supported
-
-[Tracking Issue #32563](https://github.com/dotnet/efcore/issues/32563)
-
-#### Old behavior
-
-Previously, calling synchronous methods like `ToList` or `SaveChanges` would cause EF Core to block synchronously using `.GetAwaiter().GetResult()` when executing async calls against the Azure Cosmos DB SDK. This can result in deadlock.
-
-#### New behavior
-
-Starting with EF Core 9.0, EF now throws by default when attempting to use synchronous I/O. The exception message is "Azure Cosmos DB does not support synchronous I/O. Make sure to use and correctly await only async methods when using Entity Framework Core to access Azure Cosmos DB. See [https://aka.ms/ef-cosmos-nosync](https://aka.ms/ef-cosmos-nosync) for more information."
-
-#### Why
-
-Synchronous blocking on asynchronous methods can result in deadlock, and the Azure Cosmos DB SDK only supports async methods.
-
-#### Mitigations
-
-In EF Core 9.0, the error can be suppressed with:
-
-```csharp
-protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-{
-    optionsBuilder.ConfigureWarnings(w => w.Ignore(CosmosEventId.SyncNotSupported));
-}
-```
-
-That being said, applications should stop using sync APIs with Azure Cosmos DB since this is not supported by the Azure Cosmos DB SDK. The ability to suppress the exception will be removed in a future release of EF Core, after which the only option will be to use async APIs.
 
 ## Low-impact changes
 
 <a name="unhex"></a>
 
-### EF.Functions.Unhex() now returns `byte[]?`
+### `EF.Functions.Unhex()` now returns `byte[]?`
 
 [Tracking Issue #33864](https://github.com/dotnet/efcore/issues/33864)
 
 #### Old behavior
 
-The EF.Functions.Unhex() function was previously annotated to return `byte[]`.
+The `EF.Functions.Unhex()` function was previously annotated to return `byte[]`.
 
 #### New behavior
 
@@ -77,13 +46,13 @@ Starting with EF Core 9.0, Unhex() is now annotated to return `byte[]?`.
 
 #### Why
 
-Unhex() is translated to the SQLite `unhex` function, which returns NULL for invalid inputs. As a result, Unhex() returned `null` for those cases, in violation of the annotation.
+`Unhex()` is translated to the SQLite `unhex` function, which returns NULL for invalid inputs. As a result, `Unhex()` returned `null` for those cases, in violation of the annotation.
 
 #### Mitigations
 
-If you are sure that the text content passed to Unhex() represents a valid, hexadecimal string, you can simply add the null-forgiving operator as an assertion that the invocation will never return null:
+If you are sure that the text content passed to `Unhex()` represents a valid, hexadecimal string, you can simply add the null-forgiving operator as an assertion that the invocation will never return null:
 
-```c#
+```csharp
 var binaryData = await context.Blogs.Select(b => EF.Functions.Unhex(b.HexString)!).ToListAsync();
 ```
 
@@ -110,3 +79,326 @@ Not having matching number of arguments and nullability propagation arguments ca
 #### Mitigations
 
 Make sure the `argumentsPropagateNullability` has same number of elements as the `arguments`. When in doubt use `false` for nullability argument.
+
+## Cosmos breaking changes
+
+Extensive work has gone into making the Cosmos DB provider better in 9.0. The changes include a number of high-impact breaking changes; if you are upgrading an existing application, please read the following carefully.
+
+| **Breaking change**                                                                                                                                  | **Impact** |
+|:---------------------------------------------------------------------------------------------------------------------------------------------------- | ---------- |
+| [The discriminator property is now named `$type` instead of `Discriminator`](#cosmos-discriminator-name-change)                                      | High       |
+| [The `id` property no longer contains the discriminator by default](#cosmos-id-property-changes)                                                     | High       |
+| [Sync I/O via the Azure Cosmos DB provider is no longer supported](#cosmos-nosync)                                                                   | Medium     |
+| [SQL queries must now project JSON values directly](#cosmos-sql-queries-with-value)                                                                  | Medium     |
+| [Undefined results are now automatically filtered from query results](#cosmos-undefined-filtering)                                                   | Medium     |
+| [Incorrectly translated queries are no longer translated](#cosmos-incorrect-translations)                                                            | Medium     |
+| [`HasIndex` now throws instead of being ignored](#cosmos-hasindex-throws)                                                                            | Low        |
+| [`IncludeRootDiscriminatorInJsonId` was renamed to `HasRootDiscriminatorInJsonId` after 9.0.0-rc.2](#cosmos-IncludeRootDiscriminatorInJsonId-rename) | Low        |
+
+### High-impact changes
+
+<a name="cosmos-discriminator-name-change"></a>
+
+#### The discriminator property is now named `$type` instead of `Discriminator`
+
+[Tracking Issue #34269](https://github.com/dotnet/efcore/issues/34269)
+
+##### Old behavior
+
+EF automatically adds a discriminator property to JSON documents to identify the entity type that the document represents. In previous versions of EF, this JSON property used to be named `Discriminator` by default.
+
+##### New behavior
+
+Starting with EF Core 9.0, the discriminator property is now called `$type` by default. If you have existing documents in Cosmos DB from previous versions of EF, these use the old `Discriminator` naming, and after upgrading to EF 9.0, queries against those documents will fail.
+
+##### Why
+
+An emerging JSON practice uses a `$type` property in scenarios where a document's type needs to be identified. For example, .NET's System.Text.Json also supports polymorphism, using `$type` as its default discriminator property name ([docs](/dotnet/standard/serialization/system-text-json/polymorphism#customize-the-type-discriminator-name)). To align with the rest of the ecosystem and make it easier to interoperate with external tools, the default was changed.
+
+##### Mitigations
+
+The easiest mitigation is to simply configure the name of the discriminator property to be `Discriminator`, just as before:
+
+```csharp
+modelBuilder.Entity<Session>().HasDiscriminator<string>("Discriminator");
+```
+
+Doing this for all your top-level entity types will make EF behave just like before.
+
+At this point, if you wish, you can also update all your documents to use the new `$type` naming.
+
+<a name="cosmos-id-property-changes"></a>
+
+#### The `id` property now contains only the EF key property by default
+
+[Tracking Issue #34179](https://github.com/dotnet/efcore/issues/34179)
+
+##### Old behavior
+
+Previously, EF inserted the discriminator value of your entity type into the `id` property of the document. For example, if you saved a `Blog` entity type with an `Id` property containing 8, the JSON `id` property would contain `Blog|8`.
+
+##### New behavior
+
+Starting with EF Core 9.0, the JSON `id` property no longer contains the discriminator value, and only contains the avlue of your key property. For the above example, the JSON `id` property would simply be `8`. If you have existing documents in Cosmos DB from previous versions of EF, these have the discriminator value in the JSON `id` property, and after upgrading to EF 9.0, queries against those documents will fail.
+
+##### Why
+
+Since the JSON `id` property must be unique, the discriminator was previously added to it so as to allow different entities to exist with the same key value; for example, this allowed having both a `Blog` and a `Post` with an `Id` property containing 8 within the same container and partition. This was assumed to be expected by developers used to relational databases, where each entity type is mapped its own table, and therefore has its own key-space.
+
+EF 9.0 generally changed the mapping to be more aligned with common Cosmos DB practices and expectations, rather than to correspond to the expectations of users coming from relational databases. In addition, having the discriminator value in the `id` property made it more difficult for external tools and systems to interact with EF-generated JSON documents; such external systems aren't generally aware of the EF discriminator values, which are by default derived from .NET types.
+
+##### Mitigations
+
+The easiest mitigation is to simply configure EF to include the discriminator in the JSON `id` property, as before. A new configuration option has been introduced for this purpose:
+
+```csharp
+modelBuilder.Entity<Session>().HasDiscriminatorInJsonId();
+```
+
+Doing this for all your top-level entity types will make EF behave just like before.
+
+At this point, if you wish, you can also update all your documents to rewrite their JSON `id` property. Note that this is only possible if entities of different types don't share the same id value within the same container.
+
+### Medium-impact changes
+
+<a name="cosmos-nosync"></a>
+
+#### Sync I/O via the Azure Cosmos DB provider is no longer supported
+
+[Tracking Issue #32563](https://github.com/dotnet/efcore/issues/32563)
+
+##### Old behavior
+
+Previously, calling synchronous methods like `ToList` or `SaveChanges` would cause EF Core to block synchronously using `.GetAwaiter().GetResult()` when executing async calls against the Azure Cosmos DB SDK. This can result in deadlock.
+
+##### New behavior
+
+Starting with EF Core 9.0, EF now throws by default when attempting to use synchronous I/O. The exception message is "Azure Cosmos DB does not support synchronous I/O. Make sure to use and correctly await only async methods when using Entity Framework Core to access Azure Cosmos DB. See [https://aka.ms/ef-cosmos-nosync](https://aka.ms/ef-cosmos-nosync) for more information."
+
+##### Why
+
+Synchronous blocking on asynchronous methods can result in deadlock, and the Azure Cosmos DB SDK only supports async methods.
+
+##### Mitigations
+
+In EF Core 9.0, the error can be suppressed with:
+
+```csharp
+protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+{
+    optionsBuilder.ConfigureWarnings(w => w.Ignore(CosmosEventId.SyncNotSupported));
+}
+```
+
+That being said, applications should stop using sync APIs with Azure Cosmos DB since this is not supported by the Azure Cosmos DB SDK. The ability to suppress the exception will be removed in a future release of EF Core, after which the only option will be to use async APIs.
+
+<a name="cosmos-sql-queries-with-value"></a>
+
+#### SQL queries must now project JSON values directly
+
+[Tracking Issue #25527](https://github.com/dotnet/efcore/issues/25527)
+
+##### Old behavior
+
+Previously, EF generated queries such as the following:
+
+```sql
+SELECT c["City"] FROM root c
+```
+
+Such queries cause Cosmos DB to wrap each result in a JSON object, as follows:
+
+```json
+[
+    {
+        "City": "Berlin"
+    },
+    {
+        "City": "México D.F."
+    }
+]
+```
+
+##### New behavior
+
+Starting with EF Core 9.0, EF now adds the `VALUE` modifier to queries as follows:
+
+```sql
+SELECT VALUE c["City"] FROM root c
+```
+
+Such queries cause Cosmos DB to return the values directly, without being wrapped:
+
+```json
+[
+    "Berlin",
+    "México D.F."
+]
+```
+
+If your application makes use of [SQL queries](xref:core/providers/cosmos/querying#sql-queries), such queries are likely broken after upgrading to EF 9.0, as they don't include the `VALUE` modifier.
+
+##### Why
+
+Wrapping each result in an additional JSON object can cause performance degradation in some scenarios, bloats the JSON result payload, and isn't the natural way to work with Cosmos DB.
+
+##### Mitigations
+
+To mitigate, simply add the `VALUE` modifier to the projections of your SQL queries, as shown above.
+
+<a name="cosmos-undefined-filtering"></a>
+
+#### Undefined results are now automatically filtered from query results
+
+[Tracking Issue #25527](https://github.com/dotnet/efcore/issues/25527)
+
+##### Old behavior
+
+Previously, EF generated queries such as the following:
+
+```sql
+SELECT c["City"] FROM root c
+```
+
+Such queries cause Cosmos DB to wrap each result in a JSON object, as follows:
+
+```json
+[
+    {
+        "City": "Berlin"
+    },
+    {
+        "City": "México D.F."
+    }
+]
+```
+
+If any of the results were undefined (e.g. the `City` property was absent from the document), an empty document was returned, and EF would return `null` for that result.
+
+##### New behavior
+
+Starting with EF Core 9.0, EF now adds the `VALUE` modifier to queries as follows:
+
+```sql
+SELECT VALUE c["City"] FROM root c
+```
+
+Such queries cause Cosmos DB to return the values directly, without being wrapped:
+
+```json
+[
+    "Berlin",
+    "México D.F."
+]
+```
+
+The Cosmos DB behavior is to automatically filter `undefined` values out of results; this means that if one of the `City` properties is absent from the document, the query would return just a single result, rather than two results, with one being `null`.
+
+##### Why
+
+Wrapping each result in an additional JSON object can cause performance degradation in some scenarios, bloats the JSON result payload, and isn't the natural way to work with Cosmos DB.
+
+##### Mitigations
+
+If getting `null` values for undefined results is important for your application, coalesce the `undefined` values to `null` using the new `EF.Functions.Coalesce` operator:
+
+```csharp
+var users = await context.Customer
+    .Select(c => EF.Functions.CoalesceUndefined(c.City, null))
+    .ToListAsync();
+```
+
+<a name="cosmos-incorrect-translations"></a>
+
+#### Incorrectly translated queries are no longer translated
+
+[Tracking Issue #34123](https://github.com/dotnet/efcore/issues/34123)
+
+##### Old behavior
+
+Previously, EF translated queries such as the following:
+
+```csharp
+var sessions = await context.Sessions
+    .Take(5)
+    .Where(s => s.Name.StartsWith("f"))
+    .ToListAsync();
+```
+
+However, the SQL translation for this query was incorrect:
+
+```sql
+SELECT c
+FROM root c
+WHERE ((c["Discriminator"] = "Session") AND STARTSWITH(c["Name"], "f"))
+OFFSET 0 LIMIT @__p_0
+```
+
+In SQL, the `WHERE` clause is evaluated _before_ the `OFFSET` and `LIMIT` clauses; but in the LINQ query above, the `Take` operator appears before the `Where` operator. As a result, such queries could return incorrect results.
+
+##### New behavior
+
+Starting with EF Core 9.0, such queries are no longer translated, and an exception is thrown.
+
+##### Why
+
+Incorrect translations can cause silent data corruption, which can introduce hard-to-discover bugs in your application. EF always prefer to fail-fast by throwing up-front rather than to possibly cause data corruption.
+
+##### Mitigations
+
+If you were happy with the previous behavior and would like to execute the same SQL, simply swap around the order of LINQ operators:
+
+```csharp
+var sessions = await context.Sessions
+    .Where(s => s.Name.StartsWith("f"))
+    .Take(5)
+    .ToListAsync();
+```
+
+Unfortunately, Cosmos does not currently support the `OFFSET` and `LIMIT` clauses in SQL subqueries, which is what the proper translation of the original LINQ query requires.
+
+### Low-impact changes
+
+<a name="cosmos-hasindex-throws"></a>
+
+#### `HasIndex` now throws instead of being ignored
+
+[Tracking Issue #34023](https://github.com/dotnet/efcore/issues/34023)
+
+##### Old behavior
+
+Previously, calls to <xref: Microsoft.EntityFrameworkCore.Metadata.Builders.EntityTypeBuilder%601.HasIndex%2A> were ignored by the EF Cosmos DB provider.
+
+##### New behavior
+
+The provider now throws if <xref: Microsoft.EntityFrameworkCore.Metadata.Builders.EntityTypeBuilder%601.HasIndex%2A> is specified.
+
+##### Why
+
+In Cosmos DB, all properties are indexed by default, and no indexing needs to be specified. While it's possible to define a custom indexing policy, this isn't currently supported by EF, and can be done via the Azure Portal without EF support. Since <xref: Microsoft.EntityFrameworkCore.Metadata.Builders.EntityTypeBuilder%601.HasIndex%2A> calls weren't doing anything, they are no longer allowed.
+
+##### Mitigations
+
+Remove any calls to <xref: Microsoft.EntityFrameworkCore.Metadata.Builders.EntityTypeBuilder%601.HasIndex%2A>.
+
+<a name="cosmos-IncludeRootDiscriminatorInJsonId-rename"></a>
+
+#### `IncludeRootDiscriminatorInJsonId` was renamed to `HasRootDiscriminatorInJsonId` after 9.0.0-rc.2
+
+[Tracking Issue #34717](https://github.com/dotnet/efcore/pull/34717)
+
+##### Old behavior
+
+The `IncludeRootDiscriminatorInJsonId` Cosmos API was introduced in 9.0.0 rc.1.
+
+##### New behavior
+
+For the final release of EF Core 9.0, the API was renamed to `HasRootDiscriminatorInJsonId`
+
+##### Why
+
+Another related API was renamed to start with `Has` instead of `Include`, and so this one was renamed for consistency as well.
+
+##### Mitigations
+
+If your code is using the `IncludeRootDiscriminatorInJsonId` API, simply change it to reference `HasRootDiscriminatorInJsonId` instead.

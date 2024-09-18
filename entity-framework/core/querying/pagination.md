@@ -12,9 +12,12 @@ Pagination refers to retrieving results in pages, rather than all at once; this 
 > [!WARNING]
 > Regardless of the pagination method used, always make sure that your ordering is fully unique. For example, if results are ordered only by date, but there can be multiple results with the same date, then results could be skipped when paginating as they're ordered differently across two paginating queries. Ordering by both date and ID (or any other unique property or combination of properties) makes the ordering fully unique and avoids this problem. Note that relational databases do not apply any ordering by default, even on the primary key.
 
+> [!NOTE]
+> Azure Cosmos DB has its own mechanism for pagination, [see the dedicated documentation page](xref:core/providers/cosmos/querying#pagination).
+
 ## Offset pagination
 
-A common way to implement pagination with databases is to use the `Skip` and `Take` (`OFFSET` and `LIMIT` in SQL). Given a page size of 10 results, the third page can be fetched with EF Core as follows:
+A common way to implement pagination with databases is to use the `Skip` and `Take` LINQ operators (`OFFSET` and `LIMIT` in SQL). Given a page size of 10 results, the third page can be fetched with EF Core as follows:
 
 [!code-csharp[Main](../../../samples/core/Querying/Pagination/Program.cs?name=OffsetPagination&highlight=4)]
 
