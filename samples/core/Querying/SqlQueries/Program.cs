@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace EFQuerying.RawSQL;
 
+#pragma warning disable EF1002 // Risk of vulnerability to SQL injection.
 internal class Program
 {
     private static void Main(string[] args)

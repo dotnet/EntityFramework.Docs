@@ -1,5 +1,5 @@
 ---
-title: Advanced Performance Topics
+title: Advanced Performance Topics - EF Core
 description: Advanced performance topics for Entity Framework Core
 author: roji
 ms.date: 9/26/2023

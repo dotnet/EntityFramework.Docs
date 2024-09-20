@@ -21,6 +21,8 @@
         href: efcore-and-ef6/porting/port-database.md
       - name: Porting to a hybrid model
         href: efcore-and-ef6/porting/port-hybrid.md
+      - name: Behavior Changes between EF6 and EF Core
+        href: efcore-and-ef6/porting/port-behavior.md
       - name: Detailed cases to consider when Porting
         href: efcore-and-ef6/porting/port-detailed-cases.md
     - name: Use EF6 and EF Core in the same application

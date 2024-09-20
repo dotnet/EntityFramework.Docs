@@ -176,7 +176,7 @@ public static class PrimitiveCollectionsSample
         public int Id { get; set; }
         public string Name { get; set; }
         public Terrain Terrain { get; set; }
-        public ReadOnlyCollection<DateOnly> DaysVisited { get; set; }
+        public required ReadOnlyCollection<DateOnly> DaysVisited { get; set; }
         public Pub ClosestPub { get; set; } = null!;
     }
 
