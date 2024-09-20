@@ -2,7 +2,7 @@
 using BenchmarkDotNet.Attributes;
 using CompiledModelTest;
 
-[SimpleJob(invocationCount: 1, targetCount: 50)]
+[SimpleJob(invocationCount: 1)]
 public class Test
 {
     [Benchmark]
