@@ -172,6 +172,8 @@ Math.Floor(d)              | FLOOR(@d)
 Math.Log(d)                | LOG(@d)
 Math.Log(a, newBase)       | LOG(@a, @newBase)
 Math.Log10(d)              | LOG10(@d)
+Math.Max(x, y)             | GREATEST(@x, @y)    | EF Core 9.0
+Math.Min(x, y)             | LEAST(@x, @y)       | EF Core 9.0
 Math.Pow(x, y)             | POWER(@x, @y)
 Math.Round(d)              | ROUND(@d, 0)
 Math.Round(d, decimals)    | ROUND(@d, @decimals)
@@ -202,6 +204,7 @@ string.Compare(strA, strB)                                              | CASE W
 string.Concat(str0, str1)                                               | @str0 + @str1
 string.IsNullOrEmpty(value)                                             | @value IS NULL OR @value LIKE N''
 string.IsNullOrWhiteSpace(value)                                        | @value IS NULL OR @value = N''
+string.Join(", ", new [] { x, y, z})                                    | CONCAT_WS(N', ', @x, @y, @z)                                           | EF Core 9.0
 stringValue.CompareTo(strB)                                             | CASE WHEN @stringValue = @strB THEN 0 ... END
 stringValue.Contains(value)                                             | @stringValue LIKE N'%' + @value + N'%'
 stringValue.EndsWith(value)                                             | @stringValue LIKE N'%' + @value

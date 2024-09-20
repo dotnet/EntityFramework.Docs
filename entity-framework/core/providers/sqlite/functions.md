@@ -14,11 +14,13 @@ This page shows which .NET members are translated into which SQL functions when 
 .NET                                                  | SQL                                | Added in
 ----------------------------------------------------- | ---------------------------------- | --------
 group.Average(x => x.Property)                        | AVG(Property)
+group.Average(x => x.DecimalProperty)                 | ef_avg(DecimalProperty)            | EF Core 9.0
 group.Count()                                         | COUNT(*)
 group.LongCount()                                     | COUNT(*)
 group.Max(x => x.Property)                            | MAX(Property)
 group.Min(x => x.Property)                            | MIN(Property)
 group.Sum(x => x.Property)                            | SUM(Property)
+group.Sum(x => x.DecimalProperty)                     | ef_sum(DecimalProperty)            | EF Core 9.0
 string.Concat(group.Select(x => x.Property))          | group_concat(Property, '')         | EF Core 7.0
 string.Join(separator, group.Select(x => x.Property)) | group_concat(Property, @separator) | EF Core 7.0
 

@@ -615,6 +615,8 @@ FROM [Posts] AS [p]
 WHERE [p].[Title] = N'.NET Blog' AND [p].[Id] = 1
 ```
 
+#### The `EF.Parameter` method
+
 EF9 introduces the `EF.Parameter` method to do the opposite. That is, force EF to use a parameter even if the value is a constant in code. For example:
 
 <!--
@@ -634,6 +636,59 @@ SELECT [p].[Id], [p].[Archived], [p].[AuthorId], [p].[BlogId], [p].[Content], [p
 FROM [Posts] AS [p]
 WHERE [p].[Title] = @__p_0 AND [p].[Id] = @__id_1
 ```
+
+<a name="parameterized-collections"></a>
+
+#### Parameterized primitive collections
+
+EF8 changed the way [some queries that use primitive collections are translated](xref:core/what-is-new/ef-core-8.0/whatsnew#queries-with-primitive-collections). When a LINQ query contains a parameterized primitive collection, EF converts its contents to JSON and pass it as a single parameter value the query:
+
+<!--
+#region DefaultParameterizationPrimitiveCollection
+async Task<List<Post>> GetPostsPrimitiveCollection(int[] ids)
+    => await context.Posts
+        .Where(e => e.Title == ".NET Blog" && ids.Contains(e.Id))
+        .ToListAsync();
+-->
+[!code-csharp[ForceParameter](../../../../samples/core/Miscellaneous/NewInEFCore9/QuerySample.cs?name=DefaultParameterizationPrimitiveCollection)]
+
+This will result in the following translation on SQL Server:
+
+```output
+Executed DbCommand (5ms) [Parameters=[@__ids_0='[1,2,3]' (Size = 4000)], CommandType='Text', CommandTimeout='30']
+SELECT [p].[Id], [p].[Archived], [p].[AuthorId], [p].[BlogId], [p].[Content], [p].[Discriminator], [p].[PublishedOn], [p].[Rating], [p].[Title], [p].[PromoText], [p].[Metadata]
+FROM [Posts] AS [p]
+WHERE [p].[Title] = N'.NET Blog' AND [p].[Id] IN (
+    SELECT [i].[value]
+    FROM OPENJSON(@__ids_0) WITH ([value] int '$') AS [i]
+)
+```
+
+This allows having the same SQL query for different parameterized collections (only the parameter value changes), but in some situations it can lead to performance issues as the database isn't able to optimally plan for the query. The `EF.Constant` method can be used to revert to the previous translation.
+
+The following query uses `EF.Constant` to that effect:
+
+<!--
+#region ForceConstantPrimitiveCollection
+async Task<List<Post>> GetPostsForceConstantCollection(int[] ids)
+    => await context.Posts
+        .Where(e => e.Title == ".NET Blog" && EF.Constant(ids).Contains(e.Id))
+        .ToListAsync();
+-->
+[!code-csharp[ForceParameter](../../../../samples/core/Miscellaneous/NewInEFCore9/QuerySample.cs?name=ForceConstantPrimitiveCollection)]
+
+The resulting SQL is as follows:
+
+```sql
+SELECT [p].[Id], [p].[Archived], [p].[AuthorId], [p].[BlogId], [p].[Content], [p].[Discriminator], [p].[PublishedOn], [p].[Rating], [p].[Title], [p].[PromoText], [p].[Metadata]
+FROM [Posts] AS [p]
+WHERE [p].[Title] = N'.NET Blog' AND [p].[Id] IN (1, 2, 3)
+```
+
+Moreover, EF9 introduces `TranslateParameterizedCollectionsToConstants` [context option](/ef/core/dbcontext-configuration/#dbcontextoptions) that can be used to prevent primitive collection parameterization for all queries. We also added a complementing `TranslateParameterizedCollectionsToParameters` which forces parameterization of primitive collections explicitly (this is the default behavior).
+
+> [!TIP]
+> The `EF.Parameter` method overrides the context option. If you want to prevent parameterization of primitive collections for most of your queries (but not all), you can set the context option `TranslateParameterizedCollectionsToConstants` and use `EF.Parameter` for the queries or individual variables that you want to parameterize.
 
 <a name="inlinedsubs"></a>
 
@@ -685,7 +740,71 @@ ORDER BY (SELECT 1)
 OFFSET @__p_0 ROWS FETCH NEXT @__p_1 ROWS ONLY
 ```
 
-<a name="hashsetasync"></a>
+<a name="aggregate-over-subquery"></a>
+
+### Aggregate functions over subqueries and aggregates on SQL Server
+
+EF9 improves the translation of some complex queries using aggregate functions composed over subqueries or other aggregate functions.
+Below is an example of such query:
+
+<!--
+var latestPostsAverageRatingByLanguage = await context.Blogs.
+    Select(x => new
+    {
+        x.Language,
+        LatestPostRating = x.Posts.OrderByDescending(xx => xx.PublishedOn).FirstOrDefault().Rating
+    })
+    .GroupBy(x => x.Language)
+    .Select(x => x.Average(xx => xx.LatestPostRating))
+    .ToListAsync();
+-->
+[!code-csharp[AggregateOverSubquery](../../../../samples/core/Miscellaneous/NewInEFCore9/QuerySample.cs?name=AggregateOverSubquery)]
+
+First, `Select` computes `LatestPostRating` for each `Post` which requires a subquery when translating to SQL. Later in the query these results are aggregated using `Average` operation. The resulting SQL looks as follows when run on SQL Server:
+
+```sql
+SELECT AVG([s].[Rating])
+FROM [Blogs] AS [b]
+OUTER APPLY (
+    SELECT TOP(1) [p].[Rating]
+    FROM [Posts] AS [p]
+    WHERE [b].[Id] = [p].[BlogId]
+    ORDER BY [p].[PublishedOn] DESC
+) AS [s]
+GROUP BY [b].[Language]
+```
+
+In previous versions EF Core would generate invalid SQL for similar queries, trying to apply the aggregate operation directly over the subquery. This is not allowed on SQL Server and results in an exception.
+Same principle applies to queries using aggregate over another aggregate:
+
+<!--
+var topRatedPostsAverageRatingByLanguage = await context.Blogs.
+    Select(x => new
+    {
+        x.Language,
+        TopRating = x.Posts.Max(x => x.Rating)
+    })
+    .GroupBy(x => x.Language)
+    .Select(x => x.Average(xx => xx.TopRating))
+    .ToListAsync();
+-->
+[!code-csharp[AggregateOverAggregate](../../../../samples/core/Miscellaneous/NewInEFCore9/QuerySample.cs?name=AggregateOverAggregate)]
+
+> [!NOTE]
+> This change doesn't affect Sqlite, which supports aggregates over subqueries (or other aggregates) and it does not support `LATERAL JOIN` (`APPLY`). Below is the SQL for the first query running on Sqlite:
+>
+> ```sql
+> SELECT ef_avg((
+>     SELECT "p"."Rating"
+>     FROM "Posts" AS "p"
+>     WHERE "b"."Id" = "p"."BlogId"
+>     ORDER BY "p"."PublishedOn" DESC
+>     LIMIT 1))
+> FROM "Blogs" AS "b"
+> GROUP BY "b"."Language"
+> ```
+
+<a name="count-not-zero"></a>
 
 ### Queries using Count != 0 are optimized
 
@@ -711,6 +830,8 @@ WHERE EXISTS (
     FROM "Posts" AS "p"
     WHERE "b"."Id" = "p"."BlogId")
 ```
+
+<a name="comparison-null-semantics"></a>
 
 ### C# semantics for comparison operations on nullable values
 
@@ -782,6 +903,59 @@ EF9 now properly handles these scenarios, producing results consistent with LINQ
 
 This enhancement was contributed by [@ranma42](https://github.com/ranma42). Many thanks!
 
+<a name="order-operator"></a>
+
+### Translation of `Order` and `OrderDescending` LINQ operators
+
+EF9 enables the translation of LINQ simplified ordering operations (`Order` and `OrderDescending`). These work similar to `OrderBy`/`OrderByDescending` but don't require an argument. Instead, they apply default ordering - for entities this means ordering based on primary key values and for other types, ordering based on the values themselves.
+
+Below is an example query which takes advantage of the simplified ordering operators:
+
+<!--
+var orderOperation = await context.Blogs
+    .Order()
+    .Select(x => new
+    {
+        x.Name,
+        OrderedPosts = x.Posts.OrderDescending().ToList(),
+        OrderedTitles = x.Posts.Select(xx => xx.Title).Order().ToList()
+    })
+    .ToListAsync();
+-->
+[!code-csharp[OrderOrderDescending](../../../../samples/core/Miscellaneous/NewInEFCore9/QuerySample.cs?name=OrderOrderDescending)]
+
+This query is equivalent to the following:
+
+<!--
+var orderByEquivalent = await context.Blogs
+    .OrderBy(x => x.Id)
+    .Select(x => new
+    {
+        x.Name,
+        OrderedPosts = x.Posts.OrderByDescending(xx => xx.Id).ToList(),
+        OrderedTitles = x.Posts.Select(xx => xx.Title).OrderBy(xx => xx).ToList()
+    })
+    .ToListAsync();
+-->
+[!code-csharp[OrderByEquivalent](../../../../samples/core/Miscellaneous/NewInEFCore9/QuerySample.cs?name=OrderByEquivalent)]
+
+and produces the following SQL:
+
+```sql
+SELECT [b].[Name], [b].[Id], [p].[Id], [p].[Archived], [p].[AuthorId], [p].[BlogId], [p].[Content], [p].[Discriminator], [p].[PublishedOn], [p].[Rating], [p].[Title], [p].[PromoText], [p].[Metadata], [p0].[Title], [p0].[Id]
+FROM [Blogs] AS [b]
+LEFT JOIN [Posts] AS [p] ON [b].[Id] = [p].[BlogId]
+LEFT JOIN [Posts] AS [p0] ON [b].[Id] = [p0].[BlogId]
+ORDER BY [b].[Id], [p].[Id] DESC, [p0].[Title]
+```
+
+> [!NOTE]
+> `Order` and `OrderDescending` methods are only supported for collections of entities, complex types or scalars - they will not work on more complex projections, e.g. collections of anonymous types containing multiple properties.
+
+This enhancement was contributed by the EF Team alumnus [@bricelam](https://github.com/bricelam). Many thanks!
+
+<a name="improved-negation"></a>
+
 ### Improved translation of logical negation operator (!)
 
 EF9 brings many optimizimations around SQL `CASE/WHEN`, `COALESCE`, negation, and various other constructs; most of these were contributed by Andrea Canciani ([@ranma42](https://github.com/ranma42)) - many thanks for all of these! Below, we'll detail just a few of these optimizations around logical negation.
@@ -848,7 +1022,7 @@ On SQL Server, when projecting a negated bool property:
 <!--
 var negatedBoolProjection = await context.Posts.Select(x => new { x.Title, Active = !x.Archived }).ToListAsync();
 -->
-[!code-csharp[XorBoolProjection](../../../../samples/core/Miscellaneous/NewInEFCore9/QuerySample.cs?name=XorBoolProjection)]
+[!code-csharp[NegatedBoolProjection](../../../../samples/core/Miscellaneous/NewInEFCore9/QuerySample.cs?name=NegatedBoolProjection)]
 
  EF8 would generate a `CASE` block because comparisons can't appear in the projection directly in SQL Server queries:
 
@@ -860,12 +1034,19 @@ END AS [Active]
 FROM [Posts] AS [p]
  ```
 
-In EF9 this translation has been simplified and now uses exclusive or (`^`):
+In EF9, this translation has been simplified and now uses bitwise NOT (`~`):
 
 ```sql
-SELECT [p].[Title], [p].[Archived] ^ CAST(1 AS bit) AS [Active]
+SELECT [p].[Title], ~[p].[Archived] AS [Active]
 FROM [Posts] AS [p]
 ```
+
+<a name="azuresql-azuresynapse"></a>
+
+### Better support for Azure SQL and Azure Synapse
+
+EF9 allows for more flexibility when specifying the type of SQL Server which is being targeted. Instead of configuring EF with `UseSqlServer`, you can now specify `UseAzureSql` or `UseAzureSynapse`.
+This allows EF to produce better SQL when using Azure SQL or Azure Synapse. EF can take advantage of the database specific features (e.g. [dedicated type for JSON on Azure SQL](/sql/t-sql/data-types/json-data-type)), or work around its limitations (e.g. [`ESCAPE` clause is not available when using `LIKE` on Azure Synapse](/sql/t-sql/language-elements/like-transact-sql#syntax)).
 
 ### Other query improvements
 
@@ -878,6 +1059,9 @@ FROM [Posts] AS [p]
 * `Sum` and `Average` now work for decimals on SQLite ([#33721](https://github.com/dotnet/efcore/pull/33721), contributed by [@ranma42](https://github.com/ranma42)).
 * Fixes and optimizations to `string.StartsWith` and `EndsWith` ([#31482](https://github.com/dotnet/efcore/pull/31482)).
 * `Convert.To*` methods can now accept argument of type `object` ([#33891](https://github.com/dotnet/efcore/pull/33891), contributed by [@imangd](https://github.com/imangd)).
+* Exclusive-Or (XOR) operation is now translated on SQL Server ([#34071](https://github.com/dotnet/efcore/pull/34071), contributed by [@ranma42](https://github.com/ranma42)).
+* Optimizations around nullability for `COLLATE` and `AT TIME ZONE` operations ([#34263](https://github.com/dotnet/efcore/pull/34263), contributed by [@ranma42](https://github.com/ranma42)).
+* Optimizations for `DISTINCT` over `IN`, `EXISTS` and set operations ([#34381](https://github.com/dotnet/efcore/pull/34381), contributed by [@ranma42](https://github.com/ranma42)).
 
 The above were only some of the more important query improvements in EF9; see [this issue](https://github.com/dotnet/efcore/issues/34151) for a more complete listing.
 
