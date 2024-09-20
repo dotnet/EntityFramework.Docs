@@ -137,7 +137,6 @@ public static class HierarchicalPartitionKeysSample
 
         using (var context = new UserSessionContext())
         {
-            var tenantId = "Microsoft";
             var sessionId = 7;
             var userId = new Guid("99A410D7-E467-4CC5-92DE-148F3FC53F4C");
 

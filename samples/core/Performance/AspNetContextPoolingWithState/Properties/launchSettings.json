@@ -1,0 +1,12 @@
+{
+  "profiles": {
+    "AspNetContextPoolingWithState": {
+      "commandName": "Project",
+      "launchBrowser": true,
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "applicationUrl": "https://localhost:58214;http://localhost:58216"
+    }
+  }
+}
