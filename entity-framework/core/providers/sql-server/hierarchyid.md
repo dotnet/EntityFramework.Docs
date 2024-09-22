@@ -94,7 +94,7 @@ In this tree:
 
 - Balbo is at the root of the tree, represented by `/`.
 - Balbo has five children, represented by `/1/`, `/2/`, `/3/`, `/4/`, and `/5/`.
-- Balbo's first child, Mungo, also has five children, represented by `/1/1/`, `/1/2/`, `/1/3/`, `/1/4/`, and `/1/5/`. Notice that the `HierarchyId` for Balbo (`/1/`) is the prefix for all his children.
+- Balbo's first child, Mungo, also has five children, represented by `/1/1/`, `/1/2/`, `/1/3/`, `/1/4/`, and `/1/5/`. Notice that the `HierarchyId` for Mungo (`/1/`) is the prefix for all his children.
 - Similarly, Balbo's third child, Ponto, has two children, represented by `/3/1/` and `/3/2/`. Again the each of these children is prefixed by the `HierarchyId` for Ponto, which is represented as `/3/`.
 - And so on down the tree...
 
