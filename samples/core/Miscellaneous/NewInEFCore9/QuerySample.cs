@@ -34,8 +34,7 @@ public static class QuerySample
         #region DefaultParameterization
         async Task<List<Post>> GetPosts(int id)
             => await context.Posts
-                .Where(
-                    e => e.Title == ".NET Blog" && e.Id == id)
+                .Where(e => e.Title == ".NET Blog" && e.Id == id)
                 .ToListAsync();
         #endregion
 
@@ -48,8 +47,7 @@ public static class QuerySample
         #region ForceParameter
         async Task<List<Post>> GetPostsForceParameter(int id)
             => await context.Posts
-                .Where(
-                    e => e.Title == EF.Parameter(".NET Blog") && e.Id == id)
+                .Where(e => e.Title == EF.Parameter(".NET Blog") && e.Id == id)
                 .ToListAsync();
         #endregion
 
@@ -62,8 +60,7 @@ public static class QuerySample
         #region ForceConstant
         async Task<List<Post>> GetPostsForceConstant(int id)
             => await context.Posts
-                .Where(
-                    e => e.Title == ".NET Blog" && e.Id == EF.Constant(id))
+                .Where(e => e.Title == ".NET Blog" && e.Id == EF.Constant(id))
                 .ToListAsync();
         #endregion
 
