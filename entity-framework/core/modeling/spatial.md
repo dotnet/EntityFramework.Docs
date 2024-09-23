@@ -1,7 +1,7 @@
 ---
 title: Spatial Data - EF Core
 description: Using spatial data in an Entity Framework Core model
-author: bricelam
+author: SamMonoRT
 ms.date: 11/15/2021
 uid: core/modeling/spatial
 ---

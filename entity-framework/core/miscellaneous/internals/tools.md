@@ -1,7 +1,7 @@
 ---
 title: Design-time Tools Architecture - EF Core
 description: The architecture of design-time tools in Entity Framework Core
-author: bricelam
+author: SamMonoRT
 ms.date: 11/27/2023
 uid: core/miscellaneous/internals/tools
 ---

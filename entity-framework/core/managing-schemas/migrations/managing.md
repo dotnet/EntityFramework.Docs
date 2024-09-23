@@ -1,7 +1,7 @@
 ---
 title: Managing Migrations - EF Core
 description: Adding, removing and otherwise managing database schema migrations with Entity Framework Core
-author: bricelam
+author: SamMonoRT
 ms.date: 10/27/2020
 uid: core/managing-schemas/migrations/managing
 ---

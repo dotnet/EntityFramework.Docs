@@ -1,7 +1,7 @@
 ---
 title: Create and Drop APIs - EF Core
 description: APIs for creating and dropping databases with Entity Framework Core
-author: bricelam
+author: SamMonoRT
 ms.date: 10/21/2021
 no-loc: [EnsureDeleted, EnsureCreated]
 uid: core/managing-schemas/ensure-created

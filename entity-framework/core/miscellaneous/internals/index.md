@@ -1,7 +1,7 @@
 ---
 title: Architecture - EF Core
 description: The internal architecture of Entity Framework Core
-author: bricelam
+author: SamMonoRT
 ms.date: 11/27/2023
 uid: core/miscellaneous/internals/index
 ---

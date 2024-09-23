@@ -1,7 +1,7 @@
 ---
 title: SQLite Database Provider - Spatial Data - EF Core
 description: Using spatial data with the Entity Framework Core SQLite database provider
-author: bricelam
+author: SamMonoRT
 ms.date: 10/02/2020
 uid: core/providers/sqlite/spatial
 ---

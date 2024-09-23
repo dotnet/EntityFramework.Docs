@@ -1,7 +1,7 @@
 ---
 title: Function Mappings - Microsoft SQL Server Database Provider - EF Core
 description: Function Mappings of the Microsoft SQL Server database provider
-author: bricelam
+author: SamMonoRT
 ms.date: 7/26/2023
 uid: core/providers/sql-server/functions
 ---

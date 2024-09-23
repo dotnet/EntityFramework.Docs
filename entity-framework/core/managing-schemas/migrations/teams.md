@@ -1,7 +1,7 @@
 ---
 title: Migrations in Team Environments - EF Core
 description: Best practices for managing migrations and resolving conflicts in team environments with Entity Framework Core
-author: bricelam
+author: SamMonoRT
 ms.date: 10/30/2017
 uid: core/managing-schemas/migrations/teams
 ---
