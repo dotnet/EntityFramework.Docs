@@ -1,7 +1,7 @@
 ---
 title: Installing Entity Framework Core - EF Core
 description: Installation instructions for Entity Framework Core
-author: bricelam
+author: SamMonoRT
 ms.date: 03/23/2023
 uid: core/get-started/overview/install
 ---

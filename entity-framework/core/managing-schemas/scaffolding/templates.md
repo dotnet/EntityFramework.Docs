@@ -1,7 +1,7 @@
 ---
 title: Custom Reverse Engineering Templates - EF Core
 description: Using T4 text templates to customize the scaffolded code when reverse engineering an Entity Framework Core model from a database
-author: bricelam
+author: SamMonoRT
 ms.date: 08/16/2022
 uid: core/managing-schemas/scaffolding/templates
 ---

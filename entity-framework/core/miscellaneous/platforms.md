@@ -1,7 +1,7 @@
 ---
 title: Supported .NET implementations - EF Core
 description: Information on supported platforms across Entity Framework Core versions
-author: bricelam
+author: SamMonoRT
 ms.date: 12/13/2022
 uid: core/miscellaneous/platforms
 ---

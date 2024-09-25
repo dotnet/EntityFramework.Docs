@@ -1,7 +1,7 @@
 ---
 title: Function Mappings - Azure Cosmos DB Provider - EF Core
 description: Function Mappings of the Azure Cosmos DB EF Core Provider
-author: bricelam
+author: SamMonoRT
 ms.date: 7/26/2023
 uid: core/providers/cosmos/functions
 ---

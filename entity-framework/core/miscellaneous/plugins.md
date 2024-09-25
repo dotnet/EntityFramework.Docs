@@ -1,7 +1,7 @@
 ---
 title: Plug-in APIs - EF Core
 description: APIs extensions can use to plug into certain Entity Framework Core components
-author: bricelam
+author: SamMonoRT
 ms.date: 8/31/2023
 uid: core/miscellaneous/plugins
 ---

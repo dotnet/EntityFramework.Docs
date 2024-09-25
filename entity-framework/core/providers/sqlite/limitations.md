@@ -1,7 +1,7 @@
 ---
 title: SQLite Database Provider - Limitations - EF Core
 description: Limitations of the Entity Framework Core SQLite database provider as compared to other providers
-author: bricelam
+author: SamMonoRT
 ms.date: 11/15/2021
 uid: core/providers/sqlite/limitations
 ---

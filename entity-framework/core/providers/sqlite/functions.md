@@ -1,7 +1,7 @@
 ---
 title: Function Mappings - SQLite Database Provider - EF Core
 description: Function Mappings of the SQLite EF Core database provider
-author: bricelam
+author: SamMonoRT
 ms.date: 7/26/2023
 uid: core/providers/sqlite/functions
 ---
