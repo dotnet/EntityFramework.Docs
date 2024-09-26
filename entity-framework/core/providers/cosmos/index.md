@@ -8,7 +8,7 @@ uid: core/providers/cosmos/index
 # EF Core Azure Cosmos DB Provider
 
 > [!WARNING]
-> Extensive work has gone into the Cosmos DB provider in 9.0. In order to improve the provider, a number of high-impact breaking changes had to be made; if you are upgrading an existing application, please read the [breaking changes section](xref:core/what-is-new/ef-core-9.0/breaking-changes#cosmos-breaking-changes) carefully.
+> Extensive work has gone into the Azure Cosmos DB provider in 9.0. In order to improve the provider, a number of high-impact breaking changes had to be made; if you are upgrading an existing application, please read the [breaking changes section](xref:core/what-is-new/ef-core-9.0/breaking-changes#cosmos-breaking-changes) carefully.
 
 This database provider allows Entity Framework Core to be used with Azure Cosmos DB. The provider is maintained as part of the [Entity Framework Core Project](https://github.com/dotnet/efcore).
 

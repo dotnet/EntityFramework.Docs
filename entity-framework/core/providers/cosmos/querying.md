@@ -32,7 +32,7 @@ var stringResults = await context.Sessions
 
 > [!NOTE]
 > The Azure Cosmos DB provider does not translate the same set of LINQ queries as other providers.
-> For example, the EF `Include()` operator isn't supported on Cosmos, since cross-document queries aren't supported in the database.
+> For example, the EF `Include()` operator isn't supported on Azure Cosmos DB, since cross-document queries aren't supported in the database.
 
 ## Partition keys
 
@@ -90,7 +90,7 @@ This executes in the same way as the above query, and can be preferable if you w
 
 ## Point reads
 
-While Azure Cosmos DB allows for powerful querying via SQL, such queries can be quite expensive. Cosmos DB also supports _point reads_, which can be used when both the `id` property and the entire partition key are known. Such point reads directly identify a specific document in a specific partition, and execute extremely efficiently and with reduced costs. If at all possible, it's worth designing your system in a way which leverages point reads as much as possible. To read more, see the [Cosmos DB documentation](/azure/cosmos-db/nosql/how-to-dotnet-read-item).
+While Azure Cosmos DB allows for powerful querying via SQL, such queries can be quite expensive. Azure Cosmos DB also supports _point reads_, which should be used when retrieving a single document if both the `id` property and the entire partition key are known. Point reads directly identify a specific document in a specific partition, and execute extremely efficiently and with reduced costs compared to retrieving the same document with a query. It's recommended to design your system to leverage point reads as often as possible. To read more, see the [Azure Cosmos DB documentation](/azure/cosmos-db/nosql/how-to-dotnet-read-item).
 
 In the previous section, we saw EF identifying and extracting partition key comparisons from the `Where` clause for more efficient querying, restricting processing only to the relevant partitions. It's possible to go a step further, and provide the `id` property in the query as well. Let's examine the following query:
 
@@ -102,7 +102,7 @@ var session = await context.Sessions.SingleAsync(
          && e.SessionId == sessionId);
 ```
 
-In this query, a value for the `Id` property is provided (which is mapped to the Cosmos DB `id` property), as well as values for all the partition key properties. Furthermore, there are no additional components to the query. When all these conditions are met, EF is able to execute the query as a point read:
+In this query, a value for the `Id` property is provided (which is mapped to the Azure Cosmos DB `id` property), as well as values for all the partition key properties. Furthermore, there are no additional components to the query. When all these conditions are met, EF is able to execute the query as a point read:
 
 ```console
 Executed ReadItem (46 ms, 1 RU) ActivityId='d7391311-2266-4811-ae2d-535904c42c43', Container='test', Id='9', Partition='["Microsoft","99a410d7-e467-4cc5-92de-148f3fc53f4c",10.0]'
@@ -115,7 +115,7 @@ Note that as with partition key extraction, significant improvements have been m
 ## Pagination
 
 > [!NOTE]
-> This feature was introduced in EF Core 9.0 and is stil experimental. Please let us know how it works for you and if you have any feedback.
+> This feature was introduced in EF Core 9.0 and is still experimental. Please let us know how it works for you and if you have any feedback.
 
 Pagination refers to retrieving results in pages, rather than all at once; this is typically done for large resultsets, where a user interface is displayed, allowing users to navigate through pages of the results.
 
@@ -130,7 +130,7 @@ var nextPage = context.Session
     .ToList();
 ```
 
-Unfortunately, this technique is quite inefficient and can considerably increase querying costs. Cosmos DB provides a special mechanism for paginating through the result of a query, via the use of _continuation tokens_:
+Unfortunately, this technique is quite inefficient and can considerably increase querying costs. Azure Cosmos DB provides a special mechanism for paginating through the result of a query, via the use of _continuation tokens_:
 
 ```csharp
 CosmosPage firstPage = await context.Sessions
@@ -157,20 +157,20 @@ foreach (var session in nextPage.Values)
 }
 ```
 
-We execute the same query, but this time we pass in the continuation token received from the first execution; this instructs Cosmos DB to continue the query where it left off, and fetch the next 10 items. Once we fetch the last page and there are no more results, the continuation token will be `null`, and the "Next" button can be grayed out. This method of paginating is extremely efficient and cost-effective compared to using `Skip` and `Take`.
+We execute the same query, but this time we pass in the continuation token received from the first execution; this instructs the query engine to continue the query where it left off, and fetch the next 10 items. Once we fetch the last page and there are no more results, the continuation token will be `null`, and the "Next" button can be grayed out. This method of paginating is extremely efficient and cost-effective compared to using `Skip` and `Take`.
 
-To learn more about pagination in Cosmos DB, [see this page](/azure/cosmos-db/nosql/query/pagination).
+To learn more about pagination in Azure Cosmos DB, [see this page](/azure/cosmos-db/nosql/query/pagination).
 
 > [!NOTE]
-> Cosmos DB does not support backwards pagination, and does not provide a count of the total pages or items.
+> Azure Cosmos DB does not support backwards pagination, and does not provide a count of the total pages or items.
 >
-> `ToPageAsync` is currently annotated as experimental, since it may be replaced with a more general EF pagination API that isn't Cosmos-specific. Although using the current API will generate a compilation warning (`EF9102`), doing so should be safe - future changes may require minor tweaks in the API shape.
+> `ToPageAsync` is currently annotated as experimental, since it may be replaced with a more generic EF pagination API that isn't Azure Cosmos DB specific. Although using the current API will generate a compilation warning (`EF9102`), doing so should be safe - future changes may require minor tweaks in the API shape.
 
 ## `FindAsync`
 
 [`FindAsync`](xref:core/change-tracking/entity-entries#find-and-findasync) is a useful API for getting an entity by its primary key, and avoiding a database roundtrip when the entity has already been loaded and is tracked by the context.
 
-Developers familiar with relational databases are used to the primary key of an entity type consisting e.g. of an `Id` property. When using the EF Cosmos DB provider, the primary key contains the partition key properties in addition to the property mapped to the JSON `id` property; this is the case since Cosmos DB allows different partitions to contain documents with the same JSON `id` property, and so only the combined `id` and partition key uniquely identify a single document in a container:
+Developers familiar with relational databases are used to the primary key of an entity type consisting e.g. of an `Id` property. When using the EF Azure Cosmos DB provider, the primary key contains the partition key properties in addition to the property mapped to the JSON `id` property; this is the case since Azure Cosmos DB allows different partitions to contain documents with the same JSON `id` property, and so only the combined `id` and partition key uniquely identify a single document in a container:
 
 ```csharp
 public class Session
@@ -211,7 +211,7 @@ FROM (
 
 Note that `FromSql` was introduced in EF 9.0. In previous versions, `FromSqlRaw` can be used instead, although note that that method is vulnerable to SQL injection attacks.
 
-For more information on SQL querying, see the [relational documentation on SQL queries](xref:core/querying/sql-queries); most of that content is relevant for the Cosmos provider as well.
+For more information on SQL querying, see the [relational documentation on SQL queries](xref:core/querying/sql-queries); most of that content is relevant for the Azure Cosmos DB provider as well.
 
 ## Function mappings
 
@@ -309,4 +309,4 @@ EF.Functions.VectorDistance(vector1, vector2, bruteForce, distanceFunction)<sup>
 
 <sup>1</sup> Note that `EF.Functions.CoalesceUndefined` coalesces `undefined`, not `null`. To coalesce `null`, use the regular C# `??` operator.
 
-<sup>2</sup> [See the documentation](xref:core/providers/cosmos/vector-search) for information on using vector search in Azure Cosmos DB. Cosmos DB vector searching is experimental and the APIs are subject to change.
+<sup>2</sup> [See the documentation](xref:core/providers/cosmos/vector-search) for information on using vector search in Azure Cosmos DB, which is experimental. The APIs are subject to change.
