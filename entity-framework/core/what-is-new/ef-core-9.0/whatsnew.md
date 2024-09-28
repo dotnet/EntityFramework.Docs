@@ -279,7 +279,7 @@ For more information, [see the documentation section on pagination](xref:core/pr
 
 ### Role-based access
 
-Azure Cosmos DB for NoSQL includes a [built-in role-based access control (RBAC) system](/azure/cosmos-db/role-based-access-control). This is now supported by EF9 for both management and use of containers. No changes are required to application code. See [Issue #32197](https://github.com/dotnet/efcore/issues/32197) for more information.
+Azure Cosmos DB for NoSQL includes a [built-in role-based access control (RBAC) system](/azure/cosmos-db/role-based-access-control). This is now supported by EF9 for all data plane operations. However, Azure Cosmos DB SDK does not support RBAC for management plane operations in Azure Cosmos DB. Use Azure Management API instead of `EnsureCreatedAsync` with RBAC.
 
 ### Synchronous I/O is now blocked by default
 
