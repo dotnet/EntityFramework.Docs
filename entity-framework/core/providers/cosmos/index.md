@@ -68,12 +68,13 @@ The Azure Cosmos DB provider for EF Core has multiple overloads of the [UseCosmo
 
 > [!IMPORTANT]
 > Make sure to understand [_Secure access to data in Azure Cosmos DB_](/azure/cosmos-db/secure-access-to-data) to understand the security implications and best practices for using each overload of the `UseCosmos` method.
+> Generally, RBAC with token credentials is the recommended access-control mechanism.
 
 | Connection Mechanism       | UseCosmos Overload                                                     | More information                                                                          |
-|----------------------------|------------------------------------------------------------------------|-------------------------------------------------------------------------------------------|
-| Account endpoint and key   | `UseCosmos<DbContext>(accountEndpoint, accountKey, databaseName)`      | [Primary/secondary keys](/azure/cosmos-db/secure-access-to-data#primary-keys)             |
-| Account endpoint and token | `UseCosmos<DbContext>(accountEndpoint, tokenCredential, databaseName)` | [Resource tokens](/azure/cosmos-db/secure-access-to-data#primary-keys)                    |
-| Connection string          | `UseCosmos<DbContext>(connectionString, databaseName)`                 | [Work with account keys and connection strings](/azure/cosmos-db/scripts/cli/common/keys) |
+|----------------------------|------------------------------------------------------------------------|----------------------------------------------------------------------------------------------|
+| Account endpoint and key   | `UseCosmos<DbContext>(accountEndpoint, accountKey, databaseName)`      | [Primary/secondary keys](/azure/cosmos-db/secure-access-to-data#primary-keys)                |
+| Account endpoint and token | `UseCosmos<DbContext>(accountEndpoint, tokenCredential, databaseName)` | [RBAC and Resource tokens](/azure/cosmos-db/secure-access-to-data#role-based-access-control) |
+| Connection string          | `UseCosmos<DbContext>(connectionString, databaseName)`                 | [Work with account keys and connection strings](/azure/cosmos-db/scripts/cli/common/keys)    |
 
 ## Azure Cosmos DB options
 
