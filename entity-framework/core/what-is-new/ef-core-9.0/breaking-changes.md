@@ -21,7 +21,7 @@ EF Core 9 targets .NET 8. This means that existing applications that target .NET
 ## Summary
 
 > [!NOTE]
-> If you are using Azure Cosmos DB, please see the [separate section below on Cosmos DB breaking changes](#cosmos-breaking-changes).
+> If you are using Azure Cosmos DB, please see the [separate section below on Azure Cosmos DB breaking changes](#azure-cosmos-db-breaking-changes).
 
 | **Breaking change**                                                                                  | **Impact** |
 |:-----------------------------------------------------------------------------------------------------|------------|
@@ -80,9 +80,9 @@ Not having matching number of arguments and nullability propagation arguments ca
 
 Make sure the `argumentsPropagateNullability` has same number of elements as the `arguments`. When in doubt use `false` for nullability argument.
 
-## Cosmos breaking changes
+## Azure Cosmos DB breaking changes
 
-Extensive work has gone into making the Cosmos DB provider better in 9.0. The changes include a number of high-impact breaking changes; if you are upgrading an existing application, please read the following carefully.
+Extensive work has gone into making the Azure Cosmos DB provider better in 9.0. The changes include a number of high-impact breaking changes; if you are upgrading an existing application, please read the following carefully.
 
 | **Breaking change**                                                                                                                                  | **Impact** |
 |:---------------------------------------------------------------------------------------------------------------------------------------------------- | ---------- |
@@ -109,7 +109,7 @@ EF automatically adds a discriminator property to JSON documents to identify the
 
 ##### New behavior
 
-Starting with EF Core 9.0, the discriminator property is now called `$type` by default. If you have existing documents in Cosmos DB from previous versions of EF, these use the old `Discriminator` naming, and after upgrading to EF 9.0, queries against those documents will fail.
+Starting with EF Core 9.0, the discriminator property is now called `$type` by default. If you have existing documents in Azure Cosmos DB from previous versions of EF, these use the old `Discriminator` naming, and after upgrading to EF 9.0, queries against those documents will fail.
 
 ##### Why
 
@@ -139,13 +139,13 @@ Previously, EF inserted the discriminator value of your entity type into the `id
 
 ##### New behavior
 
-Starting with EF Core 9.0, the JSON `id` property no longer contains the discriminator value, and only contains the avlue of your key property. For the above example, the JSON `id` property would simply be `8`. If you have existing documents in Cosmos DB from previous versions of EF, these have the discriminator value in the JSON `id` property, and after upgrading to EF 9.0, queries against those documents will fail.
+Starting with EF Core 9.0, the JSON `id` property no longer contains the discriminator value, and only contains the value of your key property. For the above example, the JSON `id` property would simply be `8`. If you have existing documents in Azure Cosmos DB from previous versions of EF, these have the discriminator value in the JSON `id` property, and after upgrading to EF 9.0, queries against those documents will fail.
 
 ##### Why
 
-Since the JSON `id` property must be unique, the discriminator was previously added to it so as to allow different entities to exist with the same key value; for example, this allowed having both a `Blog` and a `Post` with an `Id` property containing 8 within the same container and partition. This was assumed to be expected by developers used to relational databases, where each entity type is mapped its own table, and therefore has its own key-space.
+Since the JSON `id` property must be unique, the discriminator was previously added to it to allow different entities with the same key value to exist. For example, this allowed having both a `Blog` and a `Post` with an `Id` property containing the value 8 within the same container and partition. This aligned better with relational database data modeling patterns, where each entity type is mapped to its own table, and therefore has its own key-space.
 
-EF 9.0 generally changed the mapping to be more aligned with common Cosmos DB practices and expectations, rather than to correspond to the expectations of users coming from relational databases. In addition, having the discriminator value in the `id` property made it more difficult for external tools and systems to interact with EF-generated JSON documents; such external systems aren't generally aware of the EF discriminator values, which are by default derived from .NET types.
+EF 9.0 generally changed the mapping to be more aligned with common Azure Cosmos DB NoSQL practices and expectations, rather than to correspond to the expectations of users coming from relational databases. In addition, having the discriminator value in the `id` property made it more difficult for external tools and systems to interact with EF-generated JSON documents; such external systems aren't generally aware of the EF discriminator values, which are by default derived from .NET types.
 
 ##### Mitigations
 
@@ -206,7 +206,7 @@ Previously, EF generated queries such as the following:
 SELECT c["City"] FROM root c
 ```
 
-Such queries cause Cosmos DB to wrap each result in a JSON object, as follows:
+Such queries cause Azure Cosmos DB to wrap each result in a JSON object, as follows:
 
 ```json
 [
@@ -227,7 +227,7 @@ Starting with EF Core 9.0, EF now adds the `VALUE` modifier to queries as follow
 SELECT VALUE c["City"] FROM root c
 ```
 
-Such queries cause Cosmos DB to return the values directly, without being wrapped:
+Such queries cause Azure Cosmos DB to return the values directly, without being wrapped:
 
 ```json
 [
@@ -240,7 +240,7 @@ If your application makes use of [SQL queries](xref:core/providers/cosmos/queryi
 
 ##### Why
 
-Wrapping each result in an additional JSON object can cause performance degradation in some scenarios, bloats the JSON result payload, and isn't the natural way to work with Cosmos DB.
+Wrapping each result in an additional JSON object can cause performance degradation in some scenarios, bloats the JSON result payload, and isn't the natural way to work with Azure Cosmos DB.
 
 ##### Mitigations
 
@@ -260,7 +260,7 @@ Previously, EF generated queries such as the following:
 SELECT c["City"] FROM root c
 ```
 
-Such queries cause Cosmos DB to wrap each result in a JSON object, as follows:
+Such queries cause Azure Cosmos DB to wrap each result in a JSON object, as follows:
 
 ```json
 [
@@ -283,7 +283,7 @@ Starting with EF Core 9.0, EF now adds the `VALUE` modifier to queries as follow
 SELECT VALUE c["City"] FROM root c
 ```
 
-Such queries cause Cosmos DB to return the values directly, without being wrapped:
+Such queries cause Azure Cosmos DB to return the values directly, without being wrapped:
 
 ```json
 [
@@ -292,11 +292,11 @@ Such queries cause Cosmos DB to return the values directly, without being wrappe
 ]
 ```
 
-The Cosmos DB behavior is to automatically filter `undefined` values out of results; this means that if one of the `City` properties is absent from the document, the query would return just a single result, rather than two results, with one being `null`.
+The Azure Cosmos DB behavior is to automatically filter `undefined` values out of results; this means that if one of the `City` properties is absent from the document, the query would return just a single result, rather than two results, with one being `null`.
 
 ##### Why
 
-Wrapping each result in an additional JSON object can cause performance degradation in some scenarios, bloats the JSON result payload, and isn't the natural way to work with Cosmos DB.
+Wrapping each result in an additional JSON object can cause performance degradation in some scenarios, bloats the JSON result payload, and isn't the natural way to work with Azure Cosmos DB.
 
 ##### Mitigations
 
@@ -355,7 +355,7 @@ var sessions = await context.Sessions
     .ToListAsync();
 ```
 
-Unfortunately, Cosmos does not currently support the `OFFSET` and `LIMIT` clauses in SQL subqueries, which is what the proper translation of the original LINQ query requires.
+Unfortunately, Azure Cosmos DB does not currently support the `OFFSET` and `LIMIT` clauses in SQL subqueries, which is what the proper translation of the original LINQ query requires.
 
 ### Low-impact changes
 
@@ -375,7 +375,7 @@ The provider now throws if <xref: Microsoft.EntityFrameworkCore.Metadata.Builder
 
 ##### Why
 
-In Cosmos DB, all properties are indexed by default, and no indexing needs to be specified. While it's possible to define a custom indexing policy, this isn't currently supported by EF, and can be done via the Azure Portal without EF support. Since <xref: Microsoft.EntityFrameworkCore.Metadata.Builders.EntityTypeBuilder%601.HasIndex%2A> calls weren't doing anything, they are no longer allowed.
+In Azure Cosmos DB, all properties are indexed by default, and no indexing needs to be specified. While it's possible to define a custom indexing policy, this isn't currently supported by EF, and can be done via the Azure Portal without EF support. Since <xref: Microsoft.EntityFrameworkCore.Metadata.Builders.EntityTypeBuilder%601.HasIndex%2A> calls weren't doing anything, they are no longer allowed.
 
 ##### Mitigations
 
@@ -389,7 +389,7 @@ Remove any calls to <xref: Microsoft.EntityFrameworkCore.Metadata.Builders.Entit
 
 ##### Old behavior
 
-The `IncludeRootDiscriminatorInJsonId` Cosmos API was introduced in 9.0.0 rc.1.
+The `IncludeRootDiscriminatorInJsonId` API was introduced in 9.0.0 rc.1.
 
 ##### New behavior
 

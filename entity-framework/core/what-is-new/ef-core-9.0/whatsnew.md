@@ -24,16 +24,16 @@ EF9 targets .NET 8, and can therefore be used with either [.NET 8 (LTS)](https:/
 
 ## Azure Cosmos DB for NoSQL
 
-EF 9.0 brings substantial improvements to the EF Core provider for Azure Cosmos DB; significant parts of the provider have been rewritten to provide new functionality, allow new forms of queries, and better align the provider with Cosmos DB best practices. The main high-level improvements are listed below; for a full list, [see this epic issue](https://github.com/dotnet/efcore/issues/33033).
+EF 9.0 brings substantial improvements to the EF Core provider for Azure Cosmos DB; significant parts of the provider have been rewritten to provide new functionality, allow new forms of queries, and better align the provider with Azure Cosmos DB best practices. The main high-level improvements are listed below; for a full list, [see this epic issue](https://github.com/dotnet/efcore/issues/33033).
 
 > [!WARNING]
 > As part of the improvements going into the provider, a number of high-impact breaking changes had to be made; if you are upgrading an existing application, please read the [breaking changes section](xref:core/what-is-new/ef-core-9.0/breaking-changes#cosmos-breaking-changes) carefully.
 
 ### Improvements querying with partition keys and document IDs
 
-Each document stored in the Cosmos database has a unique resource ID. In addition, each document can contain a "partition key" which determines the logical partitioning of data such that the database can be effectively scaled. More information on choosing partition keys can be found in [_Partitioning and horizontal scaling in Azure Cosmos DB_](/azure/cosmos-db/partitioning-overview).
+Each document stored in an Azure Cosmos DB database has a unique resource ID. In addition, each document can contain a "partition key" which determines the logical partitioning of data such that the database can be effectively scaled. More information on choosing partition keys can be found in [_Partitioning and horizontal scaling in Azure Cosmos DB_](/azure/cosmos-db/partitioning-overview).
 
-In EF 9.0, the Cosmos DB provider is significantly better at identifying partition key comparisons in your LINQ queries, and extracting them out to make your queries are only sent to the relevant partition; this can greatly improve the performance of your queries and reduce costs. For example:
+In EF 9.0, the Azure Cosmos DB provider is significantly better at identifying partition key comparisons in your LINQ queries, and extracting them out to ensure your queries are only sent to the relevant partition; this can greatly improve the performance of your queries and reduce RU charges. For example:
 
 ```csharp
 var sessions = await context.Sessions
@@ -68,7 +68,7 @@ The logs show the following for this query:
 Executed ReadItem (73 ms, 1 RU) ActivityId='13f0f8b8-d481-47f0-bf41-67f7deb008b2', Container='test', Id='8', Partition='["someValue"]'
 ```
 
-Here, no SQL query is sent at all. Instead, the provider performs an an extremely efficient _point read_ (`ReadItem` API), which directly fetches the document given the partition key and ID. This is the most efficient and cost-effective kind of read you can perform in Cosmos DB; [see the Cosmos DB documentation](/azure/cosmos-db/nosql/how-to-dotnet-read-item) for more information about point reads.
+Here, no SQL query is sent at all. Instead, the provider performs an an extremely efficient _point read_ (`ReadItem` API), which directly fetches the document given the partition key and ID. This is the most efficient and cost-effective kind of read you can perform in Azure Cosmos DB; [see the Azure Cosmos DB documentation](/azure/cosmos-db/nosql/how-to-dotnet-read-item) for more information about point reads.
 
 To learn more about querying with partition keys and point reads, [see the querying documentation page](xref:core/providers/cosmos/querying).
 
@@ -77,7 +77,7 @@ To learn more about querying with partition keys and point reads, [see the query
 > [!TIP]
 > The code shown here comes from [HierarchicalPartitionKeysSample.cs](https://github.com/dotnet/EntityFramework.Docs/tree/main/samples/core/Miscellaneous/NewInEFCore9.Cosmos/HierarchicalPartitionKeysSample.cs).
 
-Azure Cosmos DB originally supported a single partition key, but has since expanded partitioning capabilities to support [subpartitioning through the specification of up to three levels of hierarchy in the partition key](/azure/cosmos-db/hierarchical-partition-keys). EF Core 9 brings full support for hierarchical partition keys, allowing you take advantage of the better performance and cost savings associated with this feature.
+Azure Cosmos DB originally supported a single partition key, but has since expanded partitioning capabilities to also support [subpartitioning through the specification of up to three levels of hierarchy in the partition key](/azure/cosmos-db/hierarchical-partition-keys). EF Core 9 brings full support for hierarchical partition keys, allowing you take advantage of the better performance and cost savings associated with this feature.
 
 Partition keys are specified using the model building API, typically in <xref:Microsoft.EntityFrameworkCore.DbContext.OnModelCreating%2A?displayProperty=nameWithType>. There must be a mapped property in the entity type for each level of the partition key. For example, consider a `UserSession` entity type:
 
@@ -112,7 +112,7 @@ The following code specifies a three-level partition key using the `TenantId`, `
 
 Notice how, starting with EF Core 9, properties of any mapped type can be used in the partition key. For `bool` and numeric types, like the `int SessionId` property, the value is used directly in the partition key. Other types, like the `Guid UserId` property, are automatically converted to strings.
 
-When querying, EF automatically extracts the partition key values from queries and applies them to the Cosmos query API to ensure the queries are constrained appropriately to the fewest number of partitions possible. For example, consider the following LINQ query that supplies the partition key values:
+When querying, EF automatically extracts the partition key values from queries and applies them to the Azure Cosmos DB query API to ensure the queries are constrained appropriately to the fewest number of partitions possible. For example, consider the following LINQ query that supplies all three partition key values in the hierarchy:
 
 <!--
             var tenantId = "Microsoft";
@@ -129,7 +129,7 @@ When querying, EF automatically extracts the partition key values from queries a
 -->
 [!code-csharp[FullPartitionKey](../../../../samples/core/Miscellaneous/NewInEFCore9.Cosmos/HierarchicalPartitionKeysSample.cs?name=FullPartitionKey)]
 
-When executing this query, EF Core will extract the values of the `tenantId`, `userId`, and `sessionId` parameters, and pass them to the Cosmos query API as the partition key value. For example, see the logs from executing the query above:
+When executing this query, EF Core will extract the values of the `tenantId`, `userId`, and `sessionId` parameters, and pass them to the Azure Cosmos DB query API as the partition key value. For example, see the logs from executing the query above:
 
 ```output
 info: 6/10/2024 19:06:00.017 CosmosEventId.ExecutingSqlQuery[30100] (Microsoft.EntityFrameworkCore.Database.Command) 
@@ -145,22 +145,22 @@ For more information, see the documentation on [querying with partition keys](xr
 
 ### Significantly improved LINQ querying capabilities
 
-In EF 9.0, the LINQ translation capabilities of the the Cosmos DB provider have been greatly expanded, and the provider can now execute significantly more query types. The full list of query improvements is too long to list, but here are the main highlights:
+In EF 9.0, the LINQ translation capabilities of the the Azure Cosmos DB provider have been greatly expanded, and the provider can now execute significantly more query types. The full list of query improvements is too long to list, but here are the main highlights:
 
-* The Cosmos provider now fully supports EF's primitive collections, allowing you to perform LINQ querying on collections of e.g. ints or strings. See [What's new in EF8: primitive collections](xref:core/what-is-new/ef-core-8.0/whatsnew#primitive-collections) for more information.
-* Support for arbitrary querying over non-primitive collections has been added as well.
+* Full support for EF's primitive collections, allowing you to perform LINQ querying on collections of e.g. ints or strings. See [What's new in EF8: primitive collections](xref:core/what-is-new/ef-core-8.0/whatsnew#primitive-collections) for more information.
+* Support for arbitrary querying over non-primitive collections.
 * Lots of additional LINQ operators are now supported: indexing into collections, `Length`/`Count`, `ElementAt`, `Contains`, and many others.
-* Support for aggregate operators such as `Count` and `Sum` has been added.
-* Many function translations have added (see the [function mappings documentation](xref:core/providers/cosmos/querying#function-mappings) for the full list of supported translations):
-  * Translations for `DateTime` and `DateTimeOffset` component members (`DateTime.Year`, `DateTimeOffset.Month`...) have been added.
+* Support for aggregate operators such as `Count` and `Sum`.
+* Additional function translations (see the [function mappings documentation](xref:core/providers/cosmos/querying#function-mappings) for the full list of supported translations):
+  * Translations for `DateTime` and `DateTimeOffset` component members (`DateTime.Year`, `DateTimeOffset.Month`...).
   * `EF.Functions.IsDefined` and `EF.Functions.CoalesceUndefined` now allow dealing with `undefined` values.
   * `string.Contains`, `StartsWith` and `EndsWith` now support `StringComparison.OrdinalIgnoreCase`.
 
 For the full list of querying improvements, see [this issue](https://github.com/dotnet/efcore/issues/33033):
 
-### Improved modeling aligned to Cosmos and JSON standards
+### Improved modeling aligned to Azure Cosmos DB and JSON standards
 
-EF 9.0 maps to Cosmos DB documents in ways which are more natural for a JSON-based document database, and help interoperate with other systems accessing your documents. Although this entails breaking changes, APIs exist which allow reverting back to the pre-9.0 behavior in all cases.
+EF 9.0 maps to Azure Cosmos DB documents in more natural ways for a JSON-based document database, and helps interoperate with other systems accessing your documents. Although this entails breaking changes, APIs exist which allow reverting back to the pre-9.0 behavior in all cases.
 
 #### Simplified `id` properties without discriminators
 
@@ -204,9 +204,9 @@ Note this is a breaking change, since EF will no longer be able to query existin
 
 ### Vector similarity search (preview)
 
-Azure Cosmos DB now offers preview support for vector similarity search. Vector search is a fundamental part of some application types, include AI, semantic search and others. The Cosmos DB support for vector search allows storing your data and vectors and performing your queries in a single database, which can considerably simplify your architecture and remove the need for an additional, dedicated vector database solution in your stack. To learn more about Cosmos DB vector search, [see the documentation](/azure/cosmos-db/nosql/vector-search).
+Azure Cosmos DB now offers preview support for vector similarity search. Vector search is a fundamental part of some application types, including AI, semantic search and others. Azure Cosmos DB allows you to store vectors directly in your documents alongside the rest of your data, meaning you can perform all of your queries against a single database. This can considerably simplify your architecture and remove the need for an additional, dedicated vector database solution in your stack. To learn more about Azure Cosmos DB vector search, [see the documentation](/azure/cosmos-db/nosql/vector-search).
 
-Once your Cosmos DB container is properly set up, using vector search via EF is a simple matter of adding a vector property and configuring it:
+Once your Azure Cosmos DB container is properly set up, using vector search via EF is a simple matter of adding a vector property and configuring it:
 
 ```c#
 public class Blog
@@ -242,14 +242,14 @@ For more information, see the [documentation on vector search](xref:core/provide
 
 ### Pagination support
 
-The Cosmos DB provider now allows for paginating through query results via _continuation tokens_, which is far more efficient and cost-effective than the traditional use of `Skip` and `Take`:
+The Azure Cosmos DB provider now allows for paginating through query results via _continuation tokens_, which is far more efficient and cost-effective than the traditional use of `Skip` and `Take`:
 
 ```c#
 var firstPage = await context.Posts
     .OrderBy(p => p.Id)
     .ToPageAsync(pageSize: 10, continuationToken: null);
 
-var continuationToken = page.ContinuationToken;
+var continuationToken = firstPage.ContinuationToken;
 foreach (var post in page.Values)
 {
     // Display/send the posts to the user
@@ -266,7 +266,7 @@ For more information, [see the documentation section on pagination](xref:core/pr
 
 ### FromSql for safer SQL querying
 
-The Cosmos DB provider has allowed SQL querying via <xref:Microsoft.EntityFrameworkCore.CosmosQueryableExtensions.FromSqlRaw%2A>. However, that API can be susceptible to SQL injection attacks when user-provided data is interpolated or concatenated into the SQL. In EF 9.0, you can now use the new `FromSql` method, which always integrates parameterized data as a parameter outside the SQL:
+The Azure Cosmos DB provider has allowed SQL querying via <xref:Microsoft.EntityFrameworkCore.CosmosQueryableExtensions.FromSqlRaw%2A>. However, that API can be susceptible to SQL injection attacks when user-provided data is interpolated or concatenated into the SQL. In EF 9.0, you can now use the new `FromSql` method, which always integrates parameterized data as a parameter outside the SQL:
 
 ```c#
 var maxAngle = 8;
