@@ -38,6 +38,15 @@ public static class QuerySample
                 .ToListAsync();
         #endregion
 
+        _ = await GetPostsPrimitiveCollection([1, 2, 3]);
+
+        #region DefaultParameterizationPrimitiveCollection
+        async Task<List<Post>> GetPostsPrimitiveCollection(int[] ids)
+            => await context.Posts
+                .Where(e => e.Title == ".NET Blog" && ids.Contains(e.Id))
+                .ToListAsync();
+        #endregion
+
         Console.WriteLine();
         Console.WriteLine("Force parameterization of a constant:");
         Console.WriteLine();
@@ -61,6 +70,20 @@ public static class QuerySample
         async Task<List<Post>> GetPostsForceConstant(int id)
             => await context.Posts
                 .Where(e => e.Title == ".NET Blog" && e.Id == EF.Constant(id))
+                .ToListAsync();
+        #endregion
+
+        Console.WriteLine();
+        Console.WriteLine("Force constant primitive collection:");
+        Console.WriteLine();
+
+        _ = await GetPostsForceConstantCollection([1, 2, 3]);
+
+        #region ForceConstantPrimitiveCollection
+        async Task<List<Post>> GetPostsForceConstantCollection(int[] ids)
+            => await context.Posts
+                .Where(
+                    e => e.Title == ".NET Blog" && EF.Constant(ids).Contains(e.Id))
                 .ToListAsync();
         #endregion
 
@@ -115,11 +138,19 @@ public static class QuerySample
             #endregion
         }
 
+        Console.WriteLine();
+        Console.WriteLine("Case translation improvements:");
+        Console.WriteLine();
+
         #region CaseTranslationImprovements
         var caseSimplification = await context.Blogs
             .Select(b => !(b.Id > 5 ? false : true))
             .ToListAsync();
         #endregion
+
+        Console.WriteLine();
+        Console.WriteLine("Negated bool improvements:");
+        Console.WriteLine();
 
         if (context.UseSqlite)
         {
@@ -130,15 +161,23 @@ public static class QuerySample
             #endregion
         }
 
-        #region XorBoolProjection
+        #region NegatedBoolProjection
         var negatedBoolProjection = await context.Posts.Select(x => new { x.Title, Active = !x.Archived }).ToListAsync();
         #endregion
+
+        Console.WriteLine();
+        Console.WriteLine("Enum to string translation:");
+        Console.WriteLine();
 
         #region EnumToString
         var englishAndSpanishBlogs = await context.Blogs
             .Where(x => x.Language.ToString().EndsWith("ish"))
             .Select(x => x.Name).ToListAsync();
         #endregion
+
+        Console.WriteLine();
+        Console.WriteLine("Average on decimal:");
+        Console.WriteLine();
 
         #region AverageOnDecimal
         var averagePostRating = await context.Blogs.Select(x => new
@@ -148,9 +187,88 @@ public static class QuerySample
         }).ToListAsync();
         #endregion
 
-        #region ConvertFromObject
-        var blogWithConversion = await context.Blogs
+        Console.WriteLine();
+        Console.WriteLine("Convert from object:");
+        Console.WriteLine();
+
+        if (!context.UseSqlite)
+        {
+            #region ConvertFromObject
+            var blogWithConversion = await context.Blogs
             .Where(x => Convert.ToDecimal((object)Convert.ToString(x.Id)) == 1.0M)
+            .ToListAsync();
+            #endregion
+        }
+
+        Console.WriteLine();
+        Console.WriteLine("Xor support:");
+        Console.WriteLine();
+
+        if (!context.UseSqlite)
+        {
+            #region XorSupport
+            var xorSupportBool = await context.Posts.CountAsync(x => x.Archived ^ (x.Rating > 3.5M));
+            var xorSupportInt = await context.Posts.Where(x => (x.Id ^ 7) > 10).ToListAsync();
+            #endregion
+        }
+
+        Console.WriteLine();
+        Console.WriteLine("Aggregate over subquery/aggregate:");
+        Console.WriteLine();
+
+        #region AggregateOverSubquery
+        var latestPostsAverageRatingByLanguage = await context.Blogs.
+            Select(x => new
+            {
+                x.Language,
+                LatestPostRating = x.Posts.OrderByDescending(xx => xx.PublishedOn).FirstOrDefault().Rating
+            })
+            .GroupBy(x => x.Language)
+            .Select(x => x.Average(xx => xx.LatestPostRating))
+            .ToListAsync();
+        #endregion
+
+        // Max over decimal is not supported on Sqlite
+        if (!context.UseSqlite)
+        {
+            #region AggregateOverAggregate
+            var topRatedPostsAverageRatingByLanguage = await context.Blogs.
+            Select(x => new
+            {
+                x.Language,
+                TopRating = x.Posts.Max(x => x.Rating)
+            })
+            .GroupBy(x => x.Language)
+            .Select(x => x.Average(xx => xx.TopRating))
+            .ToListAsync();
+            #endregion
+        }
+
+        Console.WriteLine();
+        Console.WriteLine("Order and OrderDescending:");
+        Console.WriteLine();
+
+        #region OrderOrderDescending
+        var orderOperation = await context.Blogs
+            .Order()
+            .Select(x => new
+            {
+                x.Name,
+                OrderedPosts = x.Posts.OrderDescending().ToList(),
+                OrderedTitles = x.Posts.Select(xx => xx.Title).Order().ToList()
+            })
+            .ToListAsync();
+        #endregion
+
+        #region OrderByEquivalent
+        var orderByEquivalent = await context.Blogs
+            .OrderBy(x => x.Id)
+            .Select(x => new
+            {
+                x.Name,
+                OrderedPosts = x.Posts.OrderByDescending(xx => xx.Id).ToList(),
+                OrderedTitles = x.Posts.Select(xx => xx.Title).OrderBy(xx => xx).ToList()
+            })
             .ToListAsync();
         #endregion
     }

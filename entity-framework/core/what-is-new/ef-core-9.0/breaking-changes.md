@@ -25,8 +25,9 @@ EF Core 9 targets .NET 8. This means that existing applications that target .NET
 
 | **Breaking change**                                                                                  | **Impact** |
 |:-----------------------------------------------------------------------------------------------------|------------|
-| [`EF.Functions.Unhex()` now returns `byte[]?`](#unhex)                                                 | Low        |
+| [`EF.Functions.Unhex()` now returns `byte[]?`](#unhex)                                               | Low        |
 | [SqlFunctionExpression's nullability arguments' arity validated](#sqlfunctionexpression-nullability) | Low        |
+| [`ToString()` method now returns empty string for `null` instances](#nullable-tostring)              | Low        |
 
 ## Low-impact changes
 
@@ -79,6 +80,33 @@ Not having matching number of arguments and nullability propagation arguments ca
 #### Mitigations
 
 Make sure the `argumentsPropagateNullability` has same number of elements as the `arguments`. When in doubt use `false` for nullability argument.
+
+<a name="nullable-tostring"></a>
+
+### `ToString()` method now returns empty string for `null` instances
+
+[Tracking Issue #33941](https://github.com/dotnet/efcore/issues/33941)
+
+#### Old behavior
+
+Previously EF returned inconsistent results for the `ToString()` method when the argument value was `null`. E.g. `ToString()` on `bool?` property with `null` value returned `null`, but for non-property `bool?` expressions whose value was `null` it returned `True`. The behavior was also incosistent for other data types, e.g. `ToString()` on `null` value enum returned empty string.
+
+#### New behavior
+
+Starting with EF Core 9.0, the `ToString()` method now consistently returns empty string in all cases when the argument value is `null`.
+
+#### Why
+
+The old behavior was inconsistent across different data types and situations, as well as not aligned with the [C# behavior](/dotnet/api/system.nullable-1.tostring#returns).
+
+#### Mitigations
+
+To revert to the old behavior, rewrite the query accordingly:
+
+```csharp
+var newBehavior = context.Entity.Select(x => x.NullableBool.ToString());
+var oldBehavior = context.Entity.Select(x => x.NullableBool == null ? null : x.NullableBool.ToString());
+```
 
 ## Azure Cosmos DB breaking changes
 
