@@ -68,7 +68,7 @@ This change was made to ensure that, by default, either the connection is secure
 There are three ways to proceed:
 
 1. [Install a valid certificate on the server](/sql/database-engine/configure-windows/enable-encrypted-connections-to-the-database-engine). Note that this is an involved process and requires obtaining a certificate and ensuring it is signed by an authority trusted by the client.
-2. If the server has a certificate, but it is not trusted by the client, then `TrustServerCertificate=True` to allow bypassing the normal trust mechanims.
+2. If the server has a certificate, but it is not trusted by the client, then `TrustServerCertificate=True` to allow bypassing the normal trust mechanism.
 3. Explicitly add `Encrypt=False` to the connection string.
 
 > [!WARNING]

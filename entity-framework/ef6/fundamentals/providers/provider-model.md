@@ -49,7 +49,7 @@ This is an optional service that allows a provider to create DbConnection object
 
 ### DbSpatialServices
 
-This is an optional services that allows a provider to add support for geography and geometry spatial types. An implementation of this service must be supplied in order for an application to use EF with spatial types. DbSptialServices is asked for in two ways. First, provider-specific spatial services are requested using a DbProviderInfo object (which contains invariant name and manifest token) as key. Second, DbSpatialServices can be asked for with no key. This is used to resolve the “global spatial provider” that is used when creating stand-alone DbGeography or DbGeometry types.
+This is an optional services that allows a provider to add support for geography and geometry spatial types. An implementation of this service must be supplied in order for an application to use EF with spatial types. DbSpatialServices is asked for in two ways. First, provider-specific spatial services are requested using a DbProviderInfo object (which contains invariant name and manifest token) as key. Second, DbSpatialServices can be asked for with no key. This is used to resolve the “global spatial provider” that is used when creating stand-alone DbGeography or DbGeometry types.
 
 ### MigrationSqlGenerator
 
@@ -97,7 +97,7 @@ public class MyConfiguration : DbConfiguration
 
 ## Resolving additional services
 
-As mentioned above in the _Provider types overview_ section, a DbProviderServices class can also be used to resolve additional services. This is possible because DbProviderServices implements IDbDependencyResolver and each registered DbProviderServices type is added as a “default resolver”. The IDbDpendencyResolver mechanism is described in more detail in [Dependency Resolution](xref:ef6/fundamentals/configuring/dependency-resolution). However, it is not necessary to understand all the concepts in this specification to resolve additional services in a provider.
+As mentioned above in the _Provider types overview_ section, a DbProviderServices class can also be used to resolve additional services. This is possible because DbProviderServices implements IDbDependencyResolver and each registered DbProviderServices type is added as a “default resolver”. The IDbDependencyResolver mechanism is described in more detail in [Dependency Resolution](xref:ef6/fundamentals/configuring/dependency-resolution). However, it is not necessary to understand all the concepts in this specification to resolve additional services in a provider.
 
 The most common way for a provider to resolve additional services is to call DbProviderServices.AddDependencyResolver for each service in the constructor of the DbProviderServices class. For example, SqlProviderServices (the EF provider for SQL Server) has code similar to this for initialization:
 

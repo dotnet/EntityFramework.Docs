@@ -2248,7 +2248,7 @@ You can also perform this check programmatically in your application or tests us
 
 ## Enhancements to SQLite scaffolding
 
-SQLite only supports four primitive data types--INTEGER, REAL, TEXT, and BLOB. Previously, this meant that when you reverse engineerd a SQLite database to [scaffold an EF Core model](xref:core/managing-schemas/scaffolding), the resulting entity types would only included properties of type `long`, `double`, `string`, and `byte[]`. Additional .NET types are supported by the EF Core SQLite provider by converting between them and one of the four primitive SQLite types.
+SQLite only supports four primitive data types--INTEGER, REAL, TEXT, and BLOB. Previously, this meant that when you reverse engineered a SQLite database to [scaffold an EF Core model](xref:core/managing-schemas/scaffolding), the resulting entity types would only included properties of type `long`, `double`, `string`, and `byte[]`. Additional .NET types are supported by the EF Core SQLite provider by converting between them and one of the four primitive SQLite types.
 
 In EF Core 8, we now use the data format and column type name in addition to the SQLite type in order to determine a more appropriate .NET type to use in the model. The following tables show some of the cases where the additional information leads to better property types in the model.
 

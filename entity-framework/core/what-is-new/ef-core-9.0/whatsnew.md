@@ -836,7 +836,7 @@ WHERE EXISTS (
 ### C# semantics for comparison operations on nullable values
 
 In EF8 comparisons between nullable elements were not performed correctly for some scenarios. In C#, if one or both operands are null, the result of a comparison operation is false; otherwise, the contained values of operands are compared. In EF8 we used to translate comparisons using database null semantics. This would produce results different than similar query using LINQ to Objects.
-Moreover, we would produce different results when comparison was done in filter vs projection. Some queris would also produce differet results between Sql Server and Sqlite/Postgres.
+Moreover, we would produce different results when comparison was done in filter vs projection. Some queries would also produce different results between Sql Server and Sqlite/Postgres.
 
 For example, the query:
 
@@ -958,7 +958,7 @@ This enhancement was contributed by the EF Team alumnus [@bricelam](https://gith
 
 ### Improved translation of logical negation operator (!)
 
-EF9 brings many optimizimations around SQL `CASE/WHEN`, `COALESCE`, negation, and various other constructs; most of these were contributed by Andrea Canciani ([@ranma42](https://github.com/ranma42)) - many thanks for all of these! Below, we'll detail just a few of these optimizations around logical negation.
+EF9 brings many optimizations around SQL `CASE/WHEN`, `COALESCE`, negation, and various other constructs; most of these were contributed by Andrea Canciani ([@ranma42](https://github.com/ranma42)) - many thanks for all of these! Below, we'll detail just a few of these optimizations around logical negation.
 
 Let's examine the following query:
 
@@ -1570,7 +1570,7 @@ To create a node between these two children, an additional sub-level can be used
 -->
 [!code-csharp[HierarchyIdParse2](../../../../samples/core/Miscellaneous/NewInEFCore9/HierarchyIdSample.cs?name=HierarchyIdParse2)]
 
-This creates a node with a `HierarchyId` of `/4/1/3/1/1.5/`, putting it bteween `child1` and `child2`.
+This creates a node with a `HierarchyId` of `/4/1/3/1/1.5/`, putting it between `child1` and `child2`.
 
 This enhancement was contributed by [@Rezakazemi890](https://github.com/Rezakazemi890). Many thanks!
 
