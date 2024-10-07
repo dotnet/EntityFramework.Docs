@@ -2,7 +2,7 @@
 title: Breaking changes in EF Core 9 (EF9) - EF Core
 description: List of breaking changes introduced in Entity Framework Core 9 (EF9)
 author: ajcvickers
-ms.date: 03/25/2024
+ms.date: 10/07/2024
 uid: core/what-is-new/ef-core-9.0/breaking-changes
 ---
 
@@ -28,6 +28,7 @@ EF Core 9 targets .NET 8. This means that existing applications that target .NET
 | [`EF.Functions.Unhex()` now returns `byte[]?`](#unhex)                                               | Low        |
 | [SqlFunctionExpression's nullability arguments' arity validated](#sqlfunctionexpression-nullability) | Low        |
 | [`ToString()` method now returns empty string for `null` instances](#nullable-tostring)              | Low        |
+| [Shared framework dependencies were updated to 9.0.x](#shared-framework-dependencies)                | Low        |
 
 ## Low-impact changes
 
@@ -107,6 +108,26 @@ To revert to the old behavior, rewrite the query accordingly:
 var newBehavior = context.Entity.Select(x => x.NullableBool.ToString());
 var oldBehavior = context.Entity.Select(x => x.NullableBool == null ? null : x.NullableBool.ToString());
 ```
+
+<a name="shared-framework-dependencies"></a>
+
+### Shared framework dependencies were updated to 9.0.x
+
+#### Old behavior
+
+Apps using the `Microsoft.NET.Sdk.Web` SDK and targetting net8.0 would resolve packages like `System.Text.Json`, `Microsoft.Extensions.Caching.Memory`, `Microsoft.Extensions.Configuration.Abstractions`, `Microsoft.Extensions.Logging` and `Microsoft.Extensions.DependencyModel` from the shared framework, so these assemblies wouldn't normally be deployed with the app.
+
+#### New behavior
+
+While EF Core 9.0 still supports net8.0 it now references the 9.0.x versions of `System.Text.Json`, `Microsoft.Extensions.Caching.Memory`, `Microsoft.Extensions.Configuration.Abstractions`, `Microsoft.Extensions.Logging` and `Microsoft.Extensions.DependencyModel`. Apps targetting net8.0 will not be able to leverage the shared framework to avoid deploying these assemblies.
+
+#### Why
+
+The matching dependency versions contain the latest security fixes and using them simplifies the servicing model for EF Core.
+
+#### Mitigations
+
+Change your app to target net9.0 to get the previous behavior.
 
 ## Azure Cosmos DB breaking changes
 
