@@ -1182,6 +1182,21 @@ protected override void Up(MigrationBuilder migrationBuilder)
 }
 ```
 
+<a name="concurrent-migrations"></a>
+
+### Protection against concurrent migrations
+
+EF9 introduces a locking mechanism to protect against multiple migration executions happening simultaneously, as that could leave the database in a corrupted state. This doesn't happen when migrations are deployed to the production environment using [recommended methods](/ef/core/managing-schemas/migrations/applying#sql-scripts), but can happen if migrations are applied at runtime using the [`DbContext.Database.Migrate()`](/dotnet/api/microsoft.entityframeworkcore.relationaldatabasefacadeextensions.migrate) method. We recommend applying migrations at deployment, rather than as part of application startup, but that can result in more complicated application architectures (e.g. [when using .NET Aspire projects](/dotnet/aspire/database/ef-core-migrations).
+
+> [!NOTE]
+> If you are using Sqlite database, see [potential issues associated with this feature](/ef/core/providers/sqlite/limitations#concurrent-migrations-protection).
+
+<a name="warn-when-no-transaction"></a>
+
+### Warn when multiple migration operations can't be run inside a transaction
+
+The majority of operations performed during migrations are protected by a transaction. This ensures that if for some reason migration fails, the database does not end up in a corrupted state. However, some operations are not wrapped in a transaction (e.g. [operations on SQL Server memory-optimized tables](/sql/relational-databases/in-memory-oltp/unsupported-sql-server-features-for-in-memory-oltp#scenarios-not-supported), or database altering operations like modifying the database collation). To avoid corrupting the database in case of migration failure, it is recommended that these operations are performed in isolation using a separate migration. EF9 now detects a scenario when a migration contains multiple operations, one of which can't be wrapped in a transaction, and issues a warning.
+
 ## Model building
 
 <a name="auto-compiled-models"></a>
@@ -1299,7 +1314,7 @@ Model loaded with 2 entity types.
 
 Now, whenever the model changes, the compiled model will be automatically rebuilt as soon as the project is built.
 
-> [NOTE!]
+> [!NOTE]
 > We are working through some performance issues with changes made to the compiled model in EF8 and EF9. See [Issue 33483#](https://github.com/dotnet/efcore/issues/33483) for more information.
 
 <a name="read-only-primitives"></a>

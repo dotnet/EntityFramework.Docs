@@ -90,6 +90,12 @@ Otherwise, we recommend using `dotnet ef database update` to apply migrations. Y
 dotnet ef database update --connection "Data Source=My.db"
 ```
 
+## Concurrent migrations protection
+
+EF9 introduced a locking mechanism when executing migrations. It aims to protect against multiple migration executions happening simultaneously, as that could leave the database in a corrupted state. This is one of the potential problems resulting from applying migrations at runtime using the [`DbContext.Database.Migrate()`](/dotnet/api/microsoft.entityframeworkcore.relationaldatabasefacadeextensions.migrate) method (see [Applying migrations](xref:core/managing-schemas/migrations/applying) for more information). To mitigate this, EF creates an exclusive lock on the database before any migration operations are applied.
+
+Unfortunately, SQLite does not have built-in locking mechanism, so EF creates a separate table (`__EFMigrationsLock`) and uses it for locking. The lock is released when the migration completes and the seeding code finishes execution. However, if for some reason migration fails in a non-recoverable way, the lock may not be released correctly. If this happens, consecutive migrations will be blocked from executing SQL and therefore never complete. You can manually unblock them by deleting the `__EFMigrationsLock` table in the database.
+
 ## See also
 
 * [Microsoft.Data.Sqlite Async Limitations](/dotnet/standard/data/sqlite/async)

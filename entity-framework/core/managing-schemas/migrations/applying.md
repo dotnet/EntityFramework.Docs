@@ -314,7 +314,7 @@ PS C:\local\AllTogetherNow\SixOh>
 
 It's possible for the application itself to apply migrations programmatically, typically during startup. While productive for local development and testing of migrations, this approach is inappropriate for managing production databases, for the following reasons:
 
-* If multiple instances of your application are running, both applications could attempt to apply the migration concurrently and fail (or worse, cause data corruption).
+* For versions of EF prior to 9, if multiple instances of your application are running, both applications could attempt to apply the migration concurrently and fail (or worse, cause data corruption).
 * Similarly, if an application is accessing the database while another application migrates it, this can cause severe issues.
 * The application must have elevated access to modify the database schema. It's generally good practice to limit the application's database permissions in production.
 * It's important to be able to roll back an applied migration in case of an issue. The other strategies provide this easily and out of the box.
