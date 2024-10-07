@@ -13,7 +13,7 @@ This Entity Framework 6 provider is a replacement provider for the built-in SQL 
 This provider depends on the modern [Microsoft.Data.SqlClient](https://github.com/dotnet/SqlClient) ADO.NET provider, which includes the following advantages over the currently used driver:
 
 - Current client receiving full support in contrast to `System.Data.SqlClient`, which is in maintenance mode
-- Suports new SQL Server features, including support for the SQL Server 2022 enchanced client protocol (TDS8)
+- Supports new SQL Server features, including support for the SQL Server 2022 enhanced client protocol (TDS8)
 - Supports most Azure Active Directory authentication methods
 - Supports Always Encrypted with .NET
 

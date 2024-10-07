@@ -44,7 +44,7 @@ To complete this walkthrough, you will need:
 
     ![Import Stored Procedures](~/ef6/media/import.jpg)
 
-    *Starting with Visual Studio 2012 the EF Designer supports bulk import of stored procedures. The **Import selected stored procedures and functions into theentity model** is checked by default.*
+    *Starting with Visual Studio 2012 the EF Designer supports bulk import of stored procedures. The **Import selected stored procedures and functions into the entity model** is checked by default.*
 - Click **Finish**.
 
 By default, the result shape of each imported stored procedure or function that returns more than one column will automatically become a new complex type. In this example we want to map the results of the **GetStudentGrades** function to the **StudentGrade** entity and the results of the **GetDepartmentName** to **none** (**none** is the default value).

@@ -688,7 +688,7 @@ Starting with 3.0, EF Core only creates one column for `ShippingAddress`.
 
 #### Why
 
-The old behavoir was unexpected.
+The old behavior was unexpected.
 
 #### Mitigations
 
@@ -1421,7 +1421,7 @@ Microsoft.Data.Sqlite remains capable of reading Guid values from both BLOB and 
 
 #### Old behavior
 
-Char values were previously sored as INTEGER values on SQLite. For example, a char value of _A_ was stored as the integer value 65.
+Char values were previously stored as INTEGER values on SQLite. For example, a char value of _A_ was stored as the integer value 65.
 
 #### New behavior
 

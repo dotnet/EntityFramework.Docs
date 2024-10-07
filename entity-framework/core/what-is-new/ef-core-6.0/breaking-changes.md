@@ -315,7 +315,7 @@ OnDelete()     | ON DELETE
 NoAction       | NO ACTION
 ClientNoAction | NO ACTION
 Restrict       | RESTRICT
-Cascasde       | CASCADE
+Cascade        | CASCADE
 ClientCascade  | ~~RESTRICT~~ **NO ACTION**
 SetNull        | SET NULL
 ClientSetNull  | ~~RESTRICT~~ **NO ACTION**

@@ -16,7 +16,7 @@ Here's how to get started in a few easy steps.
 
 ### Clone this repo
 
-Using your preferred tools, clone the repository. The `git` commmand looks like this:
+Using your preferred tools, clone the repository. The `git` command looks like this:
 
 ```bash
 git clone https://github.com/dotnet/EntityFramework.Docs

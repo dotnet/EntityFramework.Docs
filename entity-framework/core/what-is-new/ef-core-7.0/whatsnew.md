@@ -1991,7 +1991,7 @@ Model:
       _id PK
 ```
 
-Notice that normally, `IsClean` would have been mapped, but since it is not marked with `[Perist]` (presumably because cleanliness is not a persistent property of laundry), it is now treated as an un-mapped property.
+Notice that normally, `IsClean` would have been mapped, but since it is not marked with `[Persist]` (presumably because cleanliness is not a persistent property of laundry), it is now treated as an un-mapped property.
 
 > [!TIP]
 > This convention could not be implemented as a model finalizing convention because mapping a property triggers many other conventions to run to further configure the mapped property.

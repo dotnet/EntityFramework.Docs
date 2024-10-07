@@ -944,7 +944,7 @@ The Azure Cosmos DB provider now translates more Base Class Library (BCL) method
 | `+` operator       | `CONCAT`          |                             |
 | `String.IndexOf`   | `INDEX_OF`        |                             |
 | `String.Replace`   | `REPLACE`         |                             |
-| `String.Equals`    | `STRINGEQUAL`     | Only case-insensitive calls |
+| `String.Equals`    | `STRINGEQUALS`    | Only case-insensitive calls |
 
 Translations for `LOWER`, `LTRIM`, `RTRIM`, `TRIM`, `UPPER`, and `SUBSTRING` were contributed by [@Marusyk](https://github.com/Marusyk). Many thanks!
 

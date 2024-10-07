@@ -84,7 +84,7 @@ On the other hand, the column value is sent via a `DbParameter`, and is therefor
 
 > [!WARNING]
 >
-> Be very careful when using <xref:Microsoft.EntityFrameworkCore.RelationalQueryableExtensions.FromSqlRaw%2A>, and always make sure values are either from a safe origin, or are properly sanitized. SQL injection attacks can have disasterous consequences for your application.
+> Be very careful when using <xref:Microsoft.EntityFrameworkCore.RelationalQueryableExtensions.FromSqlRaw%2A>, and always make sure values are either from a safe origin, or are properly sanitized. SQL injection attacks can have disastrous consequences for your application.
 
 ## Composing with LINQ
 

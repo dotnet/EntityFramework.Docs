@@ -69,7 +69,7 @@ To configure a different primary key call `HasKey`.
 
 The model above is mapped to the following database schema:
 
-![Sceenshot of the database model for entity containing owned collection](_static/owned-entities-ownsmany.png)
+![Screenshot of the database model for entity containing owned collection](_static/owned-entities-ownsmany.png)
 
 ## Mapping owned types with table splitting
 

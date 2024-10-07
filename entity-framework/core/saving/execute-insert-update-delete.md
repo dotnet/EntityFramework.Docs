@@ -94,7 +94,7 @@ context.Blogs
     .ExecuteUpdate(setters => setters.SetProperty(b => b.Rating, b => b.Rating + 1));
 ```
 
-Note that the second argument to `SetProperty` is now a lambda function, and not a constant as before. Its `b` parameter represents the Blog being updated; within that lambda, `b.Rating` thus contains the rating before any change occured. This executes the following SQL:
+Note that the second argument to `SetProperty` is now a lambda function, and not a constant as before. Its `b` parameter represents the Blog being updated; within that lambda, `b.Rating` thus contains the rating before any change occurred. This executes the following SQL:
 
 ```sql
 UPDATE [b]

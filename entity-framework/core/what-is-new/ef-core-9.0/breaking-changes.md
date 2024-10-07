@@ -89,7 +89,7 @@ Make sure the `argumentsPropagateNullability` has same number of elements as the
 
 #### Old behavior
 
-Previously EF returned inconsistent results for the `ToString()` method when the argument value was `null`. E.g. `ToString()` on `bool?` property with `null` value returned `null`, but for non-property `bool?` expressions whose value was `null` it returned `True`. The behavior was also incosistent for other data types, e.g. `ToString()` on `null` value enum returned empty string.
+Previously EF returned inconsistent results for the `ToString()` method when the argument value was `null`. E.g. `ToString()` on `bool?` property with `null` value returned `null`, but for non-property `bool?` expressions whose value was `null` it returned `True`. The behavior was also inconsistent for other data types, e.g. `ToString()` on `null` value enum returned empty string.
 
 #### New behavior
 

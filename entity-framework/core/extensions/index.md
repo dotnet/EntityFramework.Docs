@@ -339,7 +339,7 @@ The Dynamic LINQ library let you execute query with dynamic string and provide s
 
 ### EfCoreNexus.Framework
 
-EfCoreNexus helps integrating the entity framework core into blazor apps. Via reflection it adds the entitiy classes automatically and provides you with basic crud functionality for them without writing additional code.
+EfCoreNexus helps integrating the entity framework core into blazor apps. Via reflection it adds the entity classes automatically and provides you with basic crud functionality for them without writing additional code.
 
 For EF Core: 8.
 

@@ -42,7 +42,7 @@ I’ll demonstrate Code First DataAnnotations with a simple pair of classes: Blo
     }
 ```
 
-As they are, the Blog and Post classes conveniently follow code first convention and require no tweaks to enable EF compatability. However, you can also use the annotations to provide more information to EF about the classes and the database to which they map.
+As they are, the Blog and Post classes conveniently follow code first convention and require no tweaks to enable EF compatibility. However, you can also use the annotations to provide more information to EF about the classes and the database to which they map.
 
  
 

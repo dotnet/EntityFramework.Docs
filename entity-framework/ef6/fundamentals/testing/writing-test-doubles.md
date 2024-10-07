@@ -158,7 +158,7 @@ namespace TestingDemo
 
 Now that we have the real EF model and the service that can use it, it's time to create the in-memory test double that we can use for testing. We've created a TestContext test double for our context. In test doubles we get to choose the behavior we want in order to support the tests we are going to run. In this example we're just capturing the number of times SaveChanges is called, but you can include whatever logic is needed to verify the scenario you are testing.  
 
-We've also created a TestDbSet that provides an in-memory implementation of DbSet. We've provided a complete implemention for all the methods on DbSet (except for Find), but you only need to implement the members that your test scenario will use.  
+We've also created a TestDbSet that provides an in-memory implementation of DbSet. We've provided a complete implementation for all the methods on DbSet (except for Find), but you only need to implement the members that your test scenario will use.  
 
 TestDbSet makes use of some other infrastructure classes that we've included to ensure that async queries can be processed.  
 
