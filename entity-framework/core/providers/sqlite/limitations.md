@@ -15,6 +15,7 @@ The common relational library (shared by Entity Framework relational database pr
 
 * Schemas
 * Sequences
+* Database-generated concurrency tokens ([see documentation](xref:core/saving/concurrency#native-database-generated-concurrency-tokens))
 
 ## Query limitations
 
