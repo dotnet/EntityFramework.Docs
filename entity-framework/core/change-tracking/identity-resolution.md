@@ -579,7 +579,7 @@ Entity types are often configured to use [automatically generated key values](xr
 -->
 [!code-csharp[Pet](../../../samples/core/ChangeTracking/IdentityResolutionInEFCore/IdentityResolutionSamples.cs?name=Pet)]
 
-Consider code that attempts to tracker two new entity instances without setting key values:
+Consider code that attempts to track two new entity instances without setting key values:
 
 <!--
             using var context = new BlogsContext();
