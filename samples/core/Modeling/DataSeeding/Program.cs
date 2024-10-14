@@ -8,6 +8,25 @@ internal static class Program
 {
     private static void Main(string[] args)
     {
+        using (var context = new ManagingDataContext())
+        {
+            context.Database.EnsureCreated();
+
+            foreach (var country in context.Countries.Include(b => b.OfficialLanguages))
+            {
+                Console.WriteLine($"{country.Name} official language(s):");
+
+                if (!country.OfficialLanguages.Any())
+                {
+                    Console.WriteLine("\tNone");
+                }
+                foreach (var language in country.OfficialLanguages)
+                {
+                    Console.WriteLine($"\t{language.Name} - phenomes count: {language.Details.PhonemesCount}");
+                }
+            }
+        }
+
         #region CustomSeeding
         using (var context = new DataSeedingContext())
         {
@@ -17,9 +36,9 @@ internal static class Program
             if (testBlog == null)
             {
                 context.Blogs.Add(new Blog { Url = "http://test.com" });
+                context.SaveChanges();
             }
 
-            context.SaveChanges();
         }
         #endregion
 
@@ -31,7 +50,7 @@ internal static class Program
 
                 foreach (var post in blog.Posts)
                 {
-                    Console.WriteLine($"\t{post.Title}: {post.Content} by {post.AuthorName.First} {post.AuthorName.Last}");
+                    Console.WriteLine($"\t{post.Title}: {post.Content}");
                 }
             }
         }

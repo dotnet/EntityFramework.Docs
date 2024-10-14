@@ -4,7 +4,6 @@ public class Program
 {
     public static async Task Main()
     {
-        
         await PrimitiveCollectionsSample.Queries_using_readonly_primitive_collections();
         await PrimitiveCollectionsSample.Queries_using_readonly_primitive_collections_SQLite();
 
@@ -20,7 +19,7 @@ public class Program
 
         await NullSemanticsSample.Null_semantics_improvements_in_EF9();
         await NullSemanticsSample.Null_semantics_improvements_in_EF9_on_SQLite();
-        
+
         await CustomConventionsSample.Conventions_enhancements_in_EF9();
 
         await JsonColumnsSample.Columns_from_JSON_are_pruned_when_needed();

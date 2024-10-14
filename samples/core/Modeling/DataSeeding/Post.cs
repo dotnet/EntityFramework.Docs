@@ -1,4 +1,4 @@
-namespace EFModeling.DataSeeding;
+﻿namespace EFModeling.DataSeeding;
 
 public class Post
 {
@@ -7,5 +7,4 @@ public class Post
     public string Title { get; set; }
     public int BlogId { get; set; }
     public Blog Blog { get; set; }
-    public Name AuthorName { get; set; }
 }
