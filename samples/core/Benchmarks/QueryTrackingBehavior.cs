@@ -54,8 +54,9 @@ public class QueryTrackingBehavior
         {
             using var context = new BloggingContext();
             context.AddRange(
-                Enumerable.Range(0, numBlogs).Select(
-                    _ => new Blog { Posts = Enumerable.Range(0, numPostsPerBlog).Select(_ => new Post()).ToList() }));
+                Enumerable.Range(0, numBlogs)
+                    .Select(_ => new Blog { Url = "Some URL", Posts = Enumerable.Range(0, numPostsPerBlog)
+                    .Select(_ => new Post() { Title = "Some Title", Content = "Some Content"}).ToList() }));
             context.SaveChanges();
         }
     }
