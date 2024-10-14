@@ -11,9 +11,14 @@ Data seeding is the process of populating a database with an initial set of data
 
 There are several ways this can be accomplished in EF Core:
 
+* Configuration options seeding methods
 * Model seed data
 * Manual migration customization
 * Custom initialization logic
+
+<a name="use-seeding-method"></a>
+
+## Configuration options `UseSeeding` and `UseAsyncSeeding` methods
 
 ## Model seed data
 

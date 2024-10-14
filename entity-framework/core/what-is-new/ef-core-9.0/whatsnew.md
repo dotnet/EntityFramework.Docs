@@ -1377,6 +1377,15 @@ FROM "Walks" AS "w"
 INNER JOIN "Pubs" AS "p" ON "w"."ClosestPubId" = "p"."Id"
 ```
 
+### Data seeding
+
+EF9 introduced a convenient way to perform data seeding, that is populating the database with initial data. `DbContextOptionsBuilder` now contains `UseSeeding` and `UseAsyncSeeding` methods which get executed every time the DbContext is initialized.
+
+> !NOTE
+> If the application had ran previously, the database may already contain the sample data (which would have been added on the first initialization of the context). As such, `UseSeeding` `UseAsyncSeeding` should check if data exists before attempting to populate the database. This can be achieved by issueing a simple EF query.
+
+More information and an example can be found [here](/core/modeling/data-seeding#use-seeding-method).
+
 <a name="sequence-caching"></a>
 
 ### Specify fill-factor for keys and indexes
