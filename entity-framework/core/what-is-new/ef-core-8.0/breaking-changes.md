@@ -544,7 +544,7 @@ protected override void OnModelCreating(ModelBuilder modelBuilder)
 
 #### Old behavior
 
-Previously, when multiple calls to `AddDbContext`, `AddDbContextPool`, `AddDbContextFactory` or `AddPooledDbContextFactor` were made with the same context type but conflicting configuration the first one won.
+Previously, when multiple calls to `AddDbContext`, `AddDbContextPool`, `AddDbContextFactory` or `AddPooledDbContextFactor` were made with the same context type but conflicting configuration, the first one won.
 
 #### New behavior
 
@@ -568,7 +568,7 @@ In EF Core 8.0 `EntityTypeAttributeConventionBase` was renamed to `TypeAttribute
 
 #### Why
 
-`TypeAttributeConventionBase` represents the functionality better as it now can be used for complex types as well as entity types.
+`TypeAttributeConventionBase` represents the functionality better as it now can be used for complex types and entity types.
 
 #### Mitigations
 

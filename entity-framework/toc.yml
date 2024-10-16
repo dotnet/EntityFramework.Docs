@@ -32,10 +32,10 @@
     items:
     - name: Welcome!
       href: core/index.md
-    - name: "What's new in EF Core 8.0"
-      href: core/what-is-new/ef-core-8.0/whatsnew.md
-    - name: "Breaking changes in EF Core 8.0"
-      href: core/what-is-new/ef-core-8.0/breaking-changes.md
+    - name: "What's new in EF Core 9.0"
+      href: core/what-is-new/ef-core-9.0/whatsnew.md
+    - name: "Breaking changes in EF Core 9.0"
+      href: core/what-is-new/ef-core-9.0/breaking-changes.md
     - name: Getting started
       items:
       - name: EF Core Overview
