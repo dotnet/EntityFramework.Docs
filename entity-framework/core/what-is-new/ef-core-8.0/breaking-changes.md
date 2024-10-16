@@ -2,7 +2,7 @@
 title: Breaking changes in EF Core 8.0 (EF8) - EF Core
 description: Complete list of breaking changes introduced in Entity Framework Core 8.0 (EF8)
 author: ajcvickers
-ms.date: 12/18/2023
+ms.date: 10/04/2024
 uid: core/what-is-new/ef-core-8.0/breaking-changes
 ---
 
@@ -34,6 +34,8 @@ EF Core 8 targets .NET 8. Applications targeting older .NET, .NET Core, and .NET
 | [Scaffolding may generate different navigation names](#navigation-names)                                      | Low        |
 | [Discriminators now have a max length](#discriminators)                                                       | Low        |
 | [SQL Server key values are compared case-insensitively](#casekeys)                                            | Low        |
+| [Multiple AddDbContext calls are applied in different order](#AddDbContext)                                   | Low        |
+| [EntityTypeAttributeConventionBase replaced with TypeAttributeConventionBase](#attributeConventionBase)       | Low        |
 
 ## High-impact changes
 
@@ -533,3 +535,41 @@ protected override void OnModelCreating(ModelBuilder modelBuilder)
         });
 }
 ```
+
+<a name="AddDbContext"></a>
+
+### Multiple AddDbContext calls are applied in different order
+
+[Tracking Issue #32518](https://github.com/dotnet/efcore/issues/32518)
+
+#### Old behavior
+
+Previously, when multiple calls to `AddDbContext`, `AddDbContextPool`, `AddDbContextFactory` or `AddPooledDbContextFactor` were made with the same context type but conflicting configuration, the first one won.
+
+#### New behavior
+
+Starting with EF Core 8.0, the configuration from the last call one will take precedence.
+
+#### Why
+
+This was changed to be consistent with the new method `ConfigureDbContext` that can be used to add configuration either before or after the `Add*` methods.
+
+#### Mitigations
+
+Reverse the order of `Add*` calls.
+
+<a name="attributeConventionBase"></a>
+
+### EntityTypeAttributeConventionBase replaced with TypeAttributeConventionBase
+
+#### New behavior
+
+In EF Core 8.0 `EntityTypeAttributeConventionBase` was renamed to `TypeAttributeConventionBase`.
+
+#### Why
+
+`TypeAttributeConventionBase` represents the functionality better as it now can be used for complex types and entity types.
+
+#### Mitigations
+
+Replace `EntityTypeAttributeConventionBase` usages with `TypeAttributeConventionBase`.
