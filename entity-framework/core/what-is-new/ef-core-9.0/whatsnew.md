@@ -2,7 +2,7 @@
 title: What's New in EF Core 9
 description: Overview of new features in EF Core 9
 author: ajcvickers
-ms.date: 06/09/2024
+ms.date: 10/10/2024
 uid: core/what-is-new/ef-core-9.0/whatsnew
 ---
 
@@ -1196,6 +1196,19 @@ EF9 introduces a locking mechanism to protect against multiple migration executi
 ### Warn when multiple migration operations can't be run inside a transaction
 
 The majority of operations performed during migrations are protected by a transaction. This ensures that if for some reason migration fails, the database does not end up in a corrupted state. However, some operations are not wrapped in a transaction (e.g. [operations on SQL Server memory-optimized tables](/sql/relational-databases/in-memory-oltp/unsupported-sql-server-features-for-in-memory-oltp#scenarios-not-supported), or database altering operations like modifying the database collation). To avoid corrupting the database in case of migration failure, it is recommended that these operations are performed in isolation using a separate migration. EF9 now detects a scenario when a migration contains multiple operations, one of which can't be wrapped in a transaction, and issues a warning.
+
+### Improved data seeding
+
+EF9 introduced a convenient way to perform data seeding, that is populating the database with initial data. `DbContextOptionsBuilder` now contains `UseSeeding` and `UseAsyncSeeding` methods which get executed when the DbContext is initialized (as part of `EnsureCreatedAsync`).
+
+> [!NOTE]
+> If the application had ran previously, the database may already contain the sample data (which would have been added on the first initialization of the context). As such, `UseSeeding` `UseAsyncSeeding` should check if data exists before attempting to populate the database. This can be achieved by issuing a simple EF query.
+
+Here is an example of how these methods can be used:
+
+[!code-csharp[ContextOptionSeeding](../../../../samples/core/Modeling/DataSeeding/DataSeedingContext.cs?name=ContextOptionSeeding)]
+
+More information can be found [here](/ef/core/modeling/data-seeding#use-seeding-method).
 
 ## Model building
 
