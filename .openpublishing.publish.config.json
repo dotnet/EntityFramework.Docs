@@ -63,6 +63,6 @@
   },
   "docs_build_engine": {},
   "contribution_branch_mappings": {},
-    "need_preview_pull_request": true,
+   "need_preview_pull_request": true,
   "need_generate_intellisense": false
 }
