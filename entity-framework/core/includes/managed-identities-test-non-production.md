@@ -1,9 +1,8 @@
 ---
-title: fix me
-description: Get an 
+description: A local database that doesn't require the user to be authenticated
 author: rick-anderson
 ms.author: riande
-ms.date: 03/07/2017
+ms.date: 10/23/2024
 ms.topic: include
 ---
 > [!WARNING]

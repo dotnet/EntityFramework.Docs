@@ -7,17 +7,22 @@ uid: core/miscellaneous/connection-strings
 ---
 # Connection Strings
 
-Most database providers require some form of connection string to connect to the database. Sometimes this connection string contains sensitive information that needs to be protected. You may also need to change the connection string as you move your app between environments, such as development, testing, and production. For more information, see [Secure authentication flows](/aspnet/core/security/#secure-authentication-flows)
+Most database providers require some form of connection string to connect to the database. The connection string:
+
+* Can contain sensitive information that needs to be protected.
+* May need to change when the app moves to different environments, such as development, testing, and production.
+
+For more information, see [Secure authentication flows](/aspnet/core/security/#secure-authentication-flows)
 
 ## ASP.NET Core
 
-In ASP.NET Core the configuration system is flexible, the connection string could be stored:
+The ASP.NET Core configuration can store connection strings with a variety of providers:
 
-* In `appsettings.Development.json` or `appsettings.json`
-* An environment variable
-* The [Secret Manager tool](/aspnet/core/security/app-secrets#secret-manager)
+* In the `appsettings.Development.json` or `appsettings.json` file.
+* In an environment variable
+* Using the [Secret Manager tool](/aspnet/core/security/app-secrets#secret-manager)
 
-> Waring
+> Warning
 > Secrets should never be added to configuration files.
 
 For example, the [Secret Manager tool](/aspnet/core/security/app-secrets#secret-manager) can store the database password. Using Secret manager, when scaffolding,  a connection string consists of `Name=<database-alias>`.
@@ -42,7 +47,7 @@ Or the following example shows the connection string stored in `appsettings.json
 }
 ```
 
-The context is generally configured in `Program.cs` with the connection string being read from configuration. Note the [GetConnectionString](/dotnet/api/microsoft.extensions.configuration.configurationextensions.getconnectionstring) method looks for a configuration value whose key is `ConnectionStrings:<connection string name>`. `GetConnectionString` requires the [Microsoft.Extensions.Configuration](/dotnet/api/microsoft.extensions.configuration).
+The context is typically configured in `Program.cs` with the connection string being read from configuration. Note the [GetConnectionString](/dotnet/api/microsoft.extensions.configuration.configurationextensions.getconnectionstring) method looks for a configuration value whose key is `ConnectionStrings:<connection string name>`. `GetConnectionString` requires the [Microsoft.Extensions.Configuration](/dotnet/api/microsoft.extensions.configuration).
 
 ```csharp
 var connectionString = builder.Configuration.GetConnectionString("BloggingContext") ??
@@ -86,7 +91,7 @@ public class BloggingContext : DbContext
 
 ## Universal Windows Platform (UWP)
 
-Connection strings in a UWP application are typically a SQLite connection that just specifies a local filename. They typically do not contain sensitive information, and do not need to be changed as an application is deployed. As such, these connection strings are usually fine to be left in code, as shown below. If you wish to move them out of code then UWP supports the concept of settings, see the [App Settings section of the UWP documentation](/windows/uwp/app-settings/store-and-retrieve-app-data) for details.
+Connection strings in a UWP application are typically a SQLite connection that just specifies a local filename. They typically don't contain sensitive information, and don't need to be changed as an application is deployed. As such, these connection strings are usually fine to be left in code, as shown below. If you wish to move them out of code then UWP supports the concept of settings, see the [App Settings section of the UWP documentation](/windows/uwp/app-settings/store-and-retrieve-app-data) for details.
 
 ```csharp
 public class BloggingContext : DbContext
