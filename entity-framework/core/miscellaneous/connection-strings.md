@@ -11,17 +11,25 @@ Most database providers require some form of connection string to connect to the
 
 ## ASP.NET Core
 
-In ASP.NET Core the configuration system is very flexible, and the connection string could be stored in `appsettings.json`, an environment variable, the user secret store, or another configuration source. See the [Configuration section of the ASP.NET Core documentation](/aspnet/core/fundamentals/configuration) for more details.
+In ASP.NET Core the configuration system is flexible, the connection string could be stored:
 
-For instance, you can use the [Secret Manager tool](/aspnet/core/security/app-secrets#secret-manager) to store your database password and then, in scaffolding, use a connection string that simply consists of `Name=<database-alias>`.
+* In `appsettings.Development.json` or `appsettings.json`
+* An environment variable
+* The [Secret Manager tool](/aspnet/core/security/app-secrets#secret-manager)
+
+> Waring
+> Secrets should never be added to configuration files.
+
+For example, the [Secret Manager tool](/aspnet/core/security/app-secrets#secret-manager) can store the database password. Using Secret manager, when scaffolding,  a connection string consists of `Name=<database-alias>`.
+
+See the [Configuration section of the ASP.NET Core documentation](/aspnet/core/fundamentals/configuration) for more details.
+
 
 ```dotnetcli
 dotnet user-secrets set ConnectionStrings:YourDatabaseAlias "Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=YourDatabase"
 dotnet ef dbcontext scaffold Name=ConnectionStrings:YourDatabaseAlias Microsoft.EntityFrameworkCore.SqlServer
 ```
-<!--
-[!INCLUDE [managed-identities-test-non-production](~/includes/managed-identities-test-non-production.md)]
--->
+
 [!INCLUDE [managed-identities-test-non-production](~/core/includes/managed-identities-test-non-production.md)]
 
 Or the following example shows the connection string stored in `appsettings.json`.
@@ -34,19 +42,18 @@ Or the following example shows the connection string stored in `appsettings.json
 }
 ```
 
-Then the context is typically configured in `Startup.cs` with the connection string being read from configuration. Note the `GetConnectionString()` method looks for a configuration value whose key is `ConnectionStrings:<connection string name>`. You need to import the [Microsoft.Extensions.Configuration](/dotnet/api/microsoft.extensions.configuration) namespace to use this extension method.
+The context is generally configured in `Program.cs` with the connection string being read from configuration. Note the [GetConnectionString](/dotnet/api/microsoft.extensions.configuration.configurationextensions.getconnectionstring) method looks for a configuration value whose key is `ConnectionStrings:<connection string name>`. `GetConnectionString` requires the [Microsoft.Extensions.Configuration](/dotnet/api/microsoft.extensions.configuration).
 
 ```csharp
-public void ConfigureServices(IServiceCollection services)
-{
-    services.AddDbContext<BloggingContext>(options =>
-        options.UseSqlServer(Configuration.GetConnectionString("BloggingDatabase")));
-}
+var connectionString = builder.Configuration.GetConnectionString("BloggingContext") ??
+     throw new InvalidOperationException("Connection string 'BloggingContext' not found.");
+builder.Services.AddDbContext<BloggingContext>(options =>
+    options.UseSqlServer(connectionString));
 ```
 
 ## WinForms & WPF Applications
 
-WinForms, WPF, and ASP.NET 4 applications have a tried and tested connection string pattern. The connection string should be added to your application's App.config file (Web.config if you are using ASP.NET). If your connection string contains sensitive information, such as username and password, you can protect the contents of the configuration file using [Protected Configuration](/dotnet/framework/data/adonet/connection-strings-and-configuration-files#encrypting-configuration-file-sections-using-protected-configuration).
+WinForms, WPF, and ASP.NET 4 applications have a tried and tested connection string pattern. The connection string should be added to your application's `App.config` file, or `Web.config` when using ASP.NET. Connection string containing sensitive information, such as username and password, should protect the contents of the configuration file using [Protected Configuration](/dotnet/framework/data/adonet/connection-strings-and-configuration-files#encrypting-configuration-file-sections-using-protected-configuration).
 
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
