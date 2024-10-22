@@ -197,7 +197,7 @@ var overAverageIds = context.Database
 
 ***
 
-<xref:Microsoft.EntityFrameworkCore.RelationalQueryableExtensions.FromSql%2A> can be used with any scalar type supported by your database provider. If you'd like to use a type not supported by your database provider, you can use [pre-convention configuration](xref:core/modeling/bulk-configuration#pre-convention-configuration) to define a value conversion for it.
+<xref:Microsoft.EntityFrameworkCore.RelationalDatabaseFacadeExtensions.SqlQuery%2A> can be used with any scalar type supported by your database provider. If you'd like to use a type not supported by your database provider, you can use [pre-convention configuration](xref:core/modeling/bulk-configuration#pre-convention-configuration) to define a value conversion for it.
 
 <xref:Microsoft.EntityFrameworkCore.RelationalDatabaseFacadeExtensions.SqlQueryRaw%2A> allows for dynamic construction of SQL queries, just like <xref:Microsoft.EntityFrameworkCore.RelationalQueryableExtensions.FromSqlRaw%2A> does for entity types.
 
