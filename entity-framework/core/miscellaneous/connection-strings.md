@@ -19,8 +19,10 @@ For instance, you can use the [Secret Manager tool](/aspnet/core/security/app-se
 dotnet user-secrets set ConnectionStrings:YourDatabaseAlias "Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=YourDatabase"
 dotnet ef dbcontext scaffold Name=ConnectionStrings:YourDatabaseAlias Microsoft.EntityFrameworkCore.SqlServer
 ```
-
+<!--
 [!INCLUDE [managed-identities-test-non-production](~/includes/managed-identities-test-non-production.md)]
+-->
+[!INCLUDE [managed-identities-test-non-production](~/core/includes/managed-identities-test-non-production.md)]
 
 Or the following example shows the connection string stored in `appsettings.json`.
 
