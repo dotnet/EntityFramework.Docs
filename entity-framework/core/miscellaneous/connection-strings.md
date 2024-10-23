@@ -16,7 +16,7 @@ For more information, see [Secure authentication flows](/aspnet/core/security/#s
 
 ## ASP.NET Core
 
-The ASP.NET Core configuration can store connection strings with a variety of providers:
+The ASP.NET Core configuration can store connection strings with various providers:
 
 * In the `appsettings.Development.json` or `appsettings.json` file.
 * In an environment variable
@@ -25,7 +25,7 @@ The ASP.NET Core configuration can store connection strings with a variety of pr
 > [!WARNING]
 > Secrets should never be added to configuration files.
 
-For example, the [Secret Manager tool](/aspnet/core/security/app-secrets#secret-manager) can store the database password. When scaffolding using Secret manager,  a connection string consists of `Name=<database-alias>`.
+For example, the [Secret Manager tool](/aspnet/core/security/app-secrets#secret-manager) can store the database password. When scaffolding and using Secret manager, a connection string consists of `Name=<database-alias>`.
 
 See the [Configuration section of the ASP.NET Core documentation](/aspnet/core/fundamentals/configuration) for more information.
 
