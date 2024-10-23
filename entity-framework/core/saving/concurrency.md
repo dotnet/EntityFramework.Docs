@@ -145,7 +145,7 @@ There are three sets of values available to help resolve a concurrency conflict:
 - **Original values** are the values that were originally retrieved from the database, before any edits were made.
 - **Database values** are the values currently stored in the database.
 
-The general approach to handle a concurrency conflicts is:
+The general approach to handle a concurrency conflict is:
 
 1. Catch `DbUpdateConcurrencyException` during `SaveChanges`.
 2. Use `DbUpdateConcurrencyException.Entries` to prepare a new set of changes for the affected entities.
