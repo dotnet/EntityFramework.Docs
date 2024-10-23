@@ -7,7 +7,7 @@ uid: core/miscellaneous/connection-strings
 ---
 # Connection Strings
 
-Most database providers require some form of connection string to connect to the database. The connection string:
+Most database providers require a connection string to connect to the database. The connection string:
 
 * Can contain sensitive information that needs to be protected.
 * May need to change when the app moves to different environments, such as development, testing, and production.
@@ -22,13 +22,12 @@ The ASP.NET Core configuration can store connection strings with a variety of pr
 * In an environment variable
 * Using the [Secret Manager tool](/aspnet/core/security/app-secrets#secret-manager)
 
-> Warning
+> [!WARNING]
 > Secrets should never be added to configuration files.
 
-For example, the [Secret Manager tool](/aspnet/core/security/app-secrets#secret-manager) can store the database password. Using Secret manager, when scaffolding,  a connection string consists of `Name=<database-alias>`.
+For example, the [Secret Manager tool](/aspnet/core/security/app-secrets#secret-manager) can store the database password. When scaffolding using Secret manager,  a connection string consists of `Name=<database-alias>`.
 
-See the [Configuration section of the ASP.NET Core documentation](/aspnet/core/fundamentals/configuration) for more details.
-
+See the [Configuration section of the ASP.NET Core documentation](/aspnet/core/fundamentals/configuration) for more information.
 
 ```dotnetcli
 dotnet user-secrets set ConnectionStrings:YourDatabaseAlias "Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=YourDatabase"
@@ -37,7 +36,7 @@ dotnet ef dbcontext scaffold Name=ConnectionStrings:YourDatabaseAlias Microsoft.
 
 [!INCLUDE [managed-identities-test-non-production](~/core/includes/managed-identities-test-non-production.md)]
 
-Or the following example shows the connection string stored in `appsettings.json`.
+The following example shows the connection string stored in `appsettings.json`.
 
 ```json
 {
@@ -47,13 +46,14 @@ Or the following example shows the connection string stored in `appsettings.json
 }
 ```
 
-The context is typically configured in `Program.cs` with the connection string being read from configuration. Note the [GetConnectionString](/dotnet/api/microsoft.extensions.configuration.configurationextensions.getconnectionstring) method looks for a configuration value whose key is `ConnectionStrings:<connection string name>`. `GetConnectionString` requires the [Microsoft.Extensions.Configuration](/dotnet/api/microsoft.extensions.configuration).
+The context is typically configured in `Program.cs` with the connection string being read from configuration. Note the [GetConnectionString](/dotnet/api/microsoft.extensions.configuration.configurationextensions.getconnectionstring) method looks for a configuration value whose key is `ConnectionStrings:<connection string name>`. `GetConnectionString` requires the [Microsoft.Extensions.Configuration](/dotnet/api/microsoft.extensions.configuration) namespace.
 
 ```csharp
-var connectionString = builder.Configuration.GetConnectionString("BloggingContext") ??
-     throw new InvalidOperationException("Connection string 'BloggingContext' not found.");
+var conString = builder.Configuration.GetConnectionString("BloggingContext") ??
+     throw new InvalidOperationException("Connection string 'BloggingContext'" +
+    " not found.");
 builder.Services.AddDbContext<BloggingContext>(options =>
-    options.UseSqlServer(connectionString));
+    options.UseSqlServer(conString));
 ```
 
 ## WinForms & WPF Applications
