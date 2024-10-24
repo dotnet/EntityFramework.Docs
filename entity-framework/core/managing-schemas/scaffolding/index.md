@@ -7,7 +7,7 @@ uid: core/managing-schemas/scaffolding
 ---
 # Scaffolding (Reverse Engineering)
 
-Reverse engineering is the process of scaffolding entity type classes and a `DbContext` class based on a database schema. It can be performed using the `Scaffold-DbContext` command of the EF Core Package Manager Console (PMC) tools or the `dotnet ef dbcontext scaffold` command of the .NET Command-line Interface (CLI) tools.
+Reverse engineering is the process of scaffolding entity type classes and a [DbContext](/dotnet/api/microsoft.entityframeworkcore.dbcontext) class based on a database schema. It can be performed using the `Scaffold-DbContext` command of the EF Core Package Manager Console (PMC) tools or the `dotnet ef dbcontext scaffold` command of the .NET Command-line Interface (CLI) tools.
 
 > [!NOTE]
 > The scaffolding of a `DbContext` and entity types documented here is distinct from the [scaffolding of controllers in ASP.NET Core](/aspnet/mvc/overview/getting-started/introduction/adding-a-controller) using Visual Studio, which is not documented here.
@@ -27,9 +27,12 @@ Both the PMC and the .NET CLI commands have two required arguments: the connecti
 
 ### Connection string
 
-The first argument to the command is a connection string to the database. The tools will use this connection string to read the database schema.
+[!INCLUDE [managed-identities-test-non-production](~/core/includes/managed-identities-test-non-production.md)]
 
-How you quote and escape the connection string depends on which shell you are using to execute the command; refer to your shell's documentation for more information. For example, PowerShell requires you to escape the `$` character, but not `\`.
+The first argument to the command is a connection string to the database. The tools use this connection string to read the database schema.
+
+
+How the connection string is quoted and escaped depends on the shell is used to run the command. Refer to the shell's documentation. For example, PowerShell requires escaping `$`, but not `\`.
 
 The following example scaffolds entity types and a `DbContext` from the `Chinook` database located on the machine's SQL Server LocalDB instance, making use of the `Microsoft.EntityFrameworkCore.SqlServer` database provider.
 

@@ -6,7 +6,7 @@ ms.date: 10/23/2016
 uid: ef6/fundamentals/configuring/connection-strings
 ---
 # Connection strings and models
-This topic covers how Entity Framework discovers which database connection to use, and how to change it. Models created with Code First and the EF Designer are covered in this article. 
+This article covers how Entity Framework discovers which database connection to use, and how to change it. Models created with Code First and the EF Designer are covered. 
 
 [!INCLUDE [managed-identities-test-non-production](~/core/includes/managed-identities-test-non-production.md)]
 
