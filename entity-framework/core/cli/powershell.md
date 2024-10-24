@@ -11,6 +11,8 @@ The Package Manager Console (PMC) tools for Entity Framework Core perform design
 
 If you aren't using Visual Studio, we recommend the [EF Core Command-line Tools](xref:core/cli/dotnet) instead. The .NET Core CLI tools are cross-platform and run inside a command prompt.
 
+[!INCLUDE [managed-identities-test-non-production](~/core/includes/managed-identities-test-non-production.md)]
+
 ## Installing the tools
 
 Install the Package Manager Console tools by running the following command in **Package Manager Console**:
@@ -215,7 +217,7 @@ Parameters:
 
 | Parameter                                 | Description                                                                                                                                                                                                                                                                  |
 |:------------------------------------------|:-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| <nobr>`-Connection <String>`</nobr>       | The connection string to the database. For ASP.NET Core 2.x projects, the value can be *name=\<name of connection string>*. In that case the name comes from the configuration sources that are set up for the project. This is a positional parameter and is required.      |
+| <nobr>`-Connection <String>`</nobr>       | The connection string to the database. The value can be *name=\<name of connection string>*. In that case the name comes from the configuration sources that are set up for the project. This is a positional parameter and is required.      |
 | <nobr>`-Provider <String>`</nobr>         | The provider to use. Typically this is the name of the NuGet package, for example: `Microsoft.EntityFrameworkCore.SqlServer`. This is a positional parameter and is required.                                                                                                |
 | <nobr>`-OutputDir <String>`</nobr>        | The directory to put entity class files in. Paths are relative to the project directory.                                                                                                                                                                                     |
 | <nobr>`-ContextDir <String>`</nobr>       | The directory to put the `DbContext` file in. Paths are relative to the project directory.                                                                                                                                                                                   |

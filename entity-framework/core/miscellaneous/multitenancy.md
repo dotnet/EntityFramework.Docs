@@ -10,6 +10,8 @@ uid: core/miscellaneous/multitenancy
 
 Many line of business applications are designed to work with multiple customers. It is important to secure the data so that customer data isn't "leaked" or seen by other customers and potential competitors. These applications are classified as "multi-tenant" because each customer is considered a tenant of the application with their own set of data.
 
+[!INCLUDE [managed-identities-test-non-production](~/core/includes/managed-identities-test-non-production.md)]
+
 > [!IMPORTANT]
 > This document provides examples and solutions "as is." These are not intended to be "best practices" but rather "working practices" for your consideration.
 
