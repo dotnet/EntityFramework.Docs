@@ -31,7 +31,6 @@ Both the PMC and the .NET CLI commands have two required arguments: the connecti
 
 The first argument to the command is a connection string to the database. The tools use this connection string to read the database schema.
 
-
 How the connection string is quoted and escaped depends on the shell is used to run the command. Refer to the shell's documentation. For example, PowerShell requires escaping `$`, but not `\`.
 
 The following example scaffolds entity types and a `DbContext` from the `Chinook` database located on the machine's SQL Server LocalDB instance, making use of the `Microsoft.EntityFrameworkCore.SqlServer` database provider.

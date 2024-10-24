@@ -11,10 +11,10 @@ This article covers how Entity Framework discovers which database connection to 
 [!INCLUDE [managed-identities-test-non-production](~/core/includes/managed-identities-test-non-production.md)]
 
 
-Typically an Entity Framework application uses a class derived from DbContext. This derived class will call one of the constructors on the base DbContext class to control:  
+Typically an Entity Framework application uses a class derived from DbContext. This derived class calls one of the constructors on the base DbContext class to control:  
 
-- How the context will connect to a database — that is, how a connection string is found/used  
-- Whether the context will use calculate a model using Code First or load a model created with the EF Designer  
+- How the context connects to a database, that is, how a connection string is found and used  
+- Whether the context calculates a model using Code First or load a model created with the EF Designer  
 - Additional advanced options  
 
 The following fragments show some of the ways the DbContext constructors can be used.  
