@@ -222,10 +222,10 @@ Options:
 | `--no-color`                             |                   | Don't colorize output.                                                                                 |
 | `--prefix-output`                        |                   | Prefix output with level.                                                                              |
 
-The following example applies migrations to a local SQL Server instance using the specified username and password.
+The following example applies migrations to a local SQL Server instance using the specified username and credentials:
 
 ```powershell
-.\efbundle.exe --connection 'Data Source=(local)\MSSQLSERVER;Initial Catalog=Blogging;User ID=myUsername;Password=myPassword'
+.\efbundle.exe --connection 'Data Source=(local)\MSSQLSERVER;Initial Catalog=Blogging;User ID=myUsername;Password={;'$Credential;'here'}'
 ```
 
 > [!WARNING]
