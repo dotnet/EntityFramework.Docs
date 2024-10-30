@@ -51,10 +51,7 @@ ASP.NET Core applications are [configured using dependency injection](/aspnet/co
 
 [!code-csharp[ConfigureServices](../../../samples/core/Miscellaneous/ConfiguringDbContext/WebApp/Startup.cs?name=ConfigureServices)]
 
-[!code-csharp[snippet_1](../../../samples/core/Miscellaneous/ConfiguringDbContext/WebApp9/Program.cs?name=ConfigureSersnippet_1vices)]
-
-C:\GH\EntityFramework.Docs\samples\core\Miscellaneous\ConfiguringDbContext\WebApp9\Program.cs
-[!code-csharp[ConfigureServices](~/core/Miscellaneous/ConfiguringDbContext/WebApp9/Program.cs?name=snippet_1)]
+[!code-csharp[snippet_1](../../../samples/core/Miscellaneous/ConfiguringDbContext/WebApp9/Program.cs?name=snippet_1)]
 
 The preceding code registers `ApplicationDbContext`, a subclass of `DbContext` as a scoped service in the ASP.NET Core app service provider. The service provider is also know as the dependency injection container. The context is configured to use the SQL Server database provider and reads the connection string from ASP.NET Core configuration.
 
@@ -69,9 +66,12 @@ The `ApplicationDbContext` class must expose a public constructor with a `DbCont
         }
     }
 -->
+
 [!code-csharp[ApplicationDbContext](../../../samples/core/Miscellaneous/ConfiguringDbContext/WebApp/ApplicationDbContext.cs?name=ApplicationDbContext)]
 
-`ApplicationDbContext` can then be used in ASP.NET Core controllers or other services through constructor injection. For example:
+[!code-csharp[dbContext](../../../samples/core/Miscellaneous/ConfiguringDbContext/WebApp9/Data\ApplicationDbContext.cs)]
+
+`ApplicationDbContext` can be used in ASP.NET Core controllers or other services through constructor injection:
 
 <!--
     public class MyController
@@ -85,6 +85,7 @@ The `ApplicationDbContext` class must expose a public constructor with a `DbCont
     }
 -->
 [!code-csharp[MyController](../../../samples/core/Miscellaneous/ConfiguringDbContext/WebApp/Controllers/MyController.cs?name=MyController)]
+
 
 The final result is an `ApplicationDbContext` instance created for each request and passed to the controller to perform a unit-of-work before being disposed when the request ends.
 
