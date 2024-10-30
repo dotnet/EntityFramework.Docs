@@ -29,7 +29,7 @@ A typical unit-of-work when using Entity Framework Core (EF Core) involves:
 
 > [!IMPORTANT]
 >
-> - It is very important to dispose the <xref:Microsoft.EntityFrameworkCore.DbContext> after use. This ensures both that any unmanaged resources are freed, and that any events or other hooks are unregistered so as to prevent memory leaks in case the instance remains referenced.
+> - It is important to dispose the <xref:Microsoft.EntityFrameworkCore.DbContext> after use. This ensures both that any unmanaged resources are freed, and that any events or other hooks are unregistered so as to prevent memory leaks in case the instance remains referenced.
 > - [DbContext is **not thread-safe**](#avoiding-dbcontext-threading-issues). Do not share contexts between threads. Make sure to [await](/dotnet/csharp/language-reference/operators/await) all async calls before continuing to use the context instance.
 > - An <xref:System.InvalidOperationException> thrown by EF Core code can put the context into an unrecoverable state. Such exceptions indicate a program error and are not designed to be recovered from.
 
@@ -48,7 +48,10 @@ ASP.NET Core applications are [configured using dependency injection](/aspnet/co
                 options => options.UseSqlServer("name=ConnectionStrings:DefaultConnection"));
         }
 -->
+
 [!code-csharp[ConfigureServices](../../../samples/core/Miscellaneous/ConfiguringDbContext/WebApp/Startup.cs?name=ConfigureServices)]
+
+[!code-csharp[ConfigureServices](~/Miscellaneous/ConfiguringDbContext/WebApp/Program.cs?name=snippet_1)]
 
 This example registers a `DbContext` subclass called `ApplicationDbContext` as a scoped service in the ASP.NET Core application service provider (a.k.a. the dependency injection container). The context is configured to use the SQL Server database provider and will read the connection string from ASP.NET Core configuration. It typically does not matter _where_ in `ConfigureServices` the call to `AddDbContext` is made.
 
