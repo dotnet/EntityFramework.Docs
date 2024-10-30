@@ -13,7 +13,7 @@ If you aren't using Visual Studio, we recommend the [EF Core Command-line Tools]
 
 [!INCLUDE [managed-identities-test-non-production](~/core/includes/managed-identities-test-non-production.md)]
 
-## Installing the tools
+## Install the tools
 
 Install the Package Manager Console tools by running the following command in **Package Manager Console**:
 
@@ -55,7 +55,7 @@ SHORT DESCRIPTION
 <A list of available commands follows, omitted here.>
 ```
 
-## Using the tools
+## Use the tools
 
 Before using the tools:
 
