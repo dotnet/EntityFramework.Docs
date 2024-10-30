@@ -51,9 +51,9 @@ ASP.NET Core applications are [configured using dependency injection](/aspnet/co
 
 [!code-csharp[ConfigureServices](../../../samples/core/Miscellaneous/ConfiguringDbContext/WebApp/Startup.cs?name=ConfigureServices)]
 
-[!code-csharp[ConfigureServices](~/Miscellaneous/ConfiguringDbContext/WebApp/Program.cs?name=snippet_1)]
+[!code-csharp[ConfigureServices](~/Miscellaneous/ConfiguringDbContext/WebApp9/Program.cs?name=snippet_1)]
 
-This example registers a `DbContext` subclass called `ApplicationDbContext` as a scoped service in the ASP.NET Core application service provider (a.k.a. the dependency injection container). The context is configured to use the SQL Server database provider and will read the connection string from ASP.NET Core configuration. It typically does not matter _where_ in `ConfigureServices` the call to `AddDbContext` is made.
+The preceding code registers `ApplicationDbContext`, a subclass of `DbContext` as a scoped service in the ASP.NET Core app service provider. The service provider is also know as the dependency injection container. The context is configured to use the SQL Server database provider and reads the connection string from ASP.NET Core configuration.
 
 The `ApplicationDbContext` class must expose a public constructor with a `DbContextOptions<ApplicationDbContext>` parameter. This is how context configuration from `AddDbContext` is passed to the `DbContext`. For example:
 
