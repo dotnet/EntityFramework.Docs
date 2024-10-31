@@ -69,7 +69,7 @@ The `ApplicationDbContext` class must expose a public constructor with a `DbCont
 
 [!code-csharp[ApplicationDbContext](../../../samples/core/Miscellaneous/ConfiguringDbContext/WebApp/ApplicationDbContext.cs?name=ApplicationDbContext)]
 
-[!code-csharp[dbContext](../../../samples/core/Miscellaneous/ConfiguringDbContext/WebApp9/Data\ApplicationDbContext.cs)]
+[!code-csharp[dbContext](../../../samples/core/Miscellaneous/ConfiguringDbContext/WebApp9/Data/ApplicationDbContext.cs)]
 
 `ApplicationDbContext` can be used in ASP.NET Core controllers or other services through constructor injection:
 
