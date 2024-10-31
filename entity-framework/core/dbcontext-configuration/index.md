@@ -10,6 +10,8 @@ uid: core/dbcontext-configuration/index
 
 This article shows basic patterns for initialization and configuration of a <xref:Microsoft.EntityFrameworkCore.DbContext> instance.
 
+[!INCLUDE [managed-identities-test-non-production](~/core/includes/managed-identities-test-non-production.md)]
+
 ## The DbContext lifetime
 
 The lifetime of a `DbContext` begins when the instance is created and ends when the instance is [disposed](/dotnet/standard/garbage-collection/unmanaged). A `DbContext` instance is designed to be used for a _single_ [unit-of-work](https://www.martinfowler.com/eaaCatalog/unitOfWork.html). This means that the lifetime of a `DbContext` instance is usually very short.
@@ -29,8 +31,10 @@ A typical unit-of-work when using Entity Framework Core (EF Core) involves:
 
 > [!IMPORTANT]
 >
-> - It is important to dispose the <xref:Microsoft.EntityFrameworkCore.DbContext> after use. This ensures both that any unmanaged resources are freed, and that any events or other hooks are unregistered so as to prevent memory leaks in case the instance remains referenced.
-> - [DbContext is **not thread-safe**](#avoiding-dbcontext-threading-issues). Do not share contexts between threads. Make sure to [await](/dotnet/csharp/language-reference/operators/await) all async calls before continuing to use the context instance.
+> - It is important to dispose the <xref:Microsoft.EntityFrameworkCore.DbContext> after use. This ensures any:
+>   - Unmanaged resources are freed.
+>   - Events or other hooks are unregistered. Unregistering prevents memory leaks when the instance remains referenced.
+> - [DbContext is **Not thread-safe**](#avoiding-dbcontext-threading-issues). Don't share contexts between threads. Make sure to [await](/dotnet/csharp/language-reference/operators/await) all async calls before continuing to use the context instance.
 > - An <xref:System.InvalidOperationException> thrown by EF Core code can put the context into an unrecoverable state. Such exceptions indicate a program error and are not designed to be recovered from.
 
 ## DbContext in dependency injection for ASP.NET Core
@@ -86,16 +90,15 @@ The `ApplicationDbContext` class must expose a public constructor with a `DbCont
 -->
 [!code-csharp[MyController](../../../samples/core/Miscellaneous/ConfiguringDbContext/WebApp/Controllers/MyController.cs?name=MyController)]
 
-
 The final result is an `ApplicationDbContext` instance created for each request and passed to the controller to perform a unit-of-work before being disposed when the request ends.
 
-Read further in this article to learn more about configuration options. In addition, see [App startup in ASP.NET Core](/aspnet/core/fundamentals/startup) and [Dependency injection in ASP.NET Core](/aspnet/core/fundamentals/dependency-injection) for more information on configuration and dependency injection in ASP.NET Core.
+Read further in this article to learn more about configuration options. See [Dependency injection in ASP.NET Core](/aspnet/core/fundamentals/dependency-injection) for more information.
 
 <!-- See also [Using Dependency Injection](TODO) for advanced dependency injection configuration with EF Core. -->
 
-## Simple DbContext initialization with 'new'
+## Basic DbContext initialization with 'new'
 
-`DbContext` instances can be constructed in the normal .NET way, for example with `new` in C#. Configuration can be performed by overriding the `OnConfiguring` method, or by passing options to the constructor. For example:
+`DbContext` instances can be constructed with `new` in C#. Configuration can be performed by overriding the `OnConfiguring` method, or by passing options to the constructor. For example:
 
 <!--
     public class ApplicationDbContext : DbContext
@@ -152,7 +155,7 @@ The `DbContextOptions` can be created and the constructor can be called explicit
 -->
 [!code-csharp[UseNewForWebApp](../../../samples/core/Miscellaneous/ConfiguringDbContext/WebApp/UseNewForWebApp.cs?name=UseNewForWebApp)]
 
-## Using a DbContext factory (e.g. for Blazor)
+## Using a DbContext factory, e.g. for Blazor
 
 Some application types (e.g. [ASP.NET Core Blazor](/aspnet/core/blazor/)) use dependency injection but do not create a service scope that aligns with the desired `DbContext` lifetime. Even where such an alignment does exist, the application may need to perform multiple units-of-work within this scope. For example, multiple units-of-work within a single HTTP request.
 

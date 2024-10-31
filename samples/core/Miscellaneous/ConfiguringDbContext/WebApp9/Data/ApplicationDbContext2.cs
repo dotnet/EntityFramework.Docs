@@ -1,9 +1,6 @@
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 
-namespace WithNew;
-
-#region ApplicationDbContext
-public class ApplicationDbContext : DbContext
+public class ApplicationDbContext2 : DbContext
 {
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
@@ -11,4 +8,3 @@ public class ApplicationDbContext : DbContext
             @"Server=(localdb)\mssqllocaldb;Database=Test;ConnectRetryCount=0");
     }
 }
-#endregion
