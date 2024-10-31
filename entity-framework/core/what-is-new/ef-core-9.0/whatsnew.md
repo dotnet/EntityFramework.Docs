@@ -1067,121 +1067,6 @@ The above were only some of the more important query improvements in EF9; see [t
 
 ## Migrations
 
-<a name="temporal-migrations"></a>
-
-### Improved temporal table migrations
-
-The migration created when changing an existing table into a temporal table has been reduced in size for EF9. For example, in EF8 making a single existing table a temporal table results in the following migration:
-
-```csharp
-protected override void Up(MigrationBuilder migrationBuilder)
-{
-    migrationBuilder.AlterTable(
-        name: "Blogs")
-        .Annotation("SqlServer:IsTemporal", true)
-        .Annotation("SqlServer:TemporalHistoryTableName", "BlogsHistory")
-        .Annotation("SqlServer:TemporalHistoryTableSchema", null)
-        .Annotation("SqlServer:TemporalPeriodEndColumnName", "PeriodEnd")
-        .Annotation("SqlServer:TemporalPeriodStartColumnName", "PeriodStart");
-
-    migrationBuilder.AlterColumn<string>(
-        name: "SiteUri",
-        table: "Blogs",
-        type: "nvarchar(max)",
-        nullable: false,
-        oldClrType: typeof(string),
-        oldType: "nvarchar(max)")
-        .Annotation("SqlServer:IsTemporal", true)
-        .Annotation("SqlServer:TemporalHistoryTableName", "BlogsHistory")
-        .Annotation("SqlServer:TemporalHistoryTableSchema", null)
-        .Annotation("SqlServer:TemporalPeriodEndColumnName", "PeriodEnd")
-        .Annotation("SqlServer:TemporalPeriodStartColumnName", "PeriodStart");
-
-    migrationBuilder.AlterColumn<string>(
-        name: "Name",
-        table: "Blogs",
-        type: "nvarchar(max)",
-        nullable: false,
-        oldClrType: typeof(string),
-        oldType: "nvarchar(max)")
-        .Annotation("SqlServer:IsTemporal", true)
-        .Annotation("SqlServer:TemporalHistoryTableName", "BlogsHistory")
-        .Annotation("SqlServer:TemporalHistoryTableSchema", null)
-        .Annotation("SqlServer:TemporalPeriodEndColumnName", "PeriodEnd")
-        .Annotation("SqlServer:TemporalPeriodStartColumnName", "PeriodStart");
-
-    migrationBuilder.AlterColumn<int>(
-        name: "Id",
-        table: "Blogs",
-        type: "int",
-        nullable: false,
-        oldClrType: typeof(int),
-        oldType: "int")
-        .Annotation("SqlServer:Identity", "1, 1")
-        .Annotation("SqlServer:IsTemporal", true)
-        .Annotation("SqlServer:TemporalHistoryTableName", "BlogsHistory")
-        .Annotation("SqlServer:TemporalHistoryTableSchema", null)
-        .Annotation("SqlServer:TemporalPeriodEndColumnName", "PeriodEnd")
-        .Annotation("SqlServer:TemporalPeriodStartColumnName", "PeriodStart")
-        .OldAnnotation("SqlServer:Identity", "1, 1");
-
-    migrationBuilder.AddColumn<DateTime>(
-        name: "PeriodEnd",
-        table: "Blogs",
-        type: "datetime2",
-        nullable: false,
-        defaultValue: new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified))
-        .Annotation("SqlServer:IsTemporal", true)
-        .Annotation("SqlServer:TemporalHistoryTableName", "BlogsHistory")
-        .Annotation("SqlServer:TemporalHistoryTableSchema", null)
-        .Annotation("SqlServer:TemporalPeriodEndColumnName", "PeriodEnd")
-        .Annotation("SqlServer:TemporalPeriodStartColumnName", "PeriodStart");
-
-    migrationBuilder.AddColumn<DateTime>(
-        name: "PeriodStart",
-        table: "Blogs",
-        type: "datetime2",
-        nullable: false,
-        defaultValue: new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified))
-        .Annotation("SqlServer:IsTemporal", true)
-        .Annotation("SqlServer:TemporalHistoryTableName", "BlogsHistory")
-        .Annotation("SqlServer:TemporalHistoryTableSchema", null)
-        .Annotation("SqlServer:TemporalPeriodEndColumnName", "PeriodEnd")
-        .Annotation("SqlServer:TemporalPeriodStartColumnName", "PeriodStart");
-}
-```
-
-In EF9, the same operation now results in a much smaller migration:
-
-```csharp
-protected override void Up(MigrationBuilder migrationBuilder)
-{
-    migrationBuilder.AlterTable(
-        name: "Blogs")
-        .Annotation("SqlServer:IsTemporal", true)
-        .Annotation("SqlServer:TemporalHistoryTableName", "BlogsHistory")
-        .Annotation("SqlServer:TemporalHistoryTableSchema", null)
-        .Annotation("SqlServer:TemporalPeriodEndColumnName", "PeriodEnd")
-        .Annotation("SqlServer:TemporalPeriodStartColumnName", "PeriodStart");
-
-    migrationBuilder.AddColumn<DateTime>(
-        name: "PeriodEnd",
-        table: "Blogs",
-        type: "datetime2",
-        nullable: false,
-        defaultValue: new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified))
-        .Annotation("SqlServer:TemporalIsPeriodEndColumn", true);
-
-    migrationBuilder.AddColumn<DateTime>(
-        name: "PeriodStart",
-        table: "Blogs",
-        type: "datetime2",
-        nullable: false,
-        defaultValue: new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified))
-        .Annotation("SqlServer:TemporalIsPeriodStartColumn", true);
-}
-```
-
 <a name="concurrent-migrations"></a>
 
 ### Protection against concurrent migrations
@@ -1209,6 +1094,10 @@ Here is an example of how these methods can be used:
 [!code-csharp[ContextOptionSeeding](../../../../samples/core/Modeling/DataSeeding/DataSeedingContext.cs?name=ContextOptionSeeding)]
 
 More information can be found [here](/ef/core/modeling/data-seeding#use-seeding-method).
+
+### Other migration improvements
+
+* When changing an existing table into a SQL Server temporal table, the migration code size has been significantly reduced.
 
 ## Model building
 
