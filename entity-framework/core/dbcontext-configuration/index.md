@@ -41,7 +41,7 @@ A typical unit-of-work when using Entity Framework Core (EF Core) involves:
 
 In many web applications, each HTTP request corresponds to a single unit-of-work. This makes tying the context lifetime to that of the request a good default for web applications.
 
-ASP.NET Core applications are [configured using dependency injection](/aspnet/core/fundamentals/startup). EF Core can be added to this configuration using <xref:Microsoft.Extensions.DependencyInjection.EntityFrameworkServiceCollectionExtensions.AddDbContext%2A> in the [`ConfigureServices`](/aspnet/core/fundamentals/startup#the-configureservices-method) method of `Startup.cs`. For example:
+ASP.NET Core applications are [configured using dependency injection](/aspnet/core/fundamentals/startup). EF Core can be added to this configuration using <xref:Microsoft.Extensions.DependencyInjection.EntityFrameworkServiceCollectionExtensions.AddDbContext%2A> in `Program.cs`. For example:
 
 <!--
         public void ConfigureServices(IServiceCollection services)
@@ -53,9 +53,7 @@ ASP.NET Core applications are [configured using dependency injection](/aspnet/co
         }
 -->
 
-[!code-csharp[ConfigureServices](../../../samples/core/Miscellaneous/ConfiguringDbContext/WebApp/Startup.cs?name=ConfigureServices)]
-
-[!code-csharp[snippet_1](../../../samples/core/Miscellaneous/ConfiguringDbContext/WebApp9/Program.cs?name=snippet_1)]
+[!code-csharp[snippet_1](../../../samples/core/Miscellaneous/ConfiguringDbContext/WebApp/Program9.cs?name=snippet_1)]
 
 The preceding code registers `ApplicationDbContext`, a subclass of `DbContext` as a scoped service in the ASP.NET Core app service provider. The service provider is also know as the dependency injection container. The context is configured to use the SQL Server database provider and reads the connection string from ASP.NET Core configuration.
 
@@ -72,8 +70,6 @@ The `ApplicationDbContext` class must expose a public constructor with a `DbCont
 -->
 
 [!code-csharp[ApplicationDbContext](../../../samples/core/Miscellaneous/ConfiguringDbContext/WebApp/ApplicationDbContext.cs?name=ApplicationDbContext)]
-
-[!code-csharp[dbContext](../../../samples/core/Miscellaneous/ConfiguringDbContext/WebApp9/Data/ApplicationDbContext.cs)]
 
 `ApplicationDbContext` can be used in ASP.NET Core controllers or other services through constructor injection:
 
