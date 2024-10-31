@@ -55,7 +55,7 @@ ASP.NET Core applications are [configured using dependency injection](/aspnet/co
 
 [!code-csharp[snippet_1](../../../samples/core/Miscellaneous/ConfiguringDbContext/WebApp/Program9.cs?name=snippet_1)]
 
-The preceding code registers `ApplicationDbContext`, a subclass of `DbContext` as a scoped service in the ASP.NET Core app service provider. The service provider is also know as the dependency injection container. The context is configured to use the SQL Server database provider and reads the connection string from ASP.NET Core configuration.
+The preceding code registers `ApplicationDbContext`, a subclass of `DbContext`, as a scoped service in the ASP.NET Core app service provider. The service provider is also known as the dependency injection container. The context is configured to use the SQL Server database provider and reads the connection string from ASP.NET Core configuration.
 
 The `ApplicationDbContext` class must expose a public constructor with a `DbContextOptions<ApplicationDbContext>` parameter. This is how context configuration from `AddDbContext` is passed to the `DbContext`. For example:
 
@@ -151,7 +151,7 @@ The `DbContextOptions` can be created and the constructor can be called explicit
 -->
 [!code-csharp[UseNewForWebApp](../../../samples/core/Miscellaneous/ConfiguringDbContext/WebApp/UseNewForWebApp.cs?name=UseNewForWebApp)]
 
-## Using a DbContext factory, e.g. for Blazor
+## Use a DbContext factory
 
 Some application types (e.g. [ASP.NET Core Blazor](/aspnet/core/blazor/)) use dependency injection but do not create a service scope that aligns with the desired `DbContext` lifetime. Even where such an alignment does exist, the application may need to perform multiple units-of-work within this scope. For example, multiple units-of-work within a single HTTP request.
 
