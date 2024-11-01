@@ -6,12 +6,15 @@ ms.date: 10/23/2016
 uid: ef6/fundamentals/configuring/connection-strings
 ---
 # Connection strings and models
-This topic covers how Entity Framework discovers which database connection to use, and how you can change it. Models created with Code First and the EF Designer are both covered in this topic.  
+This article covers how Entity Framework discovers which database connection to use, and how to change it. Models created with Code First and the EF Designer are covered. 
 
-Typically an Entity Framework application uses a class derived from DbContext. This derived class will call one of the constructors on the base DbContext class to control:  
+[!INCLUDE [managed-identities-test-non-production](~/core/includes/managed-identities-test-non-production.md)]
 
-- How the context will connect to a database — that is, how a connection string is found/used  
-- Whether the context will use calculate a model using Code First or load a model created with the EF Designer  
+
+Typically an Entity Framework application uses a class derived from DbContext. This derived class calls one of the constructors on the base DbContext class to control:  
+
+- How the context connects to a database, that is, how a connection string is found and used.
+- Whether the context calculates a model using Code First or loads a model created with the EF Designer.
 - Additional advanced options  
 
 The following fragments show some of the ways the DbContext constructors can be used.  

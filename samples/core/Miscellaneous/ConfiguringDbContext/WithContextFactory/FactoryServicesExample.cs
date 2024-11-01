@@ -10,8 +10,8 @@ public class FactoryServicesExample
     public void ConfigureServices(IServiceCollection services)
     {
         services.AddDbContextFactory<ApplicationDbContext>(
-            options =>
-                options.UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=Test;ConnectRetryCount=0"));
+            options => options.UseSqlServer(
+                @"Server=(localdb)\mssqllocaldb;Database=Test;ConnectRetryCount=0"));
     }
     #endregion
 }

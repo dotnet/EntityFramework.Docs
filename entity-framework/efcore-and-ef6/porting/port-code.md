@@ -25,7 +25,7 @@ Most APIs that you use in EF6 are in the `System.Data.Entity` namespace (and rel
 
 As described in [configuring the database  connection](xref:efcore-and-ef6/porting/port-detailed-cases#configuring-the-database-connection), EF Core has less magic around detecting the database to connect to. You will need to override the `OnConfiguring` method on your derived context, and use the database provider specific API to setup the connection to the database.
 
-Most EF6 applications store the connection string in the applications `App/Web.config` file. In EF Core, you read this connection string using the `ConfigurationManager` API. You may need to add a reference to the `System.Configuration` framework assembly to be able to use this API.
+Most EF6 applications store the connection string in the applications `App/Web.config` file. In EF Core, you read this connection string using the `ConfigurationManager` API. You may need to add a reference to the `System.Configuration` framework assembly to be able to use this API:
 
 ```csharp
 public class BloggingContext : DbContext
@@ -39,6 +39,9 @@ public class BloggingContext : DbContext
     }
 }
 ```
+
+> Warning
+> Never store passwords or other sensitive data in source code or configuration files. Production secrets shouldn't be used for development or test. Secrets shouldn't be deployed with the app. Production secrets should be accessed through a controlled means like Azure Key Vault. Azure test and production secrets can be stored and protected with the [Azure Key Vault configuration provider](/aspnet/core/security/key-vault-configuration).
 
 ## Update your code
 

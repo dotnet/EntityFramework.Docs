@@ -6,7 +6,16 @@ ms.date: 10/23/2016
 uid: ef6/fundamentals/configuring/config-file
 ---
 # Configuration File Settings
-Entity Framework allows a number of settings to be specified from the configuration file. In general EF follows a ‘convention over configuration’ principle: all the settings discussed in this post have a default behavior, you only need to worry about changing the setting when the default no longer satisfies your requirements.  
+Entity Framework allows a number of settings to be specified from the configuration file. In general EF follows a ‘convention over configuration’ principle: all the settings discussed in this post have a default behavior, you only need to worry about changing the setting when the default no longer satisfies your requirements. 
+
+## Configuration data guidelines
+
+* Never store passwords or other sensitive data in configuration provider code or in plain text configuration files.
+* Don't use production secrets in development or test environments.
+* Specify secrets outside of the project so that they can't be accidentally committed to a source code repository.
+* Consider protecting the contents of the configuration file using [Protected Configuration](/dotnet/framework/data/adonet/connection-strings-and-configuration-files#encrypt-configuration-file-sections-using-protected-configuration).
+
+[!INCLUDE [managed-identities-test-non-production](~/core/includes/managed-identities-test-non-production.md)]
 
 ## A Code-Based Alternative  
 

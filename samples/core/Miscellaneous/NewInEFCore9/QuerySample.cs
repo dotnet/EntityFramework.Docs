@@ -215,8 +215,7 @@ public static class QuerySample
         Console.WriteLine();
         Console.WriteLine("Aggregate over subquery/aggregate:");
         Console.WriteLine();
-
-        #region AggregateOverSubquery
+        // </AggregateOverSubquery>
         var latestPostsAverageRatingByLanguage = await context.Blogs.
             Select(x => new
             {
@@ -226,7 +225,7 @@ public static class QuerySample
             .GroupBy(x => x.Language)
             .Select(x => x.Average(xx => xx.LatestPostRating))
             .ToListAsync();
-        #endregion
+        // </AggregateOverSubquery>
 
         // Max over decimal is not supported on Sqlite
         if (!context.UseSqlite)

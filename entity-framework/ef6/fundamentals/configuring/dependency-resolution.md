@@ -58,7 +58,7 @@ This article does not contain full details on how to implement IDbDependencyReso
 
 **Version introduced**: EF6.0.0  
 
-**Object returned**: The connection factory that will be used when EF creates a database connection by convention. That is, when no connection or connection string is given to EF, and no connection string can be found in the app.config or web.config, then this service is used to create a connection by convention. Changing the connection factory can allow EF to use a different type of database (for example, SQL Server Compact Edition) by default.  
+**Object returned**: The connection factory that will be used when EF creates a database connection by convention. That is, when no connection or connection string is given to EF, and no connection string can be found in the `app.config` or `web.config`, then this service is used to create a connection by convention. Changing the connection factory can allow EF to use a different type of database (for example, SQL Server Compact Edition) by default. Never store passwords or other sensitive data in configuration provider code or in plain text configuration files. Specify secrets outside of the project so that they can't be accidentally committed to a source code repository. Consider protecting the contents of the configuration file using [Protected Configuration](/dotnet/framework/data/adonet/connection-strings-and-configuration-files#encrypt-configuration-file-sections-using-protected-configuration).
 
 **Key**: Not used; will be null  
 
