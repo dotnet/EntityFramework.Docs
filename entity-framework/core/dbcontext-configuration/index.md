@@ -53,7 +53,7 @@ ASP.NET Core applications are [configured using dependency injection](/aspnet/co
         }
 -->
 
-[!code-csharp[snippet_1](../../../samples/core/Miscellaneous/ConfiguringDbContext/WebApp/Program9.cs?name=snippet_1)]
+[!code-csharp[snippet_1](../../../samples/core/Miscellaneous/ConfiguringDbContext/WebApp9/Program9.cs?name=snippet_1)]
 
 The preceding code registers `ApplicationDbContext`, a subclass of `DbContext`, as a scoped service in the ASP.NET Core app service provider. The service provider is also known as the dependency injection container. The context is configured to use the SQL Server database provider and reads the connection string from ASP.NET Core configuration.
 
