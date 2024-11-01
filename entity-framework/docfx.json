@@ -33,6 +33,7 @@
         "exclude": [
           "**/bin/**",
           "**/obj/**",
+          "**/includes/**",
           "_site/**"
         ]
       }
