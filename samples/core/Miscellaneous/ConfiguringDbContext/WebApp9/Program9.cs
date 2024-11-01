@@ -1,3 +1,5 @@
+public class Program
+{
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -41,3 +43,4 @@ app.MapRazorPages()
    .WithStaticAssets();
 
 app.Run();
+}
