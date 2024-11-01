@@ -1,7 +1,5 @@
 {
-    "default": true,    
-    "first-header-h1": false,
-    "first-line-h1": false,
+    "default": true,
     "MD002": false,
     "MD013": false,
     "MD024": false,
