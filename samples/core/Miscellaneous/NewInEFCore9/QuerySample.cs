@@ -223,8 +223,7 @@ public static class QuerySample
                 x.Language,
                 LatestPostRating = x.Posts.OrderByDescending(xx => xx.PublishedOn).FirstOrDefault().Rating
             })
-            .Where(x => x.Language != null)
-            .GroupBy(x => x.Language)
+            .GroupBy(x => x?.Language)
             .Select(x => x.Average(xx => xx.LatestPostRating))
             .ToListAsync();
         #endregion
