@@ -7,6 +7,8 @@ uid: core/what-is-new/ef-core-1.0
 ---
 # Features included in EF Core 1.0
 
+[!INCLUDE [managed-identities-test-non-production](~/core/includes/managed-identities-test-non-production.md)]
+
 ## Platforms
 
 ### .NET Framework 4.5.1
