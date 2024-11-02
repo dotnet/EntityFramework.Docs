@@ -595,7 +595,7 @@ Notice that EF created a constant in the SQL for ".NET Blog" because this value 
 
 On the other hand, the value of `id` is parameterized, since the same query may be executed with many different values for `id`. Creating a constant in this case would result in pollution of the query cache with lots of queries that differ only in `id` values. This is very bad for overall performance of the database.
 
-Generally speaking, these defaults should not be changed. However, EF Core 8.0.2 introduces an `EF.Constant` method which forces EF to use a constant even if a parameter would be used by default. For example:
+Generally speaking, these defaults should not be changed. However, EF Core 9.0.2 introduces an `EF.Constant` method which forces EF to use a constant even if a parameter would be used by default. For example:
 
 <!--
         #region ForceConstant
