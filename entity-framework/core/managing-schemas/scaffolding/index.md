@@ -35,7 +35,7 @@ How the connection string is quoted and escaped depends on the shell that is use
 
 The following example scaffolds entity types and a `DbContext` from the `Chinook` database located on the machine's SQL Server LocalDB instance, making use of the `Microsoft.EntityFrameworkCore.SqlServer` database provider.
 
-#### [.NET Core CLI](#tab/dotnet-core-cli)
+#### [.NET CLI](#tab/dotnet-core-cli)
 
 ```dotnetcli
 dotnet ef dbcontext scaffold "Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=Chinook" Microsoft.EntityFrameworkCore.SqlServer
@@ -49,67 +49,8 @@ Scaffold-DbContext 'Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=Chinook' 
 
 ***
 
-#### User secrets for connection strings
-
-If you have a .NET application that uses the hosting model and configuration system, such as an ASP.NET Core project, then you can use the `Name=<connection-string>` syntax to read the connection string from configuration.
-
-For example, consider an ASP.NET Core application with the following configuration file:
-
-```json
-{
-  "ConnectionStrings": {
-    "Chinook": "Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=Chinook"
-  }
-}
-```
-
-This connection string in the config file can be used to scaffold from a database using:
-
-#### [.NET Core CLI](#tab/dotnet-core-cli)
-
-```dotnetcli
-dotnet ef dbcontext scaffold "Name=ConnectionStrings:Chinook" Microsoft.EntityFrameworkCore.SqlServer
-```
-
-#### [Visual Studio PMC](#tab/vs)
-
-```powershell
-Scaffold-DbContext 'Name=ConnectionStrings:Chinook' Microsoft.EntityFrameworkCore.SqlServer
-```
-
-***
-
-However, storing connection strings in configuration files is not a good idea, since it is too easy to accidentally expose them, for example, by pushing to source control. Instead, connection strings should be stored in a secure way, such as using [Azure Key Vault](/azure/key-vault/keys/quick-create-net) or, when working locally, the [Secret Manager tool](/aspnet/core/security/app-secrets#secret-manager), aka "User Secrets".
-
-For example, to use the User Secrets, first remove the connection string from your ASP.NET Core configuration file. Next, initialize User Secrets by executing the following command in the same directory as the ASP.NET Core project:
-
-```dotnetcli
-dotnet user-secrets init
-```
-
-This command sets up storage on your computer separate from your source code and adds a key for this storage to the project.
-
-Next, store the connection string in user secrets. For example:
-
-```dotnetcli
-dotnet user-secrets set ConnectionStrings:Chinook "Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=Chinook"
-```
-
-Now the same command that previous used the named connection string from the config file will instead use the connection string stored in User Secrets. For example:
-
-#### [.NET Core CLI](#tab/dotnet-core-cli)
-
-```dotnetcli
-dotnet ef dbcontext scaffold "Name=ConnectionStrings:Chinook" Microsoft.EntityFrameworkCore.SqlServer
-```
-
-#### [Visual Studio PMC](#tab/vs)
-
-```powershell
-Scaffold-DbContext 'Name=ConnectionStrings:Chinook' Microsoft.EntityFrameworkCore.SqlServer
-```
-
-***
+> [!TIP]
+> You can [use Configuration to store and retrieve the connection string](xref:core/miscellaneous/connection-strings#aspnet-core)
 
 #### Connection strings in the scaffolded code
 

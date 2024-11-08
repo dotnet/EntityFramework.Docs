@@ -2,13 +2,13 @@
 title: EF Core NuGet Packages
 description: Overview of the different Entity Framework Core NuGet packages
 author: ajcvickers
-ms.date: 01/21/2021
+ms.date: 10/21/2024
 uid: core/what-is-new/nuget-packages
 ---
 
 # EF Core NuGet Packages
 
-Entity Framework Core (EF Core) is shipped as [NuGet](https://www.nuget.org/) packages. The packages needed by an application depends on:
+Entity Framework Core (EF Core) is shipped as [NuGet](https://www.nuget.org/profiles/EntityFramework) packages. The packages needed by an application depends on:
 
 - The type of database system being used (SQL Server, SQLite, etc.)
 - The EF Core features needed
@@ -53,8 +53,9 @@ Common database providers are listed in the table below. See [database providers
 
 Use of tooling for [EF Core migrations](xref:core/managing-schemas/migrations/index) and [reverse engineering (scaffolding) from an existing database](xref:core/managing-schemas/scaffolding) requires installation of the appropriate tooling package:
 
+- [dotnet-ef](https://www.nuget.org/packages/dotnet-ef/) for cross-platform command line tooling
+- [Microsoft.EntityFrameworkCore.Tasks](https://www.nuget.org/packages/Microsoft.EntityFrameworkCore.Tasks/) for MSBuild tasks allowing build-time integration.
 - [Microsoft.EntityFrameworkCore.Tools](https://www.nuget.org/packages/Microsoft.EntityFrameworkCore.Tools/) for PowerShell tooling that works in the Visual Studio [Package Manager Console](/nuget/consume-packages/install-use-packages-powershell)
-- [dotnet-ef](https://www.nuget.org/packages/dotnet-ef/) and [Microsoft.EntityFrameworkCore.Design](https://www.nuget.org/packages/Microsoft.EntityFrameworkCore.Design/) for cross-platform command line tooling
 
 See [Entity Framework Core Tools Reference](xref:core/cli/index) for more information on using EF Core tooling, including how to correctly install the `dotnet-ef` tool in a project or globally.
 
@@ -84,6 +85,7 @@ Other EF Core packages are pulled in as dependencies of the database provider pa
 | Lightweight package for EF Core attributes, etc.           | [Microsoft.EntityFrameworkCore.Abstractions](https://www.nuget.org/packages/Microsoft.EntityFrameworkCore.Abstractions/)
 | Roslyn code analyzers for EF Core usage                    | [Microsoft.EntityFrameworkCore.Analyzers](https://www.nuget.org/packages/Microsoft.EntityFrameworkCore.Analyzers/)
 | EF Core SQLite provider without a native SQLite dependency | [Microsoft.EntityFrameworkCore.Sqlite.Core](https://www.nuget.org/packages/Microsoft.EntityFrameworkCore.Sqlite.Core/)
+| Design-time functionality implementation shared by EF tools| [Microsoft.EntityFrameworkCore.Design](https://www.nuget.org/packages/Microsoft.EntityFrameworkCore.Design/)
 
 ## Packages for database provider testing
 

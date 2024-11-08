@@ -20,6 +20,7 @@ The ASP.NET Core configuration can store connection strings with various provide
 
 * In the `appsettings.Development.json` or `appsettings.json` file.
 * In an environment variable
+* Using [Azure Key Vault](/azure/key-vault/keys/quick-create-net)
 * Using the [Secret Manager tool](/aspnet/core/security/app-secrets#secret-manager)
 
 > [!WARNING]
@@ -30,9 +31,25 @@ For example, the [Secret Manager tool](/aspnet/core/security/app-secrets#secret-
 See the [Configuration section of the ASP.NET Core documentation](/aspnet/core/fundamentals/configuration) for more information.
 
 ```dotnetcli
+dotnet user-secrets init
 dotnet user-secrets set ConnectionStrings:YourDatabaseAlias "Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=YourDatabase"
+```
+
+Then, in scaffolding, use a connection string that consists of `Name=<database-alias>`.
+
+### [.NET Core CLI](#tab/dotnet-core-cli)
+
+```dotnetcli
 dotnet ef dbcontext scaffold Name=ConnectionStrings:YourDatabaseAlias Microsoft.EntityFrameworkCore.SqlServer
 ```
+
+### [Visual Studio PMC](#tab/vs)
+
+```powershell
+Scaffold-DbContext 'Name=ConnectionStrings:YourDatabaseAlias' Microsoft.EntityFrameworkCore.SqlServer
+```
+
+***
 
 [!INCLUDE [managed-identities-test-non-production](~/core/includes/managed-identities-test-non-production.md)]
 

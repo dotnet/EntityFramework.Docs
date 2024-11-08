@@ -451,7 +451,7 @@
     - name: Tools & extensions
       href: core/extensions/index.md
 
-    - name: Command-line reference
+    - name: Design-time tools reference
       items:
       - name: Overview
         href: core/cli/index.md
@@ -459,6 +459,8 @@
         href: core/cli/powershell.md
       - name: .NET Core CLI
         href: core/cli/dotnet.md
+      - name: MSBuild Tasks
+        href: core/cli/msbuild.md
       - name: Design-time DbContext creation
         href: core/cli/dbcontext-creation.md
       - name: Design-time services

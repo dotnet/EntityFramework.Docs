@@ -38,10 +38,15 @@ C# interceptors are currently an experimental feature, and require a special opt
 </PropertyGroup>
 ```
 
-Finally, the [`Microsoft.EntityFrameworkCore.Tasks`](https://www.nuget.org/packages/Microsoft.EntityFrameworkCore.Tasks) package contains MSBuild integration that will perform the query precompilation (and generate the required compiled model) when you publish your application:
+Finally, the [`Microsoft.EntityFrameworkCore.Tasks`](https://www.nuget.org/packages/Microsoft.EntityFrameworkCore.Tasks) package contains [MSBuild integration](xref:core/cli/msbuild) that will perform the query precompilation (and generate the required compiled model) when you publish your application:
 
 ```xml
-<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="..." />
+<ItemGroup>
+  <PackageReference Include="Microsoft.EntityFrameworkCore.Tasks" Version="9.0.0">
+    <PrivateAssets>all</PrivateAssets>
+    <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+  </PackageReference>
+</ItemGroup>
 ```
 
 You're now ready to publish your EF NativeAOT application:
@@ -50,7 +55,7 @@ You're now ready to publish your EF NativeAOT application:
 dotnet publish -r linux-arm64 -c Release
 ```
 
-This shows publishing a NativeAOT publishing for Linux running on ARM64; [consult this catalog](/dotnet/core/rid-catalog) to find your runtime identifier. If you'd like to generate the interceptors without publishing - for example to examine the generated sources - you can do so via the `net ef dbcontext optimize --precompile-queries --nativeaot` command.
+This shows publishing a NativeAOT publishing for Linux running on ARM64; [consult this catalog](/dotnet/core/rid-catalog) to find your runtime identifier. If you'd like to generate the interceptors without publishing - for example to examine the generated sources - you can do so via the `dotnet ef dbcontext optimize --precompile-queries --nativeaot` command.
 
 Due to the way C# interceptors work, any change in the application source invalidates them and requires repeating the above process. As a result, interceptor generation and actual publishing aren't expected to happen in the inner loop, as the developer is working on code; instead, both `dotnet ef dbcontext optimize` and `dotnet publish` can be executed in a publishing/deployment workflow, in a CI/CD system.
 
