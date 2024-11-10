@@ -296,21 +296,36 @@ Note, however, that we plan to fully remove sync support in EF 11, so start upda
 
 ## AOT and pre-compiled queries
 
-As mentioned in the introduction, there is a lot of work going on behind the scenes to allow EF Core to run without just-in-time (JIT) compilation. Instead, EF compile ahead-of-time (AOT) everything needed to run queries in the application. This AOT compilation and related processing will happen as part of building and publishing the application. At this point in the EF9 release, there is not much available that can be used by you, the app developer. However, for those interested, the completed issues in EF9 that support AOT and pre-compiled queries are:
+> [!WARNING]
+> NativeAOT and query precompilation are highly experimental feature, and are not yet suited for production use. The support described below should be viewed as infrastructure towards the final feature, which will likely be released with EF 10. We encourage you to experiment with the current support and report on your experiences, but recommend against deploying EF NativeAOT applications in production.
 
-* [Compiled model: Use static binding instead of reflection for properties and fields](https://github.com/dotnet/efcore/issues/24900)
-* [Compiled model: Generate lambdas used in change tracking](https://github.com/dotnet/efcore/issues/24904)
-* [Make change tracking and the update pipeline compatible with AOT/trimming](https://github.com/dotnet/efcore/issues/29761)
-* [Use interceptors to redirect the query to precompiled code](https://github.com/dotnet/efcore/issues/31331)
-* [Make all SQL expression nodes quotable](https://github.com/dotnet/efcore/issues/33008)
-* [Generate the compiled model during build](https://github.com/dotnet/efcore/issues/24894)
-* [Discover the compiled model automatically](https://github.com/dotnet/efcore/issues/24893)
-* [Make ParameterExtractingExpressionVisitor capable of extracting paths to evaluatable fragments in the tree](https://github.com/dotnet/efcore/issues/32999)
-* [Generate expression trees in compiled models (query filters, value converters)](https://github.com/dotnet/efcore/issues/29924)
-* [Make LinqToCSharpSyntaxTranslator more resilient to multiple declaration of the same variable in nested scopes](https://github.com/dotnet/efcore/issues/32716)
-* [Optimize ParameterExtractingExpressionVisitor](https://github.com/dotnet/efcore/issues/32698)
+EF 9.0 brings initial, experimental support for [.NET NativeAOT](/dotnet/core/deploying/native-aot), allowing the publishing of ahead-of-time compiled applications which make use of EF to access databases. To support LINQ queries in NativeAOT mode, EF reiles on _query precompilation_: this mechanism statically identifies EF LINQ queries and generates C# [_interceptors_](/dotnet/csharp/whats-new/csharp-12#interceptors), which contain code to execute each specific query. This can significantly cut down on your application's startup time, as the heavy lifting of processing and compiling your LINQ queries into SQL no longer happens every time your application starts up. Instead, each query's interceptor contains the finalized SQL for that query, as well as optimized code to materialize database results as .NET objects.
 
-Check back here for examples of how to use pre-compiled queries as the experience comes together.
+For example, given a program with the following EF query:
+
+```c#
+var blogs = await context.Blogs.Where(b => b.Name == "foo").ToListAsync();
+```
+
+EF will generate a C# interceptor into your project, which will take over the query execution. Instead of processing the query and translating it to SQL every time the program starts, the interceptor has the SQL embedded right into it, allowing your program to start up much faster:
+
+```c#
+var relationalCommandTemplate = ((IRelationalCommandTemplate)(new RelationalCommand(materializerLiftableConstantContext.CommandBuilderDependencies, "SELECT [b].[Id], [b].[Name]\nFROM [Blogs] AS [b]\nWHERE [b].[Name] = N'foo'", new IRelationalParameter[] { })));
+```
+
+In addition, the same interceptor contains code to materialize your .NET object from database results:
+
+```c#
+var instance = new Blog();
+UnsafeAccessor_Blog_Id_Set(instance) = dataReader.GetInt32(0);
+UnsafeAccessor_Blog_Name_Set(instance) = dataReader.GetString(1);
+```
+
+This uses another new .NET feature - [unsafe accessors](/dotnet/api/system.runtime.compilerservices.unsafeaccessorattribute), to inject data from the database into your object's private fields.
+
+If you're interested in NativeAOT and like to experiment with cutting-edge features, give this a try! Just be aware that the feature should be consider unstable, and currently has many limitations; we expect to stabilize it and make it more suitable for production usage in EF 10.
+
+See the [NativeAOT documentation page](xref:core/miscellaneous/nativeaot-and-precompiled-queries) for more details.
 
 ## LINQ and SQL translation
 

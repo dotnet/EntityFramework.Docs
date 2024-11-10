@@ -361,11 +361,12 @@
         href: core/miscellaneous/async.md
       - name: Nullable reference types
         href: core/miscellaneous/nullable-reference-types.md
-      #- name: Using dependency injection
       - name: Collations and case sensitivity
         href: core/miscellaneous/collations-and-case-sensitivity.md
       - name: Connection resiliency
         href: core/miscellaneous/connection-resiliency.md
+      - name: NativeAOT and precompiled queries
+        href: core/miscellaneous/nativeaot-and-precompiled-queries.md
       - name: Connection strings
         href: core/miscellaneous/connection-strings.md
       - name: Context pooling
