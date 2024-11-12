@@ -350,6 +350,8 @@
         href: core/performance/efficient-updating.md
       - name: Modeling for performance
         href: core/performance/modeling-for-performance.md
+      - name: NativeAOT and precompiled queries
+        href: core/performance/nativeaot-and-precompiled-queries.md
       - name: Advanced performance topics
         href: core/performance/advanced-performance-topics.md
 
@@ -361,7 +363,6 @@
         href: core/miscellaneous/async.md
       - name: Nullable reference types
         href: core/miscellaneous/nullable-reference-types.md
-      #- name: Using dependency injection
       - name: Collations and case sensitivity
         href: core/miscellaneous/collations-and-case-sensitivity.md
       - name: Connection resiliency
