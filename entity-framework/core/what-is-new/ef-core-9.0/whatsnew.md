@@ -297,9 +297,9 @@ Note, however, that we plan to fully remove sync support in EF 11, so start upda
 ## AOT and pre-compiled queries
 
 > [!WARNING]
-> NativeAOT and query precompilation are highly experimental feature, and are not yet suited for production use. The support described below should be viewed as infrastructure towards the final feature, which will likely be released with EF 10. We encourage you to experiment with the current support and report on your experiences, but recommend against deploying EF NativeAOT applications in production.
+> NativeAOT and query precompilation are highly experimental features, and are not yet suited for production use. The support described below should be viewed as infrastructure towards the final feature, which will likely be released with EF 10. We encourage you to experiment with the current support and report on your experiences, but recommend against deploying EF NativeAOT applications in production.
 
-EF 9.0 brings initial, experimental support for [.NET NativeAOT](/dotnet/core/deploying/native-aot), allowing the publishing of ahead-of-time compiled applications which make use of EF to access databases. To support LINQ queries in NativeAOT mode, EF reiles on _query precompilation_: this mechanism statically identifies EF LINQ queries and generates C# [_interceptors_](/dotnet/csharp/whats-new/csharp-12#interceptors), which contain code to execute each specific query. This can significantly cut down on your application's startup time, as the heavy lifting of processing and compiling your LINQ queries into SQL no longer happens every time your application starts up. Instead, each query's interceptor contains the finalized SQL for that query, as well as optimized code to materialize database results as .NET objects.
+EF 9.0 brings initial, experimental support for [.NET NativeAOT](/dotnet/core/deploying/native-aot), allowing the publishing of ahead-of-time compiled applications which make use of EF to access databases. To support LINQ queries in NativeAOT mode, EF relies on _query precompilation_: this mechanism statically identifies EF LINQ queries and generates C# [_interceptors_](/dotnet/csharp/whats-new/csharp-12#interceptors), which contain code to execute each specific query. This can significantly cut down on your application's startup time, as the heavy lifting of processing and compiling your LINQ queries into SQL no longer happens every time your application starts up. Instead, each query's interceptor contains the finalized SQL for that query, as well as optimized code to materialize database results as .NET objects.
 
 For example, given a program with the following EF query:
 
@@ -307,7 +307,7 @@ For example, given a program with the following EF query:
 var blogs = await context.Blogs.Where(b => b.Name == "foo").ToListAsync();
 ```
 
-EF will generate a C# interceptor into your project, which will take over the query execution. Instead of processing the query and translating it to SQL every time the program starts, the interceptor has the SQL embedded right into it, allowing your program to start up much faster:
+EF will generate a C# interceptor into your project, which will take over the query execution. Instead of processing the query and translating it to SQL every time the program starts, the interceptor has the SQL embedded right into it (for SQL Server in this case), allowing your program to start up much faster:
 
 ```c#
 var relationalCommandTemplate = ((IRelationalCommandTemplate)(new RelationalCommand(materializerLiftableConstantContext.CommandBuilderDependencies, "SELECT [b].[Id], [b].[Name]\nFROM [Blogs] AS [b]\nWHERE [b].[Name] = N'foo'", new IRelationalParameter[] { })));
@@ -323,9 +323,9 @@ UnsafeAccessor_Blog_Name_Set(instance) = dataReader.GetString(1);
 
 This uses another new .NET feature - [unsafe accessors](/dotnet/api/system.runtime.compilerservices.unsafeaccessorattribute), to inject data from the database into your object's private fields.
 
-If you're interested in NativeAOT and like to experiment with cutting-edge features, give this a try! Just be aware that the feature should be consider unstable, and currently has many limitations; we expect to stabilize it and make it more suitable for production usage in EF 10.
+If you're interested in NativeAOT and like to experiment with cutting-edge features, give this a try! Just be aware that the feature should be considered unstable, and currently has many limitations; we expect to stabilize it and make it more suitable for production usage in EF 10.
 
-See the [NativeAOT documentation page](xref:core/miscellaneous/nativeaot-and-precompiled-queries) for more details.
+See the [NativeAOT documentation page](xref:core/performance/nativeaot-and-precompiled-queries) for more details.
 
 ## LINQ and SQL translation
 

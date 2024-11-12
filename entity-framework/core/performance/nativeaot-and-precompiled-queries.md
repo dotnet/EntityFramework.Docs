@@ -3,7 +3,7 @@ title: NativeAOT Support and Precompiled Queries (Experimental) - EF Core
 description: Publishing NativeAOT Entity Framework Core applications and using precompiled queries
 author: roji
 ms.date: 11/10/2024
-uid: core/miscellaneous/nativeaot-and-precompiled-queries
+uid: core/performance/nativeaot-and-precompiled-queries
 ---
 # NativeAOT Support and Precompiled Queries (Experimental)
 
@@ -16,7 +16,7 @@ uid: core/miscellaneous/nativeaot-and-precompiled-queries
 * Small, self-contained binaries that have smaller memory footprints and are easier to deploy
 * Running applications in environments where just-in-time compilation isn't supported
 
-EF NativeAOT applications start up much faster than the same applications without NativeAOT; aside from the general startup improvements that NativeAOT offers (i.e. no JIT compilation required on each startup), EF's NativeAOT supports removes the processing of LINQ queries and their translation to SQL; the more EF LINQ queries an application has in its code, the faster the startup gains are expected to be from NativeAOT.
+EF applications published with NativeAOT start up much faster than the same applications without it. In addition to the general .NET startup improvements that NativeAOT offers (i.e. no JIT compilation required each time), EF also precompiles LINQ queries when publishing your application, so that no processing is needed when starting up and the SQL is already available for immediate execution. The more EF LINQ queries an application has in its code, the faster the startup gains are expected to be.
 
 ## Publishing an EF NativeAOT Application
 
@@ -38,10 +38,10 @@ C# interceptors are currently an experimental feature, and require a special opt
 </PropertyGroup>
 ```
 
-At this point, you're ready to precompile your LINQ queries, and generate the [compiled model](xref:core/performance/advanced-performance-topics#compiled-models) that they depend on. Make sure that you have at least version 9.0 of the EF tools (`dotnet tool list -g`), and then execute the following:
+Finally, the [`Microsoft.EntityFrameworkCore.Tasks`](https://www.nuget.org/packages/Microsoft.EntityFrameworkCore.Tasks) package contains MSBuild integration that will perform the query precompilation (and generate the required compiled model) when you publish your application:
 
-```console
-dotnet ef dbcontext optimize --precompile-queries --nativeaot
+```xml
+<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="..." />
 ```
 
 You're now ready to publish your EF NativeAOT application:
@@ -50,7 +50,7 @@ You're now ready to publish your EF NativeAOT application:
 dotnet publish -r linux-arm64 -c Release
 ```
 
-This shows publishing a NativeAOT publishing for Linux running on ARM64; [consult this catalog](/dotnet/core/rid-catalog) to find your runtime identifier.
+This shows publishing a NativeAOT publishing for Linux running on ARM64; [consult this catalog](/dotnet/core/rid-catalog) to find your runtime identifier. If you'd like to generate the interceptors without publishing - for example to examine the generated sources - you can do so via the `net ef dbcontext optimize --precompile-queries --nativeaot` command.
 
 Due to the way C# interceptors work, any change in the application source invalidates them and requires repeating the above process. As a result, interceptor generation and actual publishing aren't expected to happen in the inner loop, as the developer is working on code; instead, both `dotnet ef dbcontext optimize` and `dotnet publish` can be executed in a publishing/deployment workflow, in a CI/CD system.
 
