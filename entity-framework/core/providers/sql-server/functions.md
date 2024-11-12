@@ -115,12 +115,12 @@ dateTimeOffset.TimeOfDay                                    | CONVERT(time, @dat
 dateTimeOffset.ToUnixTimeSeconds()                          | DATEDIFF_BIG(second, '1970-01-01T00:00:00.0000000+00:00', @dateTimeOffset)      | EF Core 8.0
 dateTimeOffset.ToUnixTimeMilliseconds()                     | DATEDIFF_BIG(millisecond, '1970-01-01T00:00:00.0000000+00:00', @dateTimeOffset) | EF Core 8.0
 dateTimeOffset.Year                                         | DATEPART(year, @dateTimeOffset)
+DateOnly.FromDateTime(dateTime)                             | CONVERT(date, @dateTime)                                                        | EF Core 8.0
 dateOnly.AddDays(value)                                     | DATEADD(day, @value, @dateOnly)                                                 | EF Core 8.0
 dateOnly.AddMonths(months)                                  | DATEADD(month, @months, @dateOnly)                                              | EF Core 8.0
 dateOnly.AddYears(value)                                    | DATEADD(year, @value, @dateOnly)                                                | EF Core 8.0
 dateOnly.Day                                                | DATEPART(day, @dateOnly)                                                        | EF Core 8.0
 dateOnly.DayOfYear                                          | DATEPART(dayofyear, @dateOnly)                                                  | EF Core 8.0
-DateOnly.FromDateTime(dateTime)                             | CONVERT(date, @dateTime)                                                        | EF Core 8.0
 dateOnly.Month                                              | DATEPART(month, @dateOnly)                                                      | EF Core 8.0
 dateOnly.Year                                               | DATEPART(year, @dateOnly)                                                       | EF Core 8.0
 EF.Functions.AtTimeZone(dateTime, timeZone)                 | @dateTime AT TIME ZONE @timeZone                                                | EF Core 7.0
@@ -143,11 +143,11 @@ EF.Functions.SmallDateTimeFromParts(year, month, day, ...)  | SMALLDATETIMEFROMP
 EF.Functions.TimeFromParts(hour, minute, second, ...)       | TIMEFROMPARTS(@hour, @minute, @second, ...)
 timeOnly.AddHours(value)                                    | DATEADD(hour, @value, @timeOnly)                                                | EF Core 8.0
 timeOnly.AddMinutes(value)                                  | DATEADD(minute, @value, @timeOnly)                                              | EF Core 8.0
-timeOnly.Hours                                              | DATEPART(hour, @timeOnly)                                                       | EF Core 8.0
+timeOnly.Hour                                               | DATEPART(hour, @timeOnly)                                                       | EF Core 8.0
 timeOnly.IsBetween(start, end)                              | @timeOnly >= @start AND @timeOnly < @end                                        | EF Core 8.0
-timeOnly.Milliseconds                                       | DATEPART(millisecond, @timeOnly)                                                | EF Core 8.0
-timeOnly.Minutes                                            | DATEPART(minute, @timeOnly)                                                     | EF Core 8.0
-timeOnly.Seconds                                            | DATEPART(second, @timeOnly)                                                     | EF Core 8.0
+timeOnly.Millisecond                                        | DATEPART(millisecond, @timeOnly)                                                | EF Core 8.0
+timeOnly.Minute                                             | DATEPART(minute, @timeOnly)                                                     | EF Core 8.0
+timeOnly.Second                                             | DATEPART(second, @timeOnly)                                                     | EF Core 8.0
 timeSpan.Hours                                              | DATEPART(hour, @timeSpan)
 timeSpan.Milliseconds                                       | DATEPART(millisecond, @timeSpan)
 timeSpan.Minutes                                            | DATEPART(minute, @timeSpan)
