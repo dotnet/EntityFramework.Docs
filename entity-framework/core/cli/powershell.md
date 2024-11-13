@@ -2,7 +2,7 @@
 title: EF Core tools reference (Package Manager Console) - EF Core
 description: Reference guide for the Entity Framework Core Visual Studio Package Manager Console
 author: SamMonoRT
-ms.date: 11/15/2021
+ms.date: 11/08/2024
 uid: core/cli/powershell
 ---
 # Entity Framework Core tools reference - Package Manager Console in Visual Studio
@@ -185,6 +185,9 @@ Parameters:
 
 The [common parameters](#common-parameters) are listed above.
 
+> [!NOTE]
+> The PMC tools currently don't support generating code required for NativeAOT compilation and precompiled queries.
+
 The following example uses the defaults and works if there is only one `DbContext` in the project:
 
 ```powershell
@@ -246,7 +249,7 @@ Example that scaffolds only selected tables and creates the context in a separat
 Scaffold-DbContext "Server=(localdb)\mssqllocaldb;Database=Blogging;Trusted_Connection=True;" Microsoft.EntityFrameworkCore.SqlServer -OutputDir Models -Tables "Blog","Post" -ContextDir Context -Context BlogContext -ContextNamespace New.Namespace
 ```
 
-The following example reads the connection string from the project's configuration possibly set using the [Secret Manager tool](/aspnet/core/security/app-secrets#secret-manager).
+The following example [reads the connection string using Configuration](xref:core/miscellaneous/connection-strings#aspnet-core).
 
 ```powershell
 Scaffold-DbContext "Name=ConnectionStrings:Blogging" Microsoft.EntityFrameworkCore.SqlServer

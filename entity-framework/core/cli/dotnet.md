@@ -2,7 +2,7 @@
 title: EF Core tools reference (.NET CLI) - EF Core
 description: Reference guide for the Entity Framework Core .NET Core CLI tools
 author: SamMonoRT
-ms.date: 11/15/2021
+ms.date: 11/08/2024
 uid: core/cli/dotnet
 ---
 
@@ -171,18 +171,27 @@ Lists available `DbContext` types.
 
 The [common options](#common-options) are listed above.
 
+<a name="optimize"></a>
+
 ## `dotnet ef dbcontext optimize`
 
-Generates a compiled version of the model used by the `DbContext`.
+Generates a compiled version of the model used by the `DbContext` and precompiles queries.
 
 See [Compiled models](xref:core/performance/advanced-performance-topics#compiled-models) for more information.
 
 Options:
 
-| Option                                   | Short             | Description                                                                                                                                                                    |
-|:-----------------------------------------|:------------------|:-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| Option                                               | Short | Description                                                                                                                                                                    |
+|:-----------------------------------------------------|:------|:-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | <nobr>`--output-dir <PATH>`</nobr>       | `-o`              | The directory to put files in. Paths are relative to the project directory.                                                                                       |
 | <nobr>`--namespace <NAMESPACE>`</nobr>   | `-n`              | The namespace to use for all generated classes. Defaults to generated from the root namespace and the output directory plus `CompiledModels`.                                  |
+| <nobr>`--suffix <SUFFIX>`</nobr>         |                   | The suffix to attach to the name of all the generated files. E.g. `.g` could be used to indicate that these files contain generated code                                            |
+| <nobr>`--no-scaffold`</nobr>             |                   | Don't generate a compiled model. This is used when the compiled model has already been generated.                                                                       |
+| <nobr>`--precompile-queries`</nobr>      |                   | Generate precompiled queries. This is required for NativeAOT compilation if the target project contains any queries                                                           |
+| <nobr>`--nativeaot`</nobr>               |                   | Generate additional code in the compiled model required for NativeAOT compilation and precompiled queries                                                           |
+
+> [!NOTE]
+> NativeAOT support and precompiled queries are considered experimental in EF 9 and could change dramatically in the next release.
 
 The [common options](#common-options) are listed above.
 

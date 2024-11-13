@@ -2,7 +2,7 @@
 title: What's New in EF Core 9
 description: Overview of new features in EF Core 9
 author: ajcvickers
-ms.date: 10/10/2024
+ms.date: 10/21/2024
 uid: core/what-is-new/ef-core-9.0/whatsnew
 ---
 
@@ -1166,38 +1166,21 @@ Notice that the model was not built when starting the application because the co
 
 ### MSBuild integration
 
-With the above approach, the compiled model still needs to be regenerated manually when the entity types or `DbContext` configuration is changed. However, EF9 ships with MSBuild and targets package that can automatically update the compiled model when the model project is built! To get started, install the [Microsoft.EntityFrameworkCore.Tasks](https://www.nuget.org/packages/Microsoft.EntityFrameworkCore.Tasks/) NuGet package. For example:
+With the above approach, the compiled model still needs to be regenerated manually when the entity types or `DbContext` configuration is changed. However, EF9 ships with an MSBuild task package that can automatically update the compiled model when the model project is built! To get started, install the [Microsoft.EntityFrameworkCore.Tasks](https://www.nuget.org/packages/Microsoft.EntityFrameworkCore.Tasks/) NuGet package. For example:
 
 ```dotnetcli
-dotnet add package Microsoft.EntityFrameworkCore.Tasks --version 9.0.0-preview.4.24205.3
+dotnet add package Microsoft.EntityFrameworkCore.Tasks --version 9.0.0
 ```
 
 > [!TIP]
 > Use the package version in the command above that matches the version of EF Core that you are using.
 
-Then enable the integration by setting the `EFOptimizeContext` property to your `.csproj` file. For example:
+Then enable the integration by setting the `EFOptimizeContext` and `EFScaffoldModelStage` properties in your `.csproj` file. For example:
 
 ```xml
 <PropertyGroup>
     <EFOptimizeContext>true</EFOptimizeContext>
-</PropertyGroup>
-```
-
-There are additional, optional, MSBuild properties for controlling how the model is built, equivalent to the options passed on the command line to `dotnet ef dbcontext optimize`. These include:
-
-| MSBuild property   | Description                                                                                                                                                                                                     |
-|--------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| EFOptimizeContext  | Set to `true` to enable auto-compiled models.                                                                                                                                                                   |
-| DbContextName      | The DbContext class to use. Class name only or fully qualified with namespaces. If this option is omitted, EF Core will find the context class. If there are multiple context classes, this option is required. |
-| EFStartupProject   | Relative path to the startup project. Default value is the current folder.                                                                                                                |
-| EFTargetNamespace  | The namespace to use for all generated classes. Defaults to generated from the root namespace and the output directory plus CompiledModels.                                                                     |
-
-In our example, we need to specify the startup project:
-
-```xml
-<PropertyGroup>
-  <EFOptimizeContext>true</EFOptimizeContext>
-  <EFStartupProject>..\App\App.csproj</EFStartupProject>
+    <EFScaffoldModelStage>build</EFScaffoldModelStage>
 </PropertyGroup>
 ```
 
@@ -1211,7 +1194,7 @@ dotnet exec --depsfile D:\code\EntityFramework.Docs\samples\core\Miscellaneous\N
   --runtimeconfig D:\code\EntityFramework.Docs\samples\core\Miscellaneous\NewInEFCore9.CompiledModels\App\bin\Release\net8.0\App.runtimeconfig.json G:\packages\microsoft.entityframeworkcore.tasks\9.0.0-preview.4.24205.3\tasks\net8.0\..\..\tools\netcoreapp2.0\ef.dll dbcontext optimize --output-dir D:\code\EntityFramework.Docs\samples\core\Miscellaneous\NewInEFCore9.CompiledModels\Model\obj\Release\net8.0\ 
   --namespace NewInEfCore9 
   --suffix .g 
-  --assembly D:\code\EntityFramework.Docs\samples\core\Miscellaneous\NewInEFCore9.CompiledModels\Model\bin\Release\net8.0\Model.dll --startup-assembly D:\code\EntityFramework.Docs\samples\core\Miscellaneous\NewInEFCore9.CompiledModels\App\bin\Release\net8.0\App.dll 
+  --assembly D:\code\EntityFramework.Docs\samples\core\Miscellaneous\NewInEFCore9.CompiledModels\Model\bin\Release\net8.0\Model.dll
   --project-dir D:\code\EntityFramework.Docs\samples\core\Miscellaneous\NewInEFCore9.CompiledModels\Model 
   --root-namespace NewInEfCore9 
   --language C# 
@@ -1231,8 +1214,7 @@ Model loaded with 2 entity types.
 
 Now, whenever the model changes, the compiled model will be automatically rebuilt as soon as the project is built.
 
-> [!NOTE]
-> We are working through some performance issues with changes made to the compiled model in EF8 and EF9. See [Issue 33483#](https://github.com/dotnet/efcore/issues/33483) for more information.
+For more information see [MSBuild integration](xref:core/cli/msbuild).
 
 <a name="read-only-primitives"></a>
 

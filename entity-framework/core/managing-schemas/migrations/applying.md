@@ -2,7 +2,7 @@
 title: Applying Migrations - EF Core
 description: Strategies for applying schema migrations to production and development databases using Entity Framework Core
 author: SamMonoRT
-ms.date: 11/02/2021
+ms.date: 10/29/2024
 uid: core/managing-schemas/migrations/applying
 ---
 # Applying Migrations
@@ -116,9 +116,6 @@ The EF command-line tools can be used to apply migrations to a database. While p
 
 * The SQL commands are applied directly by the tool, without giving the developer a chance to inspect or modify them. This can be dangerous in a production environment.
 * The .NET SDK and the EF tool must be installed on production servers and requires the project's source code.
-
-> [!NOTE]
-> Each migration is applied in its own transaction. See [GitHub issue #22616](https://github.com/dotnet/efcore/issues/22616) for a discussion of possible future enhancements in this area.
 
 ### [.NET Core CLI](#tab/dotnet-core-cli)
 
