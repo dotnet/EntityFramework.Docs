@@ -104,7 +104,7 @@ EF Core extensions for Bulk operations (Insert, Update, Delete). For EF Core: 2-
 
 ### Bricelam.EntityFrameworkCore.Pluralizer
 
-Adds design-time pluralization. For EF Core: 2-8.
+Adds design-time pluralization. For EF Core: 2-9.
 
 [GitHub repository](https://github.com/bricelam/EFCore.Pluralizer) | [NuGet](https://www.nuget.org/packages/Bricelam.EntityFrameworkCore.Pluralizer)
 
@@ -204,7 +204,7 @@ An implementation for soft deleting entities. For EF Core: 3-6.
 
 ### EntityFrameworkCore.ConfigurationManager
 
-Extends EF Core to resolve connection strings from App.config. For EF Core: 3-8.
+Extends EF Core to resolve connection strings from App.config. For EF Core: 3-9.
 
 [GitHub repository](https://github.com/efcore/EFCore.ConfigurationManager) | [NuGet](https://www.nuget.org/packages/EntityFrameworkCore.ConfigurationManager)
 
