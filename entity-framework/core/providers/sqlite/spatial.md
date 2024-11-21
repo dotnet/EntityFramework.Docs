@@ -11,7 +11,7 @@ This page includes additional information about using spatial data with the SQLi
 
 ## Installing SpatiaLite
 
-On Windows, the native mod_spatialite library is distributed as a NuGet package dependency. Other platforms need to install it separately. This is typically done using a software package manager. For example, you can use APT on Debian and Ubuntu; and Homebrew on MacOS.
+On Windows, the native `mod_spatialite` library is distributed as a [NuGet package](https://www.nuget.org/packages/mod_spatialite) dependency. Other platforms need to install it separately. This is typically done using a software package manager. For example, you can use APT on Debian and Ubuntu; and Homebrew on MacOS.
 
 ```bash
 # Debian/Ubuntu
@@ -139,4 +139,4 @@ EnvelopeCombiner.CombineAsGeometry(group.Select(x => x.Property)) | Extent(Prope
 ## Additional resources
 
 * [SpatiaLite Homepage](https://www.gaia-gis.it/fossil/libspatialite)
-* [NetTopologySuite Docs](https://nettopologysuite.github.io/NetTopologySuite/)
+* [NetTopologySuite API Documentation](https://nettopologysuite.github.io/NetTopologySuite/api/NetTopologySuite.html)

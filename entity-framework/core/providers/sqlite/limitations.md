@@ -11,7 +11,7 @@ The SQLite provider has a number of migrations limitations. Most of these limita
 
 ## Modeling limitations
 
-The common relational library (shared by Entity Framework relational database providers) defines APIs for modelling concepts that are common to most relational database engines. A couple of these concepts are not supported by the SQLite provider.
+The common relational library (shared by EF Core relational database providers) defines APIs for modelling concepts that are common to most relational database engines. A couple of these concepts are not supported by the SQLite provider.
 
 * Schemas
 * Sequences
@@ -21,14 +21,14 @@ The common relational library (shared by Entity Framework relational database pr
 
 SQLite doesn't natively support the following data types. EF Core can read and write values of these types, and querying for equality (`where e.Property == value`) is also supported. Other operations, however, like comparison and ordering will require evaluation on the client.
 
-* DateTimeOffset
-* Decimal
-* TimeSpan
-* UInt64
+* `DateTimeOffset`
+* `decimal`
+* `TimeSpan`
+* `ulong`
 
-Instead of `DateTimeOffset`, we recommend using DateTime values. When handling multiple time zones, we recommend converting the values to UTC before saving and then converting back to the appropriate time zone.
+Instead of `DateTimeOffset`, we recommend using `DateTime` values. When handling multiple time zones, we recommend converting the values to UTC before saving and then converting back to the appropriate time zone.
 
-The `Decimal` type provides a high level of precision. If you don't need that level of precision, however, we recommend using double instead. You can use a [value converter](xref:core/modeling/value-conversions) to continue using decimal in your classes.
+The `decimal` type provides a high level of precision. If you don't need that level of precision, however, we recommend using `double` instead. You can use a [value converter](xref:core/modeling/value-conversions) to continue using `decimal` in your classes.
 
 ```csharp
 modelBuilder.Entity<MyEntity>()
@@ -40,7 +40,7 @@ modelBuilder.Entity<MyEntity>()
 
 The SQLite database engine does not support a number of schema operations that are supported by the majority of other relational databases. If you attempt to apply one of the unsupported operations to a SQLite database then a `NotSupportedException` will be thrown.
 
-A rebuild will be attempted in order to perform certain operations. Rebuilds are only possible for database artifacts that are part of your EF Core model. If a database artifact isn't part of the model--for example, if it was created manually inside a migration--then a `NotSupportedException` is still thrown.
+A rebuild will be attempted in order to perform certain operations. Rebuilds are only possible for database artifacts that are part of your EF Core model. If a database artifact isn't part of the model - for example, if it was created manually inside a migration - then a `NotSupportedException` is still thrown.
 
 Operation            | Supported?
 ---------------------|:----------
@@ -70,7 +70,7 @@ Delete               | ✔
 
 ### Migrations limitations workaround
 
-You can workaround some of these limitations by manually writing code in your migrations to perform a rebuild. Table rebuilds involve creating a new table, copying data to the new table, dropping the old table, renaming the new table. You will need to use the `Sql(string)` method to perform some of these steps.
+You can workaround some of these limitations by manually writing code in your migrations to perform a rebuild. Table rebuilds involve creating a new table, copying data to the new table, dropping the old table, renaming the new table. You will need to use the <xref:Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder.Sql%2A> method to perform some of these steps.
 
 See [Making Other Kinds Of Table Schema Changes](https://sqlite.org/lang_altertable.html#otheralter) in the SQLite documentation for more details.
 
@@ -92,9 +92,9 @@ dotnet ef database update --connection "Data Source=My.db"
 
 ## Concurrent migrations protection
 
-EF9 introduced a locking mechanism when executing migrations. It aims to protect against multiple migration executions happening simultaneously, as that could leave the database in a corrupted state. This is one of the potential problems resulting from applying migrations at runtime using the [`DbContext.Database.Migrate()`](/dotnet/api/microsoft.entityframeworkcore.relationaldatabasefacadeextensions.migrate) method (see [Applying migrations](xref:core/managing-schemas/migrations/applying) for more information). To mitigate this, EF creates an exclusive lock on the database before any migration operations are applied.
+EF9 introduced a locking mechanism when executing migrations. It aims to protect against multiple migration executions happening simultaneously, as that could leave the database in a corrupted state. This is one of the potential problems resulting from applying migrations at runtime using the <xref:Microsoft.EntityFrameworkCore.RelationalDatabaseFacadeExtensions.Migrate%2A> method (see [Applying migrations](xref:core/managing-schemas/migrations/applying) for more information). To mitigate this, EF creates an exclusive lock on the database before any migration operations are applied.
 
-Unfortunately, SQLite does not have built-in locking mechanism, so EF creates a separate table (`__EFMigrationsLock`) and uses it for locking. The lock is released when the migration completes and the seeding code finishes execution. However, if for some reason migration fails in a non-recoverable way, the lock may not be released correctly. If this happens, consecutive migrations will be blocked from executing SQL and therefore never complete. You can manually unblock them by deleting the `__EFMigrationsLock` table in the database.
+Unfortunately, SQLite does not have built-in locking mechanism, so EF Core creates a separate table (`__EFMigrationsLock`) and uses it for locking. The lock is released when the migration completes and the seeding code finishes execution. However, if for some reason migration fails in a non-recoverable way, the lock may not be released correctly. If this happens, consecutive migrations will be blocked from executing SQL and therefore never complete. You can manually unblock them by deleting the `__EFMigrationsLock` table in the database.
 
 ## See also
 

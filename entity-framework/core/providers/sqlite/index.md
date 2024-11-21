@@ -29,7 +29,7 @@ Install-Package Microsoft.EntityFrameworkCore.Sqlite
 
 ## Supported Database Engines
 
-* SQLite (3.7 onwards)
+* SQLite (3.46.1 onwards)
 
 ## Limitations
 

@@ -149,11 +149,11 @@ Math.Truncate(d)                 | trunc(@d)                             | EF Co
 
 > [!TIP]
 > In addition to the methods listed here, corresponding [generic math](/dotnet/standard/generics/math) implementations
-> and [MathF](/dotnet/api/system.mathf) methods are also translated. For example, `Math.Sin`, `MathF.Sin`, `double.Sin`,
+> and <xref:System.MathF> methods are also translated. For example, `Math.Sin`, `MathF.Sin`, `double.Sin`,
 > and `float.Sin` all map to the `sin` function in SQL.
 
 > [!TIP]
-> SQL functions prefixed with *ef* are created by EF Core.
+> SQL functions prefixed with `ef_` are created by EF Core.
 
 ## String functions
 
