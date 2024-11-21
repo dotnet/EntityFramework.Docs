@@ -16,6 +16,7 @@ The .NET Data Community Standups are live-streamed every other Wednesday to Twit
 
 | Date         | Area                  | Title                                                                                    |
 |--------------|-----------------------|------------------------------------------------------------------------------------------|
+| Nov 20, 2024 | Release               | [EF Core 9: Release extravaganza](#Nov20_2024)                                          |
 | Jun 26, 2024 | SQL schemas           | [Improve your SQL schema and scripts with .NET based static code analysis](#June26_2024) |
 | May 15, 2024 | Firebird              | [Harnessing the Power of Firebird in .NET](#May15_2024)                                  |
 | Apr 17, 2024 | EF Core mapping       | [All about EF Core property mapping](#Apr17_2024)                                        |
@@ -97,6 +98,19 @@ The .NET Data Community Standups are live-streamed every other Wednesday to Twit
 | May 6, 2020  | Welcome!              | [Introducing the EF Core Community Standup](#one)                                        |
 
 ## 2024
+
+<a name="Nov20_2024"></a>
+
+### November 20: [EF Core 9: Release extravaganza](https://www.youtube.com/live/wG8D5HJMzjA?si=239r9dKJhBxilQ2e)
+
+EF Core 9 was just released. Join us in this special session talking with industry experts about all topic EF Core.
+
+Featuring:
+
+- [Erik Ejlskov Jensen](https://erikej.github.io) (Special guest)
+- [Julie Lerman](https://thedatafarm.com/) (Special guest)
+- [Jiri Cincura](https://github.com/cincuranet) (Host)
+- [Shay Rojansky](https://github.com/roji) (Host)
 
 <a name="June26_2024"></a>
 
