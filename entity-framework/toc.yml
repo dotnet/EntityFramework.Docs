@@ -469,7 +469,7 @@
     - name: Learn more
       items:
         - name: EF Core API reference >>
-          href: /dotnet/api/?view=efcore-7.0&preserve-view=true
+          href: /dotnet/api/?view=efcore-9.0&preserve-view=true
         - name: .NET Data Community Standups
           href: core/learn-more/community-standups.md
 
