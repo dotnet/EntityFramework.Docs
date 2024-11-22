@@ -1920,7 +1920,7 @@ public class Feet
 
 GitHub Issue: [#23859](https://github.com/dotnet/efcore/issues/23859). This feature was contributed by [@wmeints](https://github.com/wmeints). Many thanks!
 
-Starting with EF Core 6.0, calls to <xref:System.String.Concat%2A?displayProperty=nameWithType> with multiple arguments are now translated to SQL. For example, the following query:
+Starting with EF Core 6.0, calls to <xref:System.String.Concat*?displayProperty=nameWithType> with multiple arguments are now translated to SQL. For example, the following query:
 
 <!--
         var shards = context.Shards
@@ -1940,7 +1940,7 @@ WHERE (([s].[Token1] + ([s].[Token2] + [s].[Token3])) <> [s].[TokensProcessed]) 
 
 GitHub Issue: [#24041](https://github.com/dotnet/efcore/issues/24041).
 
-The [System.Linq.Async](https://www.nuget.org/packages/System.Linq.Async/) package adds client-side async LINQ processing. Using this package with previous versions of EF Core was cumbersome due to a namespace clash for the async LINQ methods. In EF Core 6.0 we have taken advantage of C# pattern matching for <xref:System.Collections.Generic.IAsyncEnumerable%601> such that the exposed EF Core <xref:Microsoft.EntityFrameworkCore.DbSet%601> does not need to implement the interface directly.
+The [System.Linq.Async](https://www.nuget.org/packages/System.Linq.Async/) package adds client-side async LINQ processing. Using this package with previous versions of EF Core was cumbersome due to a namespace clash for the async LINQ methods. In EF Core 6.0 we have taken advantage of C# pattern matching for <xref:System.Collections.Generic.IAsyncEnumerable`1> such that the exposed EF Core <xref:Microsoft.EntityFrameworkCore.DbSet`1> does not need to implement the interface directly.
 
 Note that most applications do not need to use System.Linq.Async since EF Core queries are usually fully translated on the server.
 
@@ -1948,7 +1948,7 @@ Note that most applications do not need to use System.Linq.Async since EF Core q
 
 GitHub Issue: [#23921](https://github.com/dotnet/efcore/issues/23921).
 
-In EF Core 6.0, we have relaxed the parameter requirements for <xref:Microsoft.EntityFrameworkCore.SqlServerDbFunctionsExtensions.FreeText(Microsoft.EntityFrameworkCore.DbFunctions,System.String,System.String)> and <xref:Microsoft.EntityFrameworkCore.SqlServerDbFunctionsExtensions.Contains%2A>. This allows these functions to be used with binary columns, or with columns mapped using a value converter. For example, consider an entity type with a `Name` property defined as a value object:
+In EF Core 6.0, we have relaxed the parameter requirements for <xref:Microsoft.EntityFrameworkCore.SqlServerDbFunctionsExtensions.FreeText(Microsoft.EntityFrameworkCore.DbFunctions,System.String,System.String)> and <xref:Microsoft.EntityFrameworkCore.SqlServerDbFunctionsExtensions.Contains*>. This allows these functions to be used with binary columns, or with columns mapped using a value converter. For example, consider an entity type with a `Name` property defined as a value object:
 
 <!--
     public class Customer
@@ -2690,7 +2690,7 @@ CREATE TABLE [Product] (
 
 GitHub Issue: [#23163](https://github.com/dotnet/efcore/issues/23163). This feature was contributed by [@KaloyanIT](https://github.com/KaloyanIT). Many thanks!
 
-<xref:Microsoft.EntityFrameworkCore.IEntityTypeConfiguration%601> instances allow <xref:Microsoft.EntityFrameworkCore.ModelBuilder> configuration for each entity type to be contained in its own configuration class. For example:
+<xref:Microsoft.EntityFrameworkCore.IEntityTypeConfiguration`1> instances allow <xref:Microsoft.EntityFrameworkCore.ModelBuilder> configuration for each entity type to be contained in its own configuration class. For example:
 
 <!--
 public class BookConfiguration : IEntityTypeConfiguration<Book>
@@ -2706,7 +2706,7 @@ public class BookConfiguration : IEntityTypeConfiguration<Book>
 -->
 [!code-csharp[BookConfiguration](../../../../samples/core/Miscellaneous/NewInEFCore6/EntityTypeConfigurationAttributeSample.cs?name=BookConfiguration)]
 
-Normally, this configuration class must be instantiated and called into from <xref:Microsoft.EntityFrameworkCore.DbContext.OnModelCreating%2A?displayProperty=nameWithType>. For example:
+Normally, this configuration class must be instantiated and called into from <xref:Microsoft.EntityFrameworkCore.DbContext.OnModelCreating*?displayProperty=nameWithType>. For example:
 
 ```csharp
 protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -2728,7 +2728,7 @@ public class Book
 -->
 [!code-csharp[BookEntityType](../../../../samples/core/Miscellaneous/NewInEFCore6/EntityTypeConfigurationAttributeSample.cs?name=BookEntityType)]
 
-This attribute means that EF Core will use the specified `IEntityTypeConfiguration` implementation whenever the `Book` entity type is included in a model. The entity type is included in a model using one of the normal mechanisms. For example, by creating a <xref:Microsoft.EntityFrameworkCore.DbSet%601> property for the entity type:
+This attribute means that EF Core will use the specified `IEntityTypeConfiguration` implementation whenever the `Book` entity type is included in a model. The entity type is included in a model using one of the normal mechanisms. For example, by creating a <xref:Microsoft.EntityFrameworkCore.DbSet`1> property for the entity type:
 
 <!--
 public class BooksContext : DbContext
@@ -2739,7 +2739,7 @@ public class BooksContext : DbContext
 -->
 [!code-csharp[DbContext](../../../../samples/core/Miscellaneous/NewInEFCore6/EntityTypeConfigurationAttributeSample.cs?name=DbContext)]
 
-Or by registering it in <xref:Microsoft.EntityFrameworkCore.DbContext.OnModelCreating%2A>:
+Or by registering it in <xref:Microsoft.EntityFrameworkCore.DbContext.OnModelCreating*>:
 
 ```csharp
 protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -2775,7 +2775,7 @@ SQL Server [sparse columns](/sql/relational-databases/tables/use-sparse-columns)
 -->
 [!code-csharp[UserEntityType](../../../../samples/core/Miscellaneous/NewInEFCore6/SparseColumnsSample.cs?name=UserEntityType)]
 
-There may be millions of users, with only a handful of these being moderators. This means mapping the `ForumName` as sparse might make sense here. This can now be configured using `IsSparse` in <xref:Microsoft.EntityFrameworkCore.DbContext.OnModelCreating%2A>. For example:
+There may be millions of users, with only a handful of these being moderators. This means mapping the `ForumName` as sparse might make sense here. This can now be configured using `IsSparse` in <xref:Microsoft.EntityFrameworkCore.DbContext.OnModelCreating*>. For example:
 
 <!--
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -3387,7 +3387,7 @@ Check out these resources to learn more about minimal APIs:
 
 GitHub Issue: [#23971](https://github.com/dotnet/efcore/issues/23971).
 
-We [changed the EF Core code in the 5.0 release](https://github.com/dotnet/efcore/issues/10164) to set <xref:System.Threading.Tasks.Task.ConfigureAwait%2A?displayProperty=nameWithType> to `false` in all places where we `await` async code. This is generally a better choice for EF Core usage. However, <xref:System.Data.Entity.DbContext.SaveChangesAsync%2A> is a special case because EF Core will set generated values into tracked entities after the async database operation is complete. These changes may then trigger notifications which, for example, may have to run on the U.I. thread. Therefore, we are reverting this change in EF Core 6.0 for the <xref:System.Data.Entity.DbContext.SaveChangesAsync%2A> method only.
+We [changed the EF Core code in the 5.0 release](https://github.com/dotnet/efcore/issues/10164) to set <xref:System.Threading.Tasks.Task.ConfigureAwait*?displayProperty=nameWithType> to `false` in all places where we `await` async code. This is generally a better choice for EF Core usage. However, <xref:System.Data.Entity.DbContext.SaveChangesAsync*> is a special case because EF Core will set generated values into tracked entities after the async database operation is complete. These changes may then trigger notifications which, for example, may have to run on the U.I. thread. Therefore, we are reverting this change in EF Core 6.0 for the <xref:System.Data.Entity.DbContext.SaveChangesAsync*> method only.
 
 ### In-memory database: validate required properties are not null
 

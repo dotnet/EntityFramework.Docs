@@ -10,7 +10,7 @@ uid: core/saving/execute-insert-update-delete
 > [!NOTE]
 > This feature was introduced in EF Core 7.0.
 
-<xref:Microsoft.EntityFrameworkCore.RelationalQueryableExtensions.ExecuteUpdate%2A> and <xref:Microsoft.EntityFrameworkCore.RelationalQueryableExtensions.ExecuteDelete%2A> are a way to save data to the database without using EF's traditional change tracking and <xref:Microsoft.EntityFrameworkCore.DbContext.SaveChanges> method. For an introductory comparison of these two techniques, see the [Overview page](xref:core/saving/index) on saving data.
+<xref:Microsoft.EntityFrameworkCore.RelationalQueryableExtensions.ExecuteUpdate*> and <xref:Microsoft.EntityFrameworkCore.RelationalQueryableExtensions.ExecuteDelete*> are a way to save data to the database without using EF's traditional change tracking and <xref:Microsoft.EntityFrameworkCore.DbContext.SaveChanges> method. For an introductory comparison of these two techniques, see the [Overview page](xref:core/saving/index) on saving data.
 
 ## ExecuteDelete
 
@@ -27,7 +27,7 @@ context.SaveChanges();
 
 This is quite an inefficient way to perform this task: we query the database for all Blogs matching our filter, and then we query, materialize and track all those instances; the number of matching entities could be huge. We then tell EF's change tracker that each Blog needs to be removed, and apply those changes by calling <xref:Microsoft.EntityFrameworkCore.DbContext.SaveChanges>, which generates a `DELETE` statement for each and every one of them.
 
-Here is the same task performed via the <xref:Microsoft.EntityFrameworkCore.RelationalQueryableExtensions.ExecuteDelete%2A> API:
+Here is the same task performed via the <xref:Microsoft.EntityFrameworkCore.RelationalQueryableExtensions.ExecuteDelete*> API:
 
 ```c#
 context.Blogs.Where(b => b.Rating < 3).ExecuteDelete();
@@ -45,7 +45,7 @@ Aside from being simpler and shorter, this executes very efficiently in the data
 
 ## ExecuteUpdate
 
-Rather than deleting these Blogs, what if we wanted to change a property to indicate that they should be hidden instead? <xref:Microsoft.EntityFrameworkCore.RelationalQueryableExtensions.ExecuteUpdate%2A> provides a similar way to express a SQL `UPDATE` statement:
+Rather than deleting these Blogs, what if we wanted to change a property to indicate that they should be hidden instead? <xref:Microsoft.EntityFrameworkCore.RelationalQueryableExtensions.ExecuteUpdate*> provides a similar way to express a SQL `UPDATE` statement:
 
 ```c#
 context.Blogs
@@ -206,7 +206,7 @@ In this code, we use a LINQ `Where` operator to apply an update to a specific Bl
 
 ## Limitations
 
-* Only updating and deleting is currently supported; insertion must be done via <xref:Microsoft.EntityFrameworkCore.DbSet%601.Add%2A?displayProperty=nameWithType> and <xref:Microsoft.EntityFrameworkCore.DbContext.SaveChanges>.
+* Only updating and deleting is currently supported; insertion must be done via <xref:Microsoft.EntityFrameworkCore.DbSet`1.Add*?displayProperty=nameWithType> and <xref:Microsoft.EntityFrameworkCore.DbContext.SaveChanges>.
 * While the SQL UPDATE and DELETE statements allow retrieving original column values for the rows affected, this isn't currently supported by `ExecuteUpdate` and `ExecuteDelete`.
 * Multiple invocations of these methods cannot be batched. Each invocation performs its own roundtrip to the database.
 * Databases typically allow only a single table to be modified with UPDATE or DELETE.

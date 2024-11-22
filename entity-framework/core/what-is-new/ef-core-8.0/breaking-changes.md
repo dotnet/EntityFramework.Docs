@@ -97,7 +97,7 @@ SELECT name, compatibility_level FROM sys.databases;
 
 If the compatibility level is below 130 (SQL Server 2016), consider modifying it to a newer value ([documentation](/sql/t-sql/statements/alter-database-transact-sql-compatibility-level#best-practices-for-upgrading-database-compatibility-leve)).
 
-Otherwise, if your database version really is older than SQL Server 2016, or is set to an old compatibility level which you cannot change for some reason, you can configure EF to revert to the older, pre-8.0 SQL. If you're using EF 9, you can use the newly-introduced <xref:Microsoft.EntityFrameworkCore.Infrastructure.RelationalDbContextOptionsBuilder%602.TranslateParameterizedCollectionsToConstants%2A>:
+Otherwise, if your database version really is older than SQL Server 2016, or is set to an old compatibility level which you cannot change for some reason, you can configure EF to revert to the older, pre-8.0 SQL. If you're using EF 9, you can use the newly-introduced <xref:Microsoft.EntityFrameworkCore.Infrastructure.RelationalDbContextOptionsBuilder`2.TranslateParameterizedCollectionsToConstants*>:
 
 ```c#
 protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -155,7 +155,7 @@ However, after the release of EF 8 it turned out that while the new SQL is more 
 
 #### Mitigations
 
-If you're using EF 9, you can use the newly-introduced <xref:Microsoft.EntityFrameworkCore.Infrastructure.RelationalDbContextOptionsBuilder%602.TranslateParameterizedCollectionsToConstants%2A> to revert the `Contains` translation for all queries back to the pre-8.0 behavior:
+If you're using EF 9, you can use the newly-introduced <xref:Microsoft.EntityFrameworkCore.Infrastructure.RelationalDbContextOptionsBuilder`2.TranslateParameterizedCollectionsToConstants*> to revert the `Contains` translation for all queries back to the pre-8.0 behavior:
 
 ```c#
 protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -170,7 +170,7 @@ protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         .UseSqlServer(@"<CONNECTION STRING>", o => o.UseCompatibilityLevel(120));
 ```
 
-Finally, you can control the translation on a query-by-query basis using <xref:Microsoft.EntityFrameworkCore.EF.Constant%2A?displayProperty=nameWithType> as follows:
+Finally, you can control the translation on a query-by-query basis using <xref:Microsoft.EntityFrameworkCore.EF.Constant*?displayProperty=nameWithType> as follows:
 
 ```c#
 var blogs = await context.Blogs

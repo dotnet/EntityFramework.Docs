@@ -79,7 +79,7 @@ To learn more about querying with partition keys and point reads, [see the query
 
 Azure Cosmos DB originally supported a single partition key, but has since expanded partitioning capabilities to also support [subpartitioning through the specification of up to three levels of hierarchy in the partition key](/azure/cosmos-db/hierarchical-partition-keys). EF Core 9 brings full support for hierarchical partition keys, allowing you take advantage of the better performance and cost savings associated with this feature.
 
-Partition keys are specified using the model building API, typically in <xref:Microsoft.EntityFrameworkCore.DbContext.OnModelCreating%2A?displayProperty=nameWithType>. There must be a mapped property in the entity type for each level of the partition key. For example, consider a `UserSession` entity type:
+Partition keys are specified using the model building API, typically in <xref:Microsoft.EntityFrameworkCore.DbContext.OnModelCreating*?displayProperty=nameWithType>. There must be a mapped property in the entity type for each level of the partition key. For example, consider a `UserSession` entity type:
 
 <!--
     public class UserSession
@@ -266,7 +266,7 @@ For more information, [see the documentation section on pagination](xref:core/pr
 
 ### FromSql for safer SQL querying
 
-The Azure Cosmos DB provider has allowed SQL querying via <xref:Microsoft.EntityFrameworkCore.CosmosQueryableExtensions.FromSqlRaw%2A>. However, that API can be susceptible to SQL injection attacks when user-provided data is interpolated or concatenated into the SQL. In EF 9.0, you can now use the new `FromSql` method, which always integrates parameterized data as a parameter outside the SQL:
+The Azure Cosmos DB provider has allowed SQL querying via <xref:Microsoft.EntityFrameworkCore.CosmosQueryableExtensions.FromSqlRaw*>. However, that API can be susceptible to SQL injection attacks when user-provided data is interpolated or concatenated into the SQL. In EF 9.0, you can now use the new `FromSql` method, which always integrates parameterized data as a parameter outside the SQL:
 
 ```c#
 var maxAngle = 8;

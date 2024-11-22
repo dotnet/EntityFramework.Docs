@@ -35,7 +35,7 @@ Reference navigations for required relationships can be nullable or non-nullable
 
 ## Collection navigations
 
-Collection navigations are instances of a .NET collection type; that is, any type implementing <xref:System.Collections.Generic.ICollection%601>. The collection contains instances of the related entity type, of which there can be any number. They represent the "many" side(s) of [one-to-many](xref:core/modeling/relationships/one-to-many) and [many-to-many](xref:core/modeling/relationships/many-to-many) relationships. For example:
+Collection navigations are instances of a .NET collection type; that is, any type implementing <xref:System.Collections.Generic.ICollection`1>. The collection contains instances of the related entity type, of which there can be any number. They represent the "many" side(s) of [one-to-many](xref:core/modeling/relationships/one-to-many) and [many-to-many](xref:core/modeling/relationships/many-to-many) relationships. For example:
 
 ```csharp
 public ICollection<Post> ThePosts { get; set; }
@@ -52,14 +52,14 @@ public ICollection<Post> ThePosts { get; } = new List<Post>();
 
 ### Collection types
 
-The underlying collection instance must implement <xref:System.Collections.Generic.ICollection%601>, and must have a working `Add` method. It is common to use <xref:System.Collections.Generic.List%601> or <xref:System.Collections.Generic.HashSet%601>. `List<T>` is efficient for small numbers of related entities and maintains a stable ordering. `HashSet<T>` has more efficient lookups for large numbers of entities, but does not have stable ordering. You can also use your own custom collection implementation.
+The underlying collection instance must implement <xref:System.Collections.Generic.ICollection`1>, and must have a working `Add` method. It is common to use <xref:System.Collections.Generic.List`1> or <xref:System.Collections.Generic.HashSet`1>. `List<T>` is efficient for small numbers of related entities and maintains a stable ordering. `HashSet<T>` has more efficient lookups for large numbers of entities, but does not have stable ordering. You can also use your own custom collection implementation.
 
 > [!IMPORTANT]
 > The collection must use reference equality. When creating a `HashSet<T>` for a collection navigation, make sure to use <xref:System.Collections.Generic.ReferenceEqualityComparer>.
 
 Arrays cannot be used for collection navigations because, even though they implement `ICollection<T>`, the `Add` method throws an exception when called.
 
-Even though the collection instance must be an `ICollection<T>`, the collection does not need to be exposed as such. For example, it is common to expose the navigation as an <xref:System.Collections.Generic.IEnumerable%601>, which provides a read-only view that cannot be randomly modified by application code. For example:
+Even though the collection instance must be an `ICollection<T>`, the collection does not need to be exposed as such. For example, it is common to expose the navigation as an <xref:System.Collections.Generic.IEnumerable`1>, which provides a read-only view that cannot be randomly modified by application code. For example:
 
 ```csharp
 public class Blog
@@ -135,7 +135,7 @@ If EF needs to add an entity to a collection navigation, for example, while exec
 - Otherwise, an exception is thrown.
 
 > [!NOTE]
-> If [notification entities](xref:core/change-tracking/change-detection#notification-entities), including [change-tracking proxies](xref:core/change-tracking/change-detection#change-tracking-proxies), are being used, then <xref:System.Collections.ObjectModel.ObservableCollection%601> and <xref:Microsoft.EntityFrameworkCore.ChangeTracking.ObservableHashSet%601> are used in place of `List<T>` and `HashSet<T>`.
+> If [notification entities](xref:core/change-tracking/change-detection#notification-entities), including [change-tracking proxies](xref:core/change-tracking/change-detection#change-tracking-proxies), are being used, then <xref:System.Collections.ObjectModel.ObservableCollection`1> and <xref:Microsoft.EntityFrameworkCore.ChangeTracking.ObservableHashSet`1> are used in place of `List<T>` and `HashSet<T>`.
 
 > [!IMPORTANT]
 > As described in the [change tracking documentation](xref:core/change-tracking/identity-resolution), EF only tracks a single instance of any entity with a given key value. This means that collections used as navigations must use [reference equality semantics](/dotnet/csharp/language-reference/operators/equality-operators). Entity types that don't override object equality will get this by default. Make sure to use <xref:System.Collections.Generic.ReferenceEqualityComparer> when creating a `HashSet<T>` for use as a navigation to ensure it works for all entity types.

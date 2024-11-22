@@ -162,7 +162,7 @@ EF Core always applies configured cascading behaviors to tracked entities. This 
 
 ### Cascade delete in the database
 
-Many database systems also offer cascading behaviors that are triggered when an entity is deleted in the database. EF Core configures these behaviors based on the cascade delete behavior in the EF Core model when a database is created using <xref:Microsoft.EntityFrameworkCore.Infrastructure.DatabaseFacade.EnsureCreated%2A> or EF Core migrations. For example, using the model above, the following table is created for posts when using SQL Server:
+Many database systems also offer cascading behaviors that are triggered when an entity is deleted in the database. EF Core configures these behaviors based on the cascade delete behavior in the EF Core model when a database is created using <xref:Microsoft.EntityFrameworkCore.Infrastructure.DatabaseFacade.EnsureCreated*> or EF Core migrations. For example, using the model above, the following table is created for posts when using SQL Server:
 
 ```sql
 CREATE TABLE [Posts] (
@@ -441,7 +441,7 @@ Databases can also be configured to cascade nulls like this when a principal/par
 > [!TIP]
 > Be sure to read sections above before coming here. The configuration options will likely not make sense if the preceding material is not understood.
 
-Cascade behaviors are configured per relationship using the <xref:Microsoft.EntityFrameworkCore.Metadata.Builders.ReferenceCollectionBuilder.OnDelete%2A> method in <xref:Microsoft.EntityFrameworkCore.DbContext.OnModelCreating%2A>. For example:
+Cascade behaviors are configured per relationship using the <xref:Microsoft.EntityFrameworkCore.Metadata.Builders.ReferenceCollectionBuilder.OnDelete*> method in <xref:Microsoft.EntityFrameworkCore.DbContext.OnModelCreating*>. For example:
 
 <!--
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -461,7 +461,7 @@ See [Relationships](xref:core/modeling/relationships) for more information on co
 
 ### Impact on database schema
 
-The following table shows the result of each `OnDelete` value on the foreign key constraint created by EF Core migrations or <xref:Microsoft.EntityFrameworkCore.Infrastructure.DatabaseFacade.EnsureCreated%2A>.
+The following table shows the result of each `OnDelete` value on the foreign key constraint created by EF Core migrations or <xref:Microsoft.EntityFrameworkCore.Infrastructure.DatabaseFacade.EnsureCreated*>.
 
 | DeleteBehavior        | Impact on database schema
 |:----------------------|--------------------------

@@ -14,13 +14,13 @@ Entity Framework Core allows you to drop down to SQL queries when working with a
 
 ## Basic SQL queries
 
-You can use <xref:Microsoft.EntityFrameworkCore.RelationalQueryableExtensions.FromSql%2A> to begin a LINQ query based on a SQL query:
+You can use <xref:Microsoft.EntityFrameworkCore.RelationalQueryableExtensions.FromSql*> to begin a LINQ query based on a SQL query:
 
 [!code-csharp[Main](../../../samples/core/Querying/SqlQueries/Program.cs#FromSql)]
 
 > [!NOTE]
 >
-> <xref:Microsoft.EntityFrameworkCore.RelationalQueryableExtensions.FromSql%2A> was introduced in EF Core 7.0. When using older versions, use <xref:Microsoft.EntityFrameworkCore.RelationalQueryableExtensions.FromSqlInterpolated%2A> instead.
+> <xref:Microsoft.EntityFrameworkCore.RelationalQueryableExtensions.FromSql*> was introduced in EF Core 7.0. When using older versions, use <xref:Microsoft.EntityFrameworkCore.RelationalQueryableExtensions.FromSqlInterpolated*> instead.
 
 SQL queries can be used to execute a stored procedure which returns entity data:
 
@@ -28,7 +28,7 @@ SQL queries can be used to execute a stored procedure which returns entity data:
 
 > [!NOTE]
 >
-> <xref:Microsoft.EntityFrameworkCore.RelationalQueryableExtensions.FromSql%2A> can only be used directly on a `DbSet`. It cannot be composed over an arbitrary LINQ query.
+> <xref:Microsoft.EntityFrameworkCore.RelationalQueryableExtensions.FromSql*> can only be used directly on a `DbSet`. It cannot be composed over an arbitrary LINQ query.
 
 ## Passing parameters
 
@@ -37,13 +37,13 @@ SQL queries can be used to execute a stored procedure which returns entity data:
 >
 > When introducing any user-provided values into a SQL query, care must be taken to avoid SQL injection attacks. SQL injection occurs when a program integrates a user-provided string value into a SQL query, and the user-provided value is crafted to terminate the string and perform another malicious SQL operation. To learn more about SQL injection, [see this page](/sql/relational-databases/security/sql-injection).
 >
-> The <xref:Microsoft.EntityFrameworkCore.RelationalQueryableExtensions.FromSql%2A> and <xref:Microsoft.EntityFrameworkCore.RelationalQueryableExtensions.FromSqlInterpolated%2A> methods are safe against SQL injection, and always integrate parameter data as a separate SQL parameter. However, the <xref:Microsoft.EntityFrameworkCore.RelationalQueryableExtensions.FromSqlRaw%2A> method can be vulnerable to SQL injection attacks, if improperly used. See below for more details.
+> The <xref:Microsoft.EntityFrameworkCore.RelationalQueryableExtensions.FromSql*> and <xref:Microsoft.EntityFrameworkCore.RelationalQueryableExtensions.FromSqlInterpolated*> methods are safe against SQL injection, and always integrate parameter data as a separate SQL parameter. However, the <xref:Microsoft.EntityFrameworkCore.RelationalQueryableExtensions.FromSqlRaw*> method can be vulnerable to SQL injection attacks, if improperly used. See below for more details.
 
 The following example passes a single parameter to a stored procedure by including a parameter placeholder in the SQL query string and providing an additional argument:
 
 [!code-csharp[Main](../../../samples/core/Querying/SqlQueries/Program.cs#FromSqlStoredProcedureParameter)]
 
-While this syntax may look like regular C# [string interpolation](/dotnet/csharp/language-reference/tokens/interpolated), the supplied value is wrapped in a `DbParameter` and the generated parameter name inserted where the `{0}` placeholder was specified. This makes <xref:Microsoft.EntityFrameworkCore.RelationalQueryableExtensions.FromSql%2A> safe from SQL injection attacks, and sends the value efficiently and correctly to the database.
+While this syntax may look like regular C# [string interpolation](/dotnet/csharp/language-reference/tokens/interpolated), the supplied value is wrapped in a `DbParameter` and the generated parameter name inserted where the `{0}` placeholder was specified. This makes <xref:Microsoft.EntityFrameworkCore.RelationalQueryableExtensions.FromSql*> safe from SQL injection attacks, and sends the value efficiently and correctly to the database.
 
 When executing stored procedures, it can be useful to use named parameters in the SQL query string, especially when the stored procedure has optional parameters:
 
@@ -59,7 +59,7 @@ If you need more control over the database parameter being sent, you can also co
 
 ### Dynamic SQL and parameters
 
-<xref:Microsoft.EntityFrameworkCore.RelationalQueryableExtensions.FromSql%2A> and its parameterization should be used wherever possible. However, there are certain scenarios where SQL needs to be dynamically pieced together, and database parameters cannot be used. For example, let's assume that a C# variable holds the name of the a property to be filtered by. It may be tempting to use a SQL query such as the following:
+<xref:Microsoft.EntityFrameworkCore.RelationalQueryableExtensions.FromSql*> and its parameterization should be used wherever possible. However, there are certain scenarios where SQL needs to be dynamically pieced together, and database parameters cannot be used. For example, let's assume that a C# variable holds the name of the a property to be filtered by. It may be tempting to use a SQL query such as the following:
 
 ```c#
 var propertyName = "User";
@@ -74,7 +74,7 @@ This code doesn't work, since databases do not allow parameterizing column names
 
 First, it's important to consider the implications of dynamically constructing a query - via SQL or otherwise. Accepting a column name from a user may allow them to choose a column that isn't indexed, making the query run extremely slowly and overload your database; or it may allow them to choose a column containing data you don't want exposed. Except for truly dynamic scenarios, it's usually better to have two queries for two column names, rather than using parameterization to collapse them into a single query.
 
-If you've decided you do want to dynamically construct your SQL, you'll have to use <xref:Microsoft.EntityFrameworkCore.RelationalQueryableExtensions.FromSqlRaw%2A>, which allows interpolating variable data directly into the SQL string, instead of using a database parameter:
+If you've decided you do want to dynamically construct your SQL, you'll have to use <xref:Microsoft.EntityFrameworkCore.RelationalQueryableExtensions.FromSqlRaw*>, which allows interpolating variable data directly into the SQL string, instead of using a database parameter:
 
 [!code-csharp[Main](../../../samples/core/Querying/SqlQueries/Program.cs#FromSqlRawStoredProcedureParameter)]
 
@@ -84,7 +84,7 @@ On the other hand, the column value is sent via a `DbParameter`, and is therefor
 
 > [!WARNING]
 >
-> Be very careful when using <xref:Microsoft.EntityFrameworkCore.RelationalQueryableExtensions.FromSqlRaw%2A>, and always make sure values are either from a safe origin, or are properly sanitized. SQL injection attacks can have disastrous consequences for your application.
+> Be very careful when using <xref:Microsoft.EntityFrameworkCore.RelationalQueryableExtensions.FromSqlRaw*>, and always make sure values are either from a safe origin, or are properly sanitized. SQL injection attacks can have disastrous consequences for your application.
 
 ## Composing with LINQ
 
@@ -115,11 +115,11 @@ Composing with LINQ requires your SQL query to be composable, since EF Core will
 - On SQL Server, a trailing query-level hint (for example, `OPTION (HASH JOIN)`)
 - On SQL Server, an `ORDER BY` clause that isn't used with `OFFSET 0` OR `TOP 100 PERCENT` in the `SELECT` clause
 
-SQL Server doesn't allow composing over stored procedure calls, so any attempt to apply additional query operators to such a call will result in invalid SQL. Use <xref:System.Linq.Enumerable.AsEnumerable%2A> or <xref:Microsoft.EntityFrameworkCore.EntityFrameworkQueryableExtensions.AsAsyncEnumerable%2A> right after <xref:Microsoft.EntityFrameworkCore.RelationalQueryableExtensions.FromSql%2A> or <xref:Microsoft.EntityFrameworkCore.RelationalQueryableExtensions.FromSqlRaw%2A> to make sure that EF Core doesn't try to compose over a stored procedure.
+SQL Server doesn't allow composing over stored procedure calls, so any attempt to apply additional query operators to such a call will result in invalid SQL. Use <xref:System.Linq.Enumerable.AsEnumerable*> or <xref:Microsoft.EntityFrameworkCore.EntityFrameworkQueryableExtensions.AsAsyncEnumerable*> right after <xref:Microsoft.EntityFrameworkCore.RelationalQueryableExtensions.FromSql*> or <xref:Microsoft.EntityFrameworkCore.RelationalQueryableExtensions.FromSqlRaw*> to make sure that EF Core doesn't try to compose over a stored procedure.
 
 ## Change Tracking
 
-Queries that use <xref:Microsoft.EntityFrameworkCore.RelationalQueryableExtensions.FromSql%2A> or <xref:Microsoft.EntityFrameworkCore.RelationalQueryableExtensions.FromSqlRaw%2A> follow the exact same change tracking rules as any other LINQ query in EF Core. For example, if the query projects entity types, the results are tracked by default.
+Queries that use <xref:Microsoft.EntityFrameworkCore.RelationalQueryableExtensions.FromSql*> or <xref:Microsoft.EntityFrameworkCore.RelationalQueryableExtensions.FromSqlRaw*> follow the exact same change tracking rules as any other LINQ query in EF Core. For example, if the query projects entity types, the results are tracked by default.
 
 The following example uses a SQL query that selects from a Table-Valued Function (TVF), then disables change tracking with the call to [`AsNoTracking`](xref:core/querying/tracking#no-tracking-queries):
 
@@ -130,7 +130,7 @@ The following example uses a SQL query that selects from a Table-Valued Function
 > [!NOTE]
 > This feature was introduced in EF Core 7.0.
 
-While <xref:Microsoft.EntityFrameworkCore.RelationalQueryableExtensions.FromSql%2A> is useful for querying entities defined in your model, <xref:Microsoft.EntityFrameworkCore.RelationalDatabaseFacadeExtensions.SqlQuery%2A> allows you to easily query for scalar, non-entity types via SQL, without needing to drop down to lower-level data access APIs. For example, the following query fetches all the IDs from the `Blogs` table:
+While <xref:Microsoft.EntityFrameworkCore.RelationalQueryableExtensions.FromSql*> is useful for querying entities defined in your model, <xref:Microsoft.EntityFrameworkCore.RelationalDatabaseFacadeExtensions.SqlQuery*> allows you to easily query for scalar, non-entity types via SQL, without needing to drop down to lower-level data access APIs. For example, the following query fetches all the IDs from the `Blogs` table:
 
 ### [SQL Server](#tab/sqlserver)
 
@@ -197,17 +197,17 @@ var overAverageIds = context.Database
 
 ***
 
-<xref:Microsoft.EntityFrameworkCore.RelationalDatabaseFacadeExtensions.SqlQuery%2A> can be used with any scalar type supported by your database provider. If you'd like to use a type not supported by your database provider, you can use [pre-convention configuration](xref:core/modeling/bulk-configuration#pre-convention-configuration) to define a value conversion for it.
+<xref:Microsoft.EntityFrameworkCore.RelationalDatabaseFacadeExtensions.SqlQuery*> can be used with any scalar type supported by your database provider. If you'd like to use a type not supported by your database provider, you can use [pre-convention configuration](xref:core/modeling/bulk-configuration#pre-convention-configuration) to define a value conversion for it.
 
-<xref:Microsoft.EntityFrameworkCore.RelationalDatabaseFacadeExtensions.SqlQueryRaw%2A> allows for dynamic construction of SQL queries, just like <xref:Microsoft.EntityFrameworkCore.RelationalQueryableExtensions.FromSqlRaw%2A> does for entity types.
+<xref:Microsoft.EntityFrameworkCore.RelationalDatabaseFacadeExtensions.SqlQueryRaw*> allows for dynamic construction of SQL queries, just like <xref:Microsoft.EntityFrameworkCore.RelationalQueryableExtensions.FromSqlRaw*> does for entity types.
 
 ## Executing non-querying SQL
 
-In some scenarios, it may be necessary to execute SQL which does not return any data, typically for modifying data in the database or calling a stored procedure which doesn't return any result sets. This can be done via <xref:Microsoft.EntityFrameworkCore.RelationalDatabaseFacadeExtensions.ExecuteSql%2A>:
+In some scenarios, it may be necessary to execute SQL which does not return any data, typically for modifying data in the database or calling a stored procedure which doesn't return any result sets. This can be done via <xref:Microsoft.EntityFrameworkCore.RelationalDatabaseFacadeExtensions.ExecuteSql*>:
 
 [!code-csharp[Main](../../../samples/core/Querying/SqlQueries/Program.cs#ExecuteSql)]
 
-This executes the provided SQL and returns the number of rows modified. <xref:Microsoft.EntityFrameworkCore.RelationalDatabaseFacadeExtensions.ExecuteSql%2A> protects against SQL injection by using safe parameterization, just like <xref:Microsoft.EntityFrameworkCore.RelationalQueryableExtensions.FromSql%2A>, and <xref:Microsoft.EntityFrameworkCore.RelationalDatabaseFacadeExtensions.ExecuteSqlRaw%2A> allows for dynamic construction of SQL queries, just like <xref:Microsoft.EntityFrameworkCore.RelationalQueryableExtensions.FromSqlRaw%2A> does for queries.
+This executes the provided SQL and returns the number of rows modified. <xref:Microsoft.EntityFrameworkCore.RelationalDatabaseFacadeExtensions.ExecuteSql*> protects against SQL injection by using safe parameterization, just like <xref:Microsoft.EntityFrameworkCore.RelationalQueryableExtensions.FromSql*>, and <xref:Microsoft.EntityFrameworkCore.RelationalDatabaseFacadeExtensions.ExecuteSqlRaw*> allows for dynamic construction of SQL queries, just like <xref:Microsoft.EntityFrameworkCore.RelationalQueryableExtensions.FromSqlRaw*> does for queries.
 
 > [!NOTE]
 >

@@ -23,7 +23,7 @@ For example, the following code listing will result in a `BlogId` shadow propert
 
 ## Configuring shadow properties
 
-You can use the [Fluent API](xref:core/modeling/index#use-fluent-api-to-configure-a-model) to configure shadow properties. Once you have called the string overload of <xref:Microsoft.EntityFrameworkCore.Metadata.Builders.EntityTypeBuilder.Property%60%601(System.String)>, you can chain any of the configuration calls you would for other properties. In the following sample, since `Blog` has no CLR property named `LastUpdated`, a shadow property is created:
+You can use the [Fluent API](xref:core/modeling/index#use-fluent-api-to-configure-a-model) to configure shadow properties. Once you have called the string overload of <xref:Microsoft.EntityFrameworkCore.Metadata.Builders.EntityTypeBuilder.Property``1(System.String)>, you can chain any of the configuration calls you would for other properties. In the following sample, since `Blog` has no CLR property named `LastUpdated`, a shadow property is created:
 
 [!code-csharp[Main](../../../samples/core/Modeling/ShadowAndIndexerProperties/ShadowProperty.cs?name=ShadowProperty&highlight=8)]
 

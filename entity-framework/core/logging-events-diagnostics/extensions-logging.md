@@ -14,11 +14,11 @@ Entity Framework Core (EF Core) fully integrates with `Microsoft.Extensions.Logg
 
 ## ASP.NET Core applications
 
-`Microsoft.Extensions.Logging` is [used by default in ASP.NET Core applications](/aspnet/core/fundamentals/logging). Calling <xref:Microsoft.Extensions.DependencyInjection.EntityFrameworkServiceCollectionExtensions.AddDbContext%2A> or <xref:Microsoft.Extensions.DependencyInjection.EntityFrameworkServiceCollectionExtensions.AddDbContextPool%2A> makes EF Core automatically use the logging setup configured via the regular ASP.NET mechanism.
+`Microsoft.Extensions.Logging` is [used by default in ASP.NET Core applications](/aspnet/core/fundamentals/logging). Calling <xref:Microsoft.Extensions.DependencyInjection.EntityFrameworkServiceCollectionExtensions.AddDbContext*> or <xref:Microsoft.Extensions.DependencyInjection.EntityFrameworkServiceCollectionExtensions.AddDbContextPool*> makes EF Core automatically use the logging setup configured via the regular ASP.NET mechanism.
 
 ## Other application types
 
-Other application types can use the [GenericHost](/dotnet/core/extensions/generic-host) to get the same dependency injection patterns as are used in ASP.NET Core. <xref:Microsoft.Extensions.DependencyInjection.EntityFrameworkServiceCollectionExtensions.AddDbContext%2A> or <xref:Microsoft.Extensions.DependencyInjection.EntityFrameworkServiceCollectionExtensions.AddDbContextPool%2A> can then be used just like in ASP.NET Core applications.
+Other application types can use the [GenericHost](/dotnet/core/extensions/generic-host) to get the same dependency injection patterns as are used in ASP.NET Core. <xref:Microsoft.Extensions.DependencyInjection.EntityFrameworkServiceCollectionExtensions.AddDbContext*> or <xref:Microsoft.Extensions.DependencyInjection.EntityFrameworkServiceCollectionExtensions.AddDbContextPool*> can then be used just like in ASP.NET Core applications.
 
 `Microsoft.Extensions.Logging` can also be used for applications that don't use dependency injection, although [simple logging](xref:core/logging-events-diagnostics/simple-logging) can be easier to set up.
 
@@ -75,7 +75,7 @@ However, knowing data values, especially for keys, can be very helpful when debu
 
 For performance reasons, EF Core does not wrap each call to read a value from the database provider in a try-catch block. However, this sometimes results in exceptions that are hard to diagnose, especially when the database returns a NULL when not allowed by the model.
 
-Turning on <xref:Microsoft.EntityFrameworkCore.DbContextOptionsBuilder.EnableDetailedErrors%2A> will cause EF to introduce these try-catch blocks and thereby provide more detailed errors. For example:
+Turning on <xref:Microsoft.EntityFrameworkCore.DbContextOptionsBuilder.EnableDetailedErrors*> will cause EF to introduce these try-catch blocks and thereby provide more detailed errors. For example:
 
 <!--
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -85,7 +85,7 @@ Turning on <xref:Microsoft.EntityFrameworkCore.DbContextOptionsBuilder.EnableDet
 
 ## Configuration for specific messages
 
-The EF Core <xref:Microsoft.EntityFrameworkCore.DbContextOptionsBuilder.ConfigureWarnings%2A> API allows applications to change what happens when a specific event is encountered. This can be used to:
+The EF Core <xref:Microsoft.EntityFrameworkCore.DbContextOptionsBuilder.ConfigureWarnings*> API allows applications to change what happens when a specific event is encountered. This can be used to:
 
 * Change the log level at which the event is logged
 * Skip logging the event altogether

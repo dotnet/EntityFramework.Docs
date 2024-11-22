@@ -42,7 +42,7 @@ Since a tracking query uses the change tracker, EF Core does identity resolution
 * Don't use the change tracker and don't do identity resolution.
 * Return a new instance of the entity even when the same entity is contained in the result multiple times.
 
-Tracking and no-tracking can be combined in the same query. That is, you can have a no-tracking query, which does identity resolution in the results. Just like <xref:Microsoft.EntityFrameworkCore.EntityFrameworkQueryableExtensions.AsNoTracking%2A> queryable operator, we've added another operator <xref:Microsoft.EntityFrameworkCore.EntityFrameworkQueryableExtensions.AsNoTrackingWithIdentityResolution%60%601(System.Linq.IQueryable{%60%600})>. There's also associated entry added in the <xref:Microsoft.EntityFrameworkCore.QueryTrackingBehavior> enum. When the query to use identity resolution is configured with no tracking, a stand-alone change tracker is used in the background when generating query results so each instance is materialized only once. Since this change tracker is different from the one in the context, the results are not tracked by the context. After the query is enumerated fully, the change tracker goes out of scope and garbage collected as required.
+Tracking and no-tracking can be combined in the same query. That is, you can have a no-tracking query, which does identity resolution in the results. Just like <xref:Microsoft.EntityFrameworkCore.EntityFrameworkQueryableExtensions.AsNoTracking*> queryable operator, we've added another operator <xref:Microsoft.EntityFrameworkCore.EntityFrameworkQueryableExtensions.AsNoTrackingWithIdentityResolution%60`1(System.Linq.IQueryable{%60%600})>. There's also associated entry added in the <xref:Microsoft.EntityFrameworkCore.QueryTrackingBehavior> enum. When the query to use identity resolution is configured with no tracking, a stand-alone change tracker is used in the background when generating query results so each instance is materialized only once. Since this change tracker is different from the one in the context, the results are not tracked by the context. After the query is enumerated fully, the change tracker goes out of scope and garbage collected as required.
 
 [!code-csharp[Main](../../../samples/core/Querying/Tracking/Program.cs#NoTrackingWithIdentityResolution)]
 
@@ -52,7 +52,7 @@ If you find yourself changing the tracking behavior for many queries, you may wa
 
 [!code-csharp[Main](../../../samples/core/Querying/Tracking/NonTrackingBloggingContext.cs?name=OnConfiguring&highlight=5)]
 
-This makes all your queries no-tracking by default. You can still add <xref:Microsoft.EntityFrameworkCore.EntityFrameworkQueryableExtensions.AsTracking%2A> to make specific queries tracking.
+This makes all your queries no-tracking by default. You can still add <xref:Microsoft.EntityFrameworkCore.EntityFrameworkQueryableExtensions.AsTracking*> to make specific queries tracking.
 
 ## Tracking and custom projections
 

@@ -77,7 +77,7 @@ In these logs, we notice the following:
 
 Note that even though some of the partition key values are not provided, hierarchical partition keys still allow targeting only the subpartitions which correspond to the first two properties. While this isn't as efficient as targeting a single partition (as identified by all three properties), it's still much more efficient than targeting all partitions.
 
-Rather than referencing partition key properties in a `Where` operator, you can explicitly specify them by using the <xref:Microsoft.EntityFrameworkCore.CosmosQueryableExtensions.WithPartitionKey%2A> operator:
+Rather than referencing partition key properties in a `Where` operator, you can explicitly specify them by using the <xref:Microsoft.EntityFrameworkCore.CosmosQueryableExtensions.WithPartitionKey*> operator:
 
 ```c#
 var sessions = await context.Sessions
@@ -86,7 +86,7 @@ var sessions = await context.Sessions
     .ToListAsync();
 ```
 
-This executes in the same way as the above query, and can be preferable if you want to make partition keys more explicit in your queries. Using <xref:Microsoft.EntityFrameworkCore.CosmosQueryableExtensions.WithPartitionKey%2A> may be necessary in versions of EF prior to 9.0 - keep an eye on the logs to ensure that queries are using partition keys as expected.
+This executes in the same way as the above query, and can be preferable if you want to make partition keys more explicit in your queries. Using <xref:Microsoft.EntityFrameworkCore.CosmosQueryableExtensions.WithPartitionKey*> may be necessary in versions of EF prior to 9.0 - keep an eye on the logs to ensure that queries are using partition keys as expected.
 
 ## Point reads
 

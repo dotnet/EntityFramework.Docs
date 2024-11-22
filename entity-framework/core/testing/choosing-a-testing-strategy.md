@@ -68,7 +68,7 @@ For information on how to use in-memory for testing, see the [see this section](
 
 ### Mocking or stubbing DbContext and DbSet
 
-This approach typically uses a mock framework to create a test double of `DbContext` and `DbSet`, and tests against those doubles. Mocking `DbContext` can be a good approach for testing various *non-query* functionality, such as calls to <xref:Microsoft.EntityFrameworkCore.DbContext.Add%2A> or <xref:Microsoft.EntityFrameworkCore.DbContext.SaveChanges>, allowing you to verify that your code called them in write scenarios.
+This approach typically uses a mock framework to create a test double of `DbContext` and `DbSet`, and tests against those doubles. Mocking `DbContext` can be a good approach for testing various *non-query* functionality, such as calls to <xref:Microsoft.EntityFrameworkCore.DbContext.Add*> or <xref:Microsoft.EntityFrameworkCore.DbContext.SaveChanges>, allowing you to verify that your code called them in write scenarios.
 
 However, properly mocking `DbSet` *query* functionality is not possible, since queries are expressed via LINQ operators, which are static extension method calls over `IQueryable`. As a result, when some people talk about "mocking `DbSet`", what they really mean is that they create a `DbSet` backed by an in-memory collection, and then evaluate query operators against that collection in memory, just like a simple `IEnumerable`. Rather than a mock, this is actually a sort of fake, where the in-memory collection replaces the the real database.
 

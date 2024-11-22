@@ -13,7 +13,7 @@ uid: core/modeling/value-comparers
 
 ## Background
 
-[Change tracking](xref:core/change-tracking/index) means that EF Core automatically determines what changes were performed by the application on a loaded entity instance, so that those changes can be saved back to the database when <xref:Microsoft.EntityFrameworkCore.DbContext.SaveChanges%2A> is called. EF Core usually performs this by taking a *snapshot* of the instance when it's loaded from the database, and *comparing* that snapshot to the instance handed out to the application.
+[Change tracking](xref:core/change-tracking/index) means that EF Core automatically determines what changes were performed by the application on a loaded entity instance, so that those changes can be saved back to the database when <xref:Microsoft.EntityFrameworkCore.DbContext.SaveChanges*> is called. EF Core usually performs this by taking a *snapshot* of the instance when it's loaded from the database, and *comparing* that snapshot to the instance handed out to the application.
 
 EF Core comes with built-in logic for snapshotting and comparing most standard types used in databases, so users don't usually need to worry about this topic. However, when a property is mapped through a [value converter](xref:core/modeling/value-conversions), EF Core needs to perform comparison on arbitrary user types, which may be complex. By default, EF Core uses the default equality comparison defined by types (e.g. the `Equals` method); for snapshotting, [value types](/dotnet/csharp/language-reference/builtin-types/value-types) are copied to produce the snapshot, while for [reference types](/dotnet/csharp/language-reference/keywords/reference-types) no copying occurs, and the same instance is used as the snapshot.
 
@@ -34,7 +34,7 @@ Consider byte arrays, which can be arbitrarily large. These could be compared:
 * By reference, such that a difference is only detected if a new byte array is used
 * By deep comparison, such that mutation of the bytes in the array is detected
 
-By default, EF Core uses the first of these approaches for non-key byte arrays. That is, only references are compared and a change is detected only when an existing byte array is replaced with a new one. This is a pragmatic decision that avoids copying entire arrays and comparing them byte-to-byte when executing <xref:Microsoft.EntityFrameworkCore.DbContext.SaveChanges%2A>. It means that the common scenario of replacing, say, one image with another is handled in a performant way.
+By default, EF Core uses the first of these approaches for non-key byte arrays. That is, only references are compared and a change is detected only when an existing byte array is replaced with a new one. This is a pragmatic decision that avoids copying entire arrays and comparing them byte-to-byte when executing <xref:Microsoft.EntityFrameworkCore.DbContext.SaveChanges*>. It means that the common scenario of replacing, say, one image with another is handled in a performant way.
 
 On the other hand, reference equality would not work when byte arrays are used to represent binary keys, since it's very unlikely that an FK property is set to the *same instance* as a PK property to which it needs to be compared. Therefore, EF Core uses deep comparisons for byte arrays acting as keys; this is unlikely to have a big performance hit since binary keys are usually short.
 
@@ -71,7 +71,7 @@ It is recommended that you use immutable types (classes or structs) with value c
 
 [!code-csharp[ListProperty](../../../samples/core/Modeling/ValueConversions/MappingListProperty.cs?name=ListProperty)]
 
-The <xref:System.Collections.Generic.List%601> class:
+The <xref:System.Collections.Generic.List`1> class:
 
 * Has reference equality; two lists containing the same values are treated as different.
 * Is mutable; values in the list can be added and removed.
@@ -88,7 +88,7 @@ A typical value conversion on a list property might convert the list to and from
 
 ***
 
-The <xref:Microsoft.EntityFrameworkCore.ChangeTracking.ValueComparer%601> constructor accepts three expressions:
+The <xref:Microsoft.EntityFrameworkCore.ChangeTracking.ValueComparer`1> constructor accepts three expressions:
 
 * An expression for checking equality
 * An expression for generating a hash code
@@ -107,10 +107,10 @@ The snapshot is created by cloning the list with `ToList`. Again, this is only n
 
 The background section covers why key comparisons may require special semantics. Make sure to create a comparer that is appropriate for keys when setting it on a primary, principal, or foreign key property.
 
-Use <xref:Microsoft.EntityFrameworkCore.MutablePropertyExtensions.SetKeyValueComparer%2A> in the rare cases where different semantics is required on the same property.
+Use <xref:Microsoft.EntityFrameworkCore.MutablePropertyExtensions.SetKeyValueComparer*> in the rare cases where different semantics is required on the same property.
 
 > [!NOTE]
-> <xref:Microsoft.EntityFrameworkCore.MutablePropertyExtensions.SetStructuralValueComparer%2A> has been obsoleted. Use <xref:Microsoft.EntityFrameworkCore.MutablePropertyExtensions.SetKeyValueComparer%2A> instead.
+> <xref:Microsoft.EntityFrameworkCore.MutablePropertyExtensions.SetStructuralValueComparer*> has been obsoleted. Use <xref:Microsoft.EntityFrameworkCore.MutablePropertyExtensions.SetKeyValueComparer*> instead.
 
 ## Overriding the default comparer
 

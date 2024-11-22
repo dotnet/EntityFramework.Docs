@@ -11,13 +11,13 @@ uid: core/providers/cosmos/modeling
 
 In Azure Cosmos DB, JSON documents are stored in containers. Unlike tables in relational databases, Azure Cosmos DB containers can contain documents with different shapes - a container does not impose a uniform schema on its documents. However, various configuration options are defined at the container level, and therefore affect all documents contained within it. See the [Azure Cosmos DB documentation on containers](/azure/cosmos-db/resource-model) for more information.
 
-By default, EF maps all entity types to the same container; this is usually a good default in terms of performance and pricing. The default container is named after the .NET context type (`OrderContext` in this case). To change the default container name, use <xref:Microsoft.EntityFrameworkCore.CosmosModelBuilderExtensions.HasDefaultContainer%2A>:
+By default, EF maps all entity types to the same container; this is usually a good default in terms of performance and pricing. The default container is named after the .NET context type (`OrderContext` in this case). To change the default container name, use <xref:Microsoft.EntityFrameworkCore.CosmosModelBuilderExtensions.HasDefaultContainer*>:
 
 ```csharp
 modelBuilder.HasDefaultContainer("Store");
 ```
 
-To map an entity type to a different container use <xref:Microsoft.EntityFrameworkCore.CosmosEntityTypeBuilderExtensions.ToContainer%2A>:
+To map an entity type to a different container use <xref:Microsoft.EntityFrameworkCore.CosmosEntityTypeBuilderExtensions.ToContainer*>:
 
 ```csharp
 modelBuilder.Entity<Order>().ToContainer("Orders");
@@ -27,7 +27,7 @@ Before mapping entity types to different containers, make sure you understand th
 
 ## IDs and keys
 
-Azure Cosmos DB requires all documents to have an `id` JSON property which uniquely identifies them. Like other EF providers, the EF Azure Cosmos DB provider will attempt to find a property named `Id` or `<type name>Id`, and configure that property as the key of your entity type, mapping it to the `id` JSON property. You can configure any property to be the key property by using <xref:Microsoft.EntityFrameworkCore.Metadata.Builders.EntityTypeBuilder%601.HasKey%2A>; see [the general EF documentation on keys](xref:core/modeling/keys) for more information.
+Azure Cosmos DB requires all documents to have an `id` JSON property which uniquely identifies them. Like other EF providers, the EF Azure Cosmos DB provider will attempt to find a property named `Id` or `<type name>Id`, and configure that property as the key of your entity type, mapping it to the `id` JSON property. You can configure any property to be the key property by using <xref:Microsoft.EntityFrameworkCore.Metadata.Builders.EntityTypeBuilder`1.HasKey*>; see [the general EF documentation on keys](xref:core/modeling/keys) for more information.
 
 Developers coming to Azure Cosmos DB from other databases sometimes expect the key (`Id`) property to be generated automatically. For example, on SQL Server, EF configures numeric key properties to be IDENTITY columns, where auto-incrementing values are generated in the database. In contrast, Azure Cosmos DB does not support automatic generation of properties, and so key properties must be explicitly set. Inserting an entity type with an unset key property will simply insert the CLR default value for that property (e.g. 0 for `int`), and a second insert will fail; EF issues a warning if you attempt to do this.
 
@@ -95,7 +95,7 @@ This is similar, but allows EF to use efficient [point reads](xref:core/provider
 
 ## Provisioned throughput
 
-If you use EF Core to create the Azure Cosmos DB database or containers you can configure [provisioned throughput](/azure/cosmos-db/set-throughput) for the database by calling <xref:Microsoft.EntityFrameworkCore.CosmosModelBuilderExtensions.HasAutoscaleThroughput%2A?displayProperty=nameWithType> or <xref:Microsoft.EntityFrameworkCore.CosmosModelBuilderExtensions.HasManualThroughput%2A?displayProperty=nameWithType>. For example:
+If you use EF Core to create the Azure Cosmos DB database or containers you can configure [provisioned throughput](/azure/cosmos-db/set-throughput) for the database by calling <xref:Microsoft.EntityFrameworkCore.CosmosModelBuilderExtensions.HasAutoscaleThroughput*?displayProperty=nameWithType> or <xref:Microsoft.EntityFrameworkCore.CosmosModelBuilderExtensions.HasManualThroughput*?displayProperty=nameWithType>. For example:
 
 <!--
 modelBuilder.HasManualThroughput(2000);
@@ -103,7 +103,7 @@ modelBuilder.HasAutoscaleThroughput(4000);
 -->
 [!code-csharp[ModelThroughput](../../../../samples/core/Miscellaneous/NewInEFCore6.Cosmos/CosmosModelConfigurationSample.cs?name=ModelThroughput)]
 
-To configure provisioned throughput for a container call <xref:Microsoft.EntityFrameworkCore.CosmosEntityTypeBuilderExtensions.HasAutoscaleThroughput%2A?displayProperty=nameWithType> or <xref:Microsoft.EntityFrameworkCore.CosmosEntityTypeBuilderExtensions.HasManualThroughput%2A?displayProperty=nameWithType>. For example:
+To configure provisioned throughput for a container call <xref:Microsoft.EntityFrameworkCore.CosmosEntityTypeBuilderExtensions.HasAutoscaleThroughput*?displayProperty=nameWithType> or <xref:Microsoft.EntityFrameworkCore.CosmosEntityTypeBuilderExtensions.HasManualThroughput*?displayProperty=nameWithType>. For example:
 
 <!--
 modelBuilder.Entity<Family>(
@@ -174,7 +174,7 @@ The shadow time-to-live property is then set by [accessing the tracked entity](x
 ## Embedded entities
 
 > [!NOTE]
-> Related entity types are configured as owned by default. To prevent this for a specific entity type call <xref:Microsoft.EntityFrameworkCore.ModelBuilder.Entity%2A?displayProperty=nameWithType>.
+> Related entity types are configured as owned by default. To prevent this for a specific entity type call <xref:Microsoft.EntityFrameworkCore.ModelBuilder.Entity*?displayProperty=nameWithType>.
 
 For Azure Cosmos DB, owned entities are embedded in the same item as the owner. To change a property name use [ToJsonProperty](/dotnet/api/Microsoft.EntityFrameworkCore.CosmosEntityTypeBuilderExtensions.ToJsonProperty):
 
@@ -242,7 +242,7 @@ Internally EF Core always needs to have unique key values for all tracked entiti
 
 ### Collections of primitive types
 
-Collections of supported primitive types, such as `string` and `int`, are discovered and mapped automatically. Supported collections are all types that implement <xref:System.Collections.Generic.IReadOnlyList%601> or <xref:System.Collections.Generic.IReadOnlyDictionary%602>. For example, consider this entity type:
+Collections of supported primitive types, such as `string` and `int`, are discovered and mapped automatically. Supported collections are all types that implement <xref:System.Collections.Generic.IReadOnlyList`1> or <xref:System.Collections.Generic.IReadOnlyDictionary`2>. For example, consider this entity type:
 
 <!--
 public class Book
@@ -327,10 +327,10 @@ Limitations:
 
 ## Optimistic concurrency with eTags
 
-To configure an entity type to use [optimistic concurrency](xref:core/saving/concurrency) call <xref:Microsoft.EntityFrameworkCore.CosmosEntityTypeBuilderExtensions.UseETagConcurrency%2A>. This call will create an `_etag` property in [shadow state](xref:core/modeling/shadow-properties) and set it as the concurrency token.
+To configure an entity type to use [optimistic concurrency](xref:core/saving/concurrency) call <xref:Microsoft.EntityFrameworkCore.CosmosEntityTypeBuilderExtensions.UseETagConcurrency*>. This call will create an `_etag` property in [shadow state](xref:core/modeling/shadow-properties) and set it as the concurrency token.
 
 [!code-csharp[Main](../../../../samples/core/Cosmos/ModelBuilding/OrderContext.cs?name=ETag)]
 
-To make it easier to resolve concurrency errors you can map the eTag to a CLR property using <xref:Microsoft.EntityFrameworkCore.CosmosPropertyBuilderExtensions.IsETagConcurrency%2A>.
+To make it easier to resolve concurrency errors you can map the eTag to a CLR property using <xref:Microsoft.EntityFrameworkCore.CosmosPropertyBuilderExtensions.IsETagConcurrency*>.
 
 [!code-csharp[Main](../../../../samples/core/Cosmos/ModelBuilding/OrderContext.cs?name=ETagProperty)]

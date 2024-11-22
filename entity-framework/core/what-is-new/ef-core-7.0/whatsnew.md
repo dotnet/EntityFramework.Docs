@@ -536,7 +536,7 @@ WHERE [Id] = @p1;
 
 By default, EF Core [tracks changes to entities](xref:core/change-tracking/index), and then [sends updates to the database](xref:core/saving/index) when one of the `SaveChanges` methods is called. Changes are only sent for properties and relationships that have actually changed. Also, the tracked entities remain in sync with the changes sent to the database. This mechanism is an efficient and convenient way to send general-purpose inserts, updates, and deletes to the database. These changes are also batched to reduce the number of database round-trips.
 
-However, it is sometimes useful to execute update or delete commands on the database without involving the change tracker. EF7 enables this with the new <xref:Microsoft.EntityFrameworkCore.RelationalQueryableExtensions.ExecuteUpdate%2A> and <xref:Microsoft.EntityFrameworkCore.RelationalQueryableExtensions.ExecuteDelete%2A> methods. These methods are applied to a LINQ query and will update or delete entities in the database based on the results of that query. Many entities can be updated with a single command and the entities are not loaded into memory, which means this can result in more efficient updates and deletes.
+However, it is sometimes useful to execute update or delete commands on the database without involving the change tracker. EF7 enables this with the new <xref:Microsoft.EntityFrameworkCore.RelationalQueryableExtensions.ExecuteUpdate*> and <xref:Microsoft.EntityFrameworkCore.RelationalQueryableExtensions.ExecuteDelete*> methods. These methods are applied to a LINQ query and will update or delete entities in the database based on the results of that query. Many entities can be updated with a single command and the entities are not loaded into memory, which means this can result in more efficient updates and deletes.
 
 However, keep in mind that:
 
@@ -777,7 +777,7 @@ Which, as it is deleting a blog, will also cause all related posts to be deleted
 
 ## Faster SaveChanges
 
-In EF7, the performance of <xref:Microsoft.EntityFrameworkCore.DbContext.SaveChanges%2A> and <xref:Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync%2A> has been significantly improved. In some scenarios, saving changes is now up to four times faster than with EF Core 6.0!
+In EF7, the performance of <xref:Microsoft.EntityFrameworkCore.DbContext.SaveChanges*> and <xref:Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync*> has been significantly improved. In some scenarios, saving changes is now up to four times faster than with EF Core 6.0!
 
 Most of these improvements come from:
 
@@ -2520,7 +2520,7 @@ EF Core makes use of [.NET LINQ queries](xref:core/querying/how-query-works). Th
 [!code-csharp[GetPageOfCustomers](../../../../samples/core/Miscellaneous/NewInEFCore7/QueryInterceptionSample.cs?name=GetPageOfCustomers)]
 
 > [!TIP]
-> This query uses the <xref:Microsoft.EntityFrameworkCore.EF.Property%2A?displayProperty=nameWithType> method to specify the property to sort by. This allows the application to dynamically pass in the property name, allowing sorting by any property of the entity type. Be aware that sorting by non-indexed columns can be slow.
+> This query uses the <xref:Microsoft.EntityFrameworkCore.EF.Property*?displayProperty=nameWithType> method to specify the property to sort by. This allows the application to dynamically pass in the property name, allowing sorting by any property of the entity type. Be aware that sorting by non-indexed columns can be slow.
 
 This will work fine as long as the property used for sorting always returns a stable ordering. But this may not always be the case. For example, the LINQ query above generates the following on SQLite when ordering by `Customer.City`:
 
@@ -2604,12 +2604,12 @@ We then need an interceptor that implements <xref:Microsoft.EntityFrameworkCore.
 
 This probably looks pretty complicated--and it is! Working with expression trees is typically not easy. Let's look at what's happening:
 
-- Fundamentally, the interceptor encapsulates an <xref:System.Linq.Expressions.ExpressionVisitor>. The visitor overrides <xref:System.Linq.Expressions.ExpressionVisitor.VisitMethodCall%2A>, which will be called whenever there is a call to a method in the query expression tree.
+- Fundamentally, the interceptor encapsulates an <xref:System.Linq.Expressions.ExpressionVisitor>. The visitor overrides <xref:System.Linq.Expressions.ExpressionVisitor.VisitMethodCall*>, which will be called whenever there is a call to a method in the query expression tree.
 
-- The visitor checks whether or not this is a call to the <xref:System.Linq.Queryable.OrderBy%2A> method we are interested in.
+- The visitor checks whether or not this is a call to the <xref:System.Linq.Queryable.OrderBy*> method we are interested in.
 - If it is, then the visitor further checks if the generic method call is for a type that implements our `IHasIntKey` interface.
 - At this point we know that the method call is of the form `OrderBy(e => ...)`. We extract the lambda expression from this call and get the parameter used in that expression--that is, the `e`.
-- We now build a new <xref:System.Linq.Expressions.MethodCallExpression> using the <xref:System.Linq.Expressions.Expression.Call%2A?displayProperty=nameWithType> builder method. In this case, the method being called is `ThenBy(e => e.Id)`. We build this using the parameter extracted above and a property access to the `Id` property of the `IHasIntKey` interface.
+- We now build a new <xref:System.Linq.Expressions.MethodCallExpression> using the <xref:System.Linq.Expressions.Expression.Call*?displayProperty=nameWithType> builder method. In this case, the method being called is `ThenBy(e => e.Id)`. We build this using the parameter extracted above and a property access to the `Id` property of the `IHasIntKey` interface.
 - The input into this call is the original `OrderBy(e => ...)`, and so the end result is an expression for `OrderBy(e => ...).ThenBy(e => e.Id)`.
 - This modified expression is returned from the visitor, which means the LINQ query has now been appropriately modified to include a `ThenBy` call.
 - EF Core continues and compiles this query expression into the appropriate SQL for the database being used.
@@ -3042,7 +3042,7 @@ EF7 introduces better extensibility for providers to translate aggregate functio
 > [!TIP]
 > The code shown here comes from [StringAggregateFunctionsSample.cs](https://github.com/dotnet/EntityFramework.Docs/tree/main/samples/core/Miscellaneous/NewInEFCore7/StringAggregateFunctionsSample.cs).
 
-Queries using <xref:System.String.Join%2A> and <xref:System.String.Concat%2A> are now translated when appropriate. For example:
+Queries using <xref:System.String.Join*> and <xref:System.String.Concat*> are now translated when appropriate. For example:
 
 <!--
         var query = context.Posts
@@ -3151,10 +3151,10 @@ GROUP BY [c].[Owner]
 
 SQL Server translations have been implemented for the following statistical functions:
 
-- <xref:Microsoft.EntityFrameworkCore.SqlServerDbFunctionsExtensions.StandardDeviationSample%2A>
-- <xref:Microsoft.EntityFrameworkCore.SqlServerDbFunctionsExtensions.StandardDeviationPopulation%2A>
-- <xref:Microsoft.EntityFrameworkCore.SqlServerDbFunctionsExtensions.VarianceSample%2A>
-- <xref:Microsoft.EntityFrameworkCore.SqlServerDbFunctionsExtensions.VariancePopulation%2A>
+- <xref:Microsoft.EntityFrameworkCore.SqlServerDbFunctionsExtensions.StandardDeviationSample*>
+- <xref:Microsoft.EntityFrameworkCore.SqlServerDbFunctionsExtensions.StandardDeviationPopulation*>
+- <xref:Microsoft.EntityFrameworkCore.SqlServerDbFunctionsExtensions.VarianceSample*>
+- <xref:Microsoft.EntityFrameworkCore.SqlServerDbFunctionsExtensions.VariancePopulation*>
 
 > [!TIP]
 > These translations have been implemented by the team for SQL Server. For other providers, contact the provider maintainer to add support if it has been implemented for that provider.
@@ -3192,7 +3192,7 @@ GROUP BY [u].[Id]
 > [!TIP]
 > The code shown here comes from [MiscellaneousTranslationsSample.cs](https://github.com/dotnet/EntityFramework.Docs/tree/main/samples/core/Miscellaneous/NewInEFCore7/MiscellaneousTranslationsSample.cs).
 
-EF7 now translates <xref:System.String.IndexOf%2A?displayProperty=nameWithType> in LINQ queries. For example:
+EF7 now translates <xref:System.String.IndexOf*?displayProperty=nameWithType> in LINQ queries. For example:
 
 <!--
             var query = context.Posts
@@ -3250,7 +3250,7 @@ And will return both `Post` and `FeaturedPost` entities.
 > [!TIP]
 > The code shown here comes from [MiscellaneousTranslationsSample.cs](https://github.com/dotnet/EntityFramework.Docs/tree/main/samples/core/Miscellaneous/NewInEFCore7/MiscellaneousTranslationsSample.cs).
 
-EF7 introduces new <xref:Microsoft.EntityFrameworkCore.SqlServerDbFunctionsExtensions.AtTimeZone%2A> functions for <xref:System.DateTime> and <xref:System.DateTimeOffset>. These functions translate to `AT TIME ZONE` clauses in the generated SQL. For example:
+EF7 introduces new <xref:Microsoft.EntityFrameworkCore.SqlServerDbFunctionsExtensions.AtTimeZone*> functions for <xref:System.DateTime> and <xref:System.DateTimeOffset>. These functions translate to `AT TIME ZONE` clauses in the generated SQL. For example:
 
 <!--
             var query = context.Posts
@@ -3278,7 +3278,7 @@ FROM [Posts] AS [p]
 > [!TIP]
 > The code shown here comes from [MiscellaneousTranslationsSample.cs](https://github.com/dotnet/EntityFramework.Docs/tree/main/samples/core/Miscellaneous/NewInEFCore7/MiscellaneousTranslationsSample.cs).
 
-The [Include methods](xref:core/querying/related-data/eager) can now be used with <xref:Microsoft.EntityFrameworkCore.EF.Property%2A?displayProperty=nameWithType>. This allows [filtering and ordering](xref:core/querying/related-data/eager#filtered-include) even for private navigation properties, or private navigations represented by fields. For example:
+The [Include methods](xref:core/querying/related-data/eager) can now be used with <xref:Microsoft.EntityFrameworkCore.EF.Property*?displayProperty=nameWithType>. This allows [filtering and ordering](xref:core/querying/related-data/eager#filtered-include) even for private navigation properties, or private navigations represented by fields. For example:
 
 <!--
             var query = context.Blogs.Include(
@@ -3317,7 +3317,7 @@ ORDER BY [b].[Id], [t].[Title]
 > [!TIP]
 > The code shown here comes from [CosmosQueriesSample.cs](https://github.com/dotnet/EntityFramework.Docs/tree/main/samples/core/Miscellaneous/NewInEFCore7/CosmosQueriesSample.cs).
 
-EF7 supports using <xref:System.Text.RegularExpressions.Regex.IsMatch%2A?displayProperty=nameWithType> in LINQ queries against Azure Cosmos DB. For example:
+EF7 supports using <xref:System.Text.RegularExpressions.Regex.IsMatch*?displayProperty=nameWithType> in LINQ queries against Azure Cosmos DB. For example:
 
 <!--
         var containsInnerT = await context.Triangles
@@ -3509,7 +3509,7 @@ If desired, the log level can be changed back to `Information`:
 
 ### `IEntityEntryGraphIterator` is publicly usable
 
-In EF7, the <xref:Microsoft.EntityFrameworkCore.ChangeTracking.IEntityEntryGraphIterator> service can be used by applications. This is the service used internally when discovering a graph of entities to track, and also by <xref:Microsoft.EntityFrameworkCore.ChangeTracking.ChangeTracker.TrackGraph%2A>. Here's an example that iterates over all entities reachable from some starting entity:
+In EF7, the <xref:Microsoft.EntityFrameworkCore.ChangeTracking.IEntityEntryGraphIterator> service can be used by applications. This is the service used internally when discovering a graph of entities to track, and also by <xref:Microsoft.EntityFrameworkCore.ChangeTracking.ChangeTracker.TrackGraph*>. Here's an example that iterates over all entities reachable from some starting entity:
 
 <!--
         var blogEntry = context.ChangeTracker.Entries<Blog>().First();

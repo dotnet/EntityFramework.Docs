@@ -94,7 +94,7 @@ Console.WriteLine(
     .ToQueryString());
 ```
 
-Finally, various EF Core types have been fitted with an enhanced `DebugView` property which provides a detailed view into the internals. For example, <xref:Microsoft.EntityFrameworkCore.ChangeTracking.ChangeTracker.DebugView%2A?displayProperty=nameWithType> can be consulted to see exactly which entities are being tracked in a given moment.
+Finally, various EF Core types have been fitted with an enhanced `DebugView` property which provides a detailed view into the internals. For example, <xref:Microsoft.EntityFrameworkCore.ChangeTracking.ChangeTracker.DebugView*?displayProperty=nameWithType> can be consulted to see exactly which entities are being tracked in a given moment.
 
 For further information, [see the documentation on logging and interception](xref:core/logging-events-diagnostics/index).
 
@@ -178,7 +178,7 @@ protected override void OnModelCreating(ModelBuilder modelBuilder)
 }
 ```
 
-Table-valued functions can also be mapped to a .NET method rather than to a DbSet, allowing parameters to be passed; the mapping can be set up with <xref:Microsoft.EntityFrameworkCore.RelationalModelBuilderExtensions.HasDbFunction%2A>.
+Table-valued functions can also be mapped to a .NET method rather than to a DbSet, allowing parameters to be passed; the mapping can be set up with <xref:Microsoft.EntityFrameworkCore.RelationalModelBuilderExtensions.HasDbFunction*>.
 
 Finally, it is now possible to map an entity to a view when querying (or to a function or defining query), but to a table when updating:
 
@@ -334,14 +334,14 @@ For further information, [see the full documentation on event counters](xref:cor
 * Added support for GroupBy with conditional aggregates (e.g. `GroupBy(o => o.OrderDate).Select(g => g.Count(i => i.OrderDate != null))`).
 * Added support for translating the Distinct operator over group elements before aggregate.
 * Translation of [`Reverse`](/dotnet/api/system.linq.queryable.reverse).
-* Improved translation around `DateTime` for SQL Server (e.g. [`DateDiffWeek`](xref:Microsoft.EntityFrameworkCore.SqlServerDbFunctionsExtensions.DateDiffWeek%2A), [`DateFromParts`](xref:Microsoft.EntityFrameworkCore.SqlServerDbFunctionsExtensions.DateFromParts%2A)).
+* Improved translation around `DateTime` for SQL Server (e.g. [`DateDiffWeek`](xref:Microsoft.EntityFrameworkCore.SqlServerDbFunctionsExtensions.DateDiffWeek*), [`DateFromParts`](xref:Microsoft.EntityFrameworkCore.SqlServerDbFunctionsExtensions.DateFromParts*)).
 * Translation of new methods on byte arrays (e.g. [`Contains`](/dotnet/api/system.linq.enumerable.contains), [`Length`](/dotnet/api/system.array.length), [`SequenceEqual`](/dotnet/api/system.linq.enumerable.sequenceequal)).
 * Translation of some additional bitwise operators, such as two's complement.
 * Translation of `FirstOrDefault` over strings.
 * Improved query translation around null semantics, resulting in tighter, more efficient queries.
 * User-mapped functions can now be annotated to control null propagation, again resulting in tighter, more efficient queries.
 * SQL containing CASE blocks is now considerably more concise.
-* The SQL Server [`DATALENGTH`](/sql/t-sql/functions/datalength-transact-sql) function can now be called in queries via the new [`EF.Functions.DataLength`](xref:Microsoft.EntityFrameworkCore.SqlServerDbFunctionsExtensions.DataLength%2A) method.
+* The SQL Server [`DATALENGTH`](/sql/t-sql/functions/datalength-transact-sql) function can now be called in queries via the new [`EF.Functions.DataLength`](xref:Microsoft.EntityFrameworkCore.SqlServerDbFunctionsExtensions.DataLength*) method.
 * `EnableDetailedErrors` adds [additional details to exceptions](xref:core/logging-events-diagnostics/simple-logging#detailed-query-exceptions).
 
 ### Saving
@@ -381,8 +381,8 @@ For further information, [see the full documentation on event counters](xref:cor
 
 * Change-tracking proxies can be generated that automatically implement [INotifyPropertyChanging](/dotnet/api/system.componentmodel.inotifypropertychanging) and [INotifyPropertyChanged](/dotnet/api/system.componentmodel.inotifypropertychanged). This provides an alternative approach to change-tracking that doesn't scan for changes when `SaveChanges` is called.
 * A <xref:System.Data.Common.DbConnection> or connection string can now be changed on an already-initialized DbContext.
-* The new <xref:Microsoft.EntityFrameworkCore.ChangeTracking.ChangeTracker.Clear%2A?displayProperty=nameWithType> method clears the DbContext of all tracked entities. This should usually not be needed when using the best practice of creating a new, short-lived context instance for each unit-of-work. However, if there is a need to reset the state of a DbContext instance, then using the new `Clear()` method is more efficient and robust than mass-detaching all entities.
+* The new <xref:Microsoft.EntityFrameworkCore.ChangeTracking.ChangeTracker.Clear*?displayProperty=nameWithType> method clears the DbContext of all tracked entities. This should usually not be needed when using the best practice of creating a new, short-lived context instance for each unit-of-work. However, if there is a need to reset the state of a DbContext instance, then using the new `Clear()` method is more efficient and robust than mass-detaching all entities.
 * The EF Core command line tools now automatically configure the `ASPNETCORE_ENVIRONMENT` *and* `DOTNET_ENVIRONMENT` environment variables to "Development". This brings the experience when using the generic host in line with the experience for ASP.NET Core during development.
-* Custom command-line arguments can be flowed into <xref:Microsoft.EntityFrameworkCore.Design.IDesignTimeDbContextFactory%601>, allowing applications to control how the context is created and initialized.
+* Custom command-line arguments can be flowed into <xref:Microsoft.EntityFrameworkCore.Design.IDesignTimeDbContextFactory`1>, allowing applications to control how the context is created and initialized.
 * The index fill factor can now be [configured on SQL Server](xref:core/providers/sql-server/indexes#fill-factor).
-* The new <xref:Microsoft.EntityFrameworkCore.RelationalDatabaseFacadeExtensions.IsRelational%2A> property can be used to distinguish when using a relational provider and a non-relation provider (such as in-memory).
+* The new <xref:Microsoft.EntityFrameworkCore.RelationalDatabaseFacadeExtensions.IsRelational*> property can be used to distinguish when using a relational provider and a non-relation provider (such as in-memory).

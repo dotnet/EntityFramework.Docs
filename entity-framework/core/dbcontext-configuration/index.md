@@ -26,7 +26,7 @@ A typical unit-of-work when using Entity Framework Core (EF Core) involves:
   - Being [returned from a query](xref:core/querying/tracking)
   - Being [added or attached to the context](xref:core/saving/disconnected-entities)
 - Changes are made to the tracked entities as needed to implement the business rule
-- <xref:Microsoft.EntityFrameworkCore.DbContext.SaveChanges%2A> or <xref:Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync%2A> is called. EF Core detects the changes made and writes them to the database.
+- <xref:Microsoft.EntityFrameworkCore.DbContext.SaveChanges*> or <xref:Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync*> is called. EF Core detects the changes made and writes them to the database.
 - The `DbContext` instance is disposed
 
 > [!IMPORTANT]
@@ -41,7 +41,7 @@ A typical unit-of-work when using Entity Framework Core (EF Core) involves:
 
 In many web applications, each HTTP request corresponds to a single unit-of-work. This makes tying the context lifetime to that of the request a good default for web applications.
 
-ASP.NET Core applications are [configured using dependency injection](/aspnet/core/fundamentals/startup). EF Core can be added to this configuration using <xref:Microsoft.Extensions.DependencyInjection.EntityFrameworkServiceCollectionExtensions.AddDbContext%2A> in `Program.cs`. For example:
+ASP.NET Core applications are [configured using dependency injection](/aspnet/core/fundamentals/startup). EF Core can be added to this configuration using <xref:Microsoft.Extensions.DependencyInjection.EntityFrameworkServiceCollectionExtensions.AddDbContext*> in `Program.cs`. For example:
 
 <!--
         public void ConfigureServices(IServiceCollection services)
@@ -155,7 +155,7 @@ The `DbContextOptions` can be created and the constructor can be called explicit
 
 Some application types (e.g. [ASP.NET Core Blazor](/aspnet/core/blazor/)) use dependency injection but do not create a service scope that aligns with the desired `DbContext` lifetime. Even where such an alignment does exist, the application may need to perform multiple units-of-work within this scope. For example, multiple units-of-work within a single HTTP request.
 
-In these cases, <xref:Microsoft.Extensions.DependencyInjection.EntityFrameworkServiceCollectionExtensions.AddDbContextFactory%2A> can be used to register a factory for creation of `DbContext` instances. For example:
+In these cases, <xref:Microsoft.Extensions.DependencyInjection.EntityFrameworkServiceCollectionExtensions.AddDbContextFactory*> can be used to register a factory for creation of `DbContext` instances. For example:
 
 <!--
         public void ConfigureServices(IServiceCollection services)
@@ -257,7 +257,7 @@ The following table contains examples for common database providers.
 
 See [Connection Strings](xref:core/miscellaneous/connection-strings) for more information on using connection strings with EF Core.
 
-Optional configuration specific to the database provider is performed in an additional provider-specific builder. For example, using <xref:Microsoft.EntityFrameworkCore.Infrastructure.SqlServerDbContextOptionsBuilder.EnableRetryOnFailure%2A> to configure retries for connection resiliency when connecting to Azure SQL:
+Optional configuration specific to the database provider is performed in an additional provider-specific builder. For example, using <xref:Microsoft.EntityFrameworkCore.Infrastructure.SqlServerDbContextOptionsBuilder.EnableRetryOnFailure*> to configure retries for connection resiliency when connecting to Azure SQL:
 
 <!--
     public class ApplicationDbContext : DbContext
@@ -302,18 +302,18 @@ The following table contains examples of common methods called on `DbContextOpti
 
 | DbContextOptionsBuilder method                                                             | What it does                                                | Learn more
 |:-------------------------------------------------------------------------------------------|-------------------------------------------------------------|--------------
-| <xref:Microsoft.EntityFrameworkCore.DbContextOptionsBuilder.UseQueryTrackingBehavior%2A>   | Sets the default tracking behavior for queries              | [Query Tracking Behavior](xref:core/querying/tracking)
-| <xref:Microsoft.EntityFrameworkCore.DbContextOptionsBuilder.LogTo%2A>                      | A simple way to get EF Core logs                            | [Logging, Events, and Diagnostics](xref:core/logging-events-diagnostics/index)
-| <xref:Microsoft.EntityFrameworkCore.DbContextOptionsBuilder.UseLoggerFactory%2A>           | Registers an `Microsoft.Extensions.Logging` factory         | [Logging, Events, and Diagnostics](xref:core/logging-events-diagnostics/index)
-| <xref:Microsoft.EntityFrameworkCore.DbContextOptionsBuilder.EnableSensitiveDataLogging%2A> | Includes application data in exceptions and logging         | [Logging, Events, and Diagnostics](xref:core/logging-events-diagnostics/index)
-| <xref:Microsoft.EntityFrameworkCore.DbContextOptionsBuilder.EnableDetailedErrors%2A>       | More detailed query errors (at the expense of performance)  | [Logging, Events, and Diagnostics](xref:core/logging-events-diagnostics/index)
-| <xref:Microsoft.EntityFrameworkCore.DbContextOptionsBuilder.ConfigureWarnings%2A>          | Ignore or throw for warnings and other events               | [Logging, Events, and Diagnostics](xref:core/logging-events-diagnostics/index)
-| <xref:Microsoft.EntityFrameworkCore.DbContextOptionsBuilder.AddInterceptors%2A>            | Registers EF Core interceptors                              | [Logging, Events, and Diagnostics](xref:core/logging-events-diagnostics/index)
-| <xref:Microsoft.EntityFrameworkCore.ProxiesExtensions.UseLazyLoadingProxies%2A>            | Use dynamic proxies for lazy-loading                        | [Lazy Loading](xref:core/querying/related-data/lazy)
-| <xref:Microsoft.EntityFrameworkCore.ProxiesExtensions.UseChangeTrackingProxies%2A>         | Use dynamic proxies for change-tracking                     | Coming soon...
+| <xref:Microsoft.EntityFrameworkCore.DbContextOptionsBuilder.UseQueryTrackingBehavior*>   | Sets the default tracking behavior for queries              | [Query Tracking Behavior](xref:core/querying/tracking)
+| <xref:Microsoft.EntityFrameworkCore.DbContextOptionsBuilder.LogTo*>                      | A simple way to get EF Core logs                            | [Logging, Events, and Diagnostics](xref:core/logging-events-diagnostics/index)
+| <xref:Microsoft.EntityFrameworkCore.DbContextOptionsBuilder.UseLoggerFactory*>           | Registers an `Microsoft.Extensions.Logging` factory         | [Logging, Events, and Diagnostics](xref:core/logging-events-diagnostics/index)
+| <xref:Microsoft.EntityFrameworkCore.DbContextOptionsBuilder.EnableSensitiveDataLogging*> | Includes application data in exceptions and logging         | [Logging, Events, and Diagnostics](xref:core/logging-events-diagnostics/index)
+| <xref:Microsoft.EntityFrameworkCore.DbContextOptionsBuilder.EnableDetailedErrors*>       | More detailed query errors (at the expense of performance)  | [Logging, Events, and Diagnostics](xref:core/logging-events-diagnostics/index)
+| <xref:Microsoft.EntityFrameworkCore.DbContextOptionsBuilder.ConfigureWarnings*>          | Ignore or throw for warnings and other events               | [Logging, Events, and Diagnostics](xref:core/logging-events-diagnostics/index)
+| <xref:Microsoft.EntityFrameworkCore.DbContextOptionsBuilder.AddInterceptors*>            | Registers EF Core interceptors                              | [Logging, Events, and Diagnostics](xref:core/logging-events-diagnostics/index)
+| <xref:Microsoft.EntityFrameworkCore.ProxiesExtensions.UseLazyLoadingProxies*>            | Use dynamic proxies for lazy-loading                        | [Lazy Loading](xref:core/querying/related-data/lazy)
+| <xref:Microsoft.EntityFrameworkCore.ProxiesExtensions.UseChangeTrackingProxies*>         | Use dynamic proxies for change-tracking                     | Coming soon...
 
 > [!NOTE]
-> <xref:Microsoft.EntityFrameworkCore.ProxiesExtensions.UseLazyLoadingProxies%2A> and <xref:Microsoft.EntityFrameworkCore.ProxiesExtensions.UseChangeTrackingProxies%2A> are extension methods from the [Microsoft.EntityFrameworkCore.Proxies](https://www.nuget.org/packages/Microsoft.EntityFrameworkCore.Proxies/) NuGet package. This kind of ".UseSomething()" call is the recommended way to configure and/or use EF Core extensions contained in other packages.
+> <xref:Microsoft.EntityFrameworkCore.ProxiesExtensions.UseLazyLoadingProxies*> and <xref:Microsoft.EntityFrameworkCore.ProxiesExtensions.UseChangeTrackingProxies*> are extension methods from the [Microsoft.EntityFrameworkCore.Proxies](https://www.nuget.org/packages/Microsoft.EntityFrameworkCore.Proxies/) NuGet package. This kind of ".UseSomething()" call is the recommended way to configure and/or use EF Core extensions contained in other packages.
 
 ### `DbContextOptions` versus `DbContextOptions<TContext>`
 

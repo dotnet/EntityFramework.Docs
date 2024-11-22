@@ -19,11 +19,11 @@ Value converters are specified in terms of a `ModelClrType` and a `ProviderClrTy
 Conversions are defined using two `Func` expression trees: one from `ModelClrType` to `ProviderClrType` and the other from `ProviderClrType` to `ModelClrType`. Expression trees are used so that they can be compiled into the database access delegate for efficient conversions. The expression tree may contain a simple call to a conversion method for complex conversions.
 
 > [!NOTE]
-> A property that has been configured for value conversion may also need to specify a <xref:Microsoft.EntityFrameworkCore.ChangeTracking.ValueComparer%601>. See the examples below, and the [Value Comparers](xref:core/modeling/value-comparers) documentation for more information.
+> A property that has been configured for value conversion may also need to specify a <xref:Microsoft.EntityFrameworkCore.ChangeTracking.ValueComparer`1>. See the examples below, and the [Value Comparers](xref:core/modeling/value-comparers) documentation for more information.
 
 ## Configuring a value converter
 
-Value conversions are configured in <xref:Microsoft.EntityFrameworkCore.DbContext.OnModelCreating%2A?displayProperty=nameWithType>. For example, consider an enum and entity type defined as:
+Value conversions are configured in <xref:Microsoft.EntityFrameworkCore.DbContext.OnModelCreating*?displayProperty=nameWithType>. For example, consider an enum and entity type defined as:
 
 <!--
         public class Rider
@@ -42,7 +42,7 @@ Value conversions are configured in <xref:Microsoft.EntityFrameworkCore.DbContex
 -->
 [!code-csharp[BeastAndRider](../../../samples/core/Modeling/ValueConversions/EnumToStringConversions.cs?name=BeastAndRider)]
 
-Conversions can be configured in <xref:Microsoft.EntityFrameworkCore.DbContext.OnModelCreating%2A> to store the enum values as strings such as "Donkey", "Mule", etc. in the database; you simply need to provide one function which converts from the `ModelClrType` to the `ProviderClrType`, and another for the opposite conversion:
+Conversions can be configured in <xref:Microsoft.EntityFrameworkCore.DbContext.OnModelCreating*> to store the enum values as strings such as "Donkey", "Mule", etc. in the database; you simply need to provide one function which converts from the `ModelClrType` to the `ProviderClrType`, and another for the opposite conversion:
 
 <!--
             protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -66,7 +66,7 @@ It's common for the same value converter to be configured for every property tha
 
 [!code-csharp[Main](../../../samples/core/Modeling/BulkConfiguration/CurrencyConverter.cs?name=CurrencyConverter)]
 
-Then, override <xref:Microsoft.EntityFrameworkCore.DbContext.ConfigureConventions%2A> in your context type and configure the converter as follows:
+Then, override <xref:Microsoft.EntityFrameworkCore.DbContext.ConfigureConventions*> in your context type and configure the converter as follows:
 
 [!code-csharp[Main](../../../samples/core/Modeling/BulkConfiguration/CurrencyContext.cs?name=ConfigureConventions)]
 
@@ -74,7 +74,7 @@ Then, override <xref:Microsoft.EntityFrameworkCore.DbContext.ConfigureConvention
 
 EF Core contains many pre-defined conversions that avoid the need to write conversion functions manually. Instead, EF Core will pick the conversion to use based on the property type in the model and the requested database provider type.
 
-For example, enum to string conversions are used as an example above, but EF Core will actually do this automatically when the provider type is configured as `string` using the generic type of <xref:Microsoft.EntityFrameworkCore.Metadata.Builders.PropertyBuilder.HasConversion%2A>:
+For example, enum to string conversions are used as an example above, but EF Core will actually do this automatically when the provider type is configured as `string` using the generic type of <xref:Microsoft.EntityFrameworkCore.Metadata.Builders.PropertyBuilder.HasConversion*>:
 
 <!--
             protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -114,11 +114,11 @@ The same thing can be achieved by explicitly specifying the database column type
 
 ***
 
-Then the enum values will be saved as strings in the database without any further configuration in <xref:Microsoft.EntityFrameworkCore.DbContext.OnModelCreating%2A>.
+Then the enum values will be saved as strings in the database without any further configuration in <xref:Microsoft.EntityFrameworkCore.DbContext.OnModelCreating*>.
 
 ## The ValueConverter class
 
-Calling <xref:Microsoft.EntityFrameworkCore.Metadata.Builders.PropertyBuilder.HasConversion%2A> as shown above will create a <xref:Microsoft.EntityFrameworkCore.Storage.ValueConversion.ValueConverter%602> instance and set it on the property. The `ValueConverter` can instead be created explicitly. For example:
+Calling <xref:Microsoft.EntityFrameworkCore.Metadata.Builders.PropertyBuilder.HasConversion*> as shown above will create a <xref:Microsoft.EntityFrameworkCore.Storage.ValueConversion.ValueConverter`2> instance and set it on the property. The `ValueConverter` can instead be created explicitly. For example:
 
 <!--
             protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -139,7 +139,7 @@ This can be useful when multiple properties use the same conversion.
 
 ## Built-in converters
 
-As mentioned above, EF Core ships with a set of pre-defined <xref:Microsoft.EntityFrameworkCore.Storage.ValueConversion.ValueConverter%602> classes, found in the <xref:Microsoft.EntityFrameworkCore.Storage.ValueConversion> namespace. In many cases EF will choose the appropriate built-in converter based on the type of the property in the model and the type requested in the database, as shown above for enums. For example, using `.HasConversion<int>()` on a `bool` property will cause EF Core to convert bool values to numerical zero and one values:
+As mentioned above, EF Core ships with a set of pre-defined <xref:Microsoft.EntityFrameworkCore.Storage.ValueConversion.ValueConverter`2> classes, found in the <xref:Microsoft.EntityFrameworkCore.Storage.ValueConversion> namespace. In many cases EF will choose the appropriate built-in converter based on the type of the property in the model and the type requested in the database, as shown above for enums. For example, using `.HasConversion<int>()` on a `bool` property will cause EF Core to convert bool values to numerical zero and one values:
 
 <!--
             protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -152,7 +152,7 @@ As mentioned above, EF Core ships with a set of pre-defined <xref:Microsoft.Enti
 -->
 [!code-csharp[ConversionByBuiltInBoolToInt](../../../samples/core/Modeling/ValueConversions/EnumToStringConversions.cs?name=ConversionByBuiltInBoolToInt)]
 
-This is functionally the same as creating an instance of the built-in <xref:Microsoft.EntityFrameworkCore.Storage.ValueConversion.BoolToZeroOneConverter%601> and setting it explicitly:
+This is functionally the same as creating an instance of the built-in <xref:Microsoft.EntityFrameworkCore.Storage.ValueConversion.BoolToZeroOneConverter`1> and setting it explicitly:
 
 <!--
             protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -172,7 +172,7 @@ The following table summarizes commonly-used pre-defined conversions from model/
 | Model/property type | Provider/database type | Conversion                                                | Usage
 |:--------------------|------------------------|-----------------------------------------------------------|------
 | bool                | any_numeric_type       | False/true to 0/1                                         | `.HasConversion<any_numeric_type>()`
-|                     | any_numeric_type       | False/true to any two numbers                             | Use <xref:Microsoft.EntityFrameworkCore.Storage.ValueConversion.BoolToTwoValuesConverter%601>
+|                     | any_numeric_type       | False/true to any two numbers                             | Use <xref:Microsoft.EntityFrameworkCore.Storage.ValueConversion.BoolToTwoValuesConverter`1>
 |                     | string                 | False/true to "N"/"Y"                                     | `.HasConversion<string>()`
 |                     | string                 | False/true to any two strings                             | Use <xref:Microsoft.EntityFrameworkCore.Storage.ValueConversion.BoolToStringConverter>
 | any_numeric_type    | bool                   | 0/1 to false/true                                         | `.HasConversion<bool>()`
@@ -210,12 +210,12 @@ The full list of built-in converters is:
 
 * Converting bool properties:
   * <xref:Microsoft.EntityFrameworkCore.Storage.ValueConversion.BoolToStringConverter> - Bool to strings such as "N" and "Y"
-  * <xref:Microsoft.EntityFrameworkCore.Storage.ValueConversion.BoolToTwoValuesConverter%601> - Bool to any two values
-  * <xref:Microsoft.EntityFrameworkCore.Storage.ValueConversion.BoolToZeroOneConverter%601> - Bool to zero and one
+  * <xref:Microsoft.EntityFrameworkCore.Storage.ValueConversion.BoolToTwoValuesConverter`1> - Bool to any two values
+  * <xref:Microsoft.EntityFrameworkCore.Storage.ValueConversion.BoolToZeroOneConverter`1> - Bool to zero and one
 * Converting byte array properties:
   * <xref:Microsoft.EntityFrameworkCore.Storage.ValueConversion.BytesToStringConverter> - Byte array to Base64-encoded string
 * Any conversion that requires only a type-cast
-  * <xref:Microsoft.EntityFrameworkCore.Storage.ValueConversion.CastingConverter%602> - Conversions that require only a type cast
+  * <xref:Microsoft.EntityFrameworkCore.Storage.ValueConversion.CastingConverter`2> - Conversions that require only a type cast
 * Converting char properties:
   * <xref:Microsoft.EntityFrameworkCore.Storage.ValueConversion.CharToStringConverter> - Char to single character string
 * Converting <xref:System.DateTimeOffset> properties:
@@ -227,8 +227,8 @@ The full list of built-in converters is:
   * <xref:Microsoft.EntityFrameworkCore.Storage.ValueConversion.DateTimeToStringConverter> - <xref:System.DateTime> to string
   * <xref:Microsoft.EntityFrameworkCore.Storage.ValueConversion.DateTimeToTicksConverter> - <xref:System.DateTime> to ticks
 * Converting enum properties:
-  * <xref:Microsoft.EntityFrameworkCore.Storage.ValueConversion.EnumToNumberConverter%602> - Enum to underlying number
-  * <xref:Microsoft.EntityFrameworkCore.Storage.ValueConversion.EnumToStringConverter%601> - Enum to string
+  * <xref:Microsoft.EntityFrameworkCore.Storage.ValueConversion.EnumToNumberConverter`2> - Enum to underlying number
+  * <xref:Microsoft.EntityFrameworkCore.Storage.ValueConversion.EnumToStringConverter`1> - Enum to string
 * Converting <xref:System.Guid> properties:
   * <xref:Microsoft.EntityFrameworkCore.Storage.ValueConversion.GuidToBytesConverter> - <xref:System.Guid> to byte array
   * <xref:Microsoft.EntityFrameworkCore.Storage.ValueConversion.GuidToStringConverter> - <xref:System.Guid> to string
@@ -236,8 +236,8 @@ The full list of built-in converters is:
   * <xref:Microsoft.EntityFrameworkCore.Storage.ValueConversion.IPAddressToBytesConverter> - <xref:System.Net.IPAddress> to byte array
   * <xref:Microsoft.EntityFrameworkCore.Storage.ValueConversion.IPAddressToStringConverter> - <xref:System.Net.IPAddress> to string
 * Converting numeric (int, double, decimal, etc.) properties:
-  * <xref:Microsoft.EntityFrameworkCore.Storage.ValueConversion.NumberToBytesConverter%601> - Any numerical value to byte array
-  * <xref:Microsoft.EntityFrameworkCore.Storage.ValueConversion.NumberToStringConverter%601> - Any numerical value to string
+  * <xref:Microsoft.EntityFrameworkCore.Storage.ValueConversion.NumberToBytesConverter`1> - Any numerical value to byte array
+  * <xref:Microsoft.EntityFrameworkCore.Storage.ValueConversion.NumberToStringConverter`1> - Any numerical value to string
 * Converting <xref:System.Net.NetworkInformation.PhysicalAddress> properties:
   * <xref:Microsoft.EntityFrameworkCore.Storage.ValueConversion.PhysicalAddressToBytesConverter> - <xref:System.Net.NetworkInformation.PhysicalAddress> to byte array
   * <xref:Microsoft.EntityFrameworkCore.Storage.ValueConversion.PhysicalAddressToStringConverter> - <xref:System.Net.NetworkInformation.PhysicalAddress> to string
@@ -247,9 +247,9 @@ The full list of built-in converters is:
   * <xref:Microsoft.EntityFrameworkCore.Storage.ValueConversion.StringToCharConverter> - String to character
   * <xref:Microsoft.EntityFrameworkCore.Storage.ValueConversion.StringToDateTimeConverter> - String to <xref:System.DateTime>
   * <xref:Microsoft.EntityFrameworkCore.Storage.ValueConversion.StringToDateTimeOffsetConverter> - String to <xref:System.DateTimeOffset>
-  * <xref:Microsoft.EntityFrameworkCore.Storage.ValueConversion.StringToEnumConverter%601> - String to enum
+  * <xref:Microsoft.EntityFrameworkCore.Storage.ValueConversion.StringToEnumConverter`1> - String to enum
   * <xref:Microsoft.EntityFrameworkCore.Storage.ValueConversion.StringToGuidConverter> - String to <xref:System.Guid>
-  * <xref:Microsoft.EntityFrameworkCore.Storage.ValueConversion.StringToNumberConverter%601> - String to numeric type
+  * <xref:Microsoft.EntityFrameworkCore.Storage.ValueConversion.StringToNumberConverter`1> - String to numeric type
   * <xref:Microsoft.EntityFrameworkCore.Storage.ValueConversion.StringToTimeSpanConverter> - String to <xref:System.TimeSpan>
   * <xref:Microsoft.EntityFrameworkCore.Storage.ValueConversion.StringToUriConverter> - String to <xref:System.Uri>
 * Converting <xref:System.TimeSpan> properties:
@@ -466,7 +466,7 @@ Using <xref:System.Text.Json> again:
 -->
 [!code-csharp[ConfigurePrimitiveCollection](../../../samples/core/Modeling/ValueConversions/PrimitiveCollection.cs?name=ConfigurePrimitiveCollection)]
 
-`ICollection<string>` represents a mutable reference type. This means that a <xref:Microsoft.EntityFrameworkCore.ChangeTracking.ValueComparer%601> is needed so that EF Core can track and detect changes correctly. See [Value Comparers](xref:core/modeling/value-comparers) for more information.
+`ICollection<string>` represents a mutable reference type. This means that a <xref:Microsoft.EntityFrameworkCore.ChangeTracking.ValueComparer`1> is needed so that EF Core can track and detect changes correctly. See [Value Comparers](xref:core/modeling/value-comparers) for more information.
 
 ### Collections of value objects
 
@@ -547,7 +547,7 @@ And again use serialization to store this:
 [!code-csharp[ConfigureValueObjectCollection](../../../samples/core/Modeling/ValueConversions/ValueObjectCollection.cs?name=ConfigureValueObjectCollection)]
 
 > [!NOTE]
-> As before, this conversion requires a <xref:Microsoft.EntityFrameworkCore.ChangeTracking.ValueComparer%601>. See [Value Comparers](xref:core/modeling/value-comparers) for more information.
+> As before, this conversion requires a <xref:Microsoft.EntityFrameworkCore.ChangeTracking.ValueComparer`1>. See [Value Comparers](xref:core/modeling/value-comparers) for more information.
 
 ### Value objects as keys
 
@@ -647,7 +647,7 @@ This can be mapped to a SQL server `rowversion` column using a value converter:
 
 ### Specify the DateTime.Kind when reading dates
 
-SQL Server discards the <xref:System.DateTime.Kind%2A?displayProperty=nameWithType> flag when storing a <xref:System.DateTime> as a [`datetime`](/sql/t-sql/data-types/datetime-transact-sql) or [`datetime2`](/sql/t-sql/data-types/datetime2-transact-sql). This means that DateTime values coming back from the database always have a <xref:System.DateTimeKind> of `Unspecified`.
+SQL Server discards the <xref:System.DateTime.Kind*?displayProperty=nameWithType> flag when storing a <xref:System.DateTime> as a [`datetime`](/sql/t-sql/data-types/datetime-transact-sql) or [`datetime2`](/sql/t-sql/data-types/datetime2-transact-sql). This means that DateTime values coming back from the database always have a <xref:System.DateTimeKind> of `Unspecified`.
 
 Value converters can be used in two ways to deal with this. First, EF Core has a value converter that creates an 8-byte opaque value which preserves the `Kind` flag. For example:
 

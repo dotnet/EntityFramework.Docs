@@ -81,6 +81,6 @@ Note that by default, if a transaction is started, the in-memory provider will t
 
 ### Views
 
-The in-memory provider allows the definition of views via LINQ queries, using <xref:Microsoft.EntityFrameworkCore.InMemoryEntityTypeBuilderExtensions.ToInMemoryQuery%2A>:
+The in-memory provider allows the definition of views via LINQ queries, using <xref:Microsoft.EntityFrameworkCore.InMemoryEntityTypeBuilderExtensions.ToInMemoryQuery*>:
 
 [!code-csharp[Main](../../../samples/core/Testing/TestingWithoutTheDatabase/InMemoryBloggingControllerTest.cs?name=ToInMemoryQuery)]
