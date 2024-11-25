@@ -17,13 +17,13 @@ These tools and extensions provide additional functionality for Entity Framework
 
 ### EF Core Power Tools
 
-EF Core Power Tools is a Visual Studio extension that exposes various EF Core design-time tasks in a simple user interface. It includes reverse engineering of DbContext and entity classes from existing databases and [SQL Server DACPACs](/sql/relational-databases/data-tier-applications/data-tier-applications), management of database migrations, and model visualizations. For EF Core: 6-8.
+EF Core Power Tools is a Visual Studio extension that exposes various EF Core design-time tasks in a simple user interface. It includes reverse engineering of DbContext and entity classes from existing databases and [SQL Server DACPACs](/sql/relational-databases/data-tier-applications/data-tier-applications), and model visualizations and diagrams. For EF Core: 6-9.
 
 [GitHub wiki](https://github.com/ErikEJ/EFCorePowerTools/wiki)
 
 ### EF Core Power Tools CLI
 
-EF Core Power Tools CLI is a .NET global command line tool. It enables advanced reverse engineering of DbContext and entity classes from existing databases and [SQL Server DACPACs](/sql/relational-databases/data-tier-applications/data-tier-applications). For EF Core: 6-8.
+EF Core Power Tools CLI is a .NET global command line tool. It enables advanced reverse engineering of DbContext and entity classes from existing databases and [SQL Server DACPACs](/sql/relational-databases/data-tier-applications/data-tier-applications). For EF Core: 6-9.
 
 [NuGet](https://www.nuget.org/packages/ErikEJ.EFCorePowerTools.Cli/#readme-body-tab)
 
@@ -169,13 +169,13 @@ This will automatically make all your table and column names have snake_case, al
 
 ### EFCore.CheckConstraints
 
-This plugin allows you to opt into some check constraints - just activate it and they'll automatically get created for you. For EF Core: 5-8.
+This plugin allows you to opt into some check constraints - just activate it and they'll automatically get created for you. For EF Core: 5-9.
 
 [GitHub repository](https://github.com/efcore/EFCore.CheckConstraints) | [NuGet](https://www.nuget.org/packages/EFCore.CheckConstraints)
 
 ### SimplerSoftware.EntityFrameworkCore.SqlServer.NodaTime
 
-Adds native support to EntityFrameworkCore for SQL Server for the NodaTime types. For EF Core: 3-8.
+Adds native support to EntityFrameworkCore for SQL Server for the NodaTime types. For EF Core: 3-9.
 
 [GitHub repository](https://github.com/StevenRasmussen/EFCore.SqlServer.NodaTime) | [NuGet](https://www.nuget.org/packages/SimplerSoftware.EntityFrameworkCore.SqlServer.NodaTime)
 
@@ -222,13 +222,13 @@ Adds support for [NodaTime](https://nodatime.org) types when using [SQLite](http
 
 ### ErikEJ.EntityFrameworkCore.SqlServer.Dacpac
 
-Enables reverse engineering an EF Core model from a SQL Server data-tier application package (.dacpac). For EF Core: 6-8.
+Enables reverse engineering an EF Core model from a SQL Server data-tier application package (.dacpac). For EF Core: 6-9.
 
 [GitHub repository](https://github.com/ErikEJ/EFCorePowerTools/tree/master/src/GUI/ErikEJ.EntityFrameworkCore.SqlServer.Dacpac) | [NuGet](https://www.nuget.org/packages/ErikEJ.EntityFrameworkCore.SqlServer.Dacpac)
 
 ### ErikEJ.EntityFrameworkCore.DgmlBuilder
 
-Generate DGML (Graph) content that visualizes your DbContext. Adds the AsDgml() extension method to the DbContext class. For EF Core: 6-7.
+Generate DGML (Graph) content that visualizes your DbContext. Adds the AsDgml() extension method to the DbContext class. For EF Core: 6-9.
 
 [GitHub repository](https://github.com/ErikEJ/EFCorePowerTools/tree/master/src/GUI/ErikEJ.EntityFrameworkCore.DgmlBuilder) | [NuGet](https://www.nuget.org/packages/ErikEJ.EntityFrameworkCore.DgmlBuilder)
 
