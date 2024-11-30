@@ -16,7 +16,7 @@ Interceptors are registered per DbContext instance when the context is configure
 
 ## Registering interceptors
 
-Interceptors are registered using <xref:Microsoft.EntityFrameworkCore.DbContextOptionsBuilder.AddInterceptors%2A> when [configuring a DbContext instance](xref:core/dbcontext-configuration/index). This is commonly done in an override of <xref:Microsoft.EntityFrameworkCore.DbContext.OnConfiguring%2A?displayProperty=nameWithType>. For example:
+Interceptors are registered using <xref:Microsoft.EntityFrameworkCore.DbContextOptionsBuilder.AddInterceptors*> when [configuring a DbContext instance](xref:core/dbcontext-configuration/index). This is commonly done in an override of <xref:Microsoft.EntityFrameworkCore.DbContext.OnConfiguring*?displayProperty=nameWithType>. For example:
 
 <!--
 public class ExampleContext : BlogsContext
@@ -27,7 +27,7 @@ public class ExampleContext : BlogsContext
 -->
 [!code-csharp[RegisterInterceptor](../../../samples/core/Miscellaneous/CommandInterception/Program.cs?name=RegisterInterceptor)]
 
-Alternately, `AddInterceptors` can be called as part of <xref:Microsoft.Extensions.DependencyInjection.EntityFrameworkServiceCollectionExtensions.AddDbContext%2A> or when creating a <xref:Microsoft.EntityFrameworkCore.DbContextOptions> instance to pass to the DbContext constructor.
+Alternately, `AddInterceptors` can be called as part of <xref:Microsoft.Extensions.DependencyInjection.EntityFrameworkServiceCollectionExtensions.AddDbContext*> or when creating a <xref:Microsoft.EntityFrameworkCore.DbContextOptions> instance to pass to the DbContext constructor.
 
 > [!TIP]
 > OnConfiguring is still called when AddDbContext is used or a DbContextOptions instance is passed to the DbContext constructor. This makes it the ideal place to apply context configuration regardless of how the DbContext is constructed.
@@ -63,7 +63,7 @@ Low-level database interception is split into the three interfaces shown in the 
 
 The base classes <xref:Microsoft.EntityFrameworkCore.Diagnostics.DbCommandInterceptor>, <xref:Microsoft.EntityFrameworkCore.Diagnostics.DbConnectionInterceptor>, and <xref:Microsoft.EntityFrameworkCore.Diagnostics.DbTransactionInterceptor> contain no-op implementations for each method in the corresponding interface. Use the base classes to avoid the need to implement unused interception methods.
 
-The methods on each interceptor type come in pairs, with the first being called before the database operation is started, and the second after the operation has completed. For example, <xref:Microsoft.EntityFrameworkCore.Diagnostics.DbCommandInterceptor.ReaderExecuting%2A?displayProperty=nameWithType> is called before a query is executed, and <xref:Microsoft.EntityFrameworkCore.Diagnostics.DbCommandInterceptor.ReaderExecuted%2A?displayProperty=nameWithType> is called after query has been sent to the database.
+The methods on each interceptor type come in pairs, with the first being called before the database operation is started, and the second after the operation has completed. For example, <xref:Microsoft.EntityFrameworkCore.Diagnostics.DbCommandInterceptor.ReaderExecuting*?displayProperty=nameWithType> is called before a query is executed, and <xref:Microsoft.EntityFrameworkCore.Diagnostics.DbCommandInterceptor.ReaderExecuted*?displayProperty=nameWithType> is called after query has been sent to the database.
 
 Each pair of methods have both sync and async variations. This allows for asynchronous I/O, such as requesting an access token, to happen as part of intercepting an async database operation.
 
@@ -250,7 +250,7 @@ In the `Executing` method (i.e. before making a database call), the interceptor 
 -->
 [!code-csharp[ReaderExecutingAsync](../../../samples/core/Miscellaneous/CachingInterception/CachingCommandInterceptor.cs?name=ReaderExecutingAsync)]
 
-Notice how the code calls <xref:Microsoft.EntityFrameworkCore.Diagnostics.InterceptionResult%601.SuppressWithResult%2A?displayProperty=nameWithType> and passes a replacement <xref:System.Data.Common.DbDataReader> containing the cached data. This InterceptionResult is then returned, causing suppression of query execution. The replacement reader is instead used by EF Core as the results of the query.
+Notice how the code calls <xref:Microsoft.EntityFrameworkCore.Diagnostics.InterceptionResult`1.SuppressWithResult*?displayProperty=nameWithType> and passes a replacement <xref:System.Data.Common.DbDataReader> containing the cached data. This InterceptionResult is then returned, causing suppression of query execution. The replacement reader is instead used by EF Core as the results of the query.
 
 This interceptor also manipulates the command text. This manipulation is not required, but improves clarity in log messages. The command text does not need to be valid SQL since the query is now not going to be executed.
 
@@ -392,7 +392,7 @@ Notice from the log output that the application continues to use the cached mess
 > [!TIP]
 > You can [download the SaveChanges interceptor sample](https://github.com/dotnet/EntityFramework.Docs/tree/main/samples/core/Miscellaneous/SaveChangesInterception) from GitHub.
 
-<xref:Microsoft.EntityFrameworkCore.DbContext.SaveChanges%2A> and <xref:Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync%2A> interception points are defined by the <xref:Microsoft.EntityFrameworkCore.Diagnostics.ISaveChangesInterceptor> interface. As for other interceptors, the <xref:Microsoft.EntityFrameworkCore.Diagnostics.SaveChangesInterceptor> base class with no-op methods is provided as a convenience.
+<xref:Microsoft.EntityFrameworkCore.DbContext.SaveChanges*> and <xref:Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync*> interception points are defined by the <xref:Microsoft.EntityFrameworkCore.Diagnostics.ISaveChangesInterceptor> interface. As for other interceptors, the <xref:Microsoft.EntityFrameworkCore.Diagnostics.SaveChangesInterceptor> base class with no-op methods is provided as a convenience.
 
 > [!TIP]
 > Interceptors are powerful. However, in many cases it may be easier to override the SaveChanges method or use the [.NET events for SaveChanges](xref:core/logging-events-diagnostics/events) exposed on DbContext.
@@ -493,7 +493,7 @@ The general idea for auditing with the interceptor is:
 * If SaveChanges succeeds, then the audit message is updated to indicate success
 * If SaveChanges fails, then the audit message is updated to indicate the failure
 
-The first stage is handled before any changes are sent to the database using overrides of <xref:Microsoft.EntityFrameworkCore.Diagnostics.ISaveChangesInterceptor.SavingChanges%2A?displayProperty=nameWithType> and <xref:Microsoft.EntityFrameworkCore.Diagnostics.ISaveChangesInterceptor.SavingChangesAsync%2A?displayProperty=nameWithType>.
+The first stage is handled before any changes are sent to the database using overrides of <xref:Microsoft.EntityFrameworkCore.Diagnostics.ISaveChangesInterceptor.SavingChanges*?displayProperty=nameWithType> and <xref:Microsoft.EntityFrameworkCore.Diagnostics.ISaveChangesInterceptor.SavingChangesAsync*?displayProperty=nameWithType>.
 
 <!--
     public async ValueTask<InterceptionResult<int>> SavingChangesAsync(
@@ -589,7 +589,7 @@ The result is a `SaveChangesAudit` entity with a collection of `EntityAudit` ent
 
 #### Detecting success
 
-The audit entity is stored on the interceptor so that it can be accessed again once SaveChanges either succeeds or fails. For success, <xref:Microsoft.EntityFrameworkCore.Diagnostics.ISaveChangesInterceptor.SavedChanges%2A?displayProperty=nameWithType> or <xref:Microsoft.EntityFrameworkCore.Diagnostics.ISaveChangesInterceptor.SavedChangesAsync%2A?displayProperty=nameWithType> is called.
+The audit entity is stored on the interceptor so that it can be accessed again once SaveChanges either succeeds or fails. For success, <xref:Microsoft.EntityFrameworkCore.Diagnostics.ISaveChangesInterceptor.SavedChanges*?displayProperty=nameWithType> or <xref:Microsoft.EntityFrameworkCore.Diagnostics.ISaveChangesInterceptor.SavedChangesAsync*?displayProperty=nameWithType> is called.
 
 <!--
     public int SavedChanges(SaveChangesCompletedEventData eventData, int result)
@@ -629,7 +629,7 @@ The audit entity is attached to the audit context, since it already exists in th
 
 #### Detecting failure
 
-Failure is handled in much the same way as success, but in the <xref:Microsoft.EntityFrameworkCore.Diagnostics.ISaveChangesInterceptor.SaveChangesFailed%2A?displayProperty=nameWithType> or <xref:Microsoft.EntityFrameworkCore.Diagnostics.ISaveChangesInterceptor.SaveChangesFailedAsync%2A?displayProperty=nameWithType> method. The event data contains the exception that was thrown.
+Failure is handled in much the same way as success, but in the <xref:Microsoft.EntityFrameworkCore.Diagnostics.ISaveChangesInterceptor.SaveChangesFailed*?displayProperty=nameWithType> or <xref:Microsoft.EntityFrameworkCore.Diagnostics.ISaveChangesInterceptor.SaveChangesFailedAsync*?displayProperty=nameWithType> method. The event data contains the exception that was thrown.
 
 <!--
     public void SaveChangesFailed(DbContextErrorEventData eventData)

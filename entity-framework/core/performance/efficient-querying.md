@@ -156,7 +156,7 @@ Whether a query buffers or streams depends on how it is evaluated:
 If your queries return just a few results, then you probably don't have to worry about this. However, if your query might return large numbers of rows, it's worth giving thought to streaming instead of buffering.
 
 > [!NOTE]
-> Avoid using <xref:System.Linq.Enumerable.ToList%2A> or <xref:System.Linq.Enumerable.ToArray%2A> if you intend to use another LINQ operator on the result - this will needlessly buffer all results into memory. Use <xref:System.Linq.Enumerable.AsEnumerable%2A> instead.
+> Avoid using <xref:System.Linq.Enumerable.ToList*> or <xref:System.Linq.Enumerable.ToArray*> if you intend to use another LINQ operator on the result - this will needlessly buffer all results into memory. Use <xref:System.Linq.Enumerable.AsEnumerable*> instead.
 
 ### Internal buffering by EF
 
@@ -165,16 +165,16 @@ In certain situations, EF will itself buffer the resultset internally, regardles
 * When a retrying execution strategy is in place. This is done to make sure the same results are returned if the query is retried later.
 * When [split query](xref:core/querying/single-split-queries) is used, the resultsets of all but the last query are buffered - unless MARS (Multiple Active Result Sets) is enabled on SQL Server. This is because it is usually impossible to have multiple query resultsets active at the same time.
 
-Note that this internal buffering occurs in addition to any buffering you cause via LINQ operators. For example, if you use <xref:System.Linq.Enumerable.ToList%2A> on a query and a retrying execution strategy is in place, the resultset is loaded into memory *twice*: once internally by EF, and once by <xref:System.Linq.Enumerable.ToList%2A>.
+Note that this internal buffering occurs in addition to any buffering you cause via LINQ operators. For example, if you use <xref:System.Linq.Enumerable.ToList*> on a query and a retrying execution strategy is in place, the resultset is loaded into memory *twice*: once internally by EF, and once by <xref:System.Linq.Enumerable.ToList*>.
 
 ## Tracking, no-tracking and identity resolution
 
 It's recommended to read [the dedicated page on tracking and no-tracking](xref:core/querying/tracking) before continuing with this section.
 
-EF tracks entity instances by default, so that changes on them are detected and persisted when <xref:Microsoft.EntityFrameworkCore.DbContext.SaveChanges%2A> is called. Another effect of tracking queries is that EF detects if an instance has already been loaded for your data, and will automatically return that tracked instance rather than returning a new one; this is called *identity resolution*. From a performance perspective, change tracking means the following:
+EF tracks entity instances by default, so that changes on them are detected and persisted when <xref:Microsoft.EntityFrameworkCore.DbContext.SaveChanges*> is called. Another effect of tracking queries is that EF detects if an instance has already been loaded for your data, and will automatically return that tracked instance rather than returning a new one; this is called *identity resolution*. From a performance perspective, change tracking means the following:
 
 * EF internally maintains a dictionary of tracked instances. When new data is loaded, EF checks the dictionary to see if an instance is already tracked for that entity's key (identity resolution). The dictionary maintenance and lookups take up some time when loading the query's results.
-* Before handing a loaded instance to the application, EF *snapshots* that instance and keeps the snapshot internally. When <xref:Microsoft.EntityFrameworkCore.DbContext.SaveChanges%2A> is called, the application's instance is compared with the snapshot to discover the changes to be persisted. The snapshot takes up more memory, and the snapshotting process itself takes time; it's sometimes possible to specify different, possibly more efficient snapshotting behavior via [value comparers](xref:core/modeling/value-comparers), or to use change-tracking proxies to bypass the snapshotting process altogether (though that comes with its own set of disadvantages).
+* Before handing a loaded instance to the application, EF *snapshots* that instance and keeps the snapshot internally. When <xref:Microsoft.EntityFrameworkCore.DbContext.SaveChanges*> is called, the application's instance is compared with the snapshot to discover the changes to be persisted. The snapshot takes up more memory, and the snapshotting process itself takes time; it's sometimes possible to specify different, possibly more efficient snapshotting behavior via [value comparers](xref:core/modeling/value-comparers), or to use change-tracking proxies to bypass the snapshotting process altogether (though that comes with its own set of disadvantages).
 
 In read-only scenarios where changes aren't saved back to the database, the above overheads can be avoided by using [no-tracking queries](xref:core/querying/tracking#no-tracking-queries). However, since no-tracking queries do not perform identity resolution, a database row which is referenced by multiple other loaded rows will be materialized as different instances.
 
@@ -193,7 +193,7 @@ Finally, it is possible to perform updates without the overhead of change tracki
 
 In some cases, more optimized SQL exists for your query, which EF does not generate. This can happen when the SQL construct is an extension specific to your database that's unsupported, or simply because EF does not translate to it yet. In these cases, writing SQL by hand can provide a substantial performance boost, and EF supports several ways to do this.
 
-* Use SQL queries [directly in your query](xref:core/querying/sql-queries), e.g. via <xref:Microsoft.EntityFrameworkCore.RelationalQueryableExtensions.FromSqlRaw%2A>. EF even lets you compose over the SQL with regular LINQ queries, allowing you to express only a part of the query in SQL. This is a good technique when the SQL only needs to be used in a single query in your codebase.
+* Use SQL queries [directly in your query](xref:core/querying/sql-queries), e.g. via <xref:Microsoft.EntityFrameworkCore.RelationalQueryableExtensions.FromSqlRaw*>. EF even lets you compose over the SQL with regular LINQ queries, allowing you to express only a part of the query in SQL. This is a good technique when the SQL only needs to be used in a single query in your codebase.
 * Define a [user-defined function](xref:core/querying/database-functions) (UDF), and then call that from your queries. Note that EF allows UDFs to return full resultsets - these are known as table-valued functions (TVFs) - and also allows mapping a `DbSet` to a function, making it look just like just another table.
 * Define a database view and query from it in your queries. Note that unlike functions, views cannot accept parameters.
 
@@ -202,7 +202,7 @@ In some cases, more optimized SQL exists for your query, which EF does not gener
 
 ## Asynchronous programming
 
-As a general rule, in order for your application to be scalable, it's important to always use asynchronous APIs rather than synchronous one (e.g. <xref:Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync%2A> rather than <xref:Microsoft.EntityFrameworkCore.DbContext.SaveChanges%2A>). Synchronous APIs block the thread for the duration of database I/O, increasing the need for threads and the number of thread context switches that must occur.
+As a general rule, in order for your application to be scalable, it's important to always use asynchronous APIs rather than synchronous one (e.g. <xref:Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync*> rather than <xref:Microsoft.EntityFrameworkCore.DbContext.SaveChanges*>). Synchronous APIs block the thread for the duration of database I/O, increasing the need for threads and the number of thread context switches that must occur.
 
 For more information, see the page on [async programming](xref:core/miscellaneous/async).
 

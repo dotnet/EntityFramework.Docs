@@ -28,7 +28,7 @@ The code above performs the following steps:
 2. The loaded entity instance is manipulated as usual, by assigning a .NET property. EF isn't involved in this step.
 3. Finally, <xref:Microsoft.EntityFrameworkCore.DbContext.SaveChanges?displayProperty=nameWithType> is called. At this point, EF automatically detects any changes by comparing the entities with a snapshot from the moment they were loaded. Any detected changes are persisted to the database; when using a relational database, this typically involves sending e.g. a SQL `UPDATE` to update the relevant rows.
 
-Note that the above described a typical update operation for existing data, but similar principles hold for *adding* and *removing* entities. You interact with EF's change tracker by calling <xref:Microsoft.EntityFrameworkCore.DbSet%601.Add%2A?displayProperty=nameWithType> and <xref:Microsoft.EntityFrameworkCore.DbSet%601.Remove%2A>, causing the changes to be tracked. EF then applies all tracked changes to the database when <xref:Microsoft.EntityFrameworkCore.DbContext.SaveChanges> is called (e.g. via SQL `INSERT` and `DELETE` when using a relational database).
+Note that the above described a typical update operation for existing data, but similar principles hold for *adding* and *removing* entities. You interact with EF's change tracker by calling <xref:Microsoft.EntityFrameworkCore.DbSet`1.Add*?displayProperty=nameWithType> and <xref:Microsoft.EntityFrameworkCore.DbSet`1.Remove*>, causing the changes to be tracked. EF then applies all tracked changes to the database when <xref:Microsoft.EntityFrameworkCore.DbContext.SaveChanges> is called (e.g. via SQL `INSERT` and `DELETE` when using a relational database).
 
 <xref:Microsoft.EntityFrameworkCore.DbContext.SaveChanges> offers the following advantages:
 
@@ -49,7 +49,7 @@ While change tracking and <xref:Microsoft.EntityFrameworkCore.DbContext.SaveChan
 
 First, <xref:Microsoft.EntityFrameworkCore.DbContext.SaveChanges> requires that you query and track all the entities you will be modifying or deleting. If you need to, say, delete all Blogs with a rating below a certain threshold, you must query, materialize and track a potentially huge number of rows, and have <xref:Microsoft.EntityFrameworkCore.DbContext.SaveChanges> generate a `DELETE` statement for each and every one of them. Relational databases provide a far more efficient alternative: a single `DELETE` command can be sent, specifying which rows to delete via a `WHERE` clause, but the <xref:Microsoft.EntityFrameworkCore.DbContext.SaveChanges> model doesn't allow for generating that.
 
-To support this "bulk update" scenario, you can use <xref:Microsoft.EntityFrameworkCore.RelationalQueryableExtensions.ExecuteDelete%2A> as follows:
+To support this "bulk update" scenario, you can use <xref:Microsoft.EntityFrameworkCore.RelationalQueryableExtensions.ExecuteDelete*> as follows:
 
 ```c#
 context.Blogs.Where(b => b.Rating < 3).ExecuteDelete();
@@ -63,9 +63,9 @@ FROM [Blogs] AS [b]
 WHERE [b].[Rating] < 3
 ```
 
-This executes very efficiently in the database, without loading any data from the database or involving EF's change tracker. Similarly, <xref:Microsoft.EntityFrameworkCore.RelationalQueryableExtensions.ExecuteUpdate%2A> allows you to express a SQL `UPDATE` statement.
+This executes very efficiently in the database, without loading any data from the database or involving EF's change tracker. Similarly, <xref:Microsoft.EntityFrameworkCore.RelationalQueryableExtensions.ExecuteUpdate*> allows you to express a SQL `UPDATE` statement.
 
-Even if you aren't changing entities in bulk, you may know exactly which properties of which entity you want to change. Using the change tracking API to perform the change can be overly complex, requiring creating an entity instance, tracking it via <xref:Microsoft.EntityFrameworkCore.DbSet%601.Attach%2A>, making your changes and finally calling <xref:Microsoft.EntityFrameworkCore.DbContext.SaveChanges>. For such scenarios, `ExecuteUpdate` and `ExecuteDelete` can be a considerably simpler way to express the same operation.
+Even if you aren't changing entities in bulk, you may know exactly which properties of which entity you want to change. Using the change tracking API to perform the change can be overly complex, requiring creating an entity instance, tracking it via <xref:Microsoft.EntityFrameworkCore.DbSet`1.Attach*>, making your changes and finally calling <xref:Microsoft.EntityFrameworkCore.DbContext.SaveChanges>. For such scenarios, `ExecuteUpdate` and `ExecuteDelete` can be a considerably simpler way to express the same operation.
 
 Finally, both change tracking and <xref:Microsoft.EntityFrameworkCore.DbContext.SaveChanges> itself impose a certain runtime overhead. If you're writing a high performance application, `ExecuteUpdate` and `ExecuteDelete` allow you to avoid both these components and efficiently generate the statement you want.
 
@@ -74,7 +74,7 @@ However, note that `ExecuteUpdate` and `ExecuteDelete` also have certain limitat
 * These methods execute immediately, and currently cannot be batched with other operations. On the other hand, <xref:Microsoft.EntityFrameworkCore.DbContext.SaveChanges>, can batch multiple operations together.
 * Since change tracking isn't involved, it's your responsibility to know exactly which entities and properties need to be changed. This may mean more manual, low-level code tracking what needs to change and what doesn't.
 * In addition, since change tracking isn't involved, these methods do not automatically apply [Concurrency Control](xref:core/saving/concurrency) when persisting changes. However, you can still explicitly add a `Where` clause to implement concurrency control yourself.
-* Only updating and deleting is currently supported; insertion must be done via <xref:Microsoft.EntityFrameworkCore.DbSet%601.Add%2A?displayProperty=nameWithType> and <xref:Microsoft.EntityFrameworkCore.DbContext.SaveChanges>.
+* Only updating and deleting is currently supported; insertion must be done via <xref:Microsoft.EntityFrameworkCore.DbSet`1.Add*?displayProperty=nameWithType> and <xref:Microsoft.EntityFrameworkCore.DbContext.SaveChanges>.
 
 For more information and code samples, see [`ExecuteUpdate` and `ExecuteDelete`](xref:core/saving/execute-insert-update-delete).
 

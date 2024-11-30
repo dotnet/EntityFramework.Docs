@@ -181,7 +181,7 @@ As in other providers, related entity types were discovered as normal (non-owned
 
 #### New behavior
 
-Related entity types will now be owned by the entity type on which they were discovered. Only the entity types that correspond to a <xref:Microsoft.EntityFrameworkCore.DbSet%601> property will be discovered as non-owned.
+Related entity types will now be owned by the entity type on which they were discovered. Only the entity types that correspond to a <xref:Microsoft.EntityFrameworkCore.DbSet`1> property will be discovered as non-owned.
 
 #### Why
 
@@ -419,21 +419,21 @@ If your application expects joined entities to be returned in a particular order
 
 #### Old behavior
 
-<xref:Microsoft.EntityFrameworkCore.DbSet%601>, which is used to execute queries on DbContext, used to implement <xref:System.Collections.Generic.IAsyncEnumerable%601>.
+<xref:Microsoft.EntityFrameworkCore.DbSet`1>, which is used to execute queries on DbContext, used to implement <xref:System.Collections.Generic.IAsyncEnumerable`1>.
 
 #### New behavior
 
-<xref:Microsoft.EntityFrameworkCore.DbSet%601> no longer directly implements <xref:System.Collections.Generic.IAsyncEnumerable%601>.
+<xref:Microsoft.EntityFrameworkCore.DbSet`1> no longer directly implements <xref:System.Collections.Generic.IAsyncEnumerable`1>.
 
 #### Why
 
-<xref:Microsoft.EntityFrameworkCore.DbSet%601> was originally made to implement <xref:System.Collections.Generic.IAsyncEnumerable%601> mainly in order to allow direct enumeration on it via the `foreach` construct. Unfortunately, when a project also references [System.Linq.Async](https://www.nuget.org/packages/System.Linq.Async) in order to compose async LINQ operators client-side, this resulted in an ambiguous invocation error between the operators defined over `IQueryable<T>` and those defined over `IAsyncEnumerable<T>`. C# 9 added [extension `GetEnumerator` support for `foreach` loops](/dotnet/csharp/language-reference/proposals/csharp-9.0/extension-getenumerator), removing the original main reason to reference `IAsyncEnumerable`.
+<xref:Microsoft.EntityFrameworkCore.DbSet`1> was originally made to implement <xref:System.Collections.Generic.IAsyncEnumerable`1> mainly in order to allow direct enumeration on it via the `foreach` construct. Unfortunately, when a project also references [System.Linq.Async](https://www.nuget.org/packages/System.Linq.Async) in order to compose async LINQ operators client-side, this resulted in an ambiguous invocation error between the operators defined over `IQueryable<T>` and those defined over `IAsyncEnumerable<T>`. C# 9 added [extension `GetEnumerator` support for `foreach` loops](/dotnet/csharp/language-reference/proposals/csharp-9.0/extension-getenumerator), removing the original main reason to reference `IAsyncEnumerable`.
 
 The vast majority of `DbSet` usages will continue to work as-is, since they compose LINQ operators over `DbSet`, enumerate it, etc. The only usages broken are those which attempt to cast `DbSet` directly to `IAsyncEnumerable`.
 
 #### Mitigations
 
-If you need to refer to a <xref:Microsoft.EntityFrameworkCore.DbSet%601> as an <xref:System.Collections.Generic.IAsyncEnumerable%601>, call <xref:Microsoft.EntityFrameworkCore.DbSet%601.AsAsyncEnumerable%2A?displayProperty=nameWithType> to explicitly cast it.
+If you need to refer to a <xref:Microsoft.EntityFrameworkCore.DbSet`1> as an <xref:System.Collections.Generic.IAsyncEnumerable`1>, call <xref:Microsoft.EntityFrameworkCore.DbSet`1.AsAsyncEnumerable*?displayProperty=nameWithType> to explicitly cast it.
 
 <a name="tvf-table"></a>
 
@@ -443,7 +443,7 @@ If you need to refer to a <xref:Microsoft.EntityFrameworkCore.DbSet%601> as an <
 
 #### Old behavior
 
-An entity type was not mapped to a table by default when used as a return type of a TVF configured with <xref:Microsoft.EntityFrameworkCore.RelationalModelBuilderExtensions.HasDbFunction%2A>.
+An entity type was not mapped to a table by default when used as a return type of a TVF configured with <xref:Microsoft.EntityFrameworkCore.RelationalModelBuilderExtensions.HasDbFunction*>.
 
 #### New behavior
 
@@ -481,7 +481,7 @@ Most databases don't allow two check constraints with the same name to be create
 
 #### Mitigations
 
-In some cases, valid check constraint names might be different due to this change. To specify the desired name explicitly, call <xref:Microsoft.EntityFrameworkCore.Metadata.Builders.CheckConstraintBuilder.HasName%2A>:
+In some cases, valid check constraint names might be different due to this change. To specify the desired name explicitly, call <xref:Microsoft.EntityFrameworkCore.Metadata.Builders.CheckConstraintBuilder.HasName*>:
 
 ```csharp
 modelBuilder.Entity<MyEntity>().HasCheckConstraint("CK_Id", "Id > 0", c => c.HasName("CK_MyEntity_Id"));
@@ -517,7 +517,7 @@ These changes shouldn't affect most code. However, if you were using the extensi
 
 #### New behavior
 
-<xref:Microsoft.EntityFrameworkCore.Storage.IExecutionStrategy> is now a singleton service. This means that any added state in custom implementations will remain between executions and the delegate passed to <xref:Microsoft.EntityFrameworkCore.Infrastructure.RelationalDbContextOptionsBuilder%602.ExecutionStrategy%2A> will only be executed once.
+<xref:Microsoft.EntityFrameworkCore.Storage.IExecutionStrategy> is now a singleton service. This means that any added state in custom implementations will remain between executions and the delegate passed to <xref:Microsoft.EntityFrameworkCore.Infrastructure.RelationalDbContextOptionsBuilder`2.ExecutionStrategy*> will only be executed once.
 
 #### Why
 
@@ -527,7 +527,7 @@ This reduced allocations on two hot paths in EF.
 
 Implementations deriving from <xref:Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy> should clear any state in <xref:Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.OnFirstExecution>.
 
-Conditional logic in the delegate passed to <xref:Microsoft.EntityFrameworkCore.Infrastructure.RelationalDbContextOptionsBuilder%602.ExecutionStrategy%2A> should be moved to a custom implementation of <xref:Microsoft.EntityFrameworkCore.Storage.IExecutionStrategy>.
+Conditional logic in the delegate passed to <xref:Microsoft.EntityFrameworkCore.Infrastructure.RelationalDbContextOptionsBuilder`2.ExecutionStrategy*> should be moved to a custom implementation of <xref:Microsoft.EntityFrameworkCore.Storage.IExecutionStrategy>.
 
 <a name="transient-errors"></a>
 
@@ -587,13 +587,13 @@ Many query services and some design-time services that were registered as `Singl
 
 #### Why
 
-The lifetime had to be changed to allow a new feature - <xref:Microsoft.EntityFrameworkCore.ModelConfigurationBuilder.DefaultTypeMapping%2A> - to affect queries.
+The lifetime had to be changed to allow a new feature - <xref:Microsoft.EntityFrameworkCore.ModelConfigurationBuilder.DefaultTypeMapping*> - to affect queries.
 
 The design-time services lifetimes have been adjusted to match the run-time services lifetimes to avoid errors when using both.
 
 #### Mitigations
 
-Use <xref:Microsoft.EntityFrameworkCore.Infrastructure.EntityFrameworkServicesBuilder.TryAdd%2A> to register EF Core services using the default lifetime. Only use <xref:Microsoft.EntityFrameworkCore.Infrastructure.EntityFrameworkServicesBuilder.TryAddProviderSpecificServices%2A> for services that are not added by EF.
+Use <xref:Microsoft.EntityFrameworkCore.Infrastructure.EntityFrameworkServicesBuilder.TryAdd*> to register EF Core services using the default lifetime. Only use <xref:Microsoft.EntityFrameworkCore.Infrastructure.EntityFrameworkServicesBuilder.TryAddProviderSpecificServices*> for services that are not added by EF.
 
 <a name="extensions-caching"></a>
 
@@ -603,13 +603,13 @@ Use <xref:Microsoft.EntityFrameworkCore.Infrastructure.EntityFrameworkServicesBu
 
 #### Old behavior
 
-In EF Core 5, <xref:Microsoft.EntityFrameworkCore.Infrastructure.DbContextOptionsExtensionInfo.GetServiceProviderHashCode%2A> returned `long` and was used directly as part of the cache key for the service provider.
+In EF Core 5, <xref:Microsoft.EntityFrameworkCore.Infrastructure.DbContextOptionsExtensionInfo.GetServiceProviderHashCode*> returned `long` and was used directly as part of the cache key for the service provider.
 
 #### New behavior
 
-<xref:Microsoft.EntityFrameworkCore.Infrastructure.DbContextOptionsExtensionInfo.GetServiceProviderHashCode%2A> now returns `int` and is only used to calculate the hash code of the cache key for the service provider.
+<xref:Microsoft.EntityFrameworkCore.Infrastructure.DbContextOptionsExtensionInfo.GetServiceProviderHashCode*> now returns `int` and is only used to calculate the hash code of the cache key for the service provider.
 
-Also, <xref:Microsoft.EntityFrameworkCore.Infrastructure.DbContextOptionsExtensionInfo.ShouldUseSameServiceProvider%2A> needs to be implemented to indicate whether the current object represents the same service configuration and thus can use the same service provider.
+Also, <xref:Microsoft.EntityFrameworkCore.Infrastructure.DbContextOptionsExtensionInfo.ShouldUseSameServiceProvider*> needs to be implemented to indicate whether the current object represents the same service configuration and thus can use the same service provider.
 
 #### Why
 
@@ -617,7 +617,7 @@ Just using a hash code as part of the cache key resulted in occasional collision
 
 #### Mitigations
 
-Many extensions don't expose any options that affect registered services and can use the following implementation of <xref:Microsoft.EntityFrameworkCore.Infrastructure.DbContextOptionsExtensionInfo.ShouldUseSameServiceProvider%2A>:
+Many extensions don't expose any options that affect registered services and can use the following implementation of <xref:Microsoft.EntityFrameworkCore.Infrastructure.DbContextOptionsExtensionInfo.ShouldUseSameServiceProvider*>:
 
 ```csharp
 private sealed class ExtensionInfo : DbContextOptionsExtensionInfo
@@ -678,7 +678,7 @@ var hasDifferences = context.GetService<IMigrationsModelDiffer>().HasDifferences
     context.GetService<IDesignTimeModel>().Model.GetRelationalModel());
 ```
 
-This snippet shows how to implement <xref:Microsoft.EntityFrameworkCore.Design.IDesignTimeDbContextFactory%601> by creating a model externally and calling <xref:Microsoft.EntityFrameworkCore.DbContextOptionsBuilder.UseModel%2A>:
+This snippet shows how to implement <xref:Microsoft.EntityFrameworkCore.Design.IDesignTimeDbContextFactory`1> by creating a model externally and calling <xref:Microsoft.EntityFrameworkCore.DbContextOptionsBuilder.UseModel*>:
 
 ```csharp
 internal class MyDesignContext : IDesignTimeDbContextFactory<MyContext>
@@ -707,11 +707,11 @@ internal class MyDesignContext : IDesignTimeDbContextFactory<MyContext>
 
 #### Old behavior
 
-In EF Core 5, <xref:Microsoft.EntityFrameworkCore.Metadata.Builders.OwnedNavigationBuilder.HasIndex%2A> returned `IndexBuilder<TEntity>` where `TEntity` is the owner type.
+In EF Core 5, <xref:Microsoft.EntityFrameworkCore.Metadata.Builders.OwnedNavigationBuilder.HasIndex*> returned `IndexBuilder<TEntity>` where `TEntity` is the owner type.
 
 #### New behavior
 
-<xref:Microsoft.EntityFrameworkCore.Metadata.Builders.OwnedNavigationBuilder.HasIndex%2A> now returns `IndexBuilder<TDependentEntity>`, where `TDependentEntity` is the owned type.
+<xref:Microsoft.EntityFrameworkCore.Metadata.Builders.OwnedNavigationBuilder.HasIndex*> now returns `IndexBuilder<TDependentEntity>`, where `TDependentEntity` is the owned type.
 
 #### Why
 
@@ -729,11 +729,11 @@ Recompiling your assembly against the latest version of EF Core will be enough t
 
 #### Old behavior
 
-In EF Core 5, calling <xref:Microsoft.EntityFrameworkCore.Metadata.Builders.DbFunctionBuilder.HasSchema%2A> with `null` value didn't store the configuration source, thus <xref:Microsoft.EntityFrameworkCore.DbFunctionAttribute> was able to override it.
+In EF Core 5, calling <xref:Microsoft.EntityFrameworkCore.Metadata.Builders.DbFunctionBuilder.HasSchema*> with `null` value didn't store the configuration source, thus <xref:Microsoft.EntityFrameworkCore.DbFunctionAttribute> was able to override it.
 
 #### New behavior
 
-Calling <xref:Microsoft.EntityFrameworkCore.Metadata.Builders.DbFunctionBuilder.HasSchema%2A> with `null` value now stores the configuration source and prevents the attribute from overriding it.
+Calling <xref:Microsoft.EntityFrameworkCore.Metadata.Builders.DbFunctionBuilder.HasSchema*> with `null` value now stores the configuration source and prevents the attribute from overriding it.
 
 #### Why
 

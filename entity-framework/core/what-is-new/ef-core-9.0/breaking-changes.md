@@ -416,19 +416,19 @@ Unfortunately, Azure Cosmos DB does not currently support the `OFFSET` and `LIMI
 
 ##### Old behavior
 
-Previously, calls to <xref: Microsoft.EntityFrameworkCore.Metadata.Builders.EntityTypeBuilder%601.HasIndex%2A> were ignored by the EF Cosmos DB provider.
+Previously, calls to <xref: Microsoft.EntityFrameworkCore.Metadata.Builders.EntityTypeBuilder`1.HasIndex*> were ignored by the EF Cosmos DB provider.
 
 ##### New behavior
 
-The provider now throws if <xref: Microsoft.EntityFrameworkCore.Metadata.Builders.EntityTypeBuilder%601.HasIndex%2A> is specified.
+The provider now throws if <xref: Microsoft.EntityFrameworkCore.Metadata.Builders.EntityTypeBuilder`1.HasIndex*> is specified.
 
 ##### Why
 
-In Azure Cosmos DB, all properties are indexed by default, and no indexing needs to be specified. While it's possible to define a custom indexing policy, this isn't currently supported by EF, and can be done via the Azure Portal without EF support. Since <xref: Microsoft.EntityFrameworkCore.Metadata.Builders.EntityTypeBuilder%601.HasIndex%2A> calls weren't doing anything, they are no longer allowed.
+In Azure Cosmos DB, all properties are indexed by default, and no indexing needs to be specified. While it's possible to define a custom indexing policy, this isn't currently supported by EF, and can be done via the Azure Portal without EF support. Since <xref: Microsoft.EntityFrameworkCore.Metadata.Builders.EntityTypeBuilder`1.HasIndex*> calls weren't doing anything, they are no longer allowed.
 
 ##### Mitigations
 
-Remove any calls to <xref: Microsoft.EntityFrameworkCore.Metadata.Builders.EntityTypeBuilder%601.HasIndex%2A>.
+Remove any calls to <xref: Microsoft.EntityFrameworkCore.Metadata.Builders.EntityTypeBuilder`1.HasIndex*>.
 
 <a name="cosmos-IncludeRootDiscriminatorInJsonId-rename"></a>
 

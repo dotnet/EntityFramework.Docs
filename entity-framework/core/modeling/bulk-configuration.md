@@ -28,12 +28,12 @@ Properties of this type are not discovered by default as the current EF provider
 ### Drawbacks of the Metadata API
 
 - Unlike [Fluent API](xref:core/modeling/index#use-fluent-api-to-configure-a-model), every modification to the model needs to be done explicitly. For example, if some of the `Currency` properties were configured as navigations by a convention then you need to first remove the navigation referencing the CLR property before adding an entity type property for it. [#9117](https://github.com/dotnet/efcore/issues/9117) will improve this.
-- The conventions run after each change. If you remove a navigation discovered by a convention then the convention will run again and could add it back. To prevent this from happening you would need to either delay the conventions until after the property is added by calling <xref:Microsoft.EntityFrameworkCore.Metadata.Conventions.IConventionContext.DelayConventions> and later disposing the returned object or to mark the CLR property as ignored using <xref:Microsoft.EntityFrameworkCore.Metadata.IMutableModel.AddIgnored%2A>.
+- The conventions run after each change. If you remove a navigation discovered by a convention then the convention will run again and could add it back. To prevent this from happening you would need to either delay the conventions until after the property is added by calling <xref:Microsoft.EntityFrameworkCore.Metadata.Conventions.IConventionContext.DelayConventions> and later disposing the returned object or to mark the CLR property as ignored using <xref:Microsoft.EntityFrameworkCore.Metadata.IMutableModel.AddIgnored*>.
 - Entity types might be added after this iteration happens and the configuration won't be applied to them. This can usually be prevented by placing this code at the end of `OnModelCreating`, but if you have two interdependent sets of configurations there might not be an order that will allow them to be applied consistently.
 
 ## Pre-convention configuration
 
-EF Core allows the mapping configuration to be specified once for a given CLR type; that configuration is then applied to all properties of that type in the model as they are discovered. This is called "pre-convention model configuration", since it configures aspects of the model before the model building conventions are allowed to run. Such configuration is applied by overriding <xref:Microsoft.EntityFrameworkCore.DbContext.ConfigureConventions%2A> on the type derived from <xref:Microsoft.EntityFrameworkCore.DbContext>.
+EF Core allows the mapping configuration to be specified once for a given CLR type; that configuration is then applied to all properties of that type in the model as they are discovered. This is called "pre-convention model configuration", since it configures aspects of the model before the model building conventions are allowed to run. Such configuration is applied by overriding <xref:Microsoft.EntityFrameworkCore.DbContext.ConfigureConventions*> on the type derived from <xref:Microsoft.EntityFrameworkCore.DbContext>.
 
 This example shows how configure all properties of type `Currency` to have a value converter:
 
@@ -63,7 +63,7 @@ Pre-convention configuration also allows to ignore a type and prevent it from be
 
 ### Default type mapping
 
-Generally, EF is able to translate queries with constants of a type that is not supported by the provider, as long as you have specified a value converter for a property of this type. However, in queries that don't involve any properties of this type, there is no way for EF to find the correct value converter. In this case, it's possible to call <xref:Microsoft.EntityFrameworkCore.ModelConfigurationBuilder.DefaultTypeMapping%2A> to add or override a provider type mapping:
+Generally, EF is able to translate queries with constants of a type that is not supported by the provider, as long as you have specified a value converter for a property of this type. However, in queries that don't involve any properties of this type, there is no way for EF to find the correct value converter. In this case, it's possible to call <xref:Microsoft.EntityFrameworkCore.ModelConfigurationBuilder.DefaultTypeMapping*> to add or override a provider type mapping:
 
 [!code-csharp[Main](../../../samples/core/Modeling/BulkConfiguration/PreConventionContext.cs?name=DefaultTypeMapping)]
 
@@ -116,7 +116,7 @@ public class DiscriminatorLengthConvention1 : IEntityTypeBaseTypeChangedConventi
 
 This convention implements <xref:Microsoft.EntityFrameworkCore.Metadata.Conventions.IEntityTypeBaseTypeChangedConvention>, which means it will be triggered whenever the mapped inheritance hierarchy for an entity type is changed. The convention then finds and configures the string discriminator property for the hierarchy.
 
-This convention is then used by calling <xref:Microsoft.EntityFrameworkCore.Metadata.Builders.ConventionSetBuilder.Add%2A> in `ConfigureConventions`:
+This convention is then used by calling <xref:Microsoft.EntityFrameworkCore.Metadata.Builders.ConventionSetBuilder.Add*> in `ConfigureConventions`:
 
 ```csharp
 protected override void ConfigureConventions(ModelConfigurationBuilder configurationBuilder)
@@ -334,7 +334,7 @@ public class AttributeBasedPropertyDiscoveryConvention : PropertyDiscoveryConven
 > [!TIP]
 > When replacing a built-in convention, the new convention implementation should inherit from the existing convention class. Note that some conventions have relational or provider-specific implementations, in which case the new convention implementation should inherit from the most specific existing convention class for the database provider in use.
 
-The convention is then registered using the <xref:Microsoft.EntityFrameworkCore.Metadata.Builders.ConventionSetBuilder.Replace%2A> method in `ConfigureConventions`:
+The convention is then registered using the <xref:Microsoft.EntityFrameworkCore.Metadata.Builders.ConventionSetBuilder.Replace*> method in `ConfigureConventions`:
 
 <!--
     protected override void ConfigureConventions(ModelConfigurationBuilder configurationBuilder)
@@ -459,7 +459,7 @@ If the current configuration can't be overridden then the method will return `nu
 property.Builder.HasMaxLength(512)?.IsUnicode(false);
 ```
 
-Notice that if the unicode configuration can't be overridden the max length will still be set. In case when you need to configure the facets only when both calls succeed then you can preemptively check this by calling <xref:Microsoft.EntityFrameworkCore.Metadata.Builders.IConventionPropertyBuilder.CanSetMaxLength%2A> and <xref:Microsoft.EntityFrameworkCore.Metadata.Builders.IConventionPropertyBuilder.CanSetIsUnicode%2A>:
+Notice that if the unicode configuration can't be overridden the max length will still be set. In case when you need to configure the facets only when both calls succeed then you can preemptively check this by calling <xref:Microsoft.EntityFrameworkCore.Metadata.Builders.IConventionPropertyBuilder.CanSetMaxLength*> and <xref:Microsoft.EntityFrameworkCore.Metadata.Builders.IConventionPropertyBuilder.CanSetIsUnicode*>:
 
 <!--
 public class MaxStringLengthNonUnicodeConvention : IModelFinalizingConvention
@@ -491,7 +491,7 @@ Here we can be sure that the call to `HasMaxLength` will not return `null`. It i
 
 ### IConventionContext
 
-All convention methods also have an <xref:Microsoft.EntityFrameworkCore.Metadata.Conventions.IConventionContext%601> parameter. It provides methods that could be useful in some specific cases.
+All convention methods also have an <xref:Microsoft.EntityFrameworkCore.Metadata.Conventions.IConventionContext`1> parameter. It provides methods that could be useful in some specific cases.
 
 #### Example: NotMappedAttribute convention
 

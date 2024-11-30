@@ -20,13 +20,13 @@ This document covers miscellaneous features and scenarios involving change track
 
 Entity Framework Core (EF Core) provides async methods whenever using that method may result in a database interaction. Synchronous methods are also provided to avoid overhead when using databases that do not support high performance asynchronous access.
 
-<xref:Microsoft.EntityFrameworkCore.DbContext.Add%2A?displayProperty=nameWithType> and <xref:Microsoft.EntityFrameworkCore.DbSet%601.Add%2A?displayProperty=nameWithType> do not normally access the database, since these methods inherently just start tracking entities. However, some forms of value generation _may_ access the database in order to generate a key value. The only value generator that does this and ships with EF Core is <xref:Microsoft.EntityFrameworkCore.ValueGeneration.HiLoValueGenerator%601>. Using this generator is uncommon; it is never configured by default. This means that the vast majority of applications should use `Add`, and not `AddAsync`.
+<xref:Microsoft.EntityFrameworkCore.DbContext.Add*?displayProperty=nameWithType> and <xref:Microsoft.EntityFrameworkCore.DbSet`1.Add*?displayProperty=nameWithType> do not normally access the database, since these methods inherently just start tracking entities. However, some forms of value generation _may_ access the database in order to generate a key value. The only value generator that does this and ships with EF Core is <xref:Microsoft.EntityFrameworkCore.ValueGeneration.HiLoValueGenerator`1>. Using this generator is uncommon; it is never configured by default. This means that the vast majority of applications should use `Add`, and not `AddAsync`.
 
 Other similar methods like `Update`, `Attach`, and `Remove` do not have async overloads because they never generate new key values, and hence never need to access the database.
 
 ## `AddRange`, `UpdateRange`, `AttachRange`, and `RemoveRange`
 
-<xref:Microsoft.EntityFrameworkCore.DbSet%601> and <xref:Microsoft.EntityFrameworkCore.DbContext> provide alternate versions of `Add`, `Update`, `Attach`, and `Remove` that accept multiple instances in a single call. These methods are <xref:Microsoft.EntityFrameworkCore.DbSet%601.AddRange%2A>, <xref:Microsoft.EntityFrameworkCore.DbSet%601.UpdateRange%2A>, <xref:Microsoft.EntityFrameworkCore.DbSet%601.AttachRange%2A>, and <xref:Microsoft.EntityFrameworkCore.DbSet%601.RemoveRange%2A> respectively.
+<xref:Microsoft.EntityFrameworkCore.DbSet`1> and <xref:Microsoft.EntityFrameworkCore.DbContext> provide alternate versions of `Add`, `Update`, `Attach`, and `Remove` that accept multiple instances in a single call. These methods are <xref:Microsoft.EntityFrameworkCore.DbSet`1.AddRange*>, <xref:Microsoft.EntityFrameworkCore.DbSet`1.UpdateRange*>, <xref:Microsoft.EntityFrameworkCore.DbSet`1.AttachRange*>, and <xref:Microsoft.EntityFrameworkCore.DbSet`1.RemoveRange*> respectively.
 
 These methods are provided as a convenience. Using a "range" method has the same functionality as multiple calls to the equivalent non-range method. There is no significant performance difference between the two approaches.
 
@@ -35,7 +35,7 @@ These methods are provided as a convenience. Using a "range" method has the same
 
 ## DbContext versus DbSet methods
 
-Many methods, including `Add`, `Update`, `Attach`, and `Remove`, have implementations on both <xref:Microsoft.EntityFrameworkCore.DbSet%601> and <xref:Microsoft.EntityFrameworkCore.DbContext>. These methods have _exactly the same behavior_ for normal entity types. This is because the CLR type of the entity is mapped onto one and only one entity type in the EF Core model. Therefore, the CLR type fully defines where the entity fits in the model, and so the DbSet to use can be determined implicitly.
+Many methods, including `Add`, `Update`, `Attach`, and `Remove`, have implementations on both <xref:Microsoft.EntityFrameworkCore.DbSet`1> and <xref:Microsoft.EntityFrameworkCore.DbContext>. These methods have _exactly the same behavior_ for normal entity types. This is because the CLR type of the entity is mapped onto one and only one entity type in the EF Core model. Therefore, the CLR type fully defines where the entity fits in the model, and so the DbSet to use can be determined implicitly.
 
 The exception to this rule is when using shared-type entity types, which are primarily used for many-to-many join entities. When using a shared-type entity type, a DbSet must first be created for the EF Core model type that is being used. Methods like `Add`, `Update`, `Attach`, and `Remove` can then be used on the DbSet without any ambiguity as to which EF Core model type is being used.
 
@@ -86,7 +86,7 @@ Shared-type entity types are used by default for the join entities in many-to-ma
 -->
 [!code-csharp[DbContext_versus_DbSet_methods_1](../../../samples/core/ChangeTracking/AdditionalChangeTrackingFeatures/Samples.cs?name=DbContext_versus_DbSet_methods_1)]
 
-Notice that <xref:Microsoft.EntityFrameworkCore.DbContext.Set%60%601(System.String)?displayProperty=nameWithType> is used to create a DbSet for the `PostTag` entity type. This DbSet can then be used to call `Add` with the new join entity instance.
+Notice that <xref:Microsoft.EntityFrameworkCore.DbContext.Set%60`1(System.String)?displayProperty=nameWithType> is used to create a DbSet for the `PostTag` entity type. This DbSet can then be used to call `Add` with the new join entity instance.
 
 > [!IMPORTANT]
 > The CLR type used for join entity types by convention may change in future releases to improve performance. Do not depend on any specific join entity type unless it has been explicitly configured as is done for `Dictionary<string, int>` in the code above.
@@ -97,10 +97,10 @@ Access to entity properties uses the backing field of the property by default. T
 
 Sometimes it may be desirable for EF Core to generate side-effects when it modifies property values. For example, when data binding to entities, setting a property may generate notifications to the U.I. which do not happen when setting the field directly. This can be achieved by changing the <xref:Microsoft.EntityFrameworkCore.PropertyAccessMode> for:
 
-- All entity types in the model using <xref:Microsoft.EntityFrameworkCore.ModelBuilder.UsePropertyAccessMode%2A?displayProperty=nameWithType>
-- All properties and navigations of a specific entity type using <xref:Microsoft.EntityFrameworkCore.Metadata.Builders.EntityTypeBuilder%601.UsePropertyAccessMode%2A?displayProperty=nameWithType>
-- A specific property using <xref:Microsoft.EntityFrameworkCore.Metadata.Builders.PropertyBuilder.UsePropertyAccessMode%2A?displayProperty=nameWithType>
-- A specific navigation using <xref:Microsoft.EntityFrameworkCore.Metadata.Builders.NavigationBuilder.UsePropertyAccessMode%2A?displayProperty=nameWithType>
+- All entity types in the model using <xref:Microsoft.EntityFrameworkCore.ModelBuilder.UsePropertyAccessMode*?displayProperty=nameWithType>
+- All properties and navigations of a specific entity type using <xref:Microsoft.EntityFrameworkCore.Metadata.Builders.EntityTypeBuilder`1.UsePropertyAccessMode*?displayProperty=nameWithType>
+- A specific property using <xref:Microsoft.EntityFrameworkCore.Metadata.Builders.PropertyBuilder.UsePropertyAccessMode*?displayProperty=nameWithType>
+- A specific navigation using <xref:Microsoft.EntityFrameworkCore.Metadata.Builders.NavigationBuilder.UsePropertyAccessMode*?displayProperty=nameWithType>
 
 Property access modes `Field` and `PreferField` will cause EF Core to access the property value through its backing field. Likewise, `Property` and `PreferProperty` will cause EF Core to access the property value through its getter and setter.
 
@@ -127,7 +127,7 @@ EF Core creates temporary key values when tracking new entities that will have r
 
 ### Accessing temporary values
 
-Temporary values are stored in the change tracker and not set onto entity instances directly. However, these temporary values _are_ exposed when using the various mechanisms for [Accessing Tracked Entities](xref:core/change-tracking/entity-entries). For example, the following code accesses a temporary value using <xref:Microsoft.EntityFrameworkCore.ChangeTracking.EntityEntry.CurrentValues%2A?displayProperty=nameWithType>:
+Temporary values are stored in the change tracker and not set onto entity instances directly. However, these temporary values _are_ exposed when using the various mechanisms for [Accessing Tracked Entities](xref:core/change-tracking/entity-entries). For example, the following code accesses a temporary value using <xref:Microsoft.EntityFrameworkCore.ChangeTracking.EntityEntry.CurrentValues*?displayProperty=nameWithType>:
 
 <!--
         using var context = new BlogsContext();
@@ -148,7 +148,7 @@ Blog.Id set on entity is 0
 Blog.Id tracked by EF is -2147482643
 ```
 
-<xref:Microsoft.EntityFrameworkCore.ChangeTracking.PropertyEntry.IsTemporary%2A?displayProperty=nameWithType> can be used to check for temporary values.
+<xref:Microsoft.EntityFrameworkCore.ChangeTracking.PropertyEntry.IsTemporary*?displayProperty=nameWithType> can be used to check for temporary values.
 
 ### Manipulating temporary values
 
@@ -203,7 +203,7 @@ Notice that:
 
 - Negative numbers are used as temporary key values; this is not required, but is a common convention to prevent key clashes.
 - The `Post.BlogId` FK property is assigned the same negative value as the PK of the associated blog.
-- The PK values are marked as temporary by setting <xref:Microsoft.EntityFrameworkCore.ChangeTracking.PropertyEntry.IsTemporary%2A> after each entity is tracked. This is necessary because any key value supplied by the application is assumed to be a real key value.
+- The PK values are marked as temporary by setting <xref:Microsoft.EntityFrameworkCore.ChangeTracking.PropertyEntry.IsTemporary*> after each entity is tracked. This is necessary because any key value supplied by the application is assumed to be a real key value.
 
 Looking at the [change tracker debug view](xref:core/change-tracking/debug-views) before calling SaveChanges shows that the PK values are marked as temporary and posts are associated with the correct blogs, including fixup of navigations:
 
@@ -231,7 +231,7 @@ Post {Id: -1} Added
   Blog: {Id: -1}
 ```
 
-After calling <xref:Microsoft.EntityFrameworkCore.DbContext.SaveChanges%2A>, these temporary values have been replaced by real values generated by the database:
+After calling <xref:Microsoft.EntityFrameworkCore.DbContext.SaveChanges*>, these temporary values have been replaced by real values generated by the database:
 
 ```output
 Blog {Id: 1} Unchanged
@@ -260,7 +260,7 @@ Post {Id: 2} Unchanged
 
 ## Working with default values
 
-EF Core allows a property to get its default value from the database when <xref:Microsoft.EntityFrameworkCore.DbContext.SaveChanges%2A> is called. Like with generated key values, EF Core will only use a default from the database if no value has been explicitly set. For example, consider the following entity type:
+EF Core allows a property to get its default value from the database when <xref:Microsoft.EntityFrameworkCore.DbContext.SaveChanges*> is called. Like with generated key values, EF Core will only use a default from the database if no value has been explicitly set. For example, consider the following entity type:
 
 <!--
     public class Token
@@ -311,7 +311,7 @@ Token {Id: 2} Unchanged
 ```
 
 > [!NOTE]
-> Using database default values requires that the database column has a default value constraint configured. This is done automatically by EF Core migrations when using <xref:Microsoft.EntityFrameworkCore.RelationalPropertyBuilderExtensions.HasDefaultValueSql%2A> or <xref:Microsoft.EntityFrameworkCore.RelationalPropertyBuilderExtensions.HasDefaultValue%2A>. Make sure to create the default constraint on the column in some other way when not using EF Core migrations.
+> Using database default values requires that the database column has a default value constraint configured. This is done automatically by EF Core migrations when using <xref:Microsoft.EntityFrameworkCore.RelationalPropertyBuilderExtensions.HasDefaultValueSql*> or <xref:Microsoft.EntityFrameworkCore.RelationalPropertyBuilderExtensions.HasDefaultValue*>. Make sure to create the default constraint on the column in some other way when not using EF Core migrations.
 
 ### Using nullable properties
 
@@ -494,7 +494,7 @@ WHERE changes() = 1 AND "rowid" = last_insert_rowid();
 
 ### Schema defaults only
 
-Sometimes it is useful to have defaults in the database schema created by EF Core migrations without EF Core ever using these values for inserts. This can be achieved by configuring the property as <xref:Microsoft.EntityFrameworkCore.Metadata.Builders.PropertyBuilder.ValueGeneratedNever%2A?displayProperty=nameWithType> For example:
+Sometimes it is useful to have defaults in the database schema created by EF Core migrations without EF Core ever using these values for inserts. This can be achieved by configuring the property as <xref:Microsoft.EntityFrameworkCore.Metadata.Builders.PropertyBuilder.ValueGeneratedNever*?displayProperty=nameWithType> For example:
 
 <!--
         modelBuilder

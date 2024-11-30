@@ -61,7 +61,7 @@ There are several different approaches to update an entity with new values, as c
 
 ### Call Update
 
-Often the entity to update does not come from a query on the DbContext that we are going to use for SaveChanges. For example, in a web application, an entity instance may be created from the information in a POST request. The simplest way to handle this is to use <xref:Microsoft.EntityFrameworkCore.DbContext.Update%2A?displayProperty=nameWithType> or <xref:Microsoft.EntityFrameworkCore.DbSet%601.Update%2A?displayProperty=nameWithType>. For example:
+Often the entity to update does not come from a query on the DbContext that we are going to use for SaveChanges. For example, in a web application, an entity instance may be created from the information in a POST request. The simplest way to handle this is to use <xref:Microsoft.EntityFrameworkCore.DbContext.Update*?displayProperty=nameWithType> or <xref:Microsoft.EntityFrameworkCore.DbSet`1.Update*?displayProperty=nameWithType>. For example:
 
 <!--
     public static void UpdateFromHttpPost1(Blog blog)
@@ -108,7 +108,7 @@ In this case:
 - Only property values that have actually changed are updated in the database.
 - Two database round-trips are made.
 
-EF Core has some helpers for transferring property values like this. For example, <xref:Microsoft.EntityFrameworkCore.ChangeTracking.PropertyValues.SetValues%2A?displayProperty=nameWithType> will copy all the values from the given object and set them on the tracked object:
+EF Core has some helpers for transferring property values like this. For example, <xref:Microsoft.EntityFrameworkCore.ChangeTracking.PropertyValues.SetValues*?displayProperty=nameWithType> will copy all the values from the given object and set them on the tracked object:
 
 <!--
     public static void UpdateFromHttpPost3(Blog blog)
@@ -498,7 +498,7 @@ The <xref:System.Text.Json> support in the .NET base class libraries (BCL) has a
 
 #### Resolve duplicates
 
-If it is not possible to eliminate duplicates in the serialization process, then <xref:Microsoft.EntityFrameworkCore.ChangeTracking.ChangeTracker.TrackGraph%2A?displayProperty=nameWithType> provides a way to handle this. TrackGraph works like `Add`, `Attach` and `Update` except that it generates a callback for every entity instance before tracking it. This callback can be used to either track the entity or ignore it. For example:
+If it is not possible to eliminate duplicates in the serialization process, then <xref:Microsoft.EntityFrameworkCore.ChangeTracking.ChangeTracker.TrackGraph*?displayProperty=nameWithType> provides a way to handle this. TrackGraph works like `Add`, `Attach` and `Update` except that it generates a callback for every entity instance before tracking it. This callback can be used to either track the entity or ignore it. For example:
 
 <!--
         public static void UpdatePostsFromJsonWithIdentityResolution(string json)
@@ -626,7 +626,7 @@ In contrast to tracking queries, no-tracking queries do not perform identity res
 
 No-tracking queries do not perform identity resolution because doing so impacts the performance of streaming a large number of entities from a query. This is because identity resolution requires keeping track of each instance returned so that it can be used instead of later creating a duplicate.
 
-No-tracking queries can be forced to perform identity resolution by using <xref:Microsoft.EntityFrameworkCore.EntityFrameworkQueryableExtensions.AsNoTrackingWithIdentityResolution%60%601(System.Linq.IQueryable{%60%600})>. The query will then keep track of returned instances (without tracking them in the normal way) and ensure no duplicates are created in the query results.
+No-tracking queries can be forced to perform identity resolution by using <xref:Microsoft.EntityFrameworkCore.EntityFrameworkQueryableExtensions.AsNoTrackingWithIdentityResolution%60`1(System.Linq.IQueryable{%60%600})>. The query will then keep track of returned instances (without tracking them in the normal way) and ensure no duplicates are created in the query results.
 
 ## Overriding object equality
 
@@ -662,4 +662,4 @@ This comparer can then be used when creating collection navigations. For example
 
 ### Comparing key properties
 
-In addition to equality comparisons, key values also need to be ordered. This is important for avoiding deadlocks when updating multiple entities in a single call to SaveChanges. All types used for primary, alternate, or foreign key properties, as well as those used for unique indexes, must implement <xref:System.IComparable%601> and <xref:System.IEquatable%601>. Types normally used as keys (int, Guid, string, etc.) already support these interfaces. Custom key types may add these interfaces.
+In addition to equality comparisons, key values also need to be ordered. This is important for avoiding deadlocks when updating multiple entities in a single call to SaveChanges. All types used for primary, alternate, or foreign key properties, as well as those used for unique indexes, must implement <xref:System.IComparable`1> and <xref:System.IEquatable`1>. Types normally used as keys (int, Guid, string, etc.) already support these interfaces. Custom key types may add these interfaces.

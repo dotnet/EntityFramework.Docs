@@ -7,7 +7,7 @@ uid: core/modeling/index
 ---
 # Creating and Configuring a Model
 
-EF Core uses a metadata _model_ to describe how the application's entity types are mapped to the underlying database. This model is built using a set of [_conventions_](#built-in-conventions) - heuristics that look for common patterns. The model can then be customized using [mapping attributes (also known as _data annotations_)](#use-data-annotations-to-configure-a-model) and/or calls to the <xref:Microsoft.EntityFrameworkCore.ModelBuilder> methods [(also known as _fluent API_)](#use-fluent-api-to-configure-a-model) in <xref:Microsoft.EntityFrameworkCore.DbContext.OnModelCreating%2A>, both of which will override the configuration performed by conventions.
+EF Core uses a metadata _model_ to describe how the application's entity types are mapped to the underlying database. This model is built using a set of [_conventions_](#built-in-conventions) - heuristics that look for common patterns. The model can then be customized using [mapping attributes (also known as _data annotations_)](#use-data-annotations-to-configure-a-model) and/or calls to the <xref:Microsoft.EntityFrameworkCore.ModelBuilder> methods [(also known as _fluent API_)](#use-fluent-api-to-configure-a-model) in <xref:Microsoft.EntityFrameworkCore.DbContext.OnModelCreating*>, both of which will override the configuration performed by conventions.
 
 Most configuration can be applied to a model targeting any data store. Providers may also enable configuration that is specific to a particular data store and they can also ignore configuration that is not supported or not applicable. For documentation on provider-specific configuration see the [Database providers](xref:core/providers/index) section.
 
@@ -25,7 +25,7 @@ You can override the `OnModelCreating` method in your derived context and use 
 
 ### Grouping configuration
 
-To reduce the size of the `OnModelCreating` method all configuration for an entity type can be extracted to a separate class implementing <xref:Microsoft.EntityFrameworkCore.IEntityTypeConfiguration%601>.
+To reduce the size of the `OnModelCreating` method all configuration for an entity type can be extracted to a separate class implementing <xref:Microsoft.EntityFrameworkCore.IEntityTypeConfiguration`1>.
 
 [!code-csharp[Main](../../../samples/core/Modeling/Misc/EntityTypeConfiguration.cs?Name=IEntityTypeConfiguration)]
 
@@ -57,7 +57,7 @@ public class Book
 -->
 [!code-csharp[BookEntityType](../../../samples/core/Miscellaneous/NewInEFCore6/EntityTypeConfigurationAttributeSample.cs?name=BookEntityType)]
 
-This attribute means that EF Core will use the specified `IEntityTypeConfiguration` implementation whenever the `Book` entity type is included in a model. The entity type is included in a model using one of the normal mechanisms. For example, by creating a <xref:Microsoft.EntityFrameworkCore.DbSet%601> property for the entity type:
+This attribute means that EF Core will use the specified `IEntityTypeConfiguration` implementation whenever the `Book` entity type is included in a model. The entity type is included in a model using one of the normal mechanisms. For example, by creating a <xref:Microsoft.EntityFrameworkCore.DbSet`1> property for the entity type:
 
 <!--
 public class BooksContext : DbContext
@@ -68,7 +68,7 @@ public class BooksContext : DbContext
 -->
 [!code-csharp[DbContext](../../../samples/core/Miscellaneous/NewInEFCore6/EntityTypeConfigurationAttributeSample.cs?name=DbContext)]
 
-Or by registering it in <xref:Microsoft.EntityFrameworkCore.DbContext.OnModelCreating%2A>:
+Or by registering it in <xref:Microsoft.EntityFrameworkCore.DbContext.OnModelCreating*>:
 
 ```csharp
 protected override void OnModelCreating(ModelBuilder modelBuilder)

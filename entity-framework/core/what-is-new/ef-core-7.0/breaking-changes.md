@@ -513,7 +513,7 @@ Query or attach entities before marking entities as `Deleted`, or manually set n
 
 #### Old behavior
 
-In EF Core 6.0, using the Azure Cosmos DB <xref:Microsoft.EntityFrameworkCore.CosmosQueryableExtensions.FromSqlRaw%2A> extension method when using a relational provider, or the relational <xref:Microsoft.EntityFrameworkCore.RelationalQueryableExtensions.FromSqlRaw%2A> extension method when using the Azure Cosmos DB provider could silently fail. Likewise, using relational methods on the in-memory provider is a silent no-op.
+In EF Core 6.0, using the Azure Cosmos DB <xref:Microsoft.EntityFrameworkCore.CosmosQueryableExtensions.FromSqlRaw*> extension method when using a relational provider, or the relational <xref:Microsoft.EntityFrameworkCore.RelationalQueryableExtensions.FromSqlRaw*> extension method when using the Azure Cosmos DB provider could silently fail. Likewise, using relational methods on the in-memory provider is a silent no-op.
 
 #### New behavior
 

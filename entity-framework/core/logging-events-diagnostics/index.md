@@ -26,7 +26,7 @@ The table below provides a quick reference for the differences between the mecha
 
 ## Simple logging
 
-EF Core logs can be accessed from any type of application through the use of <xref:Microsoft.EntityFrameworkCore.DbContextOptionsBuilder.LogTo%2A> when [configuring a DbContext instance](xref:core/dbcontext-configuration/index). This configuration is commonly done in an override of <xref:Microsoft.EntityFrameworkCore.DbContext.OnConfiguring%2A?displayProperty=nameWithType>. For example:
+EF Core logs can be accessed from any type of application through the use of <xref:Microsoft.EntityFrameworkCore.DbContextOptionsBuilder.LogTo*> when [configuring a DbContext instance](xref:core/dbcontext-configuration/index). This configuration is commonly done in an override of <xref:Microsoft.EntityFrameworkCore.DbContext.OnConfiguring*?displayProperty=nameWithType>. For example:
 
 <!--
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

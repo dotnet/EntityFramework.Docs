@@ -18,7 +18,7 @@ Entity Framework Core (EF Core) simple logging can be used to easily obtain logs
 
 ## Configuration
 
-EF Core logs can be accessed from any type of application through the use of <xref:Microsoft.EntityFrameworkCore.DbContextOptionsBuilder.LogTo%2A> when [configuring a DbContext instance](xref:core/dbcontext-configuration/index). This configuration is commonly done in an override of <xref:Microsoft.EntityFrameworkCore.DbContext.OnConfiguring%2A?displayProperty=nameWithType>. For example:
+EF Core logs can be accessed from any type of application through the use of <xref:Microsoft.EntityFrameworkCore.DbContextOptionsBuilder.LogTo*> when [configuring a DbContext instance](xref:core/dbcontext-configuration/index). This configuration is commonly done in an override of <xref:Microsoft.EntityFrameworkCore.DbContext.OnConfiguring*?displayProperty=nameWithType>. For example:
 
 <!--
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -26,7 +26,7 @@ EF Core logs can be accessed from any type of application through the use of <xr
 -->
 [!code-csharp[LogToConsole](../../../samples/core/Miscellaneous/Logging/SimpleLogging/Program.cs?name=LogToConsole)]
 
-Alternately, `LogTo` can be called as part of <xref:Microsoft.Extensions.DependencyInjection.EntityFrameworkServiceCollectionExtensions.AddDbContext%2A> or when creating a <xref:Microsoft.EntityFrameworkCore.DbContextOptions> instance to pass to the `DbContext` constructor.
+Alternately, `LogTo` can be called as part of <xref:Microsoft.Extensions.DependencyInjection.EntityFrameworkServiceCollectionExtensions.AddDbContext*> or when creating a <xref:Microsoft.EntityFrameworkCore.DbContextOptions> instance to pass to the `DbContext` constructor.
 
 > [!TIP]
 > OnConfiguring is still called when AddDbContext is used or a DbContextOptions instance is passed to the DbContext constructor. This makes it the ideal place to apply context configuration regardless of how the DbContext is constructed.
@@ -35,13 +35,13 @@ Alternately, `LogTo` can be called as part of <xref:Microsoft.Extensions.Depende
 
 ### Logging to the console
 
-`LogTo` requires an <xref:System.Action%601> delegate that accepts a string. EF Core will call this delegate with a string for each log message generated. It is then up to the delegate to do something with the given message.
+`LogTo` requires an <xref:System.Action`1> delegate that accepts a string. EF Core will call this delegate with a string for each log message generated. It is then up to the delegate to do something with the given message.
 
-The <xref:System.Console.WriteLine%2A?displayProperty=nameWithType> method is often used for this delegate, as shown above. This results in each log message being written to the console.
+The <xref:System.Console.WriteLine*?displayProperty=nameWithType> method is often used for this delegate, as shown above. This results in each log message being written to the console.
 
 ### Logging to the debug window
 
-<xref:System.Diagnostics.Debug.WriteLine%2A?displayProperty=nameWithType> can be used to send output to the Debug window in Visual Studio or other IDEs. [Lambda syntax](/dotnet/csharp/language-reference/operators/lambda-expressions) must be used in this case because the `Debug` class is compiled out of release builds. For example:
+<xref:System.Diagnostics.Debug.WriteLine*?displayProperty=nameWithType> can be used to send output to the Debug window in Visual Studio or other IDEs. [Lambda syntax](/dotnet/csharp/language-reference/operators/lambda-expressions) must be used in this case because the `Debug` class is compiled out of release builds. For example:
 
 <!--
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -51,7 +51,7 @@ The <xref:System.Console.WriteLine%2A?displayProperty=nameWithType> method is of
 
 ### Logging to a file
 
-Writing to a file requires creating a <xref:System.IO.StreamWriter> or similar for the file. The <xref:System.IO.StreamWriter.WriteLine%2A> method can then be used as in the other examples above. Remember to ensure the file is closed cleanly by disposing the writer when the context is disposed. For example:
+Writing to a file requires creating a <xref:System.IO.StreamWriter> or similar for the file. The <xref:System.IO.StreamWriter.WriteLine*> method can then be used as in the other examples above. Remember to ensure the file is closed cleanly by disposing the writer when the context is disposed. For example:
 
 <!--
     private readonly StreamWriter _logStream = new StreamWriter("mylog.txt", append: true);
@@ -96,7 +96,7 @@ However, knowing data values, especially for keys, can be very helpful when debu
 
 For performance reasons, EF Core does not wrap each call to read a value from the database provider in a try-catch block. However, this sometimes results in exceptions that are hard to diagnose, especially when the database returns a NULL when not allowed by the model.
 
-Turning on <xref:Microsoft.EntityFrameworkCore.DbContextOptionsBuilder.EnableDetailedErrors%2A> will cause EF to introduce these try-catch blocks and thereby provide more detailed errors. For example:
+Turning on <xref:Microsoft.EntityFrameworkCore.DbContextOptionsBuilder.EnableDetailedErrors*> will cause EF to introduce these try-catch blocks and thereby provide more detailed errors. For example:
 
 <!--
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -184,7 +184,7 @@ Since categories are hierarchical, this example using the `Database` category wi
 
 ## Configuration for specific messages
 
-The EF Core <xref:Microsoft.EntityFrameworkCore.DbContextOptionsBuilder.ConfigureWarnings%2A> API allows applications to change what happens when a specific event is encountered. This can be used to:
+The EF Core <xref:Microsoft.EntityFrameworkCore.DbContextOptionsBuilder.ConfigureWarnings*> API allows applications to change what happens when a specific event is encountered. This can be used to:
 
 * Change the log level at which the event is logged
 * Skip logging the event altogether

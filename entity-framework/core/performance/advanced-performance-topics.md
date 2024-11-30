@@ -15,13 +15,13 @@ Note that context pooling is orthogonal to database connection pooling, which is
 
 ### [With dependency injection](#tab/with-di)
 
-The typical pattern in an ASP.NET Core app using EF Core involves registering a custom <xref:Microsoft.EntityFrameworkCore.DbContext> type into the [dependency injection](/aspnet/core/fundamentals/dependency-injection) container via <xref:Microsoft.Extensions.DependencyInjection.EntityFrameworkServiceCollectionExtensions.AddDbContext%2A>. Then, instances of that type are obtained through constructor parameters in controllers or Razor Pages.
+The typical pattern in an ASP.NET Core app using EF Core involves registering a custom <xref:Microsoft.EntityFrameworkCore.DbContext> type into the [dependency injection](/aspnet/core/fundamentals/dependency-injection) container via <xref:Microsoft.Extensions.DependencyInjection.EntityFrameworkServiceCollectionExtensions.AddDbContext*>. Then, instances of that type are obtained through constructor parameters in controllers or Razor Pages.
 
-To enable context pooling, simply replace `AddDbContext` with <xref:Microsoft.Extensions.DependencyInjection.EntityFrameworkServiceCollectionExtensions.AddDbContextPool%2A>:
+To enable context pooling, simply replace `AddDbContext` with <xref:Microsoft.Extensions.DependencyInjection.EntityFrameworkServiceCollectionExtensions.AddDbContextPool*>:
 
 [!code-csharp[Main](../../../samples/core/Performance/AspNetContextPooling/Program.cs#AddDbContextPool)]
 
-The `poolSize` parameter of <xref:Microsoft.Extensions.DependencyInjection.EntityFrameworkServiceCollectionExtensions.AddDbContextPool%2A> sets the maximum number of instances retained by the pool (defaults to 1024). Once `poolSize` is exceeded, new context instances are not cached and EF falls back to the non-pooling behavior of creating instances on demand.
+The `poolSize` parameter of <xref:Microsoft.Extensions.DependencyInjection.EntityFrameworkServiceCollectionExtensions.AddDbContextPool*> sets the maximum number of instances retained by the pool (defaults to 1024). Once `poolSize` is exceeded, new context instances are not cached and EF falls back to the non-pooling behavior of creating instances on demand.
 
 ### [Without dependency injection](#tab/without-di)
 
@@ -92,7 +92,7 @@ EF supports *compiled queries*, which allow the explicit compilation of a LINQ q
 |    WithCompiledQuery |       10 | 645.3 us | 10.00 us |  9.35 us | 2.9297 |     13 KB |
 | WithoutCompiledQuery |       10 | 709.8 us | 25.20 us | 73.10 us | 3.9063 |     18 KB |
 
-To use compiled queries, first compile a query with <xref:Microsoft.EntityFrameworkCore.EF.CompileAsyncQuery%2A?displayProperty=nameWithType> as follows (use <xref:Microsoft.EntityFrameworkCore.EF.CompileQuery%2A?displayProperty=nameWithType> for synchronous queries):
+To use compiled queries, first compile a query with <xref:Microsoft.EntityFrameworkCore.EF.CompileAsyncQuery*?displayProperty=nameWithType> as follows (use <xref:Microsoft.EntityFrameworkCore.EF.CompileQuery*?displayProperty=nameWithType> for synchronous queries):
 
 [!code-csharp[Main](../../../samples/core/Performance/Other/Program.cs#CompiledQueryCompile)]
 

@@ -7,14 +7,14 @@ uid: core/saving/basic
 ---
 # Basic SaveChanges
 
-<xref:Microsoft.EntityFrameworkCore.DbContext.SaveChanges?displayProperty=nameWithType> is one of two techniques for saving changes to the database with EF. With this method, you perform one or more *tracked changes* (add, update, delete), and then apply those changes by calling the `SaveChanges` method. As an alternative, <xref:Microsoft.EntityFrameworkCore.RelationalQueryableExtensions.ExecuteUpdate%2A> and <xref:Microsoft.EntityFrameworkCore.RelationalQueryableExtensions.ExecuteDelete%2A> can be used without involving the change tracker. For an introductory comparison of these two techniques, see the [Overview page](xref:core/saving/index) on saving data.
+<xref:Microsoft.EntityFrameworkCore.DbContext.SaveChanges?displayProperty=nameWithType> is one of two techniques for saving changes to the database with EF. With this method, you perform one or more *tracked changes* (add, update, delete), and then apply those changes by calling the `SaveChanges` method. As an alternative, <xref:Microsoft.EntityFrameworkCore.RelationalQueryableExtensions.ExecuteUpdate*> and <xref:Microsoft.EntityFrameworkCore.RelationalQueryableExtensions.ExecuteDelete*> can be used without involving the change tracker. For an introductory comparison of these two techniques, see the [Overview page](xref:core/saving/index) on saving data.
 
 > [!TIP]
 > You can view this article's [sample](https://github.com/dotnet/EntityFramework.Docs/tree/main/samples/core/Saving/Basics/) on GitHub.
 
 ## Adding Data
 
-Use the <xref:Microsoft.EntityFrameworkCore.DbSet%601.Add%2A?displayProperty=nameWithType> method to add new instances of your entity classes. The data will be inserted into the database when you call <xref:Microsoft.EntityFrameworkCore.DbContext.SaveChanges?displayProperty=nameWithType>:
+Use the <xref:Microsoft.EntityFrameworkCore.DbSet`1.Add*?displayProperty=nameWithType> method to add new instances of your entity classes. The data will be inserted into the database when you call <xref:Microsoft.EntityFrameworkCore.DbContext.SaveChanges?displayProperty=nameWithType>:
 
 [!code-csharp[Main](../../../samples/core/Saving/Basics/Sample.cs#Add)]
 
@@ -31,7 +31,7 @@ Simply modify the values assigned to properties and then call `SaveChanges`:
 
 ## Deleting Data
 
-Use the <xref:Microsoft.EntityFrameworkCore.DbSet%601.Remove%2A?displayProperty=nameWithType> method to delete instances of your entity classes:
+Use the <xref:Microsoft.EntityFrameworkCore.DbSet`1.Remove*?displayProperty=nameWithType> method to delete instances of your entity classes:
 
 [!code-csharp[Main](../../../samples/core/Saving/Basics/Sample.cs#Remove)]
 

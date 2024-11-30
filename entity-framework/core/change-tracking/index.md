@@ -8,7 +8,7 @@ uid: core/change-tracking/index
 
 # Change Tracking in EF Core
 
-Each <xref:Microsoft.EntityFrameworkCore.DbContext> instance tracks changes made to entities. These tracked entities in turn drive the changes to the database when <xref:Microsoft.EntityFrameworkCore.DbContext.SaveChanges%2A> is called.
+Each <xref:Microsoft.EntityFrameworkCore.DbContext> instance tracks changes made to entities. These tracked entities in turn drive the changes to the database when <xref:Microsoft.EntityFrameworkCore.DbContext.SaveChanges*> is called.
 
 This document presents an overview of Entity Framework Core (EF Core) change tracking and how it relates to queries and updates.
 
@@ -16,7 +16,7 @@ This document presents an overview of Entity Framework Core (EF Core) change tra
 > You can run and debug into all the code in this document by [downloading the sample code from GitHub](https://github.com/dotnet/EntityFramework.Docs/tree/main/samples/core/ChangeTracking/ChangeTrackingInEFCore).
 
 > [!TIP]
-> For simplicity, this document uses and references synchronous methods such as <xref:Microsoft.EntityFrameworkCore.DbContext.SaveChanges%2A> rather than their async equivalents such as <xref:Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync%2A>. Calling and awaiting the async method can be substituted unless otherwise noted.
+> For simplicity, this document uses and references synchronous methods such as <xref:Microsoft.EntityFrameworkCore.DbContext.SaveChanges*> rather than their async equivalents such as <xref:Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync*>. Calling and awaiting the async method can be substituted unless otherwise noted.
 
 ## How to track entities
 
@@ -41,14 +41,14 @@ DbContext is designed to represent a short-lived unit-of-work, as described in [
 5. Dispose the DbContext instance
 
 > [!TIP]
-> It is not necessary to clear the change tracker or explicitly detach entity instances when taking this approach. However, if you do need to detach entities, then calling <xref:Microsoft.EntityFrameworkCore.ChangeTracking.ChangeTracker.Clear%2A?displayProperty=nameWithType> is more efficient than detaching entities one-by-one.
+> It is not necessary to clear the change tracker or explicitly detach entity instances when taking this approach. However, if you do need to detach entities, then calling <xref:Microsoft.EntityFrameworkCore.ChangeTracking.ChangeTracker.Clear*?displayProperty=nameWithType> is more efficient than detaching entities one-by-one.
 
 ## Entity states
 
 Every entity is associated with a given <xref:Microsoft.EntityFrameworkCore.EntityState>:
 
 - `Detached` entities are not being tracked by the <xref:Microsoft.EntityFrameworkCore.DbContext>.
-- `Added` entities are new and have not yet been inserted into the database. This means they will be inserted when <xref:Microsoft.EntityFrameworkCore.DbContext.SaveChanges%2A> is called.
+- `Added` entities are new and have not yet been inserted into the database. This means they will be inserted when <xref:Microsoft.EntityFrameworkCore.DbContext.SaveChanges*> is called.
 - `Unchanged` entities have _not_ been changed since they were queried from the database. All entities returned from queries are initially in this state.
 - `Modified` entities have been changed since they were queried from the database. This means they will be updated when SaveChanges is called.
 - `Deleted` entities exist in the database, but are marked to be deleted when SaveChanges is called.
@@ -70,7 +70,7 @@ The following table summarizes the different states:
 
 ## Tracking from queries
 
-EF Core change tracking works best when the same <xref:Microsoft.EntityFrameworkCore.DbContext> instance is used to both query for entities and update them by calling <xref:Microsoft.EntityFrameworkCore.DbContext.SaveChanges%2A>. This is because EF Core automatically tracks the state of queried entities and then detects any changes made to these entities when SaveChanges is called.
+EF Core change tracking works best when the same <xref:Microsoft.EntityFrameworkCore.DbContext> instance is used to both query for entities and update them by calling <xref:Microsoft.EntityFrameworkCore.DbContext.SaveChanges*>. This is because EF Core automatically tracks the state of queried entities and then detects any changes made to these entities when SaveChanges is called.
 
 This approach has several advantages over [explicitly tracking entity instances](xref:core/change-tracking/explicit-tracking):
 
@@ -209,7 +209,7 @@ In this example:
 - A blog and related posts are queried from the database and tracked
 - The `Blog.Name` property is changed
 - A new post is added to the collection of existing posts for the blog
-- An existing post is marked for deletion by calling <xref:Microsoft.EntityFrameworkCore.DbContext.Remove%2A?displayProperty=nameWithType>
+- An existing post is marked for deletion by calling <xref:Microsoft.EntityFrameworkCore.DbContext.Remove*?displayProperty=nameWithType>
 
 Looking again at the [change tracker debug view](xref:core/change-tracking/debug-views) before calling SaveChanges shows how EF Core is tracking these changes:
 

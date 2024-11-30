@@ -690,7 +690,7 @@ The timing of marking orphans as deleted can be changed in the same way as shown
 
 #### Optional relationships
 
-When an entity is marked as `Deleted`, for example by calling <xref:Microsoft.EntityFrameworkCore.DbContext.Remove%2A?displayProperty=nameWithType>, then references to the deleted entity are removed from the navigations of other entities. For optional relationships, the FK values in dependent entities are set to null.
+When an entity is marked as `Deleted`, for example by calling <xref:Microsoft.EntityFrameworkCore.DbContext.Remove*?displayProperty=nameWithType>, then references to the deleted entity are removed from the navigations of other entities. For optional relationships, the FK values in dependent entities are set to null.
 
 For example, let's mark the Visual Studio blog as `Deleted`:
 
@@ -1110,7 +1110,7 @@ Following on from the previous example, let's add a payload property that does n
 -->
 [!code-csharp[Model](../../../samples/core/ChangeTracking/ChangingFKsAndNavigations/ExplicitJoinEntityWithStringPayloadSamples.cs?name=Model)]
 
-A post can now be tagged in the same way as before, and the join entity will still be created automatically. This entity can then be accessed using one of the mechanisms described in [Accessing Tracked Entities](xref:core/change-tracking/entity-entries). For example, the code below uses <xref:Microsoft.EntityFrameworkCore.DbSet%601.Find%2A?displayProperty=nameWithType> to access the join entity instance:
+A post can now be tagged in the same way as before, and the join entity will still be created automatically. This entity can then be accessed using one of the mechanisms described in [Accessing Tracked Entities](xref:core/change-tracking/entity-entries). For example, the code below uses <xref:Microsoft.EntityFrameworkCore.DbSet`1.Find*?displayProperty=nameWithType> to access the join entity instance:
 
 <!--
             using var context = new BlogsContext();
@@ -1158,7 +1158,7 @@ Alternately, the join entity can be created explicitly to associate a post with 
 -->
 [!code-csharp[Many_to_many_relationships_9](../../../samples/core/ChangeTracking/ChangingFKsAndNavigations/ExplicitJoinEntityWithStringPayloadSamples.cs?name=Many_to_many_relationships_9)]
 
-Finally, another way to set payload data is by either overriding <xref:Microsoft.EntityFrameworkCore.DbContext.SaveChanges%2A> or using the <xref:Microsoft.EntityFrameworkCore.DbContext.SavingChanges?displayProperty=nameWithType> event to process entities before updating the database. For example:
+Finally, another way to set payload data is by either overriding <xref:Microsoft.EntityFrameworkCore.DbContext.SaveChanges*> or using the <xref:Microsoft.EntityFrameworkCore.DbContext.SavingChanges?displayProperty=nameWithType> event to process entities before updating the database. For example:
 
 <!--
         public override int SaveChanges()
