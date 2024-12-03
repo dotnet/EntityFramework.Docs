@@ -38,7 +38,6 @@ internal static class Program
                 context.Blogs.Add(new Blog { Url = "http://test.com" });
                 context.SaveChanges();
             }
-
         }
         #endregion
 
