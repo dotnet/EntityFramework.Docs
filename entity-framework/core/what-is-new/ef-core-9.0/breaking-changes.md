@@ -23,12 +23,53 @@ EF Core 9 targets .NET 8. This means that existing applications that target .NET
 > [!NOTE]
 > If you are using Azure Cosmos DB, please see the [separate section below on Azure Cosmos DB breaking changes](#azure-cosmos-db-breaking-changes).
 
-| **Breaking change**                                                                                  | **Impact** |
-|:-----------------------------------------------------------------------------------------------------|------------|
-| [`EF.Functions.Unhex()` now returns `byte[]?`](#unhex)                                               | Low        |
-| [SqlFunctionExpression's nullability arguments' arity validated](#sqlfunctionexpression-nullability) | Low        |
-| [`ToString()` method now returns empty string for `null` instances](#nullable-tostring)              | Low        |
-| [Shared framework dependencies were updated to 9.0.x](#shared-framework-dependencies)                | Low        |
+| **Breaking change**                                                                                       | **Impact** |
+|:----------------------------------------------------------------------------------------------------------|------------|
+| [Exception is thrown when applying migrations if there are pending model changes](#pending-model-changes) | High       |
+| [`EF.Functions.Unhex()` now returns `byte[]?`](#unhex)                                                    | Low        |
+| [SqlFunctionExpression's nullability arguments' arity validated](#sqlfunctionexpression-nullability)      | Low        |
+| [`ToString()` method now returns empty string for `null` instances](#nullable-tostring)                   | Low        |
+| [Shared framework dependencies were updated to 9.0.x](#shared-framework-dependencies)                     | Low        |
+
+## High-impact changes
+
+<a name="pending-model-changes"></a>
+
+### Exception is thrown when applying migrations if there are pending model changes
+
+[Tracking Issue #33732](https://github.com/dotnet/efcore/issues/33732)
+
+#### Old behavior
+
+If the model has pending changes compared to the last migration they are not applied with the rest of the migrations when `Migrate` is called.
+
+#### New behavior
+
+Starting with EF Core 9.0, if the model has pending changes compared to the last migration an exception is thrown when `dotnet ef database update`, `Migrate` or `MigrateAsync` is called:
+> The model for context 'DbContext' has pending changes. Add a new migration before updating the database. This exception can be suppressed or logged by passing event ID 'RelationalEventId.PendingModelChangesWarning' to the 'ConfigureWarnings' method in 'DbContext.OnConfiguring' or 'AddDbContext'.
+
+#### Why
+
+Forgetting to add a new migration after making model changes is a common mistake that can be hard to diagnose in some cases. The new exception ensures that the app's model matches the database after the migrations are applied.
+
+#### Mitigations
+
+There are several common situations when this exception can be thrown:
+
+- There are no migrations at all. This is common when the database is updated through other means.
+  - **Mitigation**: If you don't plan to use migrations for managing the database schema then remove the `Migrate` or `MigrateAsync` call, otherwise add a migration.
+- There is at least one migration, but the model snapshot is missing. This is common for migrations created manually.
+  - **Mitigation**: Add a new migration using EF tooling, this will update the model snapshot.
+- The model wasn't modified by the developer, but it's built in a non-deterministic way causing EF to detect it as modified. This is common when `new DateTime()`, `DateTime.Now`, `DateTime.UtcNow`, or `Guid.NewGuid()` are used in objects supplied to `HasData()`.
+  - **Mitigation**: Add a new migration, examine its contents to locate the cause, and replace the dynamic data with a static, hardcoded value in the model. The migration should be recreated after the model is fixed. If dynamic data has to be used for seeding consider using [the new seeding pattern](/ef/core/what-is-new/ef-core-9.0/whatsnew#improved-data-seeding) instead of `HasData()`.
+- The last migration was created for a different provider than the one used to apply the migrations.
+  - **Mitigation**: This is an unsupported scenario. The warning can be suppressed using the code snippet below, but this scenario will likely stop working in a future EF Core release. The recommended solution is [to generate a separate set of migrations for each provider](xref:core/managing-schemas/migrations/providers).
+- The migrations are generated or choosen dynamically by replacing some of the EF services.
+  - **Mitigation**: The warning is a false positive in this case and should be suppressed:
+  
+    `options.ConfigureWarnings(w => w.Ignore(RelationalEventId.PendingModelChangesWarning))`
+
+If your scenario doesn't fall under any of the above cases and adding a new migration creates the same migration each time or an empty migration and the exception is still thrown then create a small repro project and [share it with the EF team in a new issue](https://github.com/dotnet/efcore/issues/new/choose).
 
 ## Low-impact changes
 
