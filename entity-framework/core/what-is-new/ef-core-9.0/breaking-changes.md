@@ -2,7 +2,7 @@
 title: Breaking changes in EF Core 9 (EF9) - EF Core
 description: List of breaking changes introduced in Entity Framework Core 9 (EF9)
 author: ajcvickers
-ms.date: 10/07/2024
+ms.date: 12/04/2024
 uid: core/what-is-new/ef-core-9.0/breaking-changes
 ---
 
@@ -26,6 +26,7 @@ EF Core 9 targets .NET 8. This means that existing applications that target .NET
 | **Breaking change**                                                                                       | **Impact** |
 |:----------------------------------------------------------------------------------------------------------|------------|
 | [Exception is thrown when applying migrations if there are pending model changes](#pending-model-changes) | High       |
+| [Exception is thrown when applying migrations in an explicit transaction](#migrations-transaction)        | High       |
 | [`EF.Functions.Unhex()` now returns `byte[]?`](#unhex)                                                    | Low        |
 | [SqlFunctionExpression's nullability arguments' arity validated](#sqlfunctionexpression-nullability)      | Low        |
 | [`ToString()` method now returns empty string for `null` instances](#nullable-tostring)                   | Low        |
@@ -46,7 +47,7 @@ If the model has pending changes compared to the last migration they are not app
 #### New behavior
 
 Starting with EF Core 9.0, if the model has pending changes compared to the last migration an exception is thrown when `dotnet ef database update`, `Migrate` or `MigrateAsync` is called:
-> The model for context 'DbContext' has pending changes. Add a new migration before updating the database. This exception can be suppressed or logged by passing event ID 'RelationalEventId.PendingModelChangesWarning' to the 'ConfigureWarnings' method in 'DbContext.OnConfiguring' or 'AddDbContext'.
+> :::no-loc text="The model for context 'DbContext' has pending changes. Add a new migration before updating the database. This exception can be suppressed or logged by passing event ID 'RelationalEventId.PendingModelChangesWarning' to the 'ConfigureWarnings' method in 'DbContext.OnConfiguring' or 'AddDbContext'.":::
 
 #### Why
 
@@ -64,12 +65,54 @@ There are several common situations when this exception can be thrown:
   - **Mitigation**: Add a new migration, examine its contents to locate the cause, and replace the dynamic data with a static, hardcoded value in the model. The migration should be recreated after the model is fixed. If dynamic data has to be used for seeding consider using [the new seeding pattern](/ef/core/what-is-new/ef-core-9.0/whatsnew#improved-data-seeding) instead of `HasData()`.
 - The last migration was created for a different provider than the one used to apply the migrations.
   - **Mitigation**: This is an unsupported scenario. The warning can be suppressed using the code snippet below, but this scenario will likely stop working in a future EF Core release. The recommended solution is [to generate a separate set of migrations for each provider](xref:core/managing-schemas/migrations/providers).
-- The migrations are generated or choosen dynamically by replacing some of the EF services.
+- The migrations are generated or chosen dynamically by replacing some of the EF services.
   - **Mitigation**: The warning is a false positive in this case and should be suppressed:
   
     `options.ConfigureWarnings(w => w.Ignore(RelationalEventId.PendingModelChangesWarning))`
 
 If your scenario doesn't fall under any of the above cases and adding a new migration creates the same migration each time or an empty migration and the exception is still thrown then create a small repro project and [share it with the EF team in a new issue](https://github.com/dotnet/efcore/issues/new/choose).
+
+<a name="migrations-transaction"></a>
+
+### Exception is thrown when applying migrations in an explicit transaction
+
+[Tracking Issue #17578](https://github.com/dotnet/efcore/issues/17578)
+
+#### Old behavior
+
+To apply migrations resiliently the following pattern was commonly used:
+
+```csharp
+await dbContext.Database.CreateExecutionStrategy().ExecuteAsync(async () =>
+{
+    await using var transaction = await dbContext.Database.BeginTransactionAsync(cancellationToken);
+    await dbContext.Database.MigrateAsync(cancellationToken);
+    await transaction.CommitAsync(cancellationToken);
+});
+```
+
+#### New behavior
+
+Starting with EF Core 9.0, `Migrate` and `MigrateAsync` calls will start a transaction and execute the commands using an `ExecutionStrategy` and if your app uses the above pattern an exception is thrown:
+> :::no-loc text="An error was generated for warning 'Microsoft.EntityFrameworkCore.Migrations.MigrationsUserTransactionWarning': A transaction was started before applying migrations. This prevents a database lock to be acquired and hence the database will not be protected from concurrent migration applications. The transactions and execution strategy are already managed by EF as needed. Remove the external transaction. This exception can be suppressed or logged by passing event ID 'RelationalEventId.MigrationsUserTransactionWarning' to the 'ConfigureWarnings' method in 'DbContext.OnConfiguring' or 'AddDbContext'.":::
+
+#### Why
+
+Using an explicit transaction prevents a database lock to be acquired and hence the database will not be protected from concurrent migration applications, it also limits EF on how it can manage the transactions internally.
+
+#### Mitigations
+
+If there is only one database call inside the transaction then remove the external transaction and `ExecutionStrategy`:
+
+```csharp
+await dbContext.Database.MigrateAsync(cancellationToken);
+```
+
+Otherwise, if your scenario requires an explicit transaction and you have other mechanism in place to prevent concurrent migration application, then ignore the warning:
+  
+```csharp
+options.ConfigureWarnings(w => w.Ignore(RelationalEventId.MigrationsUserTransactionWarning))
+```
 
 ## Low-impact changes
 
