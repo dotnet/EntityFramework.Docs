@@ -38,7 +38,7 @@ Install-Package Microsoft.EntityFrameworkCore.SqlServer
 
 ## Usage
 
-Besides the expected `UseSqlServer` you can also use `UseAzureSql` and `UseAzureSynapse` methods to specify you're connecting to Azure SQL or Azure Synapse Analytics specifically, which allows the provide optimizations for these platforms. It's also recommended to use `UseCompatibilityLevel` method to specify the compatibility level so that the generated SQL is compatible and/or uses the latest possible features.
+Starting with EF 9, it's recommended to use `UseAzureSql` and `UseAzureSynapse` to specify that you're connecting to Azure SQL or Azure Synapse Analytics specifically, and `UseSqlServer` to specify that you're connecting to on-premises SQL Server; doing so allows the provider to optimize for and properly support these platforms. It's also recommended to use `UseCompatibilityLevel` method to specify the compatibility level so that the generated SQL is compatible and/or uses the latest possible features.
 
 > [!NOTE]
 > UseAzureSql and UseAzureSynapse methods were introduced in EF Core 9.0.
