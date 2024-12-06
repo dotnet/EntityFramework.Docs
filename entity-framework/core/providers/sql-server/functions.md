@@ -88,9 +88,11 @@ dateTime.Date                                               | CONVERT(date, @dat
 dateTime.Day                                                | DATEPART(day, @dateTime)
 dateTime.DayOfYear                                          | DATEPART(dayofyear, @dateTime)
 dateTime.Hour                                               | DATEPART(hour, @dateTime)
+dateTime.Microsecond                                        | DATEPART(microsecond, @dateTime) % 1000                                         | EF Core 10.0
 dateTime.Millisecond                                        | DATEPART(millisecond, @dateTime)
 dateTime.Minute                                             | DATEPART(minute, @dateTime)
 dateTime.Month                                              | DATEPART(month, @dateTime)
+dateTime.Nanosecond                                         | DATEPART(nanosecond, @dateTime) % 1000                                          | EF Core 10.0
 dateTime.Second                                             | DATEPART(second, @dateTime)
 dateTime.TimeOfDay                                          | CONVERT(time, @dateTime)
 dateTime.Year                                               | DATEPART(year, @dateTime)
@@ -107,9 +109,11 @@ dateTimeOffset.Date                                         | CONVERT(date, @dat
 dateTimeOffset.Day                                          | DATEPART(day, @dateTimeOffset)
 dateTimeOffset.DayOfYear                                    | DATEPART(dayofyear, @dateTimeOffset)
 dateTimeOffset.Hour                                         | DATEPART(hour, @dateTimeOffset)
+dateTimeOffset.Microsecond                                  | DATEPART(microsecond, @dateTimeOffset) % 1000                                   | EF Core 10.0
 dateTimeOffset.Millisecond                                  | DATEPART(millisecond, @dateTimeOffset)
 dateTimeOffset.Minute                                       | DATEPART(minute, @dateTimeOffset)
 dateTimeOffset.Month                                        | DATEPART(month, @dateTimeOffset)
+dateTimeOffset.Nanosecond                                   | DATEPART(nanosecond, @dateTimeOffset) % 1000                                    | EF Core 10.0
 dateTimeOffset.Second                                       | DATEPART(second, @dateTimeOffset)
 dateTimeOffset.TimeOfDay                                    | CONVERT(time, @dateTimeOffset)
 dateTimeOffset.ToUnixTimeSeconds()                          | DATEDIFF_BIG(second, '1970-01-01T00:00:00.0000000+00:00', @dateTimeOffset)      | EF Core 8.0
@@ -145,12 +149,16 @@ timeOnly.AddHours(value)                                    | DATEADD(hour, @val
 timeOnly.AddMinutes(value)                                  | DATEADD(minute, @value, @timeOnly)                                              | EF Core 8.0
 timeOnly.Hour                                               | DATEPART(hour, @timeOnly)                                                       | EF Core 8.0
 timeOnly.IsBetween(start, end)                              | @timeOnly >= @start AND @timeOnly < @end                                        | EF Core 8.0
+timeOnly.Microsecond                                        | DATEPART(microsecond, @timeOnly) % 1000                                         | EF Core 10.0
 timeOnly.Millisecond                                        | DATEPART(millisecond, @timeOnly)                                                | EF Core 8.0
 timeOnly.Minute                                             | DATEPART(minute, @timeOnly)                                                     | EF Core 8.0
+timeOnly.Nanosecond                                         | DATEPART(nanosecond, @timeOnly) % 1000                                          | EF Core 10.0
 timeOnly.Second                                             | DATEPART(second, @timeOnly)                                                     | EF Core 8.0
 timeSpan.Hours                                              | DATEPART(hour, @timeSpan)
+timeSpan.Microsecond                                        | DATEPART(microsecond, @timeSpan) % 1000                                         | EF Core 10.0
 timeSpan.Milliseconds                                       | DATEPART(millisecond, @timeSpan)
 timeSpan.Minutes                                            | DATEPART(minute, @timeSpan)
+timeSpan.Nanosecond                                         | DATEPART(nanosecond, @timeSpan) % 1000                                          | EF Core 10.0
 timeSpan.Seconds                                            | DATEPART(second, @timeSpan)
 
 ## Numeric functions
