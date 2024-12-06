@@ -233,9 +233,8 @@ stringValue.TrimStart()                                                 | LTRIM(
 
 ## Miscellaneous functions
 
-.NET                                     | SQL
----------------------------------------- | ---
-collection.Contains(item)                | @item IN @collection
+.NET                                     | SQL                                 | Added in
+---------------------------------------- | ----------------------------------- | --------
 enumValue.HasFlag(flag)                  | @enumValue & @flag = @flag
 Guid.NewGuid()                           | NEWID()
 nullable.GetValueOrDefault()             | COALESCE(@nullable, 0)
