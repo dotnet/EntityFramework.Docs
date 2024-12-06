@@ -77,6 +77,12 @@ The full source code for this sample is available [here](https://github.com/dotn
 > [!NOTE]
 > Although EF Core takes care of resetting internal state for `DbContext` and its related services, it generally does not reset state in the underlying database driver, which is outside of EF. For example, if you manually open and use a `DbConnection` or otherwise manipulate ADO.NET state, it's up to you to restore that state before returning the context instance to the pool, e.g. by closing the connection. Failure to do so may cause state to get leaked across unrelated requests.
 
+### Connection Pooling Considerations
+
+Connection pooling in Entity Framework is managed at the client level through ADO.NET and works consistently across all SQL Server-based environments, including Azure SQL Database, Azure SQL Managed Instance, and SQL Server (on-premises or in virtual machines). While pooling mechanisms are consistent, service-specific factors may impact pooling efficiency. Entity Framework relies on ADO.NET for database interactions, including connection pooling, which reuses existing database connections to minimize the overhead of repeatedly opening and closing connections.
+
+When Entity Framework Core executes queries or saves changes, it uses an ADO.NET provider, such as `System.Data.SqlClient` or `Microsoft.Data.SqlClient`, to communicate with the database. ADO.NET transparently implements connection pooling, which is enabled by default and reuses database connections for efficiency. Any pooling configurations, such as maximum or minimum pool sizes, must be set at the ADO.NET level through connection string parameters. Each DbContext instance in EF Core requests a connection from the ADO.NET pool when interacting with the database and returns it to the pool upon disposal, ensuring efficient resource utilization.
+
 ## Compiled queries
 
 When EF receives a LINQ query tree for execution, it must first "compile" that tree, e.g. produce SQL from it. Because this task is a heavy process, EF caches queries by the query tree shape, so that queries with the same structure reuse internally-cached compilation outputs. This caching ensures that executing the same LINQ query multiple times is very fast, even if parameter values differ.
