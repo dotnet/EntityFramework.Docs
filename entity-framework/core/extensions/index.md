@@ -134,13 +134,13 @@ Triggers for EF Core. Respond to changes in your DbContext before and after they
 
 ### Entity Framework Plus
 
-Extends your DbContext with features such as: Include Filter, Auditing, Caching, Query Future, Batch Delete, Batch Update, and more. For EF Core: 2-8.
+Extends your DbContext with features such as: Include Filter, Auditing, Caching, Query Future, Batch Delete, Batch Update, and more. For EF Core: 2-9.
 
 [Website](https://entityframework-plus.net/) | [GitHub repository](https://github.com/zzzprojects/EntityFramework-Plus) | [NuGet](https://www.nuget.org/packages/Z.EntityFramework.Plus.EFCore)
 
 ### Entity Framework Extensions
 
-Extends your DbContext with high-performance bulk operations: BulkSaveChanges, BulkInsert, BulkUpdate, BulkDelete, BulkMerge, and more. For EF Core: 2-8.
+Extends your DbContext with high-performance bulk operations: BulkSaveChanges, BulkInsert, BulkUpdate, BulkDelete, BulkMerge, and more. For EF Core: 2-9.
 
 [Website](https://entityframework-extensions.net/) | [NuGet](https://www.nuget.org/packages/Z.EntityFramework.Extensions.EFCore/)
 
@@ -333,7 +333,7 @@ A source generator that can generate strongly-typed-id classes automatically for
 
 ### Microsoft.EntityFrameworkCore.DynamicLinq
 
-The Dynamic LINQ library let you execute query with dynamic string and provide some utilities methods such as ParseLambda, Parse, and CreateClass. For EF Core: 2-8.
+The Dynamic LINQ library let you execute query with dynamic string and provide some utilities methods such as ParseLambda, Parse, and CreateClass. For EF Core: 2-9.
 
 [Website](https://dynamic-linq.net/) | [GitHub repository](https://github.com/zzzprojects/System.Linq.Dynamic.Core) | [NuGet](https://www.nuget.org/packages/Microsoft.EntityFrameworkCore.DynamicLinq)
 
