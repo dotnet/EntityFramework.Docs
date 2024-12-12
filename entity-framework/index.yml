@@ -78,6 +78,8 @@ additionalContent:
             text: "MySQL and MariaDB"
           - url: core/providers/cosmos/index.md
             text: "Azure Cosmos DB for NoSQL"
+          - url: https://github.com/FirebirdSQL/NETProvider
+            text: "Firebird"
           - url: core/providers/in-memory/index.md
             text: "In memory (testing)"
           - url: core/providers/index.md
