@@ -2,7 +2,7 @@
 title: Breaking changes in EF Core 9 (EF9) - EF Core
 description: List of breaking changes introduced in Entity Framework Core 9 (EF9)
 author: ajcvickers
-ms.date: 12/04/2024
+ms.date: 12/17/2024
 uid: core/what-is-new/ef-core-9.0/breaking-changes
 ---
 
@@ -221,6 +221,7 @@ Extensive work has gone into making the Azure Cosmos DB provider better in 9.0. 
 |:---------------------------------------------------------------------------------------------------------------------------------------------------- | ---------- |
 | [The discriminator property is now named `$type` instead of `Discriminator`](#cosmos-discriminator-name-change)                                      | High       |
 | [The `id` property no longer contains the discriminator by default](#cosmos-id-property-changes)                                                     | High       |
+| [The JSON `id` property is mapped to the key](#cosmos-key-changes)                                                                                   | High       |
 | [Sync I/O via the Azure Cosmos DB provider is no longer supported](#cosmos-nosync)                                                                   | Medium     |
 | [SQL queries must now project JSON values directly](#cosmos-sql-queries-with-value)                                                                  | Medium     |
 | [Undefined results are now automatically filtered from query results](#cosmos-undefined-filtering)                                                   | Medium     |
@@ -291,6 +292,38 @@ modelBuilder.Entity<Session>().HasDiscriminatorInJsonId();
 Doing this for all your top-level entity types will make EF behave just like before.
 
 At this point, if you wish, you can also update all your documents to rewrite their JSON `id` property. Note that this is only possible if entities of different types don't share the same id value within the same container.
+
+<a name="cosmos-key-changes"></a>
+
+#### The JSON `id` property is mapped to the key
+
+[Tracking Issue #34179](https://github.com/dotnet/efcore/issues/34179)
+
+##### Old behavior
+
+Previously, EF created a shadow property mapped to the JSON `id` property, unless one of the properties was mapped to `id` explicitly.
+
+##### New behavior
+
+Starting with EF Core 9, the key property will be mapped to the JSON `id` property by convention if possible. This means that the key property will no longer be persisted in the document under a different name with the same value, so non-EF code consuming the documents and relying on this property being present would no longer function correctly.
+
+##### Why
+
+EF 9.0 generally changed the mapping to be more aligned with common Azure Cosmos DB NoSQL practices and expectations. And it is not common to store the key value twice in the document.
+
+##### Mitigations
+
+If you would like to preserve EF Core 8 behavior the easiest mitigation is to use a new configuration option that has been introduced for this purpose:
+
+```csharp
+modelBuilder.Entity<Session>().HasShadowId();
+```
+
+Doing this for all your top-level entity types will make EF behave just like before. Or you could apply it to all entity types in the model with one call:
+
+```csharp
+modelBuilder.HasShadowIds();
+```
 
 ### Medium-impact changes
 
