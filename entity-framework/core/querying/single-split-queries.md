@@ -91,19 +91,29 @@ It's worth noting that unlike cartesian explosion, the data duplication caused b
 
 To work around the performance issues described above, EF allows you to specify that a given LINQ query should be *split* into multiple SQL queries. Instead of JOINs, split queries generate an additional SQL query for each included collection navigation:
 
-[!code-csharp[Main](../../../samples/core/Querying/RelatedData/Program.cs?name=AsSplitQuery&highlight=5)]
+```c#
+var blogs = ctx.Blogs
+    .Include(b => b.Posts)
+    .Include(p => p.Contributors)
+    .ToList();
+```
 
 It will produce the following SQL:
 
 ```sql
-SELECT [b].[BlogId], [b].[OwnerId], [b].[Rating], [b].[Url]
+SELECT [b].[Id], [b].[OwnerId], [b].[Rating], [b].[Url]
 FROM [Blogs] AS [b]
+ORDER BY [b].[Id]
+
+SELECT [p].[Id], [p].[AuthorId], [p].[BlogId], [p].[Content], [p].[Rating], [p].[Title], [b].[Id]
+FROM [Blogs] AS [b]
+INNER JOIN [Posts] AS [p] ON [b].[Id] = [p].[BlogId]
 ORDER BY [b].[BlogId]
 
-SELECT [p].[PostId], [p].[AuthorId], [p].[BlogId], [p].[Content], [p].[Rating], [p].[Title], [b].[BlogId]
+SELECT [c].[Id], [c].[BlogId], [c].[FirstName], [c].[LastName], [b].[Id]
 FROM [Blogs] AS [b]
-INNER JOIN [Posts] AS [p] ON [b].[BlogId] = [p].[BlogId]
-ORDER BY [b].[BlogId]
+INNER JOIN [Contributors] AS [c] ON [b].[Id] = [c].[BlogId]
+ORDER BY [b].[Id], [c].[Id]
 ```
 
 > [!WARNING]
