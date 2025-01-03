@@ -16,7 +16,11 @@ Entity Framework Core allows you to drop down to SQL queries when working with a
 
 You can use <xref:Microsoft.EntityFrameworkCore.RelationalQueryableExtensions.FromSql*> to begin a LINQ query based on a SQL query:
 
-[!code-csharp[Main](../../../samples/core/Querying/SqlQueries/Program.cs#FromSql)]
+```csharp
+var blogs = context.Blogs
+    .FromSql($"SELECT * FROM dbo.Blogs")
+    .ToList();
+```
 
 > [!NOTE]
 >
@@ -24,7 +28,11 @@ You can use <xref:Microsoft.EntityFrameworkCore.RelationalQueryableExtensions.Fr
 
 SQL queries can be used to execute a stored procedure which returns entity data:
 
-[!code-csharp[Main](../../../samples/core/Querying/SqlQueries/Program.cs#FromSqlStoredProcedure)]
+```csharp
+var blogs = context.Blogs
+    .FromSql($"EXECUTE dbo.GetMostPopularBlogs")
+    .ToList();
+```
 
 > [!NOTE]
 >
@@ -41,17 +49,35 @@ SQL queries can be used to execute a stored procedure which returns entity data:
 
 The following example passes a single parameter to a stored procedure by including a parameter placeholder in the SQL query string and providing an additional argument:
 
-[!code-csharp[Main](../../../samples/core/Querying/SqlQueries/Program.cs#FromSqlStoredProcedureParameter)]
+```csharp
+var user = "johndoe";
+
+var blogs = context.Blogs
+    .FromSql($"EXECUTE dbo.GetMostPopularBlogsForUser {user}")
+    .ToList();
+```
 
 While this syntax may look like regular C# [string interpolation](/dotnet/csharp/language-reference/tokens/interpolated), the supplied value is wrapped in a `DbParameter` and the generated parameter name inserted where the `{0}` placeholder was specified. This makes <xref:Microsoft.EntityFrameworkCore.RelationalQueryableExtensions.FromSql*> safe from SQL injection attacks, and sends the value efficiently and correctly to the database.
 
 When executing stored procedures, it can be useful to use named parameters in the SQL query string, especially when the stored procedure has optional parameters:
 
-[!code-csharp[Main](../../../samples/core/Querying/SqlQueries/Program.cs#FromSqlStoredProcedureNamedSqlParameter)]
+```csharp
+var user = new SqlParameter("user", "johndoe");
+
+var blogs = context.Blogs
+    .FromSql($"EXECUTE dbo.GetMostPopularBlogsForUser @filterByUser={user}")
+    .ToList();
+```
 
 If you need more control over the database parameter being sent, you can also construct a `DbParameter` and supply it as a parameter value. This allows you to set the precise database type of the parameter, or facets such as its size, precision or length:
 
-[!code-csharp[Main](../../../samples/core/Querying/SqlQueries/Program.cs#FromSqlStoredProcedureSqlParameter)]
+```csharp
+var user = new SqlParameter("user", "johndoe");
+
+var blogs = context.Blogs
+    .FromSql($"EXECUTE dbo.GetMostPopularBlogsForUser {user}")
+    .ToList();
+```
 
 > [!NOTE]
 >
@@ -76,7 +102,14 @@ First, it's important to consider the implications of dynamically constructing a
 
 If you've decided you do want to dynamically construct your SQL, you'll have to use <xref:Microsoft.EntityFrameworkCore.RelationalQueryableExtensions.FromSqlRaw*>, which allows interpolating variable data directly into the SQL string, instead of using a database parameter:
 
-[!code-csharp[Main](../../../samples/core/Querying/SqlQueries/Program.cs#FromSqlRawStoredProcedureParameter)]
+```csharp
+var columnName = "Url";
+var columnValue = new SqlParameter("columnValue", "http://SomeURL");
+
+var blogs = context.Blogs
+    .FromSqlRaw($"SELECT * FROM [Blogs] WHERE {columnName} = @columnValue", columnValue)
+    .ToList();
+```
 
 In the above code, the column name is inserted directly into the SQL, using C# string interpolation. It is your responsibility to make sure this string value is safe, sanitizing it if it comes from an unsafe origin; this means detecting special characters such as semicolons, comments, and other SQL constructs, and either escaping them properly or rejecting such inputs.
 
@@ -90,7 +123,15 @@ On the other hand, the column value is sent via a `DbParameter`, and is therefor
 
 You can compose on top of the initial SQL query using LINQ operators; EF Core will treat your SQL as a subquery and compose over it in the database. The following example uses a SQL query that selects from a Table-Valued Function (TVF). And then composes on it using LINQ to do filtering and sorting.
 
-[!code-csharp[Main](../../../samples/core/Querying/SqlQueries/Program.cs#FromSqlComposed)]
+```csharp
+var searchTerm = "Lorem ipsum";
+
+var blogs = context.Blogs
+    .FromSql($"SELECT * FROM dbo.SearchBlogs({searchTerm})")
+    .Where(b => b.Rating > 3)
+    .OrderByDescending(b => b.Rating)
+    .ToList();
+```
 
 The above query generates the following SQL:
 
@@ -107,7 +148,14 @@ ORDER BY [b].[Rating] DESC
 
 The [`Include`](xref:core/querying/related-data/eager) operator can be used to load related data, just like with any other LINQ query:
 
-[!code-csharp[Main](../../../samples/core/Querying/SqlQueries/Program.cs#FromSqlInclude)]
+```csharp
+var searchTerm = "Lorem ipsum";
+
+var blogs = context.Blogs
+    .FromSql($"SELECT * FROM dbo.SearchBlogs({searchTerm})")
+    .Include(b => b.Posts)
+    .ToList();
+```
 
 Composing with LINQ requires your SQL query to be composable, since EF Core will treat the supplied SQL as a subquery. Composable SQL queries generally begin with the `SELECT` keyword, and cannot contain SQL features that aren't valid in a subquery, such as:
 
@@ -123,7 +171,14 @@ Queries that use <xref:Microsoft.EntityFrameworkCore.RelationalQueryableExtensio
 
 The following example uses a SQL query that selects from a Table-Valued Function (TVF), then disables change tracking with the call to [`AsNoTracking`](xref:core/querying/tracking#no-tracking-queries):
 
-[!code-csharp[Main](../../../samples/core/Querying/SqlQueries/Program.cs#FromSqlAsNoTracking)]
+```csharp
+var searchTerm = "Lorem ipsum";
+
+var blogs = context.Blogs
+    .FromSql($"SELECT * FROM dbo.SearchBlogs({searchTerm})")
+    .AsNoTracking()
+    .ToList();
+```
 
 ## Querying scalar (non-entity) types
 
@@ -205,7 +260,12 @@ var overAverageIds = context.Database
 
 In some scenarios, it may be necessary to execute SQL which does not return any data, typically for modifying data in the database or calling a stored procedure which doesn't return any result sets. This can be done via <xref:Microsoft.EntityFrameworkCore.RelationalDatabaseFacadeExtensions.ExecuteSql*>:
 
-[!code-csharp[Main](../../../samples/core/Querying/SqlQueries/Program.cs#ExecuteSql)]
+```csharp
+using (var context = new BloggingContext())
+{
+    var rowsModified = context.Database.ExecuteSql($"UPDATE [Blogs] SET [Url] = NULL");
+}
+```
 
 This executes the provided SQL and returns the number of rows modified. <xref:Microsoft.EntityFrameworkCore.RelationalDatabaseFacadeExtensions.ExecuteSql*> protects against SQL injection by using safe parameterization, just like <xref:Microsoft.EntityFrameworkCore.RelationalQueryableExtensions.FromSql*>, and <xref:Microsoft.EntityFrameworkCore.RelationalDatabaseFacadeExtensions.ExecuteSqlRaw*> allows for dynamic construction of SQL queries, just like <xref:Microsoft.EntityFrameworkCore.RelationalQueryableExtensions.FromSqlRaw*> does for queries.
 
