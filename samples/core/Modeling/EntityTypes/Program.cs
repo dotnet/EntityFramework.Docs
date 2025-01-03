@@ -1,17 +1,18 @@
 ﻿using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 
 namespace EFModeling.EntityTypes;
 
 internal class Program
 {
-    private static void Main(string[] args)
+    private static async Task Main(string[] args)
     {
         using var context = new MyContextWithFunctionMapping();
-        context.Database.EnsureDeleted();
-        context.Database.EnsureCreated();
+        await context.Database.EnsureDeletedAsync();
+        await context.Database.EnsureCreatedAsync();
 
-        context.Database.ExecuteSqlRaw(
+        await context.Database.ExecuteSqlRawAsync(
             @"CREATE FUNCTION dbo.BlogsWithMultiplePosts()
                         RETURNS TABLE
                         AS
@@ -29,6 +30,6 @@ internal class Program
                     where b.PostCount > 3
                     select new { b.Url, b.PostCount };
         #endregion
-        var result = query.ToList();
+        var result = await query.ToListAsync();
     }
 }

@@ -1,5 +1,6 @@
 ﻿using Common;
 using Microsoft.EntityFrameworkCore;
+using System.Threading.Tasks;
 
 namespace SingleDbSingleTable.Data
 {
@@ -14,9 +15,9 @@ namespace SingleDbSingleTable.Data
 
         public DbSet<MultitenantContact> Contacts { get; set; } = null!;
 
-        public void CheckAndSeed()
+        public async Task CheckAndSeedAsync()
         {
-            if (Database.EnsureCreated())
+            if (await Database.EnsureCreatedAsync())
             {
                 foreach (var contact in Contact.GeneratedContacts)
                 {
@@ -24,7 +25,7 @@ namespace SingleDbSingleTable.Data
                     Contacts.Add(new MultitenantContact(contact, tenant));
                 }
 
-                SaveChanges();
+                await SaveChangesAsync();
             }
         }
 

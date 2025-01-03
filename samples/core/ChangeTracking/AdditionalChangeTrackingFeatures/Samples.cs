@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 
@@ -8,19 +9,19 @@ namespace Optional;
 
 public class Samples
 {
-    public static void DbContext_versus_DbSet_methods_1()
+    public static async Task DbContext_versus_DbSet_methods_1()
     {
         Console.WriteLine($">>>> Sample: {nameof(DbContext_versus_DbSet_methods_1)}");
         Console.WriteLine();
 
-        Helpers.RecreateCleanDatabase();
-        Helpers.PopulateDatabase();
+        await Helpers.RecreateCleanDatabase();
+        await Helpers.PopulateDatabase();
 
         #region DbContext_versus_DbSet_methods_1
         using var context = new BlogsContext();
 
-        var post = context.Posts.Single(e => e.Id == 3);
-        var tag = context.Tags.Single(e => e.Id == 1);
+        var post = await context.Posts.SingleAsync(e => e.Id == 3);
+        var tag = await context.Tags.SingleAsync(e => e.Id == 1);
 
         var joinEntitySet = context.Set<Dictionary<string, int>>("PostTag");
         var joinEntity = new Dictionary<string, int> { ["PostId"] = post.Id, ["TagId"] = tag.Id };
@@ -28,19 +29,19 @@ public class Samples
 
         Console.WriteLine(context.ChangeTracker.DebugView.LongView);
 
-        context.SaveChanges();
+        await context.SaveChangesAsync();
         #endregion
 
         Console.WriteLine();
     }
 
-    public static void Temporary_values_1()
+    public static async Task Temporary_values_1()
     {
         Console.WriteLine($">>>> Sample: {nameof(Temporary_values_1)}");
         Console.WriteLine();
 
-        Helpers.RecreateCleanDatabase();
-        Helpers.PopulateDatabase();
+        await Helpers.RecreateCleanDatabase();
+        await Helpers.PopulateDatabase();
 
         #region Temporary_values_1
         using var context = new BlogsContext();
@@ -56,12 +57,12 @@ public class Samples
         Console.WriteLine();
     }
 
-    public static void Temporary_values_2()
+    public static async Task Temporary_values_2()
     {
         Console.WriteLine($">>>> Sample: {nameof(Temporary_values_2)}");
         Console.WriteLine();
 
-        Helpers.RecreateCleanDatabase();
+        await Helpers.RecreateCleanDatabase();
 
         #region Temporary_values_2
         var blogs = new List<Blog> { new Blog { Id = -1, Name = ".NET Blog" }, new Blog { Id = -2, Name = "Visual Studio Blog" } };
@@ -98,7 +99,7 @@ public class Samples
 
         Console.WriteLine(context.ChangeTracker.DebugView.LongView);
 
-        context.SaveChanges();
+        await context.SaveChangesAsync();
 
         Console.WriteLine(context.ChangeTracker.DebugView.LongView);
         #endregion
@@ -109,15 +110,15 @@ public class Samples
 
 public static class Helpers
 {
-    public static void RecreateCleanDatabase()
+    public static async Task RecreateCleanDatabase()
     {
         using var context = new BlogsContext(quiet: true);
 
-        context.Database.EnsureDeleted();
-        context.Database.EnsureCreated();
+        await context.Database.EnsureDeletedAsync();
+        await context.Database.EnsureCreatedAsync();
     }
 
-    public static void PopulateDatabase()
+    public static async Task PopulateDatabase()
     {
         using var context = new BlogsContext(quiet: true);
 
@@ -161,7 +162,7 @@ public static class Helpers
             new Tag { Text = "Visual Studio" },
             new Tag { Text = "EF Core" });
 
-        context.SaveChanges();
+        await context.SaveChangesAsync();
     }
 }
 

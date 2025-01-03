@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 
@@ -53,7 +54,7 @@ public class KeyValueObserver : IObserver<KeyValuePair<string, object>>
 public class Program
 {
     #region Program
-    public static void Main()
+    public static async Task Main()
     {
         #region RegisterDiagnosticListener
         DiagnosticListener.AllListeners.Subscribe(new DiagnosticObserver());
@@ -61,24 +62,24 @@ public class Program
 
         using (var context = new BlogsContext())
         {
-            context.Database.EnsureDeleted();
-            context.Database.EnsureCreated();
+            await context.Database.EnsureDeletedAsync();
+            await context.Database.EnsureCreatedAsync();
 
             context.Add(
                 new Blog { Name = "EF Blog", Posts = { new Post { Title = "EF Core 3.1!" }, new Post { Title = "EF Core 5.0!" } } });
 
-            context.SaveChanges();
+            await context.SaveChangesAsync();
         }
 
         using (var context = new BlogsContext())
         {
-            var blog = context.Blogs.Include(e => e.Posts).Single();
+            var blog = await context.Blogs.Include(e => e.Posts).SingleAsync();
 
             blog.Name = "EF Core Blog";
             context.Remove(blog.Posts.First());
             blog.Posts.Add(new Post { Title = "EF Core 6.0!" });
 
-            context.SaveChanges();
+            await context.SaveChangesAsync();
         }
         #endregion
     }

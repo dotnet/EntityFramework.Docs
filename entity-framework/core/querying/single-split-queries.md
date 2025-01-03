@@ -16,10 +16,10 @@ When working against relational databases, EF loads related entities by introduc
 Let's examine the following LINQ query and its translated SQL equivalent:
 
 ```c#
-var blogs = ctx.Blogs
+var blogs = await ctx.Blogs
     .Include(b => b.Posts)
     .Include(b => b.Contributors)
-    .ToList();
+    .ToListAsync();
 ```
 
 ```sql
@@ -35,10 +35,10 @@ In this example, since both `Posts` and `Contributors` are collection navigation
 Note that cartesian explosion does not occur when the two JOINs aren't at the same level:
 
 ```c#
-var blogs = ctx.Blogs
+var blogs = await ctx.Blogs
     .Include(b => b.Posts)
     .ThenInclude(p => p.Comments)
-    .ToList();
+    .ToListAsync();
 ```
 
 ```sql
@@ -56,9 +56,9 @@ In this query, `Comments` is a collection navigation of `Post`, unlike `Contribu
 JOINs can create another type of performance issue. Let's examine the following query, which only loads a single collection navigation:
 
 ```c#
-var blogs = ctx.Blogs
+var blogs = await ctx.Blogs
     .Include(b => b.Posts)
-    .ToList();
+    .ToListAsync();
 ```
 
 ```sql
@@ -73,14 +73,14 @@ Examining at the projected columns, each row returned by this query contains pro
 If you don't actually need the huge column, it's easy to simply not query for it:
 
 ```c#
-var blogs = ctx.Blogs
+var blogs = await ctx.Blogs
     .Select(b => new
     {
         b.Id,
         b.Name,
         b.Posts
     })
-    .ToList();
+    .ToListAsync();
 ```
 
 By using a projection to explicitly choose which columns you want, you can omit big columns and improve performance; note that this is a good idea regardless of data duplication, so consider doing it even when not loading a collection navigation. However, since this projects the blog to an anonymous type, the blog isn't tracked by EF and changes to it can't be saved back as usual.

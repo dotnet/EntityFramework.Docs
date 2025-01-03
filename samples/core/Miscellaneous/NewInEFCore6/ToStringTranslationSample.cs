@@ -1,22 +1,23 @@
 ﻿using System;
 using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 
 public static class ToStringTranslationSample
 {
-    public static void Using_ToString_in_queries()
+    public static async Task Using_ToString_in_queries()
     {
         Console.WriteLine($">>>> Sample: {nameof(Using_ToString_in_queries)}");
         Console.WriteLine();
 
-        Helpers.RecreateCleanDatabase();
-        Helpers.PopulateDatabase();
+        await Helpers.RecreateCleanDatabase();
+        await Helpers.PopulateDatabase();
 
         using var context = new BooksContext();
 
         #region Query
-        var users = context.Users.Where(u => EF.Functions.Like(u.PhoneNumber.ToString(), "%555%")).ToList();
+        var users = await context.Users.Where(u => EF.Functions.Like(u.PhoneNumber.ToString(), "%555%")).ToListAsync();
         #endregion
 
         foreach (var user in users)
@@ -29,15 +30,15 @@ public static class ToStringTranslationSample
 
     public static class Helpers
     {
-        public static void RecreateCleanDatabase()
+        public static async Task RecreateCleanDatabase()
         {
             using var context = new BooksContext(quiet: true);
 
-            context.Database.EnsureDeleted();
-            context.Database.EnsureCreated();
+            await context.Database.EnsureDeletedAsync();
+            await context.Database.EnsureCreatedAsync();
         }
 
-        public static void PopulateDatabase()
+        public static async Task PopulateDatabase()
         {
             using var context = new BooksContext(quiet: true);
 
@@ -46,7 +47,7 @@ public static class ToStringTranslationSample
                 new User { PhoneNumber = 5155552234, Username = "wendy" },
                 new User { PhoneNumber = 18005525123, Username = "microsoft" });
 
-            context.SaveChanges();
+            await context.SaveChangesAsync();
         }
     }
 

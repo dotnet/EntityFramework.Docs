@@ -17,7 +17,7 @@ var app = builder.Build();
 
 // seed the database so demo is simple and doesn't require migrations
 using var ctx = app.Services.CreateScope().ServiceProvider.GetRequiredService<ContactContext>();
-ctx.CheckAndSeed();
+await ctx.CheckAndSeedAsync();
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())

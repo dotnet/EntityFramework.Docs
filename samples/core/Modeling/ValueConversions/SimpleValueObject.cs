@@ -3,6 +3,7 @@
 
 using System;
 using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 
@@ -10,25 +11,25 @@ namespace EFModeling.ValueConversions;
 
 public class SimpleValueObject : Program
 {
-    public void Run()
+    public async Task Run()
     {
         ConsoleWriteLines("Sample showing value conversions for a simple value object...");
 
         using (var context = new SampleDbContext())
         {
-            CleanDatabase(context);
+            await CleanDatabase(context);
 
             ConsoleWriteLines("Save a new entity...");
 
             context.Add(new Order { Price = new Dollars(3.99m) });
-            context.SaveChanges();
+            await context.SaveChangesAsync();
         }
 
         using (var context = new SampleDbContext())
         {
             ConsoleWriteLines("Read the entity back...");
 
-            var entity = context.Set<Order>().Single();
+            var entity = await context.Set<Order>().SingleAsync();
         }
 
         ConsoleWriteLines("Sample finished.");
@@ -66,12 +67,12 @@ public class SimpleValueObject : Program
     #region SimpleValueObject
     public readonly struct Dollars
     {
-        public Dollars(decimal amount) 
+        public Dollars(decimal amount)
             => Amount = amount;
-            
+
         public decimal Amount { get; }
 
-        public override string ToString() 
+        public override string ToString()
             => $"${Amount}";
     }
     #endregion

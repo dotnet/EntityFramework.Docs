@@ -49,7 +49,7 @@ using (var context = new MyDbContext())
             Name = "Bill",
             Location = new Point(-122.34877, 47.6233355) {SRID = 4326 }
         });
-    context.SaveChanges();
+    await context.SaveChangesAsync();
 }
 ```
 
@@ -57,9 +57,9 @@ And you can execute database queries based on spatial data and operations:
 
 ```csharp
 var nearestFriends =
-    (from f in context.Friends
+    await (from f in context.Friends
     orderby f.Location.Distance(myLocation) descending
-    select f).Take(5).ToList();
+    select f).Take(5).ToListAsync();
 ```
 
 For more information on this feature, see the [spatial types documentation](xref:core/modeling/spatial).
@@ -95,9 +95,9 @@ Using the spatial query from a previous example:
 
 ```csharp
 var nearestFriends =
-    (from f in context.Friends.TagWith(@"This is my spatial query!")
+    await (from f in context.Friends.TagWith(@"This is my spatial query!")
     orderby f.Location.Distance(myLocation) descending
-    select f).Take(5).ToList();
+    select f).Take(5).ToListAsync();
 ```
 
 This LINQ query will produce the following SQL output:

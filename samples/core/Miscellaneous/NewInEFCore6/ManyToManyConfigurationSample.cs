@@ -1,25 +1,26 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 
 public static class ManyToManyConfigurationSample
 {
-    public static void Many_to_many_relationships_may_need_less_configuration()
+    public static async Task Many_to_many_relationships_may_need_less_configuration()
     {
         Console.WriteLine($">>>> Sample: {nameof(Many_to_many_relationships_may_need_less_configuration)}");
         Console.WriteLine();
 
-        ManyToManyTest<NoConfigContext>();
-        ManyToManyTest<JustNavigationsContext>();
-        ManyToManyTest<SpecifySharedEntityTypeContext>();
-        ManyToManyTest<SpecifyEntityTypeContext>();
-        // ManyToManyTest<SpecifyEntityTypeAndKeyContext>();
-        ManyToManyTest<SpecifyEntityTypeAndFksContext>();
+        await ManyToManyTest<NoConfigContext>();
+        await ManyToManyTest<JustNavigationsContext>();
+        await ManyToManyTest<SpecifySharedEntityTypeContext>();
+        await ManyToManyTest<SpecifyEntityTypeContext>();
+        // await ManyToManyTest<SpecifyEntityTypeAndKeyContext>();
+        await ManyToManyTest<SpecifyEntityTypeAndFksContext>();
     }
 
-    public static void ManyToManyTest<TContext>()
+    public static async Task ManyToManyTest<TContext>()
         where TContext : BaseContext, new()
     {
         Console.WriteLine($"{typeof(TContext).Name}: ");
@@ -27,13 +28,13 @@ public static class ManyToManyConfigurationSample
 
         using (var context = new TContext())
         {
-            context.Database.EnsureDeleted();
+            await context.Database.EnsureDeletedAsync();
 
             Console.WriteLine(context.Model.ToDebugString());
             Console.WriteLine();
 
             context.Log = true;
-            context.Database.EnsureCreated();
+            await context.Database.EnsureCreatedAsync();
             context.Log = false;
 
             var cats = new List<Cat>
@@ -48,14 +49,14 @@ public static class ManyToManyConfigurationSample
                 new() { Name = "Arthur", Cats = { cats[0], cats[1] } }
             });
 
-            context.SaveChanges();
+            await context.SaveChangesAsync();
         }
 
         Console.WriteLine();
 
         using (var context = new TContext())
         {
-            var cats = context.Cats.Include(e => e.Humans).ToList();
+            var cats = await context.Cats.Include(e => e.Humans).ToListAsync();
             foreach (var cat in cats)
             {
                 Console.WriteLine($"{cat.Name} has {cat.Humans.Count} humans.");

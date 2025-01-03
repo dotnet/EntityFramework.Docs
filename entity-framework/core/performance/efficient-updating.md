@@ -30,7 +30,7 @@ foreach (var employee in context.Employees)
 {
     employee.Salary += 1000;
 }
-context.SaveChanges();
+await context.SaveChangesAsync();
 ```
 
 While this is perfectly valid code, let's analyze what it does from a performance perspective:
@@ -39,10 +39,10 @@ While this is perfectly valid code, let's analyze what it does from a performanc
 * EF Core's change tracking creates snapshots when loading the entities, and then compares those snapshots to the instances to find out which properties changed.
 * Typically, a second database roundtrip is performed to save all the changes (note that some database providers split the changes into multiples roundtrips). Although this batching behavior is far better than doing a roundtrip for each update, EF Core still sends an UPDATE statement per employee, and the database must execute each statement separately.
 
-Starting with EF Core 7.0, you can use the `ExecuteUpdate` and `ExecuteDelete` methods to do the same thing far more efficiently:
+Starting with EF Core 7.0, you can use the `ExecuteUpdateAsync` and `ExecuteDeleteAsync` methods to do the same thing far more efficiently:
 
 ```c#
-context.Employees.ExecuteUpdate(s => s.SetProperty(e => e.Salary, e => e.Salary + 1000));
+await context.Employees.ExecuteUpdateAsync(s => s.SetProperty(e => e.Salary, e => e.Salary + 1000));
 ```
 
 This sends the following SQL statement to the database:

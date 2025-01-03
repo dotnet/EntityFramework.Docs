@@ -1,5 +1,7 @@
-﻿using System.Data;
+﻿using System.Collections.Generic;
+using System.Data;
 using System.Linq;
+using System.Threading.Tasks;
 using EF.Testing.BusinessLogic;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -17,23 +19,23 @@ public class BloggingController : ControllerBase
 
     #region GetBlog
     [HttpGet]
-    public ActionResult<Blog> GetBlog(string name)
+    public async Task<ActionResult<Blog>> GetBlog(string name)
     {
-        var blog = _context.Blogs.FirstOrDefault(b => b.Name == name);
+        var blog = await _context.Blogs.FirstOrDefaultAsync(b => b.Name == name);
         return blog is null ? NotFound() : blog;
     }
     #endregion
 
     [HttpGet]
-    public ActionResult<Blog[]> GetAllBlogs()
-        => _context.Blogs.OrderBy(b => b.Name).ToArray();
+    public IAsyncEnumerable<Blog> GetAllBlogs()
+        => _context.Blogs.OrderBy(b => b.Name).AsAsyncEnumerable();
 
     #region AddBlog
     [HttpPost]
-    public ActionResult AddBlog(string name, string url)
+    public async Task<ActionResult> AddBlog(string name, string url)
     {
         _context.Blogs.Add(new Blog { Name = name, Url = url });
-        _context.SaveChanges();
+        await _context.SaveChangesAsync();
 
         return Ok();
     }
@@ -41,21 +43,21 @@ public class BloggingController : ControllerBase
 
     #region UpdateBlogUrl
     [HttpPost]
-    public ActionResult UpdateBlogUrl(string name, string url)
+    public async Task<ActionResult> UpdateBlogUrl(string name, string url)
     {
         // Note: it isn't usually necessary to start a transaction for updating. This is done here for illustration purposes only.
-        using var transaction = _context.Database.BeginTransaction(IsolationLevel.Serializable);
+        using var transaction = await _context.Database.BeginTransactionAsync(IsolationLevel.Serializable);
 
-        var blog = _context.Blogs.FirstOrDefault(b => b.Name == name);
+        var blog = await _context.Blogs.FirstOrDefaultAsync(b => b.Name == name);
         if (blog is null)
         {
             return NotFound();
         }
 
         blog.Url = url;
-        _context.SaveChanges();
+        await _context.SaveChangesAsync();
 
-        transaction.Commit();
+        await transaction.CommitAsync();
         return Ok();
     }
     #endregion

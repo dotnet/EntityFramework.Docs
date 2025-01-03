@@ -1,24 +1,25 @@
 ﻿using System;
 using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 
 public static class IsNullOrWhitespaceSample
 {
-    public static void Translate_IsNullOrWhitespace()
+    public static async Task Translate_IsNullOrWhitespace()
     {
         Console.WriteLine($">>>> Sample: {nameof(Translate_IsNullOrWhitespace)}");
         Console.WriteLine();
 
-        Helpers.RecreateCleanDatabase();
-        Helpers.PopulateDatabase();
+        await Helpers.RecreateCleanDatabase();
+        await Helpers.PopulateDatabase();
 
         using var context = new BooksContext();
 
         #region Query
-        var users = context.Users.Where(
+        var users = await context.Users.Where(
             e => string.IsNullOrWhiteSpace(e.FirstName)
-                 || string.IsNullOrWhiteSpace(e.LastName)).ToList();
+                 || string.IsNullOrWhiteSpace(e.LastName)).ToListAsync();
         #endregion
 
         foreach (var user in users)
@@ -31,15 +32,15 @@ public static class IsNullOrWhitespaceSample
 
     public static class Helpers
     {
-        public static void RecreateCleanDatabase()
+        public static async Task RecreateCleanDatabase()
         {
             using var context = new BooksContext(quiet: true);
 
-            context.Database.EnsureDeleted();
-            context.Database.EnsureCreated();
+            await context.Database.EnsureDeletedAsync();
+            await context.Database.EnsureCreatedAsync();
         }
 
-        public static void PopulateDatabase()
+        public static async Task PopulateDatabase()
         {
             using var context = new BooksContext(quiet: true);
 
@@ -69,7 +70,7 @@ public static class IsNullOrWhitespaceSample
                     LastName = "\t"
                 });
 
-            context.SaveChanges();
+            await context.SaveChangesAsync();
         }
     }
 

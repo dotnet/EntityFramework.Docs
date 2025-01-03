@@ -5,6 +5,7 @@ using System;
 using System.Linq;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 
@@ -12,25 +13,25 @@ namespace EFModeling.ValueConversions;
 
 public class CompositeValueObject : Program
 {
-    public void Run()
+    public async Task Run()
     {
         ConsoleWriteLines("Sample showing value conversions for a composite value object...");
 
         using (var context = new SampleDbContext())
         {
-            CleanDatabase(context);
+            await CleanDatabase(context);
 
             ConsoleWriteLines("Save a new entity...");
 
             context.Add(new Order { Price = new Money(3.99m, Currency.UsDollars) });
-            context.SaveChanges();
+            await context.SaveChangesAsync();
         }
 
         using (var context = new SampleDbContext())
         {
             ConsoleWriteLines("Read the entity back...");
 
-            var order = context.Set<Order>().Single();
+            var order = await context.Set<Order>().SingleAsync();
 
             ConsoleWriteLines($"Order with price {order.Price.Amount} in {order.Price.Currency}.");
         }

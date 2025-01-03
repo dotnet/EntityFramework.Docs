@@ -1,20 +1,21 @@
 ﻿using System;
 using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 
 public static class ToInMemoryQuerySample
 {
-    public static void Can_query_keyless_types_from_in_memory_database()
+    public static async Task Can_query_keyless_types_from_in_memory_database()
     {
         Console.WriteLine($">>>> Sample: {nameof(Can_query_keyless_types_from_in_memory_database)}");
         Console.WriteLine();
 
-        Helpers.PopulateDatabase();
+        await Helpers.PopulateDatabase();
 
         using var context = new CustomerContext();
 
         #region Query
-        var results = context.CustomerDensities.ToList();
+        var results = await context.CustomerDensities.ToListAsync();
         #endregion
 
         foreach (var customerDensity in results)
@@ -27,7 +28,7 @@ public static class ToInMemoryQuerySample
 
     public static class Helpers
     {
-        public static void PopulateDatabase()
+        public static async Task PopulateDatabase()
         {
             using var context = new CustomerContext();
 
@@ -109,7 +110,7 @@ public static class ToInMemoryQuerySample
                         Postcode = "MK3 2ND",
                     }
                 });
-            context.SaveChanges();
+            await context.SaveChangesAsync();
         }
     }
 
@@ -120,7 +121,7 @@ public static class ToInMemoryQuerySample
         public int CustomerCount { get; set; }
     }
     #endregion
-    
+
     #region EntityTypes
     public class Customer
     {

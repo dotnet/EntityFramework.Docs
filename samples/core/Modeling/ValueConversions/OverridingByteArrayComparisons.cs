@@ -1,6 +1,7 @@
 using System;
 using System.Diagnostics;
 using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.Extensions.Logging;
@@ -9,19 +10,19 @@ namespace EFModeling.ValueConversions;
 
 public class OverridingByteArrayComparisons : Program
 {
-    public void Run()
+    public async Task Run()
     {
         ConsoleWriteLines("Sample showing overriding byte array comparisons...");
 
         using (var context = new SampleDbContext())
         {
-            CleanDatabase(context);
+            await CleanDatabase(context);
 
             ConsoleWriteLines("Save a new entity...");
 
             var entity = new EntityType { MyBytes = new byte[] { 1, 2, 3 } };
             context.Add(entity);
-            context.SaveChanges();
+            await context.SaveChangesAsync();
 
             ConsoleWriteLines("Mutate the property value and save again...");
 
@@ -29,14 +30,14 @@ public class OverridingByteArrayComparisons : Program
             // In this case it will be detected because the comparer in the model is overridden.
             entity.MyBytes[1] = 4;
 
-            context.SaveChanges();
+            await context.SaveChangesAsync();
         }
 
         using (var context = new SampleDbContext())
         {
             ConsoleWriteLines("Read the entity back...");
 
-            var entity = context.Set<EntityType>().Single();
+            var entity = await context.Set<EntityType>().SingleAsync();
 
             Debug.Assert(entity.MyBytes.SequenceEqual(new byte[] { 1, 4, 3 }));
         }

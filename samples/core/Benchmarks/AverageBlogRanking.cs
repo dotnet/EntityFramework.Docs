@@ -1,5 +1,6 @@
 using System;
 using System.Linq;
+using System.Threading.Tasks;
 using BenchmarkDotNet.Attributes;
 using Microsoft.EntityFrameworkCore;
 
@@ -10,22 +11,22 @@ public class AverageBlogRanking
     public int NumBlogs; // number of records to write [once], and read [each pass]
 
     [GlobalSetup]
-    public void Setup()
+    public async Task Setup()
     {
         using var context = new BloggingContext();
-        context.Database.EnsureDeleted();
-        context.Database.EnsureCreated();
-        context.SeedData(NumBlogs);
+        await context.Database.EnsureDeletedAsync();
+        await context.Database.EnsureCreatedAsync();
+        await context.SeedData(NumBlogs);
     }
 
     #region LoadEntities
     [Benchmark]
-    public double LoadEntities()
+    public async Task<double> LoadEntities()
     {
         var sum = 0;
         var count = 0;
         using var ctx = new BloggingContext();
-        foreach (var blog in ctx.Blogs)
+        await foreach (var blog in ctx.Blogs.AsAsyncEnumerable())
         {
             sum += blog.Rating;
             count++;
@@ -37,12 +38,12 @@ public class AverageBlogRanking
 
     #region LoadEntitiesNoTracking
     [Benchmark]
-    public double LoadEntitiesNoTracking()
+    public async Task<double> LoadEntitiesNoTracking()
     {
         var sum = 0;
         var count = 0;
         using var ctx = new BloggingContext();
-        foreach (var blog in ctx.Blogs.AsNoTracking())
+        await foreach (var blog in ctx.Blogs.AsNoTracking().AsAsyncEnumerable())
         {
             sum += blog.Rating;
             count++;
@@ -54,12 +55,12 @@ public class AverageBlogRanking
 
     #region ProjectOnlyRanking
     [Benchmark]
-    public double ProjectOnlyRanking()
+    public async Task<double> ProjectOnlyRanking()
     {
         var sum = 0;
         var count = 0;
         using var ctx = new BloggingContext();
-        foreach (var rating in ctx.Blogs.Select(b => b.Rating))
+        await foreach (var rating in ctx.Blogs.Select(b => b.Rating).AsAsyncEnumerable())
         {
             sum += rating;
             count++;
@@ -71,10 +72,10 @@ public class AverageBlogRanking
 
     #region CalculateInDatabase
     [Benchmark(Baseline = true)]
-    public double CalculateInDatabase()
+    public async Task<double> CalculateInDatabase()
     {
         using var ctx = new BloggingContext();
-        return ctx.Blogs.Average(b => b.Rating);
+        return await ctx.Blogs.AverageAsync(b => b.Rating);
     }
     #endregion
 
@@ -85,7 +86,7 @@ public class AverageBlogRanking
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
             => optionsBuilder.UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=Blogging;Trusted_Connection=True;ConnectRetryCount=0");
 
-        public void SeedData(int numblogs)
+        public async Task SeedData(int numblogs)
         {
             Blogs.AddRange(
                 Enumerable.Range(0, numblogs).Select(
@@ -93,7 +94,7 @@ public class AverageBlogRanking
                     {
                         Name = $"Blog{i}", Url = $"blog{i}.blogs.net", CreationTime = new DateTime(2020, 1, 1), Rating = i % 5
                     }));
-            SaveChanges();
+            await SaveChangesAsync();
         }
     }
 

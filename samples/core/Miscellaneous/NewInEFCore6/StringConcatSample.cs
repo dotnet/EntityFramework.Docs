@@ -1,24 +1,25 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 
 public static class StringConcatSample
 {
-    public static void Concat_with_multiple_args()
+    public static async Task Concat_with_multiple_args()
     {
         Console.WriteLine($">>>> Sample: {nameof(Concat_with_multiple_args)}");
         Console.WriteLine();
 
-        Helpers.RecreateCleanDatabase();
-        Helpers.PopulateDatabase();
+        await Helpers.RecreateCleanDatabase();
+        await Helpers.PopulateDatabase();
 
         using var context = new BooksContext();
 
         #region StringConcat
-        var shards = context.Shards
-            .Where(e => string.Concat(e.Token1, e.Token2, e.Token3) != e.TokensProcessed).ToList();
+        var shards = await context.Shards
+            .Where(e => string.Concat(e.Token1, e.Token2, e.Token3) != e.TokensProcessed).ToListAsync();
         #endregion
 
         foreach (var shard in shards)
@@ -31,15 +32,15 @@ public static class StringConcatSample
 
     public static class Helpers
     {
-        public static void RecreateCleanDatabase()
+        public static async Task RecreateCleanDatabase()
         {
             using var context = new BooksContext(quiet: true);
 
-            context.Database.EnsureDeleted();
-            context.Database.EnsureCreated();
+            await context.Database.EnsureDeletedAsync();
+            await context.Database.EnsureCreatedAsync();
         }
 
-        public static void PopulateDatabase()
+        public static async Task PopulateDatabase()
         {
             using var context = new BooksContext(quiet: true);
 
@@ -79,7 +80,7 @@ public static class StringConcatSample
                     TokensProcessed = "JAM"
                 });
 
-            context.SaveChanges();
+            await context.SaveChangesAsync();
         }
     }
 

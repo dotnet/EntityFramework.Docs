@@ -95,9 +95,9 @@ Another strategy is to use non-nullable auto-properties, but to initialize them 
 When dealing with optional relationships, it's possible to encounter compiler warnings where an actual `null` reference exception would be impossible. When translating and executing your LINQ queries, EF Core guarantees that if an optional related entity does not exist, any navigation to it will simply be ignored, rather than throwing. However, the compiler is unaware of this EF Core guarantee, and produces warnings as if the LINQ query were executed in memory, with LINQ to Objects. As a result, it is necessary to use the null-forgiving operator (!) to inform the compiler that an actual `null` value isn't possible:
 
 ```csharp
-var order = context.Orders
+var order = await context.Orders
     .Where(o => o.OptionalInfo!.SomeProperty == "foo")
-    .ToList();
+    .ToListAsync();
 ```
 
 A similar issue occurs when including multiple levels of relationships across optional navigations:

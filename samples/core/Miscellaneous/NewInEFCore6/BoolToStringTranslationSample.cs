@@ -1,21 +1,22 @@
 ﻿using System;
 using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 
 public static class BoolToStringTranslationSample
 {
-    public static void Translate_bool_to_string_on_SQL_Server()
+    public static async Task Translate_bool_to_string_on_SQL_Server()
     {
         Console.WriteLine($">>>> Sample: {nameof(Translate_bool_to_string_on_SQL_Server)}");
         Console.WriteLine();
 
-        Helpers.RecreateCleanDatabase();
-        Helpers.PopulateDatabase();
+        await Helpers.RecreateCleanDatabase();
+        await Helpers.PopulateDatabase();
 
         using var context = new CustomersContext();
 
-        var results1 = context.Customers.Select(c => new { c.Name, IsActive = c.IsActive.ToString() }).ToList();
+        var results1 = await context.Customers.Select(c => new { c.Name, IsActive = c.IsActive.ToString() }).ToListAsync();
 
         Console.WriteLine();
 
@@ -26,7 +27,7 @@ public static class BoolToStringTranslationSample
 
         Console.WriteLine();
 
-        var results2 = context.Customers.Where(b => b.IsActive.ToString() == "true").ToList();
+        var results2 = await context.Customers.Where(b => b.IsActive.ToString() == "true").ToListAsync();
 
         Console.WriteLine();
 
@@ -40,15 +41,15 @@ public static class BoolToStringTranslationSample
 
     public static class Helpers
     {
-        public static void RecreateCleanDatabase()
+        public static async Task RecreateCleanDatabase()
         {
             using var context = new CustomersContext(quiet: true);
 
-            context.Database.EnsureDeleted();
-            context.Database.EnsureCreated();
+            await context.Database.EnsureDeletedAsync();
+            await context.Database.EnsureCreatedAsync();
         }
 
-        public static void PopulateDatabase()
+        public static async Task PopulateDatabase()
         {
             using var context = new CustomersContext(quiet: true);
 
@@ -69,7 +70,7 @@ public static class BoolToStringTranslationSample
                     IsActive = true
                 });
 
-            context.SaveChanges();
+            await context.SaveChangesAsync();
         }
     }
 

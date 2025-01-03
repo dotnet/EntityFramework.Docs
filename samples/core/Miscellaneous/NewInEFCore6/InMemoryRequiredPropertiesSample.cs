@@ -1,11 +1,12 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 
 public static class InMemoryRequiredPropertiesSample
 {
-    public static void Required_properties_validated_with_in_memory_database()
+    public static async Task Required_properties_validated_with_in_memory_database()
     {
         Console.WriteLine($">>>> Sample: {nameof(Required_properties_validated_with_in_memory_database)}");
         Console.WriteLine();
@@ -16,7 +17,7 @@ public static class InMemoryRequiredPropertiesSample
 
         try
         {
-            context.SaveChanges();
+            await context.SaveChangesAsync();
         }
         catch (Exception e)
         {
@@ -26,7 +27,7 @@ public static class InMemoryRequiredPropertiesSample
         Console.WriteLine();
     }
 
-    public static void Required_property_validation_with_in_memory_database_can_be_disabled()
+    public static async Task Required_property_validation_with_in_memory_database_can_be_disabled()
     {
         Console.WriteLine($">>>> Sample: {nameof(Required_property_validation_with_in_memory_database_can_be_disabled)}");
         Console.WriteLine();
@@ -35,7 +36,7 @@ public static class InMemoryRequiredPropertiesSample
 
         context.Add(new User());
 
-        context.SaveChanges();
+        await context.SaveChangesAsync();
 
         Console.WriteLine();
     }

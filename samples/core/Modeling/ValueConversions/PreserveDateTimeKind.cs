@@ -3,6 +3,7 @@
 
 using System;
 using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 
@@ -10,13 +11,13 @@ namespace EFModeling.ValueConversions;
 
 public class PreserveDateTimeKind : Program
 {
-    public void Run()
+    public async Task Run()
     {
         ConsoleWriteLines("Sample showing value conversions for preserving/setting DateTime.Kind...");
 
         using (var context = new SampleDbContext())
         {
-            CleanDatabase(context);
+            await CleanDatabase(context);
 
             ConsoleWriteLines("Save new entities...");
 
@@ -35,18 +36,18 @@ public class PreserveDateTimeKind : Program
                     LastUpdated = new DateTime(1976, 9, 3, 0, 0, 0, 0, DateTimeKind.Utc),
                     DeletedOn = new DateTime(2017, 9, 3, 0, 0, 0, 0, DateTimeKind.Utc)
                 });
-            context.SaveChanges();
+            await context.SaveChangesAsync();
         }
 
         using (var context = new SampleDbContext())
         {
             ConsoleWriteLines("Read the entities back...");
 
-            var blog1 = context.Set<Post>().Single(e => e.Title == "Post 1");
+            var blog1 = await context.Set<Post>().SingleAsync(e => e.Title == "Post 1");
 
             ConsoleWriteLines($"Blog 1: PostedOn.Kind = {blog1.PostedOn.Kind} LastUpdated.Kind = {blog1.LastUpdated.Kind} DeletedOn.Kind = {blog1.DeletedOn.Kind}");
 
-            var blog2 = context.Set<Post>().Single(e => e.Title == "Post 2");
+            var blog2 = await context.Set<Post>().SingleAsync(e => e.Title == "Post 2");
 
             ConsoleWriteLines($"Blog 2: PostedOn.Kind = {blog2.PostedOn.Kind} LastUpdated.Kind = {blog2.LastUpdated.Kind} DeletedOn.Kind = {blog2.DeletedOn.Kind}");
         }

@@ -115,7 +115,7 @@ public static class TpcInheritanceSample
             context.Remove(context.Animals.Local.Single(e => e.Name == "Christi"));
             context.Humans.Local.Single(e => e.Name == "Wendy").Food = new HumanFood("White pizza", 400);
 
-            var sushi = context.Foods.OfType<HumanFood>().Single(e => e.Name == "Sushi");
+            var sushi = await context.Foods.OfType<HumanFood>().SingleAsync(e => e.Name == "Sushi");
             sushi.Calories -= 100;
 
             await context.SaveChangesAsync();

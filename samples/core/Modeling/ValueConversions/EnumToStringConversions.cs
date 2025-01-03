@@ -1,6 +1,7 @@
 using System;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
@@ -9,125 +10,111 @@ namespace EFModeling.ValueConversions;
 
 public class EnumToStringConversions : Program
 {
-    public void Run()
+    public async Task Run()
     {
         ConsoleWriteLines("Sample showing explicitly configured value converter");
 
         using (var context = new SampleDbContextExplicit())
         {
-            CleanDatabase(context);
+            await CleanDatabase(context);
 
             context.Add(new Rider { Mount = EquineBeast.Horse });
-            context.SaveChanges();
-
-            context.SaveChanges();
+            await context.SaveChangesAsync();
         }
 
         using (var context = new SampleDbContextExplicit())
         {
-            ConsoleWriteLines($"Enum value read as '{context.Set<Rider>().Single().Mount}'.");
+            ConsoleWriteLines($"Enum value read as '{(await context.Set<Rider>().SingleAsync()).Mount}'.");
         }
 
         ConsoleWriteLines("Sample showing conversion configured by CLR type");
 
         using (var context = new SampleDbContextByClrType())
         {
-            CleanDatabase(context);
+            await CleanDatabase(context);
 
             context.Add(new Rider { Mount = EquineBeast.Horse });
-            context.SaveChanges();
-
-            context.SaveChanges();
+            await context.SaveChangesAsync();
         }
 
         using (var context = new SampleDbContextByClrType())
         {
-            ConsoleWriteLines($"Enum value read as '{context.Set<Rider>().Single().Mount}'.");
+            ConsoleWriteLines($"Enum value read as '{(await context.Set<Rider>().SingleAsync()).Mount}'.");
         }
 
         ConsoleWriteLines("Sample showing conversion configured by database type");
 
         using (var context = new SampleDbContextByDatabaseType())
         {
-            CleanDatabase(context);
+            await CleanDatabase(context);
 
             context.Add(new Rider2 { Mount = EquineBeast.Horse });
-            context.SaveChanges();
-
-            context.SaveChanges();
+            await context.SaveChangesAsync();
         }
 
         using (var context = new SampleDbContextByDatabaseType())
         {
-            ConsoleWriteLines($"Enum value read as '{context.Set<Rider2>().Single().Mount}'.");
+            ConsoleWriteLines($"Enum value read as '{(await context.Set<Rider2>().SingleAsync()).Mount}'.");
         }
 
         ConsoleWriteLines("Sample showing conversion configured by a ValueConverter instance");
 
         using (var context = new SampleDbContextByConverterInstance())
         {
-            CleanDatabase(context);
+            await CleanDatabase(context);
 
             context.Add(new Rider { Mount = EquineBeast.Horse });
-            context.SaveChanges();
-
-            context.SaveChanges();
+            await context.SaveChangesAsync();
         }
 
         using (var context = new SampleDbContextByConverterInstance())
         {
-            ConsoleWriteLines($"Enum value read as '{context.Set<Rider>().Single().Mount}'.");
+            ConsoleWriteLines($"Enum value read as '{(await context.Set<Rider>().SingleAsync()).Mount}'.");
         }
 
         ConsoleWriteLines("Sample showing conversion configured by a built-in ValueConverter instance");
 
         using (var context = new SampleDbContextByBuiltInInstance())
         {
-            CleanDatabase(context);
+            await CleanDatabase(context);
 
             context.Add(new Rider { Mount = EquineBeast.Horse });
-            context.SaveChanges();
-
-            context.SaveChanges();
+            await context.SaveChangesAsync();
         }
 
         using (var context = new SampleDbContextByBuiltInInstance())
         {
-            ConsoleWriteLines($"Enum value read as '{context.Set<Rider>().Single().Mount}'.");
+            ConsoleWriteLines($"Enum value read as '{(await context.Set<Rider>().SingleAsync()).Mount}'.");
         }
 
         ConsoleWriteLines("Sample showing conversion configured by CLR type with per-property facets");
 
         using (var context = new SampleDbContextByClrTypeWithFacets())
         {
-            CleanDatabase(context);
+            await CleanDatabase(context);
 
             context.Add(new Rider { Mount = EquineBeast.Horse });
-            context.SaveChanges();
-
-            context.SaveChanges();
+            await context.SaveChangesAsync();
         }
 
         using (var context = new SampleDbContextByClrTypeWithFacets())
         {
-            ConsoleWriteLines($"Enum value read as '{context.Set<Rider>().Single().Mount}'.");
+            ConsoleWriteLines($"Enum value read as '{(await context.Set<Rider>().SingleAsync()).Mount}'.");
         }
 
         ConsoleWriteLines("Sample showing conversion configured by a ValueConverter instance with per-property facets");
 
         using (var context = new SampleDbContextByConverterInstanceWithFacets())
         {
-            CleanDatabase(context);
+            await CleanDatabase(context);
 
             context.Add(new Rider { Mount = EquineBeast.Horse });
-            context.SaveChanges();
-
-            context.SaveChanges();
+            await context.SaveChangesAsync();
         }
 
         using (var context = new SampleDbContextByConverterInstanceWithFacets())
         {
-            ConsoleWriteLines($"Enum value read as '{context.Set<Rider>().Single().Mount}'.");
+            ConsoleWriteLines($"Enum value read as '{(await context.Set<Rider>().SingleAsync()).Mount}'.");
         }
     }
 

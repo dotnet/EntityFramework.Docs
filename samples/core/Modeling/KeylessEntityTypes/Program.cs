@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
@@ -10,14 +11,14 @@ namespace EFModeling.KeylessEntityTypes;
 
 public class Program
 {
-    private static void Main()
+    private static async Task Main()
     {
-        SetupDatabase();
+        await SetupDatabase();
 
         using var db = new BloggingContext();
 
         #region Query
-        var postCounts = db.BlogPostCounts.ToList();
+        var postCounts = await db.BlogPostCounts.ToListAsync();
 
         foreach (var postCount in postCounts)
         {
@@ -27,11 +28,11 @@ public class Program
         #endregion
     }
 
-    private static void SetupDatabase()
+    private static async Task SetupDatabase()
     {
         using var db = new BloggingContext();
 
-        if (db.Database.EnsureCreated())
+        if (await db.Database.EnsureCreatedAsync())
         {
             db.Blogs.Add(
                 new Blog
@@ -70,10 +71,10 @@ public class Program
                     }
                 });
 
-            db.SaveChanges();
+            await db.SaveChangesAsync();
 
             #region View
-            db.Database.ExecuteSqlRaw(
+            await db.Database.ExecuteSqlRawAsync(
                 @"CREATE VIEW View_BlogPostCounts AS
                             SELECT b.Name, Count(p.PostId) as PostCount
                             FROM Blogs b

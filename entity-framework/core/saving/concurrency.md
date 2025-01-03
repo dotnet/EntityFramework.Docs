@@ -35,9 +35,9 @@ public class Person
 In SQL Server, this configures a concurrency token that automatically changes in the database every time the row is changed (more details are available below). With this configuration in place, let's examine what happens with a simple update operation:
 
 ```csharp
-var person = context.People.Single(b => b.FirstName == "John");
+var person = await context.People.SingleAsync(b => b.FirstName == "John");
 person.FirstName = "Paul";
-context.SaveChanges();
+await context.SaveChangesAsync();
 ```
 
 1. In the first step, a Person is loaded from the database; this includes the concurrency token, which is now tracked as usual by EF along with the rest of the properties.
@@ -123,10 +123,10 @@ protected override void OnModelCreating(ModelBuilder modelBuilder)
 Since this property isn't database-generated, you must assign it in application whenever persisting changes:
 
 ```c#
-var person = context.People.Single(b => b.FirstName == "John");
+var person = await context.People.SingleAsync(b => b.FirstName == "John");
 person.FirstName = "Paul";
 person.Version = Guid.NewGuid();
-context.SaveChanges();
+await context.SaveChangesAsync();
 ```
 
 If you want a new GUID value to always be assigned, you can do this via a [`SaveChanges` interceptor](xref:core/logging-events-diagnostics/interceptors#savechanges-interception). However, one advantage of manually managing the concurrency token is that you can control precisely when it gets regenerated, to avoid needless concurrency conflicts.

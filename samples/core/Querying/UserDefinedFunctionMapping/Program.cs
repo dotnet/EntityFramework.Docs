@@ -1,17 +1,18 @@
 ﻿using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 
 namespace EFQuerying.UserDefinedFunctionMapping;
 
 internal class Program
 {
-    private static void Main(string[] args)
+    private static async Task Main(string[] args)
     {
         using var context = new BloggingContext();
-        context.Database.EnsureDeleted();
-        context.Database.EnsureCreated();
+        await context.Database.EnsureDeletedAsync();
+        await context.Database.EnsureCreatedAsync();
 
-        context.Database.ExecuteSqlRaw(
+        await context.Database.ExecuteSqlRawAsync(
             @"CREATE FUNCTION dbo.CommentedPostCountForBlog(@id int)
                     RETURNS int
                     AS
@@ -24,7 +25,7 @@ internal class Program
                                 WHERE [p].[PostId] = [c].[PostId]) > 0));
                     END");
 
-        context.Database.ExecuteSqlRaw(
+        await context.Database.ExecuteSqlRawAsync(
             @"CREATE FUNCTION [dbo].[ConcatStrings] (@prm1 nvarchar(max), @prm2 nvarchar(max))
                     RETURNS nvarchar(max)
                     AS
@@ -32,7 +33,7 @@ internal class Program
                         RETURN @prm1 + @prm2;
                     END");
 
-        context.Database.ExecuteSqlRaw(
+        await context.Database.ExecuteSqlRawAsync(
             @"CREATE FUNCTION dbo.PostsWithPopularComments(@likeThreshold int)
                     RETURNS TABLE
                     AS
@@ -51,13 +52,13 @@ internal class Program
                      where context.ActivePostCountForBlog(b.BlogId) > 1
                      select b;
         #endregion
-        var result1 = query1.ToList();
+        var result1 = await query1.ToListAsync();
 
         #region HasTranslationQuery
         var query2 = from p in context.Posts
                      select context.PercentageDifference(p.BlogId, 3);
         #endregion
-        var result2 = query2.ToList();
+        var result2 = await query2.ToListAsync();
 
         #region NullabilityPropagationExamples
         var query3 = context.Blogs.Where(e => context.ConcatStrings(e.Url, e.Rating.ToString()) != "https://mytravelblog.com/4");
@@ -65,8 +66,8 @@ internal class Program
             e => context.ConcatStringsOptimized(e.Url, e.Rating.ToString()) != "https://mytravelblog.com/4");
         #endregion
 
-        var result3 = query3.ToList();
-        var result4 = query4.ToList();
+        var result3 = await query3.ToListAsync();
+        var result4 = await query4.ToListAsync();
 
         #region TableValuedFunctionQuery
         var likeThreshold = 3;
@@ -74,6 +75,6 @@ internal class Program
                      orderby p.Rating
                      select p;
         #endregion
-        var result5 = query5.ToList();
+        var result5 = await query5.ToListAsync();
     }
 }

@@ -1,51 +1,52 @@
 ﻿using System;
 using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 
 public static class TagWithFileAndLineSample
 {
-    public static void Queries_can_be_tagged_with_filename_and_line_number()
+    public static async Task Queries_can_be_tagged_with_filename_and_line_number()
     {
         Console.WriteLine($">>>> Sample: {nameof(Queries_can_be_tagged_with_filename_and_line_number)}");
         Console.WriteLine();
 
-        Helpers.RecreateCleanDatabase();
-        Helpers.PopulateDatabase();
+        await Helpers.RecreateCleanDatabase();
+        await Helpers.PopulateDatabase();
 
         using var context = new CustomersContext();
 
         #region TagWithCallSite
-        var results1 = context
+        var results1 = await context
             .Customers
             .TagWithCallSite()
             .Where(c => c.Name.StartsWith("A"))
-            .ToList();
+            .ToListAsync();
         #endregion
 
         Console.WriteLine();
 
-        var results2 = context
+        var results2 = await context
             .Customers
             .OrderBy(c => c.Name)
             .TagWith("Ordering query")
             .TagWithCallSite()
-            .ToList();
+            .ToListAsync();
 
         Console.WriteLine();
     }
 
     public static class Helpers
     {
-        public static void RecreateCleanDatabase()
+        public static async Task RecreateCleanDatabase()
         {
             using var context = new CustomersContext(quiet: true);
 
-            context.Database.EnsureDeleted();
-            context.Database.EnsureCreated();
+            await context.Database.EnsureDeletedAsync();
+            await context.Database.EnsureCreatedAsync();
         }
 
-        public static void PopulateDatabase()
+        public static async Task PopulateDatabase()
         {
             using var context = new CustomersContext(quiet: true);
 
@@ -63,7 +64,7 @@ public static class TagWithFileAndLineSample
                     Name = "Andrew",
                 });
 
-            context.SaveChanges();
+            await context.SaveChangesAsync();
         }
     }
 

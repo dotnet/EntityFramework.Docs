@@ -24,7 +24,7 @@ if (tenantService != null && factory != null)
     {
         tenantService.SetTenant(tenant);
         using var ctx = factory.CreateDbContext();
-        ctx.CheckAndSeed();
+        await ctx.CheckAndSeed();
     }
 }
 

@@ -17,9 +17,9 @@ Entity Framework Core allows you to drop down to SQL queries when working with a
 You can use <xref:Microsoft.EntityFrameworkCore.RelationalQueryableExtensions.FromSql*> to begin a LINQ query based on a SQL query:
 
 ```csharp
-var blogs = context.Blogs
+var blogs = await context.Blogs
     .FromSql($"SELECT * FROM dbo.Blogs")
-    .ToList();
+    .ToListAsync();
 ```
 
 > [!NOTE]
@@ -29,9 +29,9 @@ var blogs = context.Blogs
 SQL queries can be used to execute a stored procedure which returns entity data:
 
 ```csharp
-var blogs = context.Blogs
+var blogs = await context.Blogs
     .FromSql($"EXECUTE dbo.GetMostPopularBlogs")
-    .ToList();
+    .ToListAsync();
 ```
 
 > [!NOTE]
@@ -52,9 +52,9 @@ The following example passes a single parameter to a stored procedure by includi
 ```csharp
 var user = "johndoe";
 
-var blogs = context.Blogs
+var blogs = await context.Blogs
     .FromSql($"EXECUTE dbo.GetMostPopularBlogsForUser {user}")
-    .ToList();
+    .ToListAsync();
 ```
 
 While this syntax may look like regular C# [string interpolation](/dotnet/csharp/language-reference/tokens/interpolated), the supplied value is wrapped in a `DbParameter` and the generated parameter name inserted where the `{0}` placeholder was specified. This makes <xref:Microsoft.EntityFrameworkCore.RelationalQueryableExtensions.FromSql*> safe from SQL injection attacks, and sends the value efficiently and correctly to the database.
@@ -64,9 +64,9 @@ When executing stored procedures, it can be useful to use named parameters in th
 ```csharp
 var user = new SqlParameter("user", "johndoe");
 
-var blogs = context.Blogs
+var blogs = await context.Blogs
     .FromSql($"EXECUTE dbo.GetMostPopularBlogsForUser @filterByUser={user}")
-    .ToList();
+    .ToListAsync();
 ```
 
 If you need more control over the database parameter being sent, you can also construct a `DbParameter` and supply it as a parameter value. This allows you to set the precise database type of the parameter, or facets such as its size, precision or length:
@@ -74,9 +74,9 @@ If you need more control over the database parameter being sent, you can also co
 ```csharp
 var user = new SqlParameter("user", "johndoe");
 
-var blogs = context.Blogs
+var blogs = await context.Blogs
     .FromSql($"EXECUTE dbo.GetMostPopularBlogsForUser {user}")
-    .ToList();
+    .ToListAsync();
 ```
 
 > [!NOTE]
@@ -91,9 +91,9 @@ var blogs = context.Blogs
 var propertyName = "User";
 var propertyValue = "johndoe";
 
-var blogs = context.Blogs
+var blogs = await context.Blogs
     .FromSql($"SELECT * FROM [Blogs] WHERE {propertyName} = {propertyValue}")
-    .ToList();
+    .ToListAsync();
 ```
 
 This code doesn't work, since databases do not allow parameterizing column names (or any other part of the schema).
@@ -106,9 +106,9 @@ If you've decided you do want to dynamically construct your SQL, you'll have to 
 var columnName = "Url";
 var columnValue = new SqlParameter("columnValue", "http://SomeURL");
 
-var blogs = context.Blogs
+var blogs = await context.Blogs
     .FromSqlRaw($"SELECT * FROM [Blogs] WHERE {columnName} = @columnValue", columnValue)
-    .ToList();
+    .ToListAsync();
 ```
 
 In the above code, the column name is inserted directly into the SQL, using C# string interpolation. It is your responsibility to make sure this string value is safe, sanitizing it if it comes from an unsafe origin; this means detecting special characters such as semicolons, comments, and other SQL constructs, and either escaping them properly or rejecting such inputs.
@@ -126,11 +126,11 @@ You can compose on top of the initial SQL query using LINQ operators; EF Core wi
 ```csharp
 var searchTerm = "Lorem ipsum";
 
-var blogs = context.Blogs
+var blogs = await context.Blogs
     .FromSql($"SELECT * FROM dbo.SearchBlogs({searchTerm})")
     .Where(b => b.Rating > 3)
     .OrderByDescending(b => b.Rating)
-    .ToList();
+    .ToListAsync();
 ```
 
 The above query generates the following SQL:
@@ -151,10 +151,10 @@ The [`Include`](xref:core/querying/related-data/eager) operator can be used to l
 ```csharp
 var searchTerm = "Lorem ipsum";
 
-var blogs = context.Blogs
+var blogs = await context.Blogs
     .FromSql($"SELECT * FROM dbo.SearchBlogs({searchTerm})")
     .Include(b => b.Posts)
-    .ToList();
+    .ToListAsync();
 ```
 
 Composing with LINQ requires your SQL query to be composable, since EF Core will treat the supplied SQL as a subquery. Composable SQL queries generally begin with the `SELECT` keyword, and cannot contain SQL features that aren't valid in a subquery, such as:
@@ -174,10 +174,10 @@ The following example uses a SQL query that selects from a Table-Valued Function
 ```csharp
 var searchTerm = "Lorem ipsum";
 
-var blogs = context.Blogs
+var blogs = await context.Blogs
     .FromSql($"SELECT * FROM dbo.SearchBlogs({searchTerm})")
     .AsNoTracking()
-    .ToList();
+    .ToListAsync();
 ```
 
 ## Querying scalar (non-entity) types
@@ -190,29 +190,29 @@ While <xref:Microsoft.EntityFrameworkCore.RelationalQueryableExtensions.FromSql*
 ### [SQL Server](#tab/sqlserver)
 
 ```c#
-var ids = context.Database
+var ids = await context.Database
     .SqlQuery<int>($"SELECT [BlogId] FROM [Blogs]")
-    .ToList();
+    .ToListAsync();
 ```
 
 ### [SQLite](#tab/sqlite)
 
 ```c#
-var ids = context.Database
+var ids = await context.Database
     .SqlQuery<int>($"""
                     SELECT "BlogId" FROM "Blogs"
                     """)
-    .ToList();
+    .ToListAsync();
 ```
 
 ### [PostgreSQL](#tab/postgres)
 
 ```c#
-var ids = context.Database
+var ids = await context.Database
     .SqlQuery<int>($"""
                     SELECT "BlogId" FROM "Blogs"
                     """)
-    .ToList();
+    .ToListAsync();
 ```
 
 ***
@@ -222,32 +222,32 @@ You can also compose LINQ operators over your SQL query. However, since your SQL
 ### [SQL Server](#tab/sqlserver)
 
 ```c#
-var overAverageIds = context.Database
+var overAverageIds = await context.Database
     .SqlQuery<int>($"SELECT [BlogId] AS [Value] FROM [Blogs]")
     .Where(id => id > context.Blogs.Average(b => b.BlogId))
-    .ToList();
+    .ToListAsync();
 ```
 
 ### [SQLite](#tab/sqlite)
 
 ```c#
-var overAverageIds = context.Database
+var overAverageIds = await context.Database
     .SqlQuery<int>($"""
                     SELECT "BlogId" AS "Value" FROM "Blogs"
                     """)
     .Where(id => id > context.Blogs.Average(b => b.BlogId))
-    .ToList();
+    .ToListAsync();
 ```
 
 ### [PostgreSQL](#tab/postgres)
 
 ```c#
-var overAverageIds = context.Database
+var overAverageIds = await context.Database
     .SqlQuery<int>($"""
                     SELECT "BlogId" AS "Value" FROM "Blogs"
                     """)
     .Where(id => id > context.Blogs.Average(b => b.BlogId))
-    .ToList();
+    .ToListAsync();
 ```
 
 ***

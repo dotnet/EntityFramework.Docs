@@ -8,43 +8,43 @@ using Microsoft.Extensions.Logging;
 
 public class Program
 {
-    public static void Main()
+    public static async Task Main()
     {
-        TestCode<LogToConsoleContext>();
-        TestCode<LogToDebugContext>();
-        TestCode<LogToFileContext>();
-        TestCode<InfoOnlyContext>();
-        TestCode<SensitiveDataLoggingContext>();
-        TestCode<EnableDetailedErrorsContext>();
-        TestCode<EventIdsContext>();
-        TestCode<DatabaseCategoryContext>();
-        TestCode<CustomFilterContext>();
-        TestCode<ChangeLogLevelContext>();
-        TestCode<SuppressMessageContext>();
-        TestCode<ThrowForEventContext>();
-        TestCode<UtcContext>();
-        TestCode<SingleLineContext>();
-        TestCode<TerseLogsContext>();
-        TestDatabaseLog();
+        await TestCode<LogToConsoleContext>();
+        await TestCode<LogToDebugContext>();
+        await TestCode<LogToFileContext>();
+        await TestCode<InfoOnlyContext>();
+        await TestCode<SensitiveDataLoggingContext>();
+        await TestCode<EnableDetailedErrorsContext>();
+        await TestCode<EventIdsContext>();
+        await TestCode<DatabaseCategoryContext>();
+        await TestCode<CustomFilterContext>();
+        await TestCode<ChangeLogLevelContext>();
+        await TestCode<SuppressMessageContext>();
+        await TestCode<ThrowForEventContext>();
+        await TestCode<UtcContext>();
+        await TestCode<SingleLineContext>();
+        await TestCode<TerseLogsContext>();
+        await TestDatabaseLog();
 
-        static void TestCode<TContext>()
+        static async Task TestCode<TContext>()
             where TContext : BlogsContext, new()
         {
             using var context = new TContext();
 
-            context.Database.EnsureDeleted();
-            context.Database.EnsureCreated();
+            await context.Database.EnsureDeletedAsync();
+            await context.Database.EnsureCreatedAsync();
         }
 
-        static void TestDatabaseLog()
+        static async Task TestDatabaseLog()
         {
             using var context = new DatabaseLogContext();
 
-            context.Database.EnsureDeleted();
+            await context.Database.EnsureDeletedAsync();
 
             context.Log = Console.WriteLine;
 
-            context.Database.EnsureCreated();
+            await context.Database.EnsureCreatedAsync();
         }
     }
 }

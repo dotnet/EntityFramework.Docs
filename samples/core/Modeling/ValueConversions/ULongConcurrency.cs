@@ -3,6 +3,7 @@
 
 using System;
 using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 
@@ -10,13 +11,13 @@ namespace EFModeling.ValueConversions;
 
 public class ULongConcurrency : Program
 {
-    public void Run()
+    public async Task Run()
     {
         ConsoleWriteLines("Sample showing how to map rowversion to ulong...");
 
         using (var context = new SampleDbContext())
         {
-            CleanDatabase(context);
+            await CleanDatabase(context);
 
             ConsoleWriteLines("Save a new entity...");
 
@@ -25,40 +26,40 @@ public class ULongConcurrency : Program
                 {
                     Name = "OneUnicorn"
                 });
-            context.SaveChanges();
+            await context.SaveChangesAsync();
         }
 
         using (var context = new SampleDbContext())
         {
             ConsoleWriteLines("Read the entity back in one context...");
 
-            var blog = context.Set<Blog>().Single();
+            var blog = await context.Set<Blog>().SingleAsync();
             blog.Name = "TwoUnicorns";
 
             using (var context2 = new SampleDbContext())
             {
                 ConsoleWriteLines("Change the blog name and save in a different context...");
 
-                context2.Set<Blog>().Single().Name = "1unicorn2";
-                context2.SaveChanges();
+                (await context2.Set<Blog>().SingleAsync()).Name = "1unicorn2";
+                await context2.SaveChangesAsync();
             }
 
             try
             {
                 ConsoleWriteLines("Change the blog name and save in the first context...");
 
-                context.SaveChanges();
+                await context.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException e)
             {
                 ConsoleWriteLines($"{e.GetType().FullName}: {e.Message}");
 
-                var databaseValues = context.Entry(blog).GetDatabaseValues();
+                var databaseValues = await context.Entry(blog).GetDatabaseValuesAsync();
                 context.Entry(blog).OriginalValues.SetValues(databaseValues);
 
                 ConsoleWriteLines("Refresh original values and save again...");
 
-                context.SaveChanges();
+                await context.SaveChangesAsync();
             }
         }
 

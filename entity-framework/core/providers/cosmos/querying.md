@@ -123,11 +123,11 @@ A common way to implement pagination with databases is to use the `Skip` and `Ta
 
 ```csharp
 var position = 20;
-var nextPage = context.Session
+var nextPage = await context.Session
     .OrderBy(s => s.Id)
     .Skip(position)
     .Take(10)
-    .ToList();
+    .ToListAsync();
 ```
 
 Unfortunately, this technique is quite inefficient and can considerably increase querying costs. Azure Cosmos DB provides a special mechanism for paginating through the result of a query, via the use of _continuation tokens_:

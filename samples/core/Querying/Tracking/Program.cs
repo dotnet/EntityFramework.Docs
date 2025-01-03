@@ -1,16 +1,17 @@
 ﻿using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 
 namespace EFQuerying.Tracking;
 
 internal class Program
 {
-    private static void Main(string[] args)
+    private static async Task Main(string[] args)
     {
         using (var context = new BloggingContext())
         {
-            context.Database.EnsureDeleted();
-            context.Database.EnsureCreated();
+            await context.Database.EnsureDeletedAsync();
+            await context.Database.EnsureCreatedAsync();
         }
 
         using (var context = new BloggingContext())
@@ -18,33 +19,33 @@ internal class Program
             // seeding database
             context.Blogs.Add(new Blog { Url = "http://sample.com/blog" });
             context.Blogs.Add(new Blog { Url = "http://sample.com/another_blog" });
-            context.SaveChanges();
+            await context.SaveChangesAsync();
         }
 
         using (var context = new BloggingContext())
         {
             #region Tracking
-            var blog = context.Blogs.SingleOrDefault(b => b.BlogId == 1);
+            var blog = await context.Blogs.SingleOrDefaultAsync(b => b.BlogId == 1);
             blog.Rating = 5;
-            context.SaveChanges();
+            await context.SaveChangesAsync();
             #endregion
         }
 
         using (var context = new BloggingContext())
         {
             #region NoTracking
-            var blogs = context.Blogs
+            var blogs = await context.Blogs
                 .AsNoTracking()
-                .ToList();
+                .ToListAsync();
             #endregion
         }
 
         using (var context = new BloggingContext())
         {
             #region NoTrackingWithIdentityResolution
-            var blogs = context.Blogs
+            var blogs = await context.Blogs
                 .AsNoTrackingWithIdentityResolution()
-                .ToList();
+                .ToListAsync();
             #endregion
         }
 
@@ -53,7 +54,7 @@ internal class Program
             #region ContextDefaultTrackingBehavior
             context.ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
 
-            var blogs = context.Blogs.ToList();
+            var blogs = await context.Blogs.ToListAsync();
             #endregion
         }
 
@@ -90,11 +91,11 @@ internal class Program
         using (var context = new BloggingContext())
         {
             #region ClientProjection
-            var blogs = context.Blogs
+            var blogs = await context.Blogs
                 .OrderByDescending(blog => blog.Rating)
                 .Select(
                     blog => new { Id = blog.BlogId, Url = StandardizeUrl(blog) })
-                .ToList();
+                .ToListAsync();
             #endregion
         }
     }

@@ -3,6 +3,7 @@
 
 using System;
 using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
@@ -11,27 +12,27 @@ namespace EFModeling.ValueConversions;
 
 public class WithMappingHints : Program
 {
-    public void Run()
+    public async Task Run()
     {
         ConsoleWriteLines("Sample showing value conversions with mapping hints for facets...");
 
         using (var context = new SampleDbContext())
         {
-            CleanDatabase(context);
+            await CleanDatabase(context);
 
             ConsoleWriteLines("Save a entities...");
 
             context.Add(new Order1 { Price = new Dollars(3.99m) });
             context.Add(new Order2 { Price = new Dollars(3.99m) });
-            context.SaveChanges();
+            await context.SaveChangesAsync();
         }
 
         using (var context = new SampleDbContext())
         {
             ConsoleWriteLines("Read the entities back...");
 
-            var entity1 = context.Set<Order1>().Single();
-            var entity2 = context.Set<Order2>().Single();
+            var entity1 = await context.Set<Order1>().SingleAsync();
+            var entity2 = await context.Set<Order2>().SingleAsync();
         }
 
         ConsoleWriteLines("Sample finished.");

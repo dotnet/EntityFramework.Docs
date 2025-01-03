@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json;
+using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.EntityFrameworkCore.Diagnostics;
@@ -13,32 +14,32 @@ namespace EFModeling.ValueConversions;
 
 public class PrimitiveCollection : Program
 {
-    public void Run()
+    public async Task Run()
     {
         ConsoleWriteLines("Sample showing value conversions for a collections of primitive values...");
 
         using (var context = new SampleDbContext())
         {
-            CleanDatabase(context);
+            await CleanDatabase(context);
 
             ConsoleWriteLines("Save a new entity...");
 
             context.Add(new Post { Tags = new List<string> { "EF Core", "Unicorns", "Donkeys" } });
-            context.SaveChanges();
+            await context.SaveChangesAsync();
         }
 
         using (var context = new SampleDbContext())
         {
             ConsoleWriteLines("Read the entity back...");
 
-            var post = context.Set<Post>().Single();
+            var post = await context.Set<Post>().SingleAsync();
 
             ConsoleWriteLines($"Post with tags {string.Join(", ", post.Tags)}.");
 
             ConsoleWriteLines("Changing the value object and saving again");
 
             post.Tags.Add("ASP.NET Core");
-            context.SaveChanges();
+            await context.SaveChangesAsync();
         }
 
         ConsoleWriteLines("Sample finished.");

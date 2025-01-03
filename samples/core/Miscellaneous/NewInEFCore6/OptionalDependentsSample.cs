@@ -1,17 +1,18 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
 public static class OptionalDependentsSample
 {
-    public static void Optional_dependents_with_a_required_property()
+    public static async Task Optional_dependents_with_a_required_property()
     {
         Console.WriteLine($">>>> Sample: {nameof(Optional_dependents_with_a_required_property)}");
         Console.WriteLine();
 
-        Helpers.RecreateCleanDatabase();
+        await Helpers.RecreateCleanDatabase();
 
         using (var context = new SomeDbContext())
         {
@@ -35,13 +36,13 @@ public static class OptionalDependentsSample
                 });
             #endregion
 
-            context.SaveChanges();
+            await context.SaveChangesAsync();
         }
 
         using (var context = new SomeDbContext())
         {
             #region CheckForNullAddress
-            foreach (var customer in context.Customers1)
+            await foreach (var customer in context.Customers1.AsAsyncEnumerable())
             {
                 Console.Write(customer.Name);
 
@@ -60,12 +61,12 @@ public static class OptionalDependentsSample
         Console.WriteLine();
     }
 
-    public static void Optional_dependents_without_a_required_property()
+    public static async Task Optional_dependents_without_a_required_property()
     {
         Console.WriteLine($">>>> Sample: {nameof(Optional_dependents_without_a_required_property)}");
         Console.WriteLine();
 
-        Helpers.RecreateCleanDatabase();
+        await Helpers.RecreateCleanDatabase();
 
         using (var context = new SomeDbContext())
         {
@@ -85,7 +86,7 @@ public static class OptionalDependentsSample
 
             #endregion
 
-            context.SaveChanges();
+            await context.SaveChangesAsync();
         }
 
         Console.WriteLine();
@@ -93,15 +94,15 @@ public static class OptionalDependentsSample
         using (var context = new SomeDbContext())
         {
             var connection = context.Database.GetDbConnection();
-            connection.Open();
+            await connection.OpenAsync();
 
-            using var command = connection.CreateCommand();
+            await using var command = connection.CreateCommand();
             command.CommandText = "SELECT Id, Name, Address_House, Address_Street, Address_City, Address_Postcode FROM Customers2";
 
             Console.WriteLine($"Id  Name               House   Street  City    Postcode");
 
-            using var reader = command.ExecuteReader();
-            while (reader.Read())
+            await using var reader = await command.ExecuteReaderAsync();
+            while (await reader.ReadAsync())
             {
                 Console.Write($"{reader.GetInt32(0)}   {reader.GetString(1).PadRight(17)}  ");
                 for (int i = 2; i <= 5; i++)
@@ -111,18 +112,18 @@ public static class OptionalDependentsSample
                 Console.WriteLine();
             }
 
-            connection.Close();
+            await connection.CloseAsync();
         }
 
         Console.WriteLine();
     }
 
-    public static void Handling_optional_dependents_sharing_table_with_principal_1()
+    public static async Task Handling_optional_dependents_sharing_table_with_principal_1()
     {
         Console.WriteLine($">>>> Sample: {nameof(Handling_optional_dependents_sharing_table_with_principal_1)}");
         Console.WriteLine();
 
-        Helpers.RecreateCleanDatabase();
+        await Helpers.RecreateCleanDatabase();
 
         using (var context = new SomeDbContext())
         {
@@ -134,12 +135,12 @@ public static class OptionalDependentsSample
             Console.WriteLine($"  Dependent with only required properties is {(principal.DependentWithOnlyRequiredProperties != null ? "not " : "")}null.");
             Console.WriteLine($"  Dependent with both optional and required properties is {(principal.DependentWithOptionalAndRequiredProperties != null ? "not " : "")}null.");
 
-            context.SaveChanges();
+            await context.SaveChangesAsync();
         }
 
         using (var context = new SomeDbContext())
         {
-            var principal = context.PrincipalsWithOptionalDependents.Single();
+            var principal = await context.PrincipalsWithOptionalDependents.SingleAsync();
             Console.WriteLine("After querying back principal and dependents saved above:");
             Console.WriteLine($"  Dependent with only optional properties is {(principal.DependentWithOnlyOptionalProperties != null ? "not " : "")}null.");
             Console.WriteLine($"  Dependent with only required properties is {(principal.DependentWithOnlyRequiredProperties != null ? "not " : "")}null.");
@@ -149,12 +150,12 @@ public static class OptionalDependentsSample
         Console.WriteLine();
     }
 
-    public static void Handling_optional_dependents_sharing_table_with_principal_2()
+    public static async Task Handling_optional_dependents_sharing_table_with_principal_2()
     {
         Console.WriteLine($">>>> Sample: {nameof(Handling_optional_dependents_sharing_table_with_principal_2)}");
         Console.WriteLine();
 
-        Helpers.RecreateCleanDatabase();
+        await Helpers.RecreateCleanDatabase();
 
         using (var context = new SomeDbContext())
         {
@@ -175,13 +176,13 @@ public static class OptionalDependentsSample
             Console.WriteLine();
             Console.WriteLine("SaveChanges will warn:");
             Console.WriteLine();
-            context.SaveChanges();
+            await context.SaveChangesAsync();
             Console.WriteLine();
         }
 
         using (var context = new SomeDbContext())
         {
-            var principal = context.PrincipalsWithOptionalDependents.Single();
+            var principal = await context.PrincipalsWithOptionalDependents.SingleAsync();
             Console.WriteLine("After querying back principal and dependents saved above:");
             Console.WriteLine($"  Dependent with only optional properties is {(principal.DependentWithOnlyOptionalProperties != null ? "not " : "")}null. <-- Note dependent is null here.");
             Console.WriteLine($"  Dependent with only required properties is {(principal.DependentWithOnlyRequiredProperties != null ? "not " : "")}null.");
@@ -191,12 +192,12 @@ public static class OptionalDependentsSample
         Console.WriteLine();
     }
 
-    public static void Handling_required_dependents_sharing_table_with_principal()
+    public static async Task Handling_required_dependents_sharing_table_with_principal()
     {
         Console.WriteLine($">>>> Sample: {nameof(Handling_required_dependents_sharing_table_with_principal)}");
         Console.WriteLine();
 
-        Helpers.RecreateCleanDatabase();
+        await Helpers.RecreateCleanDatabase();
 
         using (var context = new SomeDbContext())
         {
@@ -213,12 +214,12 @@ public static class OptionalDependentsSample
             Console.WriteLine($"  Dependent with only required properties is {(principal.DependentWithOnlyRequiredProperties != null ? "not " : "")}null.");
             Console.WriteLine($"  Dependent with both optional and required properties is {(principal.DependentWithOptionalAndRequiredProperties != null ? "not " : "")}null.");
 
-            context.SaveChanges();
+            await context.SaveChangesAsync();
         }
 
         using (var context = new SomeDbContext())
         {
-            var principal = context.PrincipalsWithRequiredDependents.Single();
+            var principal = await context.PrincipalsWithRequiredDependents.SingleAsync();
             Console.WriteLine("After querying back principal and dependents saved above:");
             Console.WriteLine($"  Dependent with only optional properties is {(principal.DependentWithOnlyOptionalProperties != null ? "not " : "")}null.");
             Console.WriteLine($"  Dependent with only required properties is {(principal.DependentWithOnlyRequiredProperties != null ? "not " : "")}null.");
@@ -228,12 +229,12 @@ public static class OptionalDependentsSample
         Console.WriteLine();
     }
 
-    public static void Handling_nested_optional_dependents_sharing_table_with_principal()
+    public static async Task Handling_nested_optional_dependents_sharing_table_with_principal()
     {
         Console.WriteLine($">>>> Sample: {nameof(Handling_nested_optional_dependents_sharing_table_with_principal)}");
         Console.WriteLine();
 
-        Helpers.RecreateCleanDatabase();
+        await Helpers.RecreateCleanDatabase();
 
         using (var context = new SomeDbContext())
         {
@@ -255,13 +256,13 @@ public static class OptionalDependentsSample
             Console.WriteLine();
             Console.WriteLine("SaveChanges will warn:");
             Console.WriteLine();
-            context.SaveChanges();
+            await context.SaveChangesAsync();
             Console.WriteLine();
         }
 
         using (var context = new SomeDbContext())
         {
-            var principal = context.PrincipalsWithNestedOptionalDependents.Single();
+            var principal = await context.PrincipalsWithNestedOptionalDependents.SingleAsync();
             Console.WriteLine("After querying back principal and dependents saved above:");
             Console.WriteLine($"  Dependent with only optional properties is {(principal.DependentWithOptionalNestedDependents != null ? "not " : "")}null.");
             Console.WriteLine($"  Nested dependent with only optional properties is {(principal.DependentWithOptionalNestedDependents?.Nested != null ? "not " : "")}null. <-- Note nested dependent is null here.");
@@ -270,12 +271,12 @@ public static class OptionalDependentsSample
         Console.WriteLine();
     }
 
-    public static void Handling_nested_required_dependents_sharing_table_with_principal()
+    public static async Task Handling_nested_required_dependents_sharing_table_with_principal()
     {
         Console.WriteLine($">>>> Sample: {nameof(Handling_nested_required_dependents_sharing_table_with_principal)}");
         Console.WriteLine();
 
-        Helpers.RecreateCleanDatabase();
+        await Helpers.RecreateCleanDatabase();
 
         using (var context = new SomeDbContext())
         {
@@ -293,12 +294,12 @@ public static class OptionalDependentsSample
             Console.WriteLine($"  Dependent with only optional properties is {(principal.DependentWithRequiredNestedDependents != null ? "not " : "")}null.");
             Console.WriteLine($"  Nested dependent with only optional properties is {(principal.DependentWithRequiredNestedDependents?.Nested != null ? "not " : "")}null.");
 
-            context.SaveChanges();
+            await context.SaveChangesAsync();
         }
 
         using (var context = new SomeDbContext())
         {
-            var principal = context.PrincipalsWithNestedRequiredDependents.Single();
+            var principal = await context.PrincipalsWithNestedRequiredDependents.SingleAsync();
             Console.WriteLine("After querying back principal and dependents saved above:");
             Console.WriteLine($"  Dependent with only optional properties is {(principal.DependentWithRequiredNestedDependents != null ? "not " : "")}null.");
             Console.WriteLine($"  Nested dependent with only optional properties is {(principal.DependentWithRequiredNestedDependents?.Nested != null ? "not " : "")}null.");
@@ -309,12 +310,12 @@ public static class OptionalDependentsSample
 
     public static class Helpers
     {
-        public static void RecreateCleanDatabase()
+        public static async Task RecreateCleanDatabase()
         {
             using var context = new SomeDbContext(quiet: true);
 
-            context.Database.EnsureDeleted();
-            context.Database.EnsureCreated();
+            await context.Database.EnsureDeletedAsync();
+            await context.Database.EnsureCreatedAsync();
         }
     }
 

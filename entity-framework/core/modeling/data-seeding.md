@@ -39,7 +39,7 @@ These methods can be set up in the [options configuration step](/ef/core/dbconte
 
 ## Custom initialization logic
 
-A straightforward and powerful way to perform data seeding is to use [`DbContext.SaveChanges()`](xref:core/saving/index) before the main application logic begins execution. It is recommended to use `UseSeeding` and `UseAsyncSeeding` for that purpose, however sometimes using these methods is not a good solution. An example scenario is when seeding requires using two different contexts in one transaction. Below is a code sample performing custom initialization in the application directly:
+A straightforward and powerful way to perform data seeding is to use [`DbContext.SaveChangesAsync()`](xref:core/saving/index) before the main application logic begins execution. It is recommended to use `UseSeeding` and `UseAsyncSeeding` for that purpose, however sometimes using these methods is not a good solution. An example scenario is when seeding requires using two different contexts in one transaction. Below is a code sample performing custom initialization in the application directly:
 
 [!code-csharp[Main](../../../samples/core/Modeling/DataSeeding/Program.cs?name=CustomSeeding)]
 
@@ -85,7 +85,7 @@ Once the data has been added to the model, [migrations](xref:core/managing-schem
 > [!TIP]
 > If you need to apply migrations as part of an automated deployment you can [create a SQL script](xref:core/managing-schemas/migrations/applying#sql-scripts) that can be previewed before execution.
 
-Alternatively, you can use `context.Database.EnsureCreated()` to create a new database containing the managed data, for example for a test database or when using the in-memory provider or any non-relational database. Note that if the database already exists, `EnsureCreated()` will neither update the schema nor managed data in the database. For relational databases you shouldn't call `EnsureCreated()` if you plan to use Migrations.
+Alternatively, you can use `context.Database.EnsureCreatedAsync()` to create a new database containing the managed data, for example for a test database or when using the in-memory provider or any non-relational database. Note that if the database already exists, `EnsureCreatedAsync()` will neither update the schema nor managed data in the database. For relational databases you shouldn't call `EnsureCreatedAsync()` if you plan to use Migrations.
 
 > [!NOTE]
 > Populating the database using the `HasData` method used to be referred to as "data seeding". This naming sets incorrect expectations, as the feature has a number of limitations and is only appropriate for specific types of data. That is why we decided to rename it to "model managed data". `UseSeeding` and `UseAsyncSeeding` methods should be used for general purpose data seeding.

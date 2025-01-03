@@ -1,24 +1,25 @@
 ﻿using System;
 using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 
 public static class SubstringTranslationSample
 {
-    public static void Translate_Substring_with_single_parameter()
+    public static async Task Translate_Substring_with_single_parameter()
     {
         Console.WriteLine($">>>> Sample: {nameof(Translate_Substring_with_single_parameter)}");
         Console.WriteLine();
 
-        Helpers.RecreateCleanDatabase();
-        Helpers.PopulateDatabase();
+        await Helpers.RecreateCleanDatabase();
+        await Helpers.PopulateDatabase();
 
         using var context = new CustomersContext();
 
         #region Substring
-        var result = context.Customers
+        var result = await context.Customers
             .Select(a => new { Name = a.Name.Substring(3) })
-            .FirstOrDefault(a => a.Name == "hur");
+            .FirstOrDefaultAsync(a => a.Name == "hur");
         #endregion
 
         Console.WriteLine();
@@ -28,15 +29,15 @@ public static class SubstringTranslationSample
 
     public static class Helpers
     {
-        public static void RecreateCleanDatabase()
+        public static async Task RecreateCleanDatabase()
         {
             using var context = new CustomersContext(quiet: true);
 
-            context.Database.EnsureDeleted();
-            context.Database.EnsureCreated();
+            await context.Database.EnsureDeletedAsync();
+            await context.Database.EnsureCreatedAsync();
         }
 
-        public static void PopulateDatabase()
+        public static async Task PopulateDatabase()
         {
             using var context = new CustomersContext(quiet: true);
 
@@ -54,7 +55,7 @@ public static class SubstringTranslationSample
                     Name = "Andrew"
                 });
 
-            context.SaveChanges();
+            await context.SaveChangesAsync();
         }
     }
 

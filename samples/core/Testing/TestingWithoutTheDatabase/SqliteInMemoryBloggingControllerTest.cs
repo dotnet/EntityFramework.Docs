@@ -1,6 +1,7 @@
 using System;
 using System.Data.Common;
 using System.Linq;
+using System.Threading.Tasks;
 using EF.Testing.BloggingWebApi.Controllers;
 using EF.Testing.BusinessLogic;
 using Microsoft.Data.Sqlite;
@@ -53,24 +54,24 @@ FROM Blogs;";
 
     #region GetBlog
     [Fact]
-    public void GetBlog()
+    public async Task GetBlog()
     {
         using var context = CreateContext();
         var controller = new BloggingController(context);
 
-        var blog = controller.GetBlog("Blog2").Value;
+        var blog = (await controller.GetBlog("Blog2")).Value;
 
         Assert.Equal("http://blog2.com", blog.Url);
     }
     #endregion
 
     [Fact]
-    public void GetAllBlogs()
+    public async Task GetAllBlogs()
     {
         using var context = CreateContext();
         var controller = new BloggingController(context);
 
-        var blogs = controller.GetAllBlogs().Value;
+        var blogs = await controller.GetAllBlogs().ToListAsync();
 
         Assert.Collection(
             blogs,
@@ -79,26 +80,26 @@ FROM Blogs;";
     }
 
     [Fact]
-    public void AddBlog()
+    public async Task AddBlog()
     {
         using var context = CreateContext();
         var controller = new BloggingController(context);
 
-        controller.AddBlog("Blog3", "http://blog3.com");
+        await controller.AddBlog("Blog3", "http://blog3.com");
 
-        var blog = context.Blogs.Single(b => b.Name == "Blog3");
+        var blog = await context.Blogs.SingleAsync(b => b.Name == "Blog3");
         Assert.Equal("http://blog3.com", blog.Url);
     }
 
     [Fact]
-    public void UpdateBlogUrl()
+    public async Task UpdateBlogUrl()
     {
         using var context = CreateContext();
         var controller = new BloggingController(context);
 
-        controller.UpdateBlogUrl("Blog2", "http://blog2_updated.com");
+        await controller.UpdateBlogUrl("Blog2", "http://blog2_updated.com");
 
-        var blog = context.Blogs.Single(b => b.Name == "Blog2");
+        var blog = await context.Blogs.SingleAsync(b => b.Name == "Blog2");
         Assert.Equal("http://blog2_updated.com", blog.Url);
     }
 }

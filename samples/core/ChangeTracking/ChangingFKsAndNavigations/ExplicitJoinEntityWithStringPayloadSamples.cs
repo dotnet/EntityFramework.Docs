@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 
@@ -8,29 +10,29 @@ namespace JoinEntityWithStringPayload;
 
 public class ExplicitJoinEntityWithStringPayloadSamples
 {
-    public static void Many_to_many_relationships_8()
+    public static async Task Many_to_many_relationships_8()
     {
         Console.WriteLine($">>>> Sample: {nameof(Many_to_many_relationships_8)}");
         Console.WriteLine();
 
-        Helpers.RecreateCleanDatabase();
-        Helpers.PopulateDatabase();
+        await Helpers.RecreateCleanDatabase();
+        await Helpers.PopulateDatabase();
 
         #region Many_to_many_relationships_8
         using var context = new BlogsContext();
 
-        var post = context.Posts.Single(e => e.Id == 3);
-        var tag = context.Tags.Single(e => e.Id == 1);
+        var post = await context.Posts.SingleAsync(e => e.Id == 3);
+        var tag = await context.Tags.SingleAsync(e => e.Id == 1);
 
         post.Tags.Add(tag);
 
         context.ChangeTracker.DetectChanges();
 
-        var joinEntity = context.Set<PostTag>().Find(post.Id, tag.Id);
+        var joinEntity = await context.Set<PostTag>().FindAsync(post.Id, tag.Id);
 
         joinEntity.TaggedBy = "ajcvickers";
 
-        context.SaveChanges();
+        await context.SaveChangesAsync();
 
         Console.WriteLine(context.ChangeTracker.DebugView.LongView);
         #endregion
@@ -38,24 +40,24 @@ public class ExplicitJoinEntityWithStringPayloadSamples
         Console.WriteLine();
     }
 
-    public static void Many_to_many_relationships_9()
+    public static async Task Many_to_many_relationships_9()
     {
         Console.WriteLine($">>>> Sample: {nameof(Many_to_many_relationships_9)}");
         Console.WriteLine();
 
-        Helpers.RecreateCleanDatabase();
-        Helpers.PopulateDatabase();
+        await Helpers.RecreateCleanDatabase();
+        await Helpers.PopulateDatabase();
 
         #region Many_to_many_relationships_9
         using var context = new BlogsContext();
 
-        var post = context.Posts.Single(e => e.Id == 3);
-        var tag = context.Tags.Single(e => e.Id == 1);
+        var post = context.Posts.SingleAsync(e => e.Id == 3);
+        var tag = context.Tags.SingleAsync(e => e.Id == 1);
 
         context.Add(
             new PostTag { PostId = post.Id, TagId = tag.Id, TaggedBy = "ajcvickers" });
 
-        context.SaveChanges();
+        await context.SaveChangesAsync();
 
         Console.WriteLine(context.ChangeTracker.DebugView.LongView);
         #endregion
@@ -66,15 +68,15 @@ public class ExplicitJoinEntityWithStringPayloadSamples
 
 public static class Helpers
 {
-    public static void RecreateCleanDatabase()
+    public static async Task RecreateCleanDatabase()
     {
         using var context = new BlogsContext(quiet: true);
 
-        context.Database.EnsureDeleted();
-        context.Database.EnsureCreated();
+        await context.Database.EnsureDeletedAsync();
+        await context.Database.EnsureCreatedAsync();
     }
 
-    public static void PopulateDatabase()
+    public static async Task PopulateDatabase()
     {
         using var context = new BlogsContext(quiet: true);
 
@@ -118,7 +120,7 @@ public static class Helpers
             new Tag { Text = "Visual Studio" },
             new Tag { Text = "EF Core" });
 
-        context.SaveChanges();
+        await context.SaveChangesAsync();
     }
 }
 
@@ -200,7 +202,7 @@ public class BlogsContext : DbContext
     #endregion
 
     #region SaveChanges
-    public override int SaveChanges()
+    public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
     {
         foreach (var entityEntry in ChangeTracker.Entries<PostTag>())
         {
@@ -210,7 +212,7 @@ public class BlogsContext : DbContext
             }
         }
 
-        return base.SaveChanges();
+        return await base.SaveChangesAsync(cancellationToken);
     }
     #endregion
 }

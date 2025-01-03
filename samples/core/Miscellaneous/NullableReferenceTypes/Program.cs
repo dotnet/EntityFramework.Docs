@@ -1,17 +1,18 @@
 ﻿using System;
 using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 
 namespace NullableReferenceTypes
 {
     public static class Program
     {
-        private static void Main(string[] args)
+        private static async Task Main(string[] args)
         {
             using (var context = new NullableReferenceTypesContext())
             {
-                context.Database.EnsureDeleted();
-                context.Database.EnsureCreated();
+                await context.Database.EnsureDeletedAsync();
+                await context.Database.EnsureCreatedAsync();
 
                 context.Add(new Customer("John", "Doe"));
 
@@ -26,19 +27,19 @@ namespace NullableReferenceTypes
                         }
                     });
 
-                context.SaveChanges();
+                await context.SaveChangesAsync();
             }
 
             using (var context = new NullableReferenceTypesContext())
             {
-                var john = context.Customers.First(c => c.FirstName == "John");
+                var john = await context.Customers.FirstAsync(c => c.FirstName == "John");
                 Console.WriteLine("John's last name: " + john.LastName);
 
                 #region Including
-                var order = context.Orders
+                var order = await context.Orders
                     .Include(o => o.OptionalInfo!)
                     .ThenInclude(op => op.ExtraAdditionalInfo)
-                    .Single();
+                    .SingleAsync();
                 #endregion
 
                 // The following would be a programming bug: we forgot to include ShippingAddress above. It would throw InvalidOperationException.

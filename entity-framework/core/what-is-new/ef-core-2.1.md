@@ -117,7 +117,7 @@ var query = context.Customers.Select(
     c => c.Orders.Where(o => o.Amount  > 100).Select(o => o.Amount));
 ```
 
-By including `ToList()` in the right place, you indicate that buffering is appropriate for the Orders, which enable the optimization:
+By including `ToListAsync()` in the right place, you indicate that buffering is appropriate for the Orders, which enable the optimization:
 
 ```csharp
 var query = context.Customers.Select(

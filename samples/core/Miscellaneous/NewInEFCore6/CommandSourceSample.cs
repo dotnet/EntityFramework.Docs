@@ -1,20 +1,21 @@
 ﻿using System;
 using System.Data.Common;
 using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 
 public static class CommandSourceSample
 {
-    public static void Interceptors_get_the_source_of_the_command()
+    public static async Task Interceptors_get_the_source_of_the_command()
     {
         Console.WriteLine($">>>> Sample: {nameof(Interceptors_get_the_source_of_the_command)}");
         Console.WriteLine();
 
         using var context = new CustomersContext();
 
-        context.Database.EnsureDeleted();
-        context.Database.EnsureCreated();
+        await context.Database.EnsureDeletedAsync();
+        await context.Database.EnsureCreatedAsync();
 
         context.Add(
             new Customer
@@ -22,11 +23,11 @@ public static class CommandSourceSample
                 Name = "Sam Vimes"
             });
 
-        context.SaveChanges();
+        await context.SaveChangesAsync();
 
         context.ChangeTracker.Clear();
 
-        var customers = context.Customers.ToList();
+        var customers = await context.Customers.ToListAsync();
 
         Console.WriteLine();
     }

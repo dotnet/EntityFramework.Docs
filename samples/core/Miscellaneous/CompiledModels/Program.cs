@@ -1,17 +1,18 @@
 ﻿using System;
 using System.Linq;
+using System.Threading.Tasks;
 using BenchmarkDotNet.Running;
 using CompiledModelTest;
 
 public class Program
 {
-    public static void Main(string[] args)
+    public static async Task Main(string[] args)
     {
-        PrintSomeStuff();
+        await PrintSomeStuff();
         BenchmarkRunner.Run<Test>();
     }
 
-    public static void PrintSomeStuff()
+    public static async Task PrintSomeStuff()
     {
         using var context = new BlogsContext();
         var model = context.Model;
@@ -21,7 +22,7 @@ public class Program
         Console.WriteLine($"  {model.GetEntityTypes().SelectMany(e => e.GetProperties()).Count()} properties");
         Console.WriteLine($"  {model.GetEntityTypes().SelectMany(e => e.GetForeignKeys()).Count()} relationships");
 
-        context.Database.EnsureDeleted();
-        context.Database.EnsureCreated();
+        await context.Database.EnsureDeletedAsync();
+        await context.Database.EnsureCreatedAsync();
     }
 }

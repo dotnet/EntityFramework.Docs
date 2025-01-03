@@ -35,7 +35,7 @@ public static class NullSemanticsSample
             .Select(x => new { x.NullableIntOne, x.NullableIntTwo }).ToListAsync();
         #endregion
 
-        var negatedNullableComparisonFilterL2O = context.Entities.AsEnumerable().Where(x => !(x.NullableIntOne > x.NullableIntTwo)).Select(x => new { x.NullableIntOne, x.NullableIntTwo }).ToList();
+        var negatedNullableComparisonFilterL2O = await context.Entities.AsAsyncEnumerable().Where(x => !(x.NullableIntOne > x.NullableIntTwo)).Select(x => new { x.NullableIntOne, x.NullableIntTwo }).ToListAsync();
 
         #region NullableComparisonProjection
         var nullableComparisonProjection = await context.Entities.Select(x => new
@@ -46,7 +46,7 @@ public static class NullSemanticsSample
         }).ToListAsync();
         #endregion
 
-        var nullableComparisonProjectionL2O = context.Entities.AsEnumerable().Select(x => new { x.NullableIntOne, x.NullableIntTwo, Operation = x.NullableIntOne > x.NullableIntTwo }).ToList();
+        var nullableComparisonProjectionL2O = await context.Entities.AsAsyncEnumerable().Select(x => new { x.NullableIntOne, x.NullableIntTwo, Operation = x.NullableIntOne > x.NullableIntTwo }).ToListAsync();
 
         #region NegatedNullableComparisonProjection
         var negatedNullableComparisonProjection = await context.Entities.Select(x => new
@@ -57,7 +57,7 @@ public static class NullSemanticsSample
         }).ToListAsync();
         #endregion
 
-        var negatedNullableComparisonProjectionL2O = context.Entities.AsEnumerable().Select(x => new { x.NullableIntOne, x.NullableIntTwo, Operation = !(x.NullableIntOne > x.NullableIntTwo) }).ToList();
+        var negatedNullableComparisonProjectionL2O = await context.Entities.AsAsyncEnumerable().Select(x => new { x.NullableIntOne, x.NullableIntTwo, Operation = !(x.NullableIntOne > x.NullableIntTwo) }).ToListAsync();
     }
 
     private static void PrintSampleName([CallerMemberName] string? methodName = null)
