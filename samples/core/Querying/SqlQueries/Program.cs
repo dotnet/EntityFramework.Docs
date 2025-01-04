@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using Microsoft.Data.SqlClient;
+using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 
 namespace EFQuerying.RawSQL;
@@ -49,70 +50,57 @@ internal class Program
 
         using (var context = new BloggingContext())
         {
-            #region FromSql
             var blogs = context.Blogs
                 .FromSql($"SELECT * FROM dbo.Blogs")
                 .ToList();
-            #endregion
         }
 
         using (var context = new BloggingContext())
         {
-            #region FromSqlStoredProcedure
             var blogs = context.Blogs
                 .FromSql($"EXECUTE dbo.GetMostPopularBlogs")
                 .ToList();
-            #endregion
         }
 
         using (var context = new BloggingContext())
         {
-            #region FromSqlStoredProcedureParameter
             var user = "johndoe";
 
             var blogs = context.Blogs
                 .FromSql($"EXECUTE dbo.GetMostPopularBlogsForUser {user}")
                 .ToList();
-            #endregion
         }
 
         using (var context = new BloggingContext())
         {
-            #region FromSqlStoredProcedureNamedSqlParameter
-            var user = new SqlParameter("user", "johndoe");
+            var user = new SqliteParameter("user", "johndoe");
 
             var blogs = context.Blogs
                 .FromSql($"EXECUTE dbo.GetMostPopularBlogsForUser @filterByUser={user}")
                 .ToList();
-            #endregion
         }
 
         using (var context = new BloggingContext())
         {
-            #region FromSqlStoredProcedureSqlParameter
-            var user = new SqlParameter("user", "johndoe");
+            var user = new SqliteParameter("user", "johndoe");
 
             var blogs = context.Blogs
                 .FromSql($"EXECUTE dbo.GetMostPopularBlogsForUser {user}")
                 .ToList();
-            #endregion
         }
 
         using (var context = new BloggingContext())
         {
-            #region FromSqlRawStoredProcedureParameter
             var columnName = "Url";
-            var columnValue = new SqlParameter("columnValue", "http://SomeURL");
+            var columnValue = new SqliteParameter("columnValue", "http://SomeURL");
 
             var blogs = context.Blogs
                 .FromSqlRaw($"SELECT * FROM [Blogs] WHERE {columnName} = @columnValue", columnValue)
                 .ToList();
-            #endregion
         }
 
         using (var context = new BloggingContext())
         {
-            #region FromSqlComposed
             var searchTerm = "Lorem ipsum";
 
             var blogs = context.Blogs
@@ -120,57 +108,46 @@ internal class Program
                 .Where(b => b.Rating > 3)
                 .OrderByDescending(b => b.Rating)
                 .ToList();
-            #endregion
         }
 
         using (var context = new BloggingContext())
         {
-            #region FromSqlInclude
             var searchTerm = "Lorem ipsum";
 
             var blogs = context.Blogs
                 .FromSql($"SELECT * FROM dbo.SearchBlogs({searchTerm})")
                 .Include(b => b.Posts)
                 .ToList();
-            #endregion
         }
 
         using (var context = new BloggingContext())
         {
-            #region FromSqlAsNoTracking
             var searchTerm = "Lorem ipsum";
 
             var blogs = context.Blogs
                 .FromSql($"SELECT * FROM dbo.SearchBlogs({searchTerm})")
                 .AsNoTracking()
                 .ToList();
-            #endregion
         }
 
         using (var context = new BloggingContext())
         {
-            #region SqlQuery
             var ids = context.Database
                 .SqlQuery<int>($"SELECT [BlogId] FROM [Blogs]")
                 .ToList();
-            #endregion
         }
 
         using (var context = new BloggingContext())
         {
-            #region SqlQueryComposed
             var overAverageIds = context.Database
                 .SqlQuery<int>($"SELECT [BlogId] AS [Value] FROM [Blogs]")
                 .Where(id => id > context.Blogs.Average(b => b.BlogId))
                 .ToList();
-            #endregion
         }
 
-        #region ExecuteSql
         using (var context = new BloggingContext())
         {
             var rowsModified = context.Database.ExecuteSql($"UPDATE [Blogs] SET [Url] = NULL");
         }
-        #endregion
     }
 }
