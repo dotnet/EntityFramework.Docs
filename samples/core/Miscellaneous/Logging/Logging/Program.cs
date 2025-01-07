@@ -1,16 +1,17 @@
 ﻿using System;
+using System.Threading.Tasks;
 
 namespace EFLogging;
 
 public class Program
 {
-    public static void Main()
+    public static async Task Main()
     {
         using (var db = new BloggingContext())
         {
-            db.Database.EnsureCreated();
+            await db.Database.EnsureCreatedAsync();
             db.Blogs.Add(new Blog { Url = "http://sample.com" });
-            db.SaveChanges();
+            await db.SaveChangesAsync();
         }
 
         using (var db = new BloggingContext())
@@ -23,9 +24,9 @@ public class Program
 
         using (var db = new BloggingContextWithFiltering())
         {
-            db.Database.EnsureCreated();
+            await db.Database.EnsureCreatedAsync();
             db.Blogs.Add(new Blog { Url = "http://sample.com" });
-            db.SaveChanges();
+            await db.SaveChangesAsync();
         }
 
         using (var db = new BloggingContextWithFiltering())

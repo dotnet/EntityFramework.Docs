@@ -21,7 +21,7 @@ By default, IDENTITY columns start off at 1 (the seed), and increment by 1 each 
 
 ### Inserting explicit values into IDENTITY columns
 
-By default, SQL Server doesn't allow inserting explicit values into IDENTITY columns. To do so, you must manually enable `IDENTITY_INSERT` before calling `SaveChanges()`, as follows:
+By default, SQL Server doesn't allow inserting explicit values into IDENTITY columns. To do so, you must manually enable `IDENTITY_INSERT` before calling `SaveChangesAsync()`, as follows:
 
 [!code-csharp[Main](../../../../samples/core/SqlServer/ValueGeneration/ExplicitIdentityValues.cs?name=ExplicitIdentityValues)]
 

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 
 namespace EFModeling.ValueConversions;
@@ -8,25 +9,25 @@ namespace EFModeling.ValueConversions;
 /// </summary>
 public class Program
 {
-    public static void Main()
+    public static async Task Main()
     {
-        new MappingImmutableClassProperty().Run();
-        new MappingImmutableStructProperty().Run();
-        new MappingListProperty().Run();
-        new MappingListPropertyOld().Run();
-        new OverridingByteArrayComparisons().Run();
-        new EnumToStringConversions().Run();
-        new KeyValueObjects().Run();
-        new SimpleValueObject().Run();
-        new CompositeValueObject().Run();
-        new PrimitiveCollection().Run();
-        new ValueObjectCollection().Run();
-        new ULongConcurrency().Run();
-        new PreserveDateTimeKind().Run();
-        new CaseInsensitiveStrings().Run();
-        new FixedLengthStrings().Run();
-        new EncryptPropertyValues().Run();
-        new WithMappingHints().Run();
+        await new MappingImmutableClassProperty().Run();
+        await new MappingImmutableStructProperty().Run();
+        await new MappingListProperty().Run();
+        await new MappingListPropertyOld().Run();
+        await new OverridingByteArrayComparisons().Run();
+        await new EnumToStringConversions().Run();
+        await new KeyValueObjects().Run();
+        await new SimpleValueObject().Run();
+        await new CompositeValueObject().Run();
+        await new PrimitiveCollection().Run();
+        await new ValueObjectCollection().Run();
+        await new ULongConcurrency().Run();
+        await new PreserveDateTimeKind().Run();
+        await new CaseInsensitiveStrings().Run();
+        await new FixedLengthStrings().Run();
+        await new EncryptPropertyValues().Run();
+        await new WithMappingHints().Run();
     }
 
     protected static void ConsoleWriteLines(params string[] values)
@@ -40,11 +41,11 @@ public class Program
         Console.WriteLine();
     }
 
-    protected static void CleanDatabase(DbContext context)
+    protected static async Task CleanDatabase(DbContext context)
     {
         ConsoleWriteLines("Deleting and re-creating database...");
-        context.Database.EnsureDeleted();
-        context.Database.EnsureCreated();
+        await context.Database.EnsureDeletedAsync();
+        await context.Database.EnsureCreatedAsync();
         ConsoleWriteLines("Done. Database is clean and fresh.");
     }
 }

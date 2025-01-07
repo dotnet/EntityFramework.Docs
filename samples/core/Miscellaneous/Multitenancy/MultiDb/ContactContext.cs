@@ -16,13 +16,13 @@ namespace MultiDb
         {
             _tenantService = service;
             _configuration = config;
-        }        
+        }
 
         public DbSet<Contact> Contacts { get; set; } = null!;
 
-        public void CheckAndSeed()
+        public async Task CheckAndSeed()
         {
-            if (Database.EnsureCreated())
+            if (await Database.EnsureCreatedAsync())
             {
                 foreach (var contact in Contact.GeneratedContacts)
                 {
@@ -33,7 +33,7 @@ namespace MultiDb
                     }
                 }
 
-                SaveChanges();
+                await SaveChangesAsync();
             }
         }
 

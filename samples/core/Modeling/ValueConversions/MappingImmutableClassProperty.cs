@@ -1,5 +1,6 @@
 using System.Diagnostics;
 using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
@@ -7,33 +8,33 @@ namespace EFModeling.ValueConversions;
 
 public class MappingImmutableClassProperty : Program
 {
-    public void Run()
+    public async Task Run()
     {
         ConsoleWriteLines("Sample showing value conversions for a simple immutable class...");
 
         using (var context = new SampleDbContext())
         {
-            CleanDatabase(context);
+            await CleanDatabase(context);
 
             ConsoleWriteLines("Save a new entity...");
 
             var entity = new MyEntityType { MyProperty = new ImmutableClass(7) };
             context.Add(entity);
-            context.SaveChanges();
+            await context.SaveChangesAsync();
 
             ConsoleWriteLines("Change the property value and save again...");
 
             // This will be detected and EF will update the database on SaveChanges
             entity.MyProperty = new ImmutableClass(77);
 
-            context.SaveChanges();
+            await context.SaveChangesAsync();
         }
 
         using (var context = new SampleDbContext())
         {
             ConsoleWriteLines("Read the entity back...");
 
-            var entity = context.Set<MyEntityType>().Single();
+            var entity = await context.Set<MyEntityType>().SingleAsync();
 
             Debug.Assert(entity.MyProperty.Value == 77);
         }

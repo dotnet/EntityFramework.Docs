@@ -1,29 +1,30 @@
 ﻿using System;
 using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 
 public static class MathFTranslationSample
 {
-    public static void Translate_MathF_methods()
+    public static async Task Translate_MathF_methods()
     {
         Console.WriteLine($">>>> Sample: {nameof(Translate_MathF_methods)}");
         Console.WriteLine();
 
-        Helpers.RecreateCleanDatabase();
-        Helpers.PopulateDatabase();
+        await Helpers.RecreateCleanDatabase();
+        await Helpers.PopulateDatabase();
 
         using var context = new CustomersContext();
 
         // Fails; see #25421
-        // var result = context.Reviews
+        // var result = await context.Reviews
         //     .Select(e => new
         //     {
         //         e.Title,
         //         Rating = MathF.Truncate(e.Rating)
         //     })
         //     .OrderBy(e => e.Rating)
-        //     .First();
+        //     .FirstAsync();
 
         Console.WriteLine();
         // Console.WriteLine($"Found {result.Title} with rating {result.Rating}.");
@@ -32,15 +33,15 @@ public static class MathFTranslationSample
 
     public static class Helpers
     {
-        public static void RecreateCleanDatabase()
+        public static async Task RecreateCleanDatabase()
         {
             using var context = new CustomersContext(quiet: true);
 
-            context.Database.EnsureDeleted();
-            context.Database.EnsureCreated();
+            await context.Database.EnsureDeletedAsync();
+            await context.Database.EnsureCreatedAsync();
         }
 
-        public static void PopulateDatabase()
+        public static async Task PopulateDatabase()
         {
             using var context = new CustomersContext(quiet: true);
 
@@ -64,7 +65,7 @@ public static class MathFTranslationSample
                     Rating = 3.5f
                 });
 
-            context.SaveChanges();
+            await context.SaveChangesAsync();
         }
     }
 

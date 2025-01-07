@@ -61,7 +61,7 @@ public class Program
         new Startup().ConfigureServices(serviceCollection);
         var serviceProvider = serviceCollection.BuildServiceProvider();
 
-        SetupDatabase(serviceProvider);
+        await SetupDatabase(serviceProvider);
 
         var stopwatch = new Stopwatch();
 
@@ -75,16 +75,16 @@ public class Program
         await monitorTask;
     }
 
-    private static void SetupDatabase(IServiceProvider serviceProvider)
+    private static async Task SetupDatabase(IServiceProvider serviceProvider)
     {
         using var serviceScope = serviceProvider.CreateScope();
         var context = serviceScope.ServiceProvider.GetService<BloggingContext>();
 
-        if (context.Database.EnsureCreated())
+        if (await context.Database.EnsureCreatedAsync())
         {
             context.Blogs.Add(new Blog { Name = "The Dog Blog", Url = "http://sample.com/dogs" });
             context.Blogs.Add(new Blog { Name = "The Cat Blog", Url = "http://sample.com/cats" });
-            context.SaveChanges();
+            await context.SaveChangesAsync();
         }
     }
 

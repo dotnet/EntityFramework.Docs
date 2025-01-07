@@ -1,5 +1,6 @@
 using System;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Transactions;
 using Microsoft.EntityFrameworkCore;
 
@@ -7,49 +8,49 @@ namespace EFConnectionResiliency;
 
 public class Program
 {
-    public static void Main(string[] args)
+    public static async Task Main(string[] args)
     {
         using (var db = new BloggingContext())
         {
-            db.Database.EnsureDeleted();
-            db.Database.EnsureCreated();
+            await db.Database.EnsureDeletedAsync();
+            await db.Database.EnsureCreatedAsync();
         }
 
-        ExecuteWithManualTransaction();
+        await ExecuteWithManualTransaction();
 
-        ExecuteWithManualAmbientTransaction();
+        await ExecuteWithManualAmbientTransaction();
 
-        ExecuteInTransactionWithVerification();
+        await ExecuteInTransactionWithVerification();
 
-        ExecuteInTransactionWithTracking();
+        await ExecuteInTransactionWithTracking();
     }
 
-    private static void ExecuteWithManualTransaction()
+    private static async Task ExecuteWithManualTransaction()
     {
         #region ManualTransaction
 
         using var db = new BloggingContext();
         var strategy = db.Database.CreateExecutionStrategy();
 
-        strategy.Execute(
-            () =>
+        await strategy.ExecuteAsync(
+            async () =>
             {
                 using var context = new BloggingContext();
-                using var transaction = context.Database.BeginTransaction();
+                await using var transaction = await context.Database.BeginTransactionAsync();
 
                 context.Blogs.Add(new Blog { Url = "http://blogs.msdn.com/dotnet" });
-                context.SaveChanges();
+                await context.SaveChangesAsync();
 
                 context.Blogs.Add(new Blog { Url = "http://blogs.msdn.com/visualstudio" });
-                context.SaveChanges();
+                await context.SaveChangesAsync();
 
-                transaction.Commit();
+                await transaction.CommitAsync();
             });
 
         #endregion
     }
 
-    private static void ExecuteWithManualAmbientTransaction()
+    private static async Task ExecuteWithManualAmbientTransaction()
     {
         #region AmbientTransaction
 
@@ -58,16 +59,16 @@ public class Program
 
         var strategy = context1.Database.CreateExecutionStrategy();
 
-        strategy.Execute(
-            () =>
+        await strategy.ExecuteAsync(
+            async () =>
             {
                 using var context2 = new BloggingContext();
                 using var transaction = new TransactionScope();
 
                 context2.Blogs.Add(new Blog { Url = "http://blogs.msdn.com/dotnet" });
-                context2.SaveChanges();
+                await context2.SaveChangesAsync();
 
-                context1.SaveChanges();
+                await context1.SaveChangesAsync();
 
                 transaction.Complete();
             });
@@ -75,7 +76,7 @@ public class Program
         #endregion
     }
 
-    private static void ExecuteInTransactionWithVerification()
+    private static async Task ExecuteInTransactionWithVerification()
     {
         #region Verification
 
@@ -85,17 +86,17 @@ public class Program
         var blogToAdd = new Blog { Url = "http://blogs.msdn.com/dotnet" };
         db.Blogs.Add(blogToAdd);
 
-        strategy.ExecuteInTransaction(
+        await strategy.ExecuteInTransactionAsync(
             db,
-            operation: context => { context.SaveChanges(acceptAllChangesOnSuccess: false); },
-            verifySucceeded: context => context.Blogs.AsNoTracking().Any(b => b.BlogId == blogToAdd.BlogId));
+            operation: (context, cancellationToken) => context.SaveChangesAsync(acceptAllChangesOnSuccess: false, cancellationToken),
+            verifySucceeded: (context, cancellationToken) => context.Blogs.AsNoTracking().AnyAsync(b => b.BlogId == blogToAdd.BlogId, cancellationToken));
 
         db.ChangeTracker.AcceptAllChanges();
 
         #endregion
     }
 
-    private static void ExecuteInTransactionWithTracking()
+    private static async Task ExecuteInTransactionWithTracking()
     {
         #region Tracking
 
@@ -107,14 +108,14 @@ public class Program
         var transaction = new TransactionRow { Id = Guid.NewGuid() };
         db.Transactions.Add(transaction);
 
-        strategy.ExecuteInTransaction(
+        await strategy.ExecuteInTransactionAsync(
             db,
-            operation: context => { context.SaveChanges(acceptAllChangesOnSuccess: false); },
-            verifySucceeded: context => context.Transactions.AsNoTracking().Any(t => t.Id == transaction.Id));
+            operation: (context, cancellationToken) => context.SaveChangesAsync(acceptAllChangesOnSuccess: false, cancellationToken),
+            verifySucceeded: (context, cancellationToken) => context.Transactions.AsNoTracking().AnyAsync(t => t.Id == transaction.Id, cancellationToken));
 
         db.ChangeTracker.AcceptAllChanges();
         db.Transactions.Remove(transaction);
-        db.SaveChanges();
+        await db.SaveChangesAsync();
 
         #endregion
     }

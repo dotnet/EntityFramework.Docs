@@ -1,32 +1,33 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 
 namespace EFSaving.Concurrency;
 
 public class ConflictResolutionSample
 {
-    public static void Run()
+    public static async Task Run()
     {
         // Ensure database is created and has a person in it
         using (var setupContext = new PersonContext())
         {
-            setupContext.Database.EnsureDeleted();
-            setupContext.Database.EnsureCreated();
+            await setupContext.Database.EnsureDeletedAsync();
+            await setupContext.Database.EnsureCreatedAsync();
 
             setupContext.People.Add(new Person { FirstName = "John", LastName = "Doe" });
-            setupContext.SaveChanges();
+            await setupContext.SaveChangesAsync();
         }
 
         #region ConcurrencyHandlingCode
         using var context = new PersonContext();
         // Fetch a person from database and change phone number
-        var person = context.People.Single(p => p.PersonId == 1);
+        var person = await context.People.SingleAsync(p => p.PersonId == 1);
         person.PhoneNumber = "555-555-5555";
 
         // Change the person's name in the database to simulate a concurrency conflict
-        context.Database.ExecuteSqlRaw(
+        await context.Database.ExecuteSqlRawAsync(
             "UPDATE dbo.People SET FirstName = 'Jane' WHERE PersonId = 1");
 
         var saved = false;
@@ -35,7 +36,7 @@ public class ConflictResolutionSample
             try
             {
                 // Attempt to save changes to the database
-                context.SaveChanges();
+                await context.SaveChangesAsync();
                 saved = true;
             }
             catch (DbUpdateConcurrencyException ex)
@@ -45,7 +46,7 @@ public class ConflictResolutionSample
                     if (entry.Entity is Person)
                     {
                         var proposedValues = entry.CurrentValues;
-                        var databaseValues = entry.GetDatabaseValues();
+                        var databaseValues = await entry.GetDatabaseValuesAsync();
 
                         foreach (var property in proposedValues.Properties)
                         {

@@ -1,4 +1,5 @@
 using System;
+using System.Threading.Tasks;
 using System.Transactions;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
@@ -7,7 +8,7 @@ namespace EFSaving.Transactions;
 
 public class CommitableTransaction
 {
-    public static void Run()
+    public static async Task Run()
     {
         var connectionString =
             @"Server=(localdb)\mssqllocaldb;Database=EFSaving.Transactions;Trusted_Connection=True;ConnectRetryCount=0";
@@ -17,8 +18,8 @@ public class CommitableTransaction
                        .UseSqlServer(connectionString)
                        .Options))
         {
-            context.Database.EnsureDeleted();
-            context.Database.EnsureCreated();
+            await context.Database.EnsureDeletedAsync();
+            await context.Database.EnsureCreatedAsync();
         }
 
         #region Transaction
@@ -35,18 +36,18 @@ public class CommitableTransaction
 
                 using (var context = new BloggingContext(options))
                 {
-                    context.Database.OpenConnection();
+                    await context.Database.OpenConnectionAsync();
                     context.Database.EnlistTransaction(transaction);
 
                     // Run raw ADO.NET command in the transaction
                     var command = connection.CreateCommand();
                     command.CommandText = "DELETE FROM dbo.Blogs";
-                    command.ExecuteNonQuery();
+                    await command.ExecuteNonQueryAsync();
 
                     // Run an EF Core command in the transaction
                     context.Blogs.Add(new Blog { Url = "http://blogs.msdn.com/dotnet" });
-                    context.SaveChanges();
-                    context.Database.CloseConnection();
+                    await context.SaveChangesAsync();
+                    await context.Database.CloseConnectionAsync();
                 }
 
                 // Commit transaction if all commands succeed, transaction will auto-rollback

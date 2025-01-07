@@ -1,28 +1,29 @@
 ﻿using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 
 public class Program
 {
-    public static void Main()
+    public static async Task Main()
     {
         using (var context = new TaggedQueryCommandInterceptorContext())
         {
-            context.Database.EnsureDeleted();
-            context.Database.EnsureCreated();
+            await context.Database.EnsureDeletedAsync();
+            await context.Database.EnsureCreatedAsync();
 
             context.AddRange(
                 new Blog { Name = "Blog1" },
                 new Blog { Name = "Blog2" });
 
-            context.SaveChanges();
+            await context.SaveChangesAsync();
         }
 
         using (var context = new TaggedQueryCommandInterceptorContext())
         {
             #region TaggedQuery
-            var blogs1 = context.Blogs.TagWith("Use hint: robust plan").ToList();
+            var blogs1 = await context.Blogs.TagWith("Use hint: robust plan").ToListAsync();
             #endregion
-            var blogs2 = context.Blogs.ToList();
+            var blogs2 = await context.Blogs.ToListAsync();
         }
     }
 }

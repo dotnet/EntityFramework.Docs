@@ -70,10 +70,10 @@ Alternatively, identical operations can be applied for each navigation that is i
 Example:
 
 ```csharp
-var orders = context.Orders.Where(o => o.Id > 1000).ToList();
+var orders = await context.Orders.Where(o => o.Id > 1000).ToListAsync();
 
 // customer entities will have references to all orders where Id > 1000, rather than > 5000
-var filtered = context.Customers.Include(c => c.Orders.Where(o => o.Id > 5000)).ToList();
+var filtered = await context.Customers.Include(c => c.Orders.Where(o => o.Id > 5000)).ToListAsync();
 ```
 
 > [!NOTE]

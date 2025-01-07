@@ -1,4 +1,5 @@
 using System;
+using System.Threading.Tasks;
 using System.Transactions;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
@@ -7,7 +8,7 @@ namespace EFSaving.Transactions;
 
 public class AmbientTransaction
 {
-    public static void Run()
+    public static async Task Run()
     {
         var connectionString =
             @"Server=(localdb)\mssqllocaldb;Database=EFSaving.Transactions;Trusted_Connection=True;ConnectRetryCount=0";
@@ -17,8 +18,8 @@ public class AmbientTransaction
                        .UseSqlServer(connectionString)
                        .Options))
         {
-            context.Database.EnsureDeleted();
-            context.Database.EnsureCreated();
+            await context.Database.EnsureDeletedAsync();
+            await context.Database.EnsureCreatedAsync();
         }
 
         #region Transaction
@@ -27,14 +28,14 @@ public class AmbientTransaction
                    new TransactionOptions { IsolationLevel = IsolationLevel.ReadCommitted }))
         {
             using var connection = new SqlConnection(connectionString);
-            connection.Open();
+            await connection.OpenAsync();
 
             try
             {
                 // Run raw ADO.NET command in the transaction
                 var command = connection.CreateCommand();
                 command.CommandText = "DELETE FROM dbo.Blogs";
-                command.ExecuteNonQuery();
+                await command.ExecuteNonQueryAsync();
 
                 // Run an EF Core command in the transaction
                 var options = new DbContextOptionsBuilder<BloggingContext>()
@@ -44,7 +45,7 @@ public class AmbientTransaction
                 using (var context = new BloggingContext(options))
                 {
                     context.Blogs.Add(new Blog { Url = "http://blogs.msdn.com/dotnet" });
-                    context.SaveChanges();
+                    await context.SaveChangesAsync();
                 }
 
                 // Commit transaction if all commands succeed, transaction will auto-rollback

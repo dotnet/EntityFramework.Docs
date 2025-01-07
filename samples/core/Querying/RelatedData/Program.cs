@@ -1,223 +1,224 @@
 ﻿using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 
 namespace EFQuerying.RelatedData;
 
 internal class Program
 {
-    private static void Main(string[] args)
+    private static async Task Main(string[] args)
     {
         using (var context = new BloggingContext())
         {
-            context.Database.EnsureDeleted();
-            context.Database.EnsureCreated();
+            await context.Database.EnsureDeletedAsync();
+            await context.Database.EnsureCreatedAsync();
         }
 
         #region SingleInclude
         using (var context = new BloggingContext())
         {
-            var blogs = context.Blogs
+            var blogs = await context.Blogs
                 .Include(blog => blog.Posts)
-                .ToList();
+                .ToListAsync();
         }
         #endregion
 
         #region IgnoredInclude
         using (var context = new BloggingContext())
         {
-            var blogs = context.Blogs
+            var blogs = await context.Blogs
                 .Include(blog => blog.Posts)
                 .Select(
                     blog => new { Id = blog.BlogId, blog.Url })
-                .ToList();
+                .ToListAsync();
         }
         #endregion
 
         #region MultipleIncludes
         using (var context = new BloggingContext())
         {
-            var blogs = context.Blogs
+            var blogs = await context.Blogs
                 .Include(blog => blog.Posts)
                 .Include(blog => blog.Owner)
-                .ToList();
+                .ToListAsync();
         }
         #endregion
 
         #region SingleThenInclude
         using (var context = new BloggingContext())
         {
-            var blogs = context.Blogs
+            var blogs = await context.Blogs
                 .Include(blog => blog.Posts)
                 .ThenInclude(post => post.Author)
-                .ToList();
+                .ToListAsync();
         }
         #endregion
 
         #region MultipleThenIncludes
         using (var context = new BloggingContext())
         {
-            var blogs = context.Blogs
+            var blogs = await context.Blogs
                 .Include(blog => blog.Posts)
                 .ThenInclude(post => post.Author)
                 .ThenInclude(author => author.Photo)
-                .ToList();
+                .ToListAsync();
         }
         #endregion
 
         #region IncludeTree
         using (var context = new BloggingContext())
         {
-            var blogs = context.Blogs
+            var blogs = await context.Blogs
                 .Include(blog => blog.Posts)
                 .ThenInclude(post => post.Author)
                 .ThenInclude(author => author.Photo)
                 .Include(blog => blog.Owner)
                 .ThenInclude(owner => owner.Photo)
-                .ToList();
+                .ToListAsync();
         }
         #endregion
 
         #region MultipleLeafIncludes
         using (var context = new BloggingContext())
         {
-            var blogs = context.Blogs
+            var blogs = await context.Blogs
                 .Include(blog => blog.Posts)
                 .ThenInclude(post => post.Author)
                 .Include(blog => blog.Posts)
                 .ThenInclude(post => post.Tags)
-                .ToList();
+                .ToListAsync();
         }
         #endregion
 
         #region IncludeMultipleNavigationsWithSingleInclude
         using (var context = new BloggingContext())
         {
-            var blogs = context.Blogs
+            var blogs = await context.Blogs
                 .Include(blog => blog.Owner.AuthoredPosts)
                 .ThenInclude(post => post.Blog.Owner.Photo)
-                .ToList();
+                .ToListAsync();
         }
         #endregion
 
         #region AsSplitQuery
         using (var context = new BloggingContext())
         {
-            var blogs = context.Blogs
+            var blogs = await context.Blogs
                 .Include(blog => blog.Posts)
                 .AsSplitQuery()
-                .ToList();
+                .ToListAsync();
         }
         #endregion
 
         using (var context = new SplitQueriesBloggingContext())
         {
-            context.Database.EnsureDeleted();
-            context.Database.EnsureCreated();
+            await context.Database.EnsureDeletedAsync();
+            await context.Database.EnsureCreatedAsync();
         }
 
         #region WithSplitQueryAsDefault
         using (var context = new SplitQueriesBloggingContext())
         {
-            var blogs = context.Blogs
+            var blogs = await context.Blogs
                 .Include(blog => blog.Posts)
-                .ToList();
+                .ToListAsync();
         }
         #endregion
 
         #region AsSingleQuery
         using (var context = new SplitQueriesBloggingContext())
         {
-            var blogs = context.Blogs
+            var blogs = await context.Blogs
                 .Include(blog => blog.Posts)
                 .AsSingleQuery()
-                .ToList();
+                .ToListAsync();
         }
         #endregion
 
         #region Explicit
         using (var context = new BloggingContext())
         {
-            var blog = context.Blogs
-                .Single(b => b.BlogId == 1);
+            var blog = await context.Blogs
+                .SingleAsync(b => b.BlogId == 1);
 
-            context.Entry(blog)
+            await context.Entry(blog)
                 .Collection(b => b.Posts)
-                .Load();
+                .LoadAsync();
 
-            context.Entry(blog)
+            await context.Entry(blog)
                 .Reference(b => b.Owner)
-                .Load();
+                .LoadAsync();
         }
         #endregion
 
         #region NavQueryAggregate
         using (var context = new BloggingContext())
         {
-            var blog = context.Blogs
-                .Single(b => b.BlogId == 1);
+            var blog = await context.Blogs
+                .SingleAsync(b => b.BlogId == 1);
 
-            var postCount = context.Entry(blog)
+            var postCount = await context.Entry(blog)
                 .Collection(b => b.Posts)
                 .Query()
-                .Count();
+                .CountAsync();
         }
         #endregion
 
         #region NavQueryFiltered
         using (var context = new BloggingContext())
         {
-            var blog = context.Blogs
-                .Single(b => b.BlogId == 1);
+            var blog = await context.Blogs
+                .SingleAsync(b => b.BlogId == 1);
 
-            var goodPosts = context.Entry(blog)
+            var goodPosts = await context.Entry(blog)
                 .Collection(b => b.Posts)
                 .Query()
                 .Where(p => p.Rating > 3)
-                .ToList();
+                .ToListAsync();
         }
         #endregion
 
         #region FilteredInclude
         using (var context = new BloggingContext())
         {
-            var filteredBlogs = context.Blogs
+            var filteredBlogs = await context.Blogs
                 .Include(
                     blog => blog.Posts
                         .Where(post => post.BlogId == 1)
                         .OrderByDescending(post => post.Title)
                         .Take(5))
-                .ToList();
+                .ToListAsync();
         }
         #endregion
 
         #region MultipleLeafIncludesFiltered1
         using (var context = new BloggingContext())
         {
-            var filteredBlogs = context.Blogs
+            var filteredBlogs = await context.Blogs
                 .Include(blog => blog.Posts.Where(post => post.BlogId == 1))
                 .ThenInclude(post => post.Author)
                 .Include(blog => blog.Posts)
                 .ThenInclude(post => post.Tags.OrderBy(postTag => postTag.TagId).Skip(3))
-                .ToList();
+                .ToListAsync();
         }
         #endregion
 
         #region MultipleLeafIncludesFiltered2
         using (var context = new BloggingContext())
         {
-            var filteredBlogs = context.Blogs
+            var filteredBlogs = await context.Blogs
                 .Include(blog => blog.Posts.Where(post => post.BlogId == 1))
                 .ThenInclude(post => post.Author)
                 .Include(blog => blog.Posts.Where(post => post.BlogId == 1))
                 .ThenInclude(post => post.Tags.OrderBy(postTag => postTag.TagId).Skip(3))
-                .ToList();
+                .ToListAsync();
         }
         #endregion
 
         #region AutoIncludes
         using (var context = new BloggingContext())
         {
-            var themes = context.Themes.ToList();
+            var themes = await context.Themes.ToListAsync();
         }
 
         #endregion
@@ -225,7 +226,7 @@ internal class Program
         #region IgnoreAutoIncludes
         using (var context = new BloggingContext())
         {
-            var themes = context.Themes.IgnoreAutoIncludes().ToList();
+            var themes = await context.Themes.IgnoreAutoIncludes().ToListAsync();
         }
 
         #endregion

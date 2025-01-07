@@ -1,3 +1,4 @@
+using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 
 namespace SqlServer.ValueGeneration;
@@ -13,12 +14,12 @@ public class ExplicitIdentityValuesContext : DbContext
 
 public class ExplicitIdentityValues
 {
-    public static void Run()
+    public static async Task Run()
     {
         using (var context = new ExplicitIdentityValuesContext())
         {
-            context.Database.EnsureDeleted();
-            context.Database.EnsureCreated();
+            await context.Database.EnsureDeletedAsync();
+            await context.Database.EnsureCreatedAsync();
         }
 
         #region ExplicitIdentityValues
@@ -27,16 +28,16 @@ public class ExplicitIdentityValues
             context.Blogs.Add(new Blog { BlogId = 100, Url = "http://blog1.somesite.com" });
             context.Blogs.Add(new Blog { BlogId = 101, Url = "http://blog2.somesite.com" });
 
-            context.Database.OpenConnection();
+            await context.Database.OpenConnectionAsync();
             try
             {
-                context.Database.ExecuteSqlRaw("SET IDENTITY_INSERT dbo.Blogs ON");
-                context.SaveChanges();
-                context.Database.ExecuteSqlRaw("SET IDENTITY_INSERT dbo.Blogs OFF");
+                await context.Database.ExecuteSqlRawAsync("SET IDENTITY_INSERT dbo.Blogs ON");
+                await context.SaveChangesAsync();
+                await context.Database.ExecuteSqlRawAsync("SET IDENTITY_INSERT dbo.Blogs OFF");
             }
             finally
             {
-                context.Database.CloseConnection();
+                await context.Database.CloseConnectionAsync();
             }
         }
         #endregion

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading;
+using System.Threading.Tasks;
 using BenchmarkDotNet.Attributes;
 using Microsoft.EntityFrameworkCore;
 
@@ -13,16 +14,16 @@ public class DynamicallyConstructedQueries
     private bool _addWhereClause = true;
 
     [GlobalSetup]
-    public static void GlobalSetup()
+    public static async Task GlobalSetup()
     {
         using var context = new BloggingContext();
-        context.Database.EnsureDeleted();
-        context.Database.EnsureCreated();
+        await context.Database.EnsureDeletedAsync();
+        await context.Database.EnsureCreatedAsync();
     }
 
     #region ExpressionApiWithConstant
     [Benchmark]
-    public int ExpressionApiWithConstant()
+    public async Task<int> ExpressionApiWithConstant()
     {
         var url = "blog" + Interlocked.Increment(ref _blogNumber);
         using var context = new BloggingContext();
@@ -43,13 +44,13 @@ public class DynamicallyConstructedQueries
             query = query.Where(whereLambda);
         }
 
-        return query.Count();
+        return await query.CountAsync();
     }
     #endregion
 
     #region ExpressionApiWithParameter
     [Benchmark]
-    public int ExpressionApiWithParameter()
+    public async Task<int> ExpressionApiWithParameter()
     {
         var url = "blog" + Interlocked.Increment(ref _blogNumber);
         using var context = new BloggingContext();
@@ -78,13 +79,13 @@ public class DynamicallyConstructedQueries
             query = query.Where(whereLambda);
         }
 
-        return query.Count();
+        return await query.CountAsync();
     }
     #endregion
 
     #region SimpleWithParameter
     [Benchmark]
-    public int SimpleWithParameter()
+    public async Task<int> SimpleWithParameter()
     {
         var url = "blog" + Interlocked.Increment(ref _blogNumber);
 
@@ -99,7 +100,7 @@ public class DynamicallyConstructedQueries
             query = query.Where(whereLambda);
         }
 
-        return query.Count();
+        return await query.CountAsync();
     }
     #endregion
 

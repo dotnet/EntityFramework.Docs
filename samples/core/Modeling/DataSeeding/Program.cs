@@ -1,18 +1,19 @@
 using System;
 using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 
 namespace EFModeling.DataSeeding;
 
 internal static class Program
 {
-    private static void Main(string[] args)
+    private static async Task Main(string[] args)
     {
         using (var context = new ManagingDataContext())
         {
-            context.Database.EnsureCreated();
+            await context.Database.EnsureCreatedAsync();
 
-            foreach (var country in context.Countries.Include(b => b.OfficialLanguages))
+            await foreach (var country in context.Countries.Include(b => b.OfficialLanguages).AsAsyncEnumerable())
             {
                 Console.WriteLine($"{country.Name} official language(s):");
 
@@ -30,20 +31,20 @@ internal static class Program
         #region CustomSeeding
         using (var context = new DataSeedingContext())
         {
-            context.Database.EnsureCreated();
+            await context.Database.EnsureCreatedAsync();
 
-            var testBlog = context.Blogs.FirstOrDefault(b => b.Url == "http://test.com");
+            var testBlog = await context.Blogs.FirstOrDefaultAsync(b => b.Url == "http://test.com");
             if (testBlog == null)
             {
                 context.Blogs.Add(new Blog { Url = "http://test.com" });
-                context.SaveChanges();
+                await context.SaveChangesAsync();
             }
         }
         #endregion
 
         using (var context = new DataSeedingContext())
         {
-            foreach (var blog in context.Blogs.Include(b => b.Posts))
+            await foreach (var blog in context.Blogs.Include(b => b.Posts).AsAsyncEnumerable())
             {
                 Console.WriteLine($"Blog {blog.Url}");
 

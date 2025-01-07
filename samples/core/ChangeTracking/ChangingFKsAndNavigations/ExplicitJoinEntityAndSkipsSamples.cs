@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 
@@ -8,19 +9,19 @@ namespace JoinEntityWithSkips;
 
 public class ExplicitJoinEntityWithSkipsSamples
 {
-    public static void Many_to_many_relationships_3()
+    public static async Task Many_to_many_relationships_3()
     {
         Console.WriteLine($">>>> Sample: {nameof(Many_to_many_relationships_3)}");
         Console.WriteLine();
 
-        Helpers.RecreateCleanDatabase();
-        Helpers.PopulateDatabase();
+        await Helpers.RecreateCleanDatabase();
+        await Helpers.PopulateDatabase();
 
         #region Many_to_many_relationships_3
         using var context = new BlogsContext();
 
-        var post = context.Posts.Single(e => e.Id == 3);
-        var tag = context.Tags.Single(e => e.Id == 1);
+        var post = await context.Posts.SingleAsync(e => e.Id == 3);
+        var tag = await context.Tags.SingleAsync(e => e.Id == 1);
 
         post.Tags.Add(tag);
 
@@ -31,18 +32,18 @@ public class ExplicitJoinEntityWithSkipsSamples
         Console.WriteLine();
     }
 
-    public static void Many_to_many_relationships_4()
+    public static async Task Many_to_many_relationships_4()
     {
         Console.WriteLine($">>>> Sample: {nameof(Many_to_many_relationships_4)}");
         Console.WriteLine();
 
-        Helpers.RecreateCleanDatabase();
-        Helpers.PopulateDatabase();
+        await Helpers.RecreateCleanDatabase();
+        await Helpers.PopulateDatabase();
 
         using var context = new BlogsContext();
 
-        var post = context.Posts.Single(e => e.Id == 3);
-        var tag = context.Tags.Single(e => e.Id == 1);
+        var post = await context.Posts.SingleAsync(e => e.Id == 3);
+        var tag = await context.Tags.SingleAsync(e => e.Id == 1);
 
         #region Many_to_many_relationships_4
         context.Add(new PostTag { Post = post, Tag = tag });
@@ -54,18 +55,18 @@ public class ExplicitJoinEntityWithSkipsSamples
         Console.WriteLine();
     }
 
-    public static void Many_to_many_relationships_5()
+    public static async Task Many_to_many_relationships_5()
     {
         Console.WriteLine($">>>> Sample: {nameof(Many_to_many_relationships_5)}");
         Console.WriteLine();
 
-        Helpers.RecreateCleanDatabase();
-        Helpers.PopulateDatabase();
+        await Helpers.RecreateCleanDatabase();
+        await Helpers.PopulateDatabase();
 
         using var context = new BlogsContext();
 
-        var post = context.Posts.Single(e => e.Id == 3);
-        var tag = context.Tags.Single(e => e.Id == 1);
+        var post = await context.Posts.SingleAsync(e => e.Id == 3);
+        var tag = await context.Tags.SingleAsync(e => e.Id == 1);
 
         #region Many_to_many_relationships_5
         context.Add(new PostTag { PostId = post.Id, TagId = tag.Id });
@@ -80,15 +81,15 @@ public class ExplicitJoinEntityWithSkipsSamples
 
 public static class Helpers
 {
-    public static void RecreateCleanDatabase()
+    public static async Task RecreateCleanDatabase()
     {
         using var context = new BlogsContext(quiet: true);
 
-        context.Database.EnsureDeleted();
-        context.Database.EnsureCreated();
+        await context.Database.EnsureDeletedAsync();
+        await context.Database.EnsureCreatedAsync();
     }
 
-    public static void PopulateDatabase()
+    public static async Task PopulateDatabase()
     {
         using var context = new BlogsContext(quiet: true);
 
@@ -132,7 +133,7 @@ public static class Helpers
             new Tag { Text = "Visual Studio" },
             new Tag { Text = "EF Core" });
 
-        context.SaveChanges();
+        await context.SaveChangesAsync();
     }
 }
 

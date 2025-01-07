@@ -1,42 +1,43 @@
 ﻿using System;
 using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 
 public static class PrecisionAttributeSample
 {
-    public static void Using_PrecisionAttribute()
+    public static async Task Using_PrecisionAttribute()
     {
         Console.WriteLine($">>>> Sample: {nameof(Using_PrecisionAttribute)}");
         Console.WriteLine();
 
-        Helpers.RecreateCleanDatabase();
-        Helpers.PopulateDatabase();
+        await Helpers.RecreateCleanDatabase();
+        await Helpers.PopulateDatabase();
 
         using var context = new BooksContext();
 
-        _ = context.Products.Single(e => e.Id == 1);
+        _ = await context.Products.SingleAsync(e => e.Id == 1);
 
         Console.WriteLine();
     }
 
     public static class Helpers
     {
-        public static void RecreateCleanDatabase()
+        public static async Task RecreateCleanDatabase()
         {
             using var context = new BooksContext();
 
-            context.Database.EnsureDeleted();
-            context.Database.EnsureCreated();
+            await context.Database.EnsureDeletedAsync();
+            await context.Database.EnsureCreatedAsync();
         }
 
-        public static void PopulateDatabase()
+        public static async Task PopulateDatabase()
         {
             using var context = new BooksContext();
 
             context.Add(new Product { Price = 3.99m });
 
-            context.SaveChanges();
+            await context.SaveChangesAsync();
         }
     }
 

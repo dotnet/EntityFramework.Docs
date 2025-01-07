@@ -1,24 +1,25 @@
 ﻿using System;
 using System.Linq;
 using System.Text.Json;
+using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 
 public static class ContainsFreeTextSample
 {
-    public static void Contains_with_non_string()
+    public static async Task Contains_with_non_string()
     {
         Console.WriteLine($">>>> Sample: {nameof(Contains_with_non_string)}");
         Console.WriteLine($">>>> Note: does not work with SQL Server LocalDb");
         Console.WriteLine();
 
-        Helpers.RecreateCleanDatabase();
-        Helpers.PopulateDatabase();
+        await Helpers.RecreateCleanDatabase();
+        await Helpers.PopulateDatabase();
 
         using var context = new CustomerContext();
 
         #region Query
-        var result = context.Customers.Where(e => EF.Functions.Contains(e.Name, "Martin")).ToList();
+        var result = await context.Customers.Where(e => EF.Functions.Contains(e.Name, "Martin")).ToListAsync();
         #endregion
 
         Console.WriteLine();
@@ -26,19 +27,19 @@ public static class ContainsFreeTextSample
 
     public static class Helpers
     {
-        public static void RecreateCleanDatabase()
+        public static async Task RecreateCleanDatabase()
         {
             using var context = new CustomerContext(quiet: true);
 
-            context.Database.EnsureDeleted();
-            context.Database.EnsureCreated();
+            await context.Database.EnsureDeletedAsync();
+            await context.Database.EnsureCreatedAsync();
 
-            context.Database.ExecuteSqlRaw(
+            await context.Database.ExecuteSqlRawAsync(
                 @"CREATE FULLTEXT CATALOG CustomersAndNames AS DEFAULT;
     CREATE FULLTEXT INDEX ON Customers (Name) KEY INDEX IX_Names;");
         }
 
-        public static void PopulateDatabase()
+        public static async Task PopulateDatabase()
         {
             using var context = new CustomerContext(quiet: true);
 
@@ -78,7 +79,7 @@ public static class ContainsFreeTextSample
                     }
                 });
 
-            context.SaveChanges();
+            await context.SaveChangesAsync();
         }
     }
 

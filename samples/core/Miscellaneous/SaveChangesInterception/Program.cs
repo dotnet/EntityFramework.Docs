@@ -22,13 +22,13 @@ public class Program
 
         using (var context = new BlogsContext())
         {
-            var blog = context.Blogs.Include(e => e.Posts).Single();
+            var blog = await context.Blogs.Include(e => e.Posts).SingleAsync();
 
             blog.Name = "EF Core Blog";
             context.Remove(blog.Posts.First());
             blog.Posts.Add(new Post { Title = "EF Core 6.0!" });
 
-            context.SaveChanges();
+            await context.SaveChangesAsync();
         }
 
         // Do an insert that will fail
@@ -50,7 +50,7 @@ public class Program
 
         using (var context = new AuditContext("DataSource=audit.db"))
         {
-            foreach (var audit in context.SaveChangesAudits.Include(e => e.Entities).ToList())
+            foreach (var audit in await context.SaveChangesAudits.Include(e => e.Entities).ToListAsync())
             {
                 Console.WriteLine(
                     $"Audit {audit.AuditId} from {audit.StartTime} to {audit.EndTime} was{(audit.Succeeded ? "" : " not")} successful.");

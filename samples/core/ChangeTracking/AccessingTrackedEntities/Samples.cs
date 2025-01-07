@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.EntityFrameworkCore.Diagnostics;
@@ -11,35 +12,35 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 
 public static class Samples
 {
-    public static void Using_DbContext_Entry_and_EntityEntry_instances_1()
+    public static async Task Using_DbContext_Entry_and_EntityEntry_instances_1()
     {
         Console.WriteLine($">>>> Sample: {nameof(Using_DbContext_Entry_and_EntityEntry_instances_1)}");
         Console.WriteLine();
 
-        Helpers.RecreateCleanDatabase();
-        Helpers.PopulateDatabase();
+        await Helpers.RecreateCleanDatabase();
+        await Helpers.PopulateDatabase();
 
         #region Using_DbContext_Entry_and_EntityEntry_instances_1
         using var context = new BlogsContext();
 
-        var blog = context.Blogs.Single(e => e.Id == 1);
+        var blog = await context.Blogs.SingleAsync(e => e.Id == 1);
         var entityEntry = context.Entry(blog);
         #endregion
 
         Console.WriteLine();
     }
 
-    public static void Work_with_the_entity_1()
+    public static async Task Work_with_the_entity_1()
     {
         Console.WriteLine($">>>> Sample: {nameof(Work_with_the_entity_1)}");
         Console.WriteLine();
 
-        Helpers.RecreateCleanDatabase();
-        Helpers.PopulateDatabase();
+        await Helpers.RecreateCleanDatabase();
+        await Helpers.PopulateDatabase();
 
         using var context = new BlogsContext();
 
-        var blog = context.Blogs.Single(e => e.Id == 1);
+        var blog = await context.Blogs.SingleAsync(e => e.Id == 1);
 
         #region Work_with_the_entity_1
         var currentState = context.Entry(blog).State;
@@ -52,13 +53,13 @@ public static class Samples
         Console.WriteLine();
     }
 
-    public static void Work_with_the_entity_2()
+    public static async Task Work_with_the_entity_2()
     {
         Console.WriteLine($">>>> Sample: {nameof(Work_with_the_entity_2)}");
         Console.WriteLine();
 
-        Helpers.RecreateCleanDatabase();
-        Helpers.PopulateDatabase();
+        await Helpers.RecreateCleanDatabase();
+        await Helpers.PopulateDatabase();
 
         using var context = new BlogsContext();
 
@@ -73,18 +74,18 @@ public static class Samples
         Console.WriteLine();
     }
 
-    public static void Work_with_a_single_property_1()
+    public static async Task Work_with_a_single_property_1()
     {
         Console.WriteLine($">>>> Sample: {nameof(Work_with_a_single_property_1)}");
         Console.WriteLine();
 
-        Helpers.RecreateCleanDatabase();
-        Helpers.PopulateDatabase();
+        await Helpers.RecreateCleanDatabase();
+        await Helpers.PopulateDatabase();
 
         using var context = new BlogsContext();
 
         {
-            var blog = context.Blogs.Single(e => e.Id == 1);
+            var blog = await context.Blogs.SingleAsync(e => e.Id == 1);
 
             #region Work_with_a_single_property_1a
             PropertyEntry<Blog, string> propertyEntry = context.Entry(blog).Property(e => e.Name);
@@ -92,7 +93,7 @@ public static class Samples
         }
 
         {
-            var blog = context.Blogs.Single(e => e.Id == 1);
+            var blog = await context.Blogs.SingleAsync(e => e.Id == 1);
 
             #region Work_with_a_single_property_1b
             PropertyEntry<Blog, string> propertyEntry = context.Entry(blog).Property<string>("Name");
@@ -100,7 +101,7 @@ public static class Samples
         }
 
         {
-            var blog = context.Blogs.Single(e => e.Id == 1);
+            var blog = await context.Blogs.SingleAsync(e => e.Id == 1);
 
             #region Work_with_a_single_property_1c
             PropertyEntry propertyEntry = context.Entry(blog).Property("Name");
@@ -108,7 +109,7 @@ public static class Samples
         }
 
         {
-            var blog = context.Blogs.Single(e => e.Id == 1);
+            var blog = await context.Blogs.SingleAsync(e => e.Id == 1);
 
             #region Work_with_a_single_property_1d
             string currentValue = context.Entry(blog).Property(e => e.Name).CurrentValue;
@@ -118,7 +119,7 @@ public static class Samples
 
         {
             #region Work_with_a_single_property_1e
-            object blog = context.Blogs.Single(e => e.Id == 1);
+            object blog = await context.Blogs.SingleAsync(e => e.Id == 1);
 
             object currentValue = context.Entry(blog).Property("Name").CurrentValue;
             context.Entry(blog).Property("Name").CurrentValue = "1unicorn2";
@@ -128,17 +129,17 @@ public static class Samples
         Console.WriteLine();
     }
 
-    public static void Work_with_a_single_navigation_1()
+    public static async Task Work_with_a_single_navigation_1()
     {
         Console.WriteLine($">>>> Sample: {nameof(Work_with_a_single_navigation_1)}");
         Console.WriteLine();
 
-        Helpers.RecreateCleanDatabase();
-        Helpers.PopulateDatabase();
+        await Helpers.RecreateCleanDatabase();
+        await Helpers.PopulateDatabase();
 
         using var context = new BlogsContext();
 
-        var post = context.Posts.Include(e => e.Blog).Single(e => e.Id == 1);
+        var post = await context.Posts.Include(e => e.Blog).SingleAsync(e => e.Id == 1);
 
         #region Work_with_a_single_navigation_1
         ReferenceEntry<Post, Blog> referenceEntry1 = context.Entry(post).Reference(e => e.Blog);
@@ -149,17 +150,17 @@ public static class Samples
         Console.WriteLine();
     }
 
-    public static void Work_with_a_single_navigation_2()
+    public static async Task Work_with_a_single_navigation_2()
     {
         Console.WriteLine($">>>> Sample: {nameof(Work_with_a_single_navigation_2)}");
         Console.WriteLine();
 
-        Helpers.RecreateCleanDatabase();
-        Helpers.PopulateDatabase();
+        await Helpers.RecreateCleanDatabase();
+        await Helpers.PopulateDatabase();
 
         using var context = new BlogsContext();
 
-        var blog = context.Blogs.Include(e => e.Posts).Single(e => e.Id == 1);
+        var blog = await context.Blogs.Include(e => e.Posts).SingleAsync(e => e.Id == 1);
 
         #region Work_with_a_single_navigation_2a
         CollectionEntry<Blog, Post> collectionEntry1 = context.Entry(blog).Collection(e => e.Posts);
@@ -174,17 +175,17 @@ public static class Samples
         Console.WriteLine();
     }
 
-    public static void Work_with_all_properties_of_an_entity_1()
+    public static async Task Work_with_all_properties_of_an_entity_1()
     {
         Console.WriteLine($">>>> Sample: {nameof(Work_with_all_properties_of_an_entity_1)}");
         Console.WriteLine();
 
-        Helpers.RecreateCleanDatabase();
-        Helpers.PopulateDatabase();
+        await Helpers.RecreateCleanDatabase();
+        await Helpers.PopulateDatabase();
 
         using var context = new BlogsContext();
 
-        var blog = context.Blogs.Include(e => e.Posts).Single(e => e.Id == 1);
+        var blog = await context.Blogs.Include(e => e.Posts).SingleAsync(e => e.Id == 1);
 
         #region Work_with_all_properties_of_an_entity_1
         foreach (var propertyEntry in context.Entry(blog).Properties)
@@ -199,23 +200,23 @@ public static class Samples
         Console.WriteLine();
     }
 
-    public static void Work_with_all_properties_of_an_entity_2()
+    public static async Task Work_with_all_properties_of_an_entity_2()
     {
         Console.WriteLine($">>>> Sample: {nameof(Work_with_all_properties_of_an_entity_2)}");
         Console.WriteLine();
 
-        Helpers.RecreateCleanDatabase();
-        Helpers.PopulateDatabase();
+        await Helpers.RecreateCleanDatabase();
+        await Helpers.PopulateDatabase();
 
         using var context = new BlogsContext();
 
-        var blog = context.Blogs.Include(e => e.Posts).Single(e => e.Id == 1);
+        var blog = await context.Blogs.Include(e => e.Posts).SingleAsync(e => e.Id == 1);
 
         {
             #region Work_with_all_properties_of_an_entity_2a
             var currentValues = context.Entry(blog).CurrentValues;
             var originalValues = context.Entry(blog).OriginalValues;
-            var databaseValues = context.Entry(blog).GetDatabaseValues();
+            var databaseValues = await context.Entry(blog).GetDatabaseValuesAsync();
             #endregion
         }
 
@@ -229,7 +230,7 @@ public static class Samples
 
         {
             #region Work_with_all_properties_of_an_entity_2c
-            var databaseValues = context.Entry(blog).GetDatabaseValues();
+            var databaseValues = await context.Entry(blog).GetDatabaseValuesAsync();
             context.Entry(blog).CurrentValues.SetValues(databaseValues);
             context.Entry(blog).OriginalValues.SetValues(databaseValues);
             #endregion
@@ -245,24 +246,24 @@ public static class Samples
 
         {
             #region Work_with_all_properties_of_an_entity_2e
-            var clonedBlog = context.Entry(blog).GetDatabaseValues().ToObject();
+            var clonedBlog = (await context.Entry(blog).GetDatabaseValuesAsync()).ToObject();
             #endregion
         }
 
         Console.WriteLine();
     }
 
-    public static void Work_with_all_navigations_of_an_entity_1()
+    public static async Task Work_with_all_navigations_of_an_entity_1()
     {
         Console.WriteLine($">>>> Sample: {nameof(Work_with_all_navigations_of_an_entity_1)}");
         Console.WriteLine();
 
-        Helpers.RecreateCleanDatabase();
-        Helpers.PopulateDatabase();
+        await Helpers.RecreateCleanDatabase();
+        await Helpers.PopulateDatabase();
 
         using var context = new BlogsContext();
 
-        var blog = context.Blogs.Single(e => e.Id == 1);
+        var blog = await context.Blogs.SingleAsync(e => e.Id == 1);
 
         #region Work_with_all_navigations_of_an_entity_1
         foreach (var navigationEntry in context.Entry(blog).Navigations)
@@ -274,17 +275,17 @@ public static class Samples
         Console.WriteLine();
     }
 
-    public static void Work_with_all_members_of_an_entity_1()
+    public static async Task Work_with_all_members_of_an_entity_1()
     {
         Console.WriteLine($">>>> Sample: {nameof(Work_with_all_members_of_an_entity_1)}");
         Console.WriteLine();
 
-        Helpers.RecreateCleanDatabase();
-        Helpers.PopulateDatabase();
+        await Helpers.RecreateCleanDatabase();
+        await Helpers.PopulateDatabase();
 
         using var context = new BlogsContext();
 
-        var blog = context.Blogs.Single(e => e.Id == 1);
+        var blog = await context.Blogs.SingleAsync(e => e.Id == 1);
 
         #region Work_with_all_members_of_an_entity_1
         foreach (var memberEntry in context.Entry(blog).Members)
@@ -297,25 +298,25 @@ public static class Samples
         Console.WriteLine();
     }
 
-    public static void Find_and_FindAsync_1()
+    public static async Task Find_and_FindAsync_1()
     {
         Console.WriteLine($">>>> Sample: {nameof(Find_and_FindAsync_1)}");
         Console.WriteLine();
 
-        Helpers.RecreateCleanDatabase();
-        Helpers.PopulateDatabase();
+        await Helpers.RecreateCleanDatabase();
+        await Helpers.PopulateDatabase();
 
         #region Find_and_FindAsync_1
         using var context = new BlogsContext();
 
         Console.WriteLine("First call to Find...");
-        var blog1 = context.Blogs.Find(1);
+        var blog1 = await context.Blogs.FindAsync(1);
 
         Console.WriteLine($"...found blog {blog1.Name}");
 
         Console.WriteLine();
         Console.WriteLine("Second call to Find...");
-        var blog2 = context.Blogs.Find(1);
+        var blog2 = await context.Blogs.FindAsync(1);
         Debug.Assert(blog1 == blog2);
 
         Console.WriteLine("...returned the same instance without executing a query.");
@@ -324,36 +325,36 @@ public static class Samples
         Console.WriteLine();
     }
 
-    public static void Find_and_FindAsync_2()
+    public static async Task Find_and_FindAsync_2()
     {
         Console.WriteLine($">>>> Sample: {nameof(Find_and_FindAsync_2)}");
         Console.WriteLine();
 
-        Helpers.RecreateCleanDatabase();
-        Helpers.PopulateDatabase();
+        await Helpers.RecreateCleanDatabase();
+        await Helpers.PopulateDatabase();
 
         using var context = new BlogsContext();
         var orderId = 1;
         var productId = 2;
 
         #region Find_and_FindAsync_2
-        var orderline = context.OrderLines.Find(orderId, productId);
+        var orderline = await context.OrderLines.FindAsync(orderId, productId);
         #endregion
 
         Console.WriteLine();
     }
 
-    public static void Using_ChangeTracker_Entries_to_access_all_tracked_entities_1()
+    public static async Task Using_ChangeTracker_Entries_to_access_all_tracked_entities_1()
     {
         Console.WriteLine($">>>> Sample: {nameof(Using_ChangeTracker_Entries_to_access_all_tracked_entities_1)}");
         Console.WriteLine();
 
-        Helpers.RecreateCleanDatabase();
-        Helpers.PopulateDatabase();
+        await Helpers.RecreateCleanDatabase();
+        await Helpers.PopulateDatabase();
 
         #region Using_ChangeTracker_Entries_to_access_all_tracked_entities_1a
         using var context = new BlogsContext();
-        var blogs = context.Blogs.Include(e => e.Posts).ToList();
+        var blogs = await context.Blogs.Include(e => e.Posts).ToListAsync();
 
         foreach (var entityEntry in context.ChangeTracker.Entries())
         {
@@ -384,18 +385,18 @@ public static class Samples
         Console.WriteLine();
     }
 
-    public static void Using_DbSet_Local_to_query_tracked_entities_1()
+    public static async Task Using_DbSet_Local_to_query_tracked_entities_1()
     {
         Console.WriteLine($">>>> Sample: {nameof(Using_DbSet_Local_to_query_tracked_entities_1)}");
         Console.WriteLine();
 
-        Helpers.RecreateCleanDatabase();
-        Helpers.PopulateDatabase();
+        await Helpers.RecreateCleanDatabase();
+        await Helpers.PopulateDatabase();
 
         #region Using_DbSet_Local_to_query_tracked_entities_1
         using var context = new BlogsContext();
 
-        context.Blogs.Include(e => e.Posts).Load();
+        await context.Blogs.Include(e => e.Posts).LoadAsync();
 
         foreach (var blog in context.Blogs.Local)
         {
@@ -411,18 +412,18 @@ public static class Samples
         Console.WriteLine();
     }
 
-    public static void Using_DbSet_Local_to_query_tracked_entities_2()
+    public static async Task Using_DbSet_Local_to_query_tracked_entities_2()
     {
         Console.WriteLine($">>>> Sample: {nameof(Using_DbSet_Local_to_query_tracked_entities_2)}");
         Console.WriteLine();
 
-        Helpers.RecreateCleanDatabase();
-        Helpers.PopulateDatabase();
+        await Helpers.RecreateCleanDatabase();
+        await Helpers.PopulateDatabase();
 
         #region Using_DbSet_Local_to_query_tracked_entities_2
         using var context = new BlogsContext();
 
-        var posts = context.Posts.Include(e => e.Blog).ToList();
+        var posts = await context.Posts.Include(e => e.Blog).ToListAsync();
 
         Console.WriteLine("Local view after loading posts:");
 
@@ -452,18 +453,18 @@ public static class Samples
         Console.WriteLine();
     }
 
-    public static void Using_DbSet_Local_to_query_tracked_entities_3()
+    public static async Task Using_DbSet_Local_to_query_tracked_entities_3()
     {
         Console.WriteLine($">>>> Sample: {nameof(Using_DbSet_Local_to_query_tracked_entities_3)}");
         Console.WriteLine();
 
-        Helpers.RecreateCleanDatabase();
-        Helpers.PopulateDatabase();
+        await Helpers.RecreateCleanDatabase();
+        await Helpers.PopulateDatabase();
 
         #region Using_DbSet_Local_to_query_tracked_entities_3
         using var context = new BlogsContext();
 
-        var posts = context.Posts.Include(e => e.Blog).ToList();
+        var posts = await context.Posts.Include(e => e.Blog).ToListAsync();
 
         Console.WriteLine("Local view after loading posts:");
 
@@ -493,17 +494,17 @@ public static class Samples
         Console.WriteLine();
     }
 
-    public static void Using_DbSet_Local_to_query_tracked_entities_4()
+    public static async Task Using_DbSet_Local_to_query_tracked_entities_4()
     {
         Console.WriteLine($">>>> Sample: {nameof(Using_DbSet_Local_to_query_tracked_entities_4)}");
         Console.WriteLine();
 
-        Helpers.RecreateCleanDatabase();
-        Helpers.PopulateDatabase();
+        await Helpers.RecreateCleanDatabase();
+        await Helpers.PopulateDatabase();
 
         using var context = new BlogsContext();
 
-        context.Posts.Include(e => e.Blog).Load();
+        await context.Posts.Include(e => e.Blog).LoadAsync();
 
         #region Using_DbSet_Local_to_query_tracked_entities_4
         ObservableCollection<Post> observableCollection = context.Posts.Local.ToObservableCollection();
@@ -516,15 +517,15 @@ public static class Samples
 
 public static class Helpers
 {
-    public static void RecreateCleanDatabase()
+    public static async Task RecreateCleanDatabase()
     {
         using var context = new BlogsContext(quiet: true);
 
-        context.Database.EnsureDeleted();
-        context.Database.EnsureCreated();
+        await context.Database.EnsureDeletedAsync();
+        await context.Database.EnsureCreatedAsync();
     }
 
-    public static void PopulateDatabase()
+    public static async Task PopulateDatabase()
     {
         using var context = new BlogsContext(quiet: true);
 
@@ -547,7 +548,7 @@ public static class Helpers
                 }
             });
 
-        context.SaveChanges();
+        await context.SaveChangesAsync();
     }
 }
 

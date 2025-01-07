@@ -15,7 +15,7 @@ public class MyController
     #endregion
 
     #region DoSomething
-    public void DoSomething()
+    public async Task DoSomething()
     {
         using (var context = _contextFactory.CreateDbContext())
         {

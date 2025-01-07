@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 
@@ -9,17 +10,17 @@ namespace ExplicitKeysRequired;
 
 public static class ExplicitKeysRequiredSamples
 {
-    public static void Deleting_principal_parent_entities_1()
+    public static async Task Deleting_principal_parent_entities_1()
     {
         Console.WriteLine($">>>> Sample: {nameof(Deleting_principal_parent_entities_1)}");
         Console.WriteLine();
 
-        Helpers.RecreateCleanDatabase();
-        Helpers.PopulateDatabase();
+        await Helpers.RecreateCleanDatabase();
+        await Helpers.PopulateDatabase();
 
         using var context = new BlogsContext();
 
-        var blog = GetDisconnectedBlogAndPosts();
+        var blog = await GetDisconnectedBlogAndPosts();
 
         #region Deleting_principal_parent_entities_1
         // Attach a blog and associated posts
@@ -32,32 +33,32 @@ public static class ExplicitKeysRequiredSamples
         Console.WriteLine("Before SaveChanges:");
         Console.WriteLine(context.ChangeTracker.DebugView.LongView);
 
-        context.SaveChanges();
+        await context.SaveChangesAsync();
 
         Console.WriteLine("After SaveChanges:");
         Console.WriteLine(context.ChangeTracker.DebugView.LongView);
 
         Console.WriteLine();
 
-        Blog GetDisconnectedBlogAndPosts()
+        async Task<Blog> GetDisconnectedBlogAndPosts()
         {
             using var tempContext = new BlogsContext();
-            return tempContext.Blogs.Include(e => e.Posts).Single();
+            return await tempContext.Blogs.Include(e => e.Posts).SingleAsync();
         }
     }
 }
 
 public static class Helpers
 {
-    public static void RecreateCleanDatabase()
+    public static async Task RecreateCleanDatabase()
     {
         using var context = new BlogsContext(quiet: true);
 
-        context.Database.EnsureDeleted();
-        context.Database.EnsureCreated();
+        await context.Database.EnsureDeletedAsync();
+        await context.Database.EnsureCreatedAsync();
     }
 
-    public static void PopulateDatabase()
+    public static async Task PopulateDatabase()
     {
         using var context = new BlogsContext(quiet: true);
 
@@ -83,7 +84,7 @@ public static class Helpers
                 }
             });
 
-        context.SaveChanges();
+        await context.SaveChangesAsync();
     }
 }
 

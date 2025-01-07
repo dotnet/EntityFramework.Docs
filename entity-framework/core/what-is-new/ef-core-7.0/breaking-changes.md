@@ -528,13 +528,13 @@ The correct extension method must be used for it to function correctly in all si
 Use the correct extension method for the provider being used. If multiple providers are referenced, then call the extension method as a static method. For example:
 
 ```csharp
-var result = CosmosQueryableExtensions.FromSqlRaw(context.Blogs, "SELECT ...").ToList();
+var result = await CosmosQueryableExtensions.FromSqlRaw(context.Blogs, "SELECT ...").ToListAsync();
 ```
 
 Or:
 
 ```csharp
-var result = RelationalQueryableExtensions.FromSqlRaw(context.Blogs, "SELECT ...").ToList();
+var result = await RelationalQueryableExtensions.FromSqlRaw(context.Blogs, "SELECT ...").ToListAsync();
 ```
 
 <a name="is-configured"></a>

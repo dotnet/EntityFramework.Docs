@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 
@@ -8,47 +9,47 @@ namespace GeneratedKeys;
 
 public static class GeneratedKeysSamples
 {
-    public static void Simple_query_and_update_1()
+    public static async Task Simple_query_and_update_1()
     {
         Console.WriteLine($">>>> Sample: {nameof(Simple_query_and_update_1)}");
         Console.WriteLine();
 
-        Helpers.RecreateCleanDatabase();
-        Helpers.PopulateDatabase();
+        await Helpers.RecreateCleanDatabase();
+        await Helpers.PopulateDatabase();
 
         #region Simple_query_and_update_1
         using var context = new BlogsContext();
 
-        var blog = context.Blogs.Include(e => e.Posts).First(e => e.Name == ".NET Blog");
+        var blog = await context.Blogs.Include(e => e.Posts).FirstAsync(e => e.Name == ".NET Blog");
 
         blog.Name = ".NET Blog (Updated!)";
 
-        foreach (var post in blog.Posts.Where(e => !e.Title.Contains("5.0")))
+        await foreach (var post in blog.Posts.AsQueryable().Where(e => !e.Title.Contains("5.0")).AsAsyncEnumerable())
         {
             post.Title = post.Title.Replace("5", "5.0");
         }
 
-        context.SaveChanges();
+        await context.SaveChangesAsync();
         #endregion
 
         Console.WriteLine();
     }
 
-    public static void Simple_query_and_update_2()
+    public static async Task Simple_query_and_update_2()
     {
         Console.WriteLine($">>>> Sample: {nameof(Simple_query_and_update_2)}");
         Console.WriteLine();
 
-        Helpers.RecreateCleanDatabase();
-        Helpers.PopulateDatabase();
+        await Helpers.RecreateCleanDatabase();
+        await Helpers.PopulateDatabase();
 
         using var context = new BlogsContext();
 
-        var blog = context.Blogs.Include(e => e.Posts).First(e => e.Name == ".NET Blog");
+        var blog = await context.Blogs.Include(e => e.Posts).FirstAsync(e => e.Name == ".NET Blog");
 
         blog.Name = ".NET Blog (Updated!)";
 
-        foreach (var post in blog.Posts.Where(e => !e.Title.Contains("5.0")))
+        await foreach (var post in blog.Posts.AsQueryable().Where(e => !e.Title.Contains("5.0")).AsAsyncEnumerable())
         {
             post.Title = post.Title.Replace("5", "5.0");
         }
@@ -58,23 +59,23 @@ public static class GeneratedKeysSamples
         Console.WriteLine(context.ChangeTracker.DebugView.LongView);
         #endregion
 
-        context.SaveChanges();
+        await context.SaveChangesAsync();
 
         Console.WriteLine();
     }
 
-    public static void Query_then_insert_update_and_delete_1()
+    public static async Task Query_then_insert_update_and_delete_1()
     {
         Console.WriteLine($">>>> Sample: {nameof(Query_then_insert_update_and_delete_1)}");
         Console.WriteLine();
 
-        Helpers.RecreateCleanDatabase();
-        Helpers.PopulateDatabase();
+        await Helpers.RecreateCleanDatabase();
+        await Helpers.PopulateDatabase();
 
         #region Query_then_insert_update_and_delete_1
         using var context = new BlogsContext();
 
-        var blog = context.Blogs.Include(e => e.Posts).First(e => e.Name == ".NET Blog");
+        var blog = await context.Blogs.Include(e => e.Posts).FirstAsync(e => e.Name == ".NET Blog");
 
         // Modify property values
         blog.Name = ".NET Blog (Updated!)";
@@ -93,16 +94,16 @@ public static class GeneratedKeysSamples
         context.ChangeTracker.DetectChanges();
         Console.WriteLine(context.ChangeTracker.DebugView.LongView);
 
-        context.SaveChanges();
+        await context.SaveChangesAsync();
         #endregion
     }
 
-    public static void Inserting_new_entities_3()
+    public static async Task Inserting_new_entities_3()
     {
         Console.WriteLine($">>>> Sample: {nameof(Inserting_new_entities_3)}");
         Console.WriteLine();
 
-        Helpers.RecreateCleanDatabase();
+        await Helpers.RecreateCleanDatabase();
 
         using var context = new BlogsContext();
 
@@ -130,7 +131,7 @@ public static class GeneratedKeysSamples
         Console.WriteLine("Before SaveChanges:");
         Console.WriteLine(context.ChangeTracker.DebugView.LongView);
 
-        context.SaveChanges();
+        await context.SaveChangesAsync();
 
         Console.WriteLine("After SaveChanges:");
         Console.WriteLine(context.ChangeTracker.DebugView.LongView);
@@ -138,13 +139,13 @@ public static class GeneratedKeysSamples
         Console.WriteLine();
     }
 
-    public static void Attaching_existing_entities_3()
+    public static async Task Attaching_existing_entities_3()
     {
         Console.WriteLine($">>>> Sample: {nameof(Attaching_existing_entities_3)}");
         Console.WriteLine();
 
-        Helpers.RecreateCleanDatabase();
-        Helpers.PopulateDatabase();
+        await Helpers.RecreateCleanDatabase();
+        await Helpers.PopulateDatabase();
 
         using var context = new BlogsContext();
 
@@ -180,7 +181,7 @@ public static class GeneratedKeysSamples
         Console.WriteLine("Before SaveChanges:");
         Console.WriteLine(context.ChangeTracker.DebugView.LongView);
 
-        context.SaveChanges();
+        await context.SaveChangesAsync();
 
         Console.WriteLine("After SaveChanges:");
         Console.WriteLine(context.ChangeTracker.DebugView.LongView);
@@ -188,13 +189,13 @@ public static class GeneratedKeysSamples
         Console.WriteLine();
     }
 
-    public static void Updating_existing_entities_3()
+    public static async Task Updating_existing_entities_3()
     {
         Console.WriteLine($">>>> Sample: {nameof(Updating_existing_entities_3)}");
         Console.WriteLine();
 
-        Helpers.RecreateCleanDatabase();
-        Helpers.PopulateDatabase();
+        await Helpers.RecreateCleanDatabase();
+        await Helpers.PopulateDatabase();
 
         using var context = new BlogsContext();
 
@@ -230,7 +231,7 @@ public static class GeneratedKeysSamples
         Console.WriteLine("Before SaveChanges:");
         Console.WriteLine(context.ChangeTracker.DebugView.LongView);
 
-        context.SaveChanges();
+        await context.SaveChangesAsync();
 
         Console.WriteLine("After SaveChanges:");
         Console.WriteLine(context.ChangeTracker.DebugView.LongView);
@@ -238,17 +239,17 @@ public static class GeneratedKeysSamples
         Console.WriteLine();
     }
 
-    public static void Custom_tracking_with_TrackGraph_1()
+    public static async Task Custom_tracking_with_TrackGraph_1()
     {
         Console.WriteLine($">>>> Sample: {nameof(Custom_tracking_with_TrackGraph_1)}");
         Console.WriteLine();
 
-        Helpers.RecreateCleanDatabase();
-        Helpers.PopulateDatabase();
+        await Helpers.RecreateCleanDatabase();
+        await Helpers.PopulateDatabase();
 
         using var context = new BlogsContext();
 
-        var blog = context.Blogs.AsNoTracking().Include(e => e.Posts).Single(e => e.Name == ".NET Blog");
+        var blog = await context.Blogs.AsNoTracking().Include(e => e.Posts).SingleAsync(e => e.Name == ".NET Blog");
 
         #region Custom_tracking_with_TrackGraph_1a
         blog.Posts.Add(
@@ -263,13 +264,13 @@ public static class GeneratedKeysSamples
         toDelete.Id = -toDelete.Id;
         #endregion
 
-        UpdateBlog(blog);
+        await UpdateBlog(blog);
 
         Console.WriteLine();
     }
 
     #region Custom_tracking_with_TrackGraph_1b
-    public static void UpdateBlog(Blog blog)
+    public static async Task UpdateBlog(Blog blog)
     {
         using var context = new BlogsContext();
 
@@ -296,22 +297,22 @@ public static class GeneratedKeysSamples
                 Console.WriteLine($"Tracking {node.Entry.Metadata.DisplayName()} with key value {keyValue} as {node.Entry.State}");
             });
 
-        context.SaveChanges();
+        await context.SaveChangesAsync();
     }
     #endregion
 }
 
 public static class Helpers
 {
-    public static void RecreateCleanDatabase()
+    public static async Task RecreateCleanDatabase()
     {
         using var context = new BlogsContext(quiet: true);
 
-        context.Database.EnsureDeleted();
-        context.Database.EnsureCreated();
+        await context.Database.EnsureDeletedAsync();
+        await context.Database.EnsureCreatedAsync();
     }
 
-    public static void PopulateDatabase()
+    public static async Task PopulateDatabase()
     {
         using var context = new BlogsContext(quiet: true);
 
@@ -334,7 +335,7 @@ public static class Helpers
                 }
             });
 
-        context.SaveChanges();
+        await context.SaveChangesAsync();
     }
 }
 

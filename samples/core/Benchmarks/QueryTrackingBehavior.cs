@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using BenchmarkDotNet.Attributes;
 using Microsoft.EntityFrameworkCore;
 
@@ -16,30 +17,30 @@ public class QueryTrackingBehavior
     public int NumPostsPerBlog { get; set; }
 
     [GlobalSetup]
-    public void Setup()
+    public async Task Setup()
     {
         Console.WriteLine("Setting up database...");
         using var context = new BloggingContext();
-        context.Database.EnsureDeleted();
-        context.Database.EnsureCreated();
-        BloggingContext.SeedData(NumBlogs, NumPostsPerBlog);
+        await context.Database.EnsureDeletedAsync();
+        await context.Database.EnsureCreatedAsync();
+        await BloggingContext.SeedData(NumBlogs, NumPostsPerBlog);
         Console.WriteLine("Setup complete.");
     }
 
     [Benchmark(Baseline = true)]
-    public List<Post> AsTracking()
+    public async Task<List<Post>> AsTracking()
     {
         using var context = new BloggingContext();
 
-        return context.Posts.AsTracking().Include(p => p.Blog).ToList();
+        return await context.Posts.AsTracking().Include(p => p.Blog).ToListAsync();
     }
 
     [Benchmark]
-    public List<Post> AsNoTracking()
+    public async Task<List<Post>> AsNoTracking()
     {
         using var context = new BloggingContext();
 
-        return context.Posts.AsNoTracking().Include(p => p.Blog).ToList();
+        return await context.Posts.AsNoTracking().Include(p => p.Blog).ToListAsync();
     }
 
     public class BloggingContext : DbContext
@@ -50,14 +51,14 @@ public class QueryTrackingBehavior
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
             => optionsBuilder.UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=Blogging;Trusted_Connection=True;ConnectRetryCount=0");
 
-        public static void SeedData(int numBlogs, int numPostsPerBlog)
+        public static async Task SeedData(int numBlogs, int numPostsPerBlog)
         {
             using var context = new BloggingContext();
             context.AddRange(
                 Enumerable.Range(0, numBlogs)
                     .Select(_ => new Blog { Url = "Some URL", Posts = Enumerable.Range(0, numPostsPerBlog)
                     .Select(_ => new Post() { Title = "Some Title", Content = "Some Content"}).ToList() }));
-            context.SaveChanges();
+            await context.SaveChangesAsync();
         }
     }
 

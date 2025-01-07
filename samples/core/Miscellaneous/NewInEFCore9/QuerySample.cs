@@ -96,11 +96,11 @@ public static class QuerySample
             .Posts
             .Where(p => p.Title.Contains(".NET"));
 
-        var results = dotnetPosts
+        var results = await dotnetPosts
             .Where(p => p.Id > 2)
             .Select(p => new { Post = p, TotalCount = dotnetPosts.Count() })
             .Skip(2).Take(10)
-            .ToArray();
+            .ToArrayAsync();
         #endregion
 
         Console.WriteLine();

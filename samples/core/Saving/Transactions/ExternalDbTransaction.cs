@@ -1,4 +1,5 @@
 using System;
+using System.Threading.Tasks;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 
@@ -6,7 +7,7 @@ namespace EFSaving.Transactions;
 
 public class ExternalDbTransaction
 {
-    public static void Run()
+    public static async Task Run()
     {
         var connectionString =
             @"Server=(localdb)\mssqllocaldb;Database=EFSaving.Transactions;Trusted_Connection=True;ConnectRetryCount=0";
@@ -16,15 +17,15 @@ public class ExternalDbTransaction
                        .UseSqlServer(connectionString)
                        .Options))
         {
-            context.Database.EnsureDeleted();
-            context.Database.EnsureCreated();
+            await context.Database.EnsureDeletedAsync();
+            await context.Database.EnsureCreatedAsync();
         }
 
         #region Transaction
         using var connection = new SqlConnection(connectionString);
-        connection.Open();
+        await connection.OpenAsync();
 
-        using var transaction = connection.BeginTransaction();
+        using var transaction = (SqlTransaction)await connection.BeginTransactionAsync();
         try
         {
             // Run raw ADO.NET command in the transaction
@@ -40,14 +41,14 @@ public class ExternalDbTransaction
 
             using (var context = new BloggingContext(options))
             {
-                context.Database.UseTransaction(transaction);
+                await context.Database.UseTransactionAsync(transaction);
                 context.Blogs.Add(new Blog { Url = "http://blogs.msdn.com/dotnet" });
-                context.SaveChanges();
+                await context.SaveChangesAsync();
             }
 
             // Commit transaction if all commands succeed, transaction will auto-rollback
             // when disposed if either commands fails
-            transaction.Commit();
+            await transaction.CommitAsync();
         }
         catch (Exception)
         {

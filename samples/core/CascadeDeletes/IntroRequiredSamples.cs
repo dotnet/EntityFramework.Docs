@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 
@@ -8,88 +9,88 @@ namespace IntroRequired;
 
 public static class IntroRequiredSamples
 {
-    public static void Deleting_principal_parent_1()
+    public static async Task Deleting_principal_parent_1()
     {
         Console.WriteLine($">>>> Sample: {nameof(Deleting_principal_parent_1)}");
         Console.WriteLine();
 
-        Helpers.RecreateCleanDatabase();
-        Helpers.PopulateDatabase();
+        await Helpers.RecreateCleanDatabase();
+        await Helpers.PopulateDatabase();
 
         #region Deleting_principal_parent_1
         using var context = new BlogsContext();
 
-        var blog = context.Blogs.OrderBy(e => e.Name).Include(e => e.Posts).First();
+        var blog = await context.Blogs.OrderBy(e => e.Name).Include(e => e.Posts).FirstAsync();
 
         context.Remove(blog);
 
-        context.SaveChanges();
+        await context.SaveChangesAsync();
         #endregion
 
         Console.WriteLine();
     }
 
-    public static void Severing_a_relationship_1()
+    public static async Task Severing_a_relationship_1()
     {
         Console.WriteLine($">>>> Sample: {nameof(Severing_a_relationship_1)}");
         Console.WriteLine();
 
-        Helpers.RecreateCleanDatabase();
-        Helpers.PopulateDatabase();
+        await Helpers.RecreateCleanDatabase();
+        await Helpers.PopulateDatabase();
 
         #region Severing_a_relationship_1
         using var context = new BlogsContext();
 
-        var blog = context.Blogs.OrderBy(e => e.Name).Include(e => e.Posts).First();
+        var blog = await context.Blogs.OrderBy(e => e.Name).Include(e => e.Posts).FirstAsync();
 
         foreach (var post in blog.Posts)
         {
             post.Blog = null;
         }
 
-        context.SaveChanges();
+        await context.SaveChangesAsync();
         #endregion
 
         Console.WriteLine();
     }
 
-    public static void Severing_a_relationship_2()
+    public static async Task Severing_a_relationship_2()
     {
         Console.WriteLine($">>>> Sample: {nameof(Severing_a_relationship_2)}");
         Console.WriteLine();
 
-        Helpers.RecreateCleanDatabase();
-        Helpers.PopulateDatabase();
+        await Helpers.RecreateCleanDatabase();
+        await Helpers.PopulateDatabase();
 
         #region Severing_a_relationship_2
         using var context = new BlogsContext();
 
-        var blog = context.Blogs.OrderBy(e => e.Name).Include(e => e.Posts).First();
+        var blog = await context.Blogs.OrderBy(e => e.Name).Include(e => e.Posts).FirstAsync();
 
         blog.Posts.Clear();
 
-        context.SaveChanges();
+        await context.SaveChangesAsync();
         #endregion
 
         Console.WriteLine();
     }
 
-    public static void Where_cascading_behaviors_happen_1()
+    public static async Task Where_cascading_behaviors_happen_1()
     {
         Console.WriteLine($">>>> Sample: {nameof(Where_cascading_behaviors_happen_1)}");
         Console.WriteLine();
 
-        Helpers.RecreateCleanDatabase();
-        Helpers.PopulateDatabase();
+        await Helpers.RecreateCleanDatabase();
+        await Helpers.PopulateDatabase();
 
         #region Where_cascading_behaviors_happen_1
         using var context = new BlogsContext();
 
-        var blog = context.Blogs.OrderBy(e => e.Name).First();
+        var blog = await context.Blogs.OrderBy(e => e.Name).FirstAsync();
 
         context.Remove(blog);
 
-        context.SaveChanges();
+        await context.SaveChangesAsync();
         #endregion
 
         Console.WriteLine();
@@ -98,15 +99,15 @@ public static class IntroRequiredSamples
 
 public static class Helpers
 {
-    public static void RecreateCleanDatabase()
+    public static async Task RecreateCleanDatabase()
     {
         using var context = new BlogsContext(quiet: true);
 
-        context.Database.EnsureDeleted();
-        context.Database.EnsureCreated();
+        await context.Database.EnsureDeletedAsync();
+        await context.Database.EnsureCreatedAsync();
     }
 
-    public static void PopulateDatabase()
+    public static async Task PopulateDatabase()
     {
         using var context = new BlogsContext(quiet: true);
 
@@ -129,7 +130,7 @@ public static class Helpers
                 }
             });
 
-        context.SaveChanges();
+        await context.SaveChangesAsync();
     }
 }
 

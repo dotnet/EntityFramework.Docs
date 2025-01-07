@@ -1,25 +1,26 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 
 namespace EFQuerying.QueryFilters;
 
 internal class Program
 {
-    private static void Main(string[] args)
+    private static async Task Main(string[] args)
     {
-        QueryFiltersBasicExample();
-        QueryFiltersWithNavigationsExample();
-        QueryFiltersWithRequiredNavigationExample();
-        QueryFiltersUsingNavigationExample();
+        await QueryFiltersBasicExample();
+        await QueryFiltersWithNavigationsExample();
+        await QueryFiltersWithRequiredNavigationExample();
+        await QueryFiltersUsingNavigationExample();
     }
 
-    private static void QueryFiltersBasicExample()
+    private static async Task QueryFiltersBasicExample()
     {
         using (var db = new BloggingContext("diego"))
         {
-            if (db.Database.EnsureCreated())
+            if (await db.Database.EnsureCreatedAsync())
             {
                 db.Blogs.Add(
                     new Blog
@@ -45,7 +46,7 @@ internal class Program
                         }
                     });
 
-                db.SaveChanges();
+                await db.SaveChangesAsync();
 
                 using (var andrewDb = new BloggingContext("andrew"))
                 {
@@ -59,25 +60,25 @@ internal class Program
                             }
                         });
 
-                    andrewDb.SaveChanges();
+                    await andrewDb.SaveChangesAsync();
                 }
 
-                db.Posts
+                (await db.Posts
                     .Where(
                         p => p.Title == "Caring for tropical fish"
                              || p.Title == "Cat care 101")
-                    .ToList()
+                    .ToListAsync())
                     .ForEach(p => db.Posts.Remove(p));
 
-                db.SaveChanges();
+                await db.SaveChangesAsync();
             }
         }
 
         using (var db = new BloggingContext("Diego"))
         {
-            var blogs = db.Blogs
+            var blogs = await db.Blogs
                 .Include(b => b.Posts)
-                .ToList();
+                .ToListAsync();
 
             foreach (var blog in blogs)
             {
@@ -93,10 +94,10 @@ internal class Program
             }
 
             #region IgnoreFilters
-            blogs = db.Blogs
+            blogs = await db.Blogs
                 .Include(b => b.Posts)
                 .IgnoreQueryFilters()
-                .ToList();
+                .ToListAsync();
             #endregion
 
             foreach (var blog in blogs)
@@ -112,12 +113,12 @@ internal class Program
         }
     }
 
-    private static void QueryFiltersWithNavigationsExample()
+    private static async Task QueryFiltersWithNavigationsExample()
     {
         using (var animalContext = new AnimalContext())
         {
-            animalContext.Database.EnsureDeleted();
-            animalContext.Database.EnsureCreated();
+            await animalContext.Database.EnsureDeletedAsync();
+            await animalContext.Database.EnsureCreatedAsync();
 
             var janice = new Person { Name = "Janice" };
             var jamie = new Person { Name = "Jamie" };
@@ -135,7 +136,7 @@ internal class Program
 
             animalContext.People.AddRange(janice, jamie, cesar, paul, dominic);
             animalContext.Animals.AddRange(kibbles, sammy, puffy, hati, simba);
-            animalContext.SaveChanges();
+            await animalContext.SaveChangesAsync();
         }
 
         using (var animalContext = new AnimalContext())
@@ -146,7 +147,7 @@ internal class Program
 
             // Jamie and Paul are filtered out.
             // Paul doesn't own any pets. Jamie owns Puffy, but her pet has been filtered out.
-            var animalLovers = animalContext.People.ToList();
+            var animalLovers = await animalContext.People.ToListAsync();
             DisplayResults(animalLovers);
 
             Console.WriteLine("**************************************************");
@@ -157,10 +158,10 @@ internal class Program
             // Paul doesn't own any pets. Jamie owns Puffy, but her pet has been filtered out.
             // Simba's favorite toy has also been filtered out.
             // Puffy is filtered out so he doesn't show up as Hati's friend.
-            var ownersAndTheirPets = animalContext.People
+            var ownersAndTheirPets = await animalContext.People
                 .Include(p => p.Pets)
                 .ThenInclude(p => ((Dog)p).FavoriteToy)
-                .ToList();
+                .ToListAsync();
 
             DisplayResults(ownersAndTheirPets);
 
@@ -168,11 +169,11 @@ internal class Program
             Console.WriteLine("* Animal lovers and their pets - query filters disabled *");
             Console.WriteLine("*********************************************************");
 
-            var ownersAndTheirPetsUnfiltered = animalContext.People
+            var ownersAndTheirPetsUnfiltered = await animalContext.People
                 .IgnoreQueryFilters()
                 .Include(p => p.Pets)
                 .ThenInclude(p => ((Dog)p).FavoriteToy)
-                .ToList();
+                .ToListAsync();
 
             DisplayResults(ownersAndTheirPetsUnfiltered);
         }
@@ -203,12 +204,12 @@ internal class Program
         }
     }
 
-    private static void QueryFiltersWithRequiredNavigationExample()
+    private static async Task QueryFiltersWithRequiredNavigationExample()
     {
         using (var db = new FilteredBloggingContextRequired())
         {
-            db.Database.EnsureDeleted();
-            db.Database.EnsureCreated();
+            await db.Database.EnsureDeletedAsync();
+            await db.Database.EnsureCreatedAsync();
 
             #region SeedData
             db.Blogs.Add(
@@ -236,15 +237,15 @@ internal class Program
                 });
             #endregion
 
-            db.SaveChanges();
+            await db.SaveChangesAsync();
         }
 
         Console.WriteLine("Use of required navigations to access entity with query filter demo");
         using (var db = new FilteredBloggingContextRequired())
         {
             #region Queries
-            var allPosts = db.Posts.ToList();
-            var allPostsWithBlogsIncluded = db.Posts.Include(p => p.Blog).ToList();
+            var allPosts = await db.Posts.ToListAsync();
+            var allPostsWithBlogsIncluded = await db.Posts.Include(p => p.Blog).ToListAsync();
             #endregion
 
             if (allPosts.Count == allPostsWithBlogsIncluded.Count)
@@ -260,12 +261,12 @@ internal class Program
         }
     }
 
-    private static void QueryFiltersUsingNavigationExample()
+    private static async Task QueryFiltersUsingNavigationExample()
     {
         using (var db = new FilteredBloggingContextRequired())
         {
-            db.Database.EnsureDeleted();
-            db.Database.EnsureCreated();
+            await db.Database.EnsureDeletedAsync();
+            await db.Database.EnsureCreatedAsync();
 
             #region SeedDataNavigation
             db.Blogs.Add(
@@ -303,16 +304,16 @@ internal class Program
                 });
             #endregion
 
-            db.SaveChanges();
+            await db.SaveChangesAsync();
         }
 
         Console.WriteLine("Query filters using navigations demo");
         using (var db = new FilteredBloggingContextRequired())
         {
             #region QueriesNavigation
-            var filteredBlogs = db.Blogs.ToList();
+            var filteredBlogs = await db.Blogs.ToListAsync();
             #endregion
-            var filteredBlogsInclude = db.Blogs.Include(b => b.Posts).ToList();
+            var filteredBlogsInclude = await db.Blogs.Include(b => b.Posts).ToListAsync();
             if (filteredBlogs.Count == 2
                 && filteredBlogsInclude.Count == 2)
             {

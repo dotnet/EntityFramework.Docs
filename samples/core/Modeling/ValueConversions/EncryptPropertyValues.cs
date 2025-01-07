@@ -3,6 +3,7 @@
 
 using System;
 using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 
@@ -10,25 +11,25 @@ namespace EFModeling.ValueConversions;
 
 public class EncryptPropertyValues : Program
 {
-    public void Run()
+    public async Task Run()
     {
         ConsoleWriteLines("Sample showing value conversions for encrypting property values...");
 
         using (var context = new SampleDbContext())
         {
-            CleanDatabase(context);
+            await CleanDatabase(context);
 
             ConsoleWriteLines("Save a new entity...");
 
             context.Add(new User { Name = "arthur", Password = "password" });
-            context.SaveChanges();
+            await context.SaveChangesAsync();
         }
 
         using (var context = new SampleDbContext())
         {
             ConsoleWriteLines("Read the entity back...");
 
-            var user = context.Set<User>().Single();
+            var user = await context.Set<User>().SingleAsync();
 
             ConsoleWriteLines($"User {user.Name} has password '{user.Password}'");
         }

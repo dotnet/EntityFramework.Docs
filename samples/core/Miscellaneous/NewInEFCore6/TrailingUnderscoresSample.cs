@@ -1,14 +1,15 @@
 ﻿using System;
+using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 
 public static class TrailingUnderscoresSample
 {
-    public static void Backing_fields_with_trailing_underscores_are_matched()
+    public static async Task Backing_fields_with_trailing_underscores_are_matched()
     {
         Console.WriteLine($">>>> Sample: {nameof(Backing_fields_with_trailing_underscores_are_matched)}");
         Console.WriteLine();
 
-        Helpers.RecreateCleanDatabase();
+        await Helpers.RecreateCleanDatabase();
 
         using var context = new SomeDbContext();
 
@@ -25,12 +26,12 @@ public static class TrailingUnderscoresSample
 
     public static class Helpers
     {
-        public static void RecreateCleanDatabase()
+        public static async Task RecreateCleanDatabase()
         {
             using var context = new SomeDbContext(quiet: true);
 
-            context.Database.EnsureDeleted();
-            context.Database.EnsureCreated();
+            await context.Database.EnsureDeletedAsync();
+            await context.Database.EnsureCreatedAsync();
         }
     }
 

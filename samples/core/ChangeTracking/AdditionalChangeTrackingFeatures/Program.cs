@@ -1,22 +1,23 @@
 ﻿using System;
+using System.Threading.Tasks;
 using DefaultValues;
 using Optional;
 
 public class Program
 {
-    public static void Main()
+    public static async Task Main()
     {
         Console.WriteLine("Samples for _Identity Resolution in EF Core_");
         Console.WriteLine();
 
-        Samples.DbContext_versus_DbSet_methods_1();
-        Samples.Temporary_values_1();
-        Samples.Temporary_values_2();
+        await Samples.DbContext_versus_DbSet_methods_1();
+        await Samples.Temporary_values_1();
+        await Samples.Temporary_values_2();
 
-        DefaultValueSamples.Working_with_default_values_1();
-        DefaultValueSamples.Working_with_default_values_2();
-        DefaultValueSamples.Working_with_default_values_3();
-        DefaultValueSamples.Working_with_default_values_4();
-        DefaultValueSamples.Working_with_default_values_5();
+        await DefaultValueSamples.Working_with_default_values_1();
+        await DefaultValueSamples.Working_with_default_values_2();
+        await DefaultValueSamples.Working_with_default_values_3();
+        await DefaultValueSamples.Working_with_default_values_4();
+        await DefaultValueSamples.Working_with_default_values_5();
     }
 }

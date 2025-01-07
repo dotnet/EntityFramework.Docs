@@ -1,15 +1,17 @@
 ﻿using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace EFSaving.Basics;
 
 public class Sample
 {
-    public static void Run()
+    public static async Task Run()
     {
         using (var context = new BloggingContext())
         {
-            context.Database.EnsureDeleted();
-            context.Database.EnsureCreated();
+            await context.Database.EnsureDeletedAsync();
+            await context.Database.EnsureCreatedAsync();
         }
 
         #region Add
@@ -17,25 +19,25 @@ public class Sample
         {
             var blog = new Blog { Url = "http://example.com" };
             context.Blogs.Add(blog);
-            context.SaveChanges();
+            await context.SaveChangesAsync();
         }
         #endregion
 
         #region Update
         using (var context = new BloggingContext())
         {
-            var blog = context.Blogs.Single(b => b.Url == "http://example.com");
+            var blog = await context.Blogs.SingleAsync(b => b.Url == "http://example.com");
             blog.Url = "http://example.com/blog";
-            context.SaveChanges();
+            await context.SaveChangesAsync();
         }
         #endregion
 
         #region Remove
         using (var context = new BloggingContext())
         {
-            var blog = context.Blogs.Single(b => b.Url == "http://example.com/blog");
+            var blog = await context.Blogs.SingleAsync(b => b.Url == "http://example.com/blog");
             context.Blogs.Remove(blog);
-            context.SaveChanges();
+            await context.SaveChangesAsync();
         }
         #endregion
 
@@ -45,7 +47,7 @@ public class Sample
             // seeding database
             context.Blogs.Add(new Blog { Url = "http://example.com/blog" });
             context.Blogs.Add(new Blog { Url = "http://example.com/another_blog" });
-            context.SaveChanges();
+            await context.SaveChangesAsync();
         }
 
         using (var context = new BloggingContext())
@@ -55,14 +57,14 @@ public class Sample
             context.Blogs.Add(new Blog { Url = "http://example.com/blog_two" });
 
             // update
-            var firstBlog = context.Blogs.First();
+            var firstBlog = await context.Blogs.FirstAsync();
             firstBlog.Url = "";
 
             // remove
-            var lastBlog = context.Blogs.OrderBy(e => e.BlogId).Last();
+            var lastBlog = await context.Blogs.OrderBy(e => e.BlogId).LastAsync();
             context.Blogs.Remove(lastBlog);
 
-            context.SaveChanges();
+            await context.SaveChangesAsync();
         }
         #endregion
     }

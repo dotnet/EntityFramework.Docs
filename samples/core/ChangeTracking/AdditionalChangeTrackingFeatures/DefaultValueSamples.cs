@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 
@@ -7,12 +8,12 @@ namespace DefaultValues;
 
 public class DefaultValueSamples
 {
-    public static void Working_with_default_values_1()
+    public static async Task Working_with_default_values_1()
     {
         Console.WriteLine($">>>> Sample: {nameof(Working_with_default_values_1)}");
         Console.WriteLine();
 
-        Helpers.RecreateCleanDatabase();
+        await Helpers.RecreateCleanDatabase();
 
         #region Working_with_default_values_1
         using var context = new BlogsContext();
@@ -21,7 +22,7 @@ public class DefaultValueSamples
             new Token { Name = "A" },
             new Token { Name = "B", ValidFrom = new DateTime(1111, 11, 11, 11, 11, 11) });
 
-        context.SaveChanges();
+        await context.SaveChangesAsync();
 
         Console.WriteLine(context.ChangeTracker.DebugView.LongView);
         #endregion
@@ -29,12 +30,12 @@ public class DefaultValueSamples
         Console.WriteLine();
     }
 
-    public static void Working_with_default_values_2()
+    public static async Task Working_with_default_values_2()
     {
         Console.WriteLine($">>>> Sample: {nameof(Working_with_default_values_2)}");
         Console.WriteLine();
 
-        Helpers.RecreateCleanDatabase();
+        await Helpers.RecreateCleanDatabase();
 
         #region Working_with_default_values_2
         using var context = new BlogsContext();
@@ -44,7 +45,7 @@ public class DefaultValueSamples
         var fooC = new Foo1();
 
         context.AddRange(fooA, fooB, fooC);
-        context.SaveChanges();
+        await context.SaveChangesAsync();
 
         Debug.Assert(fooA.Count == 10);
         Debug.Assert(fooB.Count == -1); // Not what we want!
@@ -54,12 +55,12 @@ public class DefaultValueSamples
         Console.WriteLine();
     }
 
-    public static void Working_with_default_values_3()
+    public static async Task Working_with_default_values_3()
     {
         Console.WriteLine($">>>> Sample: {nameof(Working_with_default_values_3)}");
         Console.WriteLine();
 
-        Helpers.RecreateCleanDatabase();
+        await Helpers.RecreateCleanDatabase();
 
         #region Working_with_default_values_3
         using var context = new BlogsContext();
@@ -69,7 +70,7 @@ public class DefaultValueSamples
         var fooC = new Foo2();
 
         context.AddRange(fooA, fooB, fooC);
-        context.SaveChanges();
+        await context.SaveChangesAsync();
 
         Debug.Assert(fooA.Count == 10);
         Debug.Assert(fooB.Count == 0);
@@ -79,12 +80,12 @@ public class DefaultValueSamples
         Console.WriteLine();
     }
 
-    public static void Working_with_default_values_4()
+    public static async Task Working_with_default_values_4()
     {
         Console.WriteLine($">>>> Sample: {nameof(Working_with_default_values_4)}");
         Console.WriteLine();
 
-        Helpers.RecreateCleanDatabase();
+        await Helpers.RecreateCleanDatabase();
 
         #region Working_with_default_values_4
         using var context = new BlogsContext();
@@ -94,7 +95,7 @@ public class DefaultValueSamples
         var fooC = new Foo3();
 
         context.AddRange(fooA, fooB, fooC);
-        context.SaveChanges();
+        await context.SaveChangesAsync();
 
         Debug.Assert(fooA.Count == 10);
         Debug.Assert(fooB.Count == 0);
@@ -104,12 +105,12 @@ public class DefaultValueSamples
         Console.WriteLine();
     }
 
-    public static void Working_with_default_values_5()
+    public static async Task Working_with_default_values_5()
     {
         Console.WriteLine($">>>> Sample: {nameof(Working_with_default_values_5)}");
         Console.WriteLine();
 
-        Helpers.RecreateCleanDatabase();
+        await Helpers.RecreateCleanDatabase();
 
         #region Working_with_default_values_5
         using var context = new BlogsContext();
@@ -120,7 +121,7 @@ public class DefaultValueSamples
 
         context.AddRange(userA, userB, userC);
 
-        context.SaveChanges();
+        await context.SaveChangesAsync();
         #endregion
 
         Console.WriteLine();
@@ -129,12 +130,12 @@ public class DefaultValueSamples
 
 public static class Helpers
 {
-    public static void RecreateCleanDatabase()
+    public static async Task RecreateCleanDatabase()
     {
         using var context = new BlogsContext(quiet: true);
 
-        context.Database.EnsureDeleted();
-        context.Database.EnsureCreated();
+        await context.Database.EnsureDeletedAsync();
+        await context.Database.EnsureCreatedAsync();
     }
 }
 

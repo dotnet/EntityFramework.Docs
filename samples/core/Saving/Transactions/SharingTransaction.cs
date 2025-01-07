@@ -1,5 +1,6 @@
 using System;
 using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
@@ -8,7 +9,7 @@ namespace EFSaving.Transactions;
 
 public class SharingTransaction
 {
-    public static void Run()
+    public static async Task Run()
     {
         var connectionString =
             @"Server=(localdb)\mssqllocaldb;Database=EFSaving.Transactions;Trusted_Connection=True;ConnectRetryCount=0";
@@ -18,8 +19,8 @@ public class SharingTransaction
                        .UseSqlServer(connectionString)
                        .Options))
         {
-            context.Database.EnsureDeleted();
-            context.Database.EnsureCreated();
+            await context.Database.EnsureDeletedAsync();
+            await context.Database.EnsureCreatedAsync();
         }
 
         #region Transaction
@@ -29,27 +30,27 @@ public class SharingTransaction
             .Options;
 
         using var context1 = new BloggingContext(options);
-        using var transaction = context1.Database.BeginTransaction();
+        using var transaction = await context1.Database.BeginTransactionAsync();
         try
         {
             context1.Blogs.Add(new Blog { Url = "http://blogs.msdn.com/dotnet" });
-            context1.SaveChanges();
+            await context1.SaveChangesAsync();
 
             using (var context2 = new BloggingContext(options))
             {
-                context2.Database.UseTransaction(transaction.GetDbTransaction());
+                await context2.Database.UseTransactionAsync(transaction.GetDbTransaction());
 
-                var blogs = context2.Blogs
+                var blogs = await context2.Blogs
                     .OrderBy(b => b.Url)
-                    .ToList();
+                    .ToListAsync();
 
                 context2.Blogs.Add(new Blog { Url = "http://dot.net" });
-                context2.SaveChanges();
+                await context2.SaveChangesAsync();
             }
 
             // Commit transaction if all commands succeed, transaction will auto-rollback
             // when disposed if either commands fails
-            transaction.Commit();
+            await transaction.CommitAsync();
         }
         catch (Exception)
         {

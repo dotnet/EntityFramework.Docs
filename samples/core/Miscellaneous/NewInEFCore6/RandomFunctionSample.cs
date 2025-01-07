@@ -1,22 +1,23 @@
 ﻿using System;
 using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 
 public static class RandomFunctionSample
 {
-    public static void Call_EF_Functions_Random()
+    public static async Task Call_EF_Functions_Random()
     {
         Console.WriteLine($">>>> Sample: {nameof(Call_EF_Functions_Random)}");
         Console.WriteLine();
 
-        Helpers.RecreateCleanDatabase();
-        Helpers.PopulateDatabase();
+        await Helpers.RecreateCleanDatabase();
+        await Helpers.PopulateDatabase();
 
         using var context = new BooksContext();
 
         #region Query
-        var users = context.Users.Where(u => u.Popularity == (int)(EF.Functions.Random() * 4.0) + 1).ToList();
+        var users = await context.Users.Where(u => u.Popularity == (int)(EF.Functions.Random() * 4.0) + 1).ToListAsync();
         #endregion
 
         foreach (var user in users)
@@ -29,15 +30,15 @@ public static class RandomFunctionSample
 
     public static class Helpers
     {
-        public static void RecreateCleanDatabase()
+        public static async Task RecreateCleanDatabase()
         {
             using var context = new BooksContext(quiet: true);
 
-            context.Database.EnsureDeleted();
-            context.Database.EnsureCreated();
+            await context.Database.EnsureDeletedAsync();
+            await context.Database.EnsureCreatedAsync();
         }
 
-        public static void PopulateDatabase()
+        public static async Task PopulateDatabase()
         {
             using var context = new BooksContext(quiet: true);
 
@@ -51,7 +52,7 @@ public static class RandomFunctionSample
                 new User { Popularity = 2, Username = "olive" },
                 new User { Popularity = 3, Username = "toast" });
 
-            context.SaveChanges();
+            await context.SaveChangesAsync();
         }
     }
 

@@ -16,9 +16,9 @@ In many scenarios, your program needs to query some data from the database, perf
 ```c#
 using (var context = new BloggingContext())
 {
-    var blog = context.Blogs.Single(b => b.Url == "http://example.com");
+    var blog = await context.Blogs.SingleAsync(b => b.Url == "http://example.com");
     blog.Url = "http://example.com/blog";
-    context.SaveChanges();
+    await context.SaveChangesAsync();
 }
 ```
 

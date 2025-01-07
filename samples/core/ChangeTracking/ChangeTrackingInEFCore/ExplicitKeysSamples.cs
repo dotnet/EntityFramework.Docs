@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 
@@ -9,12 +10,12 @@ namespace ExplicitKeys;
 
 public static class ExplicitKeysSamples
 {
-    public static void Inserting_new_entities_1()
+    public static async Task Inserting_new_entities_1()
     {
         Console.WriteLine($">>>> Sample: {nameof(Inserting_new_entities_1)}");
         Console.WriteLine();
 
-        Helpers.RecreateCleanDatabase();
+        await Helpers.RecreateCleanDatabase();
 
         using var context = new BlogsContext();
 
@@ -26,7 +27,7 @@ public static class ExplicitKeysSamples
         Console.WriteLine("Before SaveChanges:");
         Console.WriteLine(context.ChangeTracker.DebugView.LongView);
 
-        context.SaveChanges();
+        await context.SaveChangesAsync();
 
         Console.WriteLine("After SaveChanges:");
         Console.WriteLine(context.ChangeTracker.DebugView.LongView);
@@ -34,12 +35,12 @@ public static class ExplicitKeysSamples
         Console.WriteLine();
     }
 
-    public static void Inserting_new_entities_2()
+    public static async Task Inserting_new_entities_2()
     {
         Console.WriteLine($">>>> Sample: {nameof(Inserting_new_entities_2)}");
         Console.WriteLine();
 
-        Helpers.RecreateCleanDatabase();
+        await Helpers.RecreateCleanDatabase();
 
         using var context = new BlogsContext();
 
@@ -70,7 +71,7 @@ public static class ExplicitKeysSamples
         Console.WriteLine("Before SaveChanges:");
         Console.WriteLine(context.ChangeTracker.DebugView.LongView);
 
-        context.SaveChanges();
+        await context.SaveChangesAsync();
 
         Console.WriteLine("After SaveChanges:");
         Console.WriteLine(context.ChangeTracker.DebugView.LongView);
@@ -78,13 +79,13 @@ public static class ExplicitKeysSamples
         Console.WriteLine();
     }
 
-    public static void Attaching_existing_entities_1()
+    public static async Task Attaching_existing_entities_1()
     {
         Console.WriteLine($">>>> Sample: {nameof(Attaching_existing_entities_1)}");
         Console.WriteLine();
 
-        Helpers.RecreateCleanDatabase();
-        Helpers.PopulateDatabase();
+        await Helpers.RecreateCleanDatabase();
+        await Helpers.PopulateDatabase();
 
         using var context = new BlogsContext();
 
@@ -96,7 +97,7 @@ public static class ExplicitKeysSamples
         Console.WriteLine("Before SaveChanges:");
         Console.WriteLine(context.ChangeTracker.DebugView.LongView);
 
-        context.SaveChanges();
+        await context.SaveChangesAsync();
 
         Console.WriteLine("After SaveChanges:");
         Console.WriteLine(context.ChangeTracker.DebugView.LongView);
@@ -104,13 +105,13 @@ public static class ExplicitKeysSamples
         Console.WriteLine();
     }
 
-    public static void Attaching_existing_entities_2()
+    public static async Task Attaching_existing_entities_2()
     {
         Console.WriteLine($">>>> Sample: {nameof(Attaching_existing_entities_2)}");
         Console.WriteLine();
 
-        Helpers.RecreateCleanDatabase();
-        Helpers.PopulateDatabase();
+        await Helpers.RecreateCleanDatabase();
+        await Helpers.PopulateDatabase();
 
         using var context = new BlogsContext();
 
@@ -141,7 +142,7 @@ public static class ExplicitKeysSamples
         Console.WriteLine("Before SaveChanges:");
         Console.WriteLine(context.ChangeTracker.DebugView.LongView);
 
-        context.SaveChanges();
+        await context.SaveChangesAsync();
 
         Console.WriteLine("After SaveChanges:");
         Console.WriteLine(context.ChangeTracker.DebugView.LongView);
@@ -149,13 +150,13 @@ public static class ExplicitKeysSamples
         Console.WriteLine();
     }
 
-    public static void Updating_existing_entities_1()
+    public static async Task Updating_existing_entities_1()
     {
         Console.WriteLine($">>>> Sample: {nameof(Updating_existing_entities_1)}");
         Console.WriteLine();
 
-        Helpers.RecreateCleanDatabase();
-        Helpers.PopulateDatabase();
+        await Helpers.RecreateCleanDatabase();
+        await Helpers.PopulateDatabase();
 
         using var context = new BlogsContext();
 
@@ -167,7 +168,7 @@ public static class ExplicitKeysSamples
         Console.WriteLine("Before SaveChanges:");
         Console.WriteLine(context.ChangeTracker.DebugView.LongView);
 
-        context.SaveChanges();
+        await context.SaveChangesAsync();
 
         Console.WriteLine("After SaveChanges:");
         Console.WriteLine(context.ChangeTracker.DebugView.LongView);
@@ -175,13 +176,13 @@ public static class ExplicitKeysSamples
         Console.WriteLine();
     }
 
-    public static void Updating_existing_entities_2()
+    public static async Task Updating_existing_entities_2()
     {
         Console.WriteLine($">>>> Sample: {nameof(Updating_existing_entities_2)}");
         Console.WriteLine();
 
-        Helpers.RecreateCleanDatabase();
-        Helpers.PopulateDatabase();
+        await Helpers.RecreateCleanDatabase();
+        await Helpers.PopulateDatabase();
 
         using var context = new BlogsContext();
 
@@ -212,7 +213,7 @@ public static class ExplicitKeysSamples
         Console.WriteLine("Before SaveChanges:");
         Console.WriteLine(context.ChangeTracker.DebugView.LongView);
 
-        context.SaveChanges();
+        await context.SaveChangesAsync();
 
         Console.WriteLine("After SaveChanges:");
         Console.WriteLine(context.ChangeTracker.DebugView.LongView);
@@ -220,13 +221,13 @@ public static class ExplicitKeysSamples
         Console.WriteLine();
     }
 
-    public static void Deleting_existing_entities_1()
+    public static async Task Deleting_existing_entities_1()
     {
         Console.WriteLine($">>>> Sample: {nameof(Deleting_existing_entities_1)}");
         Console.WriteLine();
 
-        Helpers.RecreateCleanDatabase();
-        Helpers.PopulateDatabase();
+        await Helpers.RecreateCleanDatabase();
+        await Helpers.PopulateDatabase();
 
         using var context = new BlogsContext();
 
@@ -238,7 +239,7 @@ public static class ExplicitKeysSamples
         Console.WriteLine("Before SaveChanges:");
         Console.WriteLine(context.ChangeTracker.DebugView.LongView);
 
-        context.SaveChanges();
+        await context.SaveChangesAsync();
 
         Console.WriteLine("After SaveChanges:");
         Console.WriteLine(context.ChangeTracker.DebugView.LongView);
@@ -246,17 +247,17 @@ public static class ExplicitKeysSamples
         Console.WriteLine();
     }
 
-    public static void Deleting_dependent_child_entities_1()
+    public static async Task Deleting_dependent_child_entities_1()
     {
         Console.WriteLine($">>>> Sample: {nameof(Deleting_dependent_child_entities_1)}");
         Console.WriteLine();
 
-        Helpers.RecreateCleanDatabase();
-        Helpers.PopulateDatabase();
+        await Helpers.RecreateCleanDatabase();
+        await Helpers.PopulateDatabase();
 
         using var context = new BlogsContext();
 
-        var post = GetDisconnectedPost();
+        var post = await GetDisconnectedPost();
 
         #region Deleting_dependent_child_entities_1
         context.Attach(post);
@@ -266,31 +267,31 @@ public static class ExplicitKeysSamples
         Console.WriteLine("Before SaveChanges:");
         Console.WriteLine(context.ChangeTracker.DebugView.LongView);
 
-        context.SaveChanges();
+        await context.SaveChangesAsync();
 
         Console.WriteLine("After SaveChanges:");
         Console.WriteLine(context.ChangeTracker.DebugView.LongView);
 
         Console.WriteLine();
 
-        Post GetDisconnectedPost()
+        async Task<Post> GetDisconnectedPost()
         {
             using var tempContext = new BlogsContext();
-            return tempContext.Posts.Find(2);
+            return await tempContext.Posts.FindAsync(2);
         }
     }
 
-    public static void Deleting_dependent_child_entities_2()
+    public static async Task Deleting_dependent_child_entities_2()
     {
         Console.WriteLine($">>>> Sample: {nameof(Deleting_dependent_child_entities_2)}");
         Console.WriteLine();
 
-        Helpers.RecreateCleanDatabase();
-        Helpers.PopulateDatabase();
+        await Helpers.RecreateCleanDatabase();
+        await Helpers.PopulateDatabase();
 
         using var context = new BlogsContext();
 
-        var blog = GetDisconnectedBlogAndPosts();
+        var blog = await GetDisconnectedBlogAndPosts();
 
         #region Deleting_dependent_child_entities_2
         // Attach a blog and associated posts
@@ -303,31 +304,31 @@ public static class ExplicitKeysSamples
         Console.WriteLine("Before SaveChanges:");
         Console.WriteLine(context.ChangeTracker.DebugView.LongView);
 
-        context.SaveChanges();
+        await context.SaveChangesAsync();
 
         Console.WriteLine("After SaveChanges:");
         Console.WriteLine(context.ChangeTracker.DebugView.LongView);
 
         Console.WriteLine();
 
-        Blog GetDisconnectedBlogAndPosts()
+        async Task<Blog> GetDisconnectedBlogAndPosts()
         {
             using var tempContext = new BlogsContext();
-            return tempContext.Blogs.Include(e => e.Posts).Single();
+            return await tempContext.Blogs.Include(e => e.Posts).SingleAsync();
         }
     }
 
-    public static void Deleting_principal_parent_entities_1()
+    public static async Task Deleting_principal_parent_entities_1()
     {
         Console.WriteLine($">>>> Sample: {nameof(Deleting_principal_parent_entities_1)}");
         Console.WriteLine();
 
-        Helpers.RecreateCleanDatabase();
-        Helpers.PopulateDatabase();
+        await Helpers.RecreateCleanDatabase();
+        await Helpers.PopulateDatabase();
 
         using var context = new BlogsContext();
 
-        var blog = GetDisconnectedBlogAndPosts();
+        var blog = await GetDisconnectedBlogAndPosts();
 
         #region Deleting_principal_parent_entities_1
         // Attach a blog and associated posts
@@ -340,32 +341,32 @@ public static class ExplicitKeysSamples
         Console.WriteLine("Before SaveChanges:");
         Console.WriteLine(context.ChangeTracker.DebugView.LongView);
 
-        context.SaveChanges();
+        await context.SaveChangesAsync();
 
         Console.WriteLine("After SaveChanges:");
         Console.WriteLine(context.ChangeTracker.DebugView.LongView);
 
         Console.WriteLine();
 
-        Blog GetDisconnectedBlogAndPosts()
+        async Task<Blog> GetDisconnectedBlogAndPosts()
         {
             using var tempContext = new BlogsContext();
-            return tempContext.Blogs.Include(e => e.Posts).Single();
+            return await tempContext.Blogs.Include(e => e.Posts).SingleAsync();
         }
     }
 }
 
 public static class Helpers
 {
-    public static void RecreateCleanDatabase()
+    public static async Task RecreateCleanDatabase()
     {
         using var context = new BlogsContext(quiet: true);
 
-        context.Database.EnsureDeleted();
-        context.Database.EnsureCreated();
+        await context.Database.EnsureDeletedAsync();
+        await context.Database.EnsureCreatedAsync();
     }
 
-    public static void PopulateDatabase()
+    public static async Task PopulateDatabase()
     {
         using var context = new BlogsContext(quiet: true);
 
@@ -391,7 +392,7 @@ public static class Helpers
                 }
             });
 
-        context.SaveChanges();
+        await context.SaveChangesAsync();
     }
 }
 

@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using BenchmarkDotNet.Attributes;
 using Microsoft.EntityFrameworkCore;
 
@@ -11,60 +12,60 @@ public class Inheritance
     public int RowsPerEntityType { get; set; }
 
     [GlobalSetup(Target = nameof(TPH))]
-    public void SetupTPH()
+    public async Task SetupTPH()
     {
         Console.WriteLine("Setting up database...");
         using var context = new TPHContext();
-        context.Database.EnsureDeleted();
-        context.Database.EnsureCreated();
-        context.SeedData(RowsPerEntityType);
+        await context.Database.EnsureDeletedAsync();
+        await context.Database.EnsureCreatedAsync();
+        await context.SeedData(RowsPerEntityType);
         Console.WriteLine("Setup complete.");
     }
 
     [GlobalSetup(Target = nameof(TPT))]
-    public void SetupTPT()
+    public async Task SetupTPT()
     {
         Console.WriteLine("Setting up database...");
         using var context = new TPTContext();
-        context.Database.EnsureDeleted();
-        context.Database.EnsureCreated();
-        context.SeedData(RowsPerEntityType);
+        await context.Database.EnsureDeletedAsync();
+        await context.Database.EnsureCreatedAsync();
+        await context.SeedData(RowsPerEntityType);
         Console.WriteLine("Setup complete.");
     }
 
     [GlobalSetup(Target = nameof(TPC))]
-    public void SetupTPC()
+    public async Task SetupTPC()
     {
         Console.WriteLine("Setting up database...");
         using var context = new TPCContext();
-        context.Database.EnsureDeleted();
-        context.Database.EnsureCreated();
-        context.SeedData(RowsPerEntityType);
+        await context.Database.EnsureDeletedAsync();
+        await context.Database.EnsureCreatedAsync();
+        await context.SeedData(RowsPerEntityType);
         Console.WriteLine("Setup complete.");
     }
 
     [Benchmark]
-    public List<Root> TPH()
+    public async Task<List<Root>> TPH()
     {
         using var context = new TPHContext();
 
-        return context.Roots.ToList();
+        return await context.Roots.ToListAsync();
     }
 
     [Benchmark]
-    public List<Root> TPT()
+    public async Task<List<Root>> TPT()
     {
         using var context = new TPTContext();
 
-        return context.Roots.ToList();
+        return await context.Roots.ToListAsync();
     }
 
     [Benchmark]
-    public List<Root> TPC()
+    public async Task<List<Root>> TPC()
     {
         using var context = new TPCContext();
 
-        return context.Roots.ToList();
+        return await context.Roots.ToListAsync();
     }
 
     public abstract class InheritanceContext : DbContext
@@ -84,7 +85,7 @@ public class Inheritance
             modelBuilder.Entity<Child2B>();
         }
 
-        public void SeedData(int rowsPerEntityType)
+        public async Task SeedData(int rowsPerEntityType)
         {
             Set<Root>().AddRange(Enumerable.Range(0, rowsPerEntityType).Select(i => new Root { RootProperty = i }));
             Set<Child1>().AddRange(Enumerable.Range(0, rowsPerEntityType).Select(i => new Child1 { Child1Property = i }));
@@ -93,7 +94,7 @@ public class Inheritance
             Set<Child2>().AddRange(Enumerable.Range(0, rowsPerEntityType).Select(i => new Child2 { Child2Property = i }));
             Set<Child2A>().AddRange(Enumerable.Range(0, rowsPerEntityType).Select(i => new Child2A { Child2AProperty = i }));
             Set<Child2B>().AddRange(Enumerable.Range(0, rowsPerEntityType).Select(i => new Child2B { Child2BProperty = i }));
-            SaveChanges();
+            await SaveChangesAsync();
         }
     }
 

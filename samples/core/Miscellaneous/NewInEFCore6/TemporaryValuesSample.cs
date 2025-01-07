@@ -1,16 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 
 public static class TemporaryValuesSample
 {
-    public static void Explicit_temporary_values_can_be_stored_in_entity_instance_1()
+    public static async Task Explicit_temporary_values_can_be_stored_in_entity_instance_1()
     {
         Console.WriteLine($">>>> Sample: {nameof(Explicit_temporary_values_can_be_stored_in_entity_instance_1)}");
         Console.WriteLine(">>>> Shows using explicit temporary values with FK values to relate posts to a blog.");
         Console.WriteLine();
 
-        Helpers.RecreateCleanDatabase();
+        await Helpers.RecreateCleanDatabase();
 
         using var context = new SomeDbContext();
 
@@ -30,7 +31,7 @@ public static class TemporaryValuesSample
 
         Console.WriteLine();
         Console.WriteLine("SavingChanges...");
-        context.SaveChanges();
+        await context.SaveChangesAsync();
         Console.WriteLine();
 
         Console.WriteLine($"Blog has ID = {blog.Id}");
@@ -40,13 +41,13 @@ public static class TemporaryValuesSample
         Console.WriteLine();
     }
 
-    public static void Explicit_temporary_values_can_be_stored_in_entity_instance_2()
+    public static async Task Explicit_temporary_values_can_be_stored_in_entity_instance_2()
     {
         Console.WriteLine($">>>> Sample: {nameof(Explicit_temporary_values_can_be_stored_in_entity_instance_2)}");
         Console.WriteLine(">>>> Shows taking generated temporary values and setting them into entity instances.");
         Console.WriteLine();
 
-        Helpers.RecreateCleanDatabase();
+        await Helpers.RecreateCleanDatabase();
 
         using var context = new SomeDbContext();
 
@@ -87,7 +88,7 @@ public static class TemporaryValuesSample
 
         Console.WriteLine();
         Console.WriteLine("SavingChanges...");
-        context.SaveChanges();
+        await context.SaveChangesAsync();
         Console.WriteLine();
 
         Console.WriteLine($"Blog has ID = {blog.Id}");
@@ -99,12 +100,12 @@ public static class TemporaryValuesSample
 
     public static class Helpers
     {
-        public static void RecreateCleanDatabase()
+        public static async Task RecreateCleanDatabase()
         {
             using var context = new SomeDbContext(quiet: true);
 
-            context.Database.EnsureDeleted();
-            context.Database.EnsureCreated();
+            await context.Database.EnsureDeletedAsync();
+            await context.Database.EnsureCreatedAsync();
         }
     }
 

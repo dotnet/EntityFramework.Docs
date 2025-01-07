@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using Newtonsoft.Json;
@@ -12,18 +13,18 @@ namespace Graphs;
 
 public static class SerializedGraphExamples
 {
-    public static void Attaching_a_serialized_graph_1()
+    public static async Task Attaching_a_serialized_graph_1()
     {
         Console.WriteLine($">>>> Sample: {nameof(Attaching_a_serialized_graph_1)}");
         Console.WriteLine();
 
-        Helpers.RecreateCleanDatabase();
-        Helpers.PopulateDatabase();
+        await Helpers.RecreateCleanDatabase();
+        await Helpers.PopulateDatabase();
 
         #region Attaching_a_serialized_graph_1a
         using var context = new BlogsContext();
 
-        var blogs = context.Blogs.Include(e => e.Posts).ToList();
+        var blogs = await context.Blogs.Include(e => e.Posts).ToListAsync();
 
         var serialized = JsonConvert.SerializeObject(
             blogs,
@@ -32,11 +33,11 @@ public static class SerializedGraphExamples
         Console.WriteLine(serialized);
         #endregion
 
-        UpdateBlogsFromJson(serialized);
+        await UpdateBlogsFromJson(serialized);
     }
 
     #region Attaching_a_serialized_graph_1b
-    public static void UpdateBlogsFromJson(string json)
+    public static async Task UpdateBlogsFromJson(string json)
     {
         using var context = new BlogsContext();
 
@@ -47,22 +48,22 @@ public static class SerializedGraphExamples
             context.Update(blog);
         }
 
-        context.SaveChanges();
+        await context.SaveChangesAsync();
     }
     #endregion
 
-    public static void Attaching_a_serialized_graph_2()
+    public static async Task Attaching_a_serialized_graph_2()
     {
         Console.WriteLine($">>>> Sample: {nameof(Attaching_a_serialized_graph_2)}");
         Console.WriteLine();
 
-        Helpers.RecreateCleanDatabase();
-        Helpers.PopulateDatabase();
+        await Helpers.RecreateCleanDatabase();
+        await Helpers.PopulateDatabase();
 
         #region Attaching_a_serialized_graph_2
         using var context = new BlogsContext();
 
-        var posts = context.Posts.Include(e => e.Blog).ToList();
+        var posts = await context.Posts.Include(e => e.Blog).ToListAsync();
 
         var serialized = JsonConvert.SerializeObject(
             posts,
@@ -71,10 +72,10 @@ public static class SerializedGraphExamples
         Console.WriteLine(serialized);
         #endregion
 
-        UpdatePostsFromJsonBad(serialized);
+        await UpdatePostsFromJsonBad(serialized);
     }
 
-    public static void UpdatePostsFromJsonBad(string json)
+    public static async Task UpdatePostsFromJsonBad(string json)
     {
         using var context = new BlogsContext();
 
@@ -87,7 +88,7 @@ public static class SerializedGraphExamples
                 context.Update(post); // Will throw
             }
 
-            context.SaveChanges();
+            await context.SaveChangesAsync();
         }
         catch (Exception e)
         {
@@ -95,17 +96,17 @@ public static class SerializedGraphExamples
         }
     }
 
-    public static void Attaching_a_serialized_graph_3()
+    public static async Task Attaching_a_serialized_graph_3()
     {
         Console.WriteLine($">>>> Sample: {nameof(Attaching_a_serialized_graph_3)}");
         Console.WriteLine();
 
-        Helpers.RecreateCleanDatabase();
-        Helpers.PopulateDatabase();
+        await Helpers.RecreateCleanDatabase();
+        await Helpers.PopulateDatabase();
 
         using var context = new BlogsContext();
 
-        var posts = context.Posts.Include(e => e.Blog).ToList();
+        var posts = await context.Posts.Include(e => e.Blog).ToListAsync();
 
         #region Attaching_a_serialized_graph_3
         var serialized = JsonConvert.SerializeObject(
@@ -118,10 +119,10 @@ public static class SerializedGraphExamples
 
         Console.WriteLine(serialized);
 
-        UpdatePostsFromJson(serialized);
+        await UpdatePostsFromJson(serialized);
     }
 
-    public static void UpdatePostsFromJson(string json)
+    public static async Task UpdatePostsFromJson(string json)
     {
         using var context = new BlogsContext();
 
@@ -132,20 +133,20 @@ public static class SerializedGraphExamples
             context.Update(post);
         }
 
-        context.SaveChanges();
+        await context.SaveChangesAsync();
     }
 
-    public static void Attaching_a_serialized_graph_4()
+    public static async Task Attaching_a_serialized_graph_4()
     {
         Console.WriteLine($">>>> Sample: {nameof(Attaching_a_serialized_graph_4)}");
         Console.WriteLine();
 
-        Helpers.RecreateCleanDatabase();
-        Helpers.PopulateDatabase();
+        await Helpers.RecreateCleanDatabase();
+        await Helpers.PopulateDatabase();
 
         using var context = new BlogsContext();
 
-        var posts = context.Posts.Include(e => e.Blog).ToList();
+        var posts = await context.Posts.Include(e => e.Blog).ToListAsync();
 
         #region Attaching_a_serialized_graph_4
         var serialized = JsonSerializer.Serialize(
@@ -154,20 +155,20 @@ public static class SerializedGraphExamples
 
         Console.WriteLine(serialized);
 
-        UpdatePostsFromJson(serialized);
+        await UpdatePostsFromJson(serialized);
     }
 
-    public static void Attaching_a_serialized_graph_5()
+    public static async Task Attaching_a_serialized_graph_5()
     {
         Console.WriteLine($">>>> Sample: {nameof(Attaching_a_serialized_graph_4)}");
         Console.WriteLine();
 
-        Helpers.RecreateCleanDatabase();
-        Helpers.PopulateDatabase();
+        await Helpers.RecreateCleanDatabase();
+        await Helpers.PopulateDatabase();
 
         using var context = new BlogsContext();
 
-        var posts = context.Posts.Include(e => e.Blog).ToList();
+        var posts = await context.Posts.Include(e => e.Blog).ToListAsync();
 
         var serialized = JsonConvert.SerializeObject(
             posts,
@@ -175,13 +176,13 @@ public static class SerializedGraphExamples
 
         Console.WriteLine(serialized);
 
-        Console.WriteLine()
-            ;
-        UpdatePostsFromJsonWithIdentityResolution(serialized);
+        Console.WriteLine();
+
+        await UpdatePostsFromJsonWithIdentityResolution(serialized);
     }
 
     #region Attaching_a_serialized_graph_5
-    public static void UpdatePostsFromJsonWithIdentityResolution(string json)
+    public static async Task UpdatePostsFromJsonWithIdentityResolution(string json)
     {
         using var context = new BlogsContext();
 
@@ -213,22 +214,22 @@ public static class SerializedGraphExamples
                 });
         }
 
-        context.SaveChanges();
+        await context.SaveChangesAsync();
     }
     #endregion
 }
 
 public static class Helpers
 {
-    public static void RecreateCleanDatabase()
+    public static async Task RecreateCleanDatabase()
     {
         using var context = new BlogsContext(quiet: true);
 
-        context.Database.EnsureDeleted();
-        context.Database.EnsureCreated();
+        await context.Database.EnsureDeletedAsync();
+        await context.Database.EnsureCreatedAsync();
     }
 
-    public static void PopulateDatabase()
+    public static async Task PopulateDatabase()
     {
         using var context = new BlogsContext(quiet: true);
 
@@ -271,7 +272,7 @@ public static class Helpers
                 }
             });
 
-        context.SaveChanges();
+        await context.SaveChangesAsync();
     }
 }
 

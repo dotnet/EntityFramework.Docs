@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.EntityFrameworkCore.Diagnostics;
@@ -12,13 +13,13 @@ namespace EFModeling.ValueConversions;
 
 public class CaseInsensitiveStrings : Program
 {
-    public void Run()
+    public async Task Run()
     {
         ConsoleWriteLines("Sample showing value conversions for case-insensitive string keys...");
 
         using (var context = new SampleDbContext())
         {
-            CleanDatabase(context);
+            await CleanDatabase(context);
 
             ConsoleWriteLines("Save new entities...");
 
@@ -40,14 +41,14 @@ public class CaseInsensitiveStrings : Program
                     BlogId = "DotNet",
                     Title = "Some more good .NET stuff"
                 });
-            context.SaveChanges();
+            await context.SaveChangesAsync();
         }
 
         using (var context = new SampleDbContext())
         {
             ConsoleWriteLines("Read the entities back...");
 
-            var blog = context.Set<Blog>().Include(e => e.Posts).Single();
+            var blog = await context.Set<Blog>().Include(e => e.Posts).SingleAsync();
 
             ConsoleWriteLines($"The blog has {blog.Posts.Count} posts with foreign keys '{blog.Posts.First().BlogId}' and '{blog.Posts.Skip(1).First().BlogId}'");
         }

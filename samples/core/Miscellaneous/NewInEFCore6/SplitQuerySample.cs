@@ -1,18 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 
 public static class SplitQuerySample
 {
-    public static void Split_query_for_non_navigation_collections()
+    public static async Task Split_query_for_non_navigation_collections()
     {
         Console.WriteLine($">>>> Sample: {nameof(Split_query_for_non_navigation_collections)}");
         Console.WriteLine();
 
-        Helpers.RecreateCleanDatabase();
-        Helpers.PopulateDatabase();
+        await Helpers.RecreateCleanDatabase();
+        await Helpers.PopulateDatabase();
 
         using var context = new CustomersContext();
 
@@ -21,7 +22,7 @@ public static class SplitQuerySample
         Console.WriteLine("Executed as a single query:");
 
         #region SplitQuery1
-        context.Customers
+        await context.Customers
             .Select(
                 c => new
                 {
@@ -29,12 +30,12 @@ public static class SplitQuerySample
                     Orders = c.Orders
                         .Where(o => o.Id > 1)
                 })
-            .ToList();
+            .ToListAsync();
         #endregion
 
         Console.WriteLine();
         Console.WriteLine("Executed as split queries:");
-        context.Customers.AsSplitQuery().Select(c => new { c, Orders = c.Orders.Where(o => o.Id > 1) }).ToList();
+        await context.Customers.AsSplitQuery().Select(c => new { c, Orders = c.Orders.Where(o => o.Id > 1) }).ToListAsync();
 
         Console.WriteLine();
         Console.WriteLine("LINQ query: 'context.Customers.Select(c => new { c, OrderDates = c.Orders.Where(o => o.Id > 1).Select(o => o.OrderDate) })'");
@@ -42,7 +43,7 @@ public static class SplitQuerySample
         Console.WriteLine("Executed as a single query:");
 
         #region SplitQuery2
-        context.Customers
+        await context.Customers
             .Select(
                 c => new
                 {
@@ -51,12 +52,12 @@ public static class SplitQuerySample
                         .Where(o => o.Id > 1)
                         .Select(o => o.OrderDate)
                 })
-            .ToList();
+            .ToListAsync();
         #endregion
 
         Console.WriteLine();
         Console.WriteLine("Executed as split queries:");
-        context.Customers.AsSplitQuery().Select(c => new { c, OrderDates = c.Orders.Where(o => o.Id > 1).Select(o => o.OrderDate) }).ToList();
+        await context.Customers.AsSplitQuery().Select(c => new { c, OrderDates = c.Orders.Where(o => o.Id > 1).Select(o => o.OrderDate) }).ToListAsync();
 
         Console.WriteLine();
         Console.WriteLine("LINQ query: 'context.Customers.Select(c => new { c, OrderDates = c.Orders.Where(o => o.Id > 1).Select(o => o.OrderDate).Distinct() })'");
@@ -64,7 +65,7 @@ public static class SplitQuerySample
         Console.WriteLine("Executed as a single query:");
 
         #region SplitQuery3
-        context.Customers
+        await context.Customers
             .Select(
                 c => new
                 {
@@ -74,35 +75,35 @@ public static class SplitQuerySample
                         .Select(o => o.OrderDate)
                         .Distinct()
                 })
-            .ToList();
+            .ToListAsync();
         #endregion
 
         Console.WriteLine();
         Console.WriteLine("Executed as split queries:");
-        context.Customers.AsSplitQuery().Select(c => new { c, OrderDates = c.Orders.Where(o => o.Id > 1).Select(o => o.OrderDate).Distinct() }).ToList();
+        await context.Customers.AsSplitQuery().Select(c => new { c, OrderDates = c.Orders.Where(o => o.Id > 1).Select(o => o.OrderDate).Distinct() }).ToListAsync();
 
         Console.WriteLine();
     }
 
-    public static void Last_column_in_ORDER_BY_removed_when_joining_for_collection()
+    public static async Task Last_column_in_ORDER_BY_removed_when_joining_for_collection()
     {
         Console.WriteLine($">>>> Sample: {nameof(Last_column_in_ORDER_BY_removed_when_joining_for_collection)}");
         Console.WriteLine();
 
-        Helpers.RecreateCleanDatabase();
-        Helpers.PopulateDatabase();
+        await Helpers.RecreateCleanDatabase();
+        await Helpers.PopulateDatabase();
 
         using var context = new CustomersContext();
 
         #region OrderBy
-        context.Customers
+        await context.Customers
             .Select(
                 e => new
                 {
                     e.Id,
                     FirstOrder = e.Orders.Where(i => i.Id == 1).ToList()
                 })
-            .ToList();
+            .ToListAsync();
         #endregion
 
         Console.WriteLine();
@@ -110,15 +111,15 @@ public static class SplitQuerySample
 
     public static class Helpers
     {
-        public static void RecreateCleanDatabase()
+        public static async Task RecreateCleanDatabase()
         {
             using var context = new CustomersContext(quiet: true);
 
-            context.Database.EnsureDeleted();
-            context.Database.EnsureCreated();
+            await context.Database.EnsureDeletedAsync();
+            await context.Database.EnsureCreatedAsync();
         }
 
-        public static void PopulateDatabase()
+        public static async Task PopulateDatabase()
         {
             using var context = new CustomersContext(quiet: true);
 
@@ -142,7 +143,7 @@ public static class SplitQuerySample
                     }
                 });
 
-            context.SaveChanges();
+            await context.SaveChangesAsync();
         }
     }
 

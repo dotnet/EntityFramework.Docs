@@ -1,6 +1,8 @@
 using System;
 using System.Linq;
+using System.Threading.Tasks;
 using EF.Testing.BloggingWebApi.Controllers;
+using Microsoft.EntityFrameworkCore;
 using Xunit;
 
 namespace EF.Testing.IntegrationTests;
@@ -17,17 +19,17 @@ public class TransactionalBloggingControllerTest : IDisposable
 
     #region UpdateBlogUrl
     [Fact]
-    public void UpdateBlogUrl()
+    public async Task UpdateBlogUrl()
     {
         using (var context = Fixture.CreateContext())
         {
             var controller = new BloggingController(context);
-            controller.UpdateBlogUrl("Blog2", "http://blog2_updated.com");
+            await controller.UpdateBlogUrl("Blog2", "http://blog2_updated.com");
         }
 
         using (var context = Fixture.CreateContext())
         {
-            var blog = context.Blogs.Single(b => b.Name == "Blog2");
+            var blog = await context.Blogs.SingleAsync(b => b.Name == "Blog2");
             Assert.Equal("http://blog2_updated.com", blog.Url);
         }
     }
