@@ -45,7 +45,7 @@ If you prefer to configure your columns with different names, you can do so as f
 
 When using a relational database, the database provider selects a data type based on the .NET type of the property. It also takes into account other metadata, such as the configured [maximum length](#maximum-length), whether the property is part of a primary key, etc.
 
-For example, SQL Server maps `DateTime` properties to `datetime2(7)` columns, and `string` properties to `nvarchar(max)` columns (or to `nvarchar(450)` for properties that are used as a key).
+For example, the SQL Server provider maps `DateTime` properties to `datetime2(7)` columns, and `string` properties to `nvarchar(max)` columns (or to `nvarchar(450)` for properties that are used as a key).
 
 You can also configure your columns to specify an exact data type for a column. For example, the following code configures `Url` as a non-unicode string with maximum length of `200` and `Rating` as decimal with precision of `5` and scale of `2`:
 
