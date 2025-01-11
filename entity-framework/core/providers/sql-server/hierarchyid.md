@@ -86,7 +86,7 @@ The `HierarchyId` type can be used for properties of an entity type. For example
 > [!TIP]
 > If desired, `HierarchyId` is suitable for use as a key property type.
 
-In this case, the family tree is rooted with the patriarch of the family. Each halfling can be traced from the patriarch down the tree using its `PathFromPatriarch` property. SQL Server uses a compact binary format for these paths, but it is common to parse to and from a human-readable string representation when when working with code. In this representation, the position at each level is separated by a `/` character. For example, consider the family tree in the diagram below:
+In this case, the family tree is rooted with the patriarch of the family. Each halfling can be traced from the patriarch down the tree using its `PathFromPatriarch` property. SQL Server uses a compact binary format for these paths, but it is common to parse to and from a human-readable string representation when working with code. In this representation, the position at each level is separated by a `/` character. For example, consider the family tree in the diagram below:
 
 ![Halfling family tree](../../what-is-new/ef-core-8.0/familytree.png)
 
