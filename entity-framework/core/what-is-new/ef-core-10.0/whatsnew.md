@@ -31,3 +31,48 @@ EF10 requires the .NET 10 SDK to build and requires the .NET 10 runtime to run. 
 * Translation for DateOnly.ToDateTime(timeOnly) ([#35194](https://github.com/dotnet/efcore/pull/35194), contributed by [@mseada94](https://github.com/mseada94)).
 * Optimization for multiple consecutive `LIMIT`s ([#35384](https://github.com/dotnet/efcore/pull/35384)), contributed by [@ranma42](https://github.com/ranma42)).
 * Optimization for use of `Count` operation on `ICollection<T>` ([#35381](https://github.com/dotnet/efcore/pull/35381)), contributed by [@ChrisJollyAU](https://github.com/ChrisJollyAU)).
+
+## ExecuteUpdateAsync now accepts a regular, non-expression lambda
+
+The <xref:Microsoft.EntityFrameworkCore.RelationalQueryableExtensions.ExecuteUpdateAsync*> can be used to express arbitrary update operations in the database. In previous versions, the changes to be performed on the database rows were provided via an expression tree parameter; this made it quite difficult to build those changes dynamically. For example, let's assume we want to update a Blog's Views, but conditionally also its Name. Since the setters argument was an expression tree, code such as the following needed to be written:
+
+```c#
+// Base setters - update the Views only
+Expression<Func<SetPropertyCalls<Blog>, SetPropertyCalls<Blog>>> setters =
+    s => s.SetProperty(b => b.Views, 8);
+
+// Conditionally add SetProperty(b => b.Name, "foo") to setters, based on the value of nameChanged
+if (nameChanged)
+{
+    var blogParameter = Expression.Parameter(typeof(Blog), "b");
+
+    setters = Expression.Lambda<Func<SetPropertyCalls<Blog>, SetPropertyCalls<Blog>>>(
+        Expression.Call(
+            instance: setters.Body,
+            methodName: nameof(SetPropertyCalls<Blog>.SetProperty),
+            typeArguments: [typeof(string)],
+            arguments:
+            [
+                Expression.Lambda<Func<Blog, string>>(Expression.Property(blogParameter, nameof(Blog.Name)), blogParameter),
+                Expression.Constant("foo")
+            ]),
+        setters.Parameters);
+}
+
+await context.Blogs.ExecuteUpdateAsync(setters);
+```
+
+Manually creating expression trees is complicated and error-prone, and made this common scenario much more difficult than it should have been. Starting with EF 10, you can now write the following instead:
+
+```c#
+await context.Blogs.ExecuteUpdateAsync(s =>
+{
+    s.SetProperty(b => b.Views, 8);
+    if (nameChanged)
+    {
+        s.SetProperty(b => b.Name, "foo");
+    }
+});
+```
+
+Thanks to [@aradalvand](https://github.com/aradalvand) for proposing and pushing for this change (in [#32018](https://github.com/dotnet/efcore/issues/32018)).
