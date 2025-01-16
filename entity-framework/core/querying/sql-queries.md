@@ -9,9 +9,6 @@ uid: core/querying/sql-queries
 
 Entity Framework Core allows you to drop down to SQL queries when working with a relational database. SQL queries are useful if the query you want can't be expressed using LINQ, or if a LINQ query causes EF to generate inefficient SQL. SQL queries can return regular entity types or [keyless entity types](xref:core/modeling/keyless-entity-types) that are part of your model.
 
-> [!TIP]
-> You can view this article's [sample](https://github.com/dotnet/EntityFramework.Docs/tree/main/samples/core/Querying/SqlQueries) on GitHub.
-
 ## Basic SQL queries
 
 You can use <xref:Microsoft.EntityFrameworkCore.RelationalQueryableExtensions.FromSql*> to begin a LINQ query based on a SQL query:
