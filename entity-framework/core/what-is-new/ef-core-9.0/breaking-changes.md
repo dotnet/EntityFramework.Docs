@@ -2,7 +2,7 @@
 title: Breaking changes in EF Core 9 (EF9) - EF Core
 description: List of breaking changes introduced in Entity Framework Core 9 (EF9)
 author: ajcvickers
-ms.date: 12/17/2024
+ms.date: 01/17/2025
 uid: core/what-is-new/ef-core-9.0/breaking-changes
 ---
 
@@ -27,6 +27,7 @@ EF Core 9 targets .NET 8. This means that existing applications that target .NET
 |:----------------------------------------------------------------------------------------------------------|------------|
 | [Exception is thrown when applying migrations if there are pending model changes](#pending-model-changes) | High       |
 | [Exception is thrown when applying migrations in an explicit transaction](#migrations-transaction)        | High       |
+| [`Microsoft.EntityFrameworkCore.Design` not found when using EF tools](#tools-design)                     | Medium     |
 | [`EF.Functions.Unhex()` now returns `byte[]?`](#unhex)                                                    | Low        |
 | [SqlFunctionExpression's nullability arguments' arity validated](#sqlfunctionexpression-nullability)      | Low        |
 | [`ToString()` method now returns empty string for `null` instances](#nullable-tostring)                   | Low        |
@@ -113,6 +114,48 @@ Otherwise, if your scenario requires an explicit transaction and you have other 
 ```csharp
 options.ConfigureWarnings(w => w.Ignore(RelationalEventId.MigrationsUserTransactionWarning))
 ```
+
+## Medium-impact changes
+
+<a name="tools-design"></a>
+
+### `Microsoft.EntityFrameworkCore.Design` not found when using EF tools
+
+[Tracking Issue #35265](https://github.com/dotnet/efcore/issues/35265)
+
+#### Old behavior
+
+Previusly, the EF tools required `Microsoft.EntityFrameworkCore.Design` to be referenced in the following way.
+
+```XML
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="*.0.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+```
+
+#### New behavior
+
+Starting with .NET SDK 9.0.200 an exception is thrown when an EF tool is invoked:
+> :::no-loc text="Could not load file or assembly 'Microsoft.EntityFrameworkCore.Design, Culture=neutral, PublicKeyToken=null'. The system cannot find the file specified.":::
+
+#### Why
+
+EF tools were relying on an undocumented behavior of .NET SDK that caused private assets to be included in the generated `.deps.json` file. This was fixed in [sdk#45259](https://github.com/dotnet/sdk/pull/45259). Unfortunately, the EF change to account for this doesn't meet the servicing bar for EF 9.0.x, so it will be fixed in EF 10.
+
+#### Mitigations
+
+As a workaround before EF 10 is released you can mark the `Design` assembly reference as publishable:
+
+```XML
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="9.0.1">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <Publish>true</Publish>
+    </PackageReference>
+```
+
+This will include it in the generated `.deps.json` file, but has a side effect of copying `Microsoft.EntityFrameworkCore.Design.dll` to the output and publish folders.
 
 ## Low-impact changes
 

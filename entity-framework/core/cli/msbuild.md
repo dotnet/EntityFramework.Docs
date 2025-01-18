@@ -2,7 +2,7 @@
 title: EF Core MSBuild tasks - EF Core
 description: Reference guide for the Entity Framework Core .NET MSBuild tasks
 author: AndriySvyryd
-ms.date: 11/08/2024
+ms.date: 01/17/2025
 uid: core/cli/msbuild
 ---
 
@@ -40,6 +40,7 @@ If the project specifies `<PublishAot>true</PublishAot>` then by default the MSB
 
 ## Limitations
 
+* When using the integration during the `publish` stage also set the rid in the startup project (e.g. \<RuntimeIdentifier\>win-x64\</RuntimeIdentifier\>)
 * A different startup project cannot be specified when using this approach as it would introduce an inverse build dependency. This means that the context project needs to be autosuficient in terms of configuration, so if your app normally configures the context using a host builder in a different project you'd need to [implement _IDesignTimeDbContextFactory&lt;TContext&gt;_](xref:core/cli/dbcontext-creation#from-a-design-time-factory) in the context project.
 * Since the project needs to be compilable before the compiled model is generated this approach doesn't support partial method implementations for customization of the compiled model.
 * Currently, this will always generate additional code in the compiled model that's required for NativeAOT. If you are not planning to enable NativeAOT then [generate the compiled model using the CLI tools](xref:core/cli/dotnet#optimize).
