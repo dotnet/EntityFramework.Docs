@@ -1,7 +1,7 @@
 ---
 title: Plan for Entity Framework Core 6.0
 description: The themes and features planned for EF Core 6.0
-author: ajcvickers
+author: SamMonoRT
 ms.date: 11/09/2021
 uid: core/what-is-new/ef-core-6.0/plan
 ---

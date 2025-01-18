@@ -1,7 +1,7 @@
 ---
 title: Entity Framework 6 SQL Server provider based on Microsoft.Data.SqlClient
 description: Microsoft.EntityFramework.SqlServer guide
-author: ajcvickers
+author: SamMonoRT
 ms.date: 06/11/2024
 uid: ef6/what-is-new/microsoft-ef6-sqlserver
 ---

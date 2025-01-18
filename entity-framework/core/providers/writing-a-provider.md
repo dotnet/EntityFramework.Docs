@@ -1,7 +1,7 @@
 ---
 title: Writing a Database Provider - EF Core
 description: Information on writing a new Entity Framework Core provider
-author: ajcvickers
+author: SamMonoRT
 ms.date: 10/27/2016
 uid: core/providers/writing-a-provider
 ---

@@ -1,7 +1,7 @@
 ---
 title: EF Core NuGet Packages
 description: Overview of the different Entity Framework Core NuGet packages
-author: ajcvickers
+author: SamMonoRT
 ms.date: 10/21/2024
 uid: core/what-is-new/nuget-packages
 ---

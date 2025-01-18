@@ -1,7 +1,7 @@
 ---
 title: What's New in EF Core 8
 description: Overview of new features in EF Core 8
-author: ajcvickers
+author: SamMonoRT
 ms.date: 11/13/2023
 uid: core/what-is-new/ef-core-8.0/whatsnew
 ---

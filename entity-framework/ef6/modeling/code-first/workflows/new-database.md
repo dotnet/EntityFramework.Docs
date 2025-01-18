@@ -1,7 +1,7 @@
 ---
 title: Code First to a New Database - EF6
 description: Code First to a New Database in Entity Framework 6
-author: ajcvickers
+author: SamMonoRT
 ms.date: 10/23/2016
 uid: ef6/modeling/code-first/workflows/new-database
 ---

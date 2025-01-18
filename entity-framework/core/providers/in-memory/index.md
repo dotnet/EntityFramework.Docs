@@ -1,7 +1,7 @@
 ---
 title: In-memory Database Provider - EF Core
 description: Information on the Entity Framework Core in-memory database provider
-author: ajcvickers
+author: SamMonoRT
 ms.date: 02/11/2023
 uid: core/providers/in-memory/index
 ---

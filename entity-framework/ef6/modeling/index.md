@@ -1,7 +1,7 @@
 ---
 title: Creating a Model - EF6
 description: Creating a Model in Entity Framework 6
-author: ajcvickers
+author: SamMonoRT
 ms.date: 07/05/2018
 uid: ef6/modeling/index
 ---

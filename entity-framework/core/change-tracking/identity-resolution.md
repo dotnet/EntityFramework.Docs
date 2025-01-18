@@ -1,7 +1,7 @@
 ---
 title: Identity Resolution - EF Core
 description: Resolving multiple entity instances into a single instance using primary key values
-author: ajcvickers
+author: SamMonoRT
 ms.date: 12/30/2020
 uid: core/change-tracking/identity-resolution
 ---

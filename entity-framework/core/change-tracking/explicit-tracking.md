@@ -1,7 +1,7 @@
 ---
 title: Explicitly Tracking Entities - EF Core
 description: Explicitly tracking entities with DbContext using Add, Attach, Update, and Remove
-author: ajcvickers
+author: SamMonoRT
 ms.date: 12/30/2020
 uid: core/change-tracking/explicit-tracking
 ---

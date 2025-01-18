@@ -1,7 +1,7 @@
 ---
 title: Breaking changes in EF Core 3.x - EF Core
 description: Complete list of breaking changes introduced in Entity Framework Core 3.x
-author: ajcvickers
+author: SamMonoRT
 ms.date: 09/05/2020
 uid: core/what-is-new/ef-core-3.x/breaking-changes
 ---

@@ -1,7 +1,7 @@
 ---
 title: Plan for Entity Framework Core 5.0
 description: The features planned for Entity Framework Core 5.0
-author: ajcvickers
+author: SamMonoRT
 ms.date: 08/22/2020
 uid: core/what-is-new/ef-core-5.0/plan
 ---

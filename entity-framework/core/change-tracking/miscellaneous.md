@@ -1,7 +1,7 @@
 ---
 title: Additional Change Tracking Features - EF Core
 description: Miscellaneous features and scenarios involving EF Core change tracking
-author: ajcvickers
+author: SamMonoRT
 ms.date: 11/15/2021
 uid: core/change-tracking/miscellaneous
 ---
