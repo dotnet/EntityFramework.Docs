@@ -1,7 +1,7 @@
 ---
 title: Microsoft SQL Server Database Provider - Hierarchical Data - EF Core
 description: Using hierarchical data with the Entity Framework Core Microsoft SQL Server database provider
-author: ajcvickers
+author: SamMonoRT
 ms.date: 03/11/2023
 uid: core/providers/sql-server/hierarchyid
 ---

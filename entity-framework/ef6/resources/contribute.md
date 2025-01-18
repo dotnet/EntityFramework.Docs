@@ -1,7 +1,7 @@
 ---
 title: Contribute to Entity Framework - EF6
 description: Contribute to Entity Framework 6
-author: ajcvickers
+author: SamMonoRT
 ms.date: 07/05/2018
 ---
 # Contribute to Entity Framework 6

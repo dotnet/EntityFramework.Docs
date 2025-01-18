@@ -73,7 +73,7 @@
       "audience": "developer",
       "ms.tgt_pltfrm": "dotnet",
       "ms.devlang": "dotnet",
-      "ms.author": "avickers",
+      "ms.author": "sampatel",
       "feedback_system": "OpenSource",
       "feedback_github_repo": "dotnet/EntityFramework.Docs",
       "feedback_product_url": "https://github.com/dotnet/efcore/issues/new/choose",

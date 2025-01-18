@@ -1,7 +1,7 @@
 ---
 title: Visual Studio Releases - EF6
 description: Visual Studio Releases and Entity Framework 6
-author: ajcvickers
+author: SamMonoRT
 ms.date: 07/05/2018
 uid: ef6/what-is-new/visual-studio
 ---

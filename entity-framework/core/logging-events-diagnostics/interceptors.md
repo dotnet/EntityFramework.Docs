@@ -1,7 +1,7 @@
 ---
 title: Interceptors - EF Core
 description: Interception for database operations and other events
-author: ajcvickers
+author: SamMonoRT
 ms.date: 11/15/2021
 uid: core/logging-events-diagnostics/interceptors
 ---

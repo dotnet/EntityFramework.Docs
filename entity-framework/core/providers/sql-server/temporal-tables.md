@@ -1,7 +1,7 @@
 ﻿---
 title: Microsoft SQL Server Database Provider - Temporal Tables - EF Core
 description: Using SQL Server/Azure SQL temporal tables (aka system-versioned tables) with EF Core
-author: ajcvickers
+author: SamMonoRT
 ms.date: 02/11/2023
 uid: core/providers/sql-server/temporal-tables
 ---

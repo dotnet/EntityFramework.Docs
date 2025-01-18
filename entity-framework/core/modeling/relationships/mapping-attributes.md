@@ -1,7 +1,7 @@
 ﻿---
 title: Mapping attributes (aka Data Annotations) for relationships - EF Core
 description: Using mapping attributes (also know as Data Annotations) to configure Entity Framework Core relationships
-author: ajcvickers
+author: SamMonoRT
 ms.date: 03/30/2023
 uid: core/modeling/relationships/mapping-attributes
 ---

@@ -1,7 +1,7 @@
 ---
 title: Overview of Entity Framework Core - EF Core
 description: General introductory overview of Entity Framework Core
-author: ajcvickers
+author: SamMonoRT
 ms.date: 9/20/2020
 uid: core/index
 ---

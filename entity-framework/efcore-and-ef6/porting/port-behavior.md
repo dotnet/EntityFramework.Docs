@@ -1,7 +1,7 @@
 ---
 title: Porting from EF6 to EF Core - Behavior changes
 description: A non-exhaustive list of some changes in behavior between EF6 and EF Core.
-author: ajcvickers
+author: SamMonoRT
 ms.date: 12/09/2021
 uid: efcore-and-ef6/porting/port-behavior
 ---

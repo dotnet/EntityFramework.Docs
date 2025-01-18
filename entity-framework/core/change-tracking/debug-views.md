@@ -1,7 +1,7 @@
 ---
 title: Change Tracker Debugging - EF Core
 description: Using the ChangeTracker DebugView and log messages to debug EF Core change tracking
-author: ajcvickers
+author: SamMonoRT
 ms.date: 12/30/2020
 uid: core/change-tracking/debug-views
 ---

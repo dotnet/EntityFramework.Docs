@@ -1,7 +1,7 @@
 ---
 title: .NET events - EF Core
 description: .NET events defined by EF Core
-author: ajcvickers
+author: SamMonoRT
 ms.date: 10/15/2020
 uid: core/logging-events-diagnostics/events
 ---

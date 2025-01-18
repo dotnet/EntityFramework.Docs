@@ -1,7 +1,7 @@
 ---
 title: Simple logging - EF Core
 description: Logging from an EF Core DbContext using LogTo
-author: ajcvickers
+author: SamMonoRT
 ms.date: 10/03/2020
 uid: core/logging-events-diagnostics/simple-logging
 ---

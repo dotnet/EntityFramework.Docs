@@ -1,7 +1,7 @@
 ---
 title: Database Providers - EF Core
 description: Information about specific supported Entity Framework Core providers and about providers in general
-author: ajcvickers
+author: SamMonoRT
 ms.date: 12/13/2022
 uid: core/providers/index
 ---

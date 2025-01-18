@@ -1,7 +1,7 @@
 ---
 title: Basic SaveChanges - EF Core
 description: Basic information on adding, updating and removing data using SaveChanges with Entity Framework Core
-author: ajcvickers
+author: SamMonoRT
 ms.date: 4/30/2023
 uid: core/saving/basic
 ---

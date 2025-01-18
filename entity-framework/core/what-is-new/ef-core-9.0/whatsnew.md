@@ -1,7 +1,7 @@
 ---
 title: What's New in EF Core 9
 description: Overview of new features in EF Core 9
-author: ajcvickers
+author: SamMonoRT
 ms.date: 10/21/2024
 uid: core/what-is-new/ef-core-9.0/whatsnew
 ---

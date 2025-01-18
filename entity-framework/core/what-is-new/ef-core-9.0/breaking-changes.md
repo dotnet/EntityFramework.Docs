@@ -1,7 +1,7 @@
 ---
 title: Breaking changes in EF Core 9 (EF9) - EF Core
 description: List of breaking changes introduced in Entity Framework Core 9 (EF9)
-author: ajcvickers
+author: SamMonoRT
 ms.date: 12/17/2024
 uid: core/what-is-new/ef-core-9.0/breaking-changes
 ---

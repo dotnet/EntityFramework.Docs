@@ -1,7 +1,7 @@
 ---
 title: Self-Tracking Entities Walkthrough - EF6
 description: Self-tracking entities walkthrough for Entity Framework 6
-author: ajcvickers
+author: SamMonoRT
 ms.date: 10/23/2016
 uid: ef6/fundamentals/disconnected-entities/self-tracking-entities/walkthrough
 ---

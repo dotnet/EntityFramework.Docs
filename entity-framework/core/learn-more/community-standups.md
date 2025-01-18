@@ -1,7 +1,7 @@
 ﻿---
 title: .NET Data Community Standups
 description: Details and links for each episode of the .NET Data/EF Community Standup
-author: ajcvickers
+author: SamMonoRT
 ms.date: 02/23/2024
 uid: core/learn-more/community-standups
 ---

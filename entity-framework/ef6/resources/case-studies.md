@@ -1,7 +1,7 @@
 ---
 title: Case Studies for Entity Framework - EF6
 description: Case Studies for Entity Framework 6
-author: ajcvickers
+author: SamMonoRT
 ms.date: 10/23/2016
 ---
 # Microsoft Case Studies for Entity Framework

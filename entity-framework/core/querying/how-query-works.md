@@ -1,7 +1,7 @@
 ---
 title: How Queries Work - EF Core
 description: General information on how Entity Framework Core internally compiles and executes queries
-author: ajcvickers
+author: SamMonoRT
 ms.date: 03/17/2020
 uid: core/querying/how-query-works
 ---

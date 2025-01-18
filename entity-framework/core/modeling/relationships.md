@@ -1,7 +1,7 @@
 ---
 title: Introduction to relationships - EF Core
 description: How to configure relationships between entity types when using Entity Framework Core
-author: ajcvickers
+author: SamMonoRT
 ms.date: 03/30/2023
 uid: core/modeling/relationships
 ---

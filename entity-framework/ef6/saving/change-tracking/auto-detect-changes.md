@@ -1,7 +1,7 @@
 ---
 title: Automatic detect changes - EF6
 description: Automatic detect changes in Entity Framework 6
-author: ajcvickers
+author: SamMonoRT
 ms.date: 10/23/2016
 uid: ef6/saving/change-tracking/auto-detect-changes
 ---

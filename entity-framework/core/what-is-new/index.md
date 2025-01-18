@@ -1,7 +1,7 @@
 ---
 title: EF Core releases and planning
 description: Current EF Core releases and schedule/planning details for future releases
-author: ajcvickers
+author: SamMonoRT
 ms.date: 11/13/2024
 uid: core/what-is-new/index
 ---

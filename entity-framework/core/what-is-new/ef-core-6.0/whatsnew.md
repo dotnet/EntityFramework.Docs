@@ -1,7 +1,7 @@
 ---
 title: What's New in EF Core 6.0
 description: Overview of new features in EF Core 6.0
-author: ajcvickers
+author: SamMonoRT
 ms.date: 12/06/2021
 uid: core/what-is-new/ef-core-6.0/whatsnew
 ---

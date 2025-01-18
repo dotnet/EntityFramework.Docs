@@ -1,7 +1,7 @@
 ---
 title: Stored Procedures with Multiple Result Sets - EF6
 description: Stored Procedures with Multiple Result Sets in Entity Framework 6
-author: ajcvickers
+author: SamMonoRT
 ms.date: 10/23/2016
 uid: ef6/modeling/designer/advanced/multiple-result-sets
 ---

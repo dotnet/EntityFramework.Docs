@@ -1,7 +1,7 @@
 ---
 title: Testability and Entity Framework 4.0 - EF6
 description: Testability and Entity Framework 4.0
-author: ajcvickers
+author: SamMonoRT
 ms.date: 10/23/2016
 ---
 # Testability and Entity Framework 4.0

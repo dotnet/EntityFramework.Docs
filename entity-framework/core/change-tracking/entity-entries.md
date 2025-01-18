@@ -1,7 +1,7 @@
 ---
 title: Accessing Tracked Entities - EF Core
 description: Using EntityEntry, DbContext.Entries, and DbSet.Local to access tracked entities
-author: ajcvickers
+author: SamMonoRT
 ms.date: 12/30/2020
 uid: core/change-tracking/entity-entries
 ---

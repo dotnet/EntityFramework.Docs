@@ -1,7 +1,7 @@
 ---
 title: Code First Conventions - EF6
 description: Code First Conventions in Entity Framework 6
-author: ajcvickers
+author: SamMonoRT
 ms.date: 10/23/2016
 uid: ef6/modeling/code-first/conventions/built-in
 ---
