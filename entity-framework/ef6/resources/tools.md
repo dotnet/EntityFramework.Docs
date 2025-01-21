@@ -1,7 +1,7 @@
 ---
 title: Tools & Extensions - EF6
 description: Tools & Extensions  in Entity Framework 6
-author: ajcvickers
+author: SamMonoRT
 ms.date: 10/23/2016
 ---
 # Entity Framework Tools & Extensions

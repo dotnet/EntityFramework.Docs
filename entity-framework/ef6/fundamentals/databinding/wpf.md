@@ -1,7 +1,7 @@
 ---
 title: Databinding with WPF - EF6
 description: Databinding with WPF in Entity Framework 6
-author: ajcvickers
+author: SamMonoRT
 ms.date: 05/19/2020
 uid: ef6/fundamentals/databinding/wpf
 ---

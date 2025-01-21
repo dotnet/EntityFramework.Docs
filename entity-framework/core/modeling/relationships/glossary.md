@@ -1,7 +1,7 @@
 ﻿---
 title: Glossary of relationship terms - EF Core
 description: A glossary of the terms used when mapping foreign keys and relationships in Entity Framework Core
-author: ajcvickers
+author: SamMonoRT
 ms.date: 03/30/2023
 uid: core/modeling/relationships/glossary
 ---

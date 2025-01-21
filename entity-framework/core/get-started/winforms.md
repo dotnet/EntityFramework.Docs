@@ -1,8 +1,7 @@
 ---
 title: Get Started with Windows Forms - EF Core
 description: Getting started tutorial for using Windows Forms (WinForms) with Entity Framework Core
-author: ajcvickers
-ms.author: avickers
+author: SamMonoRT
 ms.date: 08/04/2021
 uid: core/get-started/winforms
 ---

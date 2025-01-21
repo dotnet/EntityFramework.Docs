@@ -1,7 +1,7 @@
 ---
 title: Using Microsoft.Extensions.Logging - EF Core
 description: Logging from EF Core using Microsoft.Extensions.Logging in ASP.NET Core and other application types
-author: ajcvickers
+author: SamMonoRT
 ms.date: 10/15/2020
 uid: core/logging-events-diagnostics/extensions-logging
 ---

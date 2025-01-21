@@ -1,7 +1,7 @@
 ---
 title: Handling transaction commit failures - EF6
 description: Handling transaction commit failures in Entity Framework 6
-author: ajcvickers
+author: SamMonoRT
 ms.date: 10/23/2016
 uid: ef6/fundamentals/connection-resiliency/commit-failures
 ---

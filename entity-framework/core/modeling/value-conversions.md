@@ -1,7 +1,7 @@
 ---
 title: Value Conversions - EF Core
 description: Configuring value converters in an Entity Framework Core model
-author: ajcvickers
+author: SamMonoRT
 ms.date: 01/16/2021
 uid: core/modeling/value-conversions
 ---

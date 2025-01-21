@@ -1,7 +1,7 @@
 ---
 title: Plan for Entity Framework Core 8
 description: The themes and features planned for EF Core 8
-author: ajcvickers
+author: SamMonoRT
 ms.date: 12/14/2022
 uid: core/what-is-new/ef-core-8.0/plan
 ---

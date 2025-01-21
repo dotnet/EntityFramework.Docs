@@ -1,7 +1,7 @@
 ---
 title: Cascade Delete - EF Core
 description: Configuring cascading behaviors triggered when an entity is deleted or severed from its principal/parent
-author: ajcvickers
+author: SamMonoRT
 ms.date: 08/10/2021
 uid: core/saving/cascade-delete
 ---

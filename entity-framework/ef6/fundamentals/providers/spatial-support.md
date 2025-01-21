@@ -1,7 +1,7 @@
 ---
 title: Provider Support for Spatial Types - EF6
 description: Provider support for spatial types in Entity Framework 6
-author: ajcvickers
+author: SamMonoRT
 ms.date: 10/23/2016
 uid: ef6/fundamentals/providers/spatial-support
 ---

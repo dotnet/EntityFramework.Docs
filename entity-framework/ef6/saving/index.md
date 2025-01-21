@@ -1,7 +1,7 @@
 ---
 title: Saving Data - EF6
 description: Saving Data in Entity Framework 6
-author: ajcvickers
+author: SamMonoRT
 ms.date: 07/05/2018
 ---
 

@@ -1,7 +1,7 @@
 ---
 title: Fluent API with VB.NET - EF6
 description: Fluent API with VB.NET in Entity Framework 6
-author: ajcvickers
+author: SamMonoRT
 ms.date: 10/23/2016
 uid: ef6/modeling/code-first/fluent/vb
 ---

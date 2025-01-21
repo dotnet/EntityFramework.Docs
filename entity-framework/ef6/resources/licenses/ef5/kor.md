@@ -1,7 +1,7 @@
 ---
 title: Entity Framework 5 License (KOR) - EF6
 description: Entity Framework 5 License (KOR)
-author: ajcvickers
+author: SamMonoRT
 ms.date: 10/23/2016
 ---
 # Entity Framework 5 License (KOR)

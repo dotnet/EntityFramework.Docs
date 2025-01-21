@@ -1,7 +1,7 @@
 ---
 title: Breaking changes in EF Core 6.0 - EF Core
 description: Complete list of breaking changes introduced in Entity Framework Core 6.0
-author: ajcvickers
+author: SamMonoRT
 ms.date: 09/21/2022
 uid: core/what-is-new/ef-core-6.0/breaking-changes
 ---

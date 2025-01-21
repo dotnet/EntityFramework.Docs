@@ -1,7 +1,7 @@
 ---
 title: Entity Framework 5 License - EF6
 description: Entity Framework 5 License
-author: ajcvickers
+author: SamMonoRT
 ms.date: 10/23/2016
 ---
 # Entity Framework 5 License (ENU)

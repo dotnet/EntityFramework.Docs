@@ -1,7 +1,7 @@
 ---
 title: Using diagnostic listeners - EF Core
 description: Using DiagnosticListener for global consumption of EF Core diagnostics
-author: ajcvickers
+author: SamMonoRT
 ms.date: 10/16/2020
 uid: core/logging-events-diagnostics/diagnostic-listeners
 ---
