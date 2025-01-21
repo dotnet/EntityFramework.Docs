@@ -2,7 +2,7 @@
 title: Design-time Tools Architecture - EF Core
 description: The architecture of design-time tools in Entity Framework Core
 author: SamMonoRT
-ms.date: 11/27/2023
+ms.date: 01/17/2025
 uid: core/miscellaneous/internals/tools
 ---
 # Design-time Tools Architecture
@@ -23,12 +23,7 @@ There are two primary inputs to this command: the startup project and the target
 
 It reads information about the projects by injecting an MSBuild .targets file and calling the custom MSBuild target. The .targets file is compiled into dotnet-ef as an embedded resource. The source is located at [src/dotnet-ef/Resources/EntityFrameworkCore.targets](https://github.com/dotnet/efcore/blob/main/src/dotnet-ef/Resources/EntityFrameworkCore.targets).
 
-It has a bit of logic at the beginning to handle multi-targeting projects. Essentially, it just picks the first target framework and re-invokes itself. After a single target framework has been determined, it writes several MSBuild properties like AssemblyName, OutputPath, RootNamespace, etc. to a temporary file that dotnet-ef then reads.
-
-> [!TIP]
-> .NET 8 adds a new, streamlined way to read MSBuild properties that will enable us to remove this .targets file. See issue [#32113](https://github.com/dotnet/efcore/issues/32113).
-
-We need to inject this target into both the startup and target project. We do that by leveraging an MSBuild hook created for NuGet and other package managers. That hook automatically loads any file under `$(MSBuildProjectExtensionsPath)` with a name matching the pattern `$(MSBuildProjectName).*.targets`. Unfortunately, we don't know the actual value of the MSBuildProjectExtensionsPath property, and we need it before we can read any MSBuild properties. So, we assume it's set to the default value of `$(MSBuildProjectDirectory)\obj`. If it's not, the user must specify it using the `--msbuildprojectextensionspath` option.
+It has a bit of logic at the beginning to handle multi-targeting projects. Essentially, it just picks the first target framework and re-invokes itself. After a single target framework has been determined, it gets several MSBuild properties like AssemblyName, OutputPath, RootNamespace, etc.
 
 After we've collected the project information, we compile the startup project. We assume that the target project will also be compiled transitively.
 
