@@ -63,8 +63,6 @@ additionalContent:
             text: "WPF .NET Core app accessing SQLite with EF Core"
           - url: core/get-started/winforms.md
             text: "Windows Forms .NET Core app accessing SQLite with EF Core"
-          - url: core/get-started/xamarin.md
-            text: "Xamarin mobile app accessing SQLite with EF Core"
       # Card
       - title: Supported databases
         links:
@@ -101,8 +99,6 @@ additionalContent:
             text: "Windows Presentation Foundation (WPF)"
           - url: core/get-started/winforms.md
             text: "Windows Forms (WinForms)"
-          - url: core/get-started/xamarin.md
-            text: "Xamarin"
       # Card
       - title: Fundamentals
         links:

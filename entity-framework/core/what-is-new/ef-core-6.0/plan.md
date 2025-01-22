@@ -126,7 +126,7 @@ Status: Scoped/Complete
 
 T-shirt size: Medium
 
-EF Core performs large amounts of runtime code generation. This is challenging for app models that depend on linker tree shaking, such as Xamarin and Blazor, and platforms that don't allow dynamic compilation, such as iOS. We will continue investigating in this space as part of EF Core 6.0 and make targeted improvements as we can. However, we do not expect to fully close the gap in the 6.0 time frame.
+EF Core performs large amounts of runtime code generation. This is challenging for app models that depend on linker tree shaking, such as .NET MAUI and Blazor, and platforms that don't allow dynamic compilation, such as iOS. We will continue investigating in this space as part of EF Core 6.0 and make targeted improvements as we can. However, we do not expect to fully close the gap in the 6.0 time frame.
 
 ## Migrations and deployment
 
