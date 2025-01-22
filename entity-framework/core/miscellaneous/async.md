@@ -37,8 +37,20 @@ Note that there are no async versions of some LINQ operators such as <xref:Syste
 
 ## Client-side async LINQ operators
 
-The async LINQ operators discussed above can only be used on EF queries - you cannot use them with client-side LINQ to Objects query. To perform client-side async LINQ operations outside of EF, use the [`System.Linq.Async` package](https://www.nuget.org/packages/System.Linq.Async); this package can be especially useful for performing operations on the client that cannot be translated for evaluation at the server.
+In certain cases, you may want to apply client-side LINQ operators to results coming back from the database; this is needed especially when you need to perform an operation that cannot be translated to SQL. For such cases, use <xref:Microsoft.EntityFrameworkCore.EntityFrameworkQueryableExtensions.AsAsyncEnumerable*> to execute the query on the database, and continue composing client-side LINQ operators over the resulting <xref:System.Collections.Generic.IAsyncEnumerable`1>. For example, the following executes a local .NET function on the asynchronous results of the EF LINQ query:
 
-In EF Core 6.0 and lower, referencing `System.Linq.Async` unfortunately causes ambiguous invocation compilation errors on LINQ operators applied to EF's DbSets; this makes it hard to use both EF and `System.Linq.Async` in the same project. To work around this issue, add <xref:System.Linq.Queryable.AsQueryable*> to your DbSet:
+```c#
+var blogs = context.Blogs
+    .Where(b => b.Rating > 3) // server-evaluated (translated to SQL)
+    .AsAsyncEnumerable()
+    .Where(b => SomeLocalFunction(b)); // client-evaluated (in .NET)
 
-[!code-csharp[Main](../../../samples/core/Miscellaneous/AsyncWithSystemInteractive/Program.cs#SystemInteractiveAsync)]
+await foreach (var blog in blogs)
+{
+    // ...
+}
+
+```
+
+> [!NOTE]
+> LINQ operators over <xref:System.Collections.Generic.IAsyncEnumerable`1> were introduced in .NET 10. When using an older version of .NET, reference the [`System.Linq.Async` package](https://www.nuget.org/packages/System.Linq.Async).
