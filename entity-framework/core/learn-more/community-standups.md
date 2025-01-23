@@ -1693,7 +1693,6 @@ Links:
 - Video: [The Intersection of Microservices, Domain-Driven Design and Entity Framework Core](https://www.youtube.com/watch?v=DG8Qe7TJiIE)
 - GitHub: [julielerman/dotnetconfms2020](https://github.com/julielerman/dotnetconfms2020)
 - Blog: [How to call stored procedures with OUTPUT parameters with FromSqlRaw in EF Core](https://erikej.github.io/efcore/2020/08/03/ef-core-call-stored-procedures-out-parameters.html)
-- Docs: [Getting Started with EF Core and Xamarin](xref:core/get-started/xamarin)
 - Docs: [Getting Started with WPF](xref:core/get-started/wpf)
 - Docs: [EF Core daily builds](https://aka.ms/ef-daily-builds)
 

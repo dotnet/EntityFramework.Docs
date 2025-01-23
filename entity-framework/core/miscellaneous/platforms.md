@@ -41,7 +41,7 @@ The last version of EF Core that supported .NET Framework was version 3.1. We re
 
 ## Xamarin
 
-The last version of EF Core that supported Xamarin was version 5.0. We recommend using .NET and [.NET MAUI](/dotnet/maui/) instead. .NET supports multiple platforms including Android, iOS, macOS, and Windows. .NET MAUI is an evolution of the Xamarin.Forms UI framework.
+The last version of EF Core that supported Xamarin was version 5.0. We recommend using .NET and [.NET MAUI](/dotnet/maui/) instead. .NET supports multiple platforms including Android, iOS, macOS, and Windows. .NET MAUI is an evolution of the Xamarin.Forms UI framework. Xamarin.Android, Xamarin.iOS, Xamarin.Mac are now integrated directly into .NET (starting with .NET 6) as .NET for Android, .NET for iOS, and .NET for macOS. If you're building with these project types today, they should be upgraded to .NET SDK-style projects for continued support. For more information about upgrading Xamarin projects to .NET, see the [Upgrade from Xamarin to .NET & .NET MAUI](/dotnet/maui/migration) documentation.
 
 ## Universal Windows Platform
 

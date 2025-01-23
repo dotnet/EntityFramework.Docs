@@ -192,6 +192,9 @@ Status: Scope/Done
 
 Scoping: Platform guidance and samples are published for Blazor, Xamarin, WinForms, and WPF. Xamarin and other AOT/linker work is now planned for EF Core 6.0.
 
+> [!IMPORTANT]
+> Xamarin.Android, Xamarin.iOS, Xamarin.Mac are now integrated directly into .NET (starting with .NET 6) as .NET for Android, .NET for iOS, and .NET for macOS. If you're building with these project types today, they should be upgraded to .NET SDK-style projects for continued support. For more information about upgrading Xamarin projects to .NET, see the [Upgrade from Xamarin to .NET & .NET MAUI](/dotnet/maui/migration) documentation.
+
 We have good guidance for using EF Core in traditional MVC-like web applications. Guidance for other platforms and application models is either missing or out-of-date. For EF Core 5.0, we plan to investigate, improve, and document the experience of using EF Core with:
 
 * Blazor

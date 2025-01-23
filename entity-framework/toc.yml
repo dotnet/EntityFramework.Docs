@@ -55,9 +55,6 @@
         href: core/get-started/wpf.md
       - name: Windows Forms tutorial
         href: core/get-started/winforms.md
-      - name: Xamarin tutorial
-        href: core/get-started/xamarin.md
-
     - name: "Releases and planning (roadmap)"
       items:
       - name: Current and planned releases
