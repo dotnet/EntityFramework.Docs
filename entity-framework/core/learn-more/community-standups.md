@@ -1,6 +1,6 @@
 ﻿---
 title: .NET Data Community Standups
-description: Details and links for each episode of the .NET Data/EF Community Standup
+description: Details and links for each episode of the .NET Data Community Standup
 author: SamMonoRT
 ms.date: 02/23/2024
 uid: core/learn-more/community-standups
@@ -8,7 +8,7 @@ uid: core/learn-more/community-standups
 
 # .NET Data Community Standups
 
-The .NET Data Community Standups are live-streamed every other Wednesday to Twitch, YouTube, and Twitter. This is your opportunity to interact with the .NET Data team and community. All past episodes are [available on YouTube](https://aka.ms/efstandups) and are listed below with links to content from the shows.
+The .NET Data Community Standups are live-streamed monthly (roughly) on Wednesday (usually) to YouTube and Twitch. This is your opportunity to interact with the .NET Data team and community. All past episodes are [available on YouTube](https://aka.ms/efstandups) and are listed below with links to content from the shows.
 
 [Comment on GitHub](https://github.com/dotnet/efcore/issues/22700) with ideas for guests, demos, or anything else you want to see.
 
@@ -33,7 +33,7 @@ The .NET Data Community Standups are live-streamed every other Wednesday to Twit
 | Jun 14, 2023 | SQLite                | [Synchronizing data between the cloud and the client (using SQLite)](#zumero)            |
 | May 31, 2023 | Power Tools           | [New CLI edition of EF Core Power Tools](#power-tools)                                   |
 | May 17, 2023 | Primitive collections | [Collections of primitive values in EF Core](#primitive-collections)                     |
-| Apr 19, 2023 | EF internals          | [EF Core Internals – Model Building](#internals-models)                                  |
+| Apr 19, 2023 | EF internals          | [EF Core Internals - Model Building](#internals-models)                                  |
 | Mar 22, 2023 | HierarchyId           | [Using hierarchical data in SQL Server and PostgreSQL with EF Core](#hierarchyid)        |
 | Mar 8, 2023  | EF internals          | [EF Core internals: IQueryable, LINQ and the EF Core query pipeline](#internals-query)   |
 | Feb 22, 2023 | MySQL                 | [MySQL and .NET: MySqlConnector and the Pomelo EF Core Provider](#mysql)                 |
