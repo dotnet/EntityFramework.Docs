@@ -16,7 +16,8 @@ The .NET Data Community Standups are live-streamed monthly (roughly) on Wednesda
 
 | Date         | Area                  | Title                                                                                    |
 |--------------|-----------------------|------------------------------------------------------------------------------------------|
-| Nov 20, 2024 | Release               | [EF Core 9: Release extravaganza](#Nov20_2024)                                          |
+| Jan 22, 2025 | Tips                  | [Context pooling, FromSql and compiled queries](#Jan22_2025)                             |
+| Nov 20, 2024 | Release               | [EF Core 9: Release extravaganza](#Nov20_2024)                                           |
 | Jun 26, 2024 | SQL schemas           | [Improve your SQL schema and scripts with .NET based static code analysis](#June26_2024) |
 | May 15, 2024 | Firebird              | [Harnessing the Power of Firebird in .NET](#May15_2024)                                  |
 | Apr 17, 2024 | EF Core mapping       | [All about EF Core property mapping](#Apr17_2024)                                        |
@@ -96,6 +97,20 @@ The .NET Data Community Standups are live-streamed monthly (roughly) on Wednesda
 | Jun 24, 2020 | Blazor                | [EF Core in Blazor](#blazor)                                                             |
 | Jun 10, 2020 | EF Core Power Tools   | [EF Core Power Tools](#power-tools1)                                                     |
 | May 6, 2020  | Welcome!              | [Introducing the EF Core Community Standup](#one)                                        |
+
+## 2025
+
+<a name="Jan22_2025"></a>
+
+### January 22: [Context pooling, FromSql and compiled queries](https://www.youtube.com/live/lAP2nlA6ijw?si=jq7XhqVwmLi_Yt7c)
+
+Join us for another .NET Data Community Standup with Chris Woodruff where he talks about context pooling, FromSql and compiled queries.
+
+Featuring:
+
+- [Chris Woodruff](https://woodruff.dev/) (Special guest)
+- [Jiri Cincura](https://www.tabsoverspaces.com/) (Host)
+- [Shay Rojansky](https://www.roji.org/) (Host)
 
 ## 2024
 
