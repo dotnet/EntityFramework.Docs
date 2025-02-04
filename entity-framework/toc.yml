@@ -75,7 +75,7 @@
             href: core/what-is-new/ef-core-8.0/whatsnew.md
           - name: Breaking changes
             href: core/what-is-new/ef-core-8.0/breaking-changes.md
-			- name: Out of support
+      - name: Out of support
         items:
         - name: EF Core 7.0
           items:
