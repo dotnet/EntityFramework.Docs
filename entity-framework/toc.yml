@@ -75,24 +75,24 @@
             href: core/what-is-new/ef-core-8.0/whatsnew.md
           - name: Breaking changes
             href: core/what-is-new/ef-core-8.0/breaking-changes.md
-      - name: EF Core 7.0
+			- name: Out of support
         items:
-          - name: High-level plan
-            href: core/what-is-new/ef-core-7.0/plan.md
-          - name: "What's new?"
-            href: core/what-is-new/ef-core-7.0/whatsnew.md
-          - name: Breaking changes
-            href: core/what-is-new/ef-core-7.0/breaking-changes.md
-      - name: EF Core 6.0
-        items:
-        - name: High-level plan
-          href: core/what-is-new/ef-core-6.0/plan.md
-        - name: "What's new?"
-          href: core/what-is-new/ef-core-6.0/whatsnew.md
-        - name: Breaking changes
-          href: core/what-is-new/ef-core-6.0/breaking-changes.md
-      - name: Out of support
-        items:
+        - name: EF Core 7.0
+          items:
+            - name: High-level plan
+              href: core/what-is-new/ef-core-7.0/plan.md
+            - name: "What's new?"
+              href: core/what-is-new/ef-core-7.0/whatsnew.md
+            - name: Breaking changes
+              href: core/what-is-new/ef-core-7.0/breaking-changes.md
+        - name: EF Core 6.0
+          items:
+            - name: High-level plan
+              href: core/what-is-new/ef-core-6.0/plan.md
+            - name: "What's new?"
+              href: core/what-is-new/ef-core-6.0/whatsnew.md
+            - name: Breaking changes
+              href: core/what-is-new/ef-core-6.0/breaking-changes.md
         - name: EF Core 5.0
           items:
             - name: High-level plan
