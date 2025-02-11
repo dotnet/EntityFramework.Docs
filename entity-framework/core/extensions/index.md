@@ -391,6 +391,12 @@ A standard for implementing REST APIs with specifications for discovery, filteri
 
 [GitHub repository](https://github.com/OData) | [NuGet](https://www.nuget.org/packages/Microsoft.OData.Core/)
 
+### SanderTenBrinke.EntityFrameworkCore.Extensions.SqlServer.DataMasking
+
+An updated fork of [EntityFrameworkCore.Extensions](https://github.com/nikitasavinov/EntityFrameworkCore.Extensions). This package focuses only on adding data masking support for SQL Server to EF Core. For EF Core: 8+.
+
+[GitHub repository](https://github.com/sander1095/EntityFrameworkCore.Extensions.SqlServer.DataMasking) | [NuGet](https://www.nuget.org/packages/SanderTenBrinke.EntityFrameworkCore.Extensions.SqlServer.DataMasking)
+
 ## Extensions for unsupported EF Core versions
 
 ### nHydrate ORM for Entity Framework
@@ -449,3 +455,12 @@ NCache Entity Framework Core Provider is a distributed second level cache provid
 Life cycle hooks (for SaveChanges). For EF Core: 2-3.
 
 [GitHub repository](https://github.com/JValck/Ramses) | [NuGet](https://www.nuget.org/packages/Ramses)
+
+
+### EntityFrameworkCore.Extensions
+
+An extension library for Dynamic Data Masking (SQL Server) and MigrationBuilder and ModelBuilder extensions. For EF Core: 5.
+
+An updated fork for the data masking feature can be found at [EntityFrameworkCore.Extensions.SqlServer.DataMasking](https://github.com/sander1095/EntityFrameworkCore.Extensions.SqlServer.DataMasking)
+
+[GitHub repository](https://github.com/nikitasavinov/EntityFrameworkCore.Extensions) | [NuGet](https://www.nuget.org/packages/EntityFrameworkCore.Extensions)
