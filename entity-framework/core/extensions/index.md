@@ -393,7 +393,7 @@ A standard for implementing REST APIs with specifications for discovery, filteri
 
 ### SanderTenBrinke.EntityFrameworkCore.Extensions.SqlServer.DataMasking
 
-An updated fork of [EntityFrameworkCore.Extensions](https://github.com/nikitasavinov/EntityFrameworkCore.Extensions). This package focuses only on adding data masking support for SQL Server to EF Core. For EF Core: 8+.
+This package focuses on adding data masking support for SQL Server to EF Core. For EF Core: 8-9.
 
 [GitHub repository](https://github.com/sander1095/EntityFrameworkCore.Extensions.SqlServer.DataMasking) | [NuGet](https://www.nuget.org/packages/SanderTenBrinke.EntityFrameworkCore.Extensions.SqlServer.DataMasking)
 
