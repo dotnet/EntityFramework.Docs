@@ -121,11 +121,11 @@ Since the second `HasIndex` call overrides the first one, this creates only a si
 To create multiple indexes over the same set of properties, pass a name to the `HasIndex`, which will be used to identify the index in the EF model, and to distinguish it from other indexes over the same properties:
 
 ```c#
-modelBuilder.Entity<Blog>()
-    .HasIndex(b => new { b.FirstName, b.LastName }, "IX_Names_Ascending");
+modelBuilder.Entity<Person>()
+    .HasIndex(p => new { p.FirstName, p.LastName }, "IX_Names_Ascending");
 
-modelBuilder.Entity<Blog>()
-    .HasIndex(b => new { b.FirstName, b.LastName }, "IX_Names_Descending")
+modelBuilder.Entity<Person>()
+    .HasIndex(p => new { p.FirstName, p.LastName }, "IX_Names_Descending")
     .IsDescending();
 ```
 
