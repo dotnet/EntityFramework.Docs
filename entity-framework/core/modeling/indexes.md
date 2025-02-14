@@ -106,12 +106,12 @@ You can set the name of the index created in the database:
 Note that if you call `HasIndex` more than once on the same set of properties, that continues to configure a single index rather than create a new one:
 
 ```csharp
-modelBuilder.Entity<Blog>()
-    .HasIndex(b => new { b.FirstName, b.LastName })
+modelBuilder.Entity<Person>()
+    .HasIndex(p => new { p.FirstName, p.LastName })
     .HasDatabaseName("IX_Names_Ascending");
 
-modelBuilder.Entity<Blog>()
-    .HasIndex(b => new { b.FirstName, b.LastName })
+modelBuilder.Entity<Person>()
+    .HasIndex(p => new { p.FirstName, p.LastName })
     .HasDatabaseName("IX_Names_Descending")
     .IsDescending();
 ```
