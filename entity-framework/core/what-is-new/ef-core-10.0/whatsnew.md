@@ -24,13 +24,40 @@ EF10 requires the .NET 10 SDK to build and requires the .NET 10 runtime to run. 
 
 ## LINQ and SQL translation
 
+<a name="support-left-join"></a>
+
+### Support for the .NET 10 LeftJoin operator
+
+`LEFT JOIN` is a common and useful operation when working with EF Core. In previous versions, implementing `LEFT JOIN` in LINQ was quite complicated, requiring `SelectMany`, `GroupJoin` and `DefaultIfEmpty` operations [in a particular configuration](/dotnet/csharp/linq/standard-query-operators/join-operations#perform-left-outer-joins).
+
+.NET 10 adds first-class LINQ support for `LeftJoin` method, making those queries much simpler to write. EF Core recognizes the new method, so it can be used in EF LINQ queries instead of the old construct:
+
+```C#
+var query = context.Students
+    .LeftJoin(
+        context.Departments,
+        student => student.DepartmentID,
+        department => department.ID,
+        (student, department) => new 
+        { 
+            student.FirstName,
+            student.LastName,
+            Department = department.Name ?? "[NONE]"
+        });
+```
+
+See [#12793](https://github.com/dotnet/efcore/issues/12793) for more details.
+
 <a name="other-query-improvements"></a>
 
 ### Other query improvements
 
 * Translation for DateOnly.ToDateTime(timeOnly) ([#35194](https://github.com/dotnet/efcore/pull/35194), contributed by [@mseada94](https://github.com/mseada94)).
-* Optimization for multiple consecutive `LIMIT`s ([#35384](https://github.com/dotnet/efcore/pull/35384)), contributed by [@ranma42](https://github.com/ranma42)).
-* Optimization for use of `Count` operation on `ICollection<T>` ([#35381](https://github.com/dotnet/efcore/pull/35381)), contributed by [@ChrisJollyAU](https://github.com/ChrisJollyAU)).
+* Optimization for multiple consecutive `LIMIT`s ([#35384](https://github.com/dotnet/efcore/pull/35384), contributed by [@ranma42](https://github.com/ranma42)).
+* Optimization for use of `Count` operation on `ICollection<T>` ([#35381](https://github.com/dotnet/efcore/pull/35381), contributed by [@ChrisJollyAU](https://github.com/ChrisJollyAU)).
+* Optimization for `MIN`/`MAX` over `DISTINCT` ([#34699](https://github.com/dotnet/efcore/pull/34699), contributed by [@ranma42](https://github.com/ranma42)).
+* Translation for date/time functions using `DatePart.Microsecond` and `DatePart.Nanosecond` arguments ([#34861](https://github.com/dotnet/efcore/pull/34861)).
+* Simplifying parameter names (e.g. from `@__city_0` to `city`) ([#35200](https://github.com/dotnet/efcore/pull/35200)).
 
 ## ExecuteUpdateAsync now accepts a regular, non-expression lambda
 
@@ -76,3 +103,9 @@ await context.Blogs.ExecuteUpdateAsync(s =>
 ```
 
 Thanks to [@aradalvand](https://github.com/aradalvand) for proposing and pushing for this change (in [#32018](https://github.com/dotnet/efcore/issues/32018)).
+
+<a name="other-improvements"></a>
+
+## Other improvements
+
+* Make SQL Server scaffolding compatible with Azure Data Explorer ([#34832](https://github.com/dotnet/efcore/pull/34832), contributed by [@barnuri](https://github.com/barnuri)).
