@@ -10,7 +10,7 @@ public class MyContext : DbContext
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Blog>()
-            .Property("Discriminator")
+            .Property("blog_type")
             .HasMaxLength(200);
     }
     #endregion
