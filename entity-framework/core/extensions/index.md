@@ -456,7 +456,6 @@ Life cycle hooks (for SaveChanges). For EF Core: 2-3.
 
 [GitHub repository](https://github.com/JValck/Ramses) | [NuGet](https://www.nuget.org/packages/Ramses)
 
-
 ### EntityFrameworkCore.Extensions
 
 An extension library for Dynamic Data Masking (SQL Server) and MigrationBuilder and ModelBuilder extensions. For EF Core: 5.
