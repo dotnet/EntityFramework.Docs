@@ -30,7 +30,7 @@ public class SharingTransaction
             .Options;
 
         using var context1 = new BloggingContext(options);
-        using var transaction = await context1.Database.BeginTransactionAsync();
+        await using var transaction = await context1.Database.BeginTransactionAsync();
         try
         {
             context1.Blogs.Add(new Blog { Url = "http://blogs.msdn.com/dotnet" });

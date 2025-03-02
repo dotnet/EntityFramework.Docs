@@ -46,7 +46,7 @@ public class BloggingController : ControllerBase
     public async Task<ActionResult> UpdateBlogUrl(string name, string url)
     {
         // Note: it isn't usually necessary to start a transaction for updating. This is done here for illustration purposes only.
-        using var transaction = await _context.Database.BeginTransactionAsync(IsolationLevel.Serializable);
+        await using var transaction = await _context.Database.BeginTransactionAsync(IsolationLevel.Serializable);
 
         var blog = await _context.Blogs.FirstOrDefaultAsync(b => b.Name == name);
         if (blog is null)
