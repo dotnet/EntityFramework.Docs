@@ -76,8 +76,8 @@ public class ManyToMany
                     .WithMany(e => e.Posts)
                     .UsingEntity(
                         "PostTag",
-                        l => l.HasOne(typeof(Tag)).WithMany().HasForeignKey("TagsId").HasPrincipalKey(nameof(Tag.Id)),
-                        r => r.HasOne(typeof(Post)).WithMany().HasForeignKey("PostsId").HasPrincipalKey(nameof(Post.Id)),
+                        r => r.HasOne(typeof(Tag)).WithMany().HasForeignKey("TagsId").HasPrincipalKey(nameof(Tag.Id)),
+                        l => l.HasOne(typeof(Post)).WithMany().HasForeignKey("PostsId").HasPrincipalKey(nameof(Post.Id)),
                         j => j.HasKey("PostsId", "TagsId"));
             }
             #endregion
@@ -143,8 +143,8 @@ public class ManyToMany
                     .WithMany()
                     .UsingEntity(
                         "PostTag",
-                        l => l.HasOne(typeof(Tag)).WithMany().HasForeignKey("TagsId").HasPrincipalKey(nameof(Tag.Id)),
-                        r => r.HasOne(typeof(Post)).WithMany().HasForeignKey("PostId").HasPrincipalKey(nameof(Post.Id)),
+                        r => r.HasOne(typeof(Tag)).WithMany().HasForeignKey("TagsId").HasPrincipalKey(nameof(Tag.Id)),
+                        l => l.HasOne(typeof(Post)).WithMany().HasForeignKey("PostId").HasPrincipalKey(nameof(Post.Id)),
                         j => j.HasKey("PostId", "TagsId"));
             }
             #endregion
@@ -212,8 +212,8 @@ public class ManyToMany
                     .WithMany(e => e.Posts)
                     .UsingEntity(
                         "PostsToTagsJoinTable",
-                        l => l.HasOne(typeof(Tag)).WithMany().HasForeignKey("TagsId").HasPrincipalKey(nameof(Tag.Id)),
-                        r => r.HasOne(typeof(Post)).WithMany().HasForeignKey("PostsId").HasPrincipalKey(nameof(Post.Id)),
+                        r => r.HasOne(typeof(Tag)).WithMany().HasForeignKey("TagsId").HasPrincipalKey(nameof(Tag.Id)),
+                        l => l.HasOne(typeof(Post)).WithMany().HasForeignKey("PostsId").HasPrincipalKey(nameof(Post.Id)),
                         j => j.HasKey("PostsId", "TagsId"));
             }
             #endregion
@@ -270,8 +270,8 @@ public class ManyToMany
                     .HasMany(e => e.Tags)
                     .WithMany(e => e.Posts)
                     .UsingEntity(
-                        l => l.HasOne(typeof(Tag)).WithMany().HasForeignKey("TagForeignKey"),
-                        r => r.HasOne(typeof(Post)).WithMany().HasForeignKey("PostForeignKey"));
+                        r => r.HasOne(typeof(Tag)).WithMany().HasForeignKey("TagForeignKey"),
+                        l => l.HasOne(typeof(Post)).WithMany().HasForeignKey("PostForeignKey"));
             }
             #endregion
         }
@@ -286,8 +286,8 @@ public class ManyToMany
                     .WithMany(e => e.Posts)
                     .UsingEntity(
                         "PostTag",
-                        l => l.HasOne(typeof(Tag)).WithMany().HasForeignKey("TagForeignKey").HasPrincipalKey(nameof(Tag.Id)),
-                        r => r.HasOne(typeof(Post)).WithMany().HasForeignKey("PostForeignKey").HasPrincipalKey(nameof(Post.Id)),
+                        r => r.HasOne(typeof(Tag)).WithMany().HasForeignKey("TagForeignKey").HasPrincipalKey(nameof(Tag.Id)),
+                        l => l.HasOne(typeof(Post)).WithMany().HasForeignKey("PostForeignKey").HasPrincipalKey(nameof(Post.Id)),
                         j => j.HasKey("PostForeignKey", "TagForeignKey"));
             }
             #endregion
@@ -381,8 +381,8 @@ public class ManyToMany
                     .HasMany(e => e.Tags)
                     .WithMany(e => e.Posts)
                     .UsingEntity<PostTag>(
-                        l => l.HasOne<Tag>().WithMany().HasForeignKey(e => e.TagId),
-                        r => r.HasOne<Post>().WithMany().HasForeignKey(e => e.PostId));
+                        r => r.HasOne<Tag>().WithMany().HasForeignKey(e => e.TagId),
+                        l => l.HasOne<Post>().WithMany().HasForeignKey(e => e.PostId));
             }
             #endregion
         }
@@ -397,8 +397,8 @@ public class ManyToMany
                     .WithMany(e => e.Posts)
                     .UsingEntity<PostTag>(
                         "PostTag",
-                        l => l.HasOne<Tag>().WithMany().HasForeignKey(e => e.TagId).HasPrincipalKey(e => e.Id),
-                        r => r.HasOne<Post>().WithMany().HasForeignKey(e => e.PostId).HasPrincipalKey(e => e.Id),
+                        r => r.HasOne<Tag>().WithMany().HasForeignKey(e => e.TagId).HasPrincipalKey(e => e.Id),
+                        l => l.HasOne<Post>().WithMany().HasForeignKey(e => e.PostId).HasPrincipalKey(e => e.Id),
                         j => j.HasKey(e => new { e.PostId, e.TagId }));
             }
             #endregion
@@ -476,8 +476,8 @@ public class ManyToMany
                     .HasMany(e => e.Tags)
                     .WithMany(e => e.Posts)
                     .UsingEntity<PostTag>(
-                        l => l.HasOne<Tag>().WithMany(e => e.PostTags),
-                        r => r.HasOne<Post>().WithMany(e => e.PostTags));
+                        r => r.HasOne<Tag>().WithMany(e => e.PostTags),
+                        l => l.HasOne<Post>().WithMany(e => e.PostTags));
             }
             #endregion
         }
@@ -492,8 +492,8 @@ public class ManyToMany
                     .WithMany(e => e.Posts)
                     .UsingEntity<PostTag>(
                         "PostTag",
-                        l => l.HasOne<Tag>().WithMany(e => e.PostTags).HasForeignKey(e => e.TagId).HasPrincipalKey(e => e.Id),
-                        r => r.HasOne<Post>().WithMany(e => e.PostTags).HasForeignKey(e => e.PostId).HasPrincipalKey(e => e.Id),
+                        r => r.HasOne<Tag>().WithMany(e => e.PostTags).HasForeignKey(e => e.TagId).HasPrincipalKey(e => e.Id),
+                        l => l.HasOne<Post>().WithMany(e => e.PostTags).HasForeignKey(e => e.PostId).HasPrincipalKey(e => e.Id),
                         j => j.HasKey(e => new { e.PostId, e.TagId }));
             }
             #endregion
@@ -573,8 +573,8 @@ public class ManyToMany
                     .HasMany(e => e.Tags)
                     .WithMany(e => e.Posts)
                     .UsingEntity<PostTag>(
-                        l => l.HasOne<Tag>(e => e.Tag).WithMany(e => e.PostTags),
-                        r => r.HasOne<Post>(e => e.Post).WithMany(e => e.PostTags));
+                        r => r.HasOne<Tag>(e => e.Tag).WithMany(e => e.PostTags),
+                        l => l.HasOne<Post>(e => e.Post).WithMany(e => e.PostTags));
             }
             #endregion
         }
@@ -589,8 +589,8 @@ public class ManyToMany
                     .WithMany(e => e.Posts)
                     .UsingEntity<PostTag>(
                         "PostTag",
-                        l => l.HasOne<Tag>(e => e.Tag).WithMany(e => e.PostTags).HasForeignKey(e => e.TagId).HasPrincipalKey(e => e.Id),
-                        r => r.HasOne<Post>(e => e.Post).WithMany(e => e.PostTags).HasForeignKey(e => e.PostId).HasPrincipalKey(e => e.Id),
+                        r => r.HasOne<Tag>(e => e.Tag).WithMany(e => e.PostTags).HasForeignKey(e => e.TagId).HasPrincipalKey(e => e.Id),
+                        l => l.HasOne<Post>(e => e.Post).WithMany(e => e.PostTags).HasForeignKey(e => e.PostId).HasPrincipalKey(e => e.Id),
                         j => j.HasKey(e => new { e.PostId, e.TagId }));
             }
             #endregion
@@ -654,8 +654,8 @@ public class ManyToMany
                     .HasMany(e => e.Tags)
                     .WithMany(e => e.Posts)
                     .UsingEntity<PostTag>(
-                        l => l.HasOne<Tag>(e => e.Tag).WithMany(e => e.PostTags).HasForeignKey(e => e.TagForeignKey),
-                        r => r.HasOne<Post>(e => e.Post).WithMany(e => e.PostTags).HasForeignKey(e => e.PostForeignKey));
+                        r => r.HasOne<Tag>(e => e.Tag).WithMany(e => e.PostTags).HasForeignKey(e => e.TagForeignKey),
+                        l => l.HasOne<Post>(e => e.Post).WithMany(e => e.PostTags).HasForeignKey(e => e.PostForeignKey));
             }
             #endregion
         }
@@ -670,8 +670,8 @@ public class ManyToMany
                     .WithMany(e => e.Posts)
                     .UsingEntity<PostTag>(
                         "PostTag",
-                        l => l.HasOne<Tag>(e => e.Tag).WithMany(e => e.PostTags).HasForeignKey(e => e.TagForeignKey).HasPrincipalKey(e => e.Id),
-                        r => r.HasOne<Post>(e => e.Post).WithMany(e => e.PostTags).HasForeignKey(e => e.PostForeignKey).HasPrincipalKey(e => e.Id),
+                        r => r.HasOne<Tag>(e => e.Tag).WithMany(e => e.PostTags).HasForeignKey(e => e.TagForeignKey).HasPrincipalKey(e => e.Id),
+                        l => l.HasOne<Post>(e => e.Post).WithMany(e => e.PostTags).HasForeignKey(e => e.PostForeignKey).HasPrincipalKey(e => e.Id),
                         j => j.HasKey(e => new { e.PostForeignKey, e.TagForeignKey }));
             }
             #endregion
@@ -727,8 +727,8 @@ public class ManyToMany
                     .HasMany(e => e.Tags)
                     .WithMany(e => e.Posts)
                     .UsingEntity(
-                        l => l.HasOne(typeof(Tag)).WithMany().HasPrincipalKey(nameof(Tag.AlternateKey)),
-                        r => r.HasOne(typeof(Post)).WithMany().HasPrincipalKey(nameof(Post.AlternateKey)));
+                        r => r.HasOne(typeof(Tag)).WithMany().HasPrincipalKey(nameof(Tag.AlternateKey)),
+                        l => l.HasOne(typeof(Post)).WithMany().HasPrincipalKey(nameof(Post.AlternateKey)));
             }
             #endregion
         }
@@ -743,8 +743,8 @@ public class ManyToMany
                     .WithMany(e => e.Posts)
                     .UsingEntity(
                         "PostTag",
-                        l => l.HasOne(typeof(Tag)).WithMany().HasForeignKey("TagsAlternateKey").HasPrincipalKey(nameof(Tag.AlternateKey)),
-                        r => r.HasOne(typeof(Post)).WithMany().HasForeignKey("PostsAlternateKey").HasPrincipalKey(nameof(Post.AlternateKey)),
+                        r => r.HasOne(typeof(Tag)).WithMany().HasForeignKey("TagsAlternateKey").HasPrincipalKey(nameof(Tag.AlternateKey)),
+                        l => l.HasOne(typeof(Post)).WithMany().HasForeignKey("PostsAlternateKey").HasPrincipalKey(nameof(Post.AlternateKey)),
                         j => j.HasKey("PostsAlternateKey", "TagsAlternateKey"));
             }
             #endregion
@@ -810,8 +810,8 @@ public class ManyToMany
                     .HasMany(e => e.Tags)
                     .WithMany(e => e.Posts)
                     .UsingEntity<PostTag>(
-                        l => l.HasOne<Tag>(e => e.Tag).WithMany(e => e.PostTags).HasPrincipalKey(e => e.AlternateKey),
-                        r => r.HasOne<Post>(e => e.Post).WithMany(e => e.PostTags).HasPrincipalKey(e => e.AlternateKey));
+                        r => r.HasOne<Tag>(e => e.Tag).WithMany(e => e.PostTags).HasPrincipalKey(e => e.AlternateKey),
+                        l => l.HasOne<Post>(e => e.Post).WithMany(e => e.PostTags).HasPrincipalKey(e => e.AlternateKey));
             }
             #endregion
         }
@@ -826,8 +826,8 @@ public class ManyToMany
                     .WithMany(e => e.Posts)
                     .UsingEntity<PostTag>(
                         "PostTag",
-                        l => l.HasOne<Tag>(e => e.Tag).WithMany(e => e.PostTags).HasForeignKey(e => e.TagId).HasPrincipalKey(e => e.AlternateKey),
-                        r => r.HasOne<Post>(e => e.Post).WithMany(e => e.PostTags).HasForeignKey(e => e.PostId).HasPrincipalKey(e => e.AlternateKey),
+                        r => r.HasOne<Tag>(e => e.Tag).WithMany(e => e.PostTags).HasForeignKey(e => e.TagId).HasPrincipalKey(e => e.AlternateKey),
+                        l => l.HasOne<Post>(e => e.Post).WithMany(e => e.PostTags).HasForeignKey(e => e.PostId).HasPrincipalKey(e => e.AlternateKey),
                         j => j.HasKey(e => new { e.PostId, e.TagId }));
             }
             #endregion
@@ -902,8 +902,8 @@ public class ManyToMany
                     .WithMany(e => e.Posts)
                     .UsingEntity<PostTag>(
                         "PostTag",
-                        l => l.HasOne<Tag>().WithMany().HasForeignKey(e => e.TagId).HasPrincipalKey(e => e.Id),
-                        r => r.HasOne<Post>().WithMany().HasForeignKey(e => e.PostId).HasPrincipalKey(e => e.Id),
+                        r => r.HasOne<Tag>().WithMany().HasForeignKey(e => e.TagId).HasPrincipalKey(e => e.Id),
+                        l => l.HasOne<Post>().WithMany().HasForeignKey(e => e.PostId).HasPrincipalKey(e => e.Id),
                         j => j.HasKey(e => e.Id));
             }
             #endregion
@@ -976,8 +976,8 @@ public class ManyToMany
                     .WithMany(e => e.Posts)
                     .UsingEntity(
                         "PostTag",
-                        l => l.HasOne(typeof(Tag)).WithMany().HasForeignKey("TagsId").HasPrincipalKey(nameof(Tag.Id)),
-                        r => r.HasOne(typeof(Post)).WithMany().HasForeignKey("PostsId").HasPrincipalKey(nameof(Post.Id)),
+                        r => r.HasOne(typeof(Tag)).WithMany().HasForeignKey("TagsId").HasPrincipalKey(nameof(Tag.Id)),
+                        l => l.HasOne(typeof(Post)).WithMany().HasForeignKey("PostsId").HasPrincipalKey(nameof(Post.Id)),
                         j =>
                         {
                             j.IndexerProperty<int>("Id");
@@ -1059,8 +1059,8 @@ public class ManyToMany
                     .WithMany(e => e.Posts)
                     .UsingEntity<PostTag>(
                         "PostTag",
-                        l => l.HasOne<Tag>().WithMany(e => e.PostTags).HasForeignKey(e => e.TagId).HasPrincipalKey(e => e.Id),
-                        r => r.HasOne<Post>().WithMany(e => e.PostTags).HasForeignKey(e => e.PostId).HasPrincipalKey(e => e.Id),
+                        r => r.HasOne<Tag>().WithMany(e => e.PostTags).HasForeignKey(e => e.TagId).HasPrincipalKey(e => e.Id),
+                        l => l.HasOne<Post>().WithMany(e => e.PostTags).HasForeignKey(e => e.PostId).HasPrincipalKey(e => e.Id),
                         j =>
                         {
                             j.HasKey(e => new { e.PostId, e.TagId });
@@ -1118,8 +1118,8 @@ public class ManyToMany
                     .HasMany(e => e.Tags)
                     .WithMany(e => e.Posts)
                     .UsingEntity(
-                        l => l.HasOne(typeof(Tag)).WithMany().OnDelete(DeleteBehavior.Restrict),
-                        r => r.HasOne(typeof(Post)).WithMany().OnDelete(DeleteBehavior.Restrict));
+                        r => r.HasOne(typeof(Tag)).WithMany().OnDelete(DeleteBehavior.Restrict),
+                        l => l.HasOne(typeof(Post)).WithMany().OnDelete(DeleteBehavior.Restrict));
             }
             #endregion
         }
@@ -1134,8 +1134,8 @@ public class ManyToMany
                     .WithMany(e => e.Posts)
                     .UsingEntity(
                         "PostTag",
-                        l => l.HasOne(typeof(Tag)).WithMany().HasForeignKey("TagsId").HasPrincipalKey(nameof(Tag.Id)).OnDelete(DeleteBehavior.Restrict),
-                        r => r.HasOne(typeof(Post)).WithMany().HasForeignKey("PostsId").HasPrincipalKey(nameof(Post.Id)).OnDelete(DeleteBehavior.Restrict),
+                        r => r.HasOne(typeof(Tag)).WithMany().HasForeignKey("TagsId").HasPrincipalKey(nameof(Tag.Id)).OnDelete(DeleteBehavior.Restrict),
+                        l => l.HasOne(typeof(Post)).WithMany().HasForeignKey("PostsId").HasPrincipalKey(nameof(Post.Id)).OnDelete(DeleteBehavior.Restrict),
                         j => j.HasKey("PostsId", "TagsId"));
             }
             #endregion
@@ -1187,8 +1187,8 @@ public class ManyToMany
                     .WithMany(e => e.Parents)
                     .UsingEntity(
                         "PersonPerson",
-                        l => l.HasOne(typeof(Person)).WithMany().HasForeignKey("ChildrenId").HasPrincipalKey(nameof(Person.Id)),
-                        r => r.HasOne(typeof(Person)).WithMany().HasForeignKey("ParentsId").HasPrincipalKey(nameof(Person.Id)),
+                        r => r.HasOne(typeof(Person)).WithMany().HasForeignKey("ChildrenId").HasPrincipalKey(nameof(Person.Id)),
+                        l => l.HasOne(typeof(Person)).WithMany().HasForeignKey("ParentsId").HasPrincipalKey(nameof(Person.Id)),
                         j => j.HasKey("ChildrenId", "ParentsId"));
             }
             #endregion
@@ -1253,8 +1253,8 @@ public class ManyToMany
                     .WithMany()
                     .UsingEntity(
                         "PersonPerson",
-                        l => l.HasOne(typeof(Person)).WithMany().HasForeignKey("FriendsId").HasPrincipalKey(nameof(Person.Id)),
-                        r => r.HasOne(typeof(Person)).WithMany().HasForeignKey("PersonId").HasPrincipalKey(nameof(Person.Id)),
+                        r => r.HasOne(typeof(Person)).WithMany().HasForeignKey("FriendsId").HasPrincipalKey(nameof(Person.Id)),
+                        l => l.HasOne(typeof(Person)).WithMany().HasForeignKey("PersonId").HasPrincipalKey(nameof(Person.Id)),
                         j => j.HasKey("FriendsId", "PersonId"));
             }
             #endregion
@@ -1334,8 +1334,8 @@ public class ManyToMany
                     .WithMany(e => e.Posts)
                     .UsingEntity<JoinType>(
                         "PostTag",
-                        l => l.HasOne<Tag>().WithMany(e => e.PostTags).HasForeignKey(e => e.Id1),
-                        r => r.HasOne<Post>().WithMany(e => e.PostTags).HasForeignKey(e => e.Id2),
+                        r => r.HasOne<Tag>().WithMany(e => e.PostTags).HasForeignKey(e => e.Id1),
+                        l => l.HasOne<Post>().WithMany(e => e.PostTags).HasForeignKey(e => e.Id2),
                         j => j.Property(e => e.CreatedOn).HasDefaultValueSql("CURRENT_TIMESTAMP"));
 
                 modelBuilder.Entity<Blog>()
@@ -1343,8 +1343,8 @@ public class ManyToMany
                     .WithMany(e => e.Blogs)
                     .UsingEntity<JoinType>(
                         "BlogAuthor",
-                        l => l.HasOne<Author>().WithMany(e => e.BlogAuthors).HasForeignKey(e => e.Id1),
-                        r => r.HasOne<Blog>().WithMany(e => e.BlogAuthors).HasForeignKey(e => e.Id2),
+                        r => r.HasOne<Author>().WithMany(e => e.BlogAuthors).HasForeignKey(e => e.Id1),
+                        l => l.HasOne<Blog>().WithMany(e => e.BlogAuthors).HasForeignKey(e => e.Id2),
                         j => j.Property(e => e.CreatedOn).HasDefaultValueSql("CURRENT_TIMESTAMP"));
             }
             #endregion
@@ -1360,8 +1360,8 @@ public class ManyToMany
                     .WithMany(e => e.Posts)
                     .UsingEntity<JoinType>(
                         "PostTag",
-                        l => l.HasOne<Tag>().WithMany(e => e.PostTags).HasForeignKey(e => e.Id1).HasPrincipalKey(e => e.Id),
-                        r => r.HasOne<Post>().WithMany(e => e.PostTags).HasForeignKey(e => e.Id2).HasPrincipalKey(e => e.Id),
+                        r => r.HasOne<Tag>().WithMany(e => e.PostTags).HasForeignKey(e => e.Id1).HasPrincipalKey(e => e.Id),
+                        l => l.HasOne<Post>().WithMany(e => e.PostTags).HasForeignKey(e => e.Id2).HasPrincipalKey(e => e.Id),
                         j =>
                         {
                             j.HasKey(e => new { e.Id1, e.Id2 });
@@ -1373,8 +1373,8 @@ public class ManyToMany
                     .WithMany(e => e.Blogs)
                     .UsingEntity<JoinType>(
                         "BlogAuthor",
-                        l => l.HasOne<Author>().WithMany(e => e.BlogAuthors).HasForeignKey(e => e.Id1).HasPrincipalKey(e => e.Id),
-                        r => r.HasOne<Blog>().WithMany(e => e.BlogAuthors).HasForeignKey(e => e.Id2).HasPrincipalKey(e => e.Id),
+                        r => r.HasOne<Author>().WithMany(e => e.BlogAuthors).HasForeignKey(e => e.Id1).HasPrincipalKey(e => e.Id),
+                        l => l.HasOne<Blog>().WithMany(e => e.BlogAuthors).HasForeignKey(e => e.Id2).HasPrincipalKey(e => e.Id),
                         j =>
                         {
                             j.HasKey(e => new { e.Id1, e.Id2 });
@@ -1490,8 +1490,8 @@ public class ManyToMany
                     .HasMany(e => e.Tags)
                     .WithMany(e => e.Posts)
                     .UsingEntity<PostTag>(
-                        l => l.HasOne(e => e.Tag).WithMany(e => e.PostTags),
-                        r => r.HasOne(e => e.Post).WithMany(e => e.PostTags));
+                        r => r.HasOne(e => e.Tag).WithMany(e => e.PostTags),
+                        l => l.HasOne(e => e.Post).WithMany(e => e.PostTags));
             }
         }
     }
