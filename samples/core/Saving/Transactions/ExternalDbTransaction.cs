@@ -25,7 +25,7 @@ public class ExternalDbTransaction
         using var connection = new SqlConnection(connectionString);
         await connection.OpenAsync();
 
-        using var transaction = (SqlTransaction)await connection.BeginTransactionAsync();
+        await using var transaction = (SqlTransaction)await connection.BeginTransactionAsync();
         try
         {
             // Run raw ADO.NET command in the transaction

@@ -16,7 +16,7 @@ public class ManagingSavepoints
 
         #region Savepoints
         using var context = new BloggingContext();
-        using var transaction = await context.Database.BeginTransactionAsync();
+        await using var transaction = await context.Database.BeginTransactionAsync();
 
         try
         {

@@ -17,7 +17,7 @@ public class ControllingTransaction
 
         #region Transaction
         using var context = new BloggingContext();
-        using var transaction = await context.Database.BeginTransactionAsync();
+        await using var transaction = await context.Database.BeginTransactionAsync();
 
         try
         {
