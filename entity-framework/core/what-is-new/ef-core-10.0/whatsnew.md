@@ -26,7 +26,7 @@ EF10 requires the .NET 10 SDK to build and requires the .NET 10 runtime to run. 
 
 <a name="support-left-join"></a>
 
-### Support for the .NET 10 LeftJoin operator
+### Support for the .NET 10 `LeftJoin` and `RightJoin` operators
 
 `LEFT JOIN` is a common and useful operation when working with EF Core. In previous versions, implementing `LEFT JOIN` in LINQ was quite complicated, requiring `SelectMany`, `GroupJoin` and `DefaultIfEmpty` operations [in a particular configuration](/dotnet/csharp/linq/standard-query-operators/join-operations#perform-left-outer-joins).
 
@@ -46,7 +46,10 @@ var query = context.Students
         });
 ```
 
-See [#12793](https://github.com/dotnet/efcore/issues/12793) for more details.
+> [!NOTE]
+> EF 10 also supports the analogous `RightJoin` operator, which keeps all the data from the second collection and only the matching data from the first collection. EF 10 translates this to `RIGHT JOIN` operation in the database.
+
+See [#12793](https://github.com/dotnet/efcore/issues/12793) and [#35367](https://github.com/dotnet/efcore/issues/35367) for more details.
 
 <a name="other-query-improvements"></a>
 
@@ -109,3 +112,4 @@ Thanks to [@aradalvand](https://github.com/aradalvand) for proposing and pushing
 ## Other improvements
 
 * Make SQL Server scaffolding compatible with Azure Data Explorer ([#34832](https://github.com/dotnet/efcore/pull/34832), contributed by [@barnuri](https://github.com/barnuri)).
+* Associate the DatabaseRoot with the scoped options instance and not the singleton options ([#34477](https://github.com/dotnet/efcore/pull/34477), contributed by [@koenigst](https://github.com/koenigst)).
