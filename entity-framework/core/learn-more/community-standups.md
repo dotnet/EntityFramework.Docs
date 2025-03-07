@@ -16,6 +16,7 @@ The .NET Data Community Standups are live-streamed monthly (roughly) on Wednesda
 
 | Date         | Area                  | Title                                                                                    |
 |--------------|-----------------------|------------------------------------------------------------------------------------------|
+| Mar 06, 2025 | Chroma                | [Using Chroma vector database from .NET](#Mar06_2025)                                    |
 | Jan 22, 2025 | Tips                  | [Context pooling, FromSql and compiled queries](#Jan22_2025)                             |
 | Nov 20, 2024 | Release               | [EF Core 9: Release extravaganza](#Nov20_2024)                                           |
 | Jun 26, 2024 | SQL schemas           | [Improve your SQL schema and scripts with .NET based static code analysis](#June26_2024) |
@@ -99,6 +100,17 @@ The .NET Data Community Standups are live-streamed monthly (roughly) on Wednesda
 | May 6, 2020  | Welcome!              | [Introducing the EF Core Community Standup](#one)                                        |
 
 ## 2025
+
+<a name="Mar06_2025"></a>
+
+### March 6: [Using Chroma vector database from .NET](https://www.youtube.com/live/Nj0vYJ9HVGk?si=fZG7B4dl7YlR4Saj)
+
+Join Jiri as he talks about Chroma vector database and fresh new library for .NET that you can use to interact with Chroma.
+
+Featuring:
+
+- [Jiri Cincura](https://www.tabsoverspaces.com/) (Host)
+- [Shay Rojansky](https://www.roji.org/) (Host)
 
 <a name="Jan22_2025"></a>
 
