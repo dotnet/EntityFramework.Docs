@@ -357,6 +357,12 @@ Persisted computed properties in EF Core that update automatically on save chang
 
 [GitHub repository](https://github.com/lucaslorentz/auto-compute) | [NuGet](https://www.nuget.org/packages/LLL.AutoCompute.EFCore)
 
+### EntityFrameworkCore.AuditInterceptor
+
+A library that provides seamless auditing capabilities for Entity Framework Core. It automatically tracks entity changes including who made the changes and when they were made. The library integrates with .NET Dependency Injection and supports various auditing scenarios through a simple configuration process. For EF Core: 6-8.
+
+[GitHub repository](https://github.com/ShadyNagy/EntityFrameworkCore.AuditInterceptor) | [NuGet](https://www.nuget.org/packages/EntityFrameworkCore.AuditInterceptor)
+
 ## API Integrations
 
 These packages are designed to integrate directly with EF Core to expose various APIs.
@@ -463,9 +469,3 @@ An extension library for Dynamic Data Masking (SQL Server) and MigrationBuilder 
 An updated fork for the data masking feature can be found at [EntityFrameworkCore.Extensions.SqlServer.DataMasking](https://github.com/sander1095/EntityFrameworkCore.Extensions.SqlServer.DataMasking)
 
 [GitHub repository](https://github.com/nikitasavinov/EntityFrameworkCore.Extensions) | [NuGet](https://www.nuget.org/packages/EntityFrameworkCore.Extensions)
-
-### EntityFrameworkCore.AuditInterceptor
-
-A library that provides seamless auditing capabilities for Entity Framework Core. It automatically tracks entity changes including who made the changes and when they were made. The library integrates with .NET Dependency Injection and supports various auditing scenarios through a simple configuration process. For EF Core: 6-8.
-
-[GitHub repository](https://github.com/ShadyNagy/EntityFrameworkCore.AuditInterceptor) | [NuGet](https://www.nuget.org/packages/EntityFrameworkCore.AuditInterceptor)
