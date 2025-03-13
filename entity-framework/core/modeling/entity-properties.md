@@ -132,13 +132,13 @@ C# 8 introduced a new feature called [nullable reference types (NRT)](/dotnet/cs
 
 The following example shows an entity type with required and optional properties, with the nullable reference feature disabled and enabled:
 
-#### [Without NRT (default)](#tab/without-nrt)
-
-[!code-csharp[Main](../../../samples/core/Miscellaneous/NullableReferenceTypes/CustomerWithoutNullableReferenceTypes.cs?name=Customer&highlight=5,8)]
-
 #### [With NRT](#tab/with-nrt)
 
 [!code-csharp[Main](../../../samples/core/Miscellaneous/NullableReferenceTypes/Customer.cs?name=Customer&highlight=4-6)]
+
+#### [Without NRT](#tab/without-nrt)
+
+[!code-csharp[Main](../../../samples/core/Miscellaneous/NullableReferenceTypes/CustomerWithoutNullableReferenceTypes.cs?name=Customer&highlight=5,8)]
 
 ***
 
