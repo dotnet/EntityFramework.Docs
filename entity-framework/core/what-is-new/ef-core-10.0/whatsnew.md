@@ -10,7 +10,7 @@ uid: core/what-is-new/ef-core-10.0/whatsnew
 
 EF Core 10 (EF10) is the next release after EF Core 9 and is scheduled for release in November 2025.
 
-EF10 is available as a preview. See [.NET 10 release notes](https://github.com/dotnet/core/release-notes/10.0) to get information about the latest preview. This article will be updated as new preview releases are made available.
+EF10 is available as a preview. See [.NET 10 release notes](https://github.com/dotnet/core/tree/main/release-notes/10.0) to get information about the latest preview. This article will be updated as new preview releases are made available.
 
 > [!TIP]
 > You can run and debug into the samples by [downloading the sample code from GitHub](https://github.com/dotnet/EntityFramework.Docs). Each section below links to the source code specific to that section.
