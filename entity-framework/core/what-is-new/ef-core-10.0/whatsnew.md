@@ -17,9 +17,6 @@ EF10 is available as a preview. See [.NET 10 release notes](https://github.com/d
 
 EF10 requires the .NET 10 SDK to build and requires the .NET 10 runtime to run. EF10 will not run on earlier .NET versions, and will not run on .NET Framework.
 
-> [!TIP]
-> The _What's New_ docs are updated for each preview. All the samples are set up to use the [EF10 daily builds](https://github.com/dotnet/efcore/blob/main/docs/DailyBuilds.md), which usually have several additional weeks of completed work compared to the latest preview. We strongly encourage use of the daily builds when testing new features so that you're not doing your testing against stale bits.
-
 <a name="linq-and-sql-translation"></a>
 
 ## LINQ and SQL translation
