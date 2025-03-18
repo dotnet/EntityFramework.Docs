@@ -144,24 +144,6 @@ If you did everything correctly, the collection navigation properties should now
 public virtual ICollection<Album> Albums { get; } = new ObservableCollection<Album>();
 ```
 
-### Generate Join Table in Many to Many Relationships
-
-By default, the scaffolding process does not generate an entity for join tables in simple many-to-many relationships. However, there are cases where explicitly generating the join table as an entity might be necessary (e.g., when finer control over the generated TSQL query is required).
-
-The scaffolding behavior for each entity is controlled by the EntityType.t4 template file. Within this file, there is a condition that short-circuits entity generation for simple many-to-many join tables. To override this behavior and generate the join entity, you can comment out this condition in the 'EntityType.t4' file.
-
-```T4
-<#
-    // Comment this condition
-    if (EntityType.IsSimpleManyToManyJoinEntityType())
-    {
-        // Don't scaffold these
-        return "";
-    }
-    .  .  .    
-#>
-```
-
 ## Updating templates
 
 When you add the default templates to your project, it creates a copy of them based on that version of EF Core. As bugs are fixed and features are added in subsequent versions of EF Core, your templates may become out of date. You should review the changes made in the EF Core templates and merge them into your customized templates.
