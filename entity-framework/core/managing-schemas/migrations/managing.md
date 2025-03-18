@@ -224,7 +224,7 @@ You can also perform this check programmatically using `context.Database.HasPend
 
 In some extreme cases, it may be necessary to remove all migrations and start over. This can be easily done by deleting your **Migrations** folder and dropping your database; at that point you can create a new initial migration, which will contain your entire current schema.
 
-It's also possible to reset all migrations and create a single one without losing your data. This is sometimes called "squashing", and involves some manual work:
+It's also possible to reset all migrations and create a single one without losing your data, commonly referred to as "squashing". You can squash your migrations with community packages like [StewardEF](https://github.com/pdevito3/StewardEF) or manually by:
 
 1. Back up your database, in case something goes wrong.
 2. In your database, delete all rows from the migrations history table (e.g. `DELETE FROM [__EFMigrationsHistory]` on SQL Server).
