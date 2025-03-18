@@ -180,7 +180,7 @@ To scaffold these classes, you can use a third template called `EntityTypeConfig
 
 ### Generate Join Table in Many to Many Relationships
 
-By default, the scaffolding process does not generate an entity for join tables in simple many-to-many relationships. However, there are cases where explicitly generating the join table as an entity might be necessary (e.g., when finer control over the generated TSQL query is required).
+By default, the scaffolding process does not generate an entity for join tables in simple many-to-many relationships. However, there are cases where explicitly generating the join table as an entity might be necessary (e.g., when finer control over the generated SQL query is required).
 
 The scaffolding behavior for each entity is controlled by the EntityType.t4 template file. Within this file, there is a condition that short-circuits entity generation for simple many-to-many join tables. To override this behavior and generate the join entity, you can comment out this condition in the 'EntityType.t4' file.
 
