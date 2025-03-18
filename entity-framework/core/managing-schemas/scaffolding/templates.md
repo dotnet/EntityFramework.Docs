@@ -144,7 +144,7 @@ If you did everything correctly, the collection navigation properties should now
 public virtual ICollection<Album> Albums { get; } = new ObservableCollection<Album>();
 ```
 
-## Generate Joint Table in Many to Many Relationships
+### Generate Join Table in Many to Many Relationships
 
 By default, the scaffolding process does not generate an entity for join tables in simple many-to-many relationships. However, there are cases where explicitly generating the join table as an entity might be necessary (e.g., when finer control over the generated TSQL query is required).
 
