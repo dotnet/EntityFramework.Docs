@@ -1006,7 +1006,7 @@ CREATE TABLE "PersonPerson" (
 
 ## Symmetrical self-referencing many-to-many
 
-Sometimes a many-to-many relationship is naturally symmetrical. That is, if entity A is related to entity B, then entity B is also related to entity A. This is naturally modeled using a single navigation. For example, imagine the case where is person A is friends with person B, then person B is friends with person A:
+Sometimes a many-to-many relationship is naturally symmetrical. That is, if entity A is related to entity B, then entity B is also related to entity A. This is naturally modeled using a single navigation. For example, imagine the case where person A is friends with person B, then person B is friends with person A:
 
 <!--
         public class Person
