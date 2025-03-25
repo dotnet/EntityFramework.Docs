@@ -48,11 +48,11 @@ A possible solution is to create a simple `ITenantService` service that handles 
 
 The `DbContext` can then manage the multi-tenancy. The approach depends on your database strategy. If you are storing all tenants in a single database, you are likely going to use a query filter. The `ITenantService` is passed to the constructor via dependency injection and used to resolve and store the tenant identifier.
 
-:::code language="csharp" source="../../../samples/core/Miscellaneous/Multitenancy/SingleDbSingleTable/Data/ContactContext.cs" range="10-13":::
+:::code language="csharp" source="../../../samples/core/Miscellaneous/Multitenancy/SingleDbSingleTable/Data/ContactContext.cs" range="11-14":::
 
 The `OnModelCreating` method is overridden to specify the query filter:
 
-:::code language="csharp" source="../../../samples/core/Miscellaneous/Multitenancy/SingleDbSingleTable/Data/ContactContext.cs" range="31-33":::
+:::code language="csharp" source="../../../samples/core/Miscellaneous/Multitenancy/SingleDbSingleTable/Data/ContactContext.cs" range="32-34":::
 
 This ensures that every query is filtered to the tenant on every request. There is no need to filter in application code because the global filter will be automatically applied.
 
