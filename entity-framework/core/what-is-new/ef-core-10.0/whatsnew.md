@@ -17,6 +17,18 @@ EF10 is available as a preview. See [.NET 10 release notes](https://github.com/d
 
 EF10 requires the .NET 10 SDK to build and requires the .NET 10 runtime to run. EF10 will not run on earlier .NET versions, and will not run on .NET Framework.
 
+<a name="cosmos"></a>
+
+## Azure Cosmos DB for NoSQL
+
+<a name="improved-model-evolution"></a>
+
+### Improved experience when evolving the model
+
+In previous versions of EF Core, evolving the model when using Azure Cosmos DB was quite painful. Specifically, when adding a new required property to the entity, EF would no longer be able to materialize that entity. The reason was that EF expected a value for the new property (since it was required), but the document created before the change didn't contain those values. The workaround was to mark the property as optional first, manually add default values for the property, and only then change it to required.
+
+In EF 10 we improved this experience - EF will now materialize a default value for a required property, if no data is present for it in the document, rather than throw.
+
 <a name="linq-and-sql-translation"></a>
 
 ## LINQ and SQL translation
@@ -110,3 +122,5 @@ Thanks to [@aradalvand](https://github.com/aradalvand) for proposing and pushing
 
 * Make SQL Server scaffolding compatible with Azure Data Explorer ([#34832](https://github.com/dotnet/efcore/pull/34832), contributed by [@barnuri](https://github.com/barnuri)).
 * Associate the DatabaseRoot with the scoped options instance and not the singleton options ([#34477](https://github.com/dotnet/efcore/pull/34477), contributed by [@koenigst](https://github.com/koenigst)).
+* Redact inlined constants from log when sensitive logging is off ([#35724](https://github.com/dotnet/efcore/pull/35724)).
+* Improve LoadExtension to work correctly with dotnet run and lib* named libs ([#35617](https://github.com/dotnet/efcore/pull/35617), contributed by [@krwq](https://github.com/krwq)).
