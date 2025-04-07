@@ -45,7 +45,7 @@ Starting with EF 9, it's recommended to use `UseAzureSql` and `UseAzureSynapse` 
 
 ### EnableRetryOnFailureByDefault
 
-EF 9 introduced `EnableRetryOnFailureByDefault` method that configures the context to default [execution strategy](xref:core/miscellaneous/connection-resiliency) unless it is configured explicitly (i.e. when using DI). To use it, simply call `ConfigureSqlEngine(c => c.EnableRetryOnFailureByDefault())` and later you can use `UseSqlServer` or `UseAzureSql` or `UseAzureSynapse` as usual.
+EF 9 introduced `EnableRetryOnFailureByDefault` method that configures the context to default [execution strategy](xref:core/miscellaneous/connection-resiliency) unless it is configured explicitly (i.e. when using DI). To use it, simply call `ConfigureSqlEngine(c => c.EnableRetryOnFailureByDefault())` and later you can use `UseSqlServer` as usual. It is not necessary to call `EnableRetryOnFailureByDefault` when using `UseAzureSql` or `UseAzureSynapse`, as they already enable the default execution strategy.
 
 ## Supported Database Engines
 
