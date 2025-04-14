@@ -297,7 +297,7 @@ Note, however, that we plan to fully remove sync support in EF 11, so start upda
 ## AOT and pre-compiled queries
 
 > [!WARNING]
-> NativeAOT and query precompilation are highly experimental features, and are not yet suited for production use. The support described below should be viewed as infrastructure towards the final feature, which will likely be released with EF 10. We encourage you to experiment with the current support and report on your experiences, but recommend against deploying EF NativeAOT applications in production.
+> NativeAOT and query precompilation are highly experimental features, and are not yet suited for production use. The support described below should be viewed as infrastructure towards the final feature, which will be released in a future version. We encourage you to experiment with the current support and report on your experiences, but recommend against deploying EF NativeAOT applications in production.
 
 EF 9.0 brings initial, experimental support for [.NET NativeAOT](/dotnet/core/deploying/native-aot), allowing the publishing of ahead-of-time compiled applications which make use of EF to access databases. To support LINQ queries in NativeAOT mode, EF relies on _query precompilation_: this mechanism statically identifies EF LINQ queries and generates C# [_interceptors_](/dotnet/csharp/whats-new/csharp-12#interceptors), which contain code to execute each specific query. This can significantly cut down on your application's startup time, as the heavy lifting of processing and compiling your LINQ queries into SQL no longer happens every time your application starts up. Instead, each query's interceptor contains the finalized SQL for that query, as well as optimized code to materialize database results as .NET objects.
 
