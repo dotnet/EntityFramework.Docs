@@ -8,7 +8,7 @@ uid: core/performance/nativeaot-and-precompiled-queries
 # NativeAOT Support and Precompiled Queries (Experimental)
 
 > [!WARNING]
-> NativeAOT and query precompilation are highly experimental feature, and are not yet suited for production use. The support described below should be viewed as infrastructure towards the final feature, which will likely be released with EF 10. We encourage you to experiment with the current support and report on your experiences, but recommend against deploying EF NativeAOT applications in production. See below for specific known limitations.
+> NativeAOT and query precompilation are highly experimental feature, and are not yet suited for production use. The support described below should be viewed as infrastructure towards the final feature, which will be released in a future version. We encourage you to experiment with the current support and report on your experiences, but recommend against deploying EF NativeAOT applications in production. See below for specific known limitations.
 
 [.NET NativeAOT](/dotnet/core/deploying/native-aot) allows publishing self-contained .NET applications that have been compiled ahead-of-time (AOT). Doing so offers the following advantages:
 
@@ -34,7 +34,7 @@ C# interceptors are currently an experimental feature, and require a special opt
 
 ```xml
 <PropertyGroup>
-  <InterceptorsNamespaces>$(InterceptorsPreviewNamespaces);Microsoft.EntityFrameworkCore.GeneratedInterceptors</InterceptorsNamespaces>
+  <InterceptorsNamespaces>$(InterceptorsNamespaces);Microsoft.EntityFrameworkCore.GeneratedInterceptors</InterceptorsNamespaces>
 </PropertyGroup>
 ```
 
