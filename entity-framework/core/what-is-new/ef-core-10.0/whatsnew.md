@@ -21,6 +21,158 @@ EF10 requires the .NET 10 SDK to build and requires the .NET 10 runtime to run. 
 
 ## Azure Cosmos DB for NoSQL
 
+<a name="full-text-search-support"></a>
+
+### Full-text search support
+
+Azure Cosmos DB now offers support for [full-text search](/azure/cosmos-db/gen-ai/full-text-search). It enables efficient and effective text searches, as well as evaluating the relevance of documents to a given search query. It can be used in combination with vector search to improve the accuracy of responses in some AI scenarios.
+EF Core 10 is adding support for this feature allowing for modeling the database with full-text search enabled properties and using full-text search functions inside queries targeting Azure Cosmos DB.
+
+<a name="full-text-search-model-configuration"></a>
+
+#### Model configuration
+
+A property can be configured inside `OnModelCreating` to use full-text search by enabling it for the property and defining a full-text index:
+
+```c#
+public class Blog
+{
+    ...
+
+    public string Contents { get; set; }
+}
+
+public class BloggingContext
+{
+    ...
+
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        modelBuilder.Entity<Blog>(b =>
+        {
+            b.Property(x => x.Contents).EnableFullTextSearch();
+            b.HasIndex(x => x.Contents).IsFullTextIndex();
+        });
+    }
+}
+```
+
+> [!NOTE]
+> Configuring the index is not mandatory, but it is recommended as it greatly improves performance of full-text search queries.
+
+Full-text search operations are language specific, using American English (`en-US`) by default. You can customize the language for individual properties as part of `EnableFullTextSearch` call:
+
+```c#
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        modelBuilder.Entity<Blog>(b =>
+        {
+            b.Property(x => x.Contents).EnableFullTextSearch();
+            b.HasIndex(x => x.Contents).IsFullTextIndex();
+            b.Property(x => x.ContentsGerman).EnableFullTextSearch("de-DE");
+            b.HasIndex(x => x.ContentsGerman).IsFullTextIndex();
+        });
+    }
+```
+
+You can also set a default language for the container - unless overridden in the `EnableFullTextSearch` method, all full-text properties inside the container will use that language.
+
+```c#
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        modelBuilder.Entity<Blog>(b =>
+        {
+            b.HasDefaultFullTextLanguage("de-DE");
+            b.Property(x => x.ContentsEnglish).EnableFullTextSearch("en-US");
+            b.HasIndex(x => x.ContentsEnglish).IsFullTextIndex();
+            b.Property(x => x.ContentsGerman).EnableFullTextSearch();
+            b.HasIndex(x => x.ContentsGerman).IsFullTextIndex();
+            b.Property(x => x.TagsGerman).EnableFullTextSearch();
+            b.HasIndex(x => x.TagsGerman).IsFullTextIndex();
+        });
+    }
+```
+
+<a name="full-text-search-querying"></a>
+
+#### Querying
+
+As part of the full-text search feature, Azure Cosmos DB introduced several built-in functions which allow for efficient querying of content inside the full-text search enabled properties. These functions are: `FullTextContains`, `FullTextContainsAll`, `FullTextContainsAny`, which look for specific keyword or keywords and `FullTextScore`, which returns [BM25 score](https://en.wikipedia.org/wiki/Okapi_BM25) based on provided keywords.
+
+> [!NOTE]
+> `FullTextScore` can only be used inside `OrderBy` to rank the documents based on the score.
+
+EF Core exposes these functions as part of `EF.Functions` so they can be used in queries:
+
+```c#
+var cosmosBlogs = await context.Blogs.Where(x => EF.Functions.FullTextContainsAll(x.Contents, "database", "cosmos")).ToListAsync();
+
+var keywords = new string[] { "AI", "agent", "breakthrough" };
+var mostInteresting = await context.Blogs.OrderBy(x => EF.Functions.FullTextScore(x.Contents, keywords)).Take(5).ToListAsync();
+```
+
+<a name="full-text-search-hybrid-search"></a>
+
+#### Hybrid search
+
+Full-text search can be used with vector search in the same query (i.e. hybrid search), by combining results of `FullTextScore` and `VectorDistance` functions. It can be done using the `RRF` function (Reciprocal Rank Fusion), which EF Core also provides inside `EF.Functions`:
+
+```c#
+public class Blog
+{
+    ...
+
+    public float[] Vector { get; set; }
+    public string Contents { get; set; }
+}
+
+public class BloggingContext
+{
+    ...
+
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        modelBuilder.Entity<Blog>(b =>
+        {
+            b.Property(x => x.Contents).EnableFullTextSearch();
+            b.HasIndex(x => x.Contents).IsFullTextIndex();
+
+            b.Property(x => x.Vector).IsVectorProperty(DistanceFunction.Cosine, dimensions: 1536);
+            b.HasIndex(x => x.Vector).IsVectorIndex(VectorIndexType.Flat);
+        });
+    }
+}
+
+float[] myVector = ...
+var hybrid = await context.Blogs.OrderBy(x => EF.Functions.Rrf(
+        EF.Functions.FullTextScore(x.Contents, "database"), 
+        EF.Functions.VectorDistance(x.Vector, myVector)))
+    .Take(10)
+    .ToListAsync();
+```
+
+> [!TIP]
+> You can combine more than two scoring functions inside `Rrf` call, as well as using only `FullTextScore`, or only `VectorDistance`.
+
+<a name="full-text-search-limitations"></a>
+
+#### Limitations
+
+Here are some current limitations of the full-text search using EF Core:
+
+- `FullTextScore` and `RRF` functions can only be used inside `OrderBy` and are mutually exclusive with other forms of ordering.
+- EF Core can't create a container with full-text search or vector properties defined inside collection navigation - you can use those properties in queries, but the database has to be generated by other means (e.g. Microsoft.Azure.Cosmos SDK or using UI on Azure Portal).
+- Keyword arguments for `FullTextContainsAll`, `FullTextContainsAny` and `FullTextScore` have to be either constants or parameters. `FullTextContains` allows more complex expressions.
+
+<a name="vector-search-exits-preview"></a>
+
+### Vector similarity search exits preview
+
+In EF9 we added experimental support for [vector similarity search](xref:core/what-is-new/ef-core-9.0/whatsnew#vector-similarity-search-preview). In EF Core 10, vector similarity search support is no longer experimental. We have also made some improvements to the feature:
+
+- EF Core can now generate containers with vector properties defined on owned reference entities. Containers with vector properties defined on owned collections still have to be created by other means. However, they can be used in queries.
+- Model building APIs have been renamed. A vector property can now be configured using the `IsVectorProperty` method, and vector index can be configured using the `IsVectorIndex` method.
+
 <a name="improved-model-evolution"></a>
 
 ### Improved experience when evolving the model
@@ -64,12 +216,12 @@ See [#12793](https://github.com/dotnet/efcore/issues/12793) and [#35367](https:/
 
 ### Other query improvements
 
-* Translation for DateOnly.ToDateTime(timeOnly) ([#35194](https://github.com/dotnet/efcore/pull/35194), contributed by [@mseada94](https://github.com/mseada94)).
-* Optimization for multiple consecutive `LIMIT`s ([#35384](https://github.com/dotnet/efcore/pull/35384), contributed by [@ranma42](https://github.com/ranma42)).
-* Optimization for use of `Count` operation on `ICollection<T>` ([#35381](https://github.com/dotnet/efcore/pull/35381), contributed by [@ChrisJollyAU](https://github.com/ChrisJollyAU)).
-* Optimization for `MIN`/`MAX` over `DISTINCT` ([#34699](https://github.com/dotnet/efcore/pull/34699), contributed by [@ranma42](https://github.com/ranma42)).
-* Translation for date/time functions using `DatePart.Microsecond` and `DatePart.Nanosecond` arguments ([#34861](https://github.com/dotnet/efcore/pull/34861)).
-* Simplifying parameter names (e.g. from `@__city_0` to `city`) ([#35200](https://github.com/dotnet/efcore/pull/35200)).
+- Translation for DateOnly.ToDateTime(timeOnly) ([#35194](https://github.com/dotnet/efcore/pull/35194), contributed by [@mseada94](https://github.com/mseada94)).
+- Optimization for multiple consecutive `LIMIT`s ([#35384](https://github.com/dotnet/efcore/pull/35384), contributed by [@ranma42](https://github.com/ranma42)).
+- Optimization for use of `Count` operation on `ICollection<T>` ([#35381](https://github.com/dotnet/efcore/pull/35381), contributed by [@ChrisJollyAU](https://github.com/ChrisJollyAU)).
+- Optimization for `MIN`/`MAX` over `DISTINCT` ([#34699](https://github.com/dotnet/efcore/pull/34699), contributed by [@ranma42](https://github.com/ranma42)).
+- Translation for date/time functions using `DatePart.Microsecond` and `DatePart.Nanosecond` arguments ([#34861](https://github.com/dotnet/efcore/pull/34861)).
+- Simplifying parameter names (e.g. from `@__city_0` to `city`) ([#35200](https://github.com/dotnet/efcore/pull/35200)).
 
 ## ExecuteUpdateAsync now accepts a regular, non-expression lambda
 
@@ -120,7 +272,7 @@ Thanks to [@aradalvand](https://github.com/aradalvand) for proposing and pushing
 
 ## Other improvements
 
-* Make SQL Server scaffolding compatible with Azure Data Explorer ([#34832](https://github.com/dotnet/efcore/pull/34832), contributed by [@barnuri](https://github.com/barnuri)).
-* Associate the DatabaseRoot with the scoped options instance and not the singleton options ([#34477](https://github.com/dotnet/efcore/pull/34477), contributed by [@koenigst](https://github.com/koenigst)).
-* Redact inlined constants from log when sensitive logging is off ([#35724](https://github.com/dotnet/efcore/pull/35724)).
-* Improve LoadExtension to work correctly with dotnet run and lib* named libs ([#35617](https://github.com/dotnet/efcore/pull/35617), contributed by [@krwq](https://github.com/krwq)).
+- Make SQL Server scaffolding compatible with Azure Data Explorer ([#34832](https://github.com/dotnet/efcore/pull/34832), contributed by [@barnuri](https://github.com/barnuri)).
+- Associate the DatabaseRoot with the scoped options instance and not the singleton options ([#34477](https://github.com/dotnet/efcore/pull/34477), contributed by [@koenigst](https://github.com/koenigst)).
+- Redact inlined constants from log when sensitive logging is off ([#35724](https://github.com/dotnet/efcore/pull/35724)).
+- Improve LoadExtension to work correctly with dotnet run and lib* named libs ([#35617](https://github.com/dotnet/efcore/pull/35617), contributed by [@krwq](https://github.com/krwq)).
