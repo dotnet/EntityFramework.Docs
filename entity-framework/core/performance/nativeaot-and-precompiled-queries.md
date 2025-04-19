@@ -55,6 +55,14 @@ You're now ready to publish your EF NativeAOT application:
 dotnet publish -r linux-arm64 -c Release
 ```
 
+> [!WARNING]
+> The publish command may fail with error `CS9137`. The cause of this error are outdated transitive package references `Microsoft.CodeAnalysis.CSharp.Workspaces` and `Microsoft.CodeAnalysis.Workspaces.MSBuild`. As a workaround add those packages explicitly to your .csproj file:
+> ```
+> <PackageReference Include="Microsoft.CodeAnalysis.CSharp.Workspaces" Version="4.13.0" />
+> <PackageReference Include="Microsoft.CodeAnalysis.Workspaces.MSBuild" Version="4.13.0" />
+> ```
+> See [this issue](https://github.com/dotnet/efcore/issues/35945) for more information.
+
 This shows publishing a NativeAOT publishing for Linux running on ARM64; [consult this catalog](/dotnet/core/rid-catalog) to find your runtime identifier. If you'd like to generate the interceptors without publishing - for example to examine the generated sources - you can do so via the `dotnet ef dbcontext optimize --precompile-queries --nativeaot` command.
 
 Due to the way C# interceptors work, any change in the application source invalidates them and requires repeating the above process. As a result, interceptor generation and actual publishing aren't expected to happen in the inner loop, as the developer is working on code; instead, both `dotnet ef dbcontext optimize` and `dotnet publish` can be executed in a publishing/deployment workflow, in a CI/CD system.
