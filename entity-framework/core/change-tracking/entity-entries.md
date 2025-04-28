@@ -481,7 +481,7 @@ Notice that, unlike <xref:Microsoft.EntityFrameworkCore.ChangeTracking.ChangeTra
 - `Added` entities are included. Note that this is not the case for normal EF Core queries, since `Added` entities do not yet exist in the database and so are therefore never returned by a database query.
 - `Deleted` entities are excluded. Note that this is again not the case for normal EF Core queries, since `Deleted` entities still exist in the database and so _are_ returned by database queries.
 
-All of this means that `DbSet.Local` is view over the data that reflects the current conceptual state of the entity graph, with `Added` entities included and `Deleted` entities excluded. This matches what database state is expected to be after SaveChanges is called.
+All of this means that `DbSet.Local` is a view over the data that reflects the current conceptual state of the entity graph, with `Added` entities included and `Deleted` entities excluded. This matches what database state is expected to be after SaveChanges is called.
 
 This is typically the ideal view for data binding, since it presents to the user the data as they understand it based on the changes made by the application.
 
