@@ -262,9 +262,9 @@ dotnet ef dbcontext scaffold Name=ConnectionStrings:Blogging Microsoft.EntityFra
 The following example skips scaffolding an `OnConfiguring` method. This can be useful when you want to configure the DbContext outside of the class. For example, ASP.NET Core apps typically configure it in Startup.ConfigureServices.
 
 ```dotnetcli
-dotnet ef dbcontext scaffold "Server=(localdb)\mssqllocaldb;Database=Blogging;User Id=myUsername;Password=\0;" Microsoft.EntityFrameworkCore.SqlServer --no-onconfiguring
+dotnet ef dbcontext scaffold "Server=(localdb)\mssqllocaldb;Database=Blogging;User Id=myUsername;Password=***" Microsoft.EntityFrameworkCore.SqlServer --no-onconfiguring
 
-In the preceding code, replace `\0` with a valid strong password.
+In the preceding code, replace `***` with a valid strong password, followed by a semicolon `;`, for example, `password=<A strong password>;`
 ```
 
 ## `dotnet ef dbcontext script`
