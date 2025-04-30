@@ -159,7 +159,7 @@ As a result, it is usually a good idea to avoid mixing both tracked `SaveChanges
 
 ## Transactions
 
-Continuing on the above, it's important to understand that `ExecuteUpdate` and `ExecuteDelete` do not implicitly start a transaction they're invoked. Consider the following code:
+Continuing on the above, it's important to understand that `ExecuteUpdate` and `ExecuteDelete` do not implicitly start a transaction when they're invoked. Consider the following code:
 
 ```c#
 await context.Blogs.ExecuteUpdateAsync(/* some update */);
@@ -170,7 +170,7 @@ blog.Rating += 2;
 await context.SaveChangesAsync();
 ```
 
-Each `ExecuteUpdate` call causes a single SQL `UPDATE` to be sent to the database. Since no transaction is created, if any sort of failure prevents the second `ExecuteUpdate` from completing successfully, the effects of the first one are still persisted to the database. In fact, the four operations above - two invocations of `ExecuteUpdate`, a query and `SaveChanges` - each executes within its own transaction. To wrap multiple operations in a single transaction, explicitly start a transaction with <xref:Microsoft.EntityFrameworkCore.Infrastructure.DatabaseFacade>:
+Each `ExecuteUpdate` call causes a single SQL `UPDATE` to be sent to the database. Since no transaction is created, if any sort of failure prevents the second `ExecuteUpdate` from completing successfully, the effects of the first one are still persisted to the database. In fact, the four operations above - two invocations of `ExecuteUpdate`, a query and `SaveChanges` - each execute within their own transaction. To wrap multiple operations in a single transaction, explicitly start a transaction with <xref:Microsoft.EntityFrameworkCore.Infrastructure.DatabaseFacade>:
 
 ```c#
 using (var transaction = context.Database.BeginTransaction())
