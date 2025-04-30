@@ -16,7 +16,8 @@ The .NET Data Community Standups are live-streamed monthly (roughly) on Wednesda
 
 | Date         | Area                  | Title                                                                                    |
 |--------------|-----------------------|------------------------------------------------------------------------------------------|
-| Mar 20, 2025 | EF Core               | [Stop using Entity Framework as a DTO provider!](#Mar20_2025)                            |
+| Apr 24, 2025 | EF Core               | [Jiri and Shay talk about EF Core testing and Maurycy corrects them](#Apr24_2025)        |
+| Mar 19, 2025 | EF Core               | [Stop using Entity Framework as a DTO provider!](#Mar19_2025)                            |
 | Mar 06, 2025 | Chroma                | [Using Chroma vector database from .NET](#Mar06_2025)                                    |
 | Jan 22, 2025 | Tips                  | [Context pooling, FromSql and compiled queries](#Jan22_2025)                             |
 | Nov 20, 2024 | Release               | [EF Core 9: Release extravaganza](#Nov20_2024)                                           |
@@ -102,9 +103,25 @@ The .NET Data Community Standups are live-streamed monthly (roughly) on Wednesda
 
 ## 2025
 
-<a name="Mar20_2025"></a>
+<a name="Apr24_2025"></a>
 
-### March 6: [Stop using Entity Framework as a DTO provider!](https://www.youtube.com/live/zlxhZhVu1O8?si=LbzOSpO3PUTN18Sf)
+### Apr 24: [Jiri and Shay talk about EF Core testing and Maurycy corrects them](https://www.youtube.com/live/FV5e3-5IOuw?si=QetyyWOSW1xYJ2LS)
+
+Jiri and Shay talk about how we test whole EF Core and Maurycy corrects them, because they have it wrong.
+
+Featuring:
+
+- [Maurycy Markowski](https://github.com/maumar) (Special guest)
+- [Jiri Cincura](https://www.tabsoverspaces.com/) (Host)
+- [Shay Rojansky](https://www.roji.org/) (Host)
+
+Links:
+
+- Demo: <https://github.com/ChrisKlug/efcore-dto-demo>
+
+<a name="Mar19_2025"></a>
+
+### March 19: [Stop using Entity Framework as a DTO provider!](https://www.youtube.com/live/zlxhZhVu1O8?si=LbzOSpO3PUTN18Sf)
 
 Chris Klug has some opinions about Entity Framework and wants you to know about them…
 
