@@ -16,6 +16,7 @@ The .NET Data Community Standups are live-streamed monthly (roughly) on Wednesda
 
 | Date         | Area                  | Title                                                                                    |
 |--------------|-----------------------|------------------------------------------------------------------------------------------|
+| May 14, 2025 | Azure SQL             | [Azure SQL vector search with Davide Mauri](#May14_2025)                                 |
 | Apr 24, 2025 | EF Core               | [Jiri and Shay talk about EF Core testing and Maurycy corrects them](#Apr24_2025)        |
 | Mar 19, 2025 | EF Core               | [Stop using Entity Framework as a DTO provider!](#Mar19_2025)                            |
 | Mar 06, 2025 | Chroma                | [Using Chroma vector database from .NET](#Mar06_2025)                                    |
@@ -102,6 +103,25 @@ The .NET Data Community Standups are live-streamed monthly (roughly) on Wednesda
 | May 6, 2020  | Welcome!              | [Introducing the EF Core Community Standup](#one)                                        |
 
 ## 2025
+
+<a name="May14_2025"></a>
+
+### May 14: [Azure SQL vector search with Davide Mauri](https://www.youtube.com/live/RksCLw2OU_M?si=7NjaVS4dB2L0iGl7)
+
+We welcome Davide Mauri, Principal Product Manager at Microsoft, to explore the exciting new vector search capabilities in Azure SQL. With the rise of AI-powered applications and semantic search, vector databases are more relevant than ever. In this session, Davide will demonstrate how Azure SQL is evolving to meet these modern needs with integrated vector search features.
+
+Featuring:
+
+- [Davide Mauri](https://www.davidemauri.it/) (Special guest)
+- [Jiri Cincura](https://www.tabsoverspaces.com/) (Host)
+- [Shay Rojansky](https://www.roji.org/) (Host)
+
+Links:
+
+- <https://azuresql.dev>
+- <https://ai.awesome.azuresql.dev/>
+- <https://github.com/Azure-Samples/azure-sql-db-vector-search/tree/main/Hybrid-Search>
+- <https://github.com/Azure-Samples/azure-sql-db-chat-sk>
 
 <a name="Apr24_2025"></a>
 
