@@ -92,7 +92,7 @@ If `[Required]` is found on the dependent navigation and the foreign key propert
 
 ## ForeignKeyAttribute
 
-<xref:System.ComponentModel.DataAnnotations.Schema.ForeignKeyAttribute> is used to connect a foreign key property with its navigations. `[ForeignKey]` can be placed on the foreign key property with the name of the dependent navigation. For example:
+<xref:System.ComponentModel.DataAnnotations.Schema.ForeignKeyAttribute> is used to connect a foreign key property with its navigations. `[ForeignKey]` can be placed on the foreign key property with the name of the principal navigation. For example:
 
 <!--
         public class Blog
