@@ -139,6 +139,7 @@ See [#12793](https://github.com/dotnet/efcore/issues/12793) and [#35367](https:/
 - Translate `COALESCE` as `ISNULL` on SQL Server, for most cases ([#34171](https://github.com/dotnet/efcore/pull/34171), contributed by [@ranma42](https://github.com/ranma42)).
 - Support some string functions taking `char` as arguments ([#34999](https://github.com/dotnet/efcore/pull/34999), contributed by [@ChrisJollyAU](https://github.com/ChrisJollyAU)).
 - Support `MAX`/`MIN`/`ORDER BY` using `decimal` on SQLite ([#35606](https://github.com/dotnet/efcore/pull/35606), contributed by [@ranma42](https://github.com/ranma42)).
+- Support projecting different navigations (but same type) via conditional operator ([#34589](https://github.com/dotnet/efcore/issues/34589), contributed by [@ranma42](https://github.com/ranma42)).
 
 ## ExecuteUpdateAsync now accepts a regular, non-expression lambda
 
