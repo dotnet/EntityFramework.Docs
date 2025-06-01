@@ -25,6 +25,7 @@ Devart.Data.Oracle.EFCore               | [Devart.Data.Oracle.EFCore.NetTopology
 Devart.Data.PostgreSql.EFCore           | [Devart.Data.PostgreSql.EFCore.NetTopologySuite](https://www.nuget.org/packages/Devart.Data.PostgreSql.EFCore.NetTopologySuite)
 Devart.Data.SQLite.EFCore               | [Devart.Data.SQLite.EFCore.NetTopologySuite](https://www.nuget.org/packages/Devart.Data.SQLite.EFCore.NetTopologySuite)
 Teradata.EntityFrameworkCore            | [Teradata.EntityFrameworkCore.NetTopologySuite](https://www.nuget.org/packages/Teradata.EntityFrameworkCore.NetTopologySuite)
+FileBaseContext                         | [NetTopologySuite](https://www.nuget.org/packages/NetTopologySuite)
 
 ## NetTopologySuite
 
