@@ -20,8 +20,8 @@ internal class Program
     {
         using (var context = new BloggingContext())
         {
-            context.Database.EnsureDeleted();
-            context.Database.EnsureCreated();
+            await context.Database.EnsureDeletedAsync();
+            await context.Database.EnsureCreatedAsync();
 
             context.Add(
                 new Blog
@@ -35,30 +35,30 @@ internal class Program
                     }
                 });
 
-            context.SaveChanges();
+            await context.SaveChangesAsync();
         }
 
         using (var context = new BloggingContext())
         {
             #region Indexes
             // Matches on start, so uses an index (on SQL Server)
-            var posts1 = context.Posts.Where(p => p.Title.StartsWith("A")).ToList();
+            var posts1 = await context.Posts.Where(p => p.Title.StartsWith("A")).ToListAsync();
             // Matches on end, so does not use the index
-            var posts2 = context.Posts.Where(p => p.Title.EndsWith("A")).ToList();
+            var posts2 = await context.Posts.Where(p => p.Title.EndsWith("A")).ToListAsync();
             #endregion
         }
 
         using (var context = new BloggingContext())
         {
             #region ProjectEntities
-            foreach (var blog in context.Blogs)
+            await foreach (var blog in context.Blogs.AsAsyncEnumerable())
             {
                 Console.WriteLine("Blog: " + blog.Url);
             }
             #endregion
 
             #region ProjectSingleProperty
-            foreach (var blogName in context.Blogs.Select(b => b.Url))
+            await foreach (var blogName in context.Blogs.Select(b => b.Url).AsAsyncEnumerable())
             {
                 Console.WriteLine("Blog: " + blogName);
             }
@@ -68,23 +68,23 @@ internal class Program
         using (var context = new BloggingContext())
         {
             #region NoLimit
-            var blogsAll = context.Posts
+            var blogsAll = await context.Posts
                 .Where(p => p.Title.StartsWith("A"))
-                .ToList();
+                .ToListAsync();
             #endregion
 
             #region Limit25
-            var blogs25 = context.Posts
+            var blogs25 = await context.Posts
                 .Where(p => p.Title.StartsWith("A"))
                 .Take(25)
-                .ToList();
+                .ToListAsync();
             #endregion
         }
 
         using (var context = new BloggingContext())
         {
             #region EagerlyLoadRelatedAndProject
-            foreach (var blog in context.Blogs.Select(b => new { b.Url, b.Posts }).ToList())
+            await foreach (var blog in context.Blogs.Select(b => new { b.Url, b.Posts }).AsAsyncEnumerable())
             {
                 foreach (var post in blog.Posts)
                 {
@@ -98,19 +98,19 @@ internal class Program
         {
             #region BufferingAndStreaming
             // ToList and ToArray cause the entire resultset to be buffered:
-            var blogsList = context.Posts.Where(p => p.Title.StartsWith("A")).ToList();
-            var blogsArray = context.Posts.Where(p => p.Title.StartsWith("A")).ToArray();
+            var blogsList = await context.Posts.Where(p => p.Title.StartsWith("A")).ToListAsync();
+            var blogsArray = await context.Posts.Where(p => p.Title.StartsWith("A")).ToArrayAsync();
 
             // Foreach streams, processing one row at a time:
-            foreach (var blog in context.Posts.Where(p => p.Title.StartsWith("A")))
+            await foreach (var blog in context.Posts.Where(p => p.Title.StartsWith("A")).AsAsyncEnumerable())
             {
                 // ...
             }
 
-            // AsEnumerable also streams, allowing you to execute LINQ operators on the client-side:
+            // AsAsyncEnumerable also streams, allowing you to execute LINQ operators on the client-side:
             var doubleFilteredBlogs = context.Posts
                 .Where(p => p.Title.StartsWith("A")) // Translated to SQL and executed in the database
-                .AsEnumerable()
+                .AsAsyncEnumerable()
                 .Where(p => SomeDotNetMethod(p)); // Executed at the client on all database results
             #endregion
 
@@ -122,19 +122,19 @@ internal class Program
         using (var context = new BloggingContext())
         {
             #region SaveChangesBatching
-            var blog = context.Blogs.Single(b => b.Url == "http://someblog.microsoft.com");
+            var blog = await context.Blogs.SingleAsync(b => b.Url == "http://someblog.microsoft.com");
             blog.Url = "http://someotherblog.microsoft.com";
             context.Add(new Blog { Url = "http://newblog1.microsoft.com" });
             context.Add(new Blog { Url = "http://newblog2.microsoft.com" });
-            context.SaveChanges();
+            await context.SaveChangesAsync();
             #endregion
         }
 
         using (var context = new BloggingContext())
         {
             #region QueriesWithConstants
-            var post1 = context.Posts.FirstOrDefault(p => p.Title == "post1");
-            var post2 = context.Posts.FirstOrDefault(p => p.Title == "post2");
+            var post1 = await context.Posts.FirstOrDefaultAsync(p => p.Title == "post1");
+            var post2 = await context.Posts.FirstOrDefaultAsync(p => p.Title == "post2");
             #endregion
         }
 
@@ -142,16 +142,16 @@ internal class Program
         {
             #region QueriesWithParameterization
             var postTitle = "post1";
-            var post1 = context.Posts.FirstOrDefault(p => p.Title == postTitle);
+            var post1 = await context.Posts.FirstOrDefaultAsync(p => p.Title == postTitle);
             postTitle = "post2";
-            var post2 = context.Posts.FirstOrDefault(p => p.Title == postTitle);
+            var post2 = await context.Posts.FirstOrDefaultAsync(p => p.Title == postTitle);
             #endregion
         }
 
         using (var context = new LazyBloggingContext())
         {
-            context.Database.EnsureDeleted();
-            context.Database.EnsureCreated();
+            await context.Database.EnsureDeletedAsync();
+            await context.Database.EnsureCreatedAsync();
 
             for (var i = 0; i < 10; i++)
             {
@@ -166,13 +166,13 @@ internal class Program
                     });
             }
 
-            context.SaveChanges();
+            await context.SaveChangesAsync();
         }
 
         using (var context = new LazyBloggingContext())
         {
             #region NPlusOne
-            foreach (var blog in context.Blogs.ToList())
+            foreach (var blog in await context.Blogs.ToListAsync())
             {
                 foreach (var post in blog.Posts)
                 {
@@ -184,8 +184,8 @@ internal class Program
 
         using (var context = new EmployeeContext())
         {
-            context.Database.EnsureDeleted();
-            context.Database.EnsureCreated();
+            await context.Database.EnsureDeletedAsync();
+            await context.Database.EnsureCreatedAsync();
 
             for (var i = 0; i < 10; i++)
             {
@@ -196,19 +196,19 @@ internal class Program
         using (var context = new EmployeeContext())
         {
             #region UpdateWithoutBulk
-            foreach (var employee in context.Employees)
+            await foreach (var employee in context.Employees.AsAsyncEnumerable())
             {
                 employee.Salary += 1000;
             }
 
-            context.SaveChanges();
+            await context.SaveChangesAsync();
             #endregion
         }
 
         using (var context = new EmployeeContext())
         {
             #region UpdateWithBulk
-            context.Database.ExecuteSqlRaw("UPDATE [Employees] SET [Salary] = [Salary] + 1000");
+            await context.Database.ExecuteSqlRawAsync("UPDATE [Employees] SET [Salary] = [Salary] + 1000");
             #endregion
         }
 
@@ -217,8 +217,8 @@ internal class Program
                        .UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=Blogging;Trusted_Connection=True;ConnectRetryCount=0")
                        .Options))
         {
-            context.Database.EnsureDeleted();
-            context.Database.EnsureCreated();
+            await context.Database.EnsureDeletedAsync();
+            await context.Database.EnsureCreatedAsync();
         }
 
         #region DbContextPoolingWithoutDI
@@ -230,7 +230,7 @@ internal class Program
 
         using (var context = factory.CreateDbContext())
         {
-            var allPosts = context.Posts.ToList();
+            var allPosts = await context.Posts.ToListAsync();
         }
         #endregion
 

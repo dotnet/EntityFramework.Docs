@@ -8,7 +8,7 @@ uid: core/performance/nativeaot-and-precompiled-queries
 # NativeAOT Support and Precompiled Queries (Experimental)
 
 > [!WARNING]
-> NativeAOT and query precompilation are highly experimental feature, and are not yet suited for production use. The support described below should be viewed as infrastructure towards the final feature, which will likely be released with EF 10. We encourage you to experiment with the current support and report on your experiences, but recommend against deploying EF NativeAOT applications in production. See below for specific known limitations.
+> NativeAOT and query precompilation are highly experimental feature, and are not yet suited for production use. The support described below should be viewed as infrastructure towards the final feature, which will be released in a future version. We encourage you to experiment with the current support and report on your experiences, but recommend against deploying EF NativeAOT applications in production. See below for specific known limitations.
 
 [.NET NativeAOT](/dotnet/core/deploying/native-aot) allows publishing self-contained .NET applications that have been compiled ahead-of-time (AOT). Doing so offers the following advantages:
 
@@ -34,7 +34,7 @@ C# interceptors are currently an experimental feature, and require a special opt
 
 ```xml
 <PropertyGroup>
-  <InterceptorsNamespaces>$(InterceptorsPreviewNamespaces);Microsoft.EntityFrameworkCore.GeneratedInterceptors</InterceptorsNamespaces>
+  <InterceptorsNamespaces>$(InterceptorsNamespaces);Microsoft.EntityFrameworkCore.GeneratedInterceptors</InterceptorsNamespaces>
 </PropertyGroup>
 ```
 
@@ -54,6 +54,17 @@ You're now ready to publish your EF NativeAOT application:
 ```console
 dotnet publish -r linux-arm64 -c Release
 ```
+
+> [!NOTE]
+>
+> The publish command may fail with error `CS9137`. The cause of this error are outdated transitive package references `Microsoft.CodeAnalysis.CSharp.Workspaces` and `Microsoft.CodeAnalysis.Workspaces.MSBuild`. As a workaround add those packages explicitly to your .csproj file:
+>
+> ```xml
+> <PackageReference Include="Microsoft.CodeAnalysis.CSharp.Workspaces" Version="4.13.0" />
+> <PackageReference Include="Microsoft.CodeAnalysis.Workspaces.MSBuild" Version="4.13.0" />
+> ```
+>
+> See [this issue](https://github.com/dotnet/efcore/issues/35945) for more information.
 
 This shows publishing a NativeAOT publishing for Linux running on ARM64; [consult this catalog](/dotnet/core/rid-catalog) to find your runtime identifier. If you'd like to generate the interceptors without publishing - for example to examine the generated sources - you can do so via the `dotnet ef dbcontext optimize --precompile-queries --nativeaot` command.
 

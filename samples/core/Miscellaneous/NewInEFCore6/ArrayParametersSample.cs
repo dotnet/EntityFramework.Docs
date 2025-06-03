@@ -1,23 +1,24 @@
 ﻿using System;
 using System.Data;
+using System.Threading.Tasks;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 
 public static class ArrayParametersSample
 {
-    public static void Array_parameters_are_logged_in_readable_form()
+    public static async Task Array_parameters_are_logged_in_readable_form()
     {
         Console.WriteLine($">>>> Sample: {nameof(Array_parameters_are_logged_in_readable_form)}");
         Console.WriteLine();
 
-        Helpers.RecreateCleanDatabase();
+        await Helpers.RecreateCleanDatabase();
 
         using var context = new SomeDbContext();
 
         try
         {
-            context.Database.ExecuteSqlRaw(
+            await context.Database.ExecuteSqlRawAsync(
                 "SELECT * FROM Blogs WHERE Data = {0}",
                 new SqlParameter
                 {
@@ -39,12 +40,12 @@ public static class ArrayParametersSample
 
     public static class Helpers
     {
-        public static void RecreateCleanDatabase()
+        public static async Task RecreateCleanDatabase()
         {
             using var context = new IsNullOrWhitespaceSample.BooksContext(quiet: true);
 
-            context.Database.EnsureDeleted();
-            context.Database.EnsureCreated();
+            await context.Database.EnsureDeletedAsync();
+            await context.Database.EnsureCreatedAsync();
         }
     }
 

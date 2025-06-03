@@ -1,7 +1,7 @@
 ---
 title: What's New in EF Core 5.0
 description: Overview of new features in EF Core 5.0
-author: ajcvickers
+author: SamMonoRT
 ms.date: 09/10/2020
 uid: core/what-is-new/ef-core-5.0/whatsnew
 ---
@@ -47,9 +47,9 @@ EF Core 5.0 now allows a single LINQ query including related collections to be s
 For example, consider a query that pulls in two levels of related collections using `Include`:
 
 ```csharp
-var artists = context.Artists
+var artists = await context.Artists
     .Include(e => e.Albums)
-    .ToList();
+    .ToListAsync();
 ```
 
 By default, EF Core will generate the following SQL when using the SQLite provider:
@@ -103,9 +103,9 @@ For further information, [see the documentation on logging and interception](xre
 The `Include` method now supports filtering of the entities included:
 
 ```csharp
-var blogs = context.Blogs
+var blogs = await context.Blogs
     .Include(e => e.Posts.Where(p => p.Title.Contains("Cheese")))
-    .ToList();
+    .ToListAsync();
 ```
 
 This query will return blogs together with each associated post, but only when the post title contains "Cheese".

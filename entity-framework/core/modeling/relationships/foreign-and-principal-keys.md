@@ -1,7 +1,7 @@
 ﻿---
 title: Foreign and principal keys in relationships - EF Core
 description: The use and configuration of foreign keys, alternate keys, and primary keys in relationships
-author: ajcvickers
+author: SamMonoRT
 ms.date: 03/30/2023
 uid: core/modeling/relationships/foreign-and-principal-keys
 ---

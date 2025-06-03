@@ -1,17 +1,19 @@
 ﻿using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace NullSemantics;
 
 internal class Program
 {
-    private static void Main(string[] args)
+    private static async Task Main(string[] args)
     {
         using var context = new NullSemanticsContext();
-        context.Database.EnsureDeleted();
-        context.Database.EnsureCreated();
+        await context.Database.EnsureDeletedAsync();
+        await context.Database.EnsureCreatedAsync();
 
         //#region FunctionSqlRaw
-        //context.Database.ExecuteSqlRaw(
+        //await context.Database.ExecuteSqlRawAsync(
         //    @"create function [dbo].[ConcatStrings] (@prm1 nvarchar(max), @prm2 nvarchar(max))
         //        returns nvarchar(max)
         //        as
@@ -20,12 +22,12 @@ internal class Program
         //        end");
         //#endregion
 
-        //BasicExamples();
-        Functions();
-        //ManualOptimization();
+        //await BasicExamples();
+        await Functions();
+        //await ManualOptimization();
     }
 
-    private static void BasicExamples()
+    private static async Task BasicExamples()
     {
         using var context = new NullSemanticsContext();
         #region BasicExamples
@@ -36,14 +38,14 @@ internal class Program
         var query5 = context.Entities.Where(e => e.String1 != e.String2);
         #endregion
 
-        var result1 = query1.ToList();
-        var result2 = query2.ToList();
-        var result3 = query3.ToList();
-        var result4 = query4.ToList();
-        var result5 = query5.ToList();
+        var result1 = await query1.ToListAsync();
+        var result2 = await query2.ToListAsync();
+        var result3 = await query3.ToListAsync();
+        var result4 = await query4.ToListAsync();
+        var result5 = await query5.ToListAsync();
     }
 
-    private static void Functions()
+    private static async Task Functions()
     {
         using var context = new NullSemanticsContext();
 
@@ -51,10 +53,10 @@ internal class Program
         var query = context.Entities.Where(e => e.String1.Substring(0, e.String2.Length) == null);
         #endregion
 
-        var result = query.ToList();
+        var result = await query.ToListAsync();
     }
 
-    private static void ManualOptimization()
+    private static async Task ManualOptimization()
     {
         using var context = new NullSemanticsContext();
 
@@ -64,7 +66,7 @@ internal class Program
             e => e.String1 != null && e.String2 != null && (e.String1 != e.String2 || e.String1.Length == e.String2.Length));
         #endregion
 
-        var result1 = query1.ToList();
-        var result2 = query2.ToList();
+        var result1 = await query1.ToListAsync();
+        var result2 = await query2.ToListAsync();
     }
 }

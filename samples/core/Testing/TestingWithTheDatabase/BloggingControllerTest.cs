@@ -1,5 +1,7 @@
 using System.Linq;
+using System.Threading.Tasks;
 using EF.Testing.BloggingWebApi.Controllers;
+using Microsoft.EntityFrameworkCore;
 using Xunit;
 
 namespace EF.Testing.IntegrationTests;
@@ -15,12 +17,12 @@ public class BloggingControllerTest : IClassFixture<TestDatabaseFixture>
 
     #region GetBlog
     [Fact]
-    public void GetBlog()
+    public async Task GetBlog()
     {
         using var context = Fixture.CreateContext();
         var controller = new BloggingController(context);
 
-        var blog = controller.GetBlog("Blog2").Value;
+        var blog = (await controller.GetBlog("Blog2")).Value;
 
         Assert.Equal("http://blog2.com", blog.Url);
     }
@@ -28,12 +30,12 @@ public class BloggingControllerTest : IClassFixture<TestDatabaseFixture>
 
     #region GetAllBlogs
     [Fact]
-    public void GetAllBlogs()
+    public async Task GetAllBlogs()
     {
         using var context = Fixture.CreateContext();
         var controller = new BloggingController(context);
 
-        var blogs = controller.GetAllBlogs().Value;
+        var blogs = await controller.GetAllBlogs().ToListAsync();
 
         Assert.Collection(
             blogs,
@@ -44,17 +46,17 @@ public class BloggingControllerTest : IClassFixture<TestDatabaseFixture>
 
     #region AddBlog
     [Fact]
-    public void AddBlog()
+    public async Task AddBlog()
     {
         using var context = Fixture.CreateContext();
         context.Database.BeginTransaction();
 
         var controller = new BloggingController(context);
-        controller.AddBlog("Blog3", "http://blog3.com");
+        await controller.AddBlog("Blog3", "http://blog3.com");
 
         context.ChangeTracker.Clear();
 
-        var blog = context.Blogs.Single(b => b.Name == "Blog3");
+        var blog = await context.Blogs.SingleAsync(b => b.Name == "Blog3");
         Assert.Equal("http://blog3.com", blog.Url);
 
     }

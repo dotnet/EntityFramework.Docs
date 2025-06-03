@@ -1,7 +1,7 @@
 ---
 title: Handling Concurrency Conflicts - EF Core
 description: Managing conflicts when the same data is updated concurrently with Entity Framework Core
-author: ajcvickers
+author: SamMonoRT
 ms.date: 10/19/2022
 uid: core/saving/concurrency
 ---
@@ -35,9 +35,9 @@ public class Person
 In SQL Server, this configures a concurrency token that automatically changes in the database every time the row is changed (more details are available below). With this configuration in place, let's examine what happens with a simple update operation:
 
 ```csharp
-var person = context.People.Single(b => b.FirstName == "John");
+var person = await context.People.SingleAsync(b => b.FirstName == "John");
 person.FirstName = "Paul";
-context.SaveChanges();
+await context.SaveChangesAsync();
 ```
 
 1. In the first step, a Person is loaded from the database; this includes the concurrency token, which is now tracked as usual by EF along with the rest of the properties.
@@ -53,7 +53,7 @@ Note that in addition to the `PersonId` in the WHERE clause, EF Core has added a
 
 In the normal ("optimistic") case, no concurrent update occurs and the UPDATE completes successfully, modifying the row; the database reports to EF Core that one row was affected by the UPDATE, as expected. However, if a concurrent update occurred, the UPDATE fails to find any matching rows and reports that zero were affected. As a result, EF Core's <xref:Microsoft.EntityFrameworkCore.DbContext.SaveChanges> throws a <xref:Microsoft.EntityFrameworkCore.DbUpdateConcurrencyException>, which the application must catch and handle appropriately. Techniques for doing this are detailed below, under [Resolving concurrency conflicts](#resolving-concurrency-conflicts).
 
-While the above examples discussed *updates* to existing entities. EF also throws <xref:Microsoft.EntityFrameworkCore.DbUpdateConcurrencyException> when attempting to *delete* a row that has been concurrently modified. However, this exception is never thrown when adding entities; while the database may indeed raise a unique constraint violation if rows with the same key are being inserted, this results in a provider-specific exception being thrown, and not <xref:Microsoft.EntityFrameworkCore.DbUpdateConcurrencyException>.
+While the above examples discussed *updates* to existing entities. EF also throws <xref:Microsoft.EntityFrameworkCore.DbUpdateConcurrencyException> when attempting to *delete* a row that has been concurrently modified. However, this exception is generally never thrown when adding entities; while the database may indeed raise a unique constraint violation if rows with the same key are being inserted, this results in a provider-specific exception being thrown, and not <xref:Microsoft.EntityFrameworkCore.DbUpdateConcurrencyException>.
 
 ## Native database-generated concurrency tokens
 
@@ -123,10 +123,10 @@ protected override void OnModelCreating(ModelBuilder modelBuilder)
 Since this property isn't database-generated, you must assign it in application whenever persisting changes:
 
 ```c#
-var person = context.People.Single(b => b.FirstName == "John");
+var person = await context.People.SingleAsync(b => b.FirstName == "John");
 person.FirstName = "Paul";
 person.Version = Guid.NewGuid();
-context.SaveChanges();
+await context.SaveChangesAsync();
 ```
 
 If you want a new GUID value to always be assigned, you can do this via a [`SaveChanges` interceptor](xref:core/logging-events-diagnostics/interceptors#savechanges-interception). However, one advantage of manually managing the concurrency token is that you can control precisely when it gets regenerated, to avoid needless concurrency conflicts.

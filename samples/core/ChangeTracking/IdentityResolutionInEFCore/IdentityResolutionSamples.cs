@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 
@@ -9,18 +10,18 @@ namespace Updates;
 
 public static class IdentityResolutionSamples
 {
-    public static void Identity_Resolution_in_EF_Core_1()
+    public static async Task Identity_Resolution_in_EF_Core_1()
     {
         Console.WriteLine($">>>> Sample: {nameof(Identity_Resolution_in_EF_Core_1)}");
         Console.WriteLine();
 
-        Helpers.RecreateCleanDatabase();
-        Helpers.PopulateDatabase();
+        await Helpers.RecreateCleanDatabase();
+        await Helpers.PopulateDatabase();
 
         #region Identity_Resolution_in_EF_Core_1
         using var context = new BlogsContext();
 
-        var blogA = context.Blogs.Single(e => e.Id == 1);
+        var blogA = await context.Blogs.SingleAsync(e => e.Id == 1);
         var blogB = new Blog { Id = 1, Name = ".NET Blog (All new!)" };
 
         try
@@ -36,149 +37,149 @@ public static class IdentityResolutionSamples
         Console.WriteLine();
     }
 
-    public static void Updating_an_entity_1()
+    public static async Task Updating_an_entity_1()
     {
         Console.WriteLine($">>>> Sample: {nameof(Updating_an_entity_1)}");
         Console.WriteLine();
 
-        Helpers.RecreateCleanDatabase();
-        Helpers.PopulateDatabase();
+        await Helpers.RecreateCleanDatabase();
+        await Helpers.PopulateDatabase();
 
-        UpdateFromHttpPost1(
+        await UpdateFromHttpPost1(
             new Blog { Id = 1, Name = ".NET Blog (All new!)", Summary = "Posts about .NET" });
 
         Console.WriteLine();
     }
 
     #region Updating_an_entity_1
-    public static void UpdateFromHttpPost1(Blog blog)
+    public static async Task UpdateFromHttpPost1(Blog blog)
     {
         using var context = new BlogsContext();
 
         context.Update(blog);
 
-        context.SaveChanges();
+        await context.SaveChangesAsync();
     }
     #endregion
 
-    public static void Updating_an_entity_2()
+    public static async Task Updating_an_entity_2()
     {
         Console.WriteLine($">>>> Sample: {nameof(Updating_an_entity_2)}");
         Console.WriteLine();
 
-        Helpers.RecreateCleanDatabase();
-        Helpers.PopulateDatabase();
+        await Helpers.RecreateCleanDatabase();
+        await Helpers.PopulateDatabase();
 
-        UpdateFromHttpPost2(
+        await UpdateFromHttpPost2(
             new Blog { Id = 1, Name = ".NET Blog (All new!)", Summary = "Posts about .NET" });
 
         Console.WriteLine();
     }
 
     #region Updating_an_entity_2
-    public static void UpdateFromHttpPost2(Blog blog)
+    public static async Task UpdateFromHttpPost2(Blog blog)
     {
         using var context = new BlogsContext();
 
-        var trackedBlog = context.Blogs.Find(blog.Id);
+        var trackedBlog = await context.Blogs.FindAsync(blog.Id);
 
         trackedBlog.Name = blog.Name;
         trackedBlog.Summary = blog.Summary;
 
-        context.SaveChanges();
+        await context.SaveChangesAsync();
     }
     #endregion
 
-    public static void Updating_an_entity_3()
+    public static async Task Updating_an_entity_3()
     {
         Console.WriteLine($">>>> Sample: {nameof(Updating_an_entity_3)}");
         Console.WriteLine();
 
-        Helpers.RecreateCleanDatabase();
-        Helpers.PopulateDatabase();
+        await Helpers.RecreateCleanDatabase();
+        await Helpers.PopulateDatabase();
 
-        UpdateFromHttpPost3(
+        await UpdateFromHttpPost3(
             new Blog { Id = 1, Name = ".NET Blog (All new!)", Summary = "Posts about .NET" });
 
         Console.WriteLine();
     }
 
     #region Updating_an_entity_3
-    public static void UpdateFromHttpPost3(Blog blog)
+    public static async Task UpdateFromHttpPost3(Blog blog)
     {
         using var context = new BlogsContext();
 
-        var trackedBlog = context.Blogs.Find(blog.Id);
+        var trackedBlog = await context.Blogs.FindAsync(blog.Id);
 
         context.Entry(trackedBlog).CurrentValues.SetValues(blog);
 
-        context.SaveChanges();
+        await context.SaveChangesAsync();
     }
     #endregion
 
-    public static void Updating_an_entity_4()
+    public static async Task Updating_an_entity_4()
     {
         Console.WriteLine($">>>> Sample: {nameof(Updating_an_entity_4)}");
         Console.WriteLine();
 
-        Helpers.RecreateCleanDatabase();
-        Helpers.PopulateDatabase();
+        await Helpers.RecreateCleanDatabase();
+        await Helpers.PopulateDatabase();
 
-        UpdateFromHttpPost4(
+        await UpdateFromHttpPost4(
             new BlogDto { Id = 1, Name = ".NET Blog (All new!)", Summary = "Posts about .NET" });
 
         Console.WriteLine();
     }
 
     #region Updating_an_entity_4
-    public static void UpdateFromHttpPost4(BlogDto dto)
+    public static async Task UpdateFromHttpPost4(BlogDto dto)
     {
         using var context = new BlogsContext();
 
-        var trackedBlog = context.Blogs.Find(dto.Id);
+        var trackedBlog = await context.Blogs.FindAsync(dto.Id);
 
         context.Entry(trackedBlog).CurrentValues.SetValues(dto);
 
-        context.SaveChanges();
+        await context.SaveChangesAsync();
     }
     #endregion
 
-    public static void Updating_an_entity_5()
+    public static async Task Updating_an_entity_5()
     {
         Console.WriteLine($">>>> Sample: {nameof(Updating_an_entity_5)}");
         Console.WriteLine();
 
-        Helpers.RecreateCleanDatabase();
-        Helpers.PopulateDatabase();
+        await Helpers.RecreateCleanDatabase();
+        await Helpers.PopulateDatabase();
 
-        UpdateFromHttpPost5(
+        await UpdateFromHttpPost5(
             new Dictionary<string, object> { ["Id"] = 1, ["Name"] = ".NET Blog (All new!)", ["Summary"] = "Posts about .NET" });
 
         Console.WriteLine();
     }
 
     #region Updating_an_entity_5
-    public static void UpdateFromHttpPost5(Dictionary<string, object> propertyValues)
+    public static async Task UpdateFromHttpPost5(Dictionary<string, object> propertyValues)
     {
         using var context = new BlogsContext();
 
-        var trackedBlog = context.Blogs.Find(propertyValues["Id"]);
+        var trackedBlog = await context.Blogs.FindAsync(propertyValues["Id"]);
 
         context.Entry(trackedBlog).CurrentValues.SetValues(propertyValues);
 
-        context.SaveChanges();
+        await context.SaveChangesAsync();
     }
     #endregion
 
-    public static void Updating_an_entity_6()
+    public static async Task Updating_an_entity_6()
     {
         Console.WriteLine($">>>> Sample: {nameof(Updating_an_entity_6)}");
         Console.WriteLine();
 
-        Helpers.RecreateCleanDatabase();
-        Helpers.PopulateDatabase();
+        await Helpers.RecreateCleanDatabase();
+        await Helpers.PopulateDatabase();
 
-        UpdateFromHttpPost6(
+        await UpdateFromHttpPost6(
             new Blog { Id = 1, Name = ".NET Blog (All new!)", Summary = "Posts about .NET" },
             new Dictionary<string, object> { ["Id"] = 1, ["Name"] = ".NET Blog", ["Summary"] = "Posts about .NET" });
 
@@ -186,14 +187,14 @@ public static class IdentityResolutionSamples
     }
 
     #region Updating_an_entity_6
-    public static void UpdateFromHttpPost6(Blog blog, Dictionary<string, object> originalValues)
+    public static async Task UpdateFromHttpPost6(Blog blog, Dictionary<string, object> originalValues)
     {
         using var context = new BlogsContext();
 
         context.Attach(blog);
         context.Entry(blog).OriginalValues.SetValues(originalValues);
 
-        context.SaveChanges();
+        await context.SaveChangesAsync();
     }
     #endregion
 
@@ -221,15 +222,15 @@ public static class IdentityResolutionSamples
 
 public static class Helpers
 {
-    public static void RecreateCleanDatabase()
+    public static async Task RecreateCleanDatabase()
     {
         using var context = new BlogsContext(quiet: true);
 
-        context.Database.EnsureDeleted();
-        context.Database.EnsureCreated();
+        await context.Database.EnsureDeletedAsync();
+        await context.Database.EnsureCreatedAsync();
     }
 
-    public static void PopulateDatabase()
+    public static async Task PopulateDatabase()
     {
         using var context = new BlogsContext(quiet: true);
 
@@ -252,7 +253,7 @@ public static class Helpers
                 }
             });
 
-        context.SaveChanges();
+        await context.SaveChangesAsync();
     }
 }
 

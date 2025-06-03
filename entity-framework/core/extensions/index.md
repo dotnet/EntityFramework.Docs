@@ -357,6 +357,12 @@ Persisted computed properties in EF Core that update automatically on save chang
 
 [GitHub repository](https://github.com/lucaslorentz/auto-compute) | [NuGet](https://www.nuget.org/packages/LLL.AutoCompute.EFCore)
 
+### EntityFrameworkCore.AuditInterceptor
+
+A library that provides seamless auditing capabilities for Entity Framework Core. It automatically tracks entity changes including who made the changes and when they were made. The library integrates with .NET Dependency Injection and supports various auditing scenarios through a simple configuration process. For EF Core: 6-8.
+
+[GitHub repository](https://github.com/ShadyNagy/EntityFrameworkCore.AuditInterceptor) | [NuGet](https://www.nuget.org/packages/EntityFrameworkCore.AuditInterceptor)
+
 ## API Integrations
 
 These packages are designed to integrate directly with EF Core to expose various APIs.
@@ -390,6 +396,12 @@ GraphQL server with tight EntityFramework integration. For EF Core: 5-8.
 A standard for implementing REST APIs with specifications for discovery, filtering, sorting, projections, navigations, bulk operations, and more.
 
 [GitHub repository](https://github.com/OData) | [NuGet](https://www.nuget.org/packages/Microsoft.OData.Core/)
+
+### SanderTenBrinke.EntityFrameworkCore.Extensions.SqlServer.DataMasking
+
+This package focuses on adding data masking support for SQL Server to EF Core. For EF Core: 8-9.
+
+[GitHub repository](https://github.com/sander1095/EntityFrameworkCore.Extensions.SqlServer.DataMasking) | [NuGet](https://www.nuget.org/packages/SanderTenBrinke.EntityFrameworkCore.Extensions.SqlServer.DataMasking)
 
 ## Extensions for unsupported EF Core versions
 
@@ -449,3 +461,11 @@ NCache Entity Framework Core Provider is a distributed second level cache provid
 Life cycle hooks (for SaveChanges). For EF Core: 2-3.
 
 [GitHub repository](https://github.com/JValck/Ramses) | [NuGet](https://www.nuget.org/packages/Ramses)
+
+### EntityFrameworkCore.Extensions
+
+An extension library for Dynamic Data Masking (SQL Server) and MigrationBuilder and ModelBuilder extensions. For EF Core: 5.
+
+An updated fork for the data masking feature can be found at [EntityFrameworkCore.Extensions.SqlServer.DataMasking](https://github.com/sander1095/EntityFrameworkCore.Extensions.SqlServer.DataMasking)
+
+[GitHub repository](https://github.com/nikitasavinov/EntityFrameworkCore.Extensions) | [NuGet](https://www.nuget.org/packages/EntityFrameworkCore.Extensions)

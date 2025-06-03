@@ -1,7 +1,7 @@
 ---
 title: Entity Framework Support Policies
 description: Support policies for every evolution of Entity Framework
-author: ajcvickers
+author: SamMonoRT
 ms.date: 05/22/2024
 uid: efcore-and-ef6/support
 ---

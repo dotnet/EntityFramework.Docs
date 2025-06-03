@@ -1,5 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace EF.Testing.BusinessLogic;
 
@@ -11,16 +13,16 @@ public class BloggingRepository : IBloggingRepository
     public BloggingRepository(BloggingContext context)
         => _context = context;
 
-    public Blog GetBlogByName(string name)
-        => _context.Blogs.FirstOrDefault(b => b.Name == name);
+    public async Task<Blog> GetBlogByNameAsync(string name)
+        => await _context.Blogs.FirstOrDefaultAsync(b => b.Name == name);
     #endregion
 
-    public IEnumerable<Blog> GetAllBlogs()
-        => _context.Blogs;
+    public IAsyncEnumerable<Blog> GetAllBlogsAsync()
+        => _context.Blogs.AsAsyncEnumerable();
 
     public void AddBlog(Blog blog)
         => _context.Add(blog);
 
-    public void SaveChanges()
-        => _context.SaveChanges();
+    public async Task SaveChangesAsync()
+        => await _context.SaveChangesAsync();
 }

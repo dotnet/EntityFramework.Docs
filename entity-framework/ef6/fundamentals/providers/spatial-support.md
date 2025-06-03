@@ -1,7 +1,7 @@
 ---
 title: Provider Support for Spatial Types - EF6
 description: Provider support for spatial types in Entity Framework 6
-author: ajcvickers
+author: SamMonoRT
 ms.date: 10/23/2016
 uid: ef6/fundamentals/providers/spatial-support
 ---
@@ -51,4 +51,4 @@ SQL Server spatial support depends on the low-level, SQL Server-specific types S
 
 When Visual Studio is installed it will often also install a version of SQL Server, and this will include installation of the Microsoft.SqlServer.Types.dll.  
 
-If SQL Server is not installed on the machine where you want to use spatial types, or if spatial types were excluded from the SQL Server installation, then you will need to install them manually. The types can be installed using `SQLSysClrTypes.msi`, which is part of Microsoft SQL Server Feature Pack. Spatial types are SQL Server version-specific, so we recommend [search for "SQL Server Feature Pack"](https://www.microsoft.com/search/result.aspx?q=sql+server+feature+pack) in the Microsoft Download Center, then select and download the option that corresponds to the version of SQL Server you will use.
+If SQL Server is not installed on the machine where you want to use spatial types, or if spatial types were excluded from the SQL Server installation, then you will need to install them manually. The types can be installed using `SQLSysClrTypes.msi`, which is part of Microsoft SQL Server Feature Pack. Spatial types are SQL Server version-specific, so we recommend [search for "SQL Server Feature Pack"](https://www.microsoft.com/search/explore?q=SQL+Server+Feature+Pack) in the Microsoft Download Center, then select and download the option that corresponds to the version of SQL Server you will use.

@@ -1,17 +1,18 @@
 ﻿using System;
 using System.Linq;
 using System.Threading;
+using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 
 public static class TemporalTablesSample
 {
-    public static void Use_SQL_Server_temporal_tables()
+    public static async Task Use_SQL_Server_temporal_tables()
     {
         Console.WriteLine($">>>> Sample: {nameof(Use_SQL_Server_temporal_tables)}");
         Console.WriteLine();
 
-        Helpers.RecreateCleanDatabase();
+        await Helpers.RecreateCleanDatabase();
 
         DateTime timeStamp1;
         DateTime timeStamp2;
@@ -47,7 +48,7 @@ public static class TemporalTablesSample
                     AnnualSalary = 30.0m
                 });
 
-            context.SaveChanges();
+            await context.SaveChangesAsync();
             #endregion
         }
 
@@ -56,7 +57,7 @@ public static class TemporalTablesSample
             Console.WriteLine();
             Console.WriteLine("Starting data:");
 
-            var employees = context.Employees.ToList();
+            var employees = await context.Employees.ToListAsync();
             foreach (var employee in employees)
             {
                 var employeeEntry = context.Entry(employee);
@@ -76,23 +77,23 @@ public static class TemporalTablesSample
             timeStamp1 = DateTime.UtcNow;
             Thread.Sleep(millisecondsDelay);
 
-            var employee = context.Employees.Single(e => e.Name == "Rainbow Dash");
+            var employee = await context.Employees.SingleAsync(e => e.Name == "Rainbow Dash");
             employee.Position = "Wonderbolt Trainee";
-            context.SaveChanges();
+            await context.SaveChangesAsync();
 
             Thread.Sleep(millisecondsDelay);
             timeStamp2 = DateTime.UtcNow;
             Thread.Sleep(millisecondsDelay);
 
             employee.Position = "Wonderbolt Reservist";
-            context.SaveChanges();
+            await context.SaveChangesAsync();
 
             Thread.Sleep(millisecondsDelay);
             timeStamp3 = DateTime.UtcNow;
             Thread.Sleep(millisecondsDelay);
 
             employee.Position = "Wonderbolt";
-            context.SaveChanges();
+            await context.SaveChangesAsync();
 
             Thread.Sleep(millisecondsDelay);
             timeStamp4 = DateTime.UtcNow;
@@ -102,9 +103,9 @@ public static class TemporalTablesSample
         using (var context = new EmployeeContext(quiet: true))
         {
             #region NormalQuery
-            var employee = context.Employees.Single(e => e.Name == "Rainbow Dash");
+            var employee = await context.Employees.SingleAsync(e => e.Name == "Rainbow Dash");
             context.Remove(employee);
-            context.SaveChanges();
+            await context.SaveChangesAsync();
             #endregion
         }
 
@@ -114,7 +115,7 @@ public static class TemporalTablesSample
             Console.WriteLine("After updates and delete:");
 
             #region TrackingQuery
-            var employees = context.Employees.ToList();
+            var employees = await context.Employees.ToListAsync();
             foreach (var employee in employees)
             {
                 var employeeEntry = context.Entry(employee);
@@ -129,7 +130,7 @@ public static class TemporalTablesSample
             Console.WriteLine("Historical data for Rainbow Dash:");
 
             #region TemporalAll
-            var history = context
+            var history = await context
                 .Employees
                 .TemporalAll()
                 .Where(e => e.Name == "Rainbow Dash")
@@ -141,7 +142,7 @@ public static class TemporalTablesSample
                         ValidFrom = EF.Property<DateTime>(e, "ValidFrom"),
                         ValidTo = EF.Property<DateTime>(e, "ValidTo")
                     })
-                .ToList();
+                .ToListAsync();
 
             foreach (var pointInTime in history)
             {
@@ -157,7 +158,7 @@ public static class TemporalTablesSample
             Console.WriteLine($"Historical data for Rainbow Dash between {timeStamp2} and {timeStamp3}:");
 
             #region TemporalBetween
-            var history = context
+            var history = await context
                 .Employees
                 .TemporalBetween(timeStamp2, timeStamp3)
                 .Where(e => e.Name == "Rainbow Dash")
@@ -169,7 +170,7 @@ public static class TemporalTablesSample
                         ValidFrom = EF.Property<DateTime>(e, "ValidFrom"),
                         ValidTo = EF.Property<DateTime>(e, "ValidTo")
                     })
-                .ToList();
+                .ToListAsync();
             #endregion
 
             foreach (var pointInTime in history)
@@ -184,7 +185,7 @@ public static class TemporalTablesSample
             Console.WriteLine();
             Console.WriteLine($"Historical data for Rainbow Dash as of {timeStamp2}:");
 
-            var history = context
+            var history = await context
                 .Employees
                 .TemporalAsOf(timeStamp2)
                 .Where(e => e.Name == "Rainbow Dash")
@@ -196,7 +197,7 @@ public static class TemporalTablesSample
                         ValidFrom = EF.Property<DateTime>(e, "ValidFrom"),
                         ValidTo = EF.Property<DateTime>(e, "ValidTo")
                     })
-                .ToList();
+                .ToListAsync();
 
             foreach (var pointInTime in history)
             {
@@ -211,19 +212,19 @@ public static class TemporalTablesSample
             Console.WriteLine($"Restoring Rainbow Dash from {timeStamp2}...");
 
             #region RestoreData
-            var employee = context
+            var employee = await context
                 .Employees
                 .TemporalAsOf(timeStamp2)
-                .Single(e => e.Name == "Rainbow Dash");
+                .SingleAsync(e => e.Name == "Rainbow Dash");
 
             context.Add(employee);
-            context.SaveChanges();
+            await context.SaveChangesAsync();
             #endregion
 
             Console.WriteLine();
             Console.WriteLine($"Historical data for Rainbow Dash between:");
 
-            var history = context
+            var history = await context
                 .Employees
                 .TemporalAll()
                 .Where(e => e.Name == "Rainbow Dash")
@@ -235,7 +236,7 @@ public static class TemporalTablesSample
                         ValidFrom = EF.Property<DateTime>(e, "ValidFrom"),
                         ValidTo = EF.Property<DateTime>(e, "ValidTo")
                     })
-                .ToList();
+                .ToListAsync();
 
             foreach (var pointInTime in history)
             {
@@ -249,16 +250,16 @@ public static class TemporalTablesSample
 
     public static class Helpers
     {
-        public static void RecreateCleanDatabase()
+        public static async Task RecreateCleanDatabase()
         {
             using (var context = new EmployeeContext(quiet: true))
             {
-                context.Database.EnsureDeleted();
+                await context.Database.EnsureDeletedAsync();
             }
 
             using (var context = new EmployeeContext())
             {
-                context.Database.EnsureCreated();
+                await context.Database.EnsureCreatedAsync();
             }
         }
     }

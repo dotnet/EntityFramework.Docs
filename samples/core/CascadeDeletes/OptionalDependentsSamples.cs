@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 
@@ -8,13 +9,13 @@ namespace Optional;
 
 public static class OptionalDependentsSamples
 {
-    public static void Optional_relationship_with_dependents_children_loaded()
+    public static async Task Optional_relationship_with_dependents_children_loaded()
     {
         Console.WriteLine("#### Optional relationship with dependents/children loaded");
         Console.WriteLine();
 
-        var deleteResults = Helpers.GatherData(c => c.Remove(c.Blogs.Include(e => e.Posts).Single()));
-        var severResults = Helpers.GatherData(c => c.Blogs.Include(e => e.Posts).Single().Posts.Clear());
+        var deleteResults = await Helpers.GatherData(async c => c.Remove(await c.Blogs.Include(e => e.Posts).SingleAsync()));
+        var severResults = await Helpers.GatherData(async c => (await c.Blogs.Include(e => e.Posts).SingleAsync()).Posts.Clear());
 
         Console.WriteLine(
             $"| `{"DeleteBehavior".PadRight(16)} | {"On deleting principal/parent".PadRight(40)} | On severing from principal/parent");
@@ -28,12 +29,12 @@ public static class OptionalDependentsSamples
         Console.WriteLine();
     }
 
-    public static void Optional_relationship_with_dependents_children_not_loaded()
+    public static async Task Optional_relationship_with_dependents_children_not_loaded()
     {
         Console.WriteLine("#### Optional relationship with dependents/children not loaded");
         Console.WriteLine();
 
-        var deleteResults = Helpers.GatherData(c => c.Remove(c.Blogs.Single()));
+        var deleteResults = await Helpers.GatherData(async c => c.Remove(await c.Blogs.SingleAsync()));
 
         Console.WriteLine(
             $"| `{"DeleteBehavior".PadRight(16)} | {"On deleting principal/parent".PadRight(40)} | On severing from principal/parent");
@@ -80,16 +81,16 @@ public static class OptionalDependentsSamples
 
     public static class Helpers
     {
-        public static void RecreateCleanDatabase(OptionalBlogsContext context)
+        public static async Task RecreateCleanDatabase(OptionalBlogsContext context)
         {
             using (context)
             {
-                context.Database.EnsureDeleted();
-                context.Database.EnsureCreated();
+                await context.Database.EnsureDeletedAsync();
+                await context.Database.EnsureCreatedAsync();
             }
         }
 
-        public static void PopulateDatabase(OptionalBlogsContext context)
+        public static async Task PopulateDatabase(OptionalBlogsContext context)
         {
             using (context)
             {
@@ -112,33 +113,33 @@ public static class OptionalDependentsSamples
                         }
                     });
 
-                context.SaveChanges();
+                await context.SaveChangesAsync();
             }
         }
 
-        public static Dictionary<DeleteBehavior, string> GatherData(Action<OptionalBlogsContext> action)
+        public static async Task<Dictionary<DeleteBehavior, string>> GatherData(Func<OptionalBlogsContext, Task> action)
         {
             var results = new Dictionary<DeleteBehavior, string>();
 
             foreach (var deleteBehavior in DeleteBehaviors)
             {
-                RecreateCleanDatabase(new OptionalBlogsContext(deleteBehavior));
-                PopulateDatabase(new OptionalBlogsContext(deleteBehavior));
+                await RecreateCleanDatabase(new OptionalBlogsContext(deleteBehavior));
+                await PopulateDatabase(new OptionalBlogsContext(deleteBehavior));
 
                 try
                 {
                     using var context = new OptionalBlogsContext(deleteBehavior);
 
-                    action(context);
+                    await action(context);
 
                     context.ChangeTracker.DetectChanges();
 
                     var deletingPosts = context.ChangeTracker.Entries<Post>().Any(e => e.State == EntityState.Deleted);
                     var settingFksToNull = context.ChangeTracker.Entries<Post>().Any(e => e.State == EntityState.Modified);
 
-                    context.SaveChanges();
+                    await context.SaveChangesAsync();
 
-                    var deletedPosts = !context.Posts.AsNoTracking().Any();
+                    var deletedPosts = !(await context.Posts.AsNoTracking().AnyAsync());
 
                     results[deleteBehavior] =
                         deletingPosts

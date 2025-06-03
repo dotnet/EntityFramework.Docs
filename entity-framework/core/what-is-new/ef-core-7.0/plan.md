@@ -1,7 +1,7 @@
 ---
 title: Plan for Entity Framework Core 7.0
 description: The themes and features planned for EF Core 7.0
-author: ajcvickers
+author: SamMonoRT
 ms.date: 12/15/2021
 uid: core/what-is-new/ef-core-7.0/plan
 ---
@@ -219,7 +219,7 @@ Tracked by [Issue #21894: Improve trimming support for EF Core apps to reduce ap
 
 Value proposition: Smaller applications that can be efficiently AOT compiled.
 
-EF Core performs large amounts of runtime code generation. This is challenging for app models that depend on linker tree shaking, such as Xamarin and Blazor, and platforms that don't allow dynamic compilation, such as iOS. We plan to greatly improve trimming of unused code in EF7. This will facilitate smaller assembly sizes when using EF Core, thus helping deployment and making ahead-of-time (AOT) compilation more efficient.
+EF Core performs large amounts of runtime code generation. This is challenging for app models that depend on linker tree shaking, such as .NET MAUI and Blazor, and platforms that don't allow dynamic compilation, such as iOS. We plan to greatly improve trimming of unused code in EF7. This will facilitate smaller assembly sizes when using EF Core, thus helping deployment and making ahead-of-time (AOT) compilation more efficient.
 
 #### Evolve System.Linq.Expression
 

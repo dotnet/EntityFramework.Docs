@@ -1,7 +1,7 @@
 ---
 title: Entity Framework 5 License (FRA) - EF6
 description: Entity Framework 5 License (FRA)
-author: ajcvickers
+author: SamMonoRT
 ms.date: 10/23/2016
 ---
 # Entity Framework 5 License (FRA)
@@ -43,4 +43,4 @@ Les conditions de licence suivantes décrivent les conditions d'utilisation supp
     -   le code soit dévoilé ou distribué dans sa forme de code source, ou
     -   d'autres aient le droit de le modifier.
 
-**2. SERVICES D'ASSISTANCE TECHNIQUE POUR LE SUPPLÉMENT.** Microsoft fournit des services d'assistance technique pour ce logiciel disponibles sur le site https://www.support.microsoft.com/common/international.aspx.
+**2. SERVICES D'ASSISTANCE TECHNIQUE POUR LE SUPPLÉMENT.** Microsoft fournit des services d'assistance technique pour ce logiciel disponibles sur le site https://support.microsoft.com/.

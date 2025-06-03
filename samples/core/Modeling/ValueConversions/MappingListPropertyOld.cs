@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Text.Json;
+using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.Extensions.Logging;
@@ -11,33 +12,33 @@ namespace EFModeling.ValueConversions;
 
 public class MappingListPropertyOld : Program
 {
-    public void Run()
+    public async Task Run()
     {
         ConsoleWriteLines("Sample showing value conversions for a List<int>...");
 
         using (var context = new SampleDbContext())
         {
-            CleanDatabase(context);
+            await CleanDatabase(context);
 
             ConsoleWriteLines("Save a new entity...");
 
             var entity = new EntityType { MyListProperty = new List<int> { 1, 2, 3 } };
             context.Add(entity);
-            context.SaveChanges();
+            await context.SaveChangesAsync();
 
             ConsoleWriteLines("Mutate the property value and save again...");
 
             // This will be detected and EF will update the database on SaveChanges
             entity.MyListProperty.Add(4);
 
-            context.SaveChanges();
+            await context.SaveChangesAsync();
         }
 
         using (var context = new SampleDbContext())
         {
             ConsoleWriteLines("Read the entity back...");
 
-            var entity = context.Set<EntityType>().Single();
+            var entity = await context.Set<EntityType>().SingleAsync();
 
             Debug.Assert(entity.MyListProperty.SequenceEqual(new List<int> { 1, 2, 3, 4 }));
         }

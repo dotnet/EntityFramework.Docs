@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.EntityFrameworkCore.Diagnostics;
@@ -9,17 +10,17 @@ namespace Required;
 
 public class RequiredRelationshipsSamples
 {
-    public static void Fixup_for_added_or_deleted_entities_4()
+    public static async Task Fixup_for_added_or_deleted_entities_4()
     {
         Console.WriteLine($">>>> Sample: {nameof(Fixup_for_added_or_deleted_entities_4)}");
         Console.WriteLine();
 
-        Helpers.RecreateCleanDatabase();
-        Helpers.PopulateDatabase();
+        await Helpers.RecreateCleanDatabase();
+        await Helpers.PopulateDatabase();
 
         using var context = new BlogsContext();
 
-        var dotNetBlog = context.Blogs.Include(e => e.Posts).Single(e => e.Name == ".NET Blog");
+        var dotNetBlog = await context.Blogs.Include(e => e.Posts).SingleAsync(e => e.Name == ".NET Blog");
 
         Console.WriteLine(context.ChangeTracker.DebugView.LongView);
 
@@ -31,23 +32,23 @@ public class RequiredRelationshipsSamples
         context.ChangeTracker.DetectChanges();
         Console.WriteLine(context.ChangeTracker.DebugView.LongView);
 
-        context.SaveChanges();
+        await context.SaveChangesAsync();
 
         Console.WriteLine();
     }
 
-    public static void Fixup_for_added_or_deleted_entities_5()
+    public static async Task Fixup_for_added_or_deleted_entities_5()
     {
         Console.WriteLine($">>>> Sample: {nameof(Fixup_for_added_or_deleted_entities_5)}");
         Console.WriteLine();
 
-        Helpers.RecreateCleanDatabase();
-        Helpers.PopulateDatabase();
+        await Helpers.RecreateCleanDatabase();
+        await Helpers.PopulateDatabase();
 
         using var context = new BlogsContext();
 
-        var dotNetBlog = context.Blogs.Include(e => e.Posts).Single(e => e.Name == ".NET Blog");
-        var vsBlog = context.Blogs.Include(e => e.Posts).Single(e => e.Name == "Visual Studio Blog");
+        var dotNetBlog = await context.Blogs.Include(e => e.Posts).SingleAsync(e => e.Name == ".NET Blog");
+        var vsBlog = await context.Blogs.Include(e => e.Posts).SingleAsync(e => e.Name == "Visual Studio Blog");
 
         #region Fixup_for_added_or_deleted_entities_5
         context.ChangeTracker.DeleteOrphansTiming = CascadeTiming.OnSaveChanges;
@@ -63,33 +64,33 @@ public class RequiredRelationshipsSamples
         context.ChangeTracker.DetectChanges();
         Console.WriteLine(context.ChangeTracker.DebugView.LongView);
 
-        context.SaveChanges();
+        await context.SaveChangesAsync();
         #endregion
 
         Console.WriteLine();
     }
 
-    public static void Fixup_for_added_or_deleted_entities_6()
+    public static async Task Fixup_for_added_or_deleted_entities_6()
     {
         Console.WriteLine($">>>> Sample: {nameof(Fixup_for_added_or_deleted_entities_6)}");
         Console.WriteLine();
 
-        Helpers.RecreateCleanDatabase();
-        Helpers.PopulateDatabase();
+        await Helpers.RecreateCleanDatabase();
+        await Helpers.PopulateDatabase();
 
         using var context = new BlogsContext();
 
         try
         {
             #region Fixup_for_added_or_deleted_entities_6
-            var dotNetBlog = context.Blogs.Include(e => e.Posts).Single(e => e.Name == ".NET Blog");
+            var dotNetBlog = await context.Blogs.Include(e => e.Posts).SingleAsync(e => e.Name == ".NET Blog");
 
             context.ChangeTracker.DeleteOrphansTiming = CascadeTiming.Never;
 
             var post = dotNetBlog.Posts.Single(e => e.Title == "Announcing F# 5");
             dotNetBlog.Posts.Remove(post);
 
-            context.SaveChanges(); // Throws
+            await context.SaveChangesAsync(); // Throws
             #endregion
         }
         catch (Exception e)
@@ -100,50 +101,50 @@ public class RequiredRelationshipsSamples
         Console.WriteLine();
     }
 
-    public static void Fixup_for_added_or_deleted_entities_8()
+    public static async Task Fixup_for_added_or_deleted_entities_8()
     {
         Console.WriteLine($">>>> Sample: {nameof(Fixup_for_added_or_deleted_entities_8)}");
         Console.WriteLine();
 
-        Helpers.RecreateCleanDatabase();
-        Helpers.PopulateDatabase();
+        await Helpers.RecreateCleanDatabase();
+        await Helpers.PopulateDatabase();
 
         #region Fixup_for_added_or_deleted_entities_8
         using var context = new BlogsContext();
 
-        var dotNetBlog = context.Blogs.Include(e => e.Assets).Single(e => e.Name == ".NET Blog");
+        var dotNetBlog = await context.Blogs.Include(e => e.Assets).SingleAsync(e => e.Name == ".NET Blog");
         dotNetBlog.Assets = new BlogAssets();
 
         context.ChangeTracker.DetectChanges();
         Console.WriteLine(context.ChangeTracker.DebugView.LongView);
 
-        context.SaveChanges();
+        await context.SaveChangesAsync();
         #endregion
 
         Console.WriteLine();
     }
 
-    public static void Deleting_an_entity_2()
+    public static async Task Deleting_an_entity_2()
     {
         Console.WriteLine($">>>> Sample: {nameof(Deleting_an_entity_2)}");
         Console.WriteLine();
 
-        Helpers.RecreateCleanDatabase();
-        Helpers.PopulateDatabase();
+        await Helpers.RecreateCleanDatabase();
+        await Helpers.PopulateDatabase();
 
         #region Deleting_an_entity_2
         using var context = new BlogsContext();
 
-        var vsBlog = context.Blogs
+        var vsBlog = await context.Blogs
             .Include(e => e.Posts)
             .Include(e => e.Assets)
-            .Single(e => e.Name == "Visual Studio Blog");
+            .SingleAsync(e => e.Name == "Visual Studio Blog");
 
         context.Remove(vsBlog);
 
         Console.WriteLine(context.ChangeTracker.DebugView.LongView);
 
-        context.SaveChanges();
+        await context.SaveChangesAsync();
         #endregion
 
         Console.WriteLine();
@@ -152,15 +153,15 @@ public class RequiredRelationshipsSamples
 
 public static class Helpers
 {
-    public static void RecreateCleanDatabase()
+    public static async Task RecreateCleanDatabase()
     {
         using var context = new BlogsContext(quiet: true);
 
-        context.Database.EnsureDeleted();
-        context.Database.EnsureCreated();
+        await context.Database.EnsureDeletedAsync();
+        await context.Database.EnsureCreatedAsync();
     }
 
-    public static void PopulateDatabase()
+    public static async Task PopulateDatabase()
     {
         using var context = new BlogsContext(quiet: true);
 
@@ -206,7 +207,7 @@ public static class Helpers
             new Tag { Text = "Visual Studio" },
             new Tag { Text = "EF Core" });
 
-        context.SaveChanges();
+        await context.SaveChangesAsync();
     }
 }
 

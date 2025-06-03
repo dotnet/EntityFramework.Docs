@@ -17,12 +17,12 @@ uid: core/saving/execute-insert-update-delete
 Let's assume that you need to delete all Blogs with a rating below a certain threshold. The traditional <xref:Microsoft.EntityFrameworkCore.DbContext.SaveChanges> approach requires you to do the following:
 
 ```c#
-foreach (var blog in context.Blogs.Where(b => b.Rating < 3))
+await foreach (var blog in context.Blogs.Where(b => b.Rating < 3).AsAsyncEnumerable())
 {
     context.Blogs.Remove(blog);
 }
 
-context.SaveChanges();
+await context.SaveChangesAsync();
 ```
 
 This is quite an inefficient way to perform this task: we query the database for all Blogs matching our filter, and then we query, materialize and track all those instances; the number of matching entities could be huge. We then tell EF's change tracker that each Blog needs to be removed, and apply those changes by calling <xref:Microsoft.EntityFrameworkCore.DbContext.SaveChanges>, which generates a `DELETE` statement for each and every one of them.
@@ -30,7 +30,7 @@ This is quite an inefficient way to perform this task: we query the database for
 Here is the same task performed via the <xref:Microsoft.EntityFrameworkCore.RelationalQueryableExtensions.ExecuteDelete*> API:
 
 ```c#
-context.Blogs.Where(b => b.Rating < 3).ExecuteDelete();
+await context.Blogs.Where(b => b.Rating < 3).ExecuteDeleteAsync();
 ```
 
 This uses the familiar LINQ operators to determine which Blogs should be affected - just as if we were querying them - and then tells EF to execute a SQL `DELETE` against the database:
@@ -48,9 +48,9 @@ Aside from being simpler and shorter, this executes very efficiently in the data
 Rather than deleting these Blogs, what if we wanted to change a property to indicate that they should be hidden instead? <xref:Microsoft.EntityFrameworkCore.RelationalQueryableExtensions.ExecuteUpdate*> provides a similar way to express a SQL `UPDATE` statement:
 
 ```c#
-context.Blogs
+await context.Blogs
     .Where(b => b.Rating < 3)
-    .ExecuteUpdate(setters => setters.SetProperty(b => b.IsVisible, false));
+    .ExecuteUpdateAsync(setters => setters.SetProperty(b => b.IsVisible, false));
 ```
 
 Like with `ExecuteDelete`, we first use LINQ to determine which Blogs should be affected; but with `ExecuteUpdate` we also need to express the change to be applied to the matching Blogs. This is done by calling `SetProperty` within the `ExecuteUpdate` call, and providing it with two arguments: the property to be changed (`IsVisible`), and the new value it should have (`false`). This causes the following SQL to be executed:
@@ -67,9 +67,9 @@ WHERE [b].[Rating] < 3
 `ExecuteUpdate` allows updating multiple properties in a single invocation. For example, to both set `IsVisible` to false and to set `Rating` to zero, simply chain additional `SetProperty` calls together:
 
 ```c#
-context.Blogs
+await context.Blogs
     .Where(b => b.Rating < 3)
-    .ExecuteUpdate(setters => setters
+    .ExecuteUpdateAsync(setters => setters
         .SetProperty(b => b.IsVisible, false)
         .SetProperty(b => b.Rating, 0));
 ```
@@ -89,9 +89,9 @@ WHERE [b].[Rating] < 3
 The above examples updated the property to a new constant value. `ExecuteUpdate` also allows referencing the existing property value when calculating the new value; for example, to increase the rating of all matching Blogs by one, use the following:
 
 ```c#
-context.Blogs
+await context.Blogs
     .Where(b => b.Rating < 3)
-    .ExecuteUpdate(setters => setters.SetProperty(b => b.Rating, b => b.Rating + 1));
+    .ExecuteUpdateAsync(setters => setters.SetProperty(b => b.Rating, b => b.Rating + 1));
 ```
 
 Note that the second argument to `SetProperty` is now a lambda function, and not a constant as before. Its `b` parameter represents the Blog being updated; within that lambda, `b.Rating` thus contains the rating before any change occurred. This executes the following SQL:
@@ -108,16 +108,16 @@ WHERE [b].[Rating] < 3
 `ExecuteUpdate` does not currently support referencing navigations within the `SetProperty` lambda. For example, let's say we want to update all the Blogs' ratings so that each Blog's new rating is the average of all its Posts' ratings. We may try to use `ExecuteUpdate` as follows:
 
 ```c#
-context.Blogs.ExecuteUpdate(
+await context.Blogs.ExecuteUpdateAsync(
     setters => setters.SetProperty(b => b.Rating, b => b.Posts.Average(p => p.Rating)));
 ```
 
 However, EF does allow performing this operation by first using `Select` to calculate the average rating and project it to an anonymous type, and then using `ExecuteUpdate` over that:
 
 ```c#
-context.Blogs
+await context.Blogs
     .Select(b => new { Blog = b, NewRating = b.Posts.Average(p => p.Rating) })
-    .ExecuteUpdate(setters => setters.SetProperty(b => b.Blog.Rating, b => b.NewRating));
+    .ExecuteUpdateAsync(setters => setters.SetProperty(b => b.Blog.Rating, b => b.NewRating));
 ```
 
 This executes the following SQL:
@@ -141,16 +141,16 @@ Consider the following code:
 
 ```c#
 // 1. Query the blog with the name `SomeBlog`. Since EF queries are tracking by default, the Blog is now tracked by EF's change tracker.
-var blog = context.Blogs.Single(b => b.Name == "SomeBlog");
+var blog = await context.Blogs.SingleAsync(b => b.Name == "SomeBlog");
 
 // 2. Increase the rating of all blogs in the database by one. This executes immediately.
-context.Blogs.ExecuteUpdate(setters => setters.SetProperty(b => b.Rating, b => b.Rating + 1));
+await context.Blogs.ExecuteUpdateAsync(setters => setters.SetProperty(b => b.Rating, b => b.Rating + 1));
 
 // 3. Increase the rating of `SomeBlog` by two. This modifies the .NET `Rating` property and is not yet persisted to the database.
 blog.Rating += 2;
 
 // 4. Persist tracked changes to the database.
-context.SaveChanges();
+await context.SaveChangesAsync();
 ```
 
 Crucially, when `ExecuteUpdate` is invoked and all Blogs are updated in the database, EF's change tracker is **not** updated, and the tracked .NET instance still has its original rating value, from the point at which it was queried. Let's assume that the Blog's rating was originally 5; after the 3rd line executes, the rating in the database is now 6 (because of the `ExecuteUpdate`), whereas the rating in the tracked .NET instance is 7. When `SaveChanges` is called, EF detects that the new value 7 is different from the original value 5, and persists that change. The change performed by `ExecuteUpdate` is overwritten and not taken into account.
@@ -159,18 +159,18 @@ As a result, it is usually a good idea to avoid mixing both tracked `SaveChanges
 
 ## Transactions
 
-Continuing on the above, it's important to understand that `ExecuteUpdate` and `ExecuteDelete` do not implicitly start a transaction they're invoked. Consider the following code:
+Continuing on the above, it's important to understand that `ExecuteUpdate` and `ExecuteDelete` do not implicitly start a transaction when they're invoked. Consider the following code:
 
 ```c#
-context.Blogs.ExecuteUpdate(/* some update */);
-context.Blogs.ExecuteUpdate(/* another update */);
+await context.Blogs.ExecuteUpdateAsync(/* some update */);
+await context.Blogs.ExecuteUpdateAsync(/* another update */);
 
-var blog = context.Blogs.Single(b => b.Name == "SomeBlog");
+var blog = await context.Blogs.SingleAsync(b => b.Name == "SomeBlog");
 blog.Rating += 2;
-context.SaveChanges();
+await context.SaveChangesAsync();
 ```
 
-Each `ExecuteUpdate` call causes a single SQL `UPDATE` to be sent to the database. Since no transaction is created, if any sort of failure prevents the second `ExecuteUpdate` from completing successfully, the effects of the first one are still persisted to the database. In fact, the four operations above - two invocations of `ExecuteUpdate`, a query and `SaveChanges` - each executes within its own transaction. To wrap multiple operations in a single transaction, explicitly start a transaction with <xref:Microsoft.EntityFrameworkCore.Infrastructure.DatabaseFacade>:
+Each `ExecuteUpdate` call causes a single SQL `UPDATE` to be sent to the database. Since no transaction is created, if any sort of failure prevents the second `ExecuteUpdate` from completing successfully, the effects of the first one are still persisted to the database. In fact, the four operations above - two invocations of `ExecuteUpdate`, a query and `SaveChanges` - each execute within their own transaction. To wrap multiple operations in a single transaction, explicitly start a transaction with <xref:Microsoft.EntityFrameworkCore.Infrastructure.DatabaseFacade>:
 
 ```c#
 using (var transaction = context.Database.BeginTransaction())
@@ -193,9 +193,9 @@ However, both these methods do return the number of rows that were affected by t
 ```c#
 // (load the ID and concurrency token for a Blog in the database)
 
-var numUpdated = context.Blogs
+var numUpdated = await context.Blogs
     .Where(b => b.Id == id && b.ConcurrencyToken == concurrencyToken)
-    .ExecuteUpdate(/* ... */);
+    .ExecuteUpdateAsync(/* ... */);
 if (numUpdated == 0)
 {
     throw new Exception("Update failed!");

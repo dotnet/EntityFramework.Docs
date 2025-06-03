@@ -1,7 +1,7 @@
 ﻿---
 title: Conventions for relationship discovery - EF Core
 description: How navigations, foreign keys, and other aspects of relationships are discovered by EF Core model building conventions
-author: ajcvickers
+author: SamMonoRT
 ms.date: 03/30/2023
 uid: core/modeling/relationships/conventions
 ---

@@ -1,39 +1,40 @@
 using System;
+using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 
 namespace EFSaving.Transactions;
 
 public class ManagingSavepoints
 {
-    public static void Run()
+    public static async Task Run()
     {
         using (var setupContext = new BloggingContext())
         {
-            setupContext.Database.EnsureDeleted();
-            setupContext.Database.EnsureCreated();
+            await setupContext.Database.EnsureDeletedAsync();
+            await setupContext.Database.EnsureCreatedAsync();
         }
 
         #region Savepoints
         using var context = new BloggingContext();
-        using var transaction = context.Database.BeginTransaction();
+        await using var transaction = await context.Database.BeginTransactionAsync();
 
         try
         {
             context.Blogs.Add(new Blog { Url = "https://devblogs.microsoft.com/dotnet/" });
-            context.SaveChanges();
+            await context.SaveChangesAsync();
 
-            transaction.CreateSavepoint("BeforeMoreBlogs");
+            await transaction.CreateSavepointAsync("BeforeMoreBlogs");
 
             context.Blogs.Add(new Blog { Url = "https://devblogs.microsoft.com/visualstudio/" });
             context.Blogs.Add(new Blog { Url = "https://devblogs.microsoft.com/aspnet/" });
-            context.SaveChanges();
+            await context.SaveChangesAsync();
 
-            transaction.Commit();
+            await transaction.CommitAsync();
         }
         catch (Exception)
         {
             // If a failure occurred, we rollback to the savepoint and can continue the transaction
-            transaction.RollbackToSavepoint("BeforeMoreBlogs");
+            await transaction.RollbackToSavepointAsync("BeforeMoreBlogs");
 
             // TODO: Handle failure, possibly retry inserting blogs
         }

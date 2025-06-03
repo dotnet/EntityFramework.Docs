@@ -1,7 +1,7 @@
 ---
 title: Introduction to relationships - EF Core
 description: How to configure relationships between entity types when using Entity Framework Core
-author: ajcvickers
+author: SamMonoRT
 ms.date: 03/30/2023
 uid: core/modeling/relationships
 ---
@@ -62,7 +62,7 @@ public class Blog
 This connection from `Blog` to `Post` and, inversely, from `Post` back to `Blog` is known as a "relationship" in EF Core.
 
 > [!IMPORTANT]
-> A **single** relationship can typically traversed in either direction. In this example, that is from `Blog` to `Post` via the `Blog.Posts` property, and from `Post` back to `Blog` via the `Post.Blog` property. This is **one** relationship, not two.
+> A **single** relationship can typically be traversed in either direction. In this example, that is from `Blog` to `Post` via the `Blog.Posts` property, and from `Post` back to `Blog` via the `Post.Blog` property. This is **one** relationship, not two.
 
 > [!TIP]
 > In EF Core, the `Blog.Posts` and `Post.Blog` properties are called "navigations".

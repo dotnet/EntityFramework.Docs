@@ -1,7 +1,7 @@
 ---
 title: Entity Framework 5 License (CHT) - EF6
 description: Entity Framework 5 License (CHT)
-author: ajcvickers
+author: SamMonoRT
 ms.date: 10/23/2016
 ---
 # Entity Framework 5 License (CHT)
@@ -43,4 +43,4 @@ Microsoft 公司（或其關係企業，視　貴用戶所居住的地點而定�
     -   程式碼必須以原始碼形式揭露或散布，或
     -   他人有修改的權利。
 
-**2. 增補程式支援服務。**Microsoft 為軟體提供支援服務之相關說明，請參閱 https://www.support.microsoft.com/common/international.aspx 。
+**2. 增補程式支援服務。**Microsoft 為軟體提供支援服務之相關說明，請參閱 https://support.microsoft.com/ 。

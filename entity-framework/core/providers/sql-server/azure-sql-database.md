@@ -7,6 +7,9 @@ uid: core/providers/sql-server/azure-sql-database
 ---
 # Specifying Azure SQL Database Options
 
+> [!NOTE]
+> You should [use `UseAzureSql` method](xref:core/providers/sql-server/index#usage) instead of `UseSqlServer` when connecting to Azure SQL.
+
 Azure SQL Database provides [a variety of pricing options](https://azure.microsoft.com/pricing/details/sql-database/single/) that are usually configured through the Azure Portal. However if you are managing the schema using [EF Core migrations](xref:core/managing-schemas/migrations/index) you can specify the desired options in the model itself.
 
 You can specify the service tier of the database (EDITION) using [HasServiceTier](/dotnet/api/Microsoft.EntityFrameworkCore.SqlServerModelBuilderExtensions.HasServiceTier):

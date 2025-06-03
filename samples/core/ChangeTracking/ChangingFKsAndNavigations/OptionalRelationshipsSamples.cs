@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 
@@ -8,21 +9,21 @@ namespace Optional;
 
 public class OptionalRelationshipsSamples
 {
-    public static void Relationship_fixup_1()
+    public static async Task Relationship_fixup_1()
     {
         Console.WriteLine($">>>> Sample: {nameof(Relationship_fixup_1)}");
         Console.WriteLine();
 
-        Helpers.RecreateCleanDatabase();
-        Helpers.PopulateDatabase();
+        await Helpers.RecreateCleanDatabase();
+        await Helpers.PopulateDatabase();
 
         #region Relationship_fixup_1
         using var context = new BlogsContext();
 
-        var blogs = context.Blogs
+        var blogs = await context.Blogs
             .Include(e => e.Posts)
             .Include(e => e.Assets)
-            .ToList();
+            .ToListAsync();
 
         Console.WriteLine(context.ChangeTracker.DebugView.LongView);
         #endregion
@@ -30,43 +31,43 @@ public class OptionalRelationshipsSamples
         Console.WriteLine();
     }
 
-    public static void Relationship_fixup_2()
+    public static async Task Relationship_fixup_2()
     {
         Console.WriteLine($">>>> Sample: {nameof(Relationship_fixup_2)}");
         Console.WriteLine();
 
-        Helpers.RecreateCleanDatabase();
-        Helpers.PopulateDatabase();
+        await Helpers.RecreateCleanDatabase();
+        await Helpers.PopulateDatabase();
 
         #region Relationship_fixup_2
         using var context = new BlogsContext();
 
-        var blogs = context.Blogs.ToList();
+        var blogs = await context.Blogs.ToListAsync();
         Console.WriteLine(context.ChangeTracker.DebugView.LongView);
 
-        var assets = context.Assets.ToList();
+        var assets = await context.Assets.ToListAsync();
         Console.WriteLine(context.ChangeTracker.DebugView.LongView);
 
-        var posts = context.Posts.ToList();
+        var posts = await context.Posts.ToListAsync();
         Console.WriteLine(context.ChangeTracker.DebugView.LongView);
         #endregion
 
         Console.WriteLine();
     }
 
-    public static void Changing_relationships_using_navigations_1()
+    public static async Task Changing_relationships_using_navigations_1()
     {
         Console.WriteLine($">>>> Sample: {nameof(Changing_relationships_using_navigations_1)}");
         Console.WriteLine();
 
-        Helpers.RecreateCleanDatabase();
-        Helpers.PopulateDatabase();
+        await Helpers.RecreateCleanDatabase();
+        await Helpers.PopulateDatabase();
 
         #region Changing_relationships_using_navigations_1
         using var context = new BlogsContext();
 
-        var dotNetBlog = context.Blogs.Include(e => e.Posts).Single(e => e.Name == ".NET Blog");
-        var vsBlog = context.Blogs.Include(e => e.Posts).Single(e => e.Name == "Visual Studio Blog");
+        var dotNetBlog = await context.Blogs.Include(e => e.Posts).SingleAsync(e => e.Name == ".NET Blog");
+        var vsBlog = await context.Blogs.Include(e => e.Posts).SingleAsync(e => e.Name == "Visual Studio Blog");
 
         Console.WriteLine(context.ChangeTracker.DebugView.LongView);
 
@@ -77,24 +78,24 @@ public class OptionalRelationshipsSamples
         context.ChangeTracker.DetectChanges();
         Console.WriteLine(context.ChangeTracker.DebugView.LongView);
 
-        context.SaveChanges();
+        await context.SaveChangesAsync();
         #endregion
 
         Console.WriteLine();
     }
 
-    public static void Changing_relationships_using_navigations_2()
+    public static async Task Changing_relationships_using_navigations_2()
     {
         Console.WriteLine($">>>> Sample: {nameof(Changing_relationships_using_navigations_2)}");
         Console.WriteLine();
 
-        Helpers.RecreateCleanDatabase();
-        Helpers.PopulateDatabase();
+        await Helpers.RecreateCleanDatabase();
+        await Helpers.PopulateDatabase();
 
         using var context = new BlogsContext();
 
-        var dotNetBlog = context.Blogs.Include(e => e.Posts).Single(e => e.Name == ".NET Blog");
-        var vsBlog = context.Blogs.Include(e => e.Posts).Single(e => e.Name == "Visual Studio Blog");
+        var dotNetBlog = await context.Blogs.Include(e => e.Posts).SingleAsync(e => e.Name == ".NET Blog");
+        var vsBlog = await context.Blogs.Include(e => e.Posts).SingleAsync(e => e.Name == "Visual Studio Blog");
 
         Console.WriteLine(context.ChangeTracker.DebugView.LongView);
 
@@ -106,23 +107,23 @@ public class OptionalRelationshipsSamples
         context.ChangeTracker.DetectChanges();
         Console.WriteLine(context.ChangeTracker.DebugView.LongView);
 
-        context.SaveChanges();
+        await context.SaveChangesAsync();
 
         Console.WriteLine();
     }
 
-    public static void Changing_relationships_using_foreign_key_values_1()
+    public static async Task Changing_relationships_using_foreign_key_values_1()
     {
         Console.WriteLine($">>>> Sample: {nameof(Changing_relationships_using_foreign_key_values_1)}");
         Console.WriteLine();
 
-        Helpers.RecreateCleanDatabase();
-        Helpers.PopulateDatabase();
+        await Helpers.RecreateCleanDatabase();
+        await Helpers.PopulateDatabase();
 
         using var context = new BlogsContext();
 
-        var dotNetBlog = context.Blogs.Include(e => e.Posts).Single(e => e.Name == ".NET Blog");
-        var vsBlog = context.Blogs.Include(e => e.Posts).Single(e => e.Name == "Visual Studio Blog");
+        var dotNetBlog = await context.Blogs.Include(e => e.Posts).SingleAsync(e => e.Name == ".NET Blog");
+        var vsBlog = await context.Blogs.Include(e => e.Posts).SingleAsync(e => e.Name == "Visual Studio Blog");
 
         Console.WriteLine(context.ChangeTracker.DebugView.LongView);
 
@@ -134,23 +135,23 @@ public class OptionalRelationshipsSamples
         context.ChangeTracker.DetectChanges();
         Console.WriteLine(context.ChangeTracker.DebugView.LongView);
 
-        context.SaveChanges();
+        await context.SaveChangesAsync();
 
         Console.WriteLine();
     }
 
-    public static void Fixup_for_added_or_deleted_entities_1()
+    public static async Task Fixup_for_added_or_deleted_entities_1()
     {
         Console.WriteLine($">>>> Sample: {nameof(Fixup_for_added_or_deleted_entities_1)}");
         Console.WriteLine();
 
-        Helpers.RecreateCleanDatabase();
-        Helpers.PopulateDatabase();
+        await Helpers.RecreateCleanDatabase();
+        await Helpers.PopulateDatabase();
 
         using var context = new BlogsContext();
 
-        var dotNetBlog = context.Blogs.Include(e => e.Posts).Single(e => e.Name == ".NET Blog");
-        var vsBlog = context.Blogs.Include(e => e.Posts).Single(e => e.Name == "Visual Studio Blog");
+        var dotNetBlog = await context.Blogs.Include(e => e.Posts).SingleAsync(e => e.Name == ".NET Blog");
+        var vsBlog = await context.Blogs.Include(e => e.Posts).SingleAsync(e => e.Name == "Visual Studio Blog");
 
         Console.WriteLine(context.ChangeTracker.DebugView.LongView);
 
@@ -163,23 +164,23 @@ public class OptionalRelationshipsSamples
         context.ChangeTracker.DetectChanges();
         Console.WriteLine(context.ChangeTracker.DebugView.LongView);
 
-        context.SaveChanges();
+        await context.SaveChangesAsync();
 
         Console.WriteLine();
     }
 
-    public static void Fixup_for_added_or_deleted_entities_2()
+    public static async Task Fixup_for_added_or_deleted_entities_2()
     {
         Console.WriteLine($">>>> Sample: {nameof(Fixup_for_added_or_deleted_entities_2)}");
         Console.WriteLine();
 
-        Helpers.RecreateCleanDatabase();
-        Helpers.PopulateDatabase();
+        await Helpers.RecreateCleanDatabase();
+        await Helpers.PopulateDatabase();
 
         using var context = new BlogsContext();
 
-        var dotNetBlog = context.Blogs.Include(e => e.Posts).Single(e => e.Name == ".NET Blog");
-        var vsBlog = context.Blogs.Include(e => e.Posts).Single(e => e.Name == "Visual Studio Blog");
+        var dotNetBlog = await context.Blogs.Include(e => e.Posts).SingleAsync(e => e.Name == ".NET Blog");
+        var vsBlog = await context.Blogs.Include(e => e.Posts).SingleAsync(e => e.Name == "Visual Studio Blog");
 
         Console.WriteLine(context.ChangeTracker.DebugView.LongView);
 
@@ -191,22 +192,22 @@ public class OptionalRelationshipsSamples
         context.ChangeTracker.DetectChanges();
         Console.WriteLine(context.ChangeTracker.DebugView.LongView);
 
-        context.SaveChanges();
+        await context.SaveChangesAsync();
 
         Console.WriteLine();
     }
 
-    public static void Fixup_for_added_or_deleted_entities_3()
+    public static async Task Fixup_for_added_or_deleted_entities_3()
     {
         Console.WriteLine($">>>> Sample: {nameof(Fixup_for_added_or_deleted_entities_3)}");
         Console.WriteLine();
 
-        Helpers.RecreateCleanDatabase();
-        Helpers.PopulateDatabase();
+        await Helpers.RecreateCleanDatabase();
+        await Helpers.PopulateDatabase();
 
         using var context = new BlogsContext();
 
-        var dotNetBlog = context.Blogs.Include(e => e.Posts).Single(e => e.Name == ".NET Blog");
+        var dotNetBlog = await context.Blogs.Include(e => e.Posts).SingleAsync(e => e.Name == ".NET Blog");
 
         Console.WriteLine(context.ChangeTracker.DebugView.LongView);
 
@@ -218,73 +219,73 @@ public class OptionalRelationshipsSamples
         context.ChangeTracker.DetectChanges();
         Console.WriteLine(context.ChangeTracker.DebugView.LongView);
 
-        context.SaveChanges();
+        await context.SaveChangesAsync();
 
         Console.WriteLine();
     }
 
-    public static void Fixup_for_added_or_deleted_entities_7()
+    public static async Task Fixup_for_added_or_deleted_entities_7()
     {
         Console.WriteLine($">>>> Sample: {nameof(Fixup_for_added_or_deleted_entities_7)}");
         Console.WriteLine();
 
-        Helpers.RecreateCleanDatabase();
-        Helpers.PopulateDatabase();
+        await Helpers.RecreateCleanDatabase();
+        await Helpers.PopulateDatabase();
 
         #region Fixup_for_added_or_deleted_entities_7
         using var context = new BlogsContext();
 
-        var dotNetBlog = context.Blogs.Include(e => e.Assets).Single(e => e.Name == ".NET Blog");
+        var dotNetBlog = await context.Blogs.Include(e => e.Assets).SingleAsync(e => e.Name == ".NET Blog");
         dotNetBlog.Assets = new BlogAssets();
 
         context.ChangeTracker.DetectChanges();
         Console.WriteLine(context.ChangeTracker.DebugView.LongView);
 
-        context.SaveChanges();
+        await context.SaveChangesAsync();
         #endregion
 
         Console.WriteLine();
     }
 
-    public static void Deleting_an_entity_1()
+    public static async Task Deleting_an_entity_1()
     {
         Console.WriteLine($">>>> Sample: {nameof(Deleting_an_entity_1)}");
         Console.WriteLine();
 
-        Helpers.RecreateCleanDatabase();
-        Helpers.PopulateDatabase();
+        await Helpers.RecreateCleanDatabase();
+        await Helpers.PopulateDatabase();
 
         #region Deleting_an_entity_1
         using var context = new BlogsContext();
 
-        var vsBlog = context.Blogs
+        var vsBlog = await context.Blogs
             .Include(e => e.Posts)
             .Include(e => e.Assets)
-            .Single(e => e.Name == "Visual Studio Blog");
+            .SingleAsync(e => e.Name == "Visual Studio Blog");
 
         context.Remove(vsBlog);
 
         Console.WriteLine(context.ChangeTracker.DebugView.LongView);
 
-        context.SaveChanges();
+        await context.SaveChangesAsync();
         #endregion
 
         Console.WriteLine();
     }
 
-    public static void Many_to_many_relationships_6()
+    public static async Task Many_to_many_relationships_6()
     {
         Console.WriteLine($">>>> Sample: {nameof(Many_to_many_relationships_6)}");
         Console.WriteLine();
 
-        Helpers.RecreateCleanDatabase();
-        Helpers.PopulateDatabase();
+        await Helpers.RecreateCleanDatabase();
+        await Helpers.PopulateDatabase();
 
         #region Many_to_many_relationships_6
         using var context = new BlogsContext();
 
-        var post = context.Posts.Single(e => e.Id == 3);
-        var tag = context.Tags.Single(e => e.Id == 1);
+        var post = await context.Posts.SingleAsync(e => e.Id == 3);
+        var tag = await context.Tags.SingleAsync(e => e.Id == 1);
 
         post.Tags.Add(tag);
 
@@ -298,15 +299,15 @@ public class OptionalRelationshipsSamples
 
 public static class Helpers
 {
-    public static void RecreateCleanDatabase()
+    public static async Task RecreateCleanDatabase()
     {
         using var context = new BlogsContext(quiet: true);
 
-        context.Database.EnsureDeleted();
-        context.Database.EnsureCreated();
+        await context.Database.EnsureDeletedAsync();
+        await context.Database.EnsureCreatedAsync();
     }
 
-    public static void PopulateDatabase()
+    public static async Task PopulateDatabase()
     {
         using var context = new BlogsContext(quiet: true);
 
@@ -352,7 +353,7 @@ public static class Helpers
             new Tag { Text = "Visual Studio" },
             new Tag { Text = "EF Core" });
 
-        context.SaveChanges();
+        await context.SaveChangesAsync();
     }
 }
 

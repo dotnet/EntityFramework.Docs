@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 
@@ -8,46 +9,46 @@ namespace DatabaseCycles;
 
 public static class WithDatabaseCycleSamples
 {
-    public static void Database_cascade_limitations_1()
+    public static async Task Database_cascade_limitations_1()
     {
         Console.WriteLine($">>>> Sample: {nameof(Database_cascade_limitations_1)}");
         Console.WriteLine();
 
-        Helpers.RecreateCleanDatabase();
-        Helpers.PopulateDatabase();
+        await Helpers.RecreateCleanDatabase();
+        await Helpers.PopulateDatabase();
 
         #region Database_cascade_limitations_1
         using var context = new BlogsContext();
 
-        var owner = context.People.Single(e => e.Name == "ajcvickers");
-        var blog = context.Blogs.Single(e => e.Owner == owner);
+        var owner = await context.People.SingleAsync(e => e.Name == "ajcvickers");
+        var blog = await context.Blogs.SingleAsync(e => e.Owner == owner);
 
         context.Remove(owner);
 
-        context.SaveChanges();
+        await context.SaveChangesAsync();
         #endregion
 
         Console.WriteLine();
     }
 
-    public static void Database_cascade_limitations_2()
+    public static async Task Database_cascade_limitations_2()
     {
         Console.WriteLine($">>>> Sample: {nameof(Database_cascade_limitations_2)}");
         Console.WriteLine();
 
-        Helpers.RecreateCleanDatabase();
-        Helpers.PopulateDatabase();
+        await Helpers.RecreateCleanDatabase();
+        await Helpers.PopulateDatabase();
 
         try
         {
             #region Database_cascade_limitations_2
             using var context = new BlogsContext();
 
-            var owner = context.People.Single(e => e.Name == "ajcvickers");
+            var owner = await context.People.SingleAsync(e => e.Name == "ajcvickers");
 
             context.Remove(owner);
 
-            context.SaveChanges();
+            await context.SaveChangesAsync();
             #endregion
         }
         catch (Exception e)
@@ -65,15 +66,15 @@ public static class WithDatabaseCycleSamples
 
 public static class Helpers
 {
-    public static void RecreateCleanDatabase()
+    public static async Task RecreateCleanDatabase()
     {
         using var context = new BlogsContext(quiet: true);
 
-        context.Database.EnsureDeleted();
-        context.Database.EnsureCreated();
+        await context.Database.EnsureDeletedAsync();
+        await context.Database.EnsureCreatedAsync();
     }
 
-    public static void PopulateDatabase()
+    public static async Task PopulateDatabase()
     {
         using var context = new BlogsContext(quiet: true);
 
@@ -101,7 +102,7 @@ public static class Helpers
                 }
             });
 
-        context.SaveChanges();
+        await context.SaveChangesAsync();
     }
 }
 

@@ -1,14 +1,14 @@
 ﻿---
 title: .NET Data Community Standups
-description: Details and links for each episode of the .NET Data/EF Community Standup
-author: ajcvickers
+description: Details and links for each episode of the .NET Data Community Standup
+author: SamMonoRT
 ms.date: 02/23/2024
 uid: core/learn-more/community-standups
 ---
 
 # .NET Data Community Standups
 
-The .NET Data Community Standups are live-streamed every other Wednesday to Twitch, YouTube, and Twitter. This is your opportunity to interact with the .NET Data team and community. All past episodes are [available on YouTube](https://aka.ms/efstandups) and are listed below with links to content from the shows.
+The .NET Data Community Standups are live-streamed monthly (roughly) on Wednesday (usually) to YouTube and Twitch. This is your opportunity to interact with the .NET Data team and community. All past episodes are [available on YouTube](https://aka.ms/efstandups) and are listed below with links to content from the shows.
 
 [Comment on GitHub](https://github.com/dotnet/efcore/issues/22700) with ideas for guests, demos, or anything else you want to see.
 
@@ -16,7 +16,12 @@ The .NET Data Community Standups are live-streamed every other Wednesday to Twit
 
 | Date         | Area                  | Title                                                                                    |
 |--------------|-----------------------|------------------------------------------------------------------------------------------|
-| Nov 20, 2024 | Release               | [EF Core 9: Release extravaganza](#Nov20_2024)                                          |
+| May 14, 2025 | Azure SQL             | [Azure SQL vector search with Davide Mauri](#May14_2025)                                 |
+| Apr 24, 2025 | EF Core               | [Jiri and Shay talk about EF Core testing and Maurycy corrects them](#Apr24_2025)        |
+| Mar 19, 2025 | EF Core               | [Stop using Entity Framework as a DTO provider!](#Mar19_2025)                            |
+| Mar 06, 2025 | Chroma                | [Using Chroma vector database from .NET](#Mar06_2025)                                    |
+| Jan 22, 2025 | Tips                  | [Context pooling, FromSql and compiled queries](#Jan22_2025)                             |
+| Nov 20, 2024 | Release               | [EF Core 9: Release extravaganza](#Nov20_2024)                                           |
 | Jun 26, 2024 | SQL schemas           | [Improve your SQL schema and scripts with .NET based static code analysis](#June26_2024) |
 | May 15, 2024 | Firebird              | [Harnessing the Power of Firebird in .NET](#May15_2024)                                  |
 | Apr 17, 2024 | EF Core mapping       | [All about EF Core property mapping](#Apr17_2024)                                        |
@@ -33,7 +38,7 @@ The .NET Data Community Standups are live-streamed every other Wednesday to Twit
 | Jun 14, 2023 | SQLite                | [Synchronizing data between the cloud and the client (using SQLite)](#zumero)            |
 | May 31, 2023 | Power Tools           | [New CLI edition of EF Core Power Tools](#power-tools)                                   |
 | May 17, 2023 | Primitive collections | [Collections of primitive values in EF Core](#primitive-collections)                     |
-| Apr 19, 2023 | EF internals          | [EF Core Internals – Model Building](#internals-models)                                  |
+| Apr 19, 2023 | EF internals          | [EF Core Internals - Model Building](#internals-models)                                  |
 | Mar 22, 2023 | HierarchyId           | [Using hierarchical data in SQL Server and PostgreSQL with EF Core](#hierarchyid)        |
 | Mar 8, 2023  | EF internals          | [EF Core internals: IQueryable, LINQ and the EF Core query pipeline](#internals-query)   |
 | Feb 22, 2023 | MySQL                 | [MySQL and .NET: MySqlConnector and the Pomelo EF Core Provider](#mysql)                 |
@@ -96,6 +101,82 @@ The .NET Data Community Standups are live-streamed every other Wednesday to Twit
 | Jun 24, 2020 | Blazor                | [EF Core in Blazor](#blazor)                                                             |
 | Jun 10, 2020 | EF Core Power Tools   | [EF Core Power Tools](#power-tools1)                                                     |
 | May 6, 2020  | Welcome!              | [Introducing the EF Core Community Standup](#one)                                        |
+
+## 2025
+
+<a name="May14_2025"></a>
+
+### May 14: [Azure SQL vector search with Davide Mauri](https://www.youtube.com/live/RksCLw2OU_M?si=7NjaVS4dB2L0iGl7)
+
+We welcome Davide Mauri, Principal Product Manager at Microsoft, to explore the exciting new vector search capabilities in Azure SQL. With the rise of AI-powered applications and semantic search, vector databases are more relevant than ever. In this session, Davide will demonstrate how Azure SQL is evolving to meet these modern needs with integrated vector search features.
+
+Featuring:
+
+- [Davide Mauri](https://www.davidemauri.it/) (Special guest)
+- [Jiri Cincura](https://www.tabsoverspaces.com/) (Host)
+- [Shay Rojansky](https://www.roji.org/) (Host)
+
+Links:
+
+- <https://azuresql.dev>
+- <https://ai.awesome.azuresql.dev/>
+- <https://github.com/Azure-Samples/azure-sql-db-vector-search/tree/main/Hybrid-Search>
+- <https://github.com/Azure-Samples/azure-sql-db-chat-sk>
+
+<a name="Apr24_2025"></a>
+
+### Apr 24: [Jiri and Shay talk about EF Core testing and Maurycy corrects them](https://www.youtube.com/live/FV5e3-5IOuw?si=QetyyWOSW1xYJ2LS)
+
+Jiri and Shay talk about how we test whole EF Core and Maurycy corrects them, because they have it wrong.
+
+Featuring:
+
+- [Maurycy Markowski](https://github.com/maumar) (Special guest)
+- [Jiri Cincura](https://www.tabsoverspaces.com/) (Host)
+- [Shay Rojansky](https://www.roji.org/) (Host)
+
+Links:
+
+- Demo: <https://github.com/ChrisKlug/efcore-dto-demo>
+
+<a name="Mar19_2025"></a>
+
+### March 19: [Stop using Entity Framework as a DTO provider!](https://www.youtube.com/live/zlxhZhVu1O8?si=LbzOSpO3PUTN18Sf)
+
+Chris Klug has some opinions about Entity Framework and wants you to know about them…
+
+Featuring:
+
+- [Chris Klug](https://www.fearofoblivion.com/) (Special guest)
+- [Jiri Cincura](https://www.tabsoverspaces.com/) (Host)
+- [Shay Rojansky](https://www.roji.org/) (Host)
+
+Links:
+
+- Demo: <https://github.com/ChrisKlug/efcore-dto-demo>
+
+<a name="Mar06_2025"></a>
+
+### March 6: [Using Chroma vector database from .NET](https://www.youtube.com/live/Nj0vYJ9HVGk?si=fZG7B4dl7YlR4Saj)
+
+Join Jiri as he talks about Chroma vector database and fresh new library for .NET that you can use to interact with Chroma.
+
+Featuring:
+
+- [Jiri Cincura](https://www.tabsoverspaces.com/) (Host)
+- [Shay Rojansky](https://www.roji.org/) (Host)
+
+<a name="Jan22_2025"></a>
+
+### January 22: [Context pooling, FromSql and compiled queries](https://www.youtube.com/live/lAP2nlA6ijw?si=jq7XhqVwmLi_Yt7c)
+
+Join us for another .NET Data Community Standup with Chris Woodruff where he talks about context pooling, FromSql and compiled queries.
+
+Featuring:
+
+- [Chris Woodruff](https://woodruff.dev/) (Special guest)
+- [Jiri Cincura](https://www.tabsoverspaces.com/) (Host)
+- [Shay Rojansky](https://www.roji.org/) (Host)
 
 ## 2024
 
@@ -1693,7 +1774,6 @@ Links:
 - Video: [The Intersection of Microservices, Domain-Driven Design and Entity Framework Core](https://www.youtube.com/watch?v=DG8Qe7TJiIE)
 - GitHub: [julielerman/dotnetconfms2020](https://github.com/julielerman/dotnetconfms2020)
 - Blog: [How to call stored procedures with OUTPUT parameters with FromSqlRaw in EF Core](https://erikej.github.io/efcore/2020/08/03/ef-core-call-stored-procedures-out-parameters.html)
-- Docs: [Getting Started with EF Core and Xamarin](xref:core/get-started/xamarin)
 - Docs: [Getting Started with WPF](xref:core/get-started/wpf)
 - Docs: [EF Core daily builds](https://aka.ms/ef-daily-builds)
 

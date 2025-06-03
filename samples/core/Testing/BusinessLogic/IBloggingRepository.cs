@@ -1,16 +1,17 @@
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace EF.Testing.BusinessLogic;
 
 #region IBloggingRepository
 public interface IBloggingRepository
 {
-    Blog GetBlogByName(string name);
+    Task<Blog> GetBlogByNameAsync(string name);
 
-    IEnumerable<Blog> GetAllBlogs();
+    IAsyncEnumerable<Blog> GetAllBlogsAsync();
 
     void AddBlog(Blog blog);
 
-    void SaveChanges();
+    Task SaveChangesAsync();
 }
 #endregion

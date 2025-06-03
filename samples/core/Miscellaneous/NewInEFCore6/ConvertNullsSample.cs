@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.EntityFrameworkCore.Infrastructure;
@@ -9,12 +10,12 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 public static class ConvertNullsSample
 {
-    public static void Value_converters_can_convert_nulls()
+    public static async Task Value_converters_can_convert_nulls()
     {
         Console.WriteLine($">>>> Sample: {nameof(Value_converters_can_convert_nulls)}");
         Console.WriteLine();
 
-        Helpers.RecreateCleanDatabase();
+        await Helpers.RecreateCleanDatabase();
 
         using (var context = new CatsContext())
         {
@@ -24,7 +25,7 @@ public static class ConvertNullsSample
                 new Cat { Name = "Clippy", Breed = Breed.Burmese },
                 new Cat { Name = "Sid", Breed = Breed.Tonkinese });
 
-            context.SaveChanges();
+            await context.SaveChangesAsync();
             #endregion
 
             Console.WriteLine();
@@ -32,7 +33,7 @@ public static class ConvertNullsSample
 
         using (var context = new CatsContext())
         {
-            var cats = context.Cats.ToList();
+            var cats = await context.Cats.ToListAsync();
 
             Console.WriteLine();
 
@@ -45,12 +46,12 @@ public static class ConvertNullsSample
         Console.WriteLine();
     }
 
-    public static void Value_converters_can_convert_nulls_in_FKs()
+    public static async Task Value_converters_can_convert_nulls_in_FKs()
     {
         Console.WriteLine($">>>> Sample: {nameof(Value_converters_can_convert_nulls_in_FKs)}");
         Console.WriteLine();
 
-        Helpers.RecreateCleanDatabase();
+        await Helpers.RecreateCleanDatabase();
 
         using (var context = new CarsContext())
         {
@@ -65,7 +66,7 @@ public static class ConvertNullsSample
                     Model = "Kia Soul"
                 });
 
-            context.SaveChanges();
+            await context.SaveChangesAsync();
 
             Console.WriteLine();
         }
@@ -73,7 +74,7 @@ public static class ConvertNullsSample
         using (var context = new CarsContext())
         {
             // Not currently working
-            var cars = context.Cars.Where(e => e.OwnerId == null).ToList();
+            var cars = await context.Cars.Where(e => e.OwnerId == null).ToListAsync();
 
             Console.WriteLine();
 
@@ -88,18 +89,18 @@ public static class ConvertNullsSample
 
     public static class Helpers
     {
-        public static void RecreateCleanDatabase()
+        public static async Task RecreateCleanDatabase()
         {
             using (var context = new CarsContext(quiet: true))
             {
-                context.Database.EnsureDeleted();
-                context.Database.Migrate();
+                await context.Database.EnsureDeletedAsync();
+                await context.Database.MigrateAsync();
             }
 
             using (var context = new CatsContext(quiet: true))
             {
-                context.Database.EnsureDeleted();
-                context.Database.EnsureCreated();
+                await context.Database.EnsureDeletedAsync();
+                await context.Database.EnsureCreatedAsync();
             }
         }
     }

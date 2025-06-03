@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace EFQuerying.ClientEvaluation;
 
@@ -19,22 +21,22 @@ internal class Program
     }
     #endregion
 
-    private static void Main(string[] args)
+    private static async Task Main(string[] args)
     {
         using (var context = new BloggingContext())
         {
-            context.Database.EnsureDeleted();
-            context.Database.EnsureCreated();
+            await context.Database.EnsureDeletedAsync();
+            await context.Database.EnsureCreatedAsync();
         }
 
         using (var context = new BloggingContext())
         {
             #region ClientProjection
-            var blogs = context.Blogs
+            var blogs = await context.Blogs
                 .OrderByDescending(blog => blog.Rating)
                 .Select(
                     blog => new { Id = blog.BlogId, Url = StandardizeUrl(blog.Url) })
-                .ToList();
+                .ToListAsync();
             #endregion
         }
 
@@ -43,9 +45,9 @@ internal class Program
             try
             {
                 #region ClientWhere
-                var blogs = context.Blogs
+                var blogs = await context.Blogs
                     .Where(blog => StandardizeUrl(blog.Url).Contains("dotnet"))
-                    .ToList();
+                    .ToListAsync();
                 #endregion
             }
             catch (Exception e)
@@ -58,9 +60,9 @@ internal class Program
         {
             #region ExplicitClientEvaluation
             var blogs = context.Blogs
-                .AsEnumerable()
+                .AsAsyncEnumerable()
                 .Where(blog => StandardizeUrl(blog.Url).Contains("dotnet"))
-                .ToList();
+                .ToListAsync();
             #endregion
         }
     }

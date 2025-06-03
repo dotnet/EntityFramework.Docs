@@ -1,7 +1,7 @@
 ---
 title: Breaking changes in EF Core 3.x - EF Core
 description: Complete list of breaking changes introduced in Entity Framework Core 3.x
-author: ajcvickers
+author: SamMonoRT
 ms.date: 09/05/2020
 uid: core/what-is-new/ef-core-3.x/breaking-changes
 ---
@@ -100,7 +100,7 @@ Besides this, automatic client evaluation can lead to issues in which improving 
 
 #### Mitigations
 
-If a query can't be fully translated, then either rewrite the query in a form that can be translated, or use `AsEnumerable()`, `ToList()`, or similar to explicitly bring data back to the client where it can then be further processed using LINQ-to-Objects.
+If a query can't be fully translated, then either rewrite the query in a form that can be translated, or use `AsEnumerableAsync()`, `ToListAsync()`, or similar to explicitly bring data back to the client where it can then be further processed using LINQ-to-Objects.
 
 <a name="no-longer"></a>
 
@@ -266,7 +266,7 @@ Specifying `FromSql` anywhere other than on a `DbSet` had no added meaning or ad
 Before EF Core 3.0, the same entity instance would be used for every occurrence of an entity with a given type and ID. This matches the behavior of tracking queries. For example, this query:
 
 ```csharp
-var results = context.Products.Include(e => e.Category).AsNoTracking().ToList();
+var results = await context.Products.Include(e => e.Category).AsNoTracking().ToListAsync();
 ```
 
 would return the same `Category` instance for each `Product` that is associated with the given category.
@@ -792,11 +792,11 @@ using (new TransactionScope())
     using (AdventureWorks context = new AdventureWorks())
     {
         context.ProductCategories.Add(new ProductCategory());
-        context.SaveChanges();
+        await context.SaveChangesAsync();
 
         // Old behavior: Connection is still open at this point
 
-        var categories = context.ProductCategories().ToList();
+        var categories = await context.ProductCategories().ToListAsync();
     }
 }
 ```
@@ -818,12 +818,12 @@ using (new TransactionScope())
 {
     using (AdventureWorks context = new AdventureWorks())
     {
-        context.Database.OpenConnection();
+        await context.Database.OpenConnectionAsync();
         context.ProductCategories.Add(new ProductCategory());
-        context.SaveChanges();
+        await context.SaveChangesAsync();
 
-        var categories = context.ProductCategories().ToList();
-        context.Database.CloseConnection();
+        var categories = await context.ProductCategories().ToListAsync();
+        await context.Database.CloseConnectionAsync();
     }
 }
 ```

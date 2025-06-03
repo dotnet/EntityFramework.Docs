@@ -656,16 +656,16 @@ For correlated collection scenarios we need to know entity's primary key in orde
 Rewrite the query to not use `GroupBy` or `Distinct` operations on the inner collection, and perform these operations on the client instead.
 
 ```csharp
-context.Parents
+(await context.Parents
     .Select(p => p.Children.Select(c => c.School))
-    .ToList()
+    .ToListAsync())
     .Select(x => x.GroupBy(c => c).Select(g => g.Key))
 ```
 
 ```csharp
-context.Parents
+(await context.Parents
     .Select(p => p.Children.Select(c => c.School))
-    .ToList()
+    .ToListAsync())
     .Select(x => x.Distinct())
 ```
 

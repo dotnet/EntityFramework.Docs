@@ -1,7 +1,7 @@
 ---
 title: What is new in EF Core 2.1 - EF Core
 description: Changes and improvements in Entity Framework Core 2.1
-author: ajcvickers
+author: SamMonoRT
 ms.date: 02/20/2018
 uid: core/what-is-new/ef-core-2.1
 ---
@@ -117,7 +117,7 @@ var query = context.Customers.Select(
     c => c.Orders.Where(o => o.Amount  > 100).Select(o => o.Amount));
 ```
 
-By including `ToList()` in the right place, you indicate that buffering is appropriate for the Orders, which enable the optimization:
+By including `ToListAsync()` in the right place, you indicate that buffering is appropriate for the Orders, which enable the optimization:
 
 ```csharp
 var query = context.Customers.Select(

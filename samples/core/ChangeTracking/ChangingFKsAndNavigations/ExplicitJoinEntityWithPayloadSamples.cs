@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 
@@ -8,23 +9,23 @@ namespace JoinEntityWithPayload;
 
 public class ExplicitJoinEntityWithPayloadSamples
 {
-    public static void Many_to_many_relationships_7()
+    public static async Task Many_to_many_relationships_7()
     {
         Console.WriteLine($">>>> Sample: {nameof(Many_to_many_relationships_7)}");
         Console.WriteLine();
 
-        Helpers.RecreateCleanDatabase();
-        Helpers.PopulateDatabase();
+        await Helpers.RecreateCleanDatabase();
+        await Helpers.PopulateDatabase();
 
         #region Many_to_many_relationships_7
         using var context = new BlogsContext();
 
-        var post = context.Posts.Single(e => e.Id == 3);
-        var tag = context.Tags.Single(e => e.Id == 1);
+        var post = await context.Posts.SingleAsync(e => e.Id == 3);
+        var tag = await context.Tags.SingleAsync(e => e.Id == 1);
 
         post.Tags.Add(tag);
 
-        context.SaveChanges();
+        await context.SaveChangesAsync();
 
         Console.WriteLine(context.ChangeTracker.DebugView.LongView);
         #endregion
@@ -35,15 +36,15 @@ public class ExplicitJoinEntityWithPayloadSamples
 
 public static class Helpers
 {
-    public static void RecreateCleanDatabase()
+    public static async Task RecreateCleanDatabase()
     {
         using var context = new BlogsContext(quiet: true);
 
-        context.Database.EnsureDeleted();
-        context.Database.EnsureCreated();
+        await context.Database.EnsureDeletedAsync();
+        await context.Database.EnsureCreatedAsync();
     }
 
-    public static void PopulateDatabase()
+    public static async Task PopulateDatabase()
     {
         using var context = new BlogsContext(quiet: true);
 
@@ -87,7 +88,7 @@ public static class Helpers
             new Tag { Text = "Visual Studio" },
             new Tag { Text = "EF Core" });
 
-        context.SaveChanges();
+        await context.SaveChangesAsync();
     }
 }
 

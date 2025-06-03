@@ -1,32 +1,33 @@
 ﻿using System;
+using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 public static class HasConversionSample
 {
-    public static void Can_set_value_converter_type_using_generic_method()
+    public static async Task Can_set_value_converter_type_using_generic_method()
     {
         Console.WriteLine($">>>> Sample: {nameof(Can_set_value_converter_type_using_generic_method)}");
         Console.WriteLine();
 
-        Helpers.RecreateCleanDatabase();
-        Helpers.PopulateDatabase();
+        await Helpers.RecreateCleanDatabase();
+        await Helpers.PopulateDatabase();
 
         Console.WriteLine();
     }
 
     public static class Helpers
     {
-        public static void RecreateCleanDatabase()
+        public static async Task RecreateCleanDatabase()
         {
             using var context = new CurrencyContext(quiet: true);
 
-            context.Database.EnsureDeleted();
-            context.Database.EnsureCreated();
+            await context.Database.EnsureDeletedAsync();
+            await context.Database.EnsureCreatedAsync();
         }
 
-        public static void PopulateDatabase()
+        public static async Task PopulateDatabase()
         {
             using var context = new CurrencyContext();
 
@@ -68,7 +69,7 @@ public static class HasConversionSample
                     Currency = Currency.PoundsSterling
                 });
 
-            context.SaveChanges();
+            await context.SaveChangesAsync();
         }
     }
 

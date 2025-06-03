@@ -1,7 +1,7 @@
 ---
 title: Entity Framework 5 License - EF6
 description: Entity Framework 5 License
-author: ajcvickers
+author: SamMonoRT
 ms.date: 10/23/2016
 ---
 # Entity Framework 5 License (ENU)
@@ -43,4 +43,4 @@ The following license terms describe additional use terms for this supplement. T
     -   the code be disclosed or distributed in source code form; or
     -   others have the right to modify it.
 
-**2. SUPPORT SERVICES FOR SUPPLEMENT.** Microsoft provides support services for this software as described at https://www.support.microsoft.com/common/international.aspx.
+**2. SUPPORT SERVICES FOR SUPPLEMENT.** Microsoft provides support services for this software as described at https://support.microsoft.com/.

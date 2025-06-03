@@ -1,27 +1,28 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Extensions.Logging;
 
 public class Samples
 {
-    public static void Change_tracker_debug_view_1()
+    public static async Task Change_tracker_debug_view_1()
     {
         Console.WriteLine($">>>> Sample: {nameof(Change_tracker_debug_view_1)}");
         Console.WriteLine();
 
-        Helpers.RecreateCleanDatabase();
-        Helpers.PopulateDatabase();
+        await Helpers.RecreateCleanDatabase();
+        await Helpers.PopulateDatabase();
 
         #region Change_tracker_debug_view_1a
         using var context = new BlogsContext();
 
-        var blogs = context.Blogs
+        var blogs = await context.Blogs
             .Include(e => e.Posts).ThenInclude(e => e.Tags)
             .Include(e => e.Assets)
-            .ToList();
+            .ToListAsync();
 
         // Mark something Added
         blogs[0].Posts.Add(
@@ -55,20 +56,20 @@ public class Samples
         Console.WriteLine();
     }
 
-    public static void Change_tracker_logging_1()
+    public static async Task Change_tracker_logging_1()
     {
         Console.WriteLine($">>>> Sample: {nameof(Change_tracker_logging_1)}");
         Console.WriteLine();
 
-        Helpers.RecreateCleanDatabase();
-        Helpers.PopulateDatabase();
+        await Helpers.RecreateCleanDatabase();
+        await Helpers.PopulateDatabase();
 
         using var context = new BlogsContext(LogLevel.Debug);
 
-        var blogs = context.Blogs
+        var blogs = await context.Blogs
             .Include(e => e.Posts).ThenInclude(e => e.Tags)
             .Include(e => e.Assets)
-            .ToList();
+            .ToListAsync();
 
         // Mark something Added
         blogs[0].Posts.Add(
@@ -92,15 +93,15 @@ public class Samples
 
 public static class Helpers
 {
-    public static void RecreateCleanDatabase()
+    public static async Task RecreateCleanDatabase()
     {
         using var context = new BlogsContext(LogLevel.Error);
 
-        context.Database.EnsureDeleted();
-        context.Database.EnsureCreated();
+        await context.Database.EnsureDeletedAsync();
+        await context.Database.EnsureCreatedAsync();
     }
 
-    public static void PopulateDatabase()
+    public static async Task PopulateDatabase()
     {
         using var context = new BlogsContext(LogLevel.Error);
 
@@ -155,7 +156,7 @@ public static class Helpers
         context.AddRange(blogs);
         context.AddRange(tags);
 
-        context.SaveChanges();
+        await context.SaveChangesAsync();
     }
 }
 

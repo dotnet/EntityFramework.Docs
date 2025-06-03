@@ -1,17 +1,18 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 
 namespace EFSaving.RelatedData;
 
 public class Sample
 {
-    public static void Run()
+    public static async Task Run()
     {
         using (var context = new BloggingContext())
         {
-            context.Database.EnsureDeleted();
-            context.Database.EnsureCreated();
+            await context.Database.EnsureDeletedAsync();
+            await context.Database.EnsureCreatedAsync();
         }
 
         #region AddingGraphOfEntities
@@ -29,18 +30,18 @@ public class Sample
             };
 
             context.Blogs.Add(blog);
-            context.SaveChanges();
+            await context.SaveChangesAsync();
         }
         #endregion
 
         #region AddingRelatedEntity
         using (var context = new BloggingContext())
         {
-            var blog = context.Blogs.Include(b => b.Posts).First();
+            var blog = await context.Blogs.Include(b => b.Posts).FirstAsync();
             var post = new Post { Title = "Intro to EF Core" };
 
             blog.Posts.Add(post);
-            context.SaveChanges();
+            await context.SaveChangesAsync();
         }
         #endregion
 
@@ -48,21 +49,21 @@ public class Sample
         using (var context = new BloggingContext())
         {
             var blog = new Blog { Url = "http://blogs.msdn.com/visualstudio" };
-            var post = context.Posts.First();
+            var post = await context.Posts.FirstAsync();
 
             post.Blog = blog;
-            context.SaveChanges();
+            await context.SaveChangesAsync();
         }
         #endregion
 
         #region RemovingRelationships
         using (var context = new BloggingContext())
         {
-            var blog = context.Blogs.Include(b => b.Posts).First();
+            var blog = await context.Blogs.Include(b => b.Posts).FirstAsync();
             var post = blog.Posts.First();
 
             blog.Posts.Remove(post);
-            context.SaveChanges();
+            await context.SaveChangesAsync();
         }
         #endregion
     }

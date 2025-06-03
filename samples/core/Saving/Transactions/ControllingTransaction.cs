@@ -1,38 +1,39 @@
 using System;
 using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 
 namespace EFSaving.Transactions;
 
 public class ControllingTransaction
 {
-    public static void Run()
+    public static async Task Run()
     {
         using (var setupContext = new BloggingContext())
         {
-            setupContext.Database.EnsureDeleted();
-            setupContext.Database.EnsureCreated();
+            await setupContext.Database.EnsureDeletedAsync();
+            await setupContext.Database.EnsureCreatedAsync();
         }
 
         #region Transaction
         using var context = new BloggingContext();
-        using var transaction = context.Database.BeginTransaction();
+        await using var transaction = await context.Database.BeginTransactionAsync();
 
         try
         {
             context.Blogs.Add(new Blog { Url = "http://blogs.msdn.com/dotnet" });
-            context.SaveChanges();
+            await context.SaveChangesAsync();
 
             context.Blogs.Add(new Blog { Url = "http://blogs.msdn.com/visualstudio" });
-            context.SaveChanges();
+            await context.SaveChangesAsync();
 
-            var blogs = context.Blogs
+            var blogs = await context.Blogs
                 .OrderBy(b => b.Url)
-                .ToList();
+                .ToListAsync();
 
             // Commit transaction if all commands succeed, transaction will auto-rollback
             // when disposed if either commands fails
-            transaction.Commit();
+            await transaction.CommitAsync();
         }
         catch (Exception)
         {

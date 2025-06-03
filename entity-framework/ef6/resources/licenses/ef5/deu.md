@@ -1,7 +1,7 @@
 ---
 title: Entity Framework 5 License (DEU) - EF6
 description: Entity Framework 5 License (DEU)
-author: ajcvickers
+author: SamMonoRT
 ms.date: 10/23/2016
 ---
 # Entity Framework 5 License (DEU)
@@ -43,4 +43,4 @@ In den folgenden Lizenzbestimmungen werden zusätzliche Nutzungsbedingungen für
     -   der Code in Quellcodeform offen gelegt oder vertrieben wird
     -   andere das Recht haben, ihn zu ändern.
 
-**2. SUPPORTLEISTUNGEN FÜR SOFTWAREERGÄNZUNG.** Microsoft stellt Supportleistungen für diese Software bereit, die unter https://www.support.microsoft.com/common/international.aspx beschrieben werden.
+**2. SUPPORTLEISTUNGEN FÜR SOFTWAREERGÄNZUNG.** Microsoft stellt Supportleistungen für diese Software bereit, die unter https://support.microsoft.com/ beschrieben werden.

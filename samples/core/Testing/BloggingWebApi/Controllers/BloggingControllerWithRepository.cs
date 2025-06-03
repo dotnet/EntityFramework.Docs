@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using System.Threading.Tasks;
 using EF.Testing.BusinessLogic;
 using Microsoft.AspNetCore.Mvc;
 
@@ -17,34 +19,32 @@ public class BloggingControllerWithRepository : ControllerBase
         => _repository = repository;
 
     [HttpGet]
-    public Blog GetBlog(string name)
-        => _repository.GetBlogByName(name);
+    public async Task<Blog> GetBlog(string name)
+        => await _repository.GetBlogByNameAsync(name);
     #endregion
 
     [HttpGet]
-    public ActionResult<Blog[]> GetAllBlogs()
-        => _repository.GetAllBlogs().ToArray();
+    public IAsyncEnumerable<Blog> GetAllBlogs()
+        => _repository.GetAllBlogsAsync();
 
     [HttpPost]
-    public ActionResult AddBlog(string name, string url)
+    public async Task AddBlog(string name, string url)
     {
         _repository.AddBlog(new Blog { Name = name, Url = url });
-        _repository.SaveChanges();
-
-        return Ok();
+        await _repository.SaveChangesAsync();
     }
 
     [HttpPost]
-    public ActionResult UpdateBlogUrl(string name, string url)
+    public async Task<ActionResult> UpdateBlogUrl(string name, string url)
     {
-        var blog = _repository.GetBlogByName(name);
+        var blog = await _repository.GetBlogByNameAsync(name);
         if (blog is null)
         {
             return NotFound();
         }
 
         blog.Url = url;
-        _repository.SaveChanges();
+        await _repository.SaveChangesAsync();
 
         return Ok();
     }

@@ -1,22 +1,23 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 
 #nullable enable
 
 public static class ScaffoldingSample
 {
-    public static void Reverse_engineer_from_database()
+    public static async Task Reverse_engineer_from_database()
     {
         Console.WriteLine($">>>> Sample: {nameof(Reverse_engineer_from_database)}");
         Console.WriteLine();
 
         using var context = new BloggingWithNRTsContext();
 
-        context.Database.EnsureDeleted();
-        context.Database.EnsureCreated();
+        await context.Database.EnsureDeletedAsync();
+        await context.Database.EnsureCreatedAsync();
     }
-    
+
     // The code below was scaffolded from an existing database.
     // To replicate this, run this sample to create the database and then use the command line as documented in the text.
 

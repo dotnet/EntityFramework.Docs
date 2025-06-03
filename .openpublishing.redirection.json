@@ -191,6 +191,11 @@
             "redirect_document_id": false
         },
         {
+            "source_path": "entity-framework/core/get-started/xamarin.md",
+            "redirect_url": "/previous-versions/xamarin/xamarin-forms/data-cloud/data/entity-framework",
+            "redirect_document_id": false
+        },
+        {
             "source_path": "entity-framework/core/what-is-new/roadmap.md",
             "redirect_url": "/ef/core/what-is-new/index",
             "redirect_document_id": false

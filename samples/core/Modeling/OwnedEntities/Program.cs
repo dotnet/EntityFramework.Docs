@@ -1,16 +1,18 @@
 ﻿using System;
 using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace EFModeling.OwnedEntities;
 
 public static class Program
 {
-    private static void Main(string[] args)
+    private static async Task Main(string[] args)
     {
         using (var context = new OwnedEntityContext())
         {
-            context.Database.EnsureDeleted();
-            context.Database.EnsureCreated();
+            await context.Database.EnsureDeletedAsync();
+            await context.Database.EnsureCreatedAsync();
 
             context.Add(
                 new DetailedOrder
@@ -23,13 +25,13 @@ public static class Program
                     }
                 });
 
-            context.SaveChanges();
+            await context.SaveChangesAsync();
         }
 
         using (var context = new OwnedEntityContext())
         {
             #region DetailedOrderQuery
-            var order = context.DetailedOrders.First(o => o.Status == OrderStatus.Pending);
+            var order = await context.DetailedOrders.FirstAsync(o => o.Status == OrderStatus.Pending);
             Console.WriteLine($"First pending order will ship to: {order.OrderDetails.ShippingAddress.City}");
             #endregion
         }

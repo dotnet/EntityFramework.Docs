@@ -1,7 +1,7 @@
 ---
 title: The Load Method - EF6
 description: The Load Method in Entity Framework 6
-author: ajcvickers
+author: SamMonoRT
 ms.date: 10/23/2016
 uid: ef6/querying/load-method
 ---

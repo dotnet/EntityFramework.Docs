@@ -1,7 +1,7 @@
 ---
 title: Entity Framework Providers - EF6
 description: Entity Framework Providers in Entity Framework 6
-author: ajcvickers
+author: SamMonoRT
 ms.date: 06/27/2018
 uid: ef6/fundamentals/providers/index
 ---

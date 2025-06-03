@@ -1,31 +1,32 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 
 public static class GroupBySample
 {
-    public static void Translate_GroupBy_followed_by_FirstOrDefault_over_group()
+    public static async Task Translate_GroupBy_followed_by_FirstOrDefault_over_group()
     {
         Console.WriteLine($">>>> Sample: {nameof(Translate_GroupBy_followed_by_FirstOrDefault_over_group)}");
         Console.WriteLine();
 
-        Helpers.RecreateCleanDatabase();
-        Helpers.PopulateDatabase();
+        await Helpers.RecreateCleanDatabase();
+        await Helpers.PopulateDatabase();
 
         // Example 1. From #12088
         using (var context = new ShoesContext())
         {
             #region GroupBy1
-            var people = context.People
+            var people = await context.People
                 .Include(e => e.Shoes)
                 .GroupBy(e => e.FirstName)
                 .Select(
                     g => g.OrderBy(e => e.FirstName)
                         .ThenBy(e => e.LastName)
                         .FirstOrDefault())
-                .ToList();
+                .ToListAsync();
             #endregion
 
             Console.WriteLine();
@@ -42,7 +43,7 @@ public static class GroupBySample
         using (var context = new ShoesContext())
         {
             #region GroupBy2
-            var group = context.People
+            var group = await context.People
                 .Select(
                     p => new
                     {
@@ -51,7 +52,7 @@ public static class GroupBySample
                     })
                 .GroupBy(p => p.FirstName)
                 .Select(g => g.First())
-                .First();
+                .FirstAsync();
             #endregion
 
             Console.WriteLine();
@@ -63,12 +64,12 @@ public static class GroupBySample
         using (var context = new ShoesContext())
         {
             #region GroupBy3
-            var people = context.People
+            var people = await context.People
                 .Where(e => e.MiddleInitial == "Q" && e.Age == 20)
                 .GroupBy(e => e.LastName)
                 .Select(g => g.First().LastName)
                 .OrderBy(e => e.Length)
-                .ToList();
+                .ToListAsync();
             #endregion
 
             Console.WriteLine();
@@ -85,7 +86,7 @@ public static class GroupBySample
         using (var context = new ShoesContext())
         {
             #region GroupBy4
-            var results = (from person in context.People
+            var results = await (from person in context.People
                            join shoes in context.Shoes on person.Age equals shoes.Age
                            group shoes by shoes.Style
                            into people
@@ -95,7 +96,7 @@ public static class GroupBySample
                                Style = people.Select(p => p.Style).FirstOrDefault(),
                                Count = people.Count()
                            })
-                .ToList();
+                .ToListAsync();
             #endregion
 
             Console.WriteLine();
@@ -112,11 +113,11 @@ public static class GroupBySample
         using (var context = new ShoesContext())
         {
             #region GroupBy5
-            var results = context.People
+            var results = await context.People
                 .GroupBy(e => e.FirstName)
                 .Select(g => g.First().LastName)
                 .OrderBy(e => e)
-                .ToList();
+                .ToListAsync();
             #endregion
 
             Console.WriteLine();
@@ -133,11 +134,12 @@ public static class GroupBySample
         using (var context = new ShoesContext())
         {
             #region GroupBy6
-            var results = context.People.Where(e => e.Age == 20)
+            var results = await context.People
+                .Where(e => e.Age == 20)
                 .GroupBy(e => e.Id)
                 .Select(g => g.First().MiddleInitial)
                 .OrderBy(e => e)
-                .ToList();
+                .ToListAsync();
             #endregion
 
             Console.WriteLine();
@@ -156,7 +158,7 @@ public static class GroupBySample
             #region GroupBy7
             var size = 11;
             var results
-                = context.People
+                = await context.People
                     .Where(
                         p => p.Feet.Size == size
                              && p.MiddleInitial != null
@@ -174,7 +176,7 @@ public static class GroupBySample
                             g.Key.Size,
                             Min = g.Min(p => p.Feet.Size),
                         })
-                    .ToList();
+                    .ToListAsync();
             #endregion
 
             Console.WriteLine();
@@ -191,7 +193,7 @@ public static class GroupBySample
         using (var context = new ShoesContext())
         {
             #region GroupBy8
-            var result = context.People
+            var result = await context.People
                 .Include(x => x.Shoes)
                 .Include(x => x.Feet)
                 .GroupBy(
@@ -209,7 +211,7 @@ public static class GroupBySample
                         SumOver60 = x.Sum(el => el.Id) / (decimal)60,
                         TotalCallOutCharges = x.Sum(el => el.Feet.Size == 11 ? 1 : 0)
                     })
-                .Count();
+                .CountAsync();
             #endregion
 
             Console.WriteLine();
@@ -221,14 +223,14 @@ public static class GroupBySample
         using (var context = new ShoesContext())
         {
             #region GroupBy9
-            var results = context.People
+            var results = await context.People
                 .GroupBy(n => n.FirstName)
                 .Select(g => new
                 {
                     Feet = g.Key,
                     Total = g.Sum(n => n.Feet.Size)
                 })
-                .ToList();
+                .ToListAsync();
             #endregion
 
             Console.WriteLine();
@@ -280,7 +282,7 @@ public static class GroupBySample
 
             Console.WriteLine();
 
-            foreach (var result in results)
+            await foreach (var result in results.AsAsyncEnumerable())
             {
                 Console.WriteLine($"{result.Id}: {result.Age} year old {result.Style}");
                 foreach (var value in result.Values)
@@ -296,11 +298,11 @@ public static class GroupBySample
         using (var context = new ShoesContext())
         {
             #region GroupBy11
-            var grouping = context.People
+            var grouping = await context.People
                 .GroupBy(i => i.LastName)
                 .Select(g => new { LastName = g.Key, Count = g.Count() , First = g.FirstOrDefault(), Take = g.Take(2)})
                 .OrderByDescending(e => e.LastName)
-                .ToList();
+                .ToListAsync();
             #endregion
 
             Console.WriteLine();
@@ -322,13 +324,13 @@ public static class GroupBySample
         using (var context = new ShoesContext())
         {
             #region GroupBy12
-            var grouping = context.People
+            var grouping = await context.People
                 .Include(e => e.Shoes)
                 .OrderBy(e => e.FirstName)
                 .ThenBy(e => e.LastName)
                 .GroupBy(e => e.FirstName)
                 .Select(g => new { Name = g.Key, People = g.ToList()})
-                .ToList();
+                .ToListAsync();
             #endregion
 
             Console.WriteLine();
@@ -348,14 +350,14 @@ public static class GroupBySample
         using (var context = new ShoesContext())
         {
             #region GroupBy13
-            var grouping = context.People
+            var grouping = await context.People
                 .GroupBy(m => new {m.FirstName, m.MiddleInitial })
                 .Select(am => new
                 {
                     Key = am.Key,
                     Items = am.ToList()
                 })
-                .ToList();
+                .ToListAsync();
             #endregion
 
             Console.WriteLine();
@@ -376,15 +378,15 @@ public static class GroupBySample
 
     public static class Helpers
     {
-        public static void RecreateCleanDatabase()
+        public static async Task RecreateCleanDatabase()
         {
             using var context = new ShoesContext(quiet: true);
 
-            context.Database.EnsureDeleted();
-            context.Database.EnsureCreated();
+            await context.Database.EnsureDeletedAsync();
+            await context.Database.EnsureCreatedAsync();
         }
 
-        public static void PopulateDatabase()
+        public static async Task PopulateDatabase()
         {
             using var context = new ShoesContext(quiet: true);
 
@@ -498,7 +500,7 @@ public static class GroupBySample
                     Shoes = { new() { Style = "Sneakers", Age = 20 }, new() { Style = "Dress", Age = 21 } }
                 });
 
-            context.SaveChanges();
+            await context.SaveChangesAsync();
         }
     }
 

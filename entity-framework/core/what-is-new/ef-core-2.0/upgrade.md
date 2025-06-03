@@ -1,7 +1,7 @@
 ---
 title: Upgrading from previous versions to EF Core 2 - EF Core
 description: Instructions and notes for upgrading to Entity Framework Core 2.0
-author: ajcvickers
+author: SamMonoRT
 ms.date: 10/25/2021
 uid: core/what-is-new/ef-core-2.0/upgrade
 ---
@@ -152,17 +152,17 @@ public class Person
 ...
 var person = new Person();
 context.People.Add(person);
-context.SaveChanges();
+await context.SaveChangesAsync();
 ...
 
 // returns one result
-context.People.ToList();
+await context.People.ToListAsync();
 
 // returns no results because 'NativeLanguage' navigation is required but has not been provided
-context.People.Include(p => p.NativeLanguage).ToList(); 
+await context.People.Include(p => p.NativeLanguage).ToListAsync(); 
 
 // returns one result because 'Sibling' navigation is optional so it doesn't have to be provided
-context.People.Include(p => p.Sibling).ToList(); 
+await context.People.Include(p => p.Sibling).ToListAsync();
 ```
 
 ## Read-only API changes

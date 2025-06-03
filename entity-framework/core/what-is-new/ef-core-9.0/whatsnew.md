@@ -1,7 +1,7 @@
 ---
 title: What's New in EF Core 9
 description: Overview of new features in EF Core 9
-author: ajcvickers
+author: SamMonoRT
 ms.date: 10/21/2024
 uid: core/what-is-new/ef-core-9.0/whatsnew
 ---
@@ -297,7 +297,7 @@ Note, however, that we plan to fully remove sync support in EF 11, so start upda
 ## AOT and pre-compiled queries
 
 > [!WARNING]
-> NativeAOT and query precompilation are highly experimental features, and are not yet suited for production use. The support described below should be viewed as infrastructure towards the final feature, which will likely be released with EF 10. We encourage you to experiment with the current support and report on your experiences, but recommend against deploying EF NativeAOT applications in production.
+> NativeAOT and query precompilation are highly experimental features, and are not yet suited for production use. The support described below should be viewed as infrastructure towards the final feature, which will be released in a future version. We encourage you to experiment with the current support and report on your experiences, but recommend against deploying EF NativeAOT applications in production.
 
 EF 9.0 brings initial, experimental support for [.NET NativeAOT](/dotnet/core/deploying/native-aot), allowing the publishing of ahead-of-time compiled applications which make use of EF to access databases. To support LINQ queries in NativeAOT mode, EF relies on _query precompilation_: this mechanism statically identifies EF LINQ queries and generates C# [_interceptors_](/dotnet/csharp/whats-new/csharp-12#interceptors), which contain code to execute each specific query. This can significantly cut down on your application's startup time, as the heavy lifting of processing and compiling your LINQ queries into SQL no longer happens every time your application starts up. Instead, each query's interceptor contains the finalized SQL for that query, as well as optimized code to materialize database results as .NET objects.
 
@@ -1086,7 +1086,7 @@ The above were only some of the more important query improvements in EF9; see [t
 
 ### Protection against concurrent migrations
 
-EF9 introduces a locking mechanism to protect against multiple migration executions happening simultaneously, as that could leave the database in a corrupted state. This doesn't happen when migrations are deployed to the production environment using [recommended methods](/ef/core/managing-schemas/migrations/applying#sql-scripts), but can happen if migrations are applied at runtime using the [`DbContext.Database.Migrate()`](/dotnet/api/microsoft.entityframeworkcore.relationaldatabasefacadeextensions.migrate) method. We recommend applying migrations at deployment, rather than as part of application startup, but that can result in more complicated application architectures (e.g. [when using .NET Aspire projects](/dotnet/aspire/database/ef-core-migrations)).
+EF9 introduces a locking mechanism to protect against multiple migration executions happening simultaneously, as that could leave the database in a corrupted state. This doesn't happen when migrations are deployed to the production environment using [recommended methods](/ef/core/managing-schemas/migrations/applying#sql-scripts), but can happen if migrations are applied at runtime using the [`DbContext.Database.MigrateAsync()`](/dotnet/api/microsoft.entityframeworkcore.relationaldatabasefacadeextensions.migrate) method. We recommend applying migrations at deployment, rather than as part of application startup, but that can result in more complicated application architectures (e.g. [when using .NET Aspire projects](/dotnet/aspire/database/ef-core-migrations)).
 
 > [!NOTE]
 > If you are using Sqlite database, see [potential issues associated with this feature](/ef/core/providers/sqlite/limitations#concurrent-migrations-protection).

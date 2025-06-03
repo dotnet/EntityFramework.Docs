@@ -1,7 +1,7 @@
 ---
 title: Breaking changes in EF Core 8.0 (EF8) - EF Core
 description: Complete list of breaking changes introduced in Entity Framework Core 8.0 (EF8)
-author: ajcvickers
+author: SamMonoRT
 ms.date: 10/04/2024
 uid: core/what-is-new/ef-core-8.0/breaking-changes
 ---
@@ -151,7 +151,9 @@ WHERE [b].[Name] IN (
 )
 ```
 
-However, after the release of EF 8 it turned out that while the new SQL is more efficient for most cases, it can be dramatically less efficient in a minority of cases, even causing query timeouts in some cases
+However, after the release of EF 8 it turned out that while the new SQL is more efficient for most cases, it can be dramatically less efficient in a minority of cases, even causing query timeouts in some cases.
+
+Please see [this comment](https://github.com/dotnet/efcore/issues/32394#issuecomment-2266634632) for a summary of the change in EF 8, the partial mitigations provided in EF 9, and the plan going forward for EF 10.
 
 #### Mitigations
 

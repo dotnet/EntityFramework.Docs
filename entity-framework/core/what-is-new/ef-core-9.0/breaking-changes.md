@@ -1,8 +1,8 @@
 ---
 title: Breaking changes in EF Core 9 (EF9) - EF Core
 description: List of breaking changes introduced in Entity Framework Core 9 (EF9)
-author: ajcvickers
-ms.date: 10/07/2024
+author: SamMonoRT
+ms.date: 01/17/2025
 uid: core/what-is-new/ef-core-9.0/breaking-changes
 ---
 
@@ -26,6 +26,8 @@ EF Core 9 targets .NET 8. This means that existing applications that target .NET
 | **Breaking change**                                                                                       | **Impact** |
 |:----------------------------------------------------------------------------------------------------------|------------|
 | [Exception is thrown when applying migrations if there are pending model changes](#pending-model-changes) | High       |
+| [Exception is thrown when applying migrations in an explicit transaction](#migrations-transaction)        | High       |
+| [`Microsoft.EntityFrameworkCore.Design` not found when using EF tools](#tools-design)                     | Medium     |
 | [`EF.Functions.Unhex()` now returns `byte[]?`](#unhex)                                                    | Low        |
 | [SqlFunctionExpression's nullability arguments' arity validated](#sqlfunctionexpression-nullability)      | Low        |
 | [`ToString()` method now returns empty string for `null` instances](#nullable-tostring)                   | Low        |
@@ -46,7 +48,7 @@ If the model has pending changes compared to the last migration they are not app
 #### New behavior
 
 Starting with EF Core 9.0, if the model has pending changes compared to the last migration an exception is thrown when `dotnet ef database update`, `Migrate` or `MigrateAsync` is called:
-> The model for context 'DbContext' has pending changes. Add a new migration before updating the database. This exception can be suppressed or logged by passing event ID 'RelationalEventId.PendingModelChangesWarning' to the 'ConfigureWarnings' method in 'DbContext.OnConfiguring' or 'AddDbContext'.
+> :::no-loc text="The model for context 'DbContext' has pending changes. Add a new migration before updating the database. This exception can be suppressed or logged by passing event ID 'RelationalEventId.PendingModelChangesWarning' to the 'ConfigureWarnings' method in 'DbContext.OnConfiguring' or 'AddDbContext'.":::
 
 #### Why
 
@@ -64,12 +66,96 @@ There are several common situations when this exception can be thrown:
   - **Mitigation**: Add a new migration, examine its contents to locate the cause, and replace the dynamic data with a static, hardcoded value in the model. The migration should be recreated after the model is fixed. If dynamic data has to be used for seeding consider using [the new seeding pattern](/ef/core/what-is-new/ef-core-9.0/whatsnew#improved-data-seeding) instead of `HasData()`.
 - The last migration was created for a different provider than the one used to apply the migrations.
   - **Mitigation**: This is an unsupported scenario. The warning can be suppressed using the code snippet below, but this scenario will likely stop working in a future EF Core release. The recommended solution is [to generate a separate set of migrations for each provider](xref:core/managing-schemas/migrations/providers).
-- The migrations are generated or choosen dynamically by replacing some of the EF services.
+- The migrations are generated or chosen dynamically by replacing some of the EF services.
   - **Mitigation**: The warning is a false positive in this case and should be suppressed:
   
     `options.ConfigureWarnings(w => w.Ignore(RelationalEventId.PendingModelChangesWarning))`
 
 If your scenario doesn't fall under any of the above cases and adding a new migration creates the same migration each time or an empty migration and the exception is still thrown then create a small repro project and [share it with the EF team in a new issue](https://github.com/dotnet/efcore/issues/new/choose).
+
+<a name="migrations-transaction"></a>
+
+### Exception is thrown when applying migrations in an explicit transaction
+
+[Tracking Issue #17578](https://github.com/dotnet/efcore/issues/17578)
+
+#### Old behavior
+
+To apply migrations resiliently the following pattern was commonly used:
+
+```csharp
+await dbContext.Database.CreateExecutionStrategy().ExecuteAsync(async () =>
+{
+    await using var transaction = await dbContext.Database.BeginTransactionAsync(cancellationToken);
+    await dbContext.Database.MigrateAsync(cancellationToken);
+    await transaction.CommitAsync(cancellationToken);
+});
+```
+
+#### New behavior
+
+Starting with EF Core 9.0, `Migrate` and `MigrateAsync` calls will start a transaction and execute the commands using an `ExecutionStrategy` and if your app uses the above pattern an exception is thrown:
+> :::no-loc text="An error was generated for warning 'Microsoft.EntityFrameworkCore.Migrations.MigrationsUserTransactionWarning': A transaction was started before applying migrations. This prevents a database lock to be acquired and hence the database will not be protected from concurrent migration applications. The transactions and execution strategy are already managed by EF as needed. Remove the external transaction. This exception can be suppressed or logged by passing event ID 'RelationalEventId.MigrationsUserTransactionWarning' to the 'ConfigureWarnings' method in 'DbContext.OnConfiguring' or 'AddDbContext'.":::
+
+#### Why
+
+Using an explicit transaction prevents a database lock to be acquired and hence the database will not be protected from concurrent migration applications, it also limits EF on how it can manage the transactions internally.
+
+#### Mitigations
+
+If there is only one database call inside the transaction then remove the external transaction and `ExecutionStrategy`:
+
+```csharp
+await dbContext.Database.MigrateAsync(cancellationToken);
+```
+
+Otherwise, if your scenario requires an explicit transaction and you have other mechanism in place to prevent concurrent migration application, then ignore the warning:
+  
+```csharp
+options.ConfigureWarnings(w => w.Ignore(RelationalEventId.MigrationsUserTransactionWarning))
+```
+
+## Medium-impact changes
+
+<a name="tools-design"></a>
+
+### `Microsoft.EntityFrameworkCore.Design` not found when using EF tools
+
+[Tracking Issue #35265](https://github.com/dotnet/efcore/issues/35265)
+
+#### Old behavior
+
+Previusly, the EF tools required `Microsoft.EntityFrameworkCore.Design` to be referenced in the following way.
+
+```XML
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="*.0.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+```
+
+#### New behavior
+
+Starting with .NET SDK 9.0.200 an exception is thrown when an EF tool is invoked:
+> :::no-loc text="Could not load file or assembly 'Microsoft.EntityFrameworkCore.Design, Culture=neutral, PublicKeyToken=null'. The system cannot find the file specified.":::
+
+#### Why
+
+EF tools were relying on an undocumented behavior of .NET SDK that caused private assets to be included in the generated `.deps.json` file. This was fixed in [sdk#45259](https://github.com/dotnet/sdk/pull/45259). Unfortunately, the EF change to account for this doesn't meet the servicing bar for EF 9.0.x, so it will be fixed in EF 10.
+
+#### Mitigations
+
+As a workaround before EF 10 is released you can mark the `Design` assembly reference as publishable:
+
+```XML
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="9.0.1">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <Publish>true</Publish>
+    </PackageReference>
+```
+
+This will include it in the generated `.deps.json` file, but has a side effect of copying `Microsoft.EntityFrameworkCore.Design.dll` to the output and publish folders.
 
 ## Low-impact changes
 
@@ -178,6 +264,7 @@ Extensive work has gone into making the Azure Cosmos DB provider better in 9.0. 
 |:---------------------------------------------------------------------------------------------------------------------------------------------------- | ---------- |
 | [The discriminator property is now named `$type` instead of `Discriminator`](#cosmos-discriminator-name-change)                                      | High       |
 | [The `id` property no longer contains the discriminator by default](#cosmos-id-property-changes)                                                     | High       |
+| [The JSON `id` property is mapped to the key](#cosmos-key-changes)                                                                                   | High       |
 | [Sync I/O via the Azure Cosmos DB provider is no longer supported](#cosmos-nosync)                                                                   | Medium     |
 | [SQL queries must now project JSON values directly](#cosmos-sql-queries-with-value)                                                                  | Medium     |
 | [Undefined results are now automatically filtered from query results](#cosmos-undefined-filtering)                                                   | Medium     |
@@ -248,6 +335,38 @@ modelBuilder.Entity<Session>().HasDiscriminatorInJsonId();
 Doing this for all your top-level entity types will make EF behave just like before.
 
 At this point, if you wish, you can also update all your documents to rewrite their JSON `id` property. Note that this is only possible if entities of different types don't share the same id value within the same container.
+
+<a name="cosmos-key-changes"></a>
+
+#### The JSON `id` property is mapped to the key
+
+[Tracking Issue #34179](https://github.com/dotnet/efcore/issues/34179)
+
+##### Old behavior
+
+Previously, EF created a shadow property mapped to the JSON `id` property, unless one of the properties was mapped to `id` explicitly.
+
+##### New behavior
+
+Starting with EF Core 9, the key property will be mapped to the JSON `id` property by convention if possible. This means that the key property will no longer be persisted in the document under a different name with the same value, so non-EF code consuming the documents and relying on this property being present would no longer function correctly.
+
+##### Why
+
+EF 9.0 generally changed the mapping to be more aligned with common Azure Cosmos DB NoSQL practices and expectations. And it is not common to store the key value twice in the document.
+
+##### Mitigations
+
+If you would like to preserve EF Core 8 behavior the easiest mitigation is to use a new configuration option that has been introduced for this purpose:
+
+```csharp
+modelBuilder.Entity<Session>().HasShadowId();
+```
+
+Doing this for all your top-level entity types will make EF behave just like before. Or you could apply it to all entity types in the model with one call:
+
+```csharp
+modelBuilder.HasShadowIds();
+```
 
 ### Medium-impact changes
 

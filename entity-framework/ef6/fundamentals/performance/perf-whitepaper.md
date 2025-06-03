@@ -1,7 +1,7 @@
 ---
 title: Performance considerations for EF4, EF5, and EF6 - EF6
 description: Performance considerations for Entity Framework 4, 5, and 6
-author: ajcvickers
+author: SamMonoRT
 ms.date: 10/23/2016
 uid: ef6/fundamentals/performance/perf-whitepaper
 ---

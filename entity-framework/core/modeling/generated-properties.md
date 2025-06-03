@@ -2,7 +2,7 @@
 title: Generated Values - EF Core
 description: How to configure value generation for properties when using Entity Framework Core
 author: AndriySvyryd
-ms.date: 1/10/2021
+ms.date: 5/27/2025
 uid: core/modeling/generated-properties
 ---
 
@@ -16,11 +16,28 @@ On relational databases, a column can be configured with a default value; if a r
 
 You can configure a default value on a property:
 
-[!code-csharp[Main](../../../samples/core/Modeling/GeneratedProperties/FluentAPI/DefaultValue.cs?name=DefaultValue&highlight=5)]
+[!code-csharp[Main](../../../samples/core/Modeling/GeneratedProperties/FluentAPI/DefaultValue.cs?name=DefaultValue&highlight=3)]
 
 You can also specify a SQL fragment that is used to calculate the default value:
 
-[!code-csharp[Main](../../../samples/core/Modeling/GeneratedProperties/FluentAPI/DefaultValueSql.cs?name=DefaultValueSql&highlight=5)]
+[!code-csharp[Main](../../../samples/core/Modeling/GeneratedProperties/FluentAPI/DefaultValueSql.cs?name=DefaultValueSql&highlight=3)]
+
+Starting with EF 10, for SQL Server you can explicitly specify the name for default value constraints, giving you more control over your database schema.
+
+[!code-csharp[Main](../../../samples/core/Modeling/GeneratedProperties/FluentAPI/DefaultValue.cs?name=DefaultValueNamed&highlight=3)]
+
+[!code-csharp[Main](../../../samples/core/Modeling/GeneratedProperties/FluentAPI/DefaultValueSql.cs?name=DefaultValueSqlNamed&highlight=3)]
+
+You can also call `UseNamedDefaultConstraints` to enable automatic naming of all the default constraints. Note that if you have existing migrations then the next migration you add will rename every single default constraint in your model.
+
+```C#
+protected override void OnModelCreating(ModelBuilder modelBuilder)
+{
+    modelBuilder
+        .UseNamedDefaultConstraints();
+}
+
+```
 
 ## Computed columns
 

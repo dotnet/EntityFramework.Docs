@@ -3,6 +3,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 
 namespace EFModeling.Relationships;
@@ -1386,11 +1387,11 @@ public class ManyToMany
 
     public class DirectJoinTableNoManyToMany
     {
-        public static void BuildModels()
+        public static async Task BuildModels()
         {
             using var context0 = new BlogContext0();
-            context0.Database.EnsureDeleted();
-            context0.Database.EnsureCreated();
+            await context0.Database.EnsureDeletedAsync();
+            await context0.Database.EnsureCreatedAsync();
 
             Console.WriteLine("Directly mapping the join table without creating a many-to-many relationship:");
             var modelDebugString = context0.Model.ToDebugString(indent: 2);
@@ -1439,11 +1440,11 @@ public class ManyToMany
 
     public class FullMappingWithJoinEntity
     {
-        public static void BuildModels()
+        public static async Task BuildModels()
         {
             using var context0 = new BlogContext0();
-            context0.Database.EnsureDeleted();
-            context0.Database.EnsureCreated();
+            await context0.Database.EnsureDeletedAsync();
+            await context0.Database.EnsureCreatedAsync();
 
             Console.WriteLine("Directly mapping the join table and including skip navigations for the many-to-many relationship:");
             var modelDebugString = context0.Model.ToDebugString(indent: 2);

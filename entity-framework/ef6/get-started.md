@@ -1,7 +1,7 @@
 ---
 title: Get started with Entity Framework 6 - EF6
 description: Get started with Entity Framework 6
-author: ajcvickers
+author: SamMonoRT
 ms.date: 10/23/2016
 uid: ef6/get-started
 ---

@@ -1,7 +1,7 @@
 ---
 title: Pre-generated mapping views - EF6
 description: Pre-generated mapping views in Entity Framework 6
-author: ajcvickers
+author: SamMonoRT
 ms.date: 10/23/2016
 uid: ef6/fundamentals/performance/pre-generated-views
 ---

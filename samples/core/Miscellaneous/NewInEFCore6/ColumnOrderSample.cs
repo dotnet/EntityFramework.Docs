@@ -1,20 +1,21 @@
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 
 public static class ColumnOrderSample
 {
-    public static void Can_use_ColumnAttribute_to_set_column_order()
+    public static async Task Can_use_ColumnAttribute_to_set_column_order()
     {
         Console.WriteLine($">>>> Sample: {nameof(Can_use_ColumnAttribute_to_set_column_order)}");
         Console.WriteLine();
 
         using var context = new EmployeeContext();
 
-        context.Database.EnsureDeleted();
-        context.Database.EnsureCreated();
+        await context.Database.EnsureDeletedAsync();
+        await context.Database.EnsureCreatedAsync();
 
         Console.WriteLine();
     }

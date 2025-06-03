@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace Performance.AspNetContextPoolingWithState.Controllers;
 
@@ -12,6 +13,6 @@ public class WeatherForecastController : ControllerBase
         => _dbContext = dbContext;
 
     [HttpGet(Name = "GetWeatherForecast")]
-    public IEnumerable<WeatherForecast> Get()
-        => _dbContext.Forecasts.OrderBy(f => f.Date).Take(5).ToArray();
+    public async Task<IEnumerable<WeatherForecast>> Get()
+        => await _dbContext.Forecasts.OrderBy(f => f.Date).Take(5).ToArrayAsync();
 }

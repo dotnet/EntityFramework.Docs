@@ -317,26 +317,26 @@ It's possible for the application itself to apply migrations programmatically, t
 * It's important to be able to roll back an applied migration in case of an issue. The other strategies provide this easily and out of the box.
 * The SQL commands are applied directly by the program, without giving the developer a chance to inspect or modify them. This can be dangerous in a production environment.
 
-To apply migrations programmatically, call `context.Database.Migrate()`. For example, a typical ASP.NET application can do the following:
+To apply migrations programmatically, call `context.Database.MigrateAsync()`. For example, a typical ASP.NET application can do the following:
 
 ```csharp
-public static void Main(string[] args)
+public static async Task Main(string[] args)
 {
     var host = CreateHostBuilder(args).Build();
 
     using (var scope = host.Services.CreateScope())
     {
         var db = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
-        db.Database.Migrate();
+        await db.Database.MigrateAsync();
     }
 
     host.Run();
 }
 ```
 
-Note that `Migrate()` builds on top of the `IMigrator` service, which can be used for more advanced scenarios. Use `myDbContext.GetInfrastructure().GetService<IMigrator>()` to access it.
+Note that `MigrateAsync()` builds on top of the `IMigrator` service, which can be used for more advanced scenarios. Use `myDbContext.GetInfrastructure().GetService<IMigrator>()` to access it.
 
 > [!WARNING]
 >
 > * Carefully consider before using this approach in production. Experience has shown that the simplicity of this deployment strategy is outweighed by the issues it creates. Consider generating SQL scripts from migrations instead.
-> * Don't call `EnsureCreated()` before `Migrate()`. `EnsureCreated()` bypasses Migrations to create the schema, which causes `Migrate()` to fail.
+> * Don't call `EnsureCreatedAsync()` before `MigrateAsync()`. `EnsureCreatedAsync()` bypasses Migrations to create the schema, which causes `MigrateAsync()` to fail.

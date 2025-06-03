@@ -1,7 +1,7 @@
 ﻿---
 title: Many-to-many relationships - EF Core
 description: How to configure many-to-many relationships between entity types when using Entity Framework Core
-author: ajcvickers
+author: SamMonoRT
 ms.date: 03/30/2023
 uid: core/modeling/relationships/many-to-many
 ---
@@ -89,7 +89,7 @@ EF allows for a more natural mapping through the introduction of two collection 
 > [!TIP]
 > These new navigations are known as "skip navigations", because they skip over the join entity to provide direct access to the other side of the many-to-many relationship.
 
-As is shown in the examples below, a many-to-many relationship can be mapped in this way--that is, with a .NET class for the join entity, and with both navigations for the two one-to-many relationships _and_ skip navigations exposed on the entity types. However, EF can manage the join entity transparently, without a .NET class defined for it, and without navigations for the two one-to-many relationships. For example:
+As is shown in the example above, a many-to-many relationship can be mapped in this way--that is, with a .NET class for the join entity, and with both navigations for the two one-to-many relationships _and_ skip navigations exposed on the entity types. However, EF can manage the join entity transparently, without a .NET class defined for it, and without navigations for the two one-to-many relationships. For example:
 
 <!--
         public class Post
@@ -1006,7 +1006,7 @@ CREATE TABLE "PersonPerson" (
 
 ## Symmetrical self-referencing many-to-many
 
-Sometimes a many-to-many relationship is naturally symmetrical. That is, if entity A is related to entity B, then entity B is also related to entity A. This is naturally modeled using a single navigation. For example, imagine the case where is person A is friends with person B, then person B is friends with person A:
+Sometimes a many-to-many relationship is naturally symmetrical. That is, if entity A is related to entity B, then entity B is also related to entity A. This is naturally modeled using a single navigation. For example, imagine the case where person A is friends with person B, and person B is friends with person A:
 
 <!--
         public class Person

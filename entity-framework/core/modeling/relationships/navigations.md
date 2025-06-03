@@ -1,7 +1,7 @@
 ﻿---
 title: Relationship navigations - EF Core
 description: Reference and collection navigations in Entity Framework Core
-author: ajcvickers
+author: SamMonoRT
 ms.date: 03/30/2023
 uid: core/modeling/relationships/navigations
 ---

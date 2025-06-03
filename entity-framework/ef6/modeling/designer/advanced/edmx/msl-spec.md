@@ -1,7 +1,7 @@
 ---
 title: MSL Specification - EF6
 description: MSL Specification in Entity Framework 6
-author: ajcvickers
+author: SamMonoRT
 ms.date: 08/23/2024
 uid: ef6/modeling/designer/advanced/edmx/msl-spec
 ---

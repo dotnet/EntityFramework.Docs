@@ -1,7 +1,7 @@
 ﻿---
 title: One-to-one relationships - EF Core
 description: How to configure one-to-one relationships between entity types when using Entity Framework Core
-author: ajcvickers
+author: SamMonoRT
 ms.date: 03/30/2023
 uid: core/modeling/relationships/one-to-one
 ---

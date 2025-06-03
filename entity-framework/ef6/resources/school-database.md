@@ -1,7 +1,7 @@
 ---
 title: School Sample Database - EF6
 description: School Sample Database for Entity Framework 6
-author: ajcvickers
+author: SamMonoRT
 ms.date: 10/23/2016
 uid: ef6/resources/school-database
 ---

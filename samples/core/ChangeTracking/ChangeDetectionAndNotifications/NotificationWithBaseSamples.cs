@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 
@@ -11,17 +12,17 @@ namespace NotificationWithBase;
 
 public class NotificationWithBaseSamples
 {
-    public static void Notification_entities_2()
+    public static async Task Notification_entities_2()
     {
         Console.WriteLine($">>>> Sample: {nameof(Notification_entities_2)}");
         Console.WriteLine();
 
-        Helpers.RecreateCleanDatabase();
-        Helpers.PopulateDatabase();
+        await Helpers.RecreateCleanDatabase();
+        await Helpers.PopulateDatabase();
 
         #region Notification_entities_2
         using var context = new BlogsContext();
-        var blog = context.Blogs.Include(e => e.Posts).First(e => e.Name == ".NET Blog");
+        var blog = await context.Blogs.Include(e => e.Posts).FirstAsync(e => e.Name == ".NET Blog");
 
         // Change a property value
         blog.Name = ".NET Blog (Updated!)";
@@ -42,15 +43,15 @@ public class NotificationWithBaseSamples
 
 public static class Helpers
 {
-    public static void RecreateCleanDatabase()
+    public static async Task RecreateCleanDatabase()
     {
         using var context = new BlogsContext(quiet: true);
 
-        context.Database.EnsureDeleted();
-        context.Database.EnsureCreated();
+        await context.Database.EnsureDeletedAsync();
+        await context.Database.EnsureCreatedAsync();
     }
 
-    public static void PopulateDatabase()
+    public static async Task PopulateDatabase()
     {
         using var context = new BlogsContext(quiet: true);
 
@@ -91,7 +92,7 @@ public static class Helpers
                 }
             });
 
-        context.SaveChanges();
+        await context.SaveChangesAsync();
     }
 }
 

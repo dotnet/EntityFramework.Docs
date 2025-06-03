@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 
@@ -8,17 +10,17 @@ namespace Snapshot;
 
 public class SnapshotSamples
 {
-    public static void Snapshot_change_tracking_1()
+    public static async Task Snapshot_change_tracking_1()
     {
         Console.WriteLine($">>>> Sample: {nameof(Snapshot_change_tracking_1)}");
         Console.WriteLine();
 
-        Helpers.RecreateCleanDatabase();
-        Helpers.PopulateDatabase();
+        await Helpers.RecreateCleanDatabase();
+        await Helpers.PopulateDatabase();
 
         #region Snapshot_change_tracking_1
         using var context = new BlogsContext();
-        var blog = context.Blogs.Include(e => e.Posts).First(e => e.Name == ".NET Blog");
+        var blog = await context.Blogs.Include(e => e.Posts).FirstAsync(e => e.Name == ".NET Blog");
 
         // Change a property value
         blog.Name = ".NET Blog (Updated!)";
@@ -38,17 +40,17 @@ public class SnapshotSamples
         Console.WriteLine();
     }
 
-    public static void Snapshot_change_tracking_2()
+    public static async Task Snapshot_change_tracking_2()
     {
         Console.WriteLine($">>>> Sample: {nameof(Snapshot_change_tracking_2)}");
         Console.WriteLine();
 
-        Helpers.RecreateCleanDatabase();
-        Helpers.PopulateDatabase();
+        await Helpers.RecreateCleanDatabase();
+        await Helpers.PopulateDatabase();
 
         #region Snapshot_change_tracking_2
         using var context = new BlogsContext();
-        var blog = context.Blogs.Include(e => e.Posts).First(e => e.Name == ".NET Blog");
+        var blog = await context.Blogs.Include(e => e.Posts).FirstAsync(e => e.Name == ".NET Blog");
 
         // Change a property value
         context.Entry(blog).Property(e => e.Name).CurrentValue = ".NET Blog (Updated!)";
@@ -71,15 +73,15 @@ public class SnapshotSamples
 
 public static class Helpers
 {
-    public static void RecreateCleanDatabase()
+    public static async Task RecreateCleanDatabase()
     {
         using var context = new BlogsContext(quiet: true);
 
-        context.Database.EnsureDeleted();
-        context.Database.EnsureCreated();
+        await context.Database.EnsureDeletedAsync();
+        await context.Database.EnsureCreatedAsync();
     }
 
-    public static void PopulateDatabase()
+    public static async Task PopulateDatabase()
     {
         using var context = new BlogsContext(quiet: true);
 
@@ -120,7 +122,7 @@ public static class Helpers
                 }
             });
 
-        context.SaveChanges();
+        await context.SaveChangesAsync();
     }
 }
 
@@ -181,7 +183,7 @@ public class BlogsContext : DbContext
     }
 
     #region SaveChanges
-    public override int SaveChanges()
+    public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
     {
         foreach (var entityEntry in ChangeTracker.Entries<PostTag>()) // Detects changes automatically
         {
@@ -195,7 +197,7 @@ public class BlogsContext : DbContext
         try
         {
             ChangeTracker.AutoDetectChangesEnabled = false;
-            return base.SaveChanges(); // Avoid automatically detecting changes again here
+            return await base.SaveChangesAsync(cancellationToken); // Avoid automatically detecting changes again here
         }
         finally
         {

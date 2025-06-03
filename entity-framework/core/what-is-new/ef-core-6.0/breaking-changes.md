@@ -1,7 +1,7 @@
 ---
 title: Breaking changes in EF Core 6.0 - EF Core
 description: Complete list of breaking changes introduced in Entity Framework Core 6.0
-author: ajcvickers
+author: SamMonoRT
 ms.date: 09/21/2022
 uid: core/what-is-new/ef-core-6.0/breaking-changes
 ---
@@ -770,7 +770,7 @@ public class Bar
 A no-tracking query for `Foo` including `Bar` set `Foo.Bar` to the entity queried from the database. For example, this code:
 
 ```csharp
-var foo = context.Foos.AsNoTracking().Include(e => e.Bar).Single();
+var foo = await context.Foos.AsNoTracking().Include(e => e.Bar).SingleAsync();
 Console.WriteLine($"Foo.Bar.Id = {foo.Bar.Id}");
 ```
 
@@ -779,7 +779,7 @@ Printed `Foo.Bar.Id = 1`.
 However, the same query run for tracking didn't overwrite `Foo.Bar` with the entity queried from the database. For example, this code:
 
 ```csharp
-var foo = context.Foos.Include(e => e.Bar).Single();
+var foo = await context.Foos.Include(e => e.Bar).SingleAsync();
 Console.WriteLine($"Foo.Bar.Id = {foo.Bar.Id}");
 ```
 
@@ -790,14 +790,14 @@ Printed `Foo.Bar.Id = 0`.
 In EF Core 6.0, the behavior of tracking queries now matches that of no-tracking queries. This means that both this code:
 
 ```csharp
-var foo = context.Foos.AsNoTracking().Include(e => e.Bar).Single();
+var foo = await context.Foos.AsNoTracking().Include(e => e.Bar).SingleAsync();
 Console.WriteLine($"Foo.Bar.Id = {foo.Bar.Id}");
 ```
 
 And this code:
 
 ```csharp
-var foo = context.Foos.Include(e => e.Bar).Single();
+var foo = await context.Foos.Include(e => e.Bar).SingleAsync();
 Console.WriteLine($"Foo.Bar.Id = {foo.Bar.Id}");
 ```
 

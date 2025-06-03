@@ -1,38 +1,40 @@
 ﻿using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace EFQuerying.Overview;
 
 internal class Program
 {
-    private static void Main(string[] args)
+    private static async Task Main(string[] args)
     {
         using (var context = new BloggingContext())
         {
-            context.Database.EnsureDeleted();
-            context.Database.EnsureCreated();
+            await context.Database.EnsureDeletedAsync();
+            await context.Database.EnsureCreatedAsync();
         }
 
         #region LoadingAllData
         using (var context = new BloggingContext())
         {
-            var blogs = context.Blogs.ToList();
+            var blogs = await context.Blogs.ToListAsync();
         }
         #endregion
 
         #region LoadingSingleEntity
         using (var context = new BloggingContext())
         {
-            var blog = context.Blogs
-                .Single(b => b.BlogId == 1);
+            var blog = await context.Blogs
+                .SingleAsync(b => b.BlogId == 1);
         }
         #endregion
 
         #region Filtering
         using (var context = new BloggingContext())
         {
-            var blogs = context.Blogs
+            var blogs = await context.Blogs
                 .Where(b => b.Url.Contains("dotnet"))
-                .ToList();
+                .ToListAsync();
         }
         #endregion
     }

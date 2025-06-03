@@ -28,14 +28,14 @@ public class BloggingRepository : IBloggingRepository
     public BloggingRepository(BloggingContext context)
         => _context = context;
 
-    public Blog GetBlogByName(string name)
-        => _context.Blogs.FirstOrDefault(b => b.Name == name);
+    public async Task<Blog> GetBlogByNameAsync(string name)
+        => await _context.Blogs.FirstOrDefaultAsync(b => b.Name == name);
 
     // Other code...
 }
 ```
 
-There's not much to it: the repository simply wraps an EF Core context, and exposes methods which execute the database queries and updates on it. A key point to note is that our `GetAllBlogs` method returns `IEnumerable<Blog>`, and not `IQueryable<Blog>`. Returning the latter would mean that query operators can still be composed over the result, requiring that EF Core still be involved in translating the query; this would defeat the purpose of having a repository in the first place. `IEnumerable<Blog>` allows us to easily stub or mock what the repository returns.
+There's not much to it: the repository simply wraps an EF Core context, and exposes methods which execute the database queries and updates on it. A key point to note is that our `GetAllBlogs` method returns `IAsyncEnumerable<Blog>` (or `IEnumerable<Blog>`), and not `IQueryable<Blog>`. Returning the latter would mean that query operators can still be composed over the result, requiring that EF Core still be involved in translating the query; this would defeat the purpose of having a repository in the first place. `IAsyncEnumerable<Blog>` allows us to easily stub or mock what the repository returns.
 
 For an ASP.NET Core application, we need to register the repository as a service in dependency injection by adding the following to the application's `ConfigureServices`:
 
@@ -55,7 +55,7 @@ The full sample code can be viewed [here](https://github.com/dotnet/EntityFramew
 
 SQLite can easily be configured as the EF Core provider for your test suite instead of your production database system (e.g. SQL Server); consult the [SQLite provider docs](xref:core/providers/sqlite/index) for details. However, it's usually a good idea to use SQLite's [in-memory database](https://sqlite.org/inmemorydb.html) feature when testing, since it provides easy isolation between tests, and does not require dealing with actual SQLite files.
 
-To use in-memory SQLite, it's important to understand that a new database is created whenever a low-level connection is opened, and that it's deleted when that connection is closed. In normal usage, EF Core's `DbContext` opens and closes database connections as needed - every time a query is executed - to avoid keeping connection for unnecessarily long times. However, with in-memory SQLite this would lead to resetting the database every time; so as a workaround, we open the connection before passing it to EF Core, and arrange for it to be closed only when the test completes:
+To use in-memory SQLite, it's important to understand that a **new database is created** whenever a low-level connection is opened, and that it's **deleted** when that connection is closed. In normal usage, EF Core's `DbContext` opens and closes database connections as needed - every time a query is executed - to avoid keeping connection for unnecessarily long times. However, with in-memory SQLite this would lead to resetting the database every time; so as a workaround, we open the connection before passing it to EF Core, and arrange for it to be closed only when the test completes:
 
 [!code-csharp[Main](../../../samples/core/Testing/TestingWithoutTheDatabase/SqliteInMemoryBloggingControllerTest.cs?name=ConstructorAndDispose)]
 

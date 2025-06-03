@@ -1,22 +1,23 @@
 ﻿using System;
 using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 
 public static class SparseColumnsSample
 {
-    public static void Use_sparse_columns()
+    public static async Task Use_sparse_columns()
     {
         Console.WriteLine($">>>> Sample: {nameof(Use_sparse_columns)}");
         Console.WriteLine();
 
-        Helpers.RecreateCleanDatabase();
-        Helpers.PopulateDatabase();
+        await Helpers.RecreateCleanDatabase();
+        await Helpers.PopulateDatabase();
 
         using var context = new BooksContext();
 
         #region Query
-        _ = context.Users.ToList();
+        _ = await context.Users.ToListAsync();
         #endregion
 
         Console.WriteLine();
@@ -24,15 +25,15 @@ public static class SparseColumnsSample
 
     public static class Helpers
     {
-        public static void RecreateCleanDatabase()
+        public static async Task RecreateCleanDatabase()
         {
             using var context = new BooksContext();
 
-            context.Database.EnsureDeleted();
-            context.Database.EnsureCreated();
+            await context.Database.EnsureDeletedAsync();
+            await context.Database.EnsureCreatedAsync();
         }
 
-        public static void PopulateDatabase()
+        public static async Task PopulateDatabase()
         {
             using var context = new BooksContext();
 
@@ -46,7 +47,7 @@ public static class SparseColumnsSample
                 new ForumUser { Username = "olive" },
                 new ForumUser { Username = "toast" });
 
-            context.SaveChanges();
+            await context.SaveChangesAsync();
         }
     }
 

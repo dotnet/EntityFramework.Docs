@@ -55,15 +55,18 @@
         href: core/get-started/wpf.md
       - name: Windows Forms tutorial
         href: core/get-started/winforms.md
-      - name: Xamarin tutorial
-        href: core/get-started/xamarin.md
-
     - name: "Releases and planning (roadmap)"
       items:
       - name: Current and planned releases
         href: core/what-is-new/index.md
       - name: Release planning process
         href: core/what-is-new/release-planning.md
+      - name: EF Core 10.0
+        items:
+          - name: "What's new?"
+            href: core/what-is-new/ef-core-10.0/whatsnew.md
+          - name: Breaking changes
+            href: core/what-is-new/ef-core-10.0/breaking-changes.md
       - name: EF Core 9.0
         items:
           - name: "What's new?"
@@ -78,24 +81,24 @@
             href: core/what-is-new/ef-core-8.0/whatsnew.md
           - name: Breaking changes
             href: core/what-is-new/ef-core-8.0/breaking-changes.md
-      - name: EF Core 7.0
-        items:
-          - name: High-level plan
-            href: core/what-is-new/ef-core-7.0/plan.md
-          - name: "What's new?"
-            href: core/what-is-new/ef-core-7.0/whatsnew.md
-          - name: Breaking changes
-            href: core/what-is-new/ef-core-7.0/breaking-changes.md
-      - name: EF Core 6.0
-        items:
-        - name: High-level plan
-          href: core/what-is-new/ef-core-6.0/plan.md
-        - name: "What's new?"
-          href: core/what-is-new/ef-core-6.0/whatsnew.md
-        - name: Breaking changes
-          href: core/what-is-new/ef-core-6.0/breaking-changes.md
       - name: Out of support
         items:
+        - name: EF Core 7.0
+          items:
+            - name: High-level plan
+              href: core/what-is-new/ef-core-7.0/plan.md
+            - name: "What's new?"
+              href: core/what-is-new/ef-core-7.0/whatsnew.md
+            - name: Breaking changes
+              href: core/what-is-new/ef-core-7.0/breaking-changes.md
+        - name: EF Core 6.0
+          items:
+            - name: High-level plan
+              href: core/what-is-new/ef-core-6.0/plan.md
+            - name: "What's new?"
+              href: core/what-is-new/ef-core-6.0/whatsnew.md
+            - name: Breaking changes
+              href: core/what-is-new/ef-core-6.0/breaking-changes.md
         - name: EF Core 5.0
           items:
             - name: High-level plan
@@ -437,6 +440,8 @@
           href: core/providers/cosmos/unstructured-data.md
         - name: Vector search
           href: core/providers/cosmos/vector-search.md
+        - name: Full text search
+          href: core/providers/cosmos/full-text-search.md
         - name: Azure Cosmos DB limitations
           href: core/providers/cosmos/limitations.md
         - name: End-to-end sample

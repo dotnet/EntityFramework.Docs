@@ -6,14 +6,20 @@ internal class MyContext : DbContext
 {
     public DbSet<Blog> Blogs { get; set; }
 
-    #region DefaultValue
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        #region DefaultValue
         modelBuilder.Entity<Blog>()
             .Property(b => b.Rating)
             .HasDefaultValue(3);
+        #endregion
+    
+        #region DefaultValueNamed
+        modelBuilder.Entity<Blog>()
+            .Property(b => b.Rating)
+            .HasDefaultValue(3, "DF_Blog_IsActive");
+        #endregion
     }
-    #endregion
 }
 
 public class Blog

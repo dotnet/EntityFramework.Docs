@@ -1,46 +1,47 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 
 namespace EFSaving.CascadeDelete;
 
 public class Sample
 {
-    public static void Run()
+    public static async Task Run()
     {
-        DeleteBehaviorSample(DeleteBehavior.Cascade, true);
-        DeleteBehaviorSample(DeleteBehavior.ClientSetNull, true);
-        DeleteBehaviorSample(DeleteBehavior.SetNull, true);
-        DeleteBehaviorSample(DeleteBehavior.Restrict, true);
+        await DeleteBehaviorSample(DeleteBehavior.Cascade, true);
+        await DeleteBehaviorSample(DeleteBehavior.ClientSetNull, true);
+        await DeleteBehaviorSample(DeleteBehavior.SetNull, true);
+        await DeleteBehaviorSample(DeleteBehavior.Restrict, true);
 
-        DeleteBehaviorSample(DeleteBehavior.Cascade, false);
-        DeleteBehaviorSample(DeleteBehavior.ClientSetNull, false);
-        DeleteBehaviorSample(DeleteBehavior.SetNull, false);
-        DeleteBehaviorSample(DeleteBehavior.Restrict, false);
+        await DeleteBehaviorSample(DeleteBehavior.Cascade, false);
+        await DeleteBehaviorSample(DeleteBehavior.ClientSetNull, false);
+        await DeleteBehaviorSample(DeleteBehavior.SetNull, false);
+        await DeleteBehaviorSample(DeleteBehavior.Restrict, false);
 
-        DeleteOrphansSample(DeleteBehavior.Cascade, true);
-        DeleteOrphansSample(DeleteBehavior.ClientSetNull, true);
-        DeleteOrphansSample(DeleteBehavior.SetNull, true);
-        DeleteOrphansSample(DeleteBehavior.Restrict, true);
+        await DeleteOrphansSample(DeleteBehavior.Cascade, true);
+        await DeleteOrphansSample(DeleteBehavior.ClientSetNull, true);
+        await DeleteOrphansSample(DeleteBehavior.SetNull, true);
+        await DeleteOrphansSample(DeleteBehavior.Restrict, true);
 
-        DeleteOrphansSample(DeleteBehavior.Cascade, false);
-        DeleteOrphansSample(DeleteBehavior.ClientSetNull, false);
-        DeleteOrphansSample(DeleteBehavior.SetNull, false);
-        DeleteOrphansSample(DeleteBehavior.Restrict, false);
+        await DeleteOrphansSample(DeleteBehavior.Cascade, false);
+        await DeleteOrphansSample(DeleteBehavior.ClientSetNull, false);
+        await DeleteOrphansSample(DeleteBehavior.SetNull, false);
+        await DeleteOrphansSample(DeleteBehavior.Restrict, false);
     }
 
-    private static void DeleteBehaviorSample(DeleteBehavior deleteBehavior, bool requiredRelationship)
+    private static async Task DeleteBehaviorSample(DeleteBehavior deleteBehavior, bool requiredRelationship)
     {
         Console.WriteLine(
             $"Test using DeleteBehavior.{deleteBehavior} with {(requiredRelationship ? "required" : "optional")} relationship:");
 
-        InitializeDatabase(requiredRelationship);
+        await InitializeDatabase(requiredRelationship);
 
         using var context = new BloggingContext(deleteBehavior, requiredRelationship);
 
         #region DeleteBehaviorVariations
-        var blog = context.Blogs.Include(b => b.Posts).First();
+        var blog = await context.Blogs.Include(b => b.Posts).FirstAsync();
         var posts = blog.Posts.ToList();
 
         DumpEntities("  After loading entities:", context, blog, posts);
@@ -54,7 +55,7 @@ public class Sample
             Console.WriteLine();
             Console.WriteLine("  Saving changes:");
 
-            context.SaveChanges();
+            await context.SaveChangesAsync();
 
             DumpSql();
 
@@ -73,17 +74,17 @@ public class Sample
         Console.WriteLine();
     }
 
-    private static void DeleteOrphansSample(DeleteBehavior deleteBehavior, bool requiredRelationship)
+    private static async Task DeleteOrphansSample(DeleteBehavior deleteBehavior, bool requiredRelationship)
     {
         Console.WriteLine(
             $"Test deleting orphans with DeleteBehavior.{deleteBehavior} and {(requiredRelationship ? "a required" : "an optional")} relationship:");
 
-        InitializeDatabase(requiredRelationship);
+        await InitializeDatabase(requiredRelationship);
 
         using var context = new BloggingContext(deleteBehavior, requiredRelationship);
 
         #region DeleteOrphansVariations
-        var blog = context.Blogs.Include(b => b.Posts).First();
+        var blog = await context.Blogs.Include(b => b.Posts).FirstAsync();
         var posts = blog.Posts.ToList();
 
         DumpEntities("  After loading entities:", context, blog, posts);
@@ -97,7 +98,7 @@ public class Sample
             Console.WriteLine();
             Console.WriteLine("  Saving changes:");
 
-            context.SaveChanges();
+            await context.SaveChangesAsync();
 
             DumpSql();
 
@@ -116,11 +117,11 @@ public class Sample
         Console.WriteLine();
     }
 
-    private static void InitializeDatabase(bool requiredRelationship)
+    private static async Task InitializeDatabase(bool requiredRelationship)
     {
         using var context = new BloggingContext(DeleteBehavior.ClientSetNull, requiredRelationship);
-        context.Database.EnsureDeleted();
-        context.Database.EnsureCreated();
+        await context.Database.EnsureDeletedAsync();
+        await context.Database.EnsureCreatedAsync();
 
         context.Blogs.Add(
             new Blog
@@ -129,7 +130,7 @@ public class Sample
                 Posts = new List<Post> { new Post { Title = "Saving Data with EF" }, new Post { Title = "Cascade Delete with EF" } }
             });
 
-        context.SaveChanges();
+        await context.SaveChangesAsync();
     }
 
     private static void DumpEntities(string message, BloggingContext context, Blog blog, IList<Post> posts)

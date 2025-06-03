@@ -34,8 +34,8 @@ The migration name can be used like a commit message in a version control system
 
 Three files are added to your project under the **Migrations** directory:
 
-* **XXXXXXXXXXXXXX_AddCreatedTimestamp.cs**--The main migrations file. Contains the operations necessary to apply the migration (in `Up`) and to revert it (in `Down`).
-* **XXXXXXXXXXXXXX_AddCreatedTimestamp.Designer.cs**--The migrations metadata file. Contains information used by EF.
+* **XXXXXXXXXXXXXX_AddBlogCreatedTimestamp.cs**--The main migrations file. Contains the operations necessary to apply the migration (in `Up`) and to revert it (in `Down`).
+* **XXXXXXXXXXXXXX_AddBlogCreatedTimestamp.Designer.cs**--The migrations metadata file. Contains information used by EF.
 * **MyContextModelSnapshot.cs**--A snapshot of your current model. Used to determine what changed when adding the next migration.
 
 The timestamp in the filename helps keep them ordered chronologically so you can see the progression of changes.

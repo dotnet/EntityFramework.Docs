@@ -14,15 +14,16 @@ Several older .NET implementations are no longer supported. See the sections bel
 
 | EF Core           | .NET & .NET Core | .NET Standard | .NET Framework |
 |-------------------|------------------|---------------|----------------|
+| **9.0**           | 8.0              |               |                |
 | **8.0**           | 8.0              |               |                |
-| **7.0**           | 6.0              |               |                |
-| **6.0**           | 6.0              |               |                |
+| ~~**7.0**~~ (EOL) | 6.0              |               |                |
+| ~~**6.0**~~ (EOL) | 6.0              |               |                |
 | ~~**5.0**~~ (EOL) | 5.0              | 2.1           |                |
 | ~~**3.1**~~ (EOL) | 3.1              | 2.0           | 4.7.2          |
 
 ## .NET
 
-EF Core is a .NET library. EF Core version 8.0 targets .NET version 8.0, while both EF Core versions 6.0 and 7.0 target .NET version 6.0. In general, we target the latest [LTS release](/lifecycle/products/microsoft-net-and-net-core) of .NET. This enables you to upgrade to a newer, STS release of EF Core to take advantage of the latest features without having to upgrade your entire app. There may be exceptions to this, however, as runtime features sometimes get added that require us to depend on the latest version of .NET.
+EF Core is a .NET library. EF Core version versions 8.0 and 9.0 both target .NET version 8.0. In general, we target the latest [LTS release](/lifecycle/products/microsoft-net-and-net-core) of .NET. This enables you to upgrade to a newer, STS release of EF Core to take advantage of the latest features without having to upgrade your entire app. There may be exceptions to this, however, as runtime features sometimes get added that require us to depend on the latest version of .NET.
 
 .NET supports multiple platforms including Windows, Linux, macOS, iOS, Android, and Wasm. For more details on which version are supported, see the [.NET Supported OS Policy](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
@@ -40,7 +41,7 @@ The last version of EF Core that supported .NET Framework was version 3.1. We re
 
 ## Xamarin
 
-The last version of EF Core that supported Xamarin was version 5.0. We recommend using .NET and [.NET MAUI](/dotnet/maui/) instead. .NET supports multiple platforms including Android, iOS, macOS, and Windows. .NET MAUI is an evolution of the Xamarin.Forms UI framework.
+The last version of EF Core that supported Xamarin was version 5.0. We recommend using .NET and [.NET MAUI](/dotnet/maui/) instead. .NET supports multiple platforms including Android, iOS, macOS, and Windows. .NET MAUI is an evolution of the Xamarin.Forms UI framework. Xamarin.Android, Xamarin.iOS, Xamarin.Mac are now integrated directly into .NET (starting with .NET 6) as .NET for Android, .NET for iOS, and .NET for macOS. If you're building with these project types today, they should be upgraded to .NET SDK-style projects for continued support. For more information about upgrading Xamarin projects to .NET, see the [Upgrade from Xamarin to .NET & .NET MAUI](/dotnet/maui/migration) documentation.
 
 ## Universal Windows Platform
 

@@ -178,6 +178,24 @@ For large models, the OnModelCreating method of the DbContext class can become u
 
 To scaffold these classes, you can use a third template called `EntityTypeConfiguration.t4`. Like the `EntityType.t4` template, it gets used for each entity type in the model and uses the `EntityType` template parameter.
 
+### Generate Join Table in Many to Many Relationships
+
+By default, the scaffolding process does not generate an entity for join tables in simple many-to-many relationships. However, there are cases where explicitly generating the join table as an entity might be necessary (e.g., when finer control over the generated SQL query is required).
+
+The scaffolding behavior for each entity is controlled by the EntityType.t4 template file. Within this file, there is a condition that short-circuits entity generation for simple many-to-many join tables. To override this behavior and generate the join entity, you can comment out this condition in the 'EntityType.t4' file.
+
+```T4
+<#
+    // Comment this condition
+    if (EntityType.IsSimpleManyToManyJoinEntityType())
+    {
+        // Don't scaffold these
+        return "";
+    }
+    .  .  .    
+#>
+```
+
 ### Scaffolding other types of files
 
 The primary purpose of reverse engineering in EF Core is to scaffold a DbContext and entity types. However, there's nothing in the tools that require you to actually scaffold code. For example, you could instead scaffold an entity relationship diagram using [Mermaid](https://mermaid-js.github.io/).

@@ -58,10 +58,10 @@ public static class ModelBuildingConventionsSample
 
         Console.WriteLine(context.Model.ToDebugString());
 
-        var blogs = context.Blogs
+        var blogs = await context.Blogs
             .Include(blog => blog.Posts).ThenInclude(post => post.Author)
             .Include(blog => blog.Posts).ThenInclude(post => post.Tags)
-            .ToList();
+            .ToListAsync();
 
         blogs[0].Name += "Changed";
         blogs[1].Posts[2].Content += "Changed";

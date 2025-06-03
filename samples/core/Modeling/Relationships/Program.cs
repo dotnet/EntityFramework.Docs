@@ -1,8 +1,10 @@
+using System.Threading.Tasks;
+
 namespace EFModeling.Relationships;
 
 public class Program
 {
-    private static void Main()
+    private static async Task Main()
     {
         OneToMany.Required.BuildModels();
         OneToMany.Optional.BuildModels();
@@ -76,8 +78,8 @@ public class Program
         ManyToMany.SelfReferencingManyToMany.BuildModels();
         ManyToMany.SelfReferencingUnidirectionalManyToMany.BuildModels();
         ManyToMany.ManyToManyWithCustomSharedTypeEntityType.BuildModels();
-        ManyToMany.DirectJoinTableNoManyToMany.BuildModels();
-        ManyToMany.FullMappingWithJoinEntity.BuildModels();
+        await ManyToMany.DirectJoinTableNoManyToMany.BuildModels();
+        await ManyToMany.FullMappingWithJoinEntity.BuildModels();
 
         RelationshipConventions.ReferenceNavigations.BuildModels();
         RelationshipConventions.CollectionNavigations.BuildModels();

@@ -2,18 +2,19 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 
 public class Program
 {
-    public static void Main()
+    public static async Task Main()
     {
         #region Demonstration
         using (var context = new BlogsContext())
         {
-            context.Database.EnsureDeleted();
-            context.Database.EnsureCreated();
+            await context.Database.EnsureDeletedAsync();
+            await context.Database.EnsureCreatedAsync();
 
             context.Add(
                 new Blog
@@ -23,18 +24,18 @@ public class Program
                     Posts = { new Post { Id = 1, Title = "EF Core 3.1!" }, new Post { Id = 2, Title = "EF Core 5.0!" } }
                 });
 
-            context.SaveChanges();
+            await context.SaveChangesAsync();
         }
 
         using (var context = new BlogsContext())
         {
-            var blog = context.Blogs.Include(e => e.Posts).Single();
+            var blog = await context.Blogs.Include(e => e.Posts).SingleAsync();
 
             blog.Name = "EF Core Blog";
             context.Remove(blog.Posts.First());
             blog.Posts.Add(new Post { Id = 3, Title = "EF Core 6.0!" });
 
-            context.SaveChanges();
+            await context.SaveChangesAsync();
         }
         #endregion
     }

@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
@@ -12,13 +13,13 @@ namespace EFModeling.ValueConversions;
 
 public class KeyValueObjects : Program
 {
-    public void Run()
+    public async Task Run()
     {
         ConsoleWriteLines("Sample showing value conversions for a value objects used as keys...");
 
         using (var context = new SampleDbContext())
         {
-            CleanDatabase(context);
+            await CleanDatabase(context);
 
             ConsoleWriteLines("Save a new entity...");
 
@@ -38,14 +39,14 @@ public class KeyValueObjects : Program
                 }
             };
             context.Add(blog);
-            context.SaveChanges();
+            await context.SaveChangesAsync();
         }
 
         using (var context = new SampleDbContext())
         {
             ConsoleWriteLines("Read the entity back...");
 
-            var blog = context.Set<Blog>().Include(e => e.Posts).Single();
+            var blog = await context.Set<Blog>().Include(e => e.Posts).SingleAsync();
         }
 
         ConsoleWriteLines("Sample finished.");

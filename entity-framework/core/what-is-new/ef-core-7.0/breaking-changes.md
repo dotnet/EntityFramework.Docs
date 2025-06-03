@@ -1,7 +1,7 @@
 ---
 title: Breaking changes in EF Core 7.0 (EF7) - EF Core
 description: Complete list of breaking changes introduced in Entity Framework Core 7.0 (EF7)
-author: ajcvickers
+author: SamMonoRT
 ms.date: 09/20/2023
 uid: core/what-is-new/ef-core-7.0/breaking-changes
 ---
@@ -528,13 +528,13 @@ The correct extension method must be used for it to function correctly in all si
 Use the correct extension method for the provider being used. If multiple providers are referenced, then call the extension method as a static method. For example:
 
 ```csharp
-var result = CosmosQueryableExtensions.FromSqlRaw(context.Blogs, "SELECT ...").ToList();
+var result = await CosmosQueryableExtensions.FromSqlRaw(context.Blogs, "SELECT ...").ToListAsync();
 ```
 
 Or:
 
 ```csharp
-var result = RelationalQueryableExtensions.FromSqlRaw(context.Blogs, "SELECT ...").ToList();
+var result = await RelationalQueryableExtensions.FromSqlRaw(context.Blogs, "SELECT ...").ToListAsync();
 ```
 
 <a name="is-configured"></a>

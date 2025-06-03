@@ -1,7 +1,7 @@
 ---
 title: Entity Framework 5 License (RUS) - EF6
 description: Entity Framework 5 License (RUS)
-author: ajcvickers
+author: SamMonoRT
 ms.date: 10/23/2016
 ---
 # Entity Framework 5 License (RUS)
@@ -43,4 +43,4 @@ ms.date: 10/23/2016
     -   код раскрывается и распространяется в виде исходного кода;
     -   другие имеют право его модифицировать.
 
-**2. ТЕХНИЧЕСКАЯ ПОДДЕРЖКА ДОПОЛНЕНИЯ.** Корпорация Майкрософт предоставляет техническую поддержку дополнения, как указано на веб-узле https://www.support.microsoft.com/common/international.aspx.
+**2. ТЕХНИЧЕСКАЯ ПОДДЕРЖКА ДОПОЛНЕНИЯ.** Корпорация Майкрософт предоставляет техническую поддержку дополнения, как указано на веб-узле https://support.microsoft.com/.

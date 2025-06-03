@@ -2,19 +2,20 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 public static class PreConventionModelConfigurationSample
 {
-    public static void Configure_property_types_and_value_converter_in_one_place()
+    public static async Task Configure_property_types_and_value_converter_in_one_place()
     {
         Console.WriteLine($">>>> Sample: {nameof(Configure_property_types_and_value_converter_in_one_place)}");
         Console.WriteLine();
 
-        Helpers.RecreateCleanDatabase();
-        Helpers.PopulateDatabase();
+        await Helpers.RecreateCleanDatabase();
+        await Helpers.PopulateDatabase();
 
         using var context = new CustomersContext();
 
@@ -23,15 +24,15 @@ public static class PreConventionModelConfigurationSample
 
     public static class Helpers
     {
-        public static void RecreateCleanDatabase()
+        public static async Task RecreateCleanDatabase()
         {
             using var context = new CustomersContext(quiet: true);
 
-            context.Database.EnsureDeleted();
-            context.Database.EnsureCreated();
+            await context.Database.EnsureDeletedAsync();
+            await context.Database.EnsureCreatedAsync();
         }
 
-        public static void PopulateDatabase()
+        public static async Task PopulateDatabase()
         {
             using var context = new CustomersContext(quiet: true);
 
@@ -69,7 +70,7 @@ public static class PreConventionModelConfigurationSample
                     Name = "Andrew",
                 });
 
-            context.SaveChanges();
+            await context.SaveChangesAsync();
         }
     }
 
