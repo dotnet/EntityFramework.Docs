@@ -188,11 +188,11 @@ Thanks to [@aradalvand](https://github.com/aradalvand) for proposing and pushing
 
 <a name="default-constrain-names"></a>
 
-## Custom Default Constraint Names
+## Custom default constraint names
 
-In previous versions of EF Core, when you specified a default value for a property, EF Core would always let the database automatically generate a constraint name. Now, you can explicitly specify the name for default value constraints for SQL Server, giving you more control over your database schema.
+In previous versions of EF Core, when you specified a default value for a property, EF Core would always let the database automatically generate a constraint name. Now, you can explicitly specify the name for default value constraints for SQL Server, giving you more control over your database schema.
 
-You can now specify a constraint name when defining default values in your model configuration:
+You can now specify a constraint name when defining default values in your model configuration:
 
 ```C#
 protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -213,8 +213,7 @@ You can also call `UseNamedDefaultConstraints` to enable automatic naming of all
 ```C#
 protected override void OnModelCreating(ModelBuilder modelBuilder)
 {
-    modelBuilder
-        .UseNamedDefaultConstraints();
+    modelBuilder.UseNamedDefaultConstraints();
 }
 
 ```
