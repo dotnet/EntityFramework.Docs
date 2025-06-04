@@ -22,7 +22,7 @@ You can also specify a SQL fragment that is used to calculate the default value:
 
 [!code-csharp[Main](../../../samples/core/Modeling/GeneratedProperties/FluentAPI/DefaultValueSql.cs?name=DefaultValueSql&highlight=3)]
 
-Starting with EF 10, for SQL Server you can explicitly specify the name for default value constraints, giving you more control over your database schema.
+Starting with EF 10, for SQL Server you can explicitly specify the name for default value constraints, giving you more control over your database schema.
 
 [!code-csharp[Main](../../../samples/core/Modeling/GeneratedProperties/FluentAPI/DefaultValue.cs?name=DefaultValueNamed&highlight=3)]
 
@@ -33,8 +33,7 @@ You can also call `UseNamedDefaultConstraints` to enable automatic naming of all
 ```C#
 protected override void OnModelCreating(ModelBuilder modelBuilder)
 {
-    modelBuilder
-        .UseNamedDefaultConstraints();
+    modelBuilder.UseNamedDefaultConstraints();
 }
 
 ```

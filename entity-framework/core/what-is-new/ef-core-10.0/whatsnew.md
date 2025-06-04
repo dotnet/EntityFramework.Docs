@@ -139,6 +139,7 @@ See [#12793](https://github.com/dotnet/efcore/issues/12793) and [#35367](https:/
 - Translate `COALESCE` as `ISNULL` on SQL Server, for most cases ([#34171](https://github.com/dotnet/efcore/pull/34171), contributed by [@ranma42](https://github.com/ranma42)).
 - Support some string functions taking `char` as arguments ([#34999](https://github.com/dotnet/efcore/pull/34999), contributed by [@ChrisJollyAU](https://github.com/ChrisJollyAU)).
 - Support `MAX`/`MIN`/`ORDER BY` using `decimal` on SQLite ([#35606](https://github.com/dotnet/efcore/pull/35606), contributed by [@ranma42](https://github.com/ranma42)).
+- Support projecting different navigations (but same type) via conditional operator ([#34589](https://github.com/dotnet/efcore/issues/34589), contributed by [@ranma42](https://github.com/ranma42)).
 
 ## ExecuteUpdateAsync now accepts a regular, non-expression lambda
 
@@ -187,11 +188,11 @@ Thanks to [@aradalvand](https://github.com/aradalvand) for proposing and pushing
 
 <a name="default-constrain-names"></a>
 
-## Custom Default Constraint Names
+## Custom default constraint names
 
-In previous versions of EF Core, when you specified a default value for a property, EF Core would always let the database automatically generate a constraint name. Now, you can explicitly specify the name for default value constraints for SQL Server, giving you more control over your database schema.
+In previous versions of EF Core, when you specified a default value for a property, EF Core would always let the database automatically generate a constraint name. Now, you can explicitly specify the name for default value constraints for SQL Server, giving you more control over your database schema.
 
-You can now specify a constraint name when defining default values in your model configuration:
+You can now specify a constraint name when defining default values in your model configuration:
 
 ```C#
 protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -212,8 +213,7 @@ You can also call `UseNamedDefaultConstraints` to enable automatic naming of all
 ```C#
 protected override void OnModelCreating(ModelBuilder modelBuilder)
 {
-    modelBuilder
-        .UseNamedDefaultConstraints();
+    modelBuilder.UseNamedDefaultConstraints();
 }
 
 ```
