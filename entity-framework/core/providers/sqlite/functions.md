@@ -72,6 +72,7 @@ dateOnly.DayOfYear              | strftime('%j', @dateOnly)
 DateOnly.FromDateTime(dateTime) | date(@dateTime)                                                          | EF Core 8.0
 dateOnly.Month                  | strftime('%m', @dateOnly)
 dateOnly.Year                   | strftime('%Y', @dateOnly)
+dateOnly.DayNumber              | CAST(julianday(@dateOnly) - julianday('0001-01-01') AS INTEGER)          | EF Core 10.0
 DateTime.Now                    | datetime('now', 'localtime')
 DateTime.Today                  | datetime('now', 'localtime', 'start of day')
 DateTime.UtcNow                 | datetime('now')
