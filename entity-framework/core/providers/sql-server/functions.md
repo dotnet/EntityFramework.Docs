@@ -127,6 +127,7 @@ dateOnly.Day                                                | DATEPART(day, @dat
 dateOnly.DayOfYear                                          | DATEPART(dayofyear, @dateOnly)                                                  | EF Core 8.0
 dateOnly.Month                                              | DATEPART(month, @dateOnly)                                                      | EF Core 8.0
 dateOnly.Year                                               | DATEPART(year, @dateOnly)                                                       | EF Core 8.0
+dateOnly.DayNumber                                          | DATEDIFF(day, '0001-01-01', @dateOnly)                                          | EF Core 10.0
 EF.Functions.AtTimeZone(dateTime, timeZone)                 | @dateTime AT TIME ZONE @timeZone                                                | EF Core 7.0
 EF.Functions.DateDiffDay(start, end)                        | DATEDIFF(day, @start, @end)
 EF.Functions.DateDiffHour(start, end)                       | DATEDIFF(hour, @start, @end)
