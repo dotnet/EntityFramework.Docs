@@ -30,7 +30,7 @@ And a second aggregate type for post metadata:
 [!code-csharp[PostMetadataAggregate](../../../../samples/core/Miscellaneous/NewInEFCore7/BlogsContext.cs?name=PostMetadataAggregate)]
 
 > [!TIP]
-> The sample model can be found in [BlogsContext.cs](https://github.com/dotnet/EntityFramework.Docs/tree/main/samples/core/Miscellaneous/NewInEFCore7/BlogsContext.cs).
+> The sample model can be found in [BlogsContext.cs](https://github.com/dotnet/EntityFramework.Docs/tree/live/samples/core/Miscellaneous/NewInEFCore7/BlogsContext.cs).
 
 ## JSON Columns
 
@@ -96,7 +96,7 @@ The aggregate type is configured  in `OnModelCreating` using `OwnsOne`:
 [!code-csharp[TableSharingAggregate](../../../../samples/core/Miscellaneous/NewInEFCore7/JsonColumnsSample.cs?name=TableSharingAggregate)]
 
 > [!TIP]
-> The code shown here comes from [JsonColumnsSample.cs](https://github.com/dotnet/EntityFramework.Docs/tree/main/samples/core/Miscellaneous/NewInEFCore7/JsonColumnsSample.cs).
+> The code shown here comes from [JsonColumnsSample.cs](https://github.com/dotnet/EntityFramework.Docs/tree/live/samples/core/Miscellaneous/NewInEFCore7/JsonColumnsSample.cs).
 
 By default, relational database providers map aggregate types like this to the same table as the owning entity type. That is, each property of the `ContactDetails` and `Address` classes is mapped to a column in the `Authors` table.
 
@@ -549,7 +549,7 @@ All of this means that the `ExecuteUpdate` and `ExecuteDelete` methods complemen
 ### Basic `ExecuteDelete` examples
 
 > [!TIP]
-> The code shown here comes from [ExecuteDeleteSample.cs](https://github.com/dotnet/EntityFramework.Docs/tree/main/samples/core/Miscellaneous/NewInEFCore7/ExecuteDeleteSample.cs).
+> The code shown here comes from [ExecuteDeleteSample.cs](https://github.com/dotnet/EntityFramework.Docs/tree/live/samples/core/Miscellaneous/NewInEFCore7/ExecuteDeleteSample.cs).
 
 Calling `ExecuteDelete` or `ExecuteDeleteAsync` on a `DbSet` immediately deletes all entities of that `DbSet` from the database. For example, to delete all `Tag` entities:
 
@@ -602,7 +602,7 @@ WHERE NOT EXISTS (
 ### Basic `ExecuteUpdate` examples
 
 > [!TIP]
-> The code shown here comes from [ExecuteUpdateSample.cs](https://github.com/dotnet/EntityFramework.Docs/tree/main/samples/core/Miscellaneous/NewInEFCore7/ExecuteUpdateSample.cs).
+> The code shown here comes from [ExecuteUpdateSample.cs](https://github.com/dotnet/EntityFramework.Docs/tree/live/samples/core/Miscellaneous/NewInEFCore7/ExecuteUpdateSample.cs).
 
 `ExecuteUpdate` and `ExecuteUpdateAsync` behave in a very similar way to the `ExecuteDelete` methods. The main difference is that an update requires knowing _which_ properties to update, and _how_ to update them. This is achieved using one or more calls to `SetProperty`. For example, to update the `Name` of every blog:
 
@@ -790,7 +790,7 @@ Some examples of these improvements are shown below.
 > See [Announcing Entity Framework Core 7 Preview 6: Performance Edition](https://devblogs.microsoft.com/dotnet/announcing-ef-core-7-preview6-performance-optimizations/) on the .NET Blog for an in-depth discussion of these changes.
 
 > [!TIP]
-> The code shown here comes from [SaveChangesPerformanceSample.cs](https://github.com/dotnet/EntityFramework.Docs/tree/main/samples/core/Miscellaneous/NewInEFCore7/SaveChangesPerformanceSample.cs).
+> The code shown here comes from [SaveChangesPerformanceSample.cs](https://github.com/dotnet/EntityFramework.Docs/tree/live/samples/core/Miscellaneous/NewInEFCore7/SaveChangesPerformanceSample.cs).
 
 ### Unneeded transactions are eliminated
 
@@ -1020,7 +1020,7 @@ In addition, different database systems require different SQL for many of these 
 By default, EF Core maps an inheritance hierarchy of .NET types to a single database table. This is known as the [table-per-hierarchy (TPH)](xref:core/modeling/inheritance#table-per-hierarchy-and-discriminator-configuration) mapping strategy. EF Core 5.0 introduced the [table-per-type (TPT)](xref:core/modeling/inheritance#table-per-type-configuration) strategy, which supports mapping each .NET type to a different database table. EF7 introduces the table-per-concrete-type (TPC) strategy. TPC also maps .NET types to different tables, but in a way that addresses some common performance issues with the TPT strategy.
 
 > [!TIP]
-> The code shown here comes from [TpcInheritanceSample.cs](https://github.com/dotnet/EntityFramework.Docs/tree/main/samples/core/Miscellaneous/NewInEFCore7/TpcInheritanceSample.cs).
+> The code shown here comes from [TpcInheritanceSample.cs](https://github.com/dotnet/EntityFramework.Docs/tree/live/samples/core/Miscellaneous/NewInEFCore7/TpcInheritanceSample.cs).
 
 > [!TIP]
 > The EF Team demonstrated and talked in depth about TPC mapping in an episode of the .NET Data Community Standup. As with [all Community Standup episodes](https://aka.ms/efstandups), you can [watch the TPC episode now on YouTube](https://youtu.be/HaL6DKW1mrg).
@@ -1486,7 +1486,7 @@ protected override void ConfigureConventions(ModelConfigurationBuilder configura
 > To find all built-in model building conventions, look for every class that implements the <xref:Microsoft.EntityFrameworkCore.Metadata.Conventions.IConvention> interface.
 
 > [!TIP]
-> The code shown here comes from [ModelBuildingConventionsSample.cs](https://github.com/dotnet/EntityFramework.Docs/tree/main/samples/core/Miscellaneous/NewInEFCore7/ModelBuildingConventionsSample.cs).
+> The code shown here comes from [ModelBuildingConventionsSample.cs](https://github.com/dotnet/EntityFramework.Docs/tree/live/samples/core/Miscellaneous/NewInEFCore7/ModelBuildingConventionsSample.cs).
 
 ### Removing an existing convention
 
@@ -2324,7 +2324,7 @@ The following sections show some examples of using these new interception capabi
 ### Simple actions on entity creation
 
 > [!TIP]
-> The code shown here comes from [SimpleMaterializationSample.cs](https://github.com/dotnet/EntityFramework.Docs/tree/main/samples/core/Miscellaneous/NewInEFCore7/SimpleMaterializationSample.cs).
+> The code shown here comes from [SimpleMaterializationSample.cs](https://github.com/dotnet/EntityFramework.Docs/tree/live/samples/core/Miscellaneous/NewInEFCore7/SimpleMaterializationSample.cs).
 
 The new <xref:Microsoft.EntityFrameworkCore.Diagnostics.IMaterializationInterceptor> supports interception before and after an entity instance is created, and before and after properties of that instance are initialized. The interceptor can change or replace the entity instance at each point. This allows:
 
@@ -2418,7 +2418,7 @@ Customer 'Alice' was retrieved at '9/22/2022 5:25:54 PM'
 ### Injecting services into entities
 
 > [!TIP]
-> The code shown here comes from [InjectLoggerSample.cs](https://github.com/dotnet/EntityFramework.Docs/tree/main/samples/core/Miscellaneous/NewInEFCore7/InjectLoggerSample.cs).
+> The code shown here comes from [InjectLoggerSample.cs](https://github.com/dotnet/EntityFramework.Docs/tree/live/samples/core/Miscellaneous/NewInEFCore7/InjectLoggerSample.cs).
 
 EF Core already has built-in support for injecting some special services into context instances; for example, see [Lazy loading without proxies](xref:core/querying/related-data/lazy#lazy-loading-without-proxies), which works by injecting the `ILazyLoader` service.
 
@@ -2503,7 +2503,7 @@ info: CustomersLogger[1]
 ### LINQ expression tree interception
 
 > [!TIP]
-> The code shown here comes from [QueryInterceptionSample.cs](https://github.com/dotnet/EntityFramework.Docs/tree/main/samples/core/Miscellaneous/NewInEFCore7/QueryInterceptionSample.cs).
+> The code shown here comes from [QueryInterceptionSample.cs](https://github.com/dotnet/EntityFramework.Docs/tree/live/samples/core/Miscellaneous/NewInEFCore7/QueryInterceptionSample.cs).
 
 EF Core makes use of [.NET LINQ queries](xref:core/querying/how-query-works). This typically involves using the C#, VB, or F# compiler to build an expression tree which is then translated by EF Core into the appropriate SQL. For example, consider a method that returns a page of customers:
 
@@ -2649,7 +2649,7 @@ In this case the `ThenBy` is simply added to the query. Yes, it may need to be d
 ### Optimistic concurrency interception
 
 > [!TIP]
-> The code shown here comes from [OptimisticConcurrencyInterceptionSample.cs](https://github.com/dotnet/EntityFramework.Docs/tree/main/samples/core/Miscellaneous/NewInEFCore7/OptimisticConcurrencyInterceptionSample.cs).
+> The code shown here comes from [OptimisticConcurrencyInterceptionSample.cs](https://github.com/dotnet/EntityFramework.Docs/tree/live/samples/core/Miscellaneous/NewInEFCore7/OptimisticConcurrencyInterceptionSample.cs).
 
 EF Core supports the [optimistic concurrency pattern](xref:core/saving/concurrency) by checking that the number of rows actually affected by an update or delete is the same as the number of rows expected to be affected. This is often coupled with a concurrency token; that is, a column value that will only match its expected value if the row has not been updated since the expected value was read.
 
@@ -2694,7 +2694,7 @@ There are several things worth noting about this interceptor:
 ### Lazy initialization of a connection string
 
 > [!TIP]
-> The code shown here comes from [LazyConnectionStringSample.cs](https://github.com/dotnet/EntityFramework.Docs/tree/main/samples/core/Miscellaneous/NewInEFCore7/LazyConnectionStringSample.cs).
+> The code shown here comes from [LazyConnectionStringSample.cs](https://github.com/dotnet/EntityFramework.Docs/tree/live/samples/core/Miscellaneous/NewInEFCore7/LazyConnectionStringSample.cs).
 
 Connection strings are often static assets read from a configuration file. These can easily be passed to `UseSqlServer` or similar when configuring a `DbContext`. However, sometimes the connection string can change for each context instance. For example, each tenant in a multi-tenant system may have a different connection string.
 
@@ -2783,7 +2783,7 @@ Finally, the interceptor uses this service to obtain the connection string async
 ### Logging SQL Server query statistics
 
 > [!TIP]
-> The code shown here comes from [QueryStatisticsLoggerSample.cs](https://github.com/dotnet/EntityFramework.Docs/tree/main/samples/core/Miscellaneous/NewInEFCore7/QueryStatisticsLoggerSample.cs).
+> The code shown here comes from [QueryStatisticsLoggerSample.cs](https://github.com/dotnet/EntityFramework.Docs/tree/live/samples/core/Miscellaneous/NewInEFCore7/QueryStatisticsLoggerSample.cs).
 
 Finally, let's create two interceptors that work together to send SQL Server query statistics to the application log. To generate the statistics, we need an <xref:Microsoft.EntityFrameworkCore.Diagnostics.IDbCommandInterceptor> to do two things.
 
@@ -2870,7 +2870,7 @@ EF7 contains many improvements in the translation of LINQ queries.
 ### GroupBy as final operator
 
 > [!TIP]
-> The code shown here comes from [GroupByFinalOperatorSample.cs](https://github.com/dotnet/EntityFramework.Docs/tree/main/samples/core/Miscellaneous/NewInEFCore7/GroupByFinalOperatorSample.cs).
+> The code shown here comes from [GroupByFinalOperatorSample.cs](https://github.com/dotnet/EntityFramework.Docs/tree/live/samples/core/Miscellaneous/NewInEFCore7/GroupByFinalOperatorSample.cs).
 
 EF7 supports using `GroupBy` as the final operator in a query. For example, this LINQ query:
 
@@ -2893,7 +2893,7 @@ ORDER BY [b].[Price]
 ### GroupJoin as final operator
 
 > [!TIP]
-> The code shown here comes from [GroupJoinFinalOperatorSample.cs](https://github.com/dotnet/EntityFramework.Docs/tree/main/samples/core/Miscellaneous/NewInEFCore7/GroupByFinalOperatorSample.cs).
+> The code shown here comes from [GroupJoinFinalOperatorSample.cs](https://github.com/dotnet/EntityFramework.Docs/tree/live/samples/core/Miscellaneous/NewInEFCore7/GroupByFinalOperatorSample.cs).
 
 EF7 supports using `GroupJoin` as the final operator in a query. For example, this LINQ query:
 
@@ -2919,7 +2919,7 @@ ORDER BY [c].[Id]
 ### GroupBy entity type
 
 > [!TIP]
-> The code shown here comes from [GroupByEntityTypeSample.cs](https://github.com/dotnet/EntityFramework.Docs/tree/main/samples/core/Miscellaneous/NewInEFCore7/GroupByEntityTypeSample.cs).
+> The code shown here comes from [GroupByEntityTypeSample.cs](https://github.com/dotnet/EntityFramework.Docs/tree/live/samples/core/Miscellaneous/NewInEFCore7/GroupByEntityTypeSample.cs).
 
 EF7 supports grouping by an entity type. For example, this LINQ query:
 
@@ -2961,7 +2961,7 @@ FROM [Authors] AS [a]
 ### Subqueries don't reference ungrouped columns from outer query
 
 > [!TIP]
-> The code shown here comes from [UngroupedColumnsQuerySample.cs](https://github.com/dotnet/EntityFramework.Docs/tree/main/samples/core/Miscellaneous/NewInEFCore7/UngroupedColumnsQuerySample.cs).
+> The code shown here comes from [UngroupedColumnsQuerySample.cs](https://github.com/dotnet/EntityFramework.Docs/tree/live/samples/core/Miscellaneous/NewInEFCore7/UngroupedColumnsQuerySample.cs).
 
 In EF Core 6.0, a `GROUP BY` clause would reference columns in the outer query, which fails with some databases and is inefficient in others. For example, consider the following query:
 
@@ -3005,7 +3005,7 @@ GROUP BY [t].[Key]
 ### Read-only collections can be used for `Contains`
 
 > [!TIP]
-> The code shown here comes from [ReadOnlySetQuerySample.cs](https://github.com/dotnet/EntityFramework.Docs/tree/main/samples/core/Miscellaneous/NewInEFCore7/ReadOnlySetQuerySample.cs).
+> The code shown here comes from [ReadOnlySetQuerySample.cs](https://github.com/dotnet/EntityFramework.Docs/tree/live/samples/core/Miscellaneous/NewInEFCore7/ReadOnlySetQuerySample.cs).
 
 EF7 supports using `Contains` when the items to search for are contained in an `IReadOnlySet` or `IReadOnlyCollection`, or `IReadOnlyList`. For example, this LINQ query:
 
@@ -3040,7 +3040,7 @@ EF7 introduces better extensibility for providers to translate aggregate functio
 #### String aggregate functions
 
 > [!TIP]
-> The code shown here comes from [StringAggregateFunctionsSample.cs](https://github.com/dotnet/EntityFramework.Docs/tree/main/samples/core/Miscellaneous/NewInEFCore7/StringAggregateFunctionsSample.cs).
+> The code shown here comes from [StringAggregateFunctionsSample.cs](https://github.com/dotnet/EntityFramework.Docs/tree/live/samples/core/Miscellaneous/NewInEFCore7/StringAggregateFunctionsSample.cs).
 
 Queries using <xref:System.String.Join*> and <xref:System.String.Concat*> are now translated when appropriate. For example:
 
@@ -3109,7 +3109,7 @@ ORDER BY [t].[Name]
 #### Spatial aggregate functions
 
 > [!TIP]
-> The code shown here comes from [SpatialAggregateFunctionsSample.cs](https://github.com/dotnet/EntityFramework.Docs/tree/main/samples/core/Miscellaneous/NewInEFCore7/SpatialAggregateFunctionsSample.cs).
+> The code shown here comes from [SpatialAggregateFunctionsSample.cs](https://github.com/dotnet/EntityFramework.Docs/tree/live/samples/core/Miscellaneous/NewInEFCore7/SpatialAggregateFunctionsSample.cs).
 
 It is now possible for [database providers that support for NetTopologySuite](xref:core/modeling/spatial) to translate the following spatial aggregate functions:
 
@@ -3147,7 +3147,7 @@ GROUP BY [c].[Owner]
 #### Statistical aggregate functions
 
 > [!TIP]
-> The code shown here comes from [StatisticalAggregateFunctionsSample.cs](https://github.com/dotnet/EntityFramework.Docs/tree/main/samples/core/Miscellaneous/NewInEFCore7/StatisticalAggregateFunctionsSample.cs).
+> The code shown here comes from [StatisticalAggregateFunctionsSample.cs](https://github.com/dotnet/EntityFramework.Docs/tree/live/samples/core/Miscellaneous/NewInEFCore7/StatisticalAggregateFunctionsSample.cs).
 
 SQL Server translations have been implemented for the following statistical functions:
 
@@ -3190,7 +3190,7 @@ GROUP BY [u].[Id]
 ### Translation of `string.IndexOf`
 
 > [!TIP]
-> The code shown here comes from [MiscellaneousTranslationsSample.cs](https://github.com/dotnet/EntityFramework.Docs/tree/main/samples/core/Miscellaneous/NewInEFCore7/MiscellaneousTranslationsSample.cs).
+> The code shown here comes from [MiscellaneousTranslationsSample.cs](https://github.com/dotnet/EntityFramework.Docs/tree/live/samples/core/Miscellaneous/NewInEFCore7/MiscellaneousTranslationsSample.cs).
 
 EF7 now translates <xref:System.String.IndexOf*?displayProperty=nameWithType> in LINQ queries. For example:
 
@@ -3212,7 +3212,7 @@ WHERE (CAST(CHARINDEX(N'Entity', [p].[Content]) AS int) - 1) > 0
 ### Translation of `GetType` for entity types
 
 > [!TIP]
-> The code shown here comes from [MiscellaneousTranslationsSample.cs](https://github.com/dotnet/EntityFramework.Docs/tree/main/samples/core/Miscellaneous/NewInEFCore7/MiscellaneousTranslationsSample.cs).
+> The code shown here comes from [MiscellaneousTranslationsSample.cs](https://github.com/dotnet/EntityFramework.Docs/tree/live/samples/core/Miscellaneous/NewInEFCore7/MiscellaneousTranslationsSample.cs).
 
 EF7 now translates <xref:System.Object.GetType?displayProperty=nameWithType> in LINQ queries. For example:
 
@@ -3248,7 +3248,7 @@ And will return both `Post` and `FeaturedPost` entities.
 ### Support for `AT TIME ZONE`
 
 > [!TIP]
-> The code shown here comes from [MiscellaneousTranslationsSample.cs](https://github.com/dotnet/EntityFramework.Docs/tree/main/samples/core/Miscellaneous/NewInEFCore7/MiscellaneousTranslationsSample.cs).
+> The code shown here comes from [MiscellaneousTranslationsSample.cs](https://github.com/dotnet/EntityFramework.Docs/tree/live/samples/core/Miscellaneous/NewInEFCore7/MiscellaneousTranslationsSample.cs).
 
 EF7 introduces new <xref:Microsoft.EntityFrameworkCore.SqlServerDbFunctionsExtensions.AtTimeZone*> functions for <xref:System.DateTime> and <xref:System.DateTimeOffset>. These functions translate to `AT TIME ZONE` clauses in the generated SQL. For example:
 
@@ -3276,7 +3276,7 @@ FROM [Posts] AS [p]
 ### Filtered Include on hidden navigations
 
 > [!TIP]
-> The code shown here comes from [MiscellaneousTranslationsSample.cs](https://github.com/dotnet/EntityFramework.Docs/tree/main/samples/core/Miscellaneous/NewInEFCore7/MiscellaneousTranslationsSample.cs).
+> The code shown here comes from [MiscellaneousTranslationsSample.cs](https://github.com/dotnet/EntityFramework.Docs/tree/live/samples/core/Miscellaneous/NewInEFCore7/MiscellaneousTranslationsSample.cs).
 
 The [Include methods](xref:core/querying/related-data/eager) can now be used with <xref:Microsoft.EntityFrameworkCore.EF.Property*?displayProperty=nameWithType>. This allows [filtering and ordering](xref:core/querying/related-data/eager#filtered-include) even for private navigation properties, or private navigations represented by fields. For example:
 
@@ -3315,7 +3315,7 @@ ORDER BY [b].[Id], [t].[Title]
 ### Cosmos translation for `Regex.IsMatch`
 
 > [!TIP]
-> The code shown here comes from [CosmosQueriesSample.cs](https://github.com/dotnet/EntityFramework.Docs/tree/main/samples/core/Miscellaneous/NewInEFCore7/CosmosQueriesSample.cs).
+> The code shown here comes from [CosmosQueriesSample.cs](https://github.com/dotnet/EntityFramework.Docs/tree/live/samples/core/Miscellaneous/NewInEFCore7/CosmosQueriesSample.cs).
 
 EF7 supports using <xref:System.Text.RegularExpressions.Regex.IsMatch*?displayProperty=nameWithType> in LINQ queries against Azure Cosmos DB. For example:
 
@@ -3339,7 +3339,7 @@ WHERE ((c["Discriminator"] = "Triangle") AND RegexMatch(c["Name"], "[a-z]t[a-z]"
 EF7 contains a variety of small improvements to <xref:Microsoft.EntityFrameworkCore.DbContext> and related classes.
 
 > [!TIP]
-> The code for samples in this section comes from [DbContextApiSample.cs](https://github.com/dotnet/EntityFramework.Docs/tree/main/samples/core/Miscellaneous/NewInEFCore7/DbContextApiSample.cs).
+> The code for samples in this section comes from [DbContextApiSample.cs](https://github.com/dotnet/EntityFramework.Docs/tree/live/samples/core/Miscellaneous/NewInEFCore7/DbContextApiSample.cs).
 
 ### Suppressor for uninitialized DbSet properties
 
@@ -3553,7 +3553,7 @@ Notice:
 EF7 contains a variety of small improvements in model building.
 
 > [!TIP]
-> The code for samples in this section comes from [ModelBuildingSample.cs](https://github.com/dotnet/EntityFramework.Docs/tree/main/samples/core/Miscellaneous/NewInEFCore7/ModelBuildingSample.cs).
+> The code for samples in this section comes from [ModelBuildingSample.cs](https://github.com/dotnet/EntityFramework.Docs/tree/live/samples/core/Miscellaneous/NewInEFCore7/ModelBuildingSample.cs).
 
 ### Indexes can be ascending or descending
 
@@ -4067,7 +4067,7 @@ If these types are mapped to the same table, then in EF7 that table can be made 
 EF7 includes two significant improvements to the automatic generation of values for key properties.
 
 > [!TIP]
-> The code for samples in this section comes from [ValueGenerationSample.cs](https://github.com/dotnet/EntityFramework.Docs/tree/main/samples/core/Miscellaneous/NewInEFCore7/ValueGenerationSample.cs).
+> The code for samples in this section comes from [ValueGenerationSample.cs](https://github.com/dotnet/EntityFramework.Docs/tree/live/samples/core/Miscellaneous/NewInEFCore7/ValueGenerationSample.cs).
 
 ### Value generation for DDD guarded types
 
@@ -4331,4 +4331,4 @@ public partial class MainForm : Form
 }
 ```
 
-See [Getting Started with Windows Forms](xref:core/get-started/winforms) for a complete walkthrough and [downloadable WinForms sample application](https://github.com/dotnet/EntityFramework.Docs/tree/main/samples/core/WinForms).
+See [Getting Started with Windows Forms](xref:core/get-started/winforms) for a complete walkthrough and [downloadable WinForms sample application](https://github.com/dotnet/EntityFramework.Docs/tree/live/samples/core/WinForms).

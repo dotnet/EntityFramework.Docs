@@ -35,7 +35,7 @@ The model above is mapped to the following database schema:
 
 ![Screenshot of the database model for entity containing owned reference](_static/owned-entities-ownsone.png)
 
-See the [full sample project](https://github.com/dotnet/EntityFramework.Docs/tree/main/samples/core/Modeling/OwnedEntities) for more context.
+See the [full sample project](https://github.com/dotnet/EntityFramework.Docs/tree/live/samples/core/Modeling/OwnedEntities) for more context.
 
 > [!TIP]
 > The owned entity type can be marked as required, see [Required one-to-one dependents](xref:core/modeling/relationships/navigations#required-navigations) for more information.

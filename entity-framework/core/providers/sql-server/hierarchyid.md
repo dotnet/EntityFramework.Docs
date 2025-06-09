@@ -81,7 +81,7 @@ The `HierarchyId` type can be used for properties of an entity type. For example
 [!code-csharp[Halfling](../../../../samples/core/Miscellaneous/NewInEFCore8/HierarchyIdSample.cs?name=Halfling)]
 
 > [!TIP]
-> The code shown here and in the examples below comes from [HierarchyIdSample.cs](https://github.com/dotnet/EntityFramework.Docs/tree/main/samples/core/Miscellaneous/NewInEFCore8/HierarchyIdSample.cs).
+> The code shown here and in the examples below comes from [HierarchyIdSample.cs](https://github.com/dotnet/EntityFramework.Docs/tree/live/samples/core/Miscellaneous/NewInEFCore8/HierarchyIdSample.cs).
 
 > [!TIP]
 > If desired, `HierarchyId` is suitable for use as a key property type.

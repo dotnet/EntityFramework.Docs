@@ -9,7 +9,7 @@ uid: core/modeling/bulk-configuration
 
 When an aspect needs to be configured in the same way across multiple entity types, the following techniques allow to reduce code duplication and consolidate the logic.
 
-See the [full sample project](https://github.com/dotnet/EntityFramework.Docs/tree/main/samples/core/Modeling/BulkConfiguration) containing the code snippets presented below.
+See the [full sample project](https://github.com/dotnet/EntityFramework.Docs/tree/live/samples/core/Modeling/BulkConfiguration) containing the code snippets presented below.
 
 ## Bulk configuration in OnModelCreating
 

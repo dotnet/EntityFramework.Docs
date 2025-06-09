@@ -75,7 +75,7 @@ To learn more about querying with partition keys and point reads, [see the query
 ### Hierarchical partition keys
 
 > [!TIP]
-> The code shown here comes from [HierarchicalPartitionKeysSample.cs](https://github.com/dotnet/EntityFramework.Docs/tree/main/samples/core/Miscellaneous/NewInEFCore9.Cosmos/HierarchicalPartitionKeysSample.cs).
+> The code shown here comes from [HierarchicalPartitionKeysSample.cs](https://github.com/dotnet/EntityFramework.Docs/tree/live/samples/core/Miscellaneous/NewInEFCore9.Cosmos/HierarchicalPartitionKeysSample.cs).
 
 Azure Cosmos DB originally supported a single partition key, but has since expanded partitioning capabilities to also support [subpartitioning through the specification of up to three levels of hierarchy in the partition key](/azure/cosmos-db/hierarchical-partition-keys). EF Core 9 brings full support for hierarchical partition keys, allowing you take advantage of the better performance and cost savings associated with this feature.
 
@@ -342,7 +342,7 @@ We'd like to call out Andrea Canciani ([@ranma42](https://github.com/ranma42)) f
 #### GroupBy
 
 > [!TIP]
-> The code shown here comes from [ComplexTypesSample.cs](https://github.com/dotnet/EntityFramework.Docs/tree/main/samples/core/Miscellaneous/NewInEFCore9/ComplexTypesSample.cs).
+> The code shown here comes from [ComplexTypesSample.cs](https://github.com/dotnet/EntityFramework.Docs/tree/live/samples/core/Miscellaneous/NewInEFCore9/ComplexTypesSample.cs).
 
 EF9 supports grouping by a complex type instance. For example:
 
@@ -365,7 +365,7 @@ GROUP BY [s].[StoreAddress_City], [s].[StoreAddress_Country], [s].[StoreAddress_
 #### ExecuteUpdate
 
 > [!TIP]
-> The code shown here comes from [ExecuteUpdateSample.cs](https://github.com/dotnet/EntityFramework.Docs/tree/main/samples/core/Miscellaneous/NewInEFCore9/ExecuteUpdateSample.cs).
+> The code shown here comes from [ExecuteUpdateSample.cs](https://github.com/dotnet/EntityFramework.Docs/tree/live/samples/core/Miscellaneous/NewInEFCore9/ExecuteUpdateSample.cs).
 
 Similarly, in EF9 `ExecuteUpdate` has also been improved to accept complex type properties. However, each member of the complex type must be specified explicitly. For example:
 
@@ -506,7 +506,7 @@ FROM (
 ### Translations involving GREATEST/LEAST
 
 > [!TIP]
-> The code shown here comes from [LeastGreatestSample.cs](https://github.com/dotnet/EntityFramework.Docs/tree/main/samples/core/Miscellaneous/NewInEFCore9/LeastGreatestSample.cs).
+> The code shown here comes from [LeastGreatestSample.cs](https://github.com/dotnet/EntityFramework.Docs/tree/live/samples/core/Miscellaneous/NewInEFCore9/LeastGreatestSample.cs).
 
 Several new translations have been introduced that use the `GREATEST` and `LEAST` SQL functions.
 
@@ -584,7 +584,7 @@ FROM [Pubs] AS [p]
 ### Force or prevent query parameterization
 
 > [!TIP]
-> The code shown here comes from [QuerySample.cs](https://github.com/dotnet/EntityFramework.Docs/tree/main/samples/core/Miscellaneous/NewInEFCore9/QuerySample.cs).
+> The code shown here comes from [QuerySample.cs](https://github.com/dotnet/EntityFramework.Docs/tree/live/samples/core/Miscellaneous/NewInEFCore9/QuerySample.cs).
 
 Except in some special cases, EF Core parameterizes variables used in a LINQ query, but includes constants in the generated SQL. For example, consider the following query method:
 
@@ -710,7 +710,7 @@ Moreover, EF9 introduces `TranslateParameterizedCollectionsToConstants` [context
 ### Inlined uncorrelated subqueries
 
 > [!TIP]
-> The code shown here comes from [QuerySample.cs](https://github.com/dotnet/EntityFramework.Docs/tree/main/samples/core/Miscellaneous/NewInEFCore9/QuerySample.cs).
+> The code shown here comes from [QuerySample.cs](https://github.com/dotnet/EntityFramework.Docs/tree/live/samples/core/Miscellaneous/NewInEFCore9/QuerySample.cs).
 
 In EF8, an IQueryable referenced in another query may be executed as a separate database roundtrip. For example, consider the following LINQ query:
 
@@ -824,7 +824,7 @@ var topRatedPostsAverageRatingByLanguage = await context.Blogs.
 ### Queries using Count != 0 are optimized
 
 > [!TIP]
-> The code shown here comes from [QuerySample.cs](https://github.com/dotnet/EntityFramework.Docs/tree/main/samples/core/Miscellaneous/NewInEFCore9/QuerySample.cs).
+> The code shown here comes from [QuerySample.cs](https://github.com/dotnet/EntityFramework.Docs/tree/live/samples/core/Miscellaneous/NewInEFCore9/QuerySample.cs).
 
 In EF8, the following LINQ query was translated to use the SQL `COUNT` function:
 
@@ -1121,7 +1121,7 @@ More information can be found [here](/ef/core/modeling/data-seeding#use-seeding-
 ### Auto-compiled models
 
 > [!TIP]
-> The code shown here comes from the [NewInEFCore9.CompiledModels](https://github.com/dotnet/EntityFramework.Docs/tree/main/samples/core/Miscellaneous/NewInEFCore9.CompiledModels/) sample.
+> The code shown here comes from the [NewInEFCore9.CompiledModels](https://github.com/dotnet/EntityFramework.Docs/tree/live/samples/core/Miscellaneous/NewInEFCore9.CompiledModels/) sample.
 
 Compiled models can improve startup time for applications with large models--that is entity type counts in the 100s or 1000s. In previous versions of EF Core, a compiled model had to be generated manually, using the command line. For example:
 
@@ -1221,7 +1221,7 @@ For more information see [MSBuild integration](xref:core/cli/msbuild).
 ### Read-only primitive collections
 
 > [!TIP]
-> The code shown here comes from [PrimitiveCollectionsSample.cs](https://github.com/dotnet/EntityFramework.Docs/tree/main/samples/core/Miscellaneous/NewInEFCore9/PrimitiveCollectionsSample.cs).
+> The code shown here comes from [PrimitiveCollectionsSample.cs](https://github.com/dotnet/EntityFramework.Docs/tree/live/samples/core/Miscellaneous/NewInEFCore9/PrimitiveCollectionsSample.cs).
 
 EF8 introduced support for [mapping arrays and mutable lists of primitive types](xref:core/what-is-new/ef-core-8.0/whatsnew#primitive-collections). This has been expanded in EF9 to include read-only collections/lists. Specifically, EF9 supports collections typed as `IReadOnlyList`, `IReadOnlyCollection`, or `ReadOnlyCollection`. For example, in the following code, `DaysVisited` will be mapped by convention as a primitive collection of dates:
 
@@ -1281,7 +1281,7 @@ INNER JOIN "Pubs" AS "p" ON "w"."ClosestPubId" = "p"."Id"
 ### Specify fill-factor for keys and indexes
 
 > [!TIP]
-> The code shown here comes from [ModelBuildingSample.cs](https://github.com/dotnet/EntityFramework.Docs/tree/main/samples/core/Miscellaneous/NewInEFCore9/ModelBuildingSample.cs).
+> The code shown here comes from [ModelBuildingSample.cs](https://github.com/dotnet/EntityFramework.Docs/tree/live/samples/core/Miscellaneous/NewInEFCore9/ModelBuildingSample.cs).
 
 EF9 supports specification of the [SQL Server fill-factor](/sql/relational-databases/indexes/specify-fill-factor-for-an-index) when using EF Core Migrations to create keys and indexes. From the SQL Server docs, "When an index is created or rebuilt, the fill-factor value determines the percentage of space on each leaf-level page to be filled with data, reserving the remainder on each page as free space for future growth."
 
@@ -1328,7 +1328,7 @@ This enhancement was contributed by [@deano-hunter](https://github.com/deano-hun
 ### Make existing model building conventions more extensible
 
 > [!TIP]
-> The code shown here comes from [CustomConventionsSample.cs](https://github.com/dotnet/EntityFramework.Docs/tree/main/samples/core/Miscellaneous/NewInEFCore9/CustomConventionsSample.cs).
+> The code shown here comes from [CustomConventionsSample.cs](https://github.com/dotnet/EntityFramework.Docs/tree/live/samples/core/Miscellaneous/NewInEFCore9/CustomConventionsSample.cs).
 
 Public model building conventions for applications were [introduced in EF7](xref:core/modeling/bulk-configuration#Conventions). In EF9, we have made it easier to extend some of the existing conventions. For example, [the code to map properties by attribute in EF7](xref:core/what-is-new/ef-core-7.0/whatsnew#model-building-conventions) is this:
 
@@ -1451,7 +1451,7 @@ As an aside, some people think this pattern is an abomination because it couples
 ## SQL Server HierarchyId
 
 > [!TIP]
-> The code shown here comes from [HierarchyIdSample.cs](https://github.com/dotnet/EntityFramework.Docs/tree/main/samples/core/Miscellaneous/NewInEFCore9/HierarchyIdSample.cs).
+> The code shown here comes from [HierarchyIdSample.cs](https://github.com/dotnet/EntityFramework.Docs/tree/live/samples/core/Miscellaneous/NewInEFCore9/HierarchyIdSample.cs).
 
 <a name="hierarchyid-path-generation"></a>
 

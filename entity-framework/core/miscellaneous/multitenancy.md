@@ -16,7 +16,7 @@ Many line of business applications are designed to work with multiple customers.
 > This document provides examples and solutions "as is." These are not intended to be "best practices" but rather "working practices" for your consideration.
 
 > [!TIP]
-> You can view the source code for this [sample on GitHub](https://github.com/dotnet/EntityFramework.Docs/tree/main/samples/core/Miscellaneous/Multitenancy)
+> You can view the source code for this [sample on GitHub](https://github.com/dotnet/EntityFramework.Docs/tree/live/samples/core/Miscellaneous/Multitenancy)
 
 ## Supporting multi-tenancy
 

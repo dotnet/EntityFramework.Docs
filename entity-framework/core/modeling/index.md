@@ -12,7 +12,7 @@ EF Core uses a metadata _model_ to describe how the application's entity types a
 Most configuration can be applied to a model targeting any data store. Providers may also enable configuration that is specific to a particular data store and they can also ignore configuration that is not supported or not applicable. For documentation on provider-specific configuration see the [Database providers](xref:core/providers/index) section.
 
 > [!TIP]
-> You can view this article's [samples](https://github.com/dotnet/EntityFramework.Docs/tree/main/samples/core/Modeling/) on GitHub.
+> You can view this article's [samples](https://github.com/dotnet/EntityFramework.Docs/tree/live/samples/core/Modeling/) on GitHub.
 
 ## Use fluent API to configure a model
 
@@ -93,7 +93,7 @@ EF Core includes many model building conventions that are enabled by default. Yo
 Applications can remove or replace any of these conventions, as well as add new [custom conventions](xref:core/modeling/bulk-configuration#conventions) that apply configuration for patterns that are not recognized by EF out of the box.
 
 > [!TIP]
-> The code shown below comes from [ModelBuildingConventionsSample.cs](https://github.com/dotnet/EntityFramework.Docs/tree/main/samples/core/Modeling/BulkConfiguration/ModelBuildingConventionsSample.cs).
+> The code shown below comes from [ModelBuildingConventionsSample.cs](https://github.com/dotnet/EntityFramework.Docs/tree/live/samples/core/Modeling/BulkConfiguration/ModelBuildingConventionsSample.cs).
 
 ### Removing an existing convention
 

@@ -113,7 +113,7 @@ Indeed, EF [model building conventions](xref:core/modeling/relationships/convent
 The following sections contain examples of many-to-many relationships, including the configuration needed to achieve each mapping.
 
 > [!TIP]
-> The code for all the examples below can be found in [ManyToMany.cs](https://github.com/dotnet/EntityFramework.Docs/tree/main/samples/core/Modeling/Relationships/ManyToMany.cs).
+> The code for all the examples below can be found in [ManyToMany.cs](https://github.com/dotnet/EntityFramework.Docs/tree/live/samples/core/Modeling/Relationships/ManyToMany.cs).
 
 ## Basic many-to-many
 

@@ -10,7 +10,7 @@ uid: core/modeling/relationships/foreign-and-principal-keys
 All [one-to-one](xref:core/modeling/relationships/one-to-one) and [one-to-many](xref:core/modeling/relationships/one-to-many) relationships are defined by a foreign key on the dependent end that references a primary or alternate key on the principal end. For convenience, this primary or alternate key is known as the "principal key" for the relationship. [Many-to-many](xref:core/modeling/relationships/one-to-many) relationships are composed of two one-to-many relationships, each of which is itself defined by a foreign key referencing a principal key.
 
 > [!TIP]
-> The code below can be found in [ForeignAndPrincipalKeys.cs](https://github.com/dotnet/EntityFramework.Docs/tree/main/samples/core/Modeling/Relationships/ForeignAndPrincipalKeys.cs).
+> The code below can be found in [ForeignAndPrincipalKeys.cs](https://github.com/dotnet/EntityFramework.Docs/tree/live/samples/core/Modeling/Relationships/ForeignAndPrincipalKeys.cs).
 
 ## Foreign keys
 
