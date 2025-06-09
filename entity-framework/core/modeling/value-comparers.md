@@ -9,7 +9,7 @@ uid: core/modeling/value-comparers
 # Value Comparers
 
 > [!TIP]
-> The code in this document can be found on GitHub as a [runnable sample](https://github.com/dotnet/EntityFramework.Docs/tree/main/samples/core/Modeling/ValueConversions/).
+> The code in this document can be found on GitHub as a [runnable sample](https://github.com/dotnet/EntityFramework.Docs/tree/live/samples/core/Modeling/ValueConversions/).
 
 ## Background
 

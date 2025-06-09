@@ -12,7 +12,7 @@ One-to-many relationships are used when a single entity is associated with any n
 This document is structured around lots of examples. The examples start with common cases, which also introduce concepts. Later examples cover less common kinds of configuration. A good approach here is to understand the first few examples and concepts, and then go to the later examples based on your specific needs. Based on this approach, we will start with simple "required" and "optional" one-to-many relationships.
 
 > [!TIP]
-> The code for all the examples below can be found in [OneToMany.cs](https://github.com/dotnet/EntityFramework.Docs/tree/main/samples/core/Modeling/Relationships/OneToMany.cs).
+> The code for all the examples below can be found in [OneToMany.cs](https://github.com/dotnet/EntityFramework.Docs/tree/live/samples/core/Modeling/Relationships/OneToMany.cs).
 
 ## Required one-to-many
 
