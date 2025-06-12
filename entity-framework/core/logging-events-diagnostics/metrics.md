@@ -19,7 +19,7 @@ Entity Framework Core (EF Core) exposes continuous numeric metrics which can pro
 EF Core reports metrics via the standard <xref:System.Diagnostics.Metrics?displayProperty=nameWithType> API. `Microsoft.EntityFrameworkCore` is the name of the meter. It's recommended to read [.NET documentation on metrics](/dotnet/core/diagnostics/metrics).
 
 > [!NOTE]
-> This feature is being introduced in EF Core 9.0 (in preview). [See event counters below](#event-counters-legacy) for older versions of EF Core.
+> This feature was introduced in EF Core 9.0. [See event counters below](#event-counters-legacy) for older versions of EF Core.
 
 ### Metrics and their meaning
 

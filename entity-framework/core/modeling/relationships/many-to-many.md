@@ -525,9 +525,6 @@ CREATE TABLE "PostTag" (
 
 ## Unidirectional many-to-many
 
-> [!NOTE]
-> Unidirectional many-to-many relationships were introduced in EF Core 7. In earlier releases, a private navigation could be used as a workaround.
-
 It is not necessary to include a navigation on both sides of the many-to-many relationship. For example:
 
 <!--

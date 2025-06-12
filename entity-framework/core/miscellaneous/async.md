@@ -53,4 +53,4 @@ await foreach (var blog in blogs)
 ```
 
 > [!NOTE]
-> LINQ operators over <xref:System.Collections.Generic.IAsyncEnumerable`1> were introduced in .NET 10. When using an older version of .NET, reference the [`System.Linq.Async` package](https://www.nuget.org/packages/System.Linq.Async).
+> LINQ operators over <xref:System.Collections.Generic.IAsyncEnumerable`1> are being introduced in .NET 10. When using an older version of .NET, reference the [`System.Linq.Async` package](https://www.nuget.org/packages/System.Linq.Async).

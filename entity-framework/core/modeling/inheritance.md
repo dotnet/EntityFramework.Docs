@@ -102,9 +102,6 @@ If you are employing bulk configuration you can retrieve the column name for a s
 
 ## Table-per-concrete-type configuration
 
-> [!NOTE]
-> The table-per-concrete-type (TPC) feature was introduced in EF Core 7.0.
-
 In the TPC mapping pattern, all the types are mapped to individual tables. Each table contains columns for all properties on the corresponding entity type. This addresses some common performance issues with the TPT strategy.
 
 > [!TIP]

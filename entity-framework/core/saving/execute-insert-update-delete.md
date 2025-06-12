@@ -7,9 +7,6 @@ uid: core/saving/execute-insert-update-delete
 ---
 # ExecuteUpdate and ExecuteDelete
 
-> [!NOTE]
-> This feature was introduced in EF Core 7.0.
-
 <xref:Microsoft.EntityFrameworkCore.RelationalQueryableExtensions.ExecuteUpdate*> and <xref:Microsoft.EntityFrameworkCore.RelationalQueryableExtensions.ExecuteDelete*> are a way to save data to the database without using EF's traditional change tracking and <xref:Microsoft.EntityFrameworkCore.DbContext.SaveChanges> method. For an introductory comparison of these two techniques, see the [Overview page](xref:core/saving/index) on saving data.
 
 ## ExecuteDelete
