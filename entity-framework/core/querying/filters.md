@@ -7,83 +7,115 @@ uid: core/querying/filters
 ---
 # Global Query Filters
 
-Global query filters are LINQ query predicates applied to Entity Types in the metadata model (usually in `OnModelCreating`). A query predicate is a boolean expression typically passed to the LINQ `Where` query operator.  EF Core applies such filters automatically to any LINQ queries involving those Entity Types.  EF Core also applies them to Entity Types, referenced indirectly through use of Include or navigation property. Some common applications of this feature are:
-
-* **Soft delete** - An Entity Type defines an `IsDeleted` property.
-* **Multi-tenancy** - An Entity Type defines a `TenantId` property.
-
-## Example
-
-The following example shows how to use Global Query Filters to implement multi-tenancy and soft-delete query behaviors in a simple blogging model.
+Global query filters allow attaching a filter to an entity type, and having that filter applied whenever a query on that entity type is executed; think of them as an additional LINQ `Where` operator that's added whenever the entity type is queried. Such filters are useful in a variety of cases.
 
 > [!TIP]
 > You can view this article's [sample](https://github.com/dotnet/EntityFramework.Docs/tree/main/samples/core/Querying/QueryFilters) on GitHub.
 
-> [!NOTE]
-> Multi-tenancy is used here as a simple example. There is also an article with comprehensive guidance for [multi-tenancy in EF Core applications](xref:core/miscellaneous/multitenancy).
+## Basic example - soft deletion
 
-First, define the entities:
+In some scenarios, rather than deleted a row from the database, it's preferable to instead set an `IsDeleted` flag to mark the row as deleted; this pattern is called *soft deletion*. Soft deletion allows rows to be undeleted if needed, or to preserve an audit trail where deleted rows are still accessible. Global query filters can be used to filter out soft-deleted rows by default, while still allowing you to access them in specific places by disabling the filter for a specific query.
 
-[!code-csharp[Main](../../../samples/core/Querying/QueryFilters/Entities.cs#Entities)]
+To enable soft deletion, let's add an `IsDeleted` property to our Blog type:
 
-Note the declaration of a `_tenantId` field on the `Blog` entity. This field will be used to associate each Blog instance with a specific tenant. Also defined is an `IsDeleted` property on the `Post` entity type. This property is used to keep track of whether a post instance has been "soft-deleted". That is, the instance is marked as deleted without physically removing the underlying data.
+[!code-csharp[Main](../../../samples/core/Querying/QueryFilters/SoftDeletion.cs#Blog)]
 
-Next, configure the query filters in `OnModelCreating` using the `HasQueryFilter` API.
+We now set up a global query filter, using the <xref:Microsoft.EntityFrameworkCore.Metadata.Builders.EntityTypeBuilder`1.HasQueryFilter*> API in `OnModelCreating`:
 
-[!code-csharp[Main](../../../samples/core/Querying/QueryFilters/BloggingContext.cs#FilterConfiguration)]
+[!code-csharp[Main](../../../samples/core/Querying/QueryFilters/SoftDeletion.cs#FilterConfiguration)]
 
-The predicate expressions passed to the `HasQueryFilter` calls will now automatically be applied to any LINQ queries for those types.
+We can now query our Blogs as usual; the configured filter will ensure that all queries will - by default - filter out all instances where `IsDeleted` is true.
 
-> [!TIP]
-> Note the use of a DbContext instance level field: `_tenantId` used to set the current tenant. Model-level filters will use the value from the correct context instance (that is, the instance that is executing the query).
+Note that at this point, you must manually set `IsDeleted` in order to soft-delete an entity. For a more end-to-end solution, you can override your context type's `SaveChangesAsync` method to add logic which goes over all entities which the user deleted, and changes them to be modified instead, setting the `IsDeleted` property to true:
 
-> [!NOTE]
-> It is currently not possible to define multiple query filters on the same entity - only the last one will be applied. However, you can define a single filter with multiple conditions using the logical `AND` operator ([`&&` in C#](/dotnet/csharp/language-reference/operators/boolean-logical-operators#conditional-logical-and-operator-)).
+[!code-csharp[Main](../../../samples/core/Querying/QueryFilters/SoftDeletion.cs#SaveChangesAsyncOverride)]
 
-## Use of navigations
+This allows you to use EF APIs the delete an entity instance as usual, and have them get soft-deleted instead.
 
-You can also use navigations in defining global query filters. Using navigations in query filter will cause query filters to be applied recursively. When EF Core expands navigations used in query filters, it will also apply query filters defined on referenced entities.
+## Using context data - multi-tenancy
 
-To illustrate this configure query filters in `OnModelCreating` in the following way:
-[!code-csharp[Main](../../../samples/core/Querying/QueryFilters/FilteredBloggingContextRequired.cs#NavigationInFilter)]
+Another mainstream scenario for global query filters is *multi-tenancy*, where your application stores data belonging to different users in the same table. In such cases, there's usually a *tenant ID* column which associates the row to a specific tenant, and global query filters can be used to automatically filter for the rows of the current tenant. This provides strong tenant isolation for your queries by default, removing the need to think of filtering for the tenant in each and every query.
 
-Next, query for all `Blog` entities:
-[!code-csharp[Main](../../../samples/core/Querying/QueryFilters/Program.cs#QueriesNavigation)]
+Unlike with soft deletion, multi-tenancy requires knowing the *current* tenant ID; this value is usually determined e.g. when the user authenticates over the web. For EF's purposes, the tenant ID must be available on the context instance, so that the global query filter can refer to it and use it when querying. Let's accept a `tenantId` parameter in our context type's constructor, and reference that from our filter:
 
-This query produces the following SQL, which applies query filters defined for both `Blog` and `Post` entities:
-
-```sql
-SELECT [b].[BlogId], [b].[Name], [b].[Url]
-FROM [Blogs] AS [b]
-WHERE (
-    SELECT COUNT(*)
-    FROM [Posts] AS [p]
-    WHERE ([p].[Title] LIKE N'%fish%') AND ([b].[BlogId] = [p].[BlogId])) > 0
+```c#
+public class MultitenancyContext(string tenantId) : DbContext
+{
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        modelBuilder.Entity<Blog>().HasQueryFilter(b => b.TenantId == tenantId);
+    }
+}
 ```
 
-> [!NOTE]
-> Currently EF Core does not detect cycles in global query filter definitions, so you should be careful when defining them. If specified incorrectly, cycles could lead to infinite loops during query translation.
+This forces anyone constructing a context to specify its associated tenant ID, and ensures that only Blogs with that ID are returned from queries by default.
 
-## Accessing entity with query filter using required navigation
+> [!NOTE]
+> This sample only showed basic multi-tenancy concepts needed in order to demonstrate global query filters. For more information on multi-tenancy and EF, see [multi-tenancy in EF Core applications](xref:core/miscellaneous/multitenancy).
+
+## Using multiple query filters
+
+Calling <xref:Microsoft.EntityFrameworkCore.Metadata.Builders.EntityTypeBuilder`1.HasQueryFilter*> with a simple filter overwrites any previous filter, so multiple filters **cannot** be defined on the same entity type in this way:
+
+```c#
+modelBuilder.Entity<Blog>().HasQueryFilter(b => !b.IsDeleted);
+// The following overwrites the previous query filter:
+modelBuilder.Entity<Blog>().HasQueryFilter(b => b.TenantId == tenantId);
+```
+
+### [EF 10+](#tab/ef10)
+
+> [!NOTE]
+> This feature is being introduced in EF Core 10.0 (in preview).
+
+In order to define multiple query filters on the same entity type, they must be *named*:
+
+[!code-csharp[Main](../../../samples/core/Querying/QueryFilters/NamedFilters.cs#FilterConfiguration)]
+
+This allows you to manage each filter separately, including selectively disabling one but not the other.
+
+### [Older versions](#tab/older)
+
+Prior to EF 10, you can attach multiple filters to an entity type by calling <xref:Microsoft.EntityFrameworkCore.Metadata.Builders.EntityTypeBuilder`1.HasQueryFilter*> once and combining your filters using the `&&` operator:
+
+```c#
+modelBuilder.Entity<Blog>().HasQueryFilter(b => !b.IsDeleted && b.TenantId == tenantId);
+```
+
+This unfortunately does not allow selectively disable a single filter.
+
+***
+
+## Disabling filters
+
+Filters may be disabled for individual LINQ queries by using the <xref:Microsoft.EntityFrameworkCore.EntityFrameworkQueryableExtensions.IgnoreQueryFilters*> operator:
+
+[!code-csharp[Main](../../../samples/core/Querying/QueryFilters/SoftDeletion.cs#DisableFilter)]
+
+If multiple named filters are configured, this disables all of them. To selectively disable specific filters (starting with EF 10), pass the list of filter names to be disabled:
+
+[!code-csharp[Main](../../../samples/core/Querying/QueryFilters/NamedFilters.cs#DisableSoftDeletionFilter)]
+
+## Query filters and required navigations
 
 > [!CAUTION]
 > Using required navigation to access entity which has global query filter defined may lead to unexpected results.
 
-Required navigation expects the related entity to always be present. If necessary related entity is filtered out by the query filter, the parent entity wouldn't be in result either. So you may get fewer elements than expected in result.
+Required navigations in EF imply that the related entity is always present. Since inner joins may be used to fetch related entities, if a required related entity is filtered out by the query filter, the parent entity may get filtered out as well. This can result in unexpectedly retrieving fewer elements than expected.
 
-To illustrate the problem, we can use the `Blog` and `Post` entities specified above and the following `OnModelCreating` method:
+To illustrate the problem, we can use `Blog` and `Post` entities and configure them as follows:
 
-[!code-csharp[Main](../../../samples/core/Querying/QueryFilters/FilteredBloggingContextRequired.cs#IncorrectFilter)]
+[!code-csharp[Main](../../../samples/core/Querying/QueryFilters/QueryFiltersAndRequiredNavigations.cs#IncorrectFilter)]
 
 The model can be seeded with the following data:
 
-[!code-csharp[Main](../../../samples/core/Querying/QueryFilters/Program.cs#SeedData)]
+[!code-csharp[Main](../../../samples/core/Querying/QueryFilters/QueryFiltersAndRequiredNavigations.cs#SeedData)]
 
-The problem can be observed when executing two queries:
+The problem can be observed when executing the following two queries:
 
-[!code-csharp[Main](../../../samples/core/Querying/QueryFilters/Program.cs#Queries)]
+[!code-csharp[Main](../../../samples/core/Querying/QueryFilters/QueryFiltersAndRequiredNavigations.cs#Queries)]
 
-With above setup, the first query returns all 6 `Post`s, however the second query only returns 3. This mismatch happens because `Include` method in the second query loads the related `Blog` entities. Since the navigation between `Blog` and `Post` is required, EF Core uses `INNER JOIN` when constructing the query:
+With the above setup, the first query returns all 6 `Post` instances, but the second query returns only 3. This mismatch occurs because the `Include` method in the second query loads the related `Blog` entities. Since the navigation between `Blog` and `Post` is required, EF Core uses `INNER JOIN` when constructing the query:
 
 ```sql
 SELECT [p].[PostId], [p].[BlogId], [p].[Content], [p].[IsDeleted], [p].[Title], [t].[BlogId], [t].[Name], [t].[Url]
@@ -95,26 +127,33 @@ INNER JOIN (
 ) AS [t] ON [p].[BlogId] = [t].[BlogId]
 ```
 
-Use of the `INNER JOIN` filters out all `Post`s whose related `Blog`s have been removed by a global query filter.
+Use of the `INNER JOIN` filters out all `Post` rows whose related `Blog` rows have been filtered out by a query filter. This problem can be addressed by configuring the navigation as optional navigation instead of required, causing EF to generate a `LEFT JOIN` instead of an `INNER JOIN`:
 
-It can be addressed by using optional navigation instead of required.
-This way the first query stays the same as before, however the second query will now generate `LEFT JOIN` and return 6 results.
+[!code-csharp[Main](../../../samples/core/Querying/QueryFilters/QueryFiltersAndRequiredNavigations.cs#OptionalNavigation)]
 
-[!code-csharp[Main](../../../samples/core/Querying/QueryFilters/FilteredBloggingContextRequired.cs#OptionalNavigation)]
+An alternative approach is to specify consistent filters on both `Blog` and `Post` entity types; once matching filters are applied to both `Blog` and `Post`, `Post` rows that could end up in unexpected state are removed and both queries return 3 results.
 
-Alternative approach is to specify consistent filters on both `Blog` and `Post` entities.
-This way matching filters are applied to both `Blog` and `Post`. `Post`s that could end up in unexpected state are removed and both queries return 3 results.
+[!code-csharp[Main](../../../samples/core/Querying/QueryFilters/QueryFiltersAndRequiredNavigations.cs#MatchingFilters)]
 
-[!code-csharp[Main](../../../samples/core/Querying/QueryFilters/FilteredBloggingContextRequired.cs#MatchingFilters)]
+## Query filters and IEntityTypeConfiguration
 
-## Disabling Filters
+If your query filter needs to access a tenant ID or similar contextual information, <xref:Microsoft.EntityFrameworkCore.IEntityTypeConfiguration`1> can pose an additional complication as unlike with `OnModelCreating`, there's no instance of your context type readily available to reference from the query filter. As a workaround, add a dummy context to your configuration type and reference that as follows:
 
-Filters may be disabled for individual LINQ queries by using the <xref:Microsoft.EntityFrameworkCore.EntityFrameworkQueryableExtensions.IgnoreQueryFilters*> operator.
+```c#
+private sealed class CustomerEntityConfiguration : IEntityTypeConfiguration<Customer>
+{
+    private readonly SomeDbContext _context == null!;
 
-[!code-csharp[Main](../../../samples/core/Querying/QueryFilters/Program.cs#IgnoreFilters)]
+    public void Configure(EntityTypeBuilder<Customer> builder)
+    {
+        builder.HasQueryFilter(d => d.TenantId == _context.TenantId);
+    }
+}
+```
 
 ## Limitations
 
 Global query filters have the following limitations:
 
-* Filters can only be defined for the root Entity Type of an inheritance hierarchy.
+* Filters can only be defined for the root entity type of an inheritance hierarchy.
+* Currently EF Core does not detect cycles in global query filter definitions, so you should be careful when defining them. If specified incorrectly, cycles could lead to infinite loops during query translation.
