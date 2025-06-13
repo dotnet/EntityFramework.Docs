@@ -13,8 +13,9 @@ Entity Framework Core, or EF Core for short, is a total rewrite of Entity Framew
 > [!IMPORTANT]
 > Before you start the porting process it is important to validate that EF Core meets the data access requirements for your application. You can find everything you need in the [EF Core documentation](xref:core/index).
 
-> [!IMPORTANT]
-> There is a known issue ([microsoft/dotnet-apiport #993](https://github.com/microsoft/dotnet-apiport/issues/993)) with the [portability analyzer](/dotnet/standard/analyzers/portability-analyzer) that erroneously reports EF Core as incompatible with .NET 5 and .NET 6. These warnings can be safely ignored as EF Core is 100% compatible with .NET 5 and .NET 6 target frameworks.
+> [!WARNING]
+> EF Core only supports modern .NET, and does not support .NET Framework.
+> As such, if your project is still targeting .NET Framework, you will have to migrate to modern .NET before you can start your migration from EF6 to EF Core. Note that EF6 supports modern .NET, so you can migrate to modern .NET first while keeping EF6, and then tackle the migration from EF6 to EF Core.
 
 ## Reasons to upgrade
 
