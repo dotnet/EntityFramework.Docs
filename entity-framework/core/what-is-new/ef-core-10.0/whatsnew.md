@@ -19,6 +19,22 @@ EF10 requires the .NET 10 SDK to build and requires the .NET 10 runtime to run. 
 
 <a name="cosmos"></a>
 
+## Named query filters
+
+EF's [global query filters](xref:core/querying/filters) feature has long enabled users to configuring filters to entity types which apply to all queries by default. This has simplified implementing common patterns and scenarios such as soft deletion, multitenancy and others. However, up to now EF has only supported a single query filter per entity type, making it difficult to have multiple filters and selectively disabling only some of them in specific queries.
+
+EF 10 introduces *named query filters*, which allow attaching names to query filter and managing each one separately:
+
+[!code-csharp[Main](../../../../samples/core/Querying/QueryFilters/NamedFilters.cs#FilterConfiguration)]
+
+This notably allows disabling only certain filters in a specific LINQ query:
+
+[!code-csharp[Main](../../../../samples/core/Querying/QueryFilters/NamedFilters.cs#DisableSoftDeletionFilter)]
+
+For more information on named query filters, see the [documentation](xref:core/querying/filters).
+
+This feature was contributed by [@bittola](https://github.com/bittola).
+
 ## Azure Cosmos DB for NoSQL
 
 <a name="full-text-search-support"></a>
@@ -130,7 +146,8 @@ See [#12793](https://github.com/dotnet/efcore/issues/12793) and [#35367](https:/
 
 ### Other query improvements
 
-- Translate DateOnly.ToDateTime(timeOnly) ([#35194](https://github.com/dotnet/efcore/pull/35194), contributed by [@mseada94](https://github.com/mseada94)).
+- Translate [DateOnly.ToDateTime()](/dotnet/api/system.dateonly.todatetime) ([#35194](https://github.com/dotnet/efcore/pull/35194), contributed by [@mseada94](https://github.com/mseada94)).
+- Translate [DateOnly.DayNumber](/dotnet/api/system.dateonly.daynumber) and `DayNumber` subtraction for SQL Server and SQLite ([#36183](https://github.com/dotnet/efcore/issues/36183)).
 - Optimize multiple consecutive `LIMIT`s ([#35384](https://github.com/dotnet/efcore/pull/35384), contributed by [@ranma42](https://github.com/ranma42)).
 - Optimize use of `Count` operation on `ICollection<T>` ([#35381](https://github.com/dotnet/efcore/pull/35381), contributed by [@ChrisJollyAU](https://github.com/ChrisJollyAU)).
 - Optimize `MIN`/`MAX` over `DISTINCT` ([#34699](https://github.com/dotnet/efcore/pull/34699), contributed by [@ranma42](https://github.com/ranma42)).
