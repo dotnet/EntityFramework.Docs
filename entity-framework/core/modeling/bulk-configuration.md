@@ -75,9 +75,6 @@ Generally, EF is able to translate queries with constants of a type that is not 
 
 ## Conventions
 
-> [!NOTE]
-> Custom model building conventions were introduced in EF Core 7.0.
-
 EF Core model building conventions are classes that contain logic that is triggered based on changes being made to the model as it is being built. This keeps the model up-to-date as explicit configuration is made, mapping attributes are applied, and other conventions run. To participate in this, every convention implements one or more interfaces which determine when the corresponding method will be triggered. For example, a convention that implements <xref:Microsoft.EntityFrameworkCore.Metadata.Conventions.IEntityTypeAddedConvention> will be triggered whenever a new entity type is added to the model. Likewise, a convention that implements both <xref:Microsoft.EntityFrameworkCore.Metadata.Conventions.IForeignKeyAddedConvention> and <xref:Microsoft.EntityFrameworkCore.Metadata.Conventions.IKeyAddedConvention> will be triggered whenever either a key or a foreign key is added to the model.
 
 Model building conventions are a powerful way to control the model configuration, but can be complex and hard to get right. In many cases, the [pre-convention model configuration](#pre-convention-configuration) can be used instead to easily specify common configuration for properties and types.

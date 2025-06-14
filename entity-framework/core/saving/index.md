@@ -42,9 +42,6 @@ For more information and code samples on basic <xref:Microsoft.EntityFrameworkCo
 
 ## Approach 2: ExecuteUpdate and ExecuteDelete ("bulk update")
 
-> [!NOTE]
-> This feature was introduced in EF Core 7.0.
-
 While change tracking and <xref:Microsoft.EntityFrameworkCore.DbContext.SaveChanges> are a powerful way to save changes, they do have certain disadvantages.
 
 First, <xref:Microsoft.EntityFrameworkCore.DbContext.SaveChanges> requires that you query and track all the entities you will be modifying or deleting. If you need to, say, delete all Blogs with a rating below a certain threshold, you must query, materialize and track a potentially huge number of rows, and have <xref:Microsoft.EntityFrameworkCore.DbContext.SaveChanges> generate a `DELETE` statement for each and every one of them. Relational databases provide a far more efficient alternative: a single `DELETE` command can be sent, specifying which rows to delete via a `WHERE` clause, but the <xref:Microsoft.EntityFrameworkCore.DbContext.SaveChanges> model doesn't allow for generating that.

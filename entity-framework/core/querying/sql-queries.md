@@ -179,9 +179,6 @@ var blogs = await context.Blogs
 
 ## Querying scalar (non-entity) types
 
-> [!NOTE]
-> This feature was introduced in EF Core 7.0.
-
 While <xref:Microsoft.EntityFrameworkCore.RelationalQueryableExtensions.FromSql*> is useful for querying entities defined in your model, <xref:Microsoft.EntityFrameworkCore.RelationalDatabaseFacadeExtensions.SqlQuery*> allows you to easily query for scalar, non-entity types via SQL, without needing to drop down to lower-level data access APIs. For example, the following query fetches all the IDs from the `Blogs` table:
 
 ### [SQL Server](#tab/sqlserver)
@@ -265,10 +262,6 @@ using (var context = new BloggingContext())
 ```
 
 This executes the provided SQL and returns the number of rows modified. <xref:Microsoft.EntityFrameworkCore.RelationalDatabaseFacadeExtensions.ExecuteSql*> protects against SQL injection by using safe parameterization, just like <xref:Microsoft.EntityFrameworkCore.RelationalQueryableExtensions.FromSql*>, and <xref:Microsoft.EntityFrameworkCore.RelationalDatabaseFacadeExtensions.ExecuteSqlRaw*> allows for dynamic construction of SQL queries, just like <xref:Microsoft.EntityFrameworkCore.RelationalQueryableExtensions.FromSqlRaw*> does for queries.
-
-> [!NOTE]
->
-> Prior to EF Core 7.0, it was sometimes necessary to use the `ExecuteSql` APIs to perform a "bulk update" on the database, as above; this is considerably more efficient than querying for all matching rows and then using `SaveChanges` to modify them. EF Core 7.0 introduced [ExecuteUpdate and ExecuteDelete](xref:core/what-is-new/ef-core-7.0/whatsnew#executeupdate-and-executedelete-bulk-updates), which made it possible to express efficient bulk update operations via LINQ. It's recommended to use those APIs whenever possible, instead of `ExecuteSql`.
 
 ## Limitations
 

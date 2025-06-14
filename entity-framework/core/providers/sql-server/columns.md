@@ -11,7 +11,7 @@ This page details column configuration options that are specific to the SQL Serv
 
 ## Unicode and UTF-8
 
-SQL Server 2019 introduced [introduced UTF-8](/sql/relational-databases/collations/collation-and-unicode-support#utf8) support, which allows storing UTF-8 data in `char` and `varchar` columns by configuring them with special UTF-8 collations. EF Core 7.0 introduced full support for mapping to UTF-8 columns, and it's possible to use them in previous EF versions as well, with some extra steps.
+SQL Server 2019 introduced [introduced UTF-8](/sql/relational-databases/collations/collation-and-unicode-support#utf8) support, which allows storing UTF-8 data in `char` and `varchar` columns by configuring them with special UTF-8 collations.
 
 ### [EF Core 7.0](#tab/ef-core-7)
 
