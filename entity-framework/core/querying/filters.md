@@ -7,14 +7,14 @@ uid: core/querying/filters
 ---
 # Global Query Filters
 
-Global query filters allow attaching a filter to an entity type, and having that filter applied whenever a query on that entity type is executed; think of them as an additional LINQ `Where` operator that's added whenever the entity type is queried. Such filters are useful in a variety of cases.
+Global query filters allow attaching a filter to an entity type and having that filter applied whenever a query on that entity type is executed; think of them as an additional LINQ `Where` operator that's added whenever the entity type is queried. Such filters are useful in a variety of cases.
 
 > [!TIP]
 > You can view this article's [sample](https://github.com/dotnet/EntityFramework.Docs/tree/main/samples/core/Querying/QueryFilters) on GitHub.
 
 ## Basic example - soft deletion
 
-In some scenarios, rather than deleted a row from the database, it's preferable to instead set an `IsDeleted` flag to mark the row as deleted; this pattern is called *soft deletion*. Soft deletion allows rows to be undeleted if needed, or to preserve an audit trail where deleted rows are still accessible. Global query filters can be used to filter out soft-deleted rows by default, while still allowing you to access them in specific places by disabling the filter for a specific query.
+In some scenarios, rather than deleting a row from the database, it's preferable to instead set an `IsDeleted` flag to mark the row as deleted; this pattern is called *soft deletion*. Soft deletion allows rows to be undeleted if needed, or to preserve an audit trail where deleted rows are still accessible. Global query filters can be used to filter out soft-deleted rows by default, while still allowing you to access them in specific places by disabling the filter for a specific query.
 
 To enable soft deletion, let's add an `IsDeleted` property to our Blog type:
 
@@ -24,13 +24,13 @@ We now set up a global query filter, using the <xref:Microsoft.EntityFrameworkCo
 
 [!code-csharp[Main](../../../samples/core/Querying/QueryFilters/SoftDeletion.cs#FilterConfiguration)]
 
-We can now query our Blogs as usual; the configured filter will ensure that all queries will - by default - filter out all instances where `IsDeleted` is true.
+We can now query our `Blog` entities as usual; the configured filter will ensure that all queries will - by default - filter out all instances where `IsDeleted` is true.
 
 Note that at this point, you must manually set `IsDeleted` in order to soft-delete an entity. For a more end-to-end solution, you can override your context type's `SaveChangesAsync` method to add logic which goes over all entities which the user deleted, and changes them to be modified instead, setting the `IsDeleted` property to true:
 
 [!code-csharp[Main](../../../samples/core/Querying/QueryFilters/SoftDeletion.cs#SaveChangesAsyncOverride)]
 
-This allows you to use EF APIs the delete an entity instance as usual, and have them get soft-deleted instead.
+This allows you to use EF APIs that delete an entity instance as usual and have them get soft-deleted instead.
 
 ## Using context data - multi-tenancy
 
@@ -48,7 +48,7 @@ public class MultitenancyContext(string tenantId) : DbContext
 }
 ```
 
-This forces anyone constructing a context to specify its associated tenant ID, and ensures that only Blogs with that ID are returned from queries by default.
+This forces anyone constructing a context to specify its associated tenant ID, and ensures that only `Blog` entities with that ID are returned from queries by default.
 
 > [!NOTE]
 > This sample only showed basic multi-tenancy concepts needed in order to demonstrate global query filters. For more information on multi-tenancy and EF, see [multi-tenancy in EF Core applications](xref:core/miscellaneous/multitenancy).
@@ -82,7 +82,7 @@ Prior to EF 10, you can attach multiple filters to an entity type by calling <xr
 modelBuilder.Entity<Blog>().HasQueryFilter(b => !b.IsDeleted && b.TenantId == tenantId);
 ```
 
-This unfortunately does not allow selectively disable a single filter.
+This unfortunately does not allow to selectively disable a single filter.
 
 ***
 
