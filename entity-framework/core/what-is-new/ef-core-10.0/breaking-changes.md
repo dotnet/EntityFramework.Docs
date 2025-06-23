@@ -17,6 +17,9 @@ This page documents API and behavior changes that have the potential to break ex
 
 ## Summary
 
+> [!NOTE]
+> If you are using Microsoft.Data.Sqlient, please see the [separate section below on Microsoft.Data.Sqlite breaking changes](#MDS-breaking-changes).
+
 | **Breaking change**                                                                                       | **Impact** |
 |:----------------------------------------------------------------------------------------------------------|------------|
 | [ExecuteUpdateAsync now accepts a regular, non-expression lambda](#ExecuteUpdateAsync-lambda)             | Low        |
@@ -82,4 +85,96 @@ await context.Blogs.ExecuteUpdateAsync(s =>
         s.SetProperty(b => b.Name, "foo");
     }
 });
+```
+
+<a name="MDS-breaking-changes"></a>
+
+## Microsoft.Data.Sqlite breaking changes
+
+### Summary
+
+| **Breaking change**                                                                                       | **Impact** |
+|:----------------------------------------------------------------------------------------------------------|------------|
+| [Reading DateTimeOffset without an offset now assumes UTC](#DateTimeOffset-read)                          | High       |
+| [Writing DateTimeOffset into REAL column now writes in UTC](#DateTimeOffset-write)                        | High       |
+| [Reading DateTime with an offset now returns value in UTC](#DateTime-read)                                | High       |
+
+### High-impact changes
+
+<a name="DateTimeOffset-read"></a>
+
+#### Reading DateTimeOffset without an offset now assumes UTC
+
+[Tracking Issue #36195](https://github.com/dotnet/efcore/issues/36195)
+
+##### Old behavior
+
+Previously, when reading a `DateTimeOffset` value that did not have an offset (e.g., `2014-04-15 10:47:16`), Microsoft.Data.Sqlite would assume the value was in the local time zone.
+
+##### New behavior
+
+Starting with Microsoft.Data.Sqlite 10.0, when reading a `DateTimeOffset` value that does not have an offset, Microsoft.Data.Sqlite will assume the value is in UTC.
+
+##### Why
+
+Is is to align with SQLite's behavior where timestamps without an offset are treated as UTC.
+
+##### Mitigations
+
+You can revert to previous behavior by setting `Microsoft.Data.Sqlite.Pre10TimeZoneHandling` AppContext switch to `true`, see [AppContext for library consumers](/dotnet/api/system.appcontext#ForConsumers) for more details.
+
+```C#
+AppContext.SetSwitch("Microsoft.Data.Sqlite.Pre10TimeZoneHandling", isEnabled: true);
+```
+
+<a name="DateTimeOffset-write"></a>
+
+#### Writing DateTimeOffset into REAL column now writes in UTC
+
+[Tracking Issue #36195](https://github.com/dotnet/efcore/issues/36195)
+
+##### Old behavior
+
+Previously, when writing a `DateTimeOffset` value into a REAL column, Microsoft.Data.Sqlite would write the value without taking the offset into account.
+
+##### New behavior
+
+Starting with Microsoft.Data.Sqlite 10.0, when writing a `DateTimeOffset` value into a REAL column, Microsoft.Data.Sqlite will convert the value to UTC before doing the conversions and writing it.
+
+##### Why
+
+This change is to align with SQLite's behavior where timestamps without an offset are treated as UTC.
+
+##### Mitigations
+
+You can revert to previous behavior by setting `Microsoft.Data.Sqlite.Pre10TimeZoneHandling` AppContext switch to `true`, see [AppContext for library consumers](/dotnet/api/system.appcontext#ForConsumers) for more details.
+
+```C#
+AppContext.SetSwitch("Microsoft.Data.Sqlite.Pre10TimeZoneHandling", isEnabled: true);
+```
+
+<a name="DateTime-read"></a>
+
+#### Reading DateTime with an offset now returns value in UTC
+
+[Tracking Issue #36195](https://github.com/dotnet/efcore/issues/36195)
+
+##### Old behavior
+
+Previously, when reading a `DateTime` value that had an offset (e.g., `2014-04-15 10:47:16+02:00`), Microsoft.Data.Sqlite would return the value with `DateTimeKind.Local` (even if the offset was not local).
+
+##### New behavior
+
+Starting with Microsoft.Data.Sqlite 10.0, when reading a `DateTime` value that has an offset, Microsoft.Data.Sqlite will convert the value to UTC and return it with `DateTimeKind.Utc`.
+
+##### Why
+
+Even though the time was parsed correctly taking offset into account, the `DateTimeKind` was not set correctly.
+
+##### Mitigations
+
+You can revert to previous behavior by setting `Microsoft.Data.Sqlite.Pre10TimeZoneHandling` AppContext switch to `true`, see [AppContext for library consumers](/dotnet/api/system.appcontext#ForConsumers) for more details.
+
+```C#
+AppContext.SetSwitch("Microsoft.Data.Sqlite.Pre10TimeZoneHandling", isEnabled: true);
 ```
