@@ -173,7 +173,7 @@ Starting with Microsoft.Data.Sqlite 10.0, when using `GetDateTime` on a textual 
 
 ##### Why
 
-Even though the time was parsed correctly it was dependent on a on local time zone, which could lead to unexpected results.
+Even though the time was parsed correctly it was dependent on the machine-configured local time zone, which could lead to unexpected results.
 
 ##### Mitigations
 
