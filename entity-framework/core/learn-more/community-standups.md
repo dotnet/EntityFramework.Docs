@@ -16,10 +16,11 @@ The .NET Data Community Standups are live-streamed monthly (roughly) on Wednesda
 
 | Date         | Area                  | Title                                                                                    |
 |--------------|-----------------------|------------------------------------------------------------------------------------------|
+| Jun 19, 2025 | Vector databases      | [Microsoft.Extensions.VectorData - Access Vector databases in AI apps](#Jun19_2025)      |
 | May 14, 2025 | Azure SQL             | [Azure SQL vector search with Davide Mauri](#May14_2025)                                 |
 | Apr 24, 2025 | EF Core               | [Jiri and Shay talk about EF Core testing and Maurycy corrects them](#Apr24_2025)        |
 | Mar 19, 2025 | EF Core               | [Stop using Entity Framework as a DTO provider!](#Mar19_2025)                            |
-| Mar 06, 2025 | Chroma                | [Using Chroma vector database from .NET](#Mar06_2025)                                    |
+| Mar 6, 2025  | Chroma                | [Using Chroma vector database from .NET](#Mar06_2025)                                    |
 | Jan 22, 2025 | Tips                  | [Context pooling, FromSql and compiled queries](#Jan22_2025)                             |
 | Nov 20, 2024 | Release               | [EF Core 9: Release extravaganza](#Nov20_2024)                                           |
 | Jun 26, 2024 | SQL schemas           | [Improve your SQL schema and scripts with .NET based static code analysis](#June26_2024) |
@@ -103,6 +104,21 @@ The .NET Data Community Standups are live-streamed monthly (roughly) on Wednesda
 | May 6, 2020  | Welcome!              | [Introducing the EF Core Community Standup](#one)                                        |
 
 ## 2025
+
+<a name="Jun19_2025"></a>
+
+### Jun 19: [Microsoft.Extensions.VectorData - Access Vector databases in AI apps](https://www.youtube.com/live/BB_jMqqfay8?si=FnweRmkypwoB8Px8)
+
+Join us for another .NET Data Community Standup where Shay tells us about Microsoft.Extensions.VectorData.
+
+Featuring:
+
+- [Shay Rojansky](https://www.roji.org/) (Host)
+- [Jiri Cincura](https://www.tabsoverspaces.com/) (Host)
+
+Links:
+
+- Docs: [Out-of-the-box Vector Store connectors](/semantic-kernel/concepts/vector-store-connectors/out-of-the-box-connectors)
 
 <a name="May14_2025"></a>
 
