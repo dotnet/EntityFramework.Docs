@@ -15,9 +15,6 @@ This document presents an overview of Entity Framework Core (EF Core) change tra
 > [!TIP]
 > You can run and debug into all the code in this document by [downloading the sample code from GitHub](https://github.com/dotnet/EntityFramework.Docs/tree/live/samples/core/ChangeTracking/ChangeTrackingInEFCore).
 
-> [!TIP]
-> For simplicity, this document uses and references synchronous methods such as <xref:Microsoft.EntityFrameworkCore.DbContext.SaveChanges*> rather than their async equivalents such as <xref:Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync*>. Calling and awaiting the async method can be substituted unless otherwise noted.
-
 ## How to track entities
 
 Entity instances become tracked when they are:

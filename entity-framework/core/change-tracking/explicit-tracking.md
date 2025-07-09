@@ -18,9 +18,6 @@ Entity Framework Core (EF Core) change tracking works best when the same <xref:M
 > [!TIP]
 > You can run and debug into all the code in this document by [downloading the sample code from GitHub](https://github.com/dotnet/EntityFramework.Docs/tree/live/samples/core/ChangeTracking/ChangeTrackingInEFCore).
 
-> [!TIP]
-> For simplicity, this document uses and references synchronous methods such as <xref:Microsoft.EntityFrameworkCore.DbContext.SaveChanges*> rather than their async equivalents such as <xref:Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync*>. Calling and awaiting the async method can be substituted unless otherwise noted.
-
 ## Introduction
 
 Entities can be explicitly "attached" to a <xref:Microsoft.EntityFrameworkCore.DbContext> such that the context then tracks those entities. This is primarily useful when:
