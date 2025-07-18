@@ -16,6 +16,7 @@ The .NET Data Community Standups are live-streamed monthly (roughly) on Wednesda
 
 | Date         | Area                  | Title                                                                                    |
 |--------------|-----------------------|------------------------------------------------------------------------------------------|
+| Jul 17, 2025 | Couchbase             | [Couchbase has an EF Core provider](#Jul17_2025)      |
 | Jun 19, 2025 | Vector databases      | [Microsoft.Extensions.VectorData - Access Vector databases in AI apps](#Jun19_2025)      |
 | May 14, 2025 | Azure SQL             | [Azure SQL vector search with Davide Mauri](#May14_2025)                                 |
 | Apr 24, 2025 | EF Core               | [Jiri and Shay talk about EF Core testing and Maurycy corrects them](#Apr24_2025)        |
@@ -104,6 +105,21 @@ The .NET Data Community Standups are live-streamed monthly (roughly) on Wednesda
 | May 6, 2020  | Welcome!              | [Introducing the EF Core Community Standup](#one)                                        |
 
 ## 2025
+
+<a name="Jul17_2025"></a>
+
+### Jul 17: [Couchbase has an EF Core provider](https://www.youtube.com/live/0UDFJvMg5Wc?si=lnIptXlNblaplGOC)
+
+Couchbase recently released their provider for EF Core. Let's chat with the team about Couchbase, the provider and challenges fitting Couchbase concepts into EF Core's world.
+
+Featuring:
+
+- [Couchbase Team](https://www.couchbase.com/) (Special guest)
+- [Jiri Cincura](https://www.tabsoverspaces.com/) (Host)
+
+Links:
+
+- [Couchbase Capella](https://cloud.couchbase.com/sign-up)
 
 <a name="Jun19_2025"></a>
 
