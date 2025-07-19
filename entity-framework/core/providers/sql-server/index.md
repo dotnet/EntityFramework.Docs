@@ -27,28 +27,103 @@ Install-Package Microsoft.EntityFrameworkCore.SqlServer
 
 ***
 
+## Usage and configuration
+
+Once your project references the nuget package, configure EF for SQL Server as follows:
+
+### [SQL Server (on-premise)](#tab/sqlserver)
+
+```c#
+public class MyContext : DbContext
+{
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    {
+        optionsBuilder.UseSqlServer("<CONNECTION STRING>");
+    }
+}
+```
+
+When using EF with dependency injection (e.g. ASP.NET), use the following:
+
+```c#
+var builder = WebApplication.CreateBuilder(args);
+builder.Services.AddDbContext<MyContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("MyContext")));
+```
+
+### [Azure SQL](#tab/azure-sql)
+
+```c#
+public class MyContext : DbContext
+{
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    {
+        optionsBuilder.UseAzureSql("<CONNECTION STRING>");
+    }
+}
+```
+
+When using EF with dependency injection (e.g. ASP.NET), use the following:
+
+```c#
+var builder = WebApplication.CreateBuilder(args);
+builder.Services.AddDbContext<MyContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("MyContext")));
+```
+
 > [!NOTE]
-> The provider references Microsoft.Data.SqlClient (not System.Data.SqlClient). If your project takes a direct dependency on SqlClient, make sure it references the Microsoft.Data.SqlClient package.
+> <xref:Microsoft.EntityFrameworkCore.SqlServerDbContextOptionsExtensions.UseAzureSql*> was introduced in EF Core 9.0. When using an older version, use <xref:Microsoft.EntityFrameworkCore.SqlServerDbContextOptionsExtensions.UseSqlServer*> instead.
 
-> [!TIP]
-> The Microsoft.Data.SqlClient package ships more frequently than the EF Core provider. If you would like to take advantage of new features and bug fixes, you can add a direct package reference to the latest version of Microsoft.Data.SqlClient.
+### [Azure Synapse Analytics](#tab/azure-synapse)
 
-> [!WARNING]
-> The async implementation of [Microsoft.Data.SqlClient](https://github.com/dotnet/SqlClient) unfortunately has some known issues (e.g. [#593](https://github.com/dotnet/SqlClient/issues/593), [#601](https://github.com/dotnet/SqlClient/issues/601), and others). If you're seeing unexpected performance problems, try using sync command execution instead, especially when dealing with large text or binary values.
+```c#
+public class MyContext : DbContext
+{
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    {
+        optionsBuilder.UseAzureSynapse("<CONNECTION STRING>");
+    }
+}
+```
 
-## Usage
+When using EF with dependency injection (e.g. ASP.NET), use the following:
 
-Starting with EF 9, it's recommended to use `UseAzureSql` and `UseAzureSynapse` to specify that you're connecting to Azure SQL or Azure Synapse Analytics specifically, and `UseSqlServer` to specify that you're connecting to on-premises SQL Server; doing so allows the provider to optimize for and properly support these platforms. It's also recommended to use `UseCompatibilityLevel` method to specify the compatibility level so that the generated SQL is compatible and/or uses the latest possible features.
+```c#
+var builder = WebApplication.CreateBuilder(args);
+builder.Services.AddDbContext<MyContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("MyContext")));
+```
 
 > [!NOTE]
-> UseAzureSql and UseAzureSynapse methods were introduced in EF Core 9.0.
+> <xref:Microsoft.EntityFrameworkCore.SqlServerDbContextOptionsExtensions.UseAzureSynapse*> was introduced in EF Core 9.0. When using an older version, use <xref:Microsoft.EntityFrameworkCore.SqlServerDbContextOptionsExtensions.UseSqlServer*> instead.
 
-### EnableRetryOnFailureByDefault
+***
 
-EF 9 introduced `EnableRetryOnFailureByDefault` method that configures the context to default [execution strategy](xref:core/miscellaneous/connection-resiliency) unless it is configured explicitly (i.e. when using DI). To use it, simply call `ConfigureSqlEngine(c => c.EnableRetryOnFailureByDefault())` and later you can use `UseSqlServer` as usual. It is not necessary to call `EnableRetryOnFailureByDefault` when using `UseAzureSql` or `UseAzureSynapse`, as they already enable the default execution strategy.
+## Compatibility level
 
-## Supported Database Engines
+You can optionally configure EF with the compatibility level of your database; higher compatibility levels allow for newer features, and configuring EF accordingly makes it use those features. If you do not explicitly configure a compatibility level, a reasonable default will be chosen that may not take advantage of the newest features. As a result, it's recommended to explicitly configure the compatibility level you'd like to have.
 
-* Microsoft SQL Server (2012 onwards)
+Note that this only covers EF's own configuration of the compatibility level - affecting e.g. the SQL it generates - but does not affect the compatibility level configured in your actual database. Newer versions of SQL Server may still be configured with lower compatibility levels, causing them to not support the latest features - so you may need to change the compatibility level in your database as well. For more information on compatibility levels, [see the documentation](/sql/relational-databases/databases/view-or-change-the-compatibility-level-of-a-database).
+
+To configure EF with a compatibility level, use `UseCompatibilityLevel()` as follows:
+
+```c#
+optionsBuilder.UseSqlServer("<CONNECTION STRING>", o => o.UseCompatibilityLevel());
+```
+
+## Connection resiliency
+
+EF includes functionality for automatically retrying failed database commands; for more information, [see the documentation](xref:core/miscellaneous/connection-resiliency). When using <xref:Microsoft.EntityFrameworkCore.SqlServerDbContextOptionsExtensions.UseAzureSql*> and <xref:Microsoft.EntityFrameworkCore.SqlServerDbContextOptionsExtensions.UseAzureSynapse*>, connection resiliency is automatically set up with the appropriate settings specific for those databases. Otherwise, when using <xref:Microsoft.EntityFrameworkCore.SqlServerDbContextOptionsExtensions.UseSqlServer*>, configure the provider with <xref:Microsoft.EntityFrameworkCore.Infrastructure.SqlEngineDbContextOptionsBuilder.EnableRetryOnFailure*> as shown in the connection resiliency documentation.
+
+In some cases, <xref:Microsoft.EntityFrameworkCore.SqlServerDbContextOptionsExtensions.UseSqlServer*> may be called in code that you cannot control. Starting with EF 9, to enable connection resiliency in such scenarios, call `ConfigureSqlEngine(c => c.EnableRetryOnFailureByDefault())` beforehand (this is not necessary with <xref:Microsoft.EntityFrameworkCore.SqlServerDbContextOptionsExtensions.UseAzureSql*> and <xref:Microsoft.EntityFrameworkCore.SqlServerDbContextOptionsExtensions.UseAzureSynapse*>).
+
+## Notes and caveats
+
+* The Microsoft.Data.SqlClient package ships more frequently than the EF Core provider. If you would like to take advantage of new features and bug fixes, you can add a direct package reference to the latest version of Microsoft.Data.SqlClient.
+* The EF SQL Server provider uses Microsoft.Data.SqlClient, and not the older System.Data.Client; if your project takes a direct dependency on SqlClient, make sure it references the Microsoft.Data.SqlClient package. For more information on the differences between Microsoft.Data.SqlClient and System.Data.SqlClient, [see this blog post](https://devblogs.microsoft.com/dotnet/introducing-the-new-microsoftdatasqlclient).
+
+## Supported database engines
+
+* Microsoft SQL Server (2019 onwards)
 * Azure SQL
 * Azure Synapse Analytics

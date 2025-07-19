@@ -394,16 +394,16 @@
         items:
         - name: Overview
           href: core/providers/sql-server/index.md
-        - name: Temporal tables
-          href: core/providers/sql-server/temporal-tables.md
-        - name: Value generation
-          href: core/providers/sql-server/value-generation.md
         - name: Function mappings
           href: core/providers/sql-server/functions.md
         - name: Columns
           href: core/providers/sql-server/columns.md
         - name: Indexes
           href: core/providers/sql-server/indexes.md
+        - name: Value generation
+          href: core/providers/sql-server/value-generation.md
+        - name: Temporal tables
+          href: core/providers/sql-server/temporal-tables.md
         - name: Memory-optimized tables
           href: core/providers/sql-server/memory-optimized-tables.md
         - name: Hierarchical data
@@ -411,8 +411,6 @@
         - name: Spatial data
           displayName: GIS
           href: core/providers/sql-server/spatial.md
-        - name: Specify Azure SQL Database options
-          href: core/providers/sql-server/azure-sql-database.md
         - name: Miscellaneous
           href: core/providers/sql-server/misc.md
       - name: SQLite

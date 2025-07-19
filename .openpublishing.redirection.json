@@ -489,6 +489,11 @@
             "source_path": "entity-framework/core/providers/cosmos/functions.md",
             "redirect_url": "/ef/core/providers/cosmos/querying",
             "redirect_document_id": false
-        }
+        },
+        {
+            "source_path": "entity-framework/core/providers/sql-server/azure-sql-database.md",
+            "redirect_url": "/ef/core/providers/sql-server/misc",
+            "redirect_document_id": false
+        }        
     ]
 }
