@@ -49,7 +49,7 @@ At this point, your application is architected according to the repository patte
 
 [!code-csharp[Main](../../../samples/core/Testing/TestingWithoutTheDatabase/RepositoryBloggingControllerTest.cs?name=GetBlog)]
 
-The full sample code can be viewed [here](https://github.com/dotnet/EntityFramework.Docs/blob/main/samples/core/Testing/TestingWithoutTheDatabase/RepositoryBloggingControllerTest.cs).
+The full sample code can be viewed [here](https://github.com/dotnet/EntityFramework.Docs/blob/live/samples/core/Testing/TestingWithoutTheDatabase/RepositoryBloggingControllerTest.cs).
 
 ## SQLite in-memory
 
@@ -61,7 +61,7 @@ To use in-memory SQLite, it's important to understand that a **new database is c
 
 Tests can now call `CreateContext`, which returns a context using the connection we set up in the constructor, ensuring we have a clean database with the seeded data.
 
-The full sample code for SQLite in-memory testing can be viewed [here](https://github.com/dotnet/EntityFramework.Docs/blob/main/samples/core/Testing/TestingWithoutTheDatabase/SqliteInMemoryBloggingControllerTest.cs).
+The full sample code for SQLite in-memory testing can be viewed [here](https://github.com/dotnet/EntityFramework.Docs/blob/live/samples/core/Testing/TestingWithoutTheDatabase/SqliteInMemoryBloggingControllerTest.cs).
 
 ## In-memory provider
 
@@ -69,7 +69,7 @@ As discussed in the [testing overview page](xref:core/testing/choosing-a-testing
 
 [!code-csharp[Main](../../../samples/core/Testing/TestingWithoutTheDatabase/InMemoryBloggingControllerTest.cs?name=Constructor)]
 
-The full sample code for in-memory testing can be viewed [here](https://github.com/dotnet/EntityFramework.Docs/blob/main/samples/core/Testing/TestingWithoutTheDatabase/InMemoryBloggingControllerTest.cs).
+The full sample code for in-memory testing can be viewed [here](https://github.com/dotnet/EntityFramework.Docs/blob/live/samples/core/Testing/TestingWithoutTheDatabase/InMemoryBloggingControllerTest.cs).
 
 ### In-memory database naming
 
