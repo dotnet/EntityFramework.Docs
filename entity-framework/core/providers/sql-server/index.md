@@ -31,7 +31,7 @@ Install-Package Microsoft.EntityFrameworkCore.SqlServer
 
 Once your project references the nuget package, configure EF for SQL Server as follows:
 
-### [SQL Server (on-premise)](#tab/sqlserver)
+### [SQL Server (on-premises)](#tab/sqlserver)
 
 ```c#
 public class MyContext : DbContext
@@ -103,7 +103,7 @@ builder.Services.AddDbContext<MyContext>(options =>
 
 You can optionally configure EF with the compatibility level of your database; higher compatibility levels allow for newer features, and configuring EF accordingly makes it use those features. If you do not explicitly configure a compatibility level, a reasonable default will be chosen that may not take advantage of the newest features. As a result, it's recommended to explicitly configure the compatibility level you'd like to have.
 
-Note that this only covers EF's own configuration of the compatibility level - affecting e.g. the SQL it generates - but does not affect the compatibility level configured in your actual database. Newer versions of SQL Server may still be configured with lower compatibility levels, causing them to not support the latest features - so you may need to change the compatibility level in your database as well. For more information on compatibility levels, [see the documentation](/sql/relational-databases/databases/view-or-change-the-compatibility-level-of-a-database).
+Note that this only covers EF's own configuration of the compatibility level - affecting e.g. the SQL it generates - but does not affect the compatibility level configured in your actual database. Databases hosted on newer versions of SQL Server may still be configured with lower compatibility levels, causing them to not support the latest features - so you may need to change the compatibility level in your database as well. For more information on compatibility levels, [see the documentation](/sql/relational-databases/databases/view-or-change-the-compatibility-level-of-a-database).
 
 To configure EF with a compatibility level, use `UseCompatibilityLevel()` as follows:
 
@@ -125,5 +125,5 @@ In some cases, <xref:Microsoft.EntityFrameworkCore.SqlServerDbContextOptionsExte
 ## Supported database engines
 
 * Microsoft SQL Server (2019 onwards)
-* Azure SQL
+* Azure SQL Database
 * Azure Synapse Analytics
