@@ -52,7 +52,7 @@ public static class NamedFilters
         {
             Console.WriteLine("Blogs (including soft-deleted ones):");
             #region DisableSoftDeletionFilter
-            var allBlogs = await context.Blogs.IgnoreQueryFilters(["SoftDeletionFlter"]).ToListAsync();
+            var allBlogs = await context.Blogs.IgnoreQueryFilters(["SoftDeletionFilter"]).ToListAsync();
             #endregion
 
             foreach (var blog in allBlogs)
@@ -76,7 +76,7 @@ public static class NamedFilters
         {
             #region FilterConfiguration
             modelBuilder.Entity<Blog>()
-                .HasQueryFilter("SoftDeletionFlter", b => !b.IsDeleted)
+                .HasQueryFilter("SoftDeletionFilter", b => !b.IsDeleted)
                 .HasQueryFilter("TenantFilter", b => b.TenantId == tenantId);
             #endregion
         }
