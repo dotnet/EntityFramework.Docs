@@ -1,12 +1,12 @@
 ---
 title: EF Core tools reference (.NET CLI) - EF Core
-description: Reference guide for the Entity Framework Core .NET Core CLI tools
+description: Reference guide for the Entity Framework Core .NET CLI tools
 author: SamMonoRT
 ms.date: 11/08/2024
 uid: core/cli/dotnet
 ---
 
-# Entity Framework Core tools reference - .NET Core CLI
+# Entity Framework Core tools reference - .NET CLI
 
 The command-line interface (CLI) tools for Entity Framework Core perform design-time development tasks. For example, they create [migrations](/aspnet/core/data/ef-mvc/migrations), apply migrations, and generate code for a model based on an existing database. The commands are an extension to the cross-platform [dotnet](/dotnet/core/tools) command, which is part of the [.NET Core SDK](https://www.microsoft.com/net/core). These tools work with .NET Core projects.
 
