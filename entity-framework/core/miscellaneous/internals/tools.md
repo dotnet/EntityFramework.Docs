@@ -62,13 +62,13 @@ Sometimes referred to as the inside man, ef.exe (for lack of a better name) ship
 
 The .NET Framework assemblies are only invoked for EF Core 3.1 projects and earlier targeting .NET Framework. By design, you can use the latest version of the tools on projects that use older versions of EF. There is no x64 because the assembly under the any directory targets the AnyCPU platform which runs as x64 on both x64 and arm64 versions of Windows.
 
-The .NET Core 2.0 assembly is used for projects targeting .NET Core or .NET 5 and newer.
+The .NET 2.0 assembly is used for projects targeting .NET or .NET 5 and newer.
 
 The primary responsibility of ef.exe is to load the startup project's output assembly and invoke the design-time entry points inside EFCore.Design.dll.
 
 On .NET Framework, we use a separate AppDomain to load the project assembly passing the project's App/Web.config file to honor and binding redirects added by NuGet or the user.
 
-On .NET Core/5+, we invoke ef.dll using the project's .deps.json and .runtimeconfig.json files to emulate the project's actual runtime and assembly loading behavior.
+On .NET/5+, we invoke ef.dll using the project's .deps.json and .runtimeconfig.json files to emulate the project's actual runtime and assembly loading behavior.
 
 ```dotnetcli
 dotnet exec ef.dll --depsfile startupProject.deps.json --runtimeconfig startupProject.runtimeconfig.json

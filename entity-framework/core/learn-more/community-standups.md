@@ -828,7 +828,7 @@ Links:
 
 ### Aug 10: [CoreWCF: Roadmap and Q&A](https://www.youtube.com/live/OvaYdycmb-U?si=ucnqZXAoXDSCMZqE)
 
-CoreWCF is a port of the service side of Windows Communication Foundation (WCF) to .NET Core. The goal of this project is to enable existing WCF services to move to .NET Core. The CoreWCF team recently conducted a survey and will be talking about some of  the responses, answering questions, and sharing insights into their roadmap for the future.
+CoreWCF is a port of the service side of Windows Communication Foundation (WCF) to .NET. The goal of this project is to enable existing WCF services to move to .NET. The CoreWCF team recently conducted a survey and will be talking about some of  the responses, answering questions, and sharing insights into their roadmap for the future.
 
 Featuring:
 
@@ -1709,7 +1709,7 @@ Links:
 
 ### Sep 30: [Geographic Data with NetTopologySuite](https://www.youtube.com/live/IHslY5rrxD0?si=QpNNSZql1UsydmHz)
 
-Joe Amenta joins us to discuss how to add spatial data to your applications to open a world of new relationships between data. He will demonstrate the "status quote" for querying spatial data from .NET Core and demo integrations with NetTopologSuite and EF Core.
+Joe Amenta joins us to discuss how to add spatial data to your applications to open a world of new relationships between data. He will demonstrate the "status quote" for querying spatial data from .NET and demo integrations with NetTopologSuite and EF Core.
 
 Featuring:
 
@@ -1790,7 +1790,7 @@ Links:
 
 ### Aug 5: [EF Core In Depth Video Series](https://www.youtube.com/live/b-zTazj2vuI?si=A9lCvvHva3AomWe7)
 
-Join members from the .NET teams for our community standup covering great community contributions for Framework, .NET Core, Languages, CLI, MSBuild, and more.
+Join members from the .NET teams for our community standup covering great community contributions for Framework, .NET, Languages, CLI, MSBuild, and more.
 
 Featuring:
 
@@ -1813,7 +1813,7 @@ Links:
 
 ### Jul 22: [Using Scaffolding with Handlebars](https://www.youtube.com/live/6Ux7EpgiWXE?si=78XhoFrViXVkMXOL)
 
-Join members from the .NET teams for our community standup covering great community contributions for Framework, .NET Core, Languages, CLI, MSBuild, and more.
+Join members from the .NET teams for our community standup covering great community contributions for Framework, .NET, Languages, CLI, MSBuild, and more.
 
 Featuring:
 
@@ -1839,7 +1839,7 @@ Links:
 
 ### Jun 24: [EF Core in Blazor](https://www.youtube.com/live/HNJYIqeBLQc?si=xvEObLRdY37_0L87)
 
-Join members from the .NET teams for our community standup covering great community contributions for Framework, .NET Core, Languages, CLI, MSBuild, and more.
+Join members from the .NET teams for our community standup covering great community contributions for Framework, .NET, Languages, CLI, MSBuild, and more.
 
 Featuring:
 
@@ -1861,7 +1861,7 @@ Links:
 
 ### Jun 10: [EF Core Power Tools](https://www.youtube.com/live/OWuP_qOYwsk?si=VoSGWW6CfR8-x46P)
 
-Join members from the .NET teams for our community standup covering great community contributions for Framework, .NET Core, Languages, CLI, MSBuild, and more.
+Join members from the .NET teams for our community standup covering great community contributions for Framework, .NET, Languages, CLI, MSBuild, and more.
 
 Featuring:
 
@@ -1881,7 +1881,7 @@ Links:
 
 ### May 6: [Introducing the EF Core Community Standup](https://www.youtube.com/live/j1sGgfCxhp0?si=VQBMex-9-me9JhAB)
 
-Join members from the .NET teams for our community standup covering great community contributions for Framework, .NET Core, Languages, CLI, MSBuild, and more.
+Join members from the .NET teams for our community standup covering great community contributions for Framework, .NET, Languages, CLI, MSBuild, and more.
 
 Featuring:
 

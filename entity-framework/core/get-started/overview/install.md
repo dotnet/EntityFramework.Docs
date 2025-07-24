@@ -18,7 +18,7 @@ uid: core/get-started/overview/install
 
 EF Core is shipped as [NuGet packages](https://www.nuget.org/). To add EF Core to an application, install the NuGet package for the database provider you want to use. See [_Providers_](xref:core/providers/index) for a list of the database providers available.
 
-To install or update NuGet packages, you can use the .NET Core command-line interface (CLI), the Visual Studio Package Manager Dialog, or the Visual Studio Package Manager Console.
+To install or update NuGet packages, you can use the .NET command-line interface (CLI), the Visual Studio Package Manager Dialog, or the Visual Studio Package Manager Console.
 
 ### .NET CLI
 

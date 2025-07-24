@@ -39,7 +39,7 @@ Entity Framework Core releases and support are aligned with .NET releases and su
 
 ## Release planning and schedules
 
-EF Core releases align with the [.NET Core shipping schedule](https://github.com/dotnet/core/blob/main/roadmap.md).
+EF Core releases align with the [.NET shipping schedule](https://github.com/dotnet/core/blob/main/roadmap.md).
 
 Patch releases usually ship monthly, but have a long lead time.
 

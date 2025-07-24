@@ -168,7 +168,7 @@ Tracked in the [.NET Data Lab repo](https://github.com/dotnet/datalab/)
 
 Value proposition: Fast, fully managed access to SQL Server and Azure SQL for modern .NET applications.
 
-[Microsoft.Data.SqlClient](https://www.nuget.org/packages/Microsoft.Data.SqlClient/) is a fully-featured ADO.NET database provider for SQL Server. It supports a broad range of SQL Server features on both .NET Core and .NET Framework. However, it is also a large and old codebase with many complex interactions between its behaviors. This makes it difficult to investigate the potential gains that could be made using newer .NET Core features.
+[Microsoft.Data.SqlClient](https://www.nuget.org/packages/Microsoft.Data.SqlClient/) is a fully-featured ADO.NET database provider for SQL Server. It supports a broad range of SQL Server features on both .NET and .NET Framework. However, it is also a large and old codebase with many complex interactions between its behaviors. This makes it difficult to investigate the potential gains that could be made using newer .NET features.
 
 We began a project last year, colloquially known as "Woodstar", to investigate the potential for a highly performing SQL Server driver for .NET. We plan to make significant further investment into this project in the EF7 timeframe.
 

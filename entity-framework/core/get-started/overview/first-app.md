@@ -8,7 +8,7 @@ uid: core/get-started/overview/first-app
 
 # Getting Started with EF Core
 
-In this tutorial, you create a .NET Core console app that performs data access against a SQLite database using Entity Framework Core.
+In this tutorial, you create a .NET console app that performs data access against a SQLite database using Entity Framework Core.
 
 You can follow the tutorial by using Visual Studio on Windows, or by using the .NET CLI on Windows, macOS, or Linux.
 

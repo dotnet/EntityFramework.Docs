@@ -12,8 +12,8 @@ We want EF Core to be available to developers on all modern .NET implementations
 
 Several older .NET implementations are no longer supported. See the sections below for more guidance.
 
-| EF Core           | .NET & .NET Core | .NET Standard | .NET Framework |
-|-------------------|------------------|---------------|----------------|
+| EF Core           | .NET | .NET Standard | .NET Framework |
+|-------------------|------|---------------|----------------|
 | **9.0**           | 8.0              |               |                |
 | **8.0**           | 8.0              |               |                |
 | ~~**7.0**~~ (EOL) | 6.0              |               |                |
