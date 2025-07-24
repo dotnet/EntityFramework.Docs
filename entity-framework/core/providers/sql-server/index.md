@@ -13,7 +13,7 @@ This database provider allows Entity Framework Core to be used with Microsoft SQ
 
 Install the [Microsoft.EntityFrameworkCore.SqlServer NuGet package](https://www.nuget.org/packages/Microsoft.EntityFrameworkCore.SqlServer/).
 
-### [.NET Core CLI](#tab/dotnet-core-cli)
+### [.NET CLI](#tab/dotnet-core-cli)
 
 ```dotnetcli
 dotnet add package Microsoft.EntityFrameworkCore.SqlServer

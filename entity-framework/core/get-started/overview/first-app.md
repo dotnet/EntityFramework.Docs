@@ -51,7 +51,7 @@ cd EFGetStarted
 
 To install EF Core, you install the package for the EF Core database provider(s) you want to target. This tutorial uses SQLite because it runs on all platforms that .NET supports. For a list of available providers, see [Database Providers](xref:core/providers/index).
 
-### [.NET Core CLI](#tab/netcore-cli)
+### [.NET CLI](#tab/netcore-cli)
 
 ```dotnetcli
 dotnet add package Microsoft.EntityFrameworkCore.Sqlite

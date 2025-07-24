@@ -21,7 +21,7 @@ It is strongly recommended to familiarize yourself with the [Azure Cosmos DB doc
 
 Install the [Microsoft.EntityFrameworkCore.Cosmos NuGet package](https://www.nuget.org/packages/Microsoft.EntityFrameworkCore.Cosmos/).
 
-### [.NET Core CLI](#tab/dotnet-core-cli)
+### [.NET CLI](#tab/dotnet-core-cli)
 
 ```dotnetcli
 dotnet add package Microsoft.EntityFrameworkCore.Cosmos

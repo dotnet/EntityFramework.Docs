@@ -31,7 +31,7 @@ At the next level, a new [Microsoft.EntityFrameworkCore.SqlServer.Abstractions](
 
 Use of `HierarchyId` for EF Core functionality such as queries and updates requires the [Microsoft.EntityFrameworkCore.SqlServer.HierarchyId](https://www.nuget.org/packages/Microsoft.EntityFrameworkCore.SqlServer.HierarchyId) package. This package brings in `Microsoft.EntityFrameworkCore.SqlServer.Abstractions` and `Microsoft.SqlServer.Types` as transitive dependencies, and so is often the only package needed.
 
-### [.NET Core CLI](#tab/netcore-cli)
+### [.NET CLI](#tab/netcore-cli)
 
 ```dotnetcli
 dotnet add package Microsoft.EntityFrameworkCore.SqlServer.HierarchyId

@@ -120,7 +120,7 @@ var usings = new List<string>
 
 Test the changes by using the reverse engineering commands. The templates inside your project are used automatically by the commands.
 
-### [.NET Core CLI](#tab/dotnet-core-cli)
+### [.NET CLI](#tab/dotnet-core-cli)
 
 ```dotnetcli
 dotnet ef dbcontext scaffold "Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=Chinook" Microsoft.EntityFrameworkCore.SqlServer

@@ -46,7 +46,7 @@ You may want to store your migrations in a different project than the one contai
 
 If you did everything correctly, you should be able to add new migrations to the project.
 
-## [.NET Core CLI](#tab/dotnet-core-cli)
+## [.NET CLI](#tab/dotnet-core-cli)
 
 ```dotnetcli
 dotnet ef migrations add NewMigration --project WebApplication1.Migrations

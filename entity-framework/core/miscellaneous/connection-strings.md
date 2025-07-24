@@ -37,7 +37,7 @@ dotnet user-secrets set ConnectionStrings:YourDatabaseAlias "Data Source=(locald
 
 Then, in scaffolding, use a connection string that consists of `Name=<database-alias>`.
 
-### [.NET Core CLI](#tab/dotnet-core-cli)
+### [.NET CLI](#tab/dotnet-core-cli)
 
 ```dotnetcli
 dotnet ef dbcontext scaffold Name=ConnectionStrings:YourDatabaseAlias Microsoft.EntityFrameworkCore.SqlServer

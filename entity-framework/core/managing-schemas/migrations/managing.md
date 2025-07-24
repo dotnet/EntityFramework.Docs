@@ -10,13 +10,13 @@ uid: core/managing-schemas/migrations/managing
 As your model changes, migrations are added and removed as part of normal development, and the migration files are checked into your project's source control. To manage migrations, you must first install the [EF Core command-line tools](xref:core/cli/index).
 
 > [!TIP]
-> If the `DbContext` is in a different assembly than the startup project, you can explicitly specify the target and startup projects in either the [Package Manager Console tools](xref:core/cli/powershell#target-and-startup-project) or the [.NET Core CLI tools](xref:core/cli/dotnet#target-project-and-startup-project).
+> If the `DbContext` is in a different assembly than the startup project, you can explicitly specify the target and startup projects in either the [Package Manager Console tools](xref:core/cli/powershell#target-and-startup-project) or the [.NET CLI tools](xref:core/cli/dotnet#target-project-and-startup-project).
 
 ## Add a migration
 
 After your model has been changed, you can add a migration for that change:
 
-### [.NET Core CLI](#tab/dotnet-core-cli)
+### [.NET CLI](#tab/dotnet-core-cli)
 
 ```dotnetcli
 dotnet ef migrations add AddBlogCreatedTimestamp
@@ -44,7 +44,7 @@ The timestamp in the filename helps keep them ordered chronologically so you can
 
 You are free to move Migrations files and change their namespace manually. New migrations are created as siblings of the last migration. Alternatively, you can specify the directory at generation time as follows:
 
-#### [.NET Core CLI](#tab/dotnet-core-cli)
+#### [.NET CLI](#tab/dotnet-core-cli)
 
 ```dotnetcli
 dotnet ef migrations add InitialCreate --output-dir Your/Directory
@@ -170,7 +170,7 @@ In most cases, EF Core will automatically wrap each migration in its own transac
 
 Sometimes you add a migration and realize you need to make additional changes to your EF Core model before applying it. To remove the last migration, use this command.
 
-### [.NET Core CLI](#tab/dotnet-core-cli)
+### [.NET CLI](#tab/dotnet-core-cli)
 
 ```dotnetcli
 dotnet ef migrations remove
@@ -193,7 +193,7 @@ After removing the migration, you can make the additional model changes and add 
 
 You can list all existing migrations as follows:
 
-### [.NET Core CLI](#tab/dotnet-core-cli)
+### [.NET CLI](#tab/dotnet-core-cli)
 
 ```dotnetcli
 dotnet ef migrations list
@@ -242,5 +242,5 @@ VALUES (N'<full_migration_timestamp_and_name>', N'<EF_version>');
 
 ## Additional resources
 
-* [Entity Framework Core tools reference - .NET Core CLI](xref:core/cli/dotnet) : Includes commands to update, drop, add, remove, and  more.
+* [Entity Framework Core tools reference - .NET CLI](xref:core/cli/dotnet) : Includes commands to update, drop, add, remove, and  more.
 * [Entity Framework Core tools reference - Package Manager Console in Visual Studio](xref:core/cli/powershell) : Includes commands to update, drop, add, remove, and  more.

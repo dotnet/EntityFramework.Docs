@@ -67,7 +67,7 @@ Entity Framework Core can access many different databases through plug-in librar
 
 Most database providers for EF Core are distributed as NuGet packages, and can be installed as follows:
 
-## [.NET Core CLI](#tab/dotnet-core-cli)
+## [.NET CLI](#tab/dotnet-core-cli)
 
 ```dotnetcli
 dotnet add package provider_package_name
