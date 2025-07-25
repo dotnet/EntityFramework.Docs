@@ -42,7 +42,7 @@ Both <xref:Microsoft.EntityFrameworkCore.Design.IDesignTimeDbContextFactory`1.Cr
 
 You can specify these arguments from the tools:
 
-### [.NET Core CLI](#tab/dotnet-core-cli)
+### [.NET CLI](#tab/dotnet-core-cli)
 
 ```dotnetcli
 dotnet ef database update -- --environment Production

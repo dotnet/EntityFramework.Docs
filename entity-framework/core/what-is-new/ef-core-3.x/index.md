@@ -188,7 +188,7 @@ public class OrderDetails
 
 This isn't really an EF Core 3.x feature, but we think it is important to many of our current customers.
 
-We understand that many existing applications use previous versions of EF, and that porting them to EF Core only to take advantage of .NET Core can require a significant effort.
+We understand that many existing applications use previous versions of EF, and that porting them to EF Core only to take advantage of .NET can require a significant effort.
 For that reason, we decided to port the newest version of EF 6 to run on .NET Core 3.x.
 
 For more details, see [what's new in EF 6](xref:ef6/what-is-new/index).

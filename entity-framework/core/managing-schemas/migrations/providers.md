@@ -23,7 +23,7 @@ class SqliteBlogContext : BlogContext
 
 Specify the context type when adding new migrations.
 
-### [.NET Core CLI](#tab/dotnet-core-cli)
+### [.NET CLI](#tab/dotnet-core-cli)
 
 ```dotnetcli
 dotnet ef migrations add InitialCreate --context BlogContext --output-dir Migrations/SqlServerMigrations
@@ -58,7 +58,7 @@ Here's one pattern that works well when using a [Generic Host](/dotnet/core/exte
 
 Since the default host builder reads configuration from command-line arguments, you can specify the provider when running the tools.
 
-### [.NET Core CLI](#tab/dotnet-core-cli)
+### [.NET CLI](#tab/dotnet-core-cli)
 
 ```dotnetcli
 dotnet ef migrations add MyMigration --project ../SqlServerMigrations -- --provider SqlServer

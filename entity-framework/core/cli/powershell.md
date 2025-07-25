@@ -7,9 +7,9 @@ uid: core/cli/powershell
 ---
 # Entity Framework Core tools reference - Package Manager Console in Visual Studio
 
-The Package Manager Console (PMC) tools for Entity Framework Core perform design-time development tasks. For example, they create [migrations](/aspnet/core/data/ef-mvc/migrations), apply migrations, and generate code for a model based on an existing database. The commands run inside of Visual Studio using the [Package Manager Console](/nuget/tools/package-manager-console). These tools work with both .NET Framework and .NET Core projects.
+The Package Manager Console (PMC) tools for Entity Framework Core perform design-time development tasks. For example, they create [migrations](/aspnet/core/data/ef-mvc/migrations), apply migrations, and generate code for a model based on an existing database. The commands run inside of Visual Studio using the [Package Manager Console](/nuget/tools/package-manager-console). These tools work with both .NET Framework and .NET projects.
 
-If you aren't using Visual Studio, we recommend the [EF Core Command-line Tools](xref:core/cli/dotnet) instead. The .NET Core CLI tools are cross-platform and run inside a command prompt.
+If you aren't using Visual Studio, we recommend the [EF Core Command-line Tools](xref:core/cli/dotnet) instead. The .NET CLI tools are cross-platform and run inside a command prompt.
 
 [!INCLUDE [managed-identities-test-non-production](~/core/includes/managed-identities-test-non-production.md)]
 
@@ -73,19 +73,19 @@ The commands refer to a *project* and a *startup project*.
 
 The startup project and target project are often the same project. A typical scenario where they are separate projects is when:
 
-* The EF Core context and entity classes are in a .NET Core class library.
-* A .NET Core console app or web app references the class library.
+* The EF Core context and entity classes are in a .NET class library.
+* A .NET console app or web app references the class library.
 
 It's also possible to [put migrations code in a class library separate from the EF Core context](xref:core/managing-schemas/migrations/projects).
 
 ### Other target frameworks
 
-The Package Manager Console tools work with .NET Core or .NET Framework projects. Apps that have the EF Core model in a .NET Standard class library might not have a .NET Core or .NET Framework project. For example, this is true of Xamarin and Universal Windows Platform apps. In such cases, you can create a .NET Core or .NET Framework console app project whose only purpose is to act as startup project for the tools. The project can be a dummy project with no real code &mdash; it is only needed to provide a target for the tooling.
+The Package Manager Console tools work with .NET or .NET Framework projects. Apps that have the EF Core model in a .NET Standard class library might not have a .NET or .NET Framework project. For example, this is true of Xamarin and Universal Windows Platform apps. In such cases, you can create a .NET or .NET Framework console app project whose only purpose is to act as startup project for the tools. The project can be a dummy project with no real code &mdash; it is only needed to provide a target for the tooling.
 
 > [!IMPORTANT]
 > Xamarin.Android, Xamarin.iOS, Xamarin.Mac are now integrated directly into .NET (starting with .NET 6) as .NET for Android, .NET for iOS, and .NET for macOS. If you're building with these project types today, they should be upgraded to .NET SDK-style projects for continued support. For more information about upgrading Xamarin projects to .NET, see the [Upgrade from Xamarin to .NET & .NET MAUI](/dotnet/maui/migration) documentation.
 
-Why is a dummy project required? As mentioned earlier, the tools have to execute application code at design time. To do that, they need to use the .NET Core or .NET Framework runtime. When the EF Core model is in a project that targets .NET Core or .NET Framework, the EF Core tools borrow the runtime from the project. They can't do that if the EF Core model is in a .NET Standard class library. The .NET Standard is not an actual .NET implementation; it's a specification of a set of APIs that .NET implementations must support. Therefore .NET Standard is not sufficient for the EF Core tools to execute application code. The dummy project you create to use as startup project provides a concrete target platform into which the tools can load the .NET Standard class library.
+Why is a dummy project required? As mentioned earlier, the tools have to execute application code at design time. To do that, they need to use the .NET or .NET Framework runtime. When the EF Core model is in a project that targets .NET or .NET Framework, the EF Core tools borrow the runtime from the project. They can't do that if the EF Core model is in a .NET Standard class library. The .NET Standard is not an actual .NET implementation; it's a specification of a set of APIs that .NET implementations must support. Therefore .NET Standard is not sufficient for the EF Core tools to execute application code. The dummy project you create to use as startup project provides a concrete target platform into which the tools can load the .NET Standard class library.
 
 ### ASP.NET Core environment
 

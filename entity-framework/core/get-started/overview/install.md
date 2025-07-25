@@ -18,11 +18,11 @@ uid: core/get-started/overview/install
 
 EF Core is shipped as [NuGet packages](https://www.nuget.org/). To add EF Core to an application, install the NuGet package for the database provider you want to use. See [_Providers_](xref:core/providers/index) for a list of the database providers available.
 
-To install or update NuGet packages, you can use the .NET Core command-line interface (CLI), the Visual Studio Package Manager Dialog, or the Visual Studio Package Manager Console.
+To install or update NuGet packages, you can use the .NET command-line interface (CLI), the Visual Studio Package Manager Dialog, or the Visual Studio Package Manager Console.
 
-### .NET Core CLI
+### .NET CLI
 
-* Use the following .NET Core CLI command from the operating system's command line to install or update the EF Core SQL Server provider:
+* Use the following .NET CLI command from the operating system's command line to install or update the EF Core SQL Server provider:
 
   ```dotnetcli
   dotnet add package Microsoft.EntityFrameworkCore.SqlServer
@@ -64,15 +64,15 @@ You can install tools to carry out EF Core-related tasks in your project, like c
 
 Two sets of tools are available:
 
-* The [.NET Core command-line interface (CLI) tools](xref:core/cli/dotnet) can be used on Windows, Linux, or macOS. These commands begin with `dotnet ef`.
+* The [.NET command-line interface (CLI) tools](xref:core/cli/dotnet) can be used on Windows, Linux, or macOS. These commands begin with `dotnet ef`.
 
 * The [Package Manager Console (PMC) tools](xref:core/cli/powershell) run in Visual Studio on Windows. These commands start with a verb, for example `Add-Migration`, `Update-Database`.
 
 <a name="cli"></a>
 
-### Get the .NET Core CLI tools
+### Get the .NET CLI tools
 
-.NET Core CLI tools require the .NET Core SDK, mentioned earlier in [Prerequisites](#prerequisites).
+.NET CLI tools require the .NET SDK, mentioned earlier in [Prerequisites](#prerequisites).
 
 * `dotnet ef` must be installed as a global or local tool. Most developers prefer installing `dotnet ef` as a global tool using the following command:
 

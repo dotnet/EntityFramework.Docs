@@ -25,7 +25,7 @@ You need to have Visual Studio 2019 16.3 or later installed with the **.NET desk
 
 1. Open Visual Studio
 2. On the start window, choose **Create new project**.
-3. Search for "WPF," choose **WPF App (.NET Core)** and then choose **Next**.
+3. Search for "WPF," choose **WPF App (.NET)** and then choose **Next**.
 4. At the next screen, give the project a name, for example, **GetStartedWPF**, and choose **Create.**
 
 ## Install the Entity Framework NuGet packages

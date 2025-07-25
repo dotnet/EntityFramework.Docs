@@ -34,14 +34,14 @@ During development, you may have used the [Create and Drop APIs](xref:core/manag
 
 First, you'll have to install the [EF Core command-line tools](xref:core/cli/index):
 
-* We generally recommend using the [.NET Core CLI tools](xref:core/cli/dotnet), which work on all platforms.
+* We generally recommend using the [.NET CLI tools](xref:core/cli/dotnet), which work on all platforms.
 * If you're more comfortable working inside Visual Studio or have experience with EF6 migrations, you can also use the [Package Manager Console tools](xref:core/cli/powershell).
 
 ### Create your first migration
 
 You're now ready to add your first migration! Instruct EF Core to create a migration named **InitialCreate**:
 
-#### [.NET Core CLI](#tab/dotnet-core-cli)
+#### [.NET CLI](#tab/dotnet-core-cli)
 
 ```dotnetcli
 dotnet ef migrations add InitialCreate
@@ -61,7 +61,7 @@ EF Core will create a directory called **Migrations** in your project, and gener
 
 At this point you can have EF create your database and create your schema from the migration. This can be done via the following:
 
-#### [.NET Core CLI](#tab/dotnet-core-cli)
+#### [.NET CLI](#tab/dotnet-core-cli)
 
 ```dotnetcli
 dotnet ef database update
@@ -92,7 +92,7 @@ public class Blog
 
 Your model and your production database are now out of sync - we must add a new column to your database schema. Let's create a new migration for this:
 
-#### [.NET Core CLI](#tab/dotnet-core-cli)
+#### [.NET CLI](#tab/dotnet-core-cli)
 
 ```dotnetcli
 dotnet ef migrations add AddBlogCreatedTimestamp
@@ -114,7 +114,7 @@ You can now apply your migration as before:
 
 <!--markdownlint-disable MD024-->
 
-#### [.NET Core CLI](#tab/dotnet-core-cli)
+#### [.NET CLI](#tab/dotnet-core-cli)
 
 ```dotnetcli
 dotnet ef database update
@@ -140,10 +140,10 @@ Sometimes you may want to reference types from another DbContext. This can lead 
 
 ### Next steps
 
-The above was only a brief introduction to migrations. Please consult the other documentation pages to learn more about [managing migrations](xref:core/managing-schemas/migrations/managing), [applying them](xref:core/managing-schemas/migrations/applying), and other aspects. The [.NET Core CLI tool reference](xref:core/cli/index) also contains useful information on the different commands
+The above was only a brief introduction to migrations. Please consult the other documentation pages to learn more about [managing migrations](xref:core/managing-schemas/migrations/managing), [applying them](xref:core/managing-schemas/migrations/applying), and other aspects. The [.NET CLI tool reference](xref:core/cli/index) also contains useful information on the different commands
 
 ## Additional resources
 
-* [Entity Framework Core tools reference - .NET Core CLI](xref:core/cli/dotnet) : Includes commands to update, drop, add, remove, and  more.
+* [Entity Framework Core tools reference - .NET CLI](xref:core/cli/dotnet) : Includes commands to update, drop, add, remove, and  more.
 * [Entity Framework Core tools reference - Package Manager Console in Visual Studio](xref:core/cli/powershell) : Includes commands to update, drop, add, remove, and  more.
 * [.NET Data Community Standup session](https://www.youtube.com/watch?v=mSsGERmrhnE&list=PLdo4fOcmZ0oX-DBuRG4u58ZTAJgBAeQ-t&index=20) going over new migration features in EF Core 5.0.

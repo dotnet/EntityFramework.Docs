@@ -152,7 +152,7 @@ See [#12793](https://github.com/dotnet/efcore/issues/12793) and [#35367](https:/
 - Optimize use of `Count` operation on `ICollection<T>` ([#35381](https://github.com/dotnet/efcore/pull/35381), contributed by [@ChrisJollyAU](https://github.com/ChrisJollyAU)).
 - Optimize `MIN`/`MAX` over `DISTINCT` ([#34699](https://github.com/dotnet/efcore/pull/34699), contributed by [@ranma42](https://github.com/ranma42)).
 - Translate date/time functions using `DatePart.Microsecond` and `DatePart.Nanosecond` arguments ([#34861](https://github.com/dotnet/efcore/pull/34861)).
-- Simplify parameter names (e.g. from `@__city_0` to `city`) ([#35200](https://github.com/dotnet/efcore/pull/35200)).
+- Simplify parameter names (e.g. from `@__city_0` to `@city`) ([#35200](https://github.com/dotnet/efcore/pull/35200)).
 - Translate `COALESCE` as `ISNULL` on SQL Server, for most cases ([#34171](https://github.com/dotnet/efcore/pull/34171), contributed by [@ranma42](https://github.com/ranma42)).
 - Support some string functions taking `char` as arguments ([#34999](https://github.com/dotnet/efcore/pull/34999), contributed by [@ChrisJollyAU](https://github.com/ChrisJollyAU)).
 - Support `MAX`/`MIN`/`ORDER BY` using `decimal` on SQLite ([#35606](https://github.com/dotnet/efcore/pull/35606), contributed by [@ranma42](https://github.com/ranma42)).

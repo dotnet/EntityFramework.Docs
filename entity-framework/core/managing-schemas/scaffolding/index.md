@@ -201,7 +201,7 @@ public partial class post
 
 ### Use mapping attributes (aka Data Annotations)
 
-Entity types are configured using the [`ModelBuilder` API in `OnModelCreating`](xref:core/modeling/index#use-fluent-api-to-configure-a-model) by default. Specify `-DataAnnotations` (PMC) or `--data-annotations` (.NET Core CLI) to instead use [mapping attributes](xref:core/modeling/index#use-data-annotations-to-configure-a-model) when possible.
+Entity types are configured using the [`ModelBuilder` API in `OnModelCreating`](xref:core/modeling/index#use-fluent-api-to-configure-a-model) by default. Specify `-DataAnnotations` (PMC) or `--data-annotations` (.NET CLI) to instead use [mapping attributes](xref:core/modeling/index#use-data-annotations-to-configure-a-model) when possible.
 
 For example, using the Fluent API will scaffold this:
 
@@ -224,7 +224,7 @@ public string Title { get; set; }
 
 ### DbContext name
 
-The scaffolded `DbContext` class name will be the name of the database suffixed with _Context_ by default. To specify a different one, use `-Context` in PMC and `--context` in the .NET Core CLI.
+The scaffolded `DbContext` class name will be the name of the database suffixed with _Context_ by default. To specify a different one, use `-Context` in PMC and `--context` in the .NET CLI.
 
 ### Target directories and namespaces
 

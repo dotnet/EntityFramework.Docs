@@ -21,7 +21,7 @@ The recommended way to deploy migrations to a production database is by generati
 * SQL scripts can be used in conjunction with a deployment technology, and can even be generated as part of your CI process.
 * SQL scripts can be provided to a DBA, and can be managed and archived separately.
 
-### [.NET Core CLI](#tab/dotnet-core-cli)
+### [.NET CLI](#tab/dotnet-core-cli)
 
 #### Basic Usage
 
@@ -96,7 +96,7 @@ The SQL scripts generated above can only be applied to change your schema from o
 
 The following generates idempotent migrations:
 
-### [.NET Core CLI](#tab/dotnet-core-cli)
+### [.NET CLI](#tab/dotnet-core-cli)
 
 ```dotnetcli
 dotnet ef migrations script --idempotent
@@ -117,7 +117,7 @@ The EF command-line tools can be used to apply migrations to a database. While p
 * The SQL commands are applied directly by the tool, without giving the developer a chance to inspect or modify them. This can be dangerous in a production environment.
 * The .NET SDK and the EF tool must be installed on production servers and requires the project's source code.
 
-### [.NET Core CLI](#tab/dotnet-core-cli)
+### [.NET CLI](#tab/dotnet-core-cli)
 
 The following updates your database to the latest migration:
 
@@ -168,7 +168,7 @@ Migration bundles are single-file executables that can be used to apply migratio
 * Bundles can be generated as part of your CI process and easily executed later as part of your deployment process.
 * Bundles can be executed without installing the .NET SDK or EF Tool (or even the .NET Runtime, when self-contained), and they don't require the project's source code.
 
-### [.NET Core CLI](#tab/dotnet-core-cli)
+### [.NET CLI](#tab/dotnet-core-cli)
 
 The following generates a bundle:
 
