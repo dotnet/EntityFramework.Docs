@@ -82,7 +82,7 @@ There are several common situations when this exception can be thrown:
 
   - **Mitigation**: To make sure that the options are applied consistently the app needs to be specified as the startup project when running the EF tools or, alternatively, `IDesignTimeDbContextFactory` needs to be implemented in the project containing the `DbContext`:
 
-    ```C#
+    ```csharp
     public class DatabaseContextDesignTimeFactory : IDesignTimeDbContextFactory<DatabaseContext>
     {
         public DatabaseContext CreateDbContext(string[] args)
