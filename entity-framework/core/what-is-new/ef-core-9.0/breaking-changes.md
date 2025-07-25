@@ -66,10 +66,51 @@ There are several common situations when this exception can be thrown:
   - **Mitigation**: Add a new migration, examine its contents to locate the cause, and replace the dynamic data with a static, hardcoded value in the model. The migration should be recreated after the model is fixed. If dynamic data has to be used for seeding consider using [the new seeding pattern](/ef/core/what-is-new/ef-core-9.0/whatsnew#improved-data-seeding) instead of `HasData()`.
 - The last migration was created for a different provider than the one used to apply the migrations.
   - **Mitigation**: This is an unsupported scenario. The warning can be suppressed using the code snippet below, but this scenario will likely stop working in a future EF Core release. The recommended solution is [to generate a separate set of migrations for each provider](xref:core/managing-schemas/migrations/providers).
-- The migrations are generated or chosen dynamically by replacing some of the EF services.
-  - **Mitigation**: The warning is a false positive in this case and should be suppressed:
-  
+- The migrations are generated, modified or chosen dynamically by replacing some of the EF services.
+  - **Mitigation**: The warning is a false positive in this case and should be suppressed:  
     `options.ConfigureWarnings(w => w.Ignore(RelationalEventId.PendingModelChangesWarning))`
+- You are using ASP.NET Core Identity and change options that affect the model, such as:
+
+    ```csharp
+    .AddDefaultIdentity<ApplicationUser>(options =>
+        {
+            options.Stores.SchemaVersion = IdentitySchemaVersions.Version2;
+            options.Stores.MaxLengthForKeys = 256;
+            options.SignIn.RequireConfirmedAccount = false;
+        })
+    ```
+
+  - **Mitigation**: To make sure that the options are applied consistently the app needs to be specified as the startup project when running the EF tools or, alternatively, `IDesignTimeDbContextFactory` needs to be implemented in the project containing the `DbContext`:
+
+    ```C#
+    public class DatabaseContextDesignTimeFactory : IDesignTimeDbContextFactory<DatabaseContext>
+    {
+        public DatabaseContext CreateDbContext(string[] args)
+        {
+            var services = new ServiceCollection();
+            AddIdentity(services);
+            var serviceProvider = services.BuildServiceProvider();
+            var optionsBuilder = new DbContextOptionsBuilder<DatabaseContext>();
+            optionsBuilder.UseApplicationServiceProvider(serviceProvider);
+            optionsBuilder.UseSqlServer();
+            return new DatabaseContext(optionsBuilder.Options);
+        }
+    
+        public static IServiceCollection AddIdentity(IServiceCollection services)
+        {
+            services.AddDefaultIdentity<ApplicationUser>(options =>
+                {
+                    options.Stores.SchemaVersion = IdentitySchemaVersions.Version2;
+                    options.Stores.MaxLengthForKeys = 256;
+                    options.SignIn.RequireConfirmedAccount = false;
+                })
+                .AddRoles<IdentityRole>()
+                .AddEntityFrameworkStores<DatabaseContext>();
+    
+            return services;
+        }
+    }
+    ```
 
 If your scenario doesn't fall under any of the above cases and adding a new migration creates the same migration each time or an empty migration and the exception is still thrown then create a small repro project and [share it with the EF team in a new issue](https://github.com/dotnet/efcore/issues/new/choose).
 
