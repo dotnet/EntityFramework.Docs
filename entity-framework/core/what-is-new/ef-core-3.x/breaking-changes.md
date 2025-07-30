@@ -4,6 +4,7 @@ description: Complete list of breaking changes introduced in Entity Framework Co
 author: SamMonoRT
 ms.date: 09/05/2020
 uid: core/what-is-new/ef-core-3.x/breaking-changes
+ms.custom: sfi-ropc-nochange
 ---
 
 # Breaking changes included in EF Core 3.x

@@ -4,6 +4,7 @@ description: Reverse engineering a model from an existing database using Entity 
 author: SamMonoRT
 ms.date: 03/27/2023
 uid: core/managing-schemas/scaffolding
+ms.custom: sfi-ropc-nochange
 ---
 # Scaffolding (Reverse Engineering)
 

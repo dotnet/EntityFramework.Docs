@@ -4,6 +4,7 @@ description: Overview of new features in EF Core 7.0
 author: SamMonoRT
 ms.date: 01/15/2022
 uid: core/what-is-new/ef-core-7.0/whatsnew
+ms.custom: sfi-ropc-nochange
 ---
 
 # What's New in EF Core 7.0

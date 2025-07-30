@@ -4,6 +4,7 @@ description: Adding, removing and otherwise managing database schema migrations 
 author: SamMonoRT
 ms.date: 10/27/2020
 uid: core/managing-schemas/migrations/managing
+ms.custom: sfi-ropc-nochange
 ---
 # Managing Migrations
 
