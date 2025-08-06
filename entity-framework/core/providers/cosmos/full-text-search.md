@@ -1,11 +1,14 @@
 ---
-title: Full Text Search - Azure Cosmos DB Provider - EF Core
-description: Full text search with the Azure Cosmos DB EF Core Provider
+title: Full-Text Search - Azure Cosmos DB Provider - EF Core
+description: Full-text search with the Azure Cosmos DB EF Core Provider
 author: maumar
 ms.date: 04/19/2025
 uid: core/providers/cosmos/full-text-search
 ---
-# Full text search
+# Full-text search
+
+> [!NOTE]
+> Full-text search support for Cosmos was introduced in EF 10.
 
 Azure Cosmos DB now offers support for [full-text search](/azure/cosmos-db/gen-ai/full-text-search). It enables efficient and effective text searches using advanced techniques like stemming, as well as evaluating the relevance of documents to a given search query. It can be used in combination with vector search (i.e. hybrid search) to improve the accuracy of responses in some AI scenarios.
 EF Core allows for modeling the database with full-text search enabled properties and using full-text search functions inside queries targeting Azure Cosmos DB.

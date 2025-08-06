@@ -7,6 +7,9 @@ uid: core/providers/cosmos/vector-search
 ---
 # Vector search
 
+> [!NOTE]
+> The below describes the vector search support in EF 10. EF 9 includes similar experimental support with slightly different method naming.
+
 Azure Cosmos DB now offers support for vector similarity search. Vector search is a fundamental part of some application types, including AI, semantic search and others. Azure Cosmos DB allows you to store vectors directly in your documents alongside the rest of your data, meaning you can perform all of your queries against a single database. This can considerably simplify your architecture and remove the need for an additional, dedicated vector database solution in your stack. To learn more about Azure Cosmos DB vector search, [see the documentation](/azure/cosmos-db/nosql/vector-search).
 
 Vector property can be configured inside `OnModelCreating`:
