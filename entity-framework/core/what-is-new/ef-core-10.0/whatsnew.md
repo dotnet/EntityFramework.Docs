@@ -115,7 +115,66 @@ In EF 10 we improved this experience - EF will now materialize a default value f
 
 ## LINQ and SQL translation
 
-<a name="support-left-join"></a>
+<a name="parameterized-collection-translation"></a>
+
+### Improved translation for parameterized collection
+
+A notoriously difficult problem with relational databases is queries that involve *parameterized collections*:
+
+```c#
+int[] ids = [1, 2, 3];
+var blogs = await context.Blogs.Where(b => ids.Contains(b.Id)).ToListAsync();
+```
+
+In the above query, `ids` is a parameterized collection: the same query can be executed many times, with `ids` containing different values each time.
+
+Since relational databases don't typically support sending a collection directly as a parameter, EF version up to 8.0 simply inlined the collection contents into the SQL as constants:
+
+```sql
+SELECT [b].[Id], [b].[Name]
+FROM [Blogs] AS [b]
+WHERE [b].[Id] IN (1, 2, 3)
+```
+
+While this works, it has the unfortunate consequence of generating different SQLs for different collections, causing database plan cache misses and bloat, and creating various performance problems (see [#13617](https://github.com/dotnet/efcore/issues/13617), which was the most highly-voted issue in the repo at the time). As a result, EF 8.0 leveraged the introduction of extensive JSON support and changed the translation of parameterized collections to use JSON arrays ([release notes](xref:core/what-is-new/ef-core-8.0/whatsnew#queries-with-primitive-collections
+)):
+
+```sql
+@__ids_0='[1,2,3]'
+
+SELECT [b].[Id], [b].[Name]
+FROM [Blogs] AS [b]
+WHERE [b].[Id] IN (
+    SELECT [i].[value]
+    FROM OPENJSON(@__ids_0) WITH ([value] int '$') AS [i]
+)
+```
+
+Here, the collection is encoded as a string containing a JSON array, sent as a single parameter and then unpacked using the SQL Server [`OPENJSON`](/sql/t-sql/functions/openjson-transact-sql) function (other databases use similar mechanisms). Since the collection is now parameterized, the SQL stays the same and a single query plan no matter what values the collection contains. Unfortunately, while elegant, this translation also deprives the database query planner of important information on the cardinality (or length) of the collection, and can cause a plan to be chosen that works well for a small - or large - number of elements. As a result, EF Core 9.0 introduced the ability to control which translation strategy to use ([release notes](xref:core/what-is-new/ef-core-9.0/whatsnew#parameterized-primitive-collections)).
+
+EF 10.0 introduces a new default translation mode for parameterized collections, where each value in the collection is translated into its own scalar parameter:
+
+```sql
+SELECT [b].[Id], [b].[Name]
+FROM [Blogs] AS [b]
+WHERE [b].[Id] IN (@ids1, @ids2, @ids3)
+```
+
+This allows the collection values to change without resulting in different SQLs - solving the plan cache problem - but at the same time provides the query planner with information on the collection cardinality. Since different cardinalities still cause different SQLs to be generated, the final version of EF 10 will include a "bucketization" feature, where e.g. 10 parameters are sent even when the user only specifies 8, to reduce the SQL variations and optimize the query cache.
+
+Unfortunately, parameterized collections are a case where EF simply cannot always make the right choice: selecting between multiple parameters (the new default), a single JSON array parameter or multiple inlined constants can require knowledge about the data in your database, and different choices may work better for different queries. As a result, EF exposes full control to the user to control the translation strategy, both at the global configuration level:
+
+```c#
+protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    => optionsBuilder
+        .UseSqlServer("<CONNECTION STRING>", o => o.UseParameterizedCollectionMode(ParameterTranslationMode.Constant));
+```
+
+... and at the per-query level:
+
+```c#
+var blogs = await context.Blogs.Where(b => EF.Constant(ids).Contains(b.Id)).ToListAsync();
+```
 
 ### Support for the .NET 10 `LeftJoin` and `RightJoin` operators
 
@@ -140,23 +199,32 @@ var query = context.Students
 > [!NOTE]
 > EF 10 also supports the analogous `RightJoin` operator, which keeps all the data from the second collection and only the matching data from the first collection. EF 10 translates this to `RIGHT JOIN` operation in the database.
 
+Unfortunately, C# query syntax (`from x select x.Id`) doesn't yet support expressing left/right join operations in this way.
+
 See [#12793](https://github.com/dotnet/efcore/issues/12793) and [#35367](https://github.com/dotnet/efcore/issues/35367) for more details.
 
 <a name="other-query-improvements"></a>
 
 ### Other query improvements
 
+#### New translations
+
 - Translate [DateOnly.ToDateTime()](/dotnet/api/system.dateonly.todatetime) ([#35194](https://github.com/dotnet/efcore/pull/35194), contributed by [@mseada94](https://github.com/mseada94)).
 - Translate [DateOnly.DayNumber](/dotnet/api/system.dateonly.daynumber) and `DayNumber` subtraction for SQL Server and SQLite ([#36183](https://github.com/dotnet/efcore/issues/36183)).
-- Optimize multiple consecutive `LIMIT`s ([#35384](https://github.com/dotnet/efcore/pull/35384), contributed by [@ranma42](https://github.com/ranma42)).
-- Optimize use of `Count` operation on `ICollection<T>` ([#35381](https://github.com/dotnet/efcore/pull/35381), contributed by [@ChrisJollyAU](https://github.com/ChrisJollyAU)).
-- Optimize `MIN`/`MAX` over `DISTINCT` ([#34699](https://github.com/dotnet/efcore/pull/34699), contributed by [@ranma42](https://github.com/ranma42)).
 - Translate date/time functions using `DatePart.Microsecond` and `DatePart.Nanosecond` arguments ([#34861](https://github.com/dotnet/efcore/pull/34861)).
-- Simplify parameter names (e.g. from `@__city_0` to `@city`) ([#35200](https://github.com/dotnet/efcore/pull/35200)).
 - Translate `COALESCE` as `ISNULL` on SQL Server, for most cases ([#34171](https://github.com/dotnet/efcore/pull/34171), contributed by [@ranma42](https://github.com/ranma42)).
 - Support some string functions taking `char` as arguments ([#34999](https://github.com/dotnet/efcore/pull/34999), contributed by [@ChrisJollyAU](https://github.com/ChrisJollyAU)).
 - Support `MAX`/`MIN`/`ORDER BY` using `decimal` on SQLite ([#35606](https://github.com/dotnet/efcore/pull/35606), contributed by [@ranma42](https://github.com/ranma42)).
 - Support projecting different navigations (but same type) via conditional operator ([#34589](https://github.com/dotnet/efcore/issues/34589), contributed by [@ranma42](https://github.com/ranma42)).
+
+#### Bug fixes and optimizations
+
+- Fix Microsoft.Data.Sqlite behavior around `DateTime`, `DateTimeOffset` and UTC, [see breaking change notes](xref:core/what-is-new/ef-core-10.0/breaking-changes#DateTimeOffset-read) ([#36195](https://github.com/dotnet/efcore/issues/36195)).
+- Fix translation of `DefaultIfEmpty` in various scenarios ([#19095](https://github.com/dotnet/efcore/issues/19095), [#33343](https://github.com/dotnet/efcore/issues/33343), [#36208](https://github.com/dotnet/efcore/issues/36208)).
+- Optimize multiple consecutive `LIMIT`s ([#35384](https://github.com/dotnet/efcore/pull/35384), contributed by [@ranma42](https://github.com/ranma42)).
+- Optimize use of `Count` operation on `ICollection<T>` ([#35381](https://github.com/dotnet/efcore/pull/35381), contributed by [@ChrisJollyAU](https://github.com/ChrisJollyAU)).
+- Optimize `MIN`/`MAX` over `DISTINCT` ([#34699](https://github.com/dotnet/efcore/pull/34699), contributed by [@ranma42](https://github.com/ranma42)).
+- Simplify parameter names (e.g. from `@__city_0` to `@city`) ([#35200](https://github.com/dotnet/efcore/pull/35200)).
 
 ## ExecuteUpdateAsync now accepts a regular, non-expression lambda
 
