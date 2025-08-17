@@ -21,8 +21,8 @@ group.Max(x => x.Property)                            | MAX(Property)
 group.Min(x => x.Property)                            | MIN(Property)
 group.Sum(x => x.Property)                            | SUM(Property)
 group.Sum(x => x.DecimalProperty)                     | ef_sum(DecimalProperty)            | EF Core 9.0
-string.Concat(group.Select(x => x.Property))          | group_concat(Property, '')         | EF Core 7.0
-string.Join(separator, group.Select(x => x.Property)) | group_concat(Property, @separator) | EF Core 7.0
+string.Concat(group.Select(x => x.Property))          | group_concat(Property, '')
+string.Join(separator, group.Select(x => x.Property)) | group_concat(Property, @separator)
 
 ## Binary functions
 
@@ -34,8 +34,8 @@ bytes.SequenceEqual(second)                    | @bytes = @second
 EF.Functions.Hex(bytes)                        | hex(@bytes)
 EF.Functions.Substr(bytes, startIndex)         | substr(@bytes, @startIndex)
 EF.Functions.Substr(bytes, startIndex, length) | substr(@bytes, @startIndex, @length)
-EF.Functions.Unhex(value)                      | unhex(@value)                        | EF Core 8.0
-EF.Functions.Unhex(value, ignoreChars)         | unhex(@value, @ignoreChars)          | EF Core 8.0
+EF.Functions.Unhex(value)                      | unhex(@value)
+EF.Functions.Unhex(value, ignoreChars)         | unhex(@value, @ignoreChars)
 
 ## Conversion functions
 
@@ -69,7 +69,7 @@ dateOnly.AddYears(value)        | date(@dateOnly, @value \|\| ' years')
 dateOnly.Day                    | strftime('%d', @dateOnly)
 dateOnly.DayOfWeek              | strftime('%w', @dateOnly)
 dateOnly.DayOfYear              | strftime('%j', @dateOnly)
-DateOnly.FromDateTime(dateTime) | date(@dateTime)                                                          | EF Core 8.0
+DateOnly.FromDateTime(dateTime) | date(@dateTime)
 dateOnly.Month                  | strftime('%m', @dateOnly)
 dateOnly.Year                   | strftime('%Y', @dateOnly)
 dateOnly.DayNumber              | CAST(julianday(@dateOnly) - julianday('0001-01-01') AS INTEGER)          | EF Core 10.0
@@ -114,23 +114,23 @@ decimalValue < d                 | ef_compare(@decimalValue, @d) < 0
 decimalValue <= d                | ef_compare(@decimalValue, @d) <= 0
 decimalValue > d                 | ef_compare(@decimalValue, @d) > 0
 decimalValue >= d                | ef_compare(@decimalValue, @d) >= 0
-double.DegreesToRadians(degrees) | radians(@degrees)                     | EF Core 8.0
-double.RadiansToDegrees(radians) | degrees(@dradians)                    | EF Core 8.0
+double.DegreesToRadians(degrees) | radians(@degrees)
+double.RadiansToDegrees(radians) | degrees(@dradians)
 doubleValue % d                  | mod(@doubleValue, @d)
 EF.Functions.Random()            | abs(random() / 9223372036854780000.0)
 Math.Abs(value)                  | abs(@value)
-Math.Acos(value)                 | acos(@value)                          | EF Core 8.0
-Math.Acosh(d)                    | acosh(@d)                             | EF Core 8.0
-Math.Asin(d)                     | asin(@d)                              | EF Core 8.0
-Math.Asinh(d)                    | asinh(@d)                             | EF Core 8.0
-Math.Atan(d)                     | atan(@d)                              | EF Core 8.0
-Math.Atan2(y, x)                 | atan2(@y, @x)                         | EF Core 8.0
-Math.Atanh(d)                    | atanh(@d)                             | EF Core 8.0
-Math.Ceiling(d)                  | ceiling(@d)                           | EF Core 8.0
-Math.Cos(d)                      | cos(@d)                               | EF Core 8.0
-Math.Cosh(value)                 | cosh(@value)                          | EF Core 8.0
-Math.Exp(d)                      | exp(@d)                               | EF Core 8.0
-Math.Floor(d)                    | floor(@d)                             | EF Core 8.0
+Math.Acos(value)                 | acos(@value)
+Math.Acosh(d)                    | acosh(@d)
+Math.Asin(d)                     | asin(@d)
+Math.Asinh(d)                    | asinh(@d)
+Math.Atan(d)                     | atan(@d)
+Math.Atan2(y, x)                 | atan2(@y, @x)
+Math.Atanh(d)                    | atanh(@d)
+Math.Ceiling(d)                  | ceiling(@d)
+Math.Cos(d)                      | cos(@d)
+Math.Cosh(value)                 | cosh(@value)
+Math.Exp(d)                      | exp(@d)
+Math.Floor(d)                    | floor(@d)
 Math.Log(d)                      | ln(@d)                                | EF Core 8.0
 Math.Log(a, newBase)             | log(@newBase, @a)                     | EF Core 8.0
 Math.Log2(x)                     | log2(@x)                              | EF Core 8.0
