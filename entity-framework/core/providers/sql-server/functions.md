@@ -13,25 +13,25 @@ This page shows which .NET members are translated into which SQL functions when 
 
 .NET                                                                    | SQL                              | Added in
 ----------------------------------------------------------------------- | -------------------------------- | --------
-EF.Functions.StandardDeviationSample(group.Select(x => x.Property))     | STDEV(Property)                  | EF Core 7.0
-EF.Functions.StandardDeviationPopulation(group.Select(x => x.Property)) | STDEVP(Property)                 | EF Core 7.0
-EF.Functions.VarianceSample(group.Select(x => x.Property))              | VAR(Property)                    | EF Core 7.0
-EF.Functions.VariancePopulation(group.Select(x => x.Property))          | VARP(Property)                   | EF Core 7.0
+EF.Functions.StandardDeviationSample(group.Select(x => x.Property))     | STDEV(Property)
+EF.Functions.StandardDeviationPopulation(group.Select(x => x.Property)) | STDEVP(Property)
+EF.Functions.VarianceSample(group.Select(x => x.Property))              | VAR(Property)
+EF.Functions.VariancePopulation(group.Select(x => x.Property))          | VARP(Property)
 group.Average(x => x.Property)                                          | AVG(Property)
 group.Count()                                                           | COUNT(*)
 group.LongCount()                                                       | COUNT_BIG(*)
 group.Max(x => x.Property)                                              | MAX(Property)
 group.Min(x => x.Property)                                              | MIN(Property)
 group.Sum(x => x.Property)                                              | SUM(Property)
-string.Concat(group.Select(x => x.Property))                            | STRING_AGG(Property, N'')        | EF Core 7.0
-string.Join(separator, group.Select(x => x.Property))                   | STRING_AGG(Property, @separator) | EF Core 7.0
+string.Concat(group.Select(x => x.Property))                            | STRING_AGG(Property, N'')
+string.Join(separator, group.Select(x => x.Property))                   | STRING_AGG(Property, @separator)
 
 ## Binary functions
 
 .NET                         | SQL                           | Added in
 ---------------------------- | ----------------------------- | --------
 bytes.Contains(value)        | CHARINDEX(@value, @bytes) > 0
-bytes.ElementAt(i)           | SUBSTRING(@bytes, @i + 1, 1)  | EF Core 8.0
+bytes.ElementAt(i)           | SUBSTRING(@bytes, @i + 1, 1)
 bytes.First()                | SUBSTRING(@bytes, 1, 1)
 bytes.Length                 | DATALENGTH(@bytes)
 bytes.SequenceEqual(second)  | @bytes = @second
@@ -53,7 +53,7 @@ Convert.ToInt16(value)    | CONVERT(smallint, @value)
 Convert.ToInt32(value)    | CONVERT(int, @value)
 Convert.ToInt64(value)    | CONVERT(bigint, @value)
 Convert.ToString(value)   | CONVERT(nvarchar(max), @value)
-dateOnly.ToString()       | CONVERT(varchar(100), @dateOnly)       | EF Core 8.0
+dateOnly.ToString()       | CONVERT(varchar(100), @dateOnly)
 dateTime.ToString()       | CONVERT(varchar(100), @dateTime)
 dateTimeOffset.ToString() | CONVERT(varchar(100), @dateTimeOffset)
 decimalValue.ToString()   | CONVERT(varchar(100), @decimalValue)
@@ -64,7 +64,7 @@ intValue.ToString()       | CONVERT(varchar(11), @intValue)
 longValue.ToString()      | CONVERT(varchar(20), @longValue)
 sbyteValue.ToString()     | CONVERT(varchar(4), @sbyteValue)
 shortValue.ToString()     | CONVERT(varchar(6), @shortValue)
-timeOnly.ToString()       | CONVERT(varchar(100), @timeOnly)       | EF Core 8.0
+timeOnly.ToString()       | CONVERT(varchar(100), @timeOnly)
 timeSpan.ToString()       | CONVERT(varchar(100), @timeSpan)
 uintValue.ToString()      | CONVERT(varchar(10), @uintValue)
 ulongValue.ToString()     | CONVERT(varchar(19), @ulongValue)
@@ -116,19 +116,19 @@ dateTimeOffset.Month                                        | DATEPART(month, @d
 dateTimeOffset.Nanosecond                                   | DATEPART(nanosecond, @dateTimeOffset) % 1000                                    | EF Core 10.0
 dateTimeOffset.Second                                       | DATEPART(second, @dateTimeOffset)
 dateTimeOffset.TimeOfDay                                    | CONVERT(time, @dateTimeOffset)
-dateTimeOffset.ToUnixTimeSeconds()                          | DATEDIFF_BIG(second, '1970-01-01T00:00:00.0000000+00:00', @dateTimeOffset)      | EF Core 8.0
-dateTimeOffset.ToUnixTimeMilliseconds()                     | DATEDIFF_BIG(millisecond, '1970-01-01T00:00:00.0000000+00:00', @dateTimeOffset) | EF Core 8.0
+dateTimeOffset.ToUnixTimeSeconds()                          | DATEDIFF_BIG(second, '1970-01-01T00:00:00.0000000+00:00', @dateTimeOffset)
+dateTimeOffset.ToUnixTimeMilliseconds()                     | DATEDIFF_BIG(millisecond, '1970-01-01T00:00:00.0000000+00:00', @dateTimeOffset)
 dateTimeOffset.Year                                         | DATEPART(year, @dateTimeOffset)
-DateOnly.FromDateTime(dateTime)                             | CONVERT(date, @dateTime)                                                        | EF Core 8.0
-dateOnly.AddDays(value)                                     | DATEADD(day, @value, @dateOnly)                                                 | EF Core 8.0
-dateOnly.AddMonths(months)                                  | DATEADD(month, @months, @dateOnly)                                              | EF Core 8.0
-dateOnly.AddYears(value)                                    | DATEADD(year, @value, @dateOnly)                                                | EF Core 8.0
-dateOnly.Day                                                | DATEPART(day, @dateOnly)                                                        | EF Core 8.0
-dateOnly.DayOfYear                                          | DATEPART(dayofyear, @dateOnly)                                                  | EF Core 8.0
-dateOnly.Month                                              | DATEPART(month, @dateOnly)                                                      | EF Core 8.0
-dateOnly.Year                                               | DATEPART(year, @dateOnly)                                                       | EF Core 8.0
+DateOnly.FromDateTime(dateTime)                             | CONVERT(date, @dateTime)
+dateOnly.AddDays(value)                                     | DATEADD(day, @value, @dateOnly)
+dateOnly.AddMonths(months)                                  | DATEADD(month, @months, @dateOnly)
+dateOnly.AddYears(value)                                    | DATEADD(year, @value, @dateOnly)
+dateOnly.Day                                                | DATEPART(day, @dateOnly)
+dateOnly.DayOfYear                                          | DATEPART(dayofyear, @dateOnly)
+dateOnly.Month                                              | DATEPART(month, @dateOnly)
+dateOnly.Year                                               | DATEPART(year, @dateOnly)
 dateOnly.DayNumber                                          | DATEDIFF(day, '0001-01-01', @dateOnly)                                          | EF Core 10.0
-EF.Functions.AtTimeZone(dateTime, timeZone)                 | @dateTime AT TIME ZONE @timeZone                                                | EF Core 7.0
+EF.Functions.AtTimeZone(dateTime, timeZone)                 | @dateTime AT TIME ZONE @timeZone
 EF.Functions.DateDiffDay(start, end)                        | DATEDIFF(day, @start, @end)
 EF.Functions.DateDiffHour(start, end)                       | DATEDIFF(hour, @start, @end)
 EF.Functions.DateDiffMicrosecond(start, end)                | DATEDIFF(microsecond, @start, @end)
@@ -146,15 +146,15 @@ EF.Functions.DateTimeOffsetFromParts(year, month, day, ...) | DATETIMEOFFSETFROM
 EF.Functions.IsDate(expression)                             | ISDATE(@expression)
 EF.Functions.SmallDateTimeFromParts(year, month, day, ...)  | SMALLDATETIMEFROMPARTS(@year, @month, @day, ...)
 EF.Functions.TimeFromParts(hour, minute, second, ...)       | TIMEFROMPARTS(@hour, @minute, @second, ...)
-timeOnly.AddHours(value)                                    | DATEADD(hour, @value, @timeOnly)                                                | EF Core 8.0
-timeOnly.AddMinutes(value)                                  | DATEADD(minute, @value, @timeOnly)                                              | EF Core 8.0
-timeOnly.Hour                                               | DATEPART(hour, @timeOnly)                                                       | EF Core 8.0
-timeOnly.IsBetween(start, end)                              | @timeOnly >= @start AND @timeOnly < @end                                        | EF Core 8.0
+timeOnly.AddHours(value)                                    | DATEADD(hour, @value, @timeOnly)
+timeOnly.AddMinutes(value)                                  | DATEADD(minute, @value, @timeOnly)
+timeOnly.Hour                                               | DATEPART(hour, @timeOnly)
+timeOnly.IsBetween(start, end)                              | @timeOnly >= @start AND @timeOnly < @end
 timeOnly.Microsecond                                        | DATEPART(microsecond, @timeOnly) % 1000                                         | EF Core 10.0
-timeOnly.Millisecond                                        | DATEPART(millisecond, @timeOnly)                                                | EF Core 8.0
-timeOnly.Minute                                             | DATEPART(minute, @timeOnly)                                                     | EF Core 8.0
+timeOnly.Millisecond                                        | DATEPART(millisecond, @timeOnly)
+timeOnly.Minute                                             | DATEPART(minute, @timeOnly)
 timeOnly.Nanosecond                                         | DATEPART(nanosecond, @timeOnly) % 1000                                          | EF Core 10.0
-timeOnly.Second                                             | DATEPART(second, @timeOnly)                                                     | EF Core 8.0
+timeOnly.Second                                             | DATEPART(second, @timeOnly)
 timeSpan.Hours                                              | DATEPART(hour, @timeSpan)
 timeSpan.Microsecond                                        | DATEPART(microsecond, @timeSpan) % 1000                                         | EF Core 10.0
 timeSpan.Milliseconds                                       | DATEPART(millisecond, @timeSpan)
@@ -166,8 +166,8 @@ timeSpan.Seconds                                            | DATEPART(second, @
 
 .NET                       | SQL                  | Added in
 -------------------------- | -------------------- | --------
-double.DegreesToRadians(x) | RADIANS(@x)          | EF Core 8.0
-double.RadiansToDegrees(x) | DEGREES(@x)          | EF Core 8.0
+double.DegreesToRadians(x) | RADIANS(@x)
+double.RadiansToDegrees(x) | DEGREES(@x)
 EF.Functions.Random()      | RAND()
 Math.Abs(value)            | ABS(@value)
 Math.Acos(d)               | ACOS(@d)
@@ -219,7 +219,7 @@ stringValue.Contains(value)                                             | @strin
 stringValue.EndsWith(value)                                             | @stringValue LIKE N'%' + @value
 stringValue.FirstOrDefault()                                            | SUBSTRING(@stringValue, 1, 1)
 stringValue.IndexOf(value)                                              | CHARINDEX(@value, @stringValue) - 1
-stringValue.IndexOf(value, startIndex)                                  | CHARINDEX(@value, @stringValue, @startIndex) - 1                       | EF Core 7.0
+stringValue.IndexOf(value, startIndex)                                  | CHARINDEX(@value, @stringValue, @startIndex) - 1
 stringValue.LastOrDefault()                                             | SUBSTRING(@stringValue, LEN(@stringValue), 1)
 stringValue.Length                                                      | LEN(@stringValue)
 stringValue.Replace(@oldValue, @newValue)                               | REPLACE(@stringValue, @oldValue, @newValue)
@@ -242,9 +242,10 @@ nullable.GetValueOrDefault()             | COALESCE(@nullable, 0)
 nullable.GetValueOrDefault(defaultValue) | COALESCE(@nullable, @defaultValue)
 
 > [!NOTE]
-> Some SQL has been simplified for illustration purposes. The actual SQL is more complex to handle a wider range of values.
+> Some SQL translations have been simplified for illustration purposes. The actual SQL is more complex to handle a wider range of values.
 
 ## See also
 
+* [Vector Search Function Mappings](xref:core/providers/sql-server/vector-search)
 * [Spatial Function Mappings](xref:core/providers/sql-server/spatial#spatial-function-mappings)
 * [HierarchyId Function Mappings](xref:core/providers/sql-server/hierarchyid#function-mappings)
