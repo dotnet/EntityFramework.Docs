@@ -19,21 +19,131 @@ EF10 requires the .NET 10 SDK to build and requires the .NET 10 runtime to run. 
 
 <a name="cosmos"></a>
 
-## Named query filters
+## Azure SQL and SQL Server
 
-EF's [global query filters](xref:core/querying/filters) feature has long enabled users to configuring filters to entity types which apply to all queries by default. This has simplified implementing common patterns and scenarios such as soft deletion, multitenancy and others. However, up to now EF has only supported a single query filter per entity type, making it difficult to have multiple filters and selectively disabling only some of them in specific queries.
+### Vector search support
 
-EF 10 introduces *named query filters*, which allow attaching names to query filter and managing each one separately:
+EF 10 brings full support for the recently-introduced [vector data type](/sql/t-sql/data-types/vector-data-type) and its supporting [`VECTOR_DISTANCE()`](/sql/t-sql/functions/vector-distance-transact-sql) function, available on Azure SQL Database and on SQL Server 2025. The vector data type allows storing *embeddings*, which are representation of meaning that can be efficiently searched over for similarity, powering AI workloads such as semantic search and retrieval-augmented generation (RAG).
 
-[!code-csharp[Main](../../../../samples/core/Querying/QueryFilters/NamedFilters.cs#FilterConfiguration)]
+To use the `vector` data type, simply add a .NET property of type `SqlVector<float>` to your entity type:
 
-This notably allows disabling only certain filters in a specific LINQ query:
+```c#
+public class Blog
+{
+    // ...
 
-[!code-csharp[Main](../../../../samples/core/Querying/QueryFilters/NamedFilters.cs#DisableSoftDeletionFilter)]
+    [Column(TypeName = "vector(1536)")]
+    public SqlVector<float> Embedding { get; set; }
+}
+```
 
-For more information on named query filters, see the [documentation](xref:core/querying/filters).
+Then, insert embedding data by populating the Embedding property and calling `SaveChangesAsync()` as usual:
 
-This feature was contributed by [@bittola](https://github.com/bittola).
+```c#
+IEmbeddingGenerator<string, Embedding<float>> embeddingGenerator = /* Set up your preferred embedding generator */;
+
+var embedding = await embeddingGenerator.GenerateVectorAsync("Some text to be vectorized");
+context.Blogs.Add(new Blog
+{
+    Name = "Some blog",
+    Embedding = new SqlVector<float>(embedding)
+});
+await context.SaveChangesAsync();
+```
+
+Finally, use the [`EF.Functions.VectorDistance()`](/sql/t-sql/functions/vector-distance-transact-sql) function in your LINQ queries to perform similarity search for a given user query:
+
+```c#
+var sqlVector = /* some user query which we should search for similarity */;
+var topSimilarBlogs = context.Blogs
+    .OrderBy(b => EF.Functions.VectorDistance("cosine", b.Embedding, sqlVector))
+    .Take(3)
+    .ToListAsync();
+```
+
+For more information on vector search, [see the documentation](xref:core/providers/sql-server/vector-search).
+
+### JSON type support
+
+EF 10 also fully supports the new [json data type](/sql/t-sql/data-types/json-data-type), also available on Azure SQL Database and on SQL Server 2025. While SQL Server has included JSON functionality for several versions, the data itself was stored in plain textual columns in the database; the new data type provides significant efficiency improvements and a safer way to store and interact with JSON.
+
+With EF 10, if you've configured EF with `UseAzureSql()` or with a compatibility level of 170 or higher (SQL Server 2025), EF automatically defaults to using the new JSON data type. For example, the following entity type has a primitive collection (Tags, an array of strings) and Details (mapped as a complex type):
+
+```c#
+public class Blog
+{
+    public int Id { get; set; }
+
+    public string[] Tags { get; set; }
+    public required BlogDetails Details { get; set; }
+}
+
+public class BlogDetails
+{
+    public string? Description { get; set; }
+    public int Viewers { get; set; }
+}
+
+protected override void OnModelCreating(ModelBuilder modelBuilder)
+{
+    modelBuilder.Entity<Blog>().ComplexProperty(b => b.Details, b => b.ToJson());
+}
+```
+
+EF 10 creates the following table for the above:
+
+```sql
+CREATE TABLE [Blogs] (
+    [Id] int NOT NULL IDENTITY,
+    [Name] nvarchar(max) NOT NULL,
+    [Tags] json NOT NULL,
+    [Details] json NOT NULL,
+    CONSTRAINT [PK_Blogs] PRIMARY KEY ([Id])
+);
+```
+
+LINQ querying is fully supported as well. For example, the following filters for blogs with more than 3 viewers:
+
+```c#
+var highlyViewedBlogs = await context.Blogs.Where(b => b.Details.Viewers > 3).ToListAsync();
+```
+
+This produces the following SQL, making use of the new `JSON_VALUE()` `RETURNING` clause:
+
+```sql
+SELECT [b].[Id], [b].[Name], [b].[Tags], [b].[Details]
+FROM [Blogs] AS [b]
+WHERE JSON_VALUE([b].[Details], '$.Viewers' RETURNING int) > 3
+```
+
+Note that if your EF application already uses JSON via `nvarchar` columns, these columns will be automatically changed to `json` with the first migration. You can opt out of this by manually setting the column type to `nvarchar(max)`, or configuring a compatibility level lower than 170.
+
+<a name="default-constraint-names"></a>
+
+### Custom default constraint names
+
+EF 10 now allows you to specify a name for default constraints, rather than letting the database generate them:
+
+```c#
+protected override void OnModelCreating(ModelBuilder modelBuilder)
+{
+    modelBuilder.Entity<Post>()
+        .Property(p => b.CreatedDate)
+        .HasDefaultValueSql("GETDATE()", "DF_Post_CreatedDate");
+}
+```
+
+You can also enable automatic naming by EF of all default constraints:
+
+```c#
+protected override void OnModelCreating(ModelBuilder modelBuilder)
+{
+    modelBuilder.UseNamedDefaultConstraints();
+}
+```
+
+> [!NOTE]
+> If you have existing migrations, the next migration you add will rename every single default constraint in your model.
 
 ## Azure Cosmos DB for NoSQL
 
@@ -77,7 +187,7 @@ var cosmosBlogs = await context.Blogs.Where(x => EF.Functions.FullTextContains(x
 
 The following full-text operations are currently supported: [`FullTextContains`](/azure/cosmos-db/nosql/query/fulltextcontains), [`FullTextContainsAll`](/azure/cosmos-db/nosql/query/fulltextcontainsall), [`FullTextContainsAny`](/azure/cosmos-db/nosql/query/fulltextcontainsany), [`FullTextScore`](/azure/cosmos-db/nosql/query/fulltextscore).
 
-For more information on Cosmos full-text search, see the [docs](xref:core/providers/cosmos/full-text-search).
+For more information on Cosmos full-text search, see the [documentation](xref:core/providers/cosmos/full-text-search).
 
 ### Hybrid search
 
@@ -92,7 +202,7 @@ var hybrid = await context.Blogs.OrderBy(x => EF.Functions.Rrf(
     .ToListAsync();
 ```
 
-For more information on Cosmos hybrid search, see the [docs](xref:core/providers/cosmos/full-text-search?#hybrid-search).
+For more information on Cosmos hybrid search, [see the documentation](xref:core/providers/cosmos/full-text-search?#hybrid-search).
 
 ### Vector similarity search exits preview
 
@@ -101,7 +211,7 @@ In EF9 we added experimental support for [vector similarity search](xref:core/wh
 - EF Core can now generate containers with vector properties defined on owned reference entities. Containers with vector properties defined on owned collections still have to be created by other means. However, they can be used in queries.
 - Model building APIs have been renamed. A vector property can now be configured using the `IsVectorProperty` method, and vector index can be configured using the `IsVectorIndex` method.
 
-For more information on Cosmos vector search, see the [docs](xref:core/providers/cosmos/vector-search).
+For more information on Cosmos vector search, [see the documentation](xref:core/providers/cosmos/vector-search).
 
 <a name="improved-model-evolution"></a>
 
@@ -110,6 +220,24 @@ For more information on Cosmos vector search, see the [docs](xref:core/providers
 In previous versions of EF Core, evolving the model when using Azure Cosmos DB was quite painful. Specifically, when adding a new required property to the entity, EF would no longer be able to materialize that entity. The reason was that EF expected a value for the new property (since it was required), but the document created before the change didn't contain those values. The workaround was to mark the property as optional first, manually add default values for the property, and only then change it to required.
 
 In EF 10 we improved this experience - EF will now materialize a default value for a required property, if no data is present for it in the document, rather than throw.
+
+<a name="named-query-filters"></a>
+
+## Named query filters
+
+EF's [global query filters](xref:core/querying/filters) feature has long enabled users to configuring filters to entity types which apply to all queries by default. This has simplified implementing common patterns and scenarios such as soft deletion, multitenancy and others. However, up to now EF has only supported a single query filter per entity type, making it difficult to have multiple filters and selectively disabling only some of them in specific queries.
+
+EF 10 introduces *named query filters*, which allow attaching names to query filter and managing each one separately:
+
+[!code-csharp[Main](../../../../samples/core/Querying/QueryFilters/NamedFilters.cs#FilterConfiguration)]
+
+This notably allows disabling only certain filters in a specific LINQ query:
+
+[!code-csharp[Main](../../../../samples/core/Querying/QueryFilters/NamedFilters.cs#DisableSoftDeletionFilter)]
+
+For more information on named query filters, [see the documentation](xref:core/querying/filters).
+
+This feature was contributed by [@bittola](https://github.com/bittola).
 
 <a name="linq-and-sql-translation"></a>
 
@@ -270,38 +398,6 @@ await context.Blogs.ExecuteUpdateAsync(s =>
 ```
 
 Thanks to [@aradalvand](https://github.com/aradalvand) for proposing and pushing for this change (in [#32018](https://github.com/dotnet/efcore/issues/32018)).
-
-<a name="default-constrain-names"></a>
-
-## Custom default constraint names
-
-In previous versions of EF Core, when you specified a default value for a property, EF Core would always let the database automatically generate a constraint name. Now, you can explicitly specify the name for default value constraints for SQL Server, giving you more control over your database schema.
-
-You can now specify a constraint name when defining default values in your model configuration:
-
-```C#
-protected override void OnModelCreating(ModelBuilder modelBuilder)
-{
-    modelBuilder.Entity<Blog>()
-        .Property(b => b.IsActive)
-        .HasDefaultValue(true, "DF_Blog_IsActive");
-
-    modelBuilder.Entity<Post>()
-        .Property(p => b.CreatedDate)
-        .HasDefaultValueSql("GETDATE()", "DF_Post_CreatedDate");
-}
-
-```
-
-You can also call `UseNamedDefaultConstraints` to enable automatic naming of all the default constraints. Note that if you have existing migrations then the next migration you add will rename every single default constraint in your model.
-
-```C#
-protected override void OnModelCreating(ModelBuilder modelBuilder)
-{
-    modelBuilder.UseNamedDefaultConstraints();
-}
-
-```
 
 <a name="other-improvements"></a>
 

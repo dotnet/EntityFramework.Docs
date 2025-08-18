@@ -402,6 +402,8 @@
           href: core/providers/sql-server/indexes.md
         - name: Value generation
           href: core/providers/sql-server/value-generation.md
+        - name: Vector search
+          href: core/providers/sql-server/vector-search.md
         - name: Temporal tables
           href: core/providers/sql-server/temporal-tables.md
         - name: Memory-optimized tables
