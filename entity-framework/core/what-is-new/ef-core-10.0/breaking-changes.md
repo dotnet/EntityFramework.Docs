@@ -20,11 +20,97 @@ This page documents API and behavior changes that have the potential to break ex
 > [!NOTE]
 > If you are using Microsoft.Data.Sqlite, please see the [separate section below on Microsoft.Data.Sqlite breaking changes](#MDS-breaking-changes).
 
-| **Breaking change**                                                                                       | **Impact** |
-|:----------------------------------------------------------------------------------------------------------|------------|
-| [ExecuteUpdateAsync now accepts a regular, non-expression lambda](#ExecuteUpdateAsync-lambda)             | Low        |
+| **Breaking change**                                                                                             | **Impact** |
+|:--------------------------------------------------------------------------------------------------------------- | -----------|
+| [SQL Server json data type used by default on Azure SQL and compatibility level 170](#sqlserver-json-data-type) | Low        |
+| [ExecuteUpdateAsync now accepts a regular, non-expression lambda](#ExecuteUpdateAsync-lambda)                   | Low        |
 
 ## Low-impact changes
+
+<a name="sqlserver-json-data-type"></a>
+
+### SQL Server json data type used by default on Azure SQL and compatibility level 170
+
+[Tracking Issue #36372](https://github.com/dotnet/efcore/issues/36372)
+
+#### Old behavior
+
+Previously, when mapping primitive collections or owned types to JSON in the database, the SQL Server provider stored the JSON data in an `nvarchar(max)` column:
+
+```c#
+public class Blog
+{
+    // ...
+
+    // Primitive collection, mapped to nvarchar(max) JSON column
+    public string[] Tags { get; set; }
+    // Owned entity type mapped to nvarchar(max) JSON column
+    public List<Post> Posts { get; set; }
+}
+
+protected override void OnModelCreating(ModelBuilder modelBuilder)
+{
+    modelBuilder.Entity<Blog>().OwnsMany(b => b.Posts, b => b.ToJson());
+}
+```
+
+For the above, EF previously generated the following table:
+
+```sql
+CREATE TABLE [Blogs] (
+    ...
+    [Tags] nvarchar(max),
+    [Posts] nvarchar(max)
+);
+```
+
+#### New behavior
+
+With EF 10, if you configure EF with <xref:Microsoft.EntityFrameworkCore.SqlServerDbContextOptionsExtensions.UseAzureSql*> ([see documentation](xref:core/providers/sql-server/index#usage-and-configuration)), or configure EF with a compatibility level of 170 or above ([see documentation](xref:core/providers/sql-server/index#compatibility-level)), EF will map to the new JSON data type instead:
+
+```sql
+CREATE TABLE [Blogs] (
+    ...
+    [Tags] json
+    [Posts] json
+);
+```
+
+Note that if you have an existing table and are using <xref:Microsoft.EntityFrameworkCore.SqlServerDbContextOptionsExtensions.UseAzureSql*>, upgrading to EF 10 will cause a migration to be generated which alters all existing `nvarchar(max)` JSON columns to `json`. This alter operation is supported and should get applied seamlessly and without any issues, but is a non-trivial change to your database.
+
+> [!NOTE]
+> For 10.0.0 rc1, support for the new JSON data type has been temporarily disabled for Azure SQL Database, due to lacking support. These issues are expected to be resolved by the time EF 10.0 is released, and the JSON data type will become the default until then.
+
+#### Why
+
+The new JSON data type introduced by SQL Server is a superior, 1st-class way to store and interact with JSON data in the database; it notably brings significant performance improvements ([see documentation](/sql/t-sql/data-types/json-data-type)). All applications using Azure SQL Database or SQL Server 2025 are encouraged to migrate to the new JSON data type.
+
+#### Mitigations
+
+If you do not wish to transition to the new JSON data type right away, you can configure EF with a compatibility level lower than 170:
+
+```c#
+protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+{
+     optionsBuilder.UseSqlServer("<connection string>", o => o.UseCompatibilityLevel(160));
+}
+```
+
+As an alternative, you can explicitly set the column type for your properties to be `nvarchar(max)`:
+
+```c#
+public class Blog
+{
+    public string[] Tags { get; set; }
+    public List<Post> Posts { get; set; }
+}
+
+protected override void OnModelCreating(ModelBuilder modelBuilder)
+{
+    modelBuilder.Entity<Blog>().PrimitiveCollection(b => b.Tags).HasColumnType("nvarchar(max)");
+    modelBuilder.Entity<Blog>().OwnsMany(b => b.Posts, b => b.ToJson().HasColumnType("nvarchar(max)"));
+}
+```
 
 <a name="ExecuteUpdateAsync-lambda"></a>
 
