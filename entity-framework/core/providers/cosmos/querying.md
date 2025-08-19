@@ -223,19 +223,19 @@ This section shows which .NET methods and members are translated into which SQL 
 ------------------------------------------ | --------------------------------------------------------------------------------- | --------
 DateTime.UtcNow                            | [GetCurrentDateTime()](/azure/cosmos-db/nosql/query/getcurrentdatetime)
 DateTimeOffset.UtcNow                      | [GetCurrentDateTime()](/azure/cosmos-db/nosql/query/getcurrentdatetime)
-dateTime.Year<sup>1</sup>                  | [DateTimePart("yyyy", dateTime)](/azure/cosmos-db/nosql/query/datetimepart)       | EF Core 9.0
-dateTimeOffset.Year<sup>1</sup>            | [DateTimePart("yyyy", dateTimeOffset)](/azure/cosmos-db/nosql/query/datetimepart) | EF Core 9.0
-dateTime.AddYears(years)<sup>1</sup>       | [DateTimeAdd("yyyy", dateTime)](/azure/cosmos-db/nosql/query/datetimeadd)         | EF Core 9.0
-dateTimeOffset.AddYears(years)<sup>1</sup> | [DateTimeAdd("yyyy", dateTimeOffset)](/azure/cosmos-db/nosql/query/datetimeadd)   | EF Core 9.0
+dateTime.Year<sup>1</sup>                  | [DateTimePart("yyyy", dateTime)](/azure/cosmos-db/nosql/query/datetimepart)       | EF 9
+dateTimeOffset.Year<sup>1</sup>            | [DateTimePart("yyyy", dateTimeOffset)](/azure/cosmos-db/nosql/query/datetimepart) | EF 9
+dateTime.AddYears(years)<sup>1</sup>       | [DateTimeAdd("yyyy", dateTime)](/azure/cosmos-db/nosql/query/datetimeadd)         | EF 9
+dateTimeOffset.AddYears(years)<sup>1</sup> | [DateTimeAdd("yyyy", dateTimeOffset)](/azure/cosmos-db/nosql/query/datetimeadd)   | EF 9
 
 <sup>1</sup> The other component members are translated as well (Month, Day...).
 
 ### Numeric functions
 
-.NET                       | SQL                                                 | Added in
--------------------------- | --------------------------------------------------- | --------
-double.DegreesToRadians(x) | [RADIANS(@x)](/azure/cosmos-db/nosql/query/radians) | EF Core 8.0
-double.RadiansToDegrees(x) | [DEGREES(@x)](/azure/cosmos-db/nosql/query/degrees) | EF Core 8.0
+.NET                       | SQL
+-------------------------- | ---------------------------------------------------
+double.DegreesToRadians(x) | [RADIANS(@x)](/azure/cosmos-db/nosql/query/radians)
+double.RadiansToDegrees(x) | [DEGREES(@x)](/azure/cosmos-db/nosql/query/degrees)
 EF.Functions.Random()      | [RAND()](/azure/cosmos-db/nosql/query/rand)
 Math.Abs(value)            | [ABS(@value)](/azure/cosmos-db/nosql/query/abs)
 Math.Acos(d)               | [ACOS(@d)](/azure/cosmos-db/nosql/query/acos)
@@ -266,17 +266,17 @@ Math.Truncate(d)           | [TRUNC(@d)](/azure/cosmos-db/nosql/query/trunc)
 
 .NET                                                              | SQL                                                                                | Added in
 ----------------------------------------------------------------- | ---------------------------------------------------------------------------------- | --------
-Regex.IsMatch(input, pattern)                                     | [RegexMatch(@pattern, @input)](/azure/cosmos-db/nosql/query/regexmatch)             | EF Core 7.0
-Regex.IsMatch(input, pattern, options)                            | [RegexMatch(@input, @pattern, @options)](/azure/cosmos-db/nosql/query/regexmatch)   | EF Core 7.0
+Regex.IsMatch(input, pattern)                                     | [RegexMatch(@pattern, @input)](/azure/cosmos-db/nosql/query/regexmatch)
+Regex.IsMatch(input, pattern, options)                            | [RegexMatch(@input, @pattern, @options)](/azure/cosmos-db/nosql/query/regexmatch)
 string.Concat(str0, str1)                                         | @str0 + @str1
 string.Equals(a, b, StringComparison.Ordinal)                     | [STRINGEQUALS(@a, @b)](/azure/cosmos-db/nosql/query/stringequals)
 string.Equals(a, b, StringComparison.OrdinalIgnoreCase)           | [STRINGEQUALS(@a, @b, true)](/azure/cosmos-db/nosql/query/stringequals)
 stringValue.Contains(value)                                       | [CONTAINS(@stringValue, @value)](/azure/cosmos-db/nosql/query/contains)
-stringValue.Contains(value, StringComparison.Ordinal)             | [CONTAINS(@stringValue, @value, false)](/azure/cosmos-db/nosql/query/contains)     | EF Core 9.0
-stringValue.Contains(value, StringComparison.OrdinalIgnoreCase)   | [CONTAINS(@stringValue, @value, true)](/azure/cosmos-db/nosql/query/contains)      | EF Core 9.0
+stringValue.Contains(value, StringComparison.Ordinal)             | [CONTAINS(@stringValue, @value, false)](/azure/cosmos-db/nosql/query/contains)     | EF 9
+stringValue.Contains(value, StringComparison.OrdinalIgnoreCase)   | [CONTAINS(@stringValue, @value, true)](/azure/cosmos-db/nosql/query/contains)      | EF 9
 stringValue.EndsWith(value)                                       | [ENDSWITH(@stringValue, @value)](/azure/cosmos-db/nosql/query/endswith)
-stringValue.EndsWith(value, StringComparison.Ordinal)             | [ENDSWITH(@stringValue, @value, false)](/azure/cosmos-db/nosql/query/endswith)     | EF Core 9.0
-stringValue.EndsWith(value, StringComparison.OrdinalIgnoreCase)   | [ENDSWITH(@stringValue, @value, true)](/azure/cosmos-db/nosql/query/endswith)      | EF Core 9.0
+stringValue.EndsWith(value, StringComparison.Ordinal)             | [ENDSWITH(@stringValue, @value, false)](/azure/cosmos-db/nosql/query/endswith)     | EF 9
+stringValue.EndsWith(value, StringComparison.OrdinalIgnoreCase)   | [ENDSWITH(@stringValue, @value, true)](/azure/cosmos-db/nosql/query/endswith)      | EF 9
 stringValue.Equals(value, StringComparison.Ordinal)               | [STRINGEQUALS(@stringValue, @value)](/azure/cosmos-db/nosql/query/stringequals)
 stringValue.Equals(value, StringComparison.OrdinalIgnoreCase)     | [STRINGEQUALS(@stringValue, @value, true)](/azure/cosmos-db/nosql/query/stringequals)
 stringValue.FirstOrDefault()                                      | [LEFT(@stringValue, 1)](/azure/cosmos-db/nosql/query/left)
@@ -286,8 +286,8 @@ stringValue.LastOrDefault()                                       | [RIGHT(@stri
 stringValue.Length                                                | [LENGTH(@stringValue)](/azure/cosmos-db/nosql/query/length)
 stringValue.Replace(oldValue, newValue)                           | [REPLACE(@stringValue, @oldValue, @newValue)](/azure/cosmos-db/nosql/query/replace)
 stringValue.StartsWith(value)                                     | [STARTSWITH(@stringValue, @value)](/azure/cosmos-db/nosql/query/startswith)
-stringValue.StartsWith(value, StringComparison.Ordinal)           | [STARTSWITH(@stringValue, @value, false)](/azure/cosmos-db/nosql/query/startswith) | EF Core 9.0
-stringValue.StartsWith(value, StringComparison.OrdinalIgnoreCase) | [STARTSWITH(@stringValue, @value, true)](/azure/cosmos-db/nosql/query/startswith)  | EF Core 9.0
+stringValue.StartsWith(value, StringComparison.Ordinal)           | [STARTSWITH(@stringValue, @value, false)](/azure/cosmos-db/nosql/query/startswith) | EF 9
+stringValue.StartsWith(value, StringComparison.OrdinalIgnoreCase) | [STARTSWITH(@stringValue, @value, true)](/azure/cosmos-db/nosql/query/startswith)  | EF 9
 stringValue.Substring(startIndex)                                 | [SUBSTRING(@stringValue, @startIndex, LENGTH(@stringValue))](/azure/cosmos-db/nosql/query/substring)
 stringValue.Substring(startIndex, length)                         | [SUBSTRING(@stringValue, @startIndex, @length)](/azure/cosmos-db/nosql/query/substring)
 stringValue.ToLower()                                             | [LOWER(@stringValue)](/azure/cosmos-db/nosql/query/lower)
@@ -296,17 +296,28 @@ stringValue.Trim()                                                | [TRIM(@strin
 stringValue.TrimEnd()                                             | [RTRIM(@stringValue)](/azure/cosmos-db/nosql/query/rtrim)
 stringValue.TrimStart()                                           | [LTRIM(@stringValue)](/azure/cosmos-db/nosql/query/ltrim)
 
+### Vector and full-text search
+
+.NET                                                                        | SQL                                                                                                           | Added in
+--------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------- | -----
+EF.Functions.VectorDistance(vector1, vector2).                              | [VectorDistance(vector1, vector2)](/azure/cosmos-db/nosql/query/vectordistance)                               | EF 9
+EF.Functions.VectorDistance(vector1, vector2, bruteForce)                   | [VectorDistance(vector1, vector2, bruteForce)](/azure/cosmos-db/nosql/query/vectordistance)                   | EF 9
+EF.Functions.VectorDistance(vector1, vector2, bruteForce, distanceFunction) | [VectorDistance(vector1, vector2, bruteForce, distanceFunction)](/azure/cosmos-db/nosql/query/vectordistance) | EF 9
+EF.Functions.FullTextContains(property, keyword)                            | [FullTextContains(property, keyword)](/azure/cosmos-db/nosql/query/fulltextcontains)                          | EF 10
+EF.Functions.FullTextContainsAll(property, keyword1, keyword2)              | [FullTextContainsAll(property, keyword1, keyword2)](/azure/cosmos-db/nosql/query/fulltextcontainsall)         | EF 10
+EF.Functions.FullTextContainsAny(property, keyword1, keyword2)              | [FullTextContainsAny(property, keyword1, keyword2)](/azure/cosmos-db/nosql/query/fulltextcontainsany)         | EF 10
+EF.Functions.FullTextScore(property, keyword1, keyword2)                    | [FullTextScore(property, keyword1, keyword2)](/azure/cosmos-db/nosql/query/fulltextscore)                     | EF 10
+EF.Functions.Rrf(search1, search2)                                          | [RRF(property, search1, search2)](/azure/cosmos-db/nosql/query/rrf).                                          | EF 10
+EF.Functions.Rrf(new[] { search1, search2 }, weights)                       | [RRF(property, search1, search2, weights)](/azure/cosmos-db/nosql/query/rrf)                                  | EF 10
+
+For more information on vector search, see [the documentation](xref:core/providers/cosmos/vector-search). For more information on full-text search, see [the documentation](xref:core/providers/cosmos/full-text-search).
+
 ### Miscellaneous functions
 
-.NET                                                                                    | SQL                                                                                                           | Notes
+.NET                                                                                    | SQL                                                                                                           | Added in
 --------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------- | -----
 collection.Contains(item)                                                               | @item IN @collection
-EF.Functions.CoalesceUndefined(x, y)<sup>1</sup>                                        | [x ?? y](/azure/cosmos-db/nosql/query/ternary-coalesce-operators#coalesce-operator)                           | Added in EF Core 9.0
-EF.Functions.IsDefined(x)                                                               | [IS_DEFINED(x)](/azure/cosmos-db/nosql/query/is-defined)                                                      | Added in EF Core 9.0
-EF.Functions.VectorDistance(vector1, vector2)<sup>2</sup>                               | [VectorDistance(vector1, vector2)](/azure/cosmos-db/nosql/query/vectordistance)                               | Added in EF Core 9.0, Experimental
-EF.Functions.VectorDistance(vector1, vector2, bruteForce)<sup>2</sup>                   | [VectorDistance(vector1, vector2, bruteForce)](/azure/cosmos-db/nosql/query/vectordistance)                   | Added in EF Core 9.0, Experimental
-EF.Functions.VectorDistance(vector1, vector2, bruteForce, distanceFunction)<sup>2</sup> | [VectorDistance(vector1, vector2, bruteForce, distanceFunction)](/azure/cosmos-db/nosql/query/vectordistance) | Added in EF Core 9.0, Experimental
+EF.Functions.CoalesceUndefined(x, y)<sup>1</sup>                                        | [x ?? y](/azure/cosmos-db/nosql/query/ternary-coalesce-operators#coalesce-operator)                           | EF 9
+EF.Functions.IsDefined(x)                                                               | [IS_DEFINED(x)](/azure/cosmos-db/nosql/query/is-defined)                                                      | EF 9
 
 <sup>1</sup> Note that `EF.Functions.CoalesceUndefined` coalesces `undefined`, not `null`. To coalesce `null`, use the regular C# `??` operator.
-
-<sup>2</sup> [See the documentation](xref:core/providers/cosmos/vector-search) for information on using vector search in Azure Cosmos DB, which is experimental. The APIs are subject to change.
