@@ -95,9 +95,9 @@ await context.Blogs.ExecuteUpdateAsync(s =>
 
 | **Breaking change**                                                                                       | **Impact** |
 |:----------------------------------------------------------------------------------------------------------|------------|
-| [Using GetDateTimeOffset without an offset now assumes UTC](#DateTimeOffset-read)                          | High       |
+| [Using GetDateTimeOffset without an offset now assumes UTC](#DateTimeOffset-read)                         | High       |
 | [Writing DateTimeOffset into REAL column now writes in UTC](#DateTimeOffset-write)                        | High       |
-| [Using GetDateTime with an offset now returns value in UTC](#DateTime-read)                                | High       |
+| [Using GetDateTime with an offset now returns value in UTC](#DateTime-read)                               | High       |
 
 ### High-impact changes
 
