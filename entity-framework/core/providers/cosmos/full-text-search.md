@@ -46,34 +46,34 @@ public class BloggingContext
 Full-text search operations are language specific, using American English (`en-US`) by default. You can customize the language for individual properties as part of `EnableFullTextSearch` call:
 
 ```c#
-    protected override void OnModelCreating(ModelBuilder modelBuilder)
+protected override void OnModelCreating(ModelBuilder modelBuilder)
+{
+    modelBuilder.Entity<Blog>(b =>
     {
-        modelBuilder.Entity<Blog>(b =>
-        {
-            b.Property(x => x.Contents).EnableFullTextSearch();
-            b.HasIndex(x => x.Contents).IsFullTextIndex();
-            b.Property(x => x.ContentsGerman).EnableFullTextSearch("de-DE");
-            b.HasIndex(x => x.ContentsGerman).IsFullTextIndex();
-        });
-    }
+        b.Property(x => x.Contents).EnableFullTextSearch();
+        b.HasIndex(x => x.Contents).IsFullTextIndex();
+        b.Property(x => x.ContentsGerman).EnableFullTextSearch("de-DE");
+        b.HasIndex(x => x.ContentsGerman).IsFullTextIndex();
+    });
+}
 ```
 
 You can also set a default language for the container - unless overridden in the `EnableFullTextSearch` method, all full-text properties inside the container will use that language.
 
 ```c#
-    protected override void OnModelCreating(ModelBuilder modelBuilder)
+protected override void OnModelCreating(ModelBuilder modelBuilder)
+{
+    modelBuilder.Entity<Blog>(b =>
     {
-        modelBuilder.Entity<Blog>(b =>
-        {
-            b.HasDefaultFullTextLanguage("de-DE");
-            b.Property(x => x.ContentsEnglish).EnableFullTextSearch("en-US");
-            b.HasIndex(x => x.ContentsEnglish).IsFullTextIndex();
-            b.Property(x => x.ContentsGerman).EnableFullTextSearch();
-            b.HasIndex(x => x.ContentsGerman).IsFullTextIndex();
-            b.Property(x => x.TagsGerman).EnableFullTextSearch();
-            b.HasIndex(x => x.TagsGerman).IsFullTextIndex();
-        });
-    }
+        b.HasDefaultFullTextLanguage("de-DE");
+        b.Property(x => x.ContentsEnglish).EnableFullTextSearch("en-US");
+        b.HasIndex(x => x.ContentsEnglish).IsFullTextIndex();
+        b.Property(x => x.ContentsGerman).EnableFullTextSearch();
+        b.HasIndex(x => x.ContentsGerman).IsFullTextIndex();
+        b.Property(x => x.TagsGerman).EnableFullTextSearch();
+        b.HasIndex(x => x.TagsGerman).IsFullTextIndex();
+    });
+}
 ```
 
 ## Querying
@@ -94,41 +94,33 @@ var mostInteresting = await context.Blogs.OrderBy(x => EF.Functions.FullTextScor
 
 ## Hybrid search
 
-Full-text search can be used with vector search in the same query (i.e. hybrid search), by combining results of `FullTextScore` and `VectorDistance` functions. It can be done using the [`RRF`](/azure/cosmos-db/nosql/query/rrf) (Reciprocal Rank Fusion) function, which EF Core also provides inside `EF.Functions`:
+Full-text search can be used with [vector search](xref:core/providers/cosmos/vector-search) in the same query; this is sometimes known as "hybrid search", and involves combining the scoring results from multiple searches via the [RRF (Reciprocal Rank Fusion) function](/azure/cosmos-db/nosql/query/rrf). Once you have your vector and full-text search configuration properly set up, you can perform hybrid search as follows:
 
 ```c#
-public class Blog
-{
-    ...
-
-    public float[] Vector { get; set; }
-    public string Contents { get; set; }
-}
-
-public class BloggingContext
-{
-    ...
-
-    protected override void OnModelCreating(ModelBuilder modelBuilder)
-    {
-        modelBuilder.Entity<Blog>(b =>
-        {
-            b.Property(x => x.Contents).EnableFullTextSearch();
-            b.HasIndex(x => x.Contents).IsFullTextIndex();
-
-            b.Property(x => x.Vector).IsVectorProperty(DistanceFunction.Cosine, dimensions: 1536);
-            b.HasIndex(x => x.Vector).IsVectorIndex(VectorIndexType.Flat);
-        });
-    }
-}
-
 float[] myVector = /* generate vector data from text, image, etc. */
-var hybrid = await context.Blogs.OrderBy(x => EF.Functions.Rrf(
+var hybrid = await context.Blogs
+    .OrderBy(x => EF.Functions.Rrf(
         EF.Functions.FullTextScore(x.Contents, "database"), 
         EF.Functions.VectorDistance(x.Vector, myVector)))
     .Take(10)
     .ToListAsync();
 ```
 
+The RRF function also allows assigning different weights to each search function, allowing e.g. the vector search to have great weight in the overall results:
+
+```c#
+float[] myVector = /* generate vector data from text, image, etc. */
+var hybrid = await context.Blogs
+    .OrderBy(x => EF.Functions.Rrf(
+        new[]
+        {
+            EF.Functions.FullTextScore(x.Contents, "database"), 
+            EF.Functions.VectorDistance(x.Vector, myVector)
+        },
+        weights: new[] { 1, 2 }))
+    .Take(10)
+    .ToListAsync();
+```
+
 > [!TIP]
-> You can combine more than two scoring functions inside `Rrf` call, as well as using only `FullTextScore`, or only `VectorDistance`.
+> You can combine more than two scoring functions inside `Rrf` call, as well as using only `FullTextScore`, or only `VectorDistance` invocations.
