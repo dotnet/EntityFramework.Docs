@@ -95,7 +95,10 @@
         "ef6/**/**.md": "https://github.com/dotnet/ef6/issues/new"
       },
       "ms.technology": {
-      }      
+      },
+      "ms.update-cycle": {
+        "**/**.{md,yml}": "3650-days"
+      }           
     },
     "dest": "_site",
     "template": [
