@@ -365,9 +365,7 @@ A library that provides seamless auditing capabilities for Entity Framework Core
 
 ### PhenX.EntityFrameworkCore.BulkInsert
 
-A high-performance bulk insert extension for Entity Framework Core. Supports SQL Server, PostgreSQL, SQLite, MySQL and Oracle.
-
-Its main purpose is to provide a fast way to perform simple bulk inserts in Entity Framework Core applications. For EF Core 8-9.
+A high-performance bulk insert extension for Entity Framework Core. Supports SQL Server, PostgreSQL, SQLite, MySQL and Oracle. For EF Core: 8-9.
 
 [Website](https://phenx.github.io/PhenX.EntityFrameworkCore.BulkInsert/) | [GitHub repository](https://github.com/PhenX/PhenX.EntityFrameworkCore.BulkInsert) 
 
