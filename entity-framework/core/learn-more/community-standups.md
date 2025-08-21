@@ -16,7 +16,8 @@ The .NET Data Community Standups are live-streamed monthly (roughly) on Wednesda
 
 | Date         | Area                  | Title                                                                                    |
 |--------------|-----------------------|------------------------------------------------------------------------------------------|
-| Jul 17, 2025 | Couchbase             | [Couchbase has an EF Core provider](#Jul17_2025)      |
+| Aug 21, 2025 | ORMs                  | [Learning about jOOQ with Lukas Eder](#Aug21_2025)                                       |
+| Jul 17, 2025 | Couchbase             | [Couchbase has an EF Core provider](#Jul17_2025)                                         |
 | Jun 19, 2025 | Vector databases      | [Microsoft.Extensions.VectorData - Access Vector databases in AI apps](#Jun19_2025)      |
 | May 14, 2025 | Azure SQL             | [Azure SQL vector search with Davide Mauri](#May14_2025)                                 |
 | Apr 24, 2025 | EF Core               | [Jiri and Shay talk about EF Core testing and Maurycy corrects them](#Apr24_2025)        |
@@ -105,6 +106,22 @@ The .NET Data Community Standups are live-streamed monthly (roughly) on Wednesda
 | May 6, 2020  | Welcome!              | [Introducing the EF Core Community Standup](#one)                                        |
 
 ## 2025
+
+<a name="Aug21_2025"></a>
+
+### Aug 21: [Learning about jOOQ with Lukas Eder](https://www.youtube.com/live/EbFqlYPvAE4?si=O2ifWoBfxNSS5zL9)
+
+Join us for another community standup where we welcome Lukas Eder, author of jOOQ, to show us what it can do, and what inspiration we can get for EF from it.
+
+Featuring:
+
+- [Lukas Eder](https://blog.jooq.org/author/lukaseder/) (Special guest)
+- [Jiri Cincura](https://www.tabsoverspaces.com/) (Host)
+- [Shay Rojansky](https://www.roji.org/) (Host)
+
+Links:
+
+- [jOOQ](https://www.jooq.org/)
 
 <a name="Jul17_2025"></a>
 
