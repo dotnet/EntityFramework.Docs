@@ -363,6 +363,14 @@ A library that provides seamless auditing capabilities for Entity Framework Core
 
 [GitHub repository](https://github.com/ShadyNagy/EntityFrameworkCore.AuditInterceptor) | [NuGet](https://www.nuget.org/packages/EntityFrameworkCore.AuditInterceptor)
 
+### PhenX.EntityFrameworkCore.BulkInsert
+
+A high-performance bulk insert extension for Entity Framework Core. Supports SQL Server, PostgreSQL, SQLite, MySQL and Oracle.
+
+Its main purpose is to provide a fast way to perform simple bulk inserts in Entity Framework Core applications. For EF Core 8-9.
+
+[Website](https://phenx.github.io/PhenX.EntityFrameworkCore.BulkInsert/) | [GitHub repository](https://github.com/PhenX/PhenX.EntityFrameworkCore.BulkInsert) 
+
 ## API Integrations
 
 These packages are designed to integrate directly with EF Core to expose various APIs.
