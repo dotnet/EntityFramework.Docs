@@ -118,6 +118,9 @@ WHERE JSON_VALUE([b].[Details], '$.Viewers' RETURNING int) > 3
 
 Note that if your EF application already uses JSON via `nvarchar` columns, these columns will be automatically changed to `json` with the first migration. You can opt out of this by manually setting the column type to `nvarchar(max)`, or configuring a compatibility level lower than 170.
 
+> [!NOTE]
+> For 10.0.0 rc1, support for the new JSON data type has been temporarily disabled for Azure SQL Database, due to lacking support. These issues are expected to be resolved by the time EF 10.0 is released, and the JSON data type will become the default until then.
+
 <a name="default-constraint-names"></a>
 
 ### Custom default constraint names
