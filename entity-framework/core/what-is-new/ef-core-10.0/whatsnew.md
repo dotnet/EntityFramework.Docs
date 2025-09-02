@@ -273,6 +273,53 @@ var query = context.Students
 
 See [#12793](https://github.com/dotnet/efcore/issues/12793) and [#35367](https://github.com/dotnet/efcore/issues/35367) for more details.
 
+### More consistent ordering for split queries
+
+Split queries can be essential to avoid performance issues associated with JOINs, such as the so-called "cartesian explosion" effect (see [Single vs. Split Queries](xref:core/querying/single-split-queries) to learn more). However, since split queries loads related data in separate SQL queries, consistency issues can arise, possibly leading to non-deterministic, hard-to-detect data corruption.
+
+For example, consider the following query:
+
+```C#
+var blogs = await context.Blogs
+    .AsSplitQuery()
+    .Include(b => b.Posts)
+    .OrderBy(b => b.Name)
+    .Take(2)
+    .ToListAsync();
+```
+
+Prior to EF10, the following two SQL queries were generated:
+
+```sql
+SELECT TOP(@__p_0) [b].[Id], [b].[Name]
+FROM [Blogs] AS [b]
+ORDER BY [b].[Name], [b].[Id]
+
+SELECT [p].[Id], [p].[BlogId], [p].[Title], [b0].[Id]
+FROM (
+    SELECT TOP(@__p_0) [b].[Id], [b].[Name]
+    FROM [Blogs] AS [b]
+    ORDER BY [b].[Name]
+) AS [b0]
+INNER JOIN [Post] AS [p] ON [b0].[Id] = [p].[BlogId]
+ORDER BY [b0].[Name], [b0].[Id]
+```
+
+Note that the first query (the one reading Blogs) is integrated as a subquery within the second (the one reading Posts). However, the ordering within the subquery omits the `Id` column, leading to possible incorrect data being returned.
+
+EF10 fixes this by ensuring that the ordering is consistent across the queries:
+
+```sql
+SELECT [p].[Id], [p].[BlogId], [p].[Title], [b0].[Id]
+FROM (
+    SELECT TOP(@p) [b].[Id], [b].[Name]
+    FROM [Blogs] AS [b]
+    ORDER BY [b].[Name], [b].[Id]
+) AS [b0]
+INNER JOIN [Post] AS [p] ON [b0].[Id] = [p].[BlogId]
+ORDER BY [b0].[Name], [b0].[Id]
+```
+
 <a name="other-query-improvements"></a>
 
 ### Other query improvements
