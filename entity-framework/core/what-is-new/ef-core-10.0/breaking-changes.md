@@ -76,6 +76,8 @@ CREATE TABLE [Blogs] (
 );
 ```
 
+Although the new JSON data type is the recommended way to store JSON data in SQL Server going forward, there may be some behavioral differences when transitioning from `nvarchar(max)`, and some specific querying forms may not be supported. For example, SQL Server does not support the DISTINCT operator over JSON arrays, and queries attempting to do so will fail.
+
 Note that if you have an existing table and are using <xref:Microsoft.EntityFrameworkCore.SqlServerDbContextOptionsExtensions.UseAzureSql*>, upgrading to EF 10 will cause a migration to be generated which alters all existing `nvarchar(max)` JSON columns to `json`. This alter operation is supported and should get applied seamlessly and without any issues, but is a non-trivial change to your database.
 
 > [!NOTE]
@@ -87,16 +89,18 @@ The new JSON data type introduced by SQL Server is a superior, 1st-class way to 
 
 #### Mitigations
 
-If you do not wish to transition to the new JSON data type right away, you can configure EF with a compatibility level lower than 170:
+If you are targeting Azure SQL Databasse and do not wish to transition to the new JSON data type right away, you can configure EF with a compatibility level lower than 170:
 
 ```c#
 protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 {
-     optionsBuilder.UseSqlServer("<connection string>", o => o.UseCompatibilityLevel(160));
+    optionsBuilder.UseAzureSql("<connection string>", o => o.UseCompatibilityLevel(160));
 }
 ```
 
-As an alternative, you can explicitly set the column type for your properties to be `nvarchar(max)`:
+If you're targeting on-premises SQL Server, the default compatibility level with `UseSqlServer` is currently 150 (SQL Server 2019), so the JSON data type is not used.
+
+As an alternative, you can explicitly set the column type on specific properties to be `nvarchar(max)`:
 
 ```c#
 public class Blog
@@ -109,6 +113,7 @@ protected override void OnModelCreating(ModelBuilder modelBuilder)
 {
     modelBuilder.Entity<Blog>().PrimitiveCollection(b => b.Tags).HasColumnType("nvarchar(max)");
     modelBuilder.Entity<Blog>().OwnsMany(b => b.Posts, b => b.ToJson().HasColumnType("nvarchar(max)"));
+    modelBuilder.Entity<Blog>().ComplexProperty(e => e.Posts, b => b.ToJson());
 }
 ```
 
