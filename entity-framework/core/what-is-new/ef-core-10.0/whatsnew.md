@@ -224,24 +224,6 @@ In previous versions of EF Core, evolving the model when using Azure Cosmos DB w
 
 In EF 10 we improved this experience - EF will now materialize a default value for a required property, if no data is present for it in the document, rather than throw.
 
-<a name="named-query-filters"></a>
-
-## Named query filters
-
-EF's [global query filters](xref:core/querying/filters) feature has long enabled users to configuring filters to entity types which apply to all queries by default. This has simplified implementing common patterns and scenarios such as soft deletion, multitenancy and others. However, up to now EF has only supported a single query filter per entity type, making it difficult to have multiple filters and selectively disabling only some of them in specific queries.
-
-EF 10 introduces *named query filters*, which allow attaching names to query filter and managing each one separately:
-
-[!code-csharp[Main](../../../../samples/core/Querying/QueryFilters/NamedFilters.cs#FilterConfiguration)]
-
-This notably allows disabling only certain filters in a specific LINQ query:
-
-[!code-csharp[Main](../../../../samples/core/Querying/QueryFilters/NamedFilters.cs#DisableSoftDeletionFilter)]
-
-For more information on named query filters, [see the documentation](xref:core/querying/filters).
-
-This feature was contributed by [@bittola](https://github.com/bittola).
-
 <a name="linq-and-sql-translation"></a>
 
 ## LINQ and SQL translation
@@ -403,6 +385,72 @@ ORDER BY [b0].[Name], [b0].[Id]
 - Optimize use of `Count` operation on `ICollection<T>` ([#35381](https://github.com/dotnet/efcore/pull/35381), contributed by [@ChrisJollyAU](https://github.com/ChrisJollyAU)).
 - Optimize `MIN`/`MAX` over `DISTINCT` ([#34699](https://github.com/dotnet/efcore/pull/34699), contributed by [@ranma42](https://github.com/ranma42)).
 - Simplify parameter names (e.g. from `@__city_0` to `@city`) ([#35200](https://github.com/dotnet/efcore/pull/35200)).
+
+<a name="execute-update-json"></a>
+
+## ExecuteUpdate support for relational JSON columns
+
+> [!NOTE]
+> ExecuteUpdate support for JSON requires mapping your types as complex types, and does not work when you types are mapped as owned entities.
+
+Although EF has support JSON columns for some time and allows updating them via `SaveChanges`, `ExecuteUpdate` lacked support for them. EF10 now allows referencing JSON columns and properties within them in `ExecuteUpdate`, allowing efficient bulk updating of document-modeled data within relational databases.
+
+For example, given the following model, mapping the `BlogDetails` type to a complex JSON column in the database:
+
+```c#
+public class Blog
+{
+    public int Id { get; set; }
+
+    public BlogDetails Details { get; set; }
+}
+
+public class BlogDetails
+{
+    public string Title { get; set; }
+    public int Views { get; set; }
+}
+
+protected override void OnModelCreating(ModelBuilder modelBuilder)
+{
+    modelBuilder.Entity<Blog>().ComplexProperty(b => b.Details, bd => bd.ToJson());
+}
+```
+
+You can now use `ExecuteUpdate` as usual, referencing properties within `BlogDetails`:
+
+```c#
+await context.Blogs.ExecuteUpdateAsync(s =>
+    s.SetProperty(b => b.Details.Views, b => b.Details.Views + 1));
+```
+
+This generates the following for SQL Server 2025, using the efficient, new `modify` function to increment the JSON property `Views` by one:
+
+```sql
+UPDATE [b]
+SET [Details].modify('$.Views', JSON_VALUE([b].[Details], '$.Views' RETURNING int) + 1)
+FROM [Blogs] AS [b]
+```
+
+Older versions of SQL Server are also supported, where the JSON data is stored in an `nvarchar(max)` column rather than the new JSON data type support. For support with other databases, consult the documentation for your EF provider.
+
+<a name="named-query-filters"></a>
+
+## Named query filters
+
+EF's [global query filters](xref:core/querying/filters) feature has long enabled users to configuring filters to entity types which apply to all queries by default. This has simplified implementing common patterns and scenarios such as soft deletion, multitenancy and others. However, up to now EF has only supported a single query filter per entity type, making it difficult to have multiple filters and selectively disabling only some of them in specific queries.
+
+EF 10 introduces *named query filters*, which allow attaching names to query filter and managing each one separately:
+
+[!code-csharp[Main](../../../../samples/core/Querying/QueryFilters/NamedFilters.cs#FilterConfiguration)]
+
+This notably allows disabling only certain filters in a specific LINQ query:
+
+[!code-csharp[Main](../../../../samples/core/Querying/QueryFilters/NamedFilters.cs#DisableSoftDeletionFilter)]
+
+For more information on named query filters, [see the documentation](xref:core/querying/filters).
+
+This feature was contributed by [@bittola](https://github.com/bittola).
 
 ## ExecuteUpdateAsync now accepts a regular, non-expression lambda
 
