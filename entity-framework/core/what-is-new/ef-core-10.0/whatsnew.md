@@ -291,9 +291,19 @@ FROM [Blogs] AS [b]
 WHERE [b].[Id] IN (@ids1, @ids2, @ids3)
 ```
 
-This allows the collection values to change without resulting in different SQLs - solving the plan cache problem - but at the same time provides the query planner with information on the collection cardinality. Since different cardinalities still cause different SQLs to be generated, the final version of EF 10 will include a "bucketization" feature, where e.g. 10 parameters are sent even when the user only specifies 8, to reduce the SQL variations and optimize the query cache.
+This allows the collection values to change without resulting in different SQLs - solving the plan cache problem - but at the same time provides the query planner with information on the collection cardinality.
 
-Unfortunately, parameterized collections are a case where EF simply cannot always make the right choice: selecting between multiple parameters (the new default), a single JSON array parameter or multiple inlined constants can require knowledge about the data in your database, and different choices may work better for different queries. As a result, EF exposes full control to the user to control the translation strategy, both at the global configuration level:
+Since different cardinalities still cause different SQLs to be generated, EF also "pads" parameter list. For example, if your `ids` list contains 8 values, EF generates SQL with 10 parameters:
+
+```sql
+SELECT [b].[Id], [b].[Name]
+FROM [Blogs] AS [b]
+WHERE [b].[Id] IN (@ids1, @ids2, @ids3, @ids4, @ids5, @ids6, @ids7, @ids8, @ids9, @ids10)
+```
+
+The last two parameters `@ids9` and `@ids10` are added by EF to reduce the number of SQLs generated, and contain the same value as `@ids8`, so that the query returns the same result.
+
+Unfortunately, parameterized collections are a case where EF simply cannot always make the right choice: selecting between multiple parameters (the new default), a single JSON array parameter (with e.g. SQL Server `OPENJSON`) or multiple inlined constants can require knowledge about the data in your database, and different choices may work better for different queries. As a result, EF exposes full control to the user to control the translation strategy, both at the global configuration level:
 
 ```c#
 protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
