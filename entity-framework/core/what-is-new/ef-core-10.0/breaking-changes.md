@@ -89,7 +89,7 @@ The new JSON data type introduced by SQL Server is a superior, 1st-class way to 
 
 #### Mitigations
 
-If you are targeting Azure SQL Databasse and do not wish to transition to the new JSON data type right away, you can configure EF with a compatibility level lower than 170:
+If you are targeting Azure SQL Database and do not wish to transition to the new JSON data type right away, you can configure EF with a compatibility level lower than 170:
 
 ```c#
 protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
