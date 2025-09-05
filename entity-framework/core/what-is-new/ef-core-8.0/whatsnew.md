@@ -2357,7 +2357,7 @@ modelBuilder.Entity<Course>()
 
 With this configuration, EF will exclude sending the value to the database when it is set to `Level.Beginner`, and instead `Level.Intermediate` is assigned by the database. This isn't what was intended!
 
-The problem would not have occurred if the the enum been defined with the "unknown" or "unspecified" value being the database default:
+The problem would not have occurred if the enum been defined with the "unknown" or "unspecified" value being the database default:
 
 ```csharp
 public enum Level
