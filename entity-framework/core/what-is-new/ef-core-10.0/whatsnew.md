@@ -17,9 +17,11 @@ EF10 is available as a preview. See [.NET 10 release notes](https://github.com/d
 
 EF10 requires the .NET 10 SDK to build and requires the .NET 10 runtime to run. EF10 will not run on earlier .NET versions, and will not run on .NET Framework.
 
-<a name="cosmos"></a>
+<a name="sql-server"></a>
 
 ## Azure SQL and SQL Server
+
+<a name="sql-server-vector-search"></a>
 
 ### Vector search support
 
@@ -62,6 +64,8 @@ var topSimilarBlogs = context.Blogs
 ```
 
 For more information on vector search, [see the documentation](xref:core/providers/sql-server/vector-search).
+
+<a name="sql-server-json-type"></a>
 
 ### JSON type support
 
@@ -148,6 +152,8 @@ protected override void OnModelCreating(ModelBuilder modelBuilder)
 > [!NOTE]
 > If you have existing migrations, the next migration you add will rename every single default constraint in your model.
 
+<a name="cosmos"></a>
+
 ## Azure Cosmos DB for NoSQL
 
 <a name="full-text-search-support"></a>
@@ -223,6 +229,117 @@ For more information on Cosmos vector search, [see the documentation](xref:core/
 In previous versions of EF Core, evolving the model when using Azure Cosmos DB was quite painful. Specifically, when adding a new required property to the entity, EF would no longer be able to materialize that entity. The reason was that EF expected a value for the new property (since it was required), but the document created before the change didn't contain those values. The workaround was to mark the property as optional first, manually add default values for the property, and only then change it to required.
 
 In EF 10 we improved this experience - EF will now materialize a default value for a required property, if no data is present for it in the document, rather than throw.
+
+<a name="complex-types"></a>
+
+## Complex types
+
+Complex types are used to model types which are contained within your entity types and have no identity of their own; while entity types are (usually) mapped to a database table, complex types can be mapped to columns in their container table ("table splitting"), or to a single JSON column. Complex types introduce document modeling techniques, which can bring substantial performance benefits as traditional JOINs are avoided, and can make your database modeling much simpler and more natural.
+
+### Table splitting
+
+For example, the following maps a customer's addresses as complex types:
+
+```c#
+modelBuilder.Entity<Customer>(b =>
+{
+    b.ComplexProperty(c => c.ShippingAddress);
+    b.ComplexProperty(c => c.BillingAddress);
+});
+```
+
+On relational database, this causes the addresses to be mapped to additional columns in the main `Customers` table:
+
+```sql
+CREATE TABLE [Customers] (
+    [Id] int NOT NULL IDENTITY,
+    [Name] nvarchar(max) NOT NULL,
+    [BillingAddress_City] nvarchar(max) NOT NULL,
+    [BillingAddress_PostalCode] nvarchar(max) NOT NULL,
+    [BillingAddress_Street] nvarchar(max) NOT NULL,
+    [BillingAddress_StreetNumber] int NOT NULL,
+    [ShippingAddress_City] nvarchar(max) NOT NULL,
+    [ShippingAddress_PostalCode] nvarchar(max) NOT NULL,
+    [ShippingAddress_Street] nvarchar(max) NOT NULL,
+    [ShippingAddress_StreetNumber] int NOT NULL,
+    CONSTRAINT [PK_Customers] PRIMARY KEY ([Id])
+);
+```
+
+Note the difference with the default, traditional relational behavior of mapping the addresses to a separate table and using a foreign key to represent the customer/address relationship.
+
+While the above was already possible since EF 8, EF 10 adds support for **optional** types:
+
+```c#
+public class Customer
+{
+    ...
+
+    public Address ShippingAddress { get; set; }
+    public Address? BillingAddress { get; set; }
+}
+```
+
+Note that optional complex types currently require at least one required property to be defined on the complex type.
+
+### JSON
+
+EF 10 now allows mapping complex types to JSON:
+
+```c#
+modelBuilder.Entity<Customer>(b =>
+{
+    b.ComplexProperty(c => c.ShippingAddress, c => c.ToJson());
+    b.ComplexProperty(c => c.BillingAddress, c => c.ToJson());
+});
+```
+
+This causes EF to map each Address to a single JSON column in the customer table. When using the new SQL Server 2025 JSON column ([see above](#sql-server-json-type)), this causes the following table to be created:
+
+```sql
+CREATE TABLE [Customers] (
+    [Id] int NOT NULL IDENTITY,
+    [Name] nvarchar(max) NOT NULL,
+    [ShippingAddress] json NOT NULL,
+    [BillingAddress] json NOT NULL NULL,
+    CONSTRAINT [PK_Customers] PRIMARY KEY ([Id])
+);
+```
+
+Unlike table splitting, JSON mapping allows collections within the mapped type. You can query and update properties inside your JSON documents just like any other non-JSON property, and perform efficient bulk updating on them via `ExecuteUpdateAsync` ([see release note](#execute-update-json)).
+
+### Struct support
+
+Complex types also supports mapping .NET structs instead of classes:
+
+```c#
+public struct Address
+{
+    public required string Street { get; set; }
+    public required string City { get; set; }
+    public required string ZipCode { get; set; }
+}
+```
+
+This aligns well with complex types not having an identity of their own, and only being found within entity types which have an identity. However, collections of structs currently aren't currently supported.
+
+### Complex and owned entity types
+
+Both table splitting and JSON mapping have been supported before EF 10 via owned entity modeling. However, this modeling created quite a few issues stemming from the fact that owned entity types are entity types, and therefore still operate with reference semantics and an identity behind the scenes.
+
+For example, trying to assign a customer's billing address to be the same as their shipping address fails with owned entity types, since the same entity type can't be referenced more than once:
+
+```c#
+var customer = await context.Customers.SingleAsync(c => c.Id == someId);
+customer.BillingAddress = customer.ShippingAddress;
+await context.SaveChangesAsync(); // ERROR
+```
+
+In contrast, since complex types have value semantics, assigning them simply copies their properties over, as expected. For the same reasons, bulk assignment of owned entity types is not supported, whereas complex types fully support `ExecuteUpdateAsync` in EF 10 ([see release note](#execute-update-json)).
+
+Similarly, comparing a customer's shipping and billing addresses in LINQ queries does not work as expected, since entity types are compared by their identities; complex types, on the other hand, are compared by their contents, producing the expected result.
+
+These issues - as well as various others - make complex types the better choice for modeling JSON and table splitting, and users already using owned entity types for these are advised to switch to complex types.
 
 <a name="linq-and-sql-translation"></a>
 
