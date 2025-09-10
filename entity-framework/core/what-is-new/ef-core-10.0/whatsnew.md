@@ -390,7 +390,11 @@ ORDER BY [b0].[Name], [b0].[Id]
 #### Bug fixes and optimizations
 
 - Fix Microsoft.Data.Sqlite behavior around `DateTime`, `DateTimeOffset` and UTC, [see breaking change notes](xref:core/what-is-new/ef-core-10.0/breaking-changes#DateTimeOffset-read) ([#36195](https://github.com/dotnet/efcore/issues/36195)).
-- Fix translation of `DefaultIfEmpty` in various scenarios ([#19095](https://github.com/dotnet/efcore/issues/19095), [#33343](https://github.com/dotnet/efcore/issues/33343), [#36208](https://github.com/dotnet/efcore/issues/36208)).
+- Fix translation of `DefaultIfEmpty` in various scenarios:
+  - [DefaultIfEmpty applied on child collection wipes the parent info in query result](https://github.com/dotnet/efcore/issues/19095)
+  - [Logic for lifting DefaultIfEmpty out of SelectMany (to LEFT JOIN/OUTER APPLY) is incorrect](https://github.com/dotnet/efcore/issues/33343)
+  - [NavigationExpandingExpressionVisitor moves Select() behind DefaultIfEmpty()](https://github.com/dotnet/efcore/issues/36208)
+  - [EF Core 9 no longer applies COALESCE in SQL translation for DefaultIfEmpty() which causing an InvalidOperationException](https://github.com/dotnet/efcore/issues/35950)
 - Optimize multiple consecutive `LIMIT`s ([#35384](https://github.com/dotnet/efcore/pull/35384), contributed by [@ranma42](https://github.com/ranma42)).
 - Optimize use of `Count` operation on `ICollection<T>` ([#35381](https://github.com/dotnet/efcore/pull/35381), contributed by [@ChrisJollyAU](https://github.com/ChrisJollyAU)).
 - Optimize `MIN`/`MAX` over `DISTINCT` ([#34699](https://github.com/dotnet/efcore/pull/34699), contributed by [@ranma42](https://github.com/ranma42)).
