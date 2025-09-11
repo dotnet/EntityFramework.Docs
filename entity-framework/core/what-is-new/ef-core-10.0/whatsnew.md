@@ -321,7 +321,7 @@ public struct Address
 }
 ```
 
-This aligns well with complex types not having an identity of their own, and only being found within entity types which have an identity. However, collections of structs currently aren't currently supported.
+This aligns well with complex types not having an identity of their own, and only being found within entity types which have an identity. However, collections of structs aren't currently supported.
 
 ### Complex and owned entity types
 
