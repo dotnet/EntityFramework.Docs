@@ -2,7 +2,7 @@
 title: DbContext Lifetime, Configuration, and Initialization - EF Core
 description: Patterns for creating and managing DbContext instances with or without dependency injection
 author: SamMonoRT
-ms.date: 11/07/2020
+ms.date: 09/30/2025
 uid: core/dbcontext-configuration/index
 ---
 
@@ -309,6 +309,8 @@ The following table contains examples of common methods called on `DbContextOpti
 | <xref:Microsoft.EntityFrameworkCore.DbContextOptionsBuilder.EnableDetailedErrors*>       | More detailed query errors (at the expense of performance)  | [Logging, Events, and Diagnostics](xref:core/logging-events-diagnostics/index)
 | <xref:Microsoft.EntityFrameworkCore.DbContextOptionsBuilder.ConfigureWarnings*>          | Ignore or throw for warnings and other events               | [Logging, Events, and Diagnostics](xref:core/logging-events-diagnostics/index)
 | <xref:Microsoft.EntityFrameworkCore.DbContextOptionsBuilder.AddInterceptors*>            | Registers EF Core interceptors                              | [Logging, Events, and Diagnostics](xref:core/logging-events-diagnostics/index)
+| <xref:Microsoft.EntityFrameworkCore.DbContextOptionsBuilder.EnableServiceProviderCaching*> | Controls caching of the internal service provider          | [Service Provider Caching](xref:core/testing/advanced-topics#service-provider-caching)
+| <xref:Microsoft.EntityFrameworkCore.DbContextOptionsBuilder.UseMemoryCache*>             | Configures the memory cache used by EF Core                | [Memory Cache Integration](xref:core/performance/advanced-performance-topics#memory-cache-integration)
 | <xref:Microsoft.EntityFrameworkCore.ProxiesExtensions.UseLazyLoadingProxies*>            | Use dynamic proxies for lazy-loading                        | [Lazy Loading](xref:core/querying/related-data/lazy)
 | <xref:Microsoft.EntityFrameworkCore.ProxiesExtensions.UseChangeTrackingProxies*>         | Use dynamic proxies for change-tracking                     | Coming soon...
 
