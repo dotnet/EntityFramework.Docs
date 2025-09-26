@@ -34,3 +34,7 @@ Install-Package Microsoft.EntityFrameworkCore.Sqlite
 ## Limitations
 
 See [SQLite Limitations](xref:core/providers/sqlite/limitations) for some important limitations of the SQLite provider.
+
+## Additional Resources
+
+* [SQLite Value Generation](xref:core/providers/sqlite/value-generation) - Information about SQLite AUTOINCREMENT and value generation patterns.
