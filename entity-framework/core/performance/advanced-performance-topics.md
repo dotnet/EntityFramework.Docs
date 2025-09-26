@@ -295,12 +295,61 @@ Compiled models have some limitations:
 
 * [Global query filters are not supported](https://github.com/dotnet/efcore/issues/24897).
 * [Lazy loading and change-tracking proxies are not supported](https://github.com/dotnet/efcore/issues/24902).
+* [Value converters that reference private methods are not supported](#value-converters-private-methods). Make referenced methods public or internal instead.
 * [The model must be manually synchronized by regenerating it any time the model definition or configuration change](https://github.com/dotnet/efcore/issues/24894).
 * Custom IModelCacheKeyFactory implementations are not supported. However, you can compile multiple models and load the appropriate one as needed.
 
 Because of these limitations, you should only use compiled models if your EF Core startup time is too slow. Compiling small models is typically not worth it.
 
 If supporting any of these features is critical to your success, then please vote for the appropriate issues linked above.
+
+<a name="value-converters-private-methods"></a>
+
+#### Value converters with private methods
+
+When using [value converters](xref:core/modeling/value-conversions) with compiled models, ensure that any methods referenced by the converter are accessible (public or internal, not private). For example, this value converter will cause compilation errors when used with compiled models:
+
+```c#
+public sealed class BooleanToCharConverter : ValueConverter<bool, char>
+{
+    public BooleanToCharConverter()
+        : base(v => ConvertToChar(v), v => ConvertToBoolean(v)) // References private methods
+    {
+    }
+
+    private static char ConvertToChar(bool value) // This will cause compilation errors
+    {
+        return value ? 'Y' : 'N';
+    }
+
+    private static bool ConvertToBoolean(char value) // This will cause compilation errors
+    {
+        return value == 'Y';
+    }
+}
+```
+
+Instead, make the methods public or internal:
+
+```c#
+public sealed class BooleanToCharConverter : ValueConverter<bool, char>
+{
+    public BooleanToCharConverter()
+        : base(v => ConvertToChar(v), v => ConvertToBoolean(v))
+    {
+    }
+
+    public static char ConvertToChar(bool value) // Now accessible
+    {
+        return value ? 'Y' : 'N';
+    }
+
+    public static bool ConvertToBoolean(char value) // Now accessible
+    {
+        return value == 'Y';
+    }
+}
+```
 
 ## Reducing runtime overhead
 

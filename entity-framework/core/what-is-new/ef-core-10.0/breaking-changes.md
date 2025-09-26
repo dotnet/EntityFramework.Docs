@@ -24,6 +24,8 @@ This page documents API and behavior changes that have the potential to break ex
 |:--------------------------------------------------------------------------------------------------------------- | -----------|
 | [SQL Server json data type used by default on Azure SQL and compatibility level 170](#sqlserver-json-data-type) | Low        |
 | [ExecuteUpdateAsync now accepts a regular, non-expression lambda](#ExecuteUpdateAsync-lambda)                   | Low        |
+| [Compiled models now throw exception for value converters with private methods](#compiled-model-private-methods) | Low        |
+| [Complex types are now recommended over owned entity types for JSON and table splitting](#complex-types-recommendation) | Low        |
 
 ## Low-impact changes
 
@@ -177,6 +179,141 @@ await context.Blogs.ExecuteUpdateAsync(s =>
     }
 });
 ```
+
+<a name="compiled-model-private-methods"></a>
+
+### Compiled models now throw exception for value converters with private methods
+
+[Tracking Issue #35033](https://github.com/dotnet/efcore/issues/35033)
+
+#### Old behavior
+
+Previously, when using value converters that referenced private methods with compiled models (using `dotnet ef dbcontext optimize`), EF would generate code that attempted to call these private methods, resulting in compilation errors at build time. For example:
+
+```c#
+public sealed class BooleanToCharConverter : ValueConverter<bool, char>
+{
+    public static readonly BooleanToCharConverter Default = new();
+
+    public BooleanToCharConverter()
+        : base(v => ConvertToChar(v), v => ConvertToBoolean(v))
+    {
+    }
+
+    private static char ConvertToChar(bool value) // Private method
+    {
+        return value ? 'Y' : 'N';
+    }
+
+    private static bool ConvertToBoolean(char value) // Private method
+    {
+        return value == 'Y';
+    }
+}
+```
+
+Running `dotnet ef dbcontext optimize` would generate code that attempted to reference these private methods, causing CS0122 compilation errors.
+
+#### New behavior
+
+Starting with EF Core 10.0, EF will throw an exception during the `dotnet ef dbcontext optimize` command when it detects value converters that reference private methods, preventing the generation of invalid code.
+
+#### Why
+
+This change prevents the generation of code that would fail to compile, providing a clearer error message about the root cause of the issue.
+
+#### Mitigations
+
+Make the methods referenced by value converters public or internal instead of private:
+
+```c#
+public sealed class BooleanToCharConverter : ValueConverter<bool, char>
+{
+    public static readonly BooleanToCharConverter Default = new();
+
+    public BooleanToCharConverter()
+        : base(v => ConvertToChar(v), v => ConvertToBoolean(v))
+    {
+    }
+
+    public static char ConvertToChar(bool value) // Now public
+    {
+        return value ? 'Y' : 'N';
+    }
+
+    public static bool ConvertToBoolean(char value) // Now public
+    {
+        return value == 'Y';
+    }
+}
+```
+
+<a name="complex-types-recommendation"></a>
+
+### Complex types are now recommended over owned entity types for JSON and table splitting
+
+[Tracking Issue #4970](https://github.com/dotnet/EntityFramework.Docs/issues/4970)
+
+#### Old behavior
+
+Previously, EF Core applications commonly used owned entity types for JSON mapping and table splitting scenarios:
+
+```c#
+modelBuilder.Entity<Customer>().OwnsOne(c => c.Address, a => a.ToJson());
+```
+
+#### New behavior
+
+Starting with EF Core 10.0, complex types are now the recommended approach for JSON mapping and table splitting, as they provide better semantics and behavior for value-like objects:
+
+```c#
+modelBuilder.Entity<Customer>().ComplexProperty(c => c.Address, c => c.ToJson());
+```
+
+#### Why
+
+Owned entity types create issues because they still have entity identity semantics behind the scenes, leading to problems such as:
+
+- Cannot assign the same owned entity instance to multiple properties (e.g., `customer.BillingAddress = customer.ShippingAddress`)
+- Identity-based comparisons in LINQ queries don't work as expected for value objects
+- `ExecuteUpdateAsync` operations are not supported with owned entities in JSON
+
+Complex types solve these issues by providing true value semantics without hidden identity, making them more suitable for modeling value objects like addresses, coordinates, etc.
+
+#### Mitigations
+
+Migrate owned entity types used for JSON mapping and table splitting to complex types:
+
+**Before (owned entities):**
+```c#
+modelBuilder.Entity<Customer>(b =>
+{
+    b.OwnsOne(c => c.ShippingAddress, a => a.ToJson());
+    b.OwnsOne(c => c.BillingAddress, a => a.ToJson());
+});
+```
+
+**After (complex types):**
+```c#
+modelBuilder.Entity<Customer>(b =>
+{
+    b.ComplexProperty(c => c.ShippingAddress, c => c.ToJson());
+    b.ComplexProperty(c => c.BillingAddress, c => c.ToJson());
+});
+```
+
+For table splitting without JSON:
+```c#
+modelBuilder.Entity<Customer>(b =>
+{
+    b.ComplexProperty(c => c.ShippingAddress);
+    b.ComplexProperty(c => c.BillingAddress);
+});
+```
+
+Note that complex types have some limitations compared to owned entities:
+- Collections of complex types are not yet supported for table splitting
+- Complex types cannot be navigated to from other entities (no foreign key relationships)
 
 <a name="MDS-breaking-changes"></a>
 
