@@ -90,6 +90,86 @@ The final result is an `ApplicationDbContext` instance created for each request 
 
 Read further in this article to learn more about configuration options. See [Dependency injection in ASP.NET Core](/aspnet/core/fundamentals/dependency-injection) for more information.
 
+## Multiple AddDbContext calls and configuration precedence
+
+Starting with EF Core 8.0, when multiple `AddDbContext` calls are made with the same context type, the **last call takes precedence** over earlier calls. This change was made to provide consistent configuration behavior and allow for better configuration override scenarios.
+
+### Basic usage with multiple AddDbContext calls
+
+When you register the same `DbContext` type multiple times, the final registration will be used:
+
+<!--
+        var services = new ServiceCollection();
+
+        // First configuration - will be overridden in EF Core 8.0
+        services.AddDbContext<BlogContext>(options =>
+            options.UseInMemoryDatabase("FirstDatabase"));
+
+        // Second configuration - this takes precedence (EF Core 8.0 behavior)
+        services.AddDbContext<BlogContext>(options =>
+            options.UseInMemoryDatabase("SecondDatabase")
+                   .EnableSensitiveDataLogging());
+
+        var serviceProvider = services.BuildServiceProvider();
+-->
+[!code-csharp[MultipleAddDbContextCalls](../../../samples/core/Miscellaneous/ConfiguringDbContext/ConfigureDbContextSample/Program.cs?name=MultipleAddDbContextCalls)]
+
+### Configuration precedence scenarios
+
+This change is particularly useful in scenarios where:
+
+- Libraries provide default `DbContext` configuration
+- Applications need to override library defaults
+- Different modules or components need to modify the same context configuration
+
+For example, a library might provide a default configuration:
+
+```csharp
+// Library's default configuration
+services.AddDbContext<ApplicationDbContext>(options => 
+    options.UseSqlServer(defaultConnectionString));
+```
+
+And the application can then override it:
+
+```csharp
+// Application's override - this will be used in EF Core 8.0
+services.AddDbContext<ApplicationDbContext>(options => 
+    options.UseSqlite(customConnectionString)
+           .EnableSensitiveDataLogging());
+```
+
+> [!IMPORTANT]
+> **Breaking change in EF Core 8.0**: In EF Core 7.0 and earlier, the first `AddDbContext` call would take precedence. Starting with EF Core 8.0, the last call takes precedence. See [breaking changes in EF Core 8.0](xref:core/what-is-new/ef-core-8.0/breaking-changes#AddDbContext) for more information and migration guidance.
+
+### Alternative approaches for conditional configuration
+
+If you need conditional configuration based on runtime conditions, consider using a factory pattern or options configuration:
+
+<!--
+        var services = new ServiceCollection();
+        
+        // Mock environment and configuration services
+        var isDevelopment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == "Development";
+        
+        services.AddDbContext<BlogContext>((serviceProvider, options) =>
+        {
+            if (isDevelopment)
+            {
+                options.UseInMemoryDatabase("DevelopmentDatabase")
+                       .EnableSensitiveDataLogging()
+                       .EnableDetailedErrors();
+            }
+            else
+            {
+                options.UseInMemoryDatabase("ProductionDatabase");
+            }
+        });
+
+        var serviceProvider = services.BuildServiceProvider();
+-->
+[!code-csharp[ConditionalConfiguration](../../../samples/core/Miscellaneous/ConfiguringDbContext/ConfigureDbContextSample/Program.cs?name=ConditionalConfiguration)]
+
 <!-- See also [Using Dependency Injection](TODO) for advanced dependency injection configuration with EF Core. -->
 
 ## Basic DbContext initialization with 'new'

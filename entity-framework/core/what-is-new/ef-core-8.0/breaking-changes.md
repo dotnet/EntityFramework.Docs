@@ -627,19 +627,37 @@ protected override void OnModelCreating(ModelBuilder modelBuilder)
 
 #### Old behavior
 
-Previously, when multiple calls to `AddDbContext`, `AddDbContextPool`, `AddDbContextFactory` or `AddPooledDbContextFactor` were made with the same context type but conflicting configuration, the first one won.
+Previously, when multiple calls to `AddDbContext`, `AddDbContextPool`, `AddDbContextFactory` or `AddPooledDbContextFactory` were made with the same context type but conflicting configuration, the first one won.
+
+For example:
+
+```csharp
+services.AddDbContext<BlogContext>(options => options.UseSqlServer(connectionString1));
+services.AddDbContext<BlogContext>(options => options.UseSqlite(connectionString2)); // This was ignored
+
+// The context would use SQL Server (connectionString1)
+```
 
 #### New behavior
 
-Starting with EF Core 8.0, the configuration from the last call one will take precedence.
+Starting with EF Core 8.0, the configuration from the last call will take precedence.
+
+Using the same example:
+
+```csharp
+services.AddDbContext<BlogContext>(options => options.UseSqlServer(connectionString1)); // This is now ignored
+services.AddDbContext<BlogContext>(options => options.UseSqlite(connectionString2));
+
+// The context will now use SQLite (connectionString2)
+```
 
 #### Why
 
-This was changed to be consistent with the new method `ConfigureDbContext` that can be used to add configuration either before or after the `Add*` methods.
+This was changed to be consistent with the new method `ConfigureDbContext` that can be used to add configuration either before or after the `Add*` methods. With the new `ConfigureDbContext` method, the last configuration call should take precedence to allow for proper configuration override scenarios.
 
 #### Mitigations
 
-Reverse the order of `Add*` calls.
+Reverse the order of `Add*` calls if you were depending on the previous behavior.
 
 <a name="attributeConventionBase"></a>
 
