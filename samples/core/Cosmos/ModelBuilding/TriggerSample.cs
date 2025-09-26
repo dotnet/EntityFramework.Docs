@@ -51,14 +51,14 @@ public class TriggerContext : DbContext
             entity.HasPartitionKey(p => p.Category);
             
             #region TriggerConfiguration
-            // Configure pre-trigger for create operations (requires EF Core 10.0+ and .NET 10)
-            // entity.HasTrigger("PreInsertTrigger", TriggerType.Pre, TriggerOperation.Create);
+            // Configure pre-trigger for create operations
+            entity.HasTrigger("PreInsertTrigger", TriggerType.Pre, TriggerOperation.Create);
             
-            // Configure post-trigger for delete operations (requires EF Core 10.0+ and .NET 10)
-            // entity.HasTrigger("PostDeleteTrigger", TriggerType.Post, TriggerOperation.Delete);
+            // Configure post-trigger for delete operations
+            entity.HasTrigger("PostDeleteTrigger", TriggerType.Post, TriggerOperation.Delete);
             
-            // Configure trigger for replace operations (requires EF Core 10.0+ and .NET 10)
-            // entity.HasTrigger("UpdateTrigger", TriggerType.Pre, TriggerOperation.Replace);
+            // Configure trigger for replace operations
+            entity.HasTrigger("UpdateTrigger", TriggerType.Pre, TriggerOperation.Replace);
             #endregion
         });
     }
