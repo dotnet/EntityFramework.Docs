@@ -262,11 +262,11 @@ modelBuilder.Entity<Customer>(b =>
 
 #### Old behavior
 
-Previously, properties on nested complex types were mapped to columns using just the declaring type name. For example, `EntityType.Owned.Complex.Property` was mapped to column `Complex_Property`.
+Previously, properties on nested complex types were mapped to columns using just the declaring type name. For example, `EntityType.Complex.NestedComplex.Property` was mapped to column `NestedComplex_Property`.
 
 #### New behavior
 
-Starting with EF Core 10.0, properties on nested complex types use the full path to the property as part of the column name. For example, `EntityType.Owned.Complex.Property` is now mapped to column `Owned_Complex_Property`.
+Starting with EF Core 10.0, properties on nested complex types use the full path to the property as part of the column name. For example, `EntityType.Complex.NestedComplex.Property` is now mapped to column `Complex_NestedComplex_Property`.
 
 #### Why
 
@@ -278,10 +278,10 @@ If you need to maintain the old column names, configure them explicitly:
 
 ```c#
 modelBuilder.Entity<EntityType>()
-    .ComplexProperty(e => e.Owned)
-    .ComplexProperty(o => o.Complex)
+    .ComplexProperty(e => e.Complex)
+    .ComplexProperty(o => o.NestedComplex)
     .Property(c => c.Property)
-    .HasColumnName("Complex_Property");
+    .HasColumnName("NestedComplex_Property");
 ```
 
 <a name="discriminator-convention-signature"></a>
