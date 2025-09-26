@@ -25,7 +25,9 @@ This page documents API and behavior changes that have the potential to break ex
 | [SQL Server json data type used by default on Azure SQL and compatibility level 170](#sqlserver-json-data-type) | Low        |
 | [ExecuteUpdateAsync now accepts a regular, non-expression lambda](#ExecuteUpdateAsync-lambda)                   | Low        |
 | [Compiled models now throw exception for value converters with private methods](#compiled-model-private-methods) | Low        |
-| [Complex types are now recommended over owned entity types for JSON and table splitting](#complex-types-recommendation) | Low        |
+| [Complex type column names are now uniquified](#complex-type-column-uniquification)                           | Low        |
+| [IDiscriminatorPropertySetConvention signature changed](#discriminator-convention-signature)                  | Low        |
+| [Nested complex type properties use full path in column names](#nested-complex-type-column-names)             | Low        |
 
 ## Low-impact changes
 
@@ -188,7 +190,7 @@ await context.Blogs.ExecuteUpdateAsync(s =>
 
 #### Old behavior
 
-Previously, when using value converters that referenced private methods with compiled models (using `dotnet ef dbcontext optimize`), EF would generate code that attempted to call these private methods, resulting in compilation errors at build time. For example:
+Previously, when using value converters with compiled models (using `dotnet ef dbcontext optimize`), EF would reference the converter type and everything worked correctly.
 
 ```c#
 public sealed class BooleanToCharConverter : ValueConverter<bool, char>
@@ -216,11 +218,11 @@ Running `dotnet ef dbcontext optimize` would generate code that attempted to ref
 
 #### New behavior
 
-Starting with EF Core 10.0, EF will throw an exception during the `dotnet ef dbcontext optimize` command when it detects value converters that reference private methods, preventing the generation of invalid code.
+Starting with EF Core 10.0, EF generates code that directly references the conversion methods themselves. If these methods are private, compilation will fail.
 
 #### Why
 
-This change prevents the generation of code that would fail to compile, providing a clearer error message about the root cause of the issue.
+This change improves performance by generating more direct code, but requires that conversion methods be accessible to the generated code.
 
 #### Mitigations
 
@@ -248,72 +250,101 @@ public sealed class BooleanToCharConverter : ValueConverter<bool, char>
 }
 ```
 
-<a name="complex-types-recommendation"></a>
+<a name="complex-type-column-uniquification"></a>
 
-### Complex types are now recommended over owned entity types for JSON and table splitting
+### Complex type column names are now uniquified
 
 [Tracking Issue #4970](https://github.com/dotnet/EntityFramework.Docs/issues/4970)
 
 #### Old behavior
 
-Previously, EF Core applications commonly used owned entity types for JSON mapping and table splitting scenarios:
-
-```c#
-modelBuilder.Entity<Customer>().OwnsOne(c => c.Address, a => a.ToJson());
-```
+Previously, when mapping complex types to table columns, if multiple complex type properties had the same column name, they would silently share the same column.
 
 #### New behavior
 
-Starting with EF Core 10.0, complex types are now the recommended approach for JSON mapping and table splitting, as they provide better semantics and behavior for value-like objects:
-
-```c#
-modelBuilder.Entity<Customer>().ComplexProperty(c => c.Address, c => c.ToJson());
-```
+Starting with EF Core 10.0, complex type column names are uniquified by appending a number at the end if another column with the same name exists on the table.
 
 #### Why
 
-Owned entity types create issues because they still have entity identity semantics behind the scenes, leading to problems such as:
-
-- Cannot assign the same owned entity instance to multiple properties (e.g., `customer.BillingAddress = customer.ShippingAddress`)
-- Identity-based comparisons in LINQ queries don't work as expected for value objects
-- `ExecuteUpdateAsync` operations are not supported with owned entities in JSON
-
-Complex types solve these issues by providing true value semantics without hidden identity, making them more suitable for modeling value objects like addresses, coordinates, etc.
+This prevents data corruption that could occur when multiple properties unintentionally mapped to the same column.
 
 #### Mitigations
 
-Migrate owned entity types used for JSON mapping and table splitting to complex types:
+If you need specific column names, configure them explicitly:
 
-**Before (owned entities):**
 ```c#
 modelBuilder.Entity<Customer>(b =>
 {
-    b.OwnsOne(c => c.ShippingAddress, a => a.ToJson());
-    b.OwnsOne(c => c.BillingAddress, a => a.ToJson());
+    b.ComplexProperty(c => c.ShippingAddress, p => p.Property(a => a.Street).HasColumnName("ShippingStreet"));
+    b.ComplexProperty(c => c.BillingAddress, p => p.Property(a => a.Street).HasColumnName("BillingStreet"));
 });
 ```
 
-**After (complex types):**
+<a name="discriminator-convention-signature"></a>
+
+### IDiscriminatorPropertySetConvention signature changed
+
+[Tracking Issue #4970](https://github.com/dotnet/EntityFramework.Docs/issues/4970)
+
+#### Old behavior
+
+Previously, `IDiscriminatorPropertySetConvention.ProcessDiscriminatorPropertySet` took `IConventionEntityTypeBuilder` as a parameter.
+
+#### New behavior
+
+Starting with EF Core 10.0, the method signature changed to take `IConventionTypeBaseBuilder` instead of `IConventionEntityTypeBuilder`.
+
+#### Why
+
+This change allows the convention to work with both entity types and complex types.
+
+#### Mitigations
+
+Update your custom convention implementations to use the new signature:
+
 ```c#
-modelBuilder.Entity<Customer>(b =>
-{
-    b.ComplexProperty(c => c.ShippingAddress, c => c.ToJson());
-    b.ComplexProperty(c => c.BillingAddress, c => c.ToJson());
-});
+public virtual void ProcessDiscriminatorPropertySet(
+    IConventionTypeBaseBuilder typeBaseBuilder, // Changed from IConventionEntityTypeBuilder
+    string name,
+    Type type,
+    MemberInfo memberInfo,
+    IConventionContext<IConventionProperty> context)
 ```
 
-For table splitting without JSON:
+<a name="nested-complex-type-column-names"></a>
+
+### Nested complex type properties use full path in column names
+
+[Tracking Issue #4947](https://github.com/dotnet/EntityFramework.Docs/issues/4947)
+
+#### Old behavior
+
+Previously, properties on nested complex types were mapped to columns using just the declaring type name. For example, `EntityType.Owned.Complex.Property` was mapped to column `Complex_Property`.
+
+#### New behavior
+
+Starting with EF Core 10.0, properties on nested complex types use the full path to the property as part of the column name. For example, `EntityType.Owned.Complex.Property` is now mapped to column `Owned_Complex_Property`.
+
+#### Why
+
+This provides better column name uniqueness and makes it clearer which property maps to which column.
+
+#### Mitigations
+
+If you need to maintain the old column names, configure them explicitly:
+
 ```c#
-modelBuilder.Entity<Customer>(b =>
+modelBuilder.Entity<EntityType>(b =>
 {
-    b.ComplexProperty(c => c.ShippingAddress);
-    b.ComplexProperty(c => c.BillingAddress);
+    b.ComplexProperty(e => e.Owned, owned =>
+    {
+        owned.ComplexProperty(o => o.Complex, complex =>
+        {
+            complex.Property(c => c.Property).HasColumnName("Complex_Property");
+        });
+    });
 });
 ```
-
-Note that complex types have some limitations compared to owned entities:
-- Collections of complex types are not yet supported for table splitting
-- Complex types cannot be navigated to from other entities (no foreign key relationships)
 
 <a name="MDS-breaking-changes"></a>
 

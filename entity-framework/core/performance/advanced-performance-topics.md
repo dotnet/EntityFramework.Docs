@@ -303,54 +303,6 @@ Because of these limitations, you should only use compiled models if your EF Cor
 
 If supporting any of these features is critical to your success, then please vote for the appropriate issues linked above.
 
-<a name="value-converters-private-methods"></a>
-
-#### Value converters with private methods
-
-When using [value converters](xref:core/modeling/value-conversions) with compiled models, ensure that any methods referenced by the converter are accessible (public or internal, not private). For example, this value converter will cause compilation errors when used with compiled models:
-
-```c#
-public sealed class BooleanToCharConverter : ValueConverter<bool, char>
-{
-    public BooleanToCharConverter()
-        : base(v => ConvertToChar(v), v => ConvertToBoolean(v)) // References private methods
-    {
-    }
-
-    private static char ConvertToChar(bool value) // This will cause compilation errors
-    {
-        return value ? 'Y' : 'N';
-    }
-
-    private static bool ConvertToBoolean(char value) // This will cause compilation errors
-    {
-        return value == 'Y';
-    }
-}
-```
-
-Instead, make the methods public or internal:
-
-```c#
-public sealed class BooleanToCharConverter : ValueConverter<bool, char>
-{
-    public BooleanToCharConverter()
-        : base(v => ConvertToChar(v), v => ConvertToBoolean(v))
-    {
-    }
-
-    public static char ConvertToChar(bool value) // Now accessible
-    {
-        return value ? 'Y' : 'N';
-    }
-
-    public static bool ConvertToBoolean(char value) // Now accessible
-    {
-        return value == 'Y';
-    }
-}
-```
-
 ## Reducing runtime overhead
 
 As with any layer, EF Core adds a bit of runtime overhead compared to coding directly against lower-level database APIs. This runtime overhead is unlikely to impact most real-world applications in a significant way; the other topics in this performance guide, such as query efficiency, index usage and minimizing roundtrips, are far more important. In addition, even for highly-optimized applications, network latency and database I/O will usually dominate any time spent inside EF Core itself. However, for high-performance, low-latency applications where every bit of perf is important, the following recommendations can be used to reduce EF Core overhead to a minimum:
