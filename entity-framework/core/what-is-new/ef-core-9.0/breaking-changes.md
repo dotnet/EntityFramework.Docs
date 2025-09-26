@@ -197,6 +197,11 @@ If your application depends on the previous behavior where the first registratio
    if (descriptor != null)
        services.Remove(descriptor);
    
+   // Also remove the configuration services (EF Core 9.0+)
+   var configurations = services.Where(d => d.ServiceType == typeof(IDbContextOptionsConfiguration<MyContext>)).ToList();
+   foreach (var config in configurations)
+       services.Remove(config);
+   
    // Add new registration  
    services.AddDbContext<MyContext>(options => 
        options.UseSqlServer("new-connection"));
@@ -224,6 +229,8 @@ If your application depends on the previous behavior where the first registratio
 Note that this change primarily affects scenarios where multiple database providers are configured for the same context, which could result in the error:
 
 > Services for database providers 'Microsoft.EntityFrameworkCore.SqlServer', 'Microsoft.EntityFrameworkCore.InMemory' have been registered in the service provider. Only a single database provider can be registered in a service provider.
+
+This error commonly occurs in ASP.NET Core integration testing scenarios where developers try to replace a production database with an in-memory database for testing. The recommended solution is to remove both the `DbContextOptions<T>` and `IDbContextOptionsConfiguration<T>` registrations before adding the test configuration, as shown in mitigation option 2 above.
 
 ## Medium-impact changes
 
