@@ -27,6 +27,7 @@ EF Core 9 targets .NET 8. This means that existing applications that target .NET
 |:----------------------------------------------------------------------------------------------------------|------------|
 | [Exception is thrown when applying migrations if there are pending model changes](#pending-model-changes) | High       |
 | [Exception is thrown when applying migrations in an explicit transaction](#migrations-transaction)        | High       |
+| [DbContext configuration is applied in registration order](#dbcontext-configuration-order)                | High       |
 | [`Microsoft.EntityFrameworkCore.Design` not found when using EF tools](#tools-design)                     | Medium     |
 | [`EF.Functions.Unhex()` now returns `byte[]?`](#unhex)                                                    | Low        |
 | [SqlFunctionExpression's nullability arguments' arity validated](#sqlfunctionexpression-nullability)      | Low        |
@@ -155,6 +156,74 @@ Otherwise, if your scenario requires an explicit transaction and you have other 
 ```csharp
 options.ConfigureWarnings(w => w.Ignore(RelationalEventId.MigrationsUserTransactionWarning))
 ```
+
+<a name="dbcontext-configuration-order"></a>
+
+### DbContext configuration is applied in registration order
+
+[Tracking Issue #32518](https://github.com/dotnet/efcore/pull/32518)
+
+#### Old behavior
+
+Previously, when multiple `AddDbContext`, `AddDbContextPool`, `AddDbContextFactory`, or `AddPooledDbContextFactory` calls were made for the same `DbContext` type, the first registration's configuration would be used and subsequent registrations would be ignored.
+
+#### New behavior
+
+Starting with EF Core 9.0, the configuration is applied in the order the registration methods are called. This means the last registration will overwrite conflicting configuration from earlier registrations.
+
+#### Why
+
+This change enables configuration composability, allowing you to build up a `DbContext` configuration from multiple sources. It also aligns the behavior with how other .NET dependency injection containers handle multiple registrations of the same service.
+
+#### Mitigations
+
+If your application depends on the previous behavior where the first registration wins, you have several options:
+
+1. **Reorder your registrations**: Place the registration with the configuration you want to use last:
+
+   ```csharp
+   services.AddDbContext<MyContext>(options => 
+       options.UseSqlServer("connection1")); // This will be ignored now
+   
+   services.AddDbContext<MyContext>(options => 
+       options.UseSqlServer("connection2")); // This will be used
+   ```
+
+2. **Remove previous registrations**: If you need to completely replace a registration, remove the previous ones:
+
+   ```csharp
+   // Remove existing DbContextOptions registration
+   var descriptor = services.SingleOrDefault(d => d.ServiceType == typeof(DbContextOptions<MyContext>));
+   if (descriptor != null)
+       services.Remove(descriptor);
+   
+   // Add new registration  
+   services.AddDbContext<MyContext>(options => 
+       options.UseSqlServer("new-connection"));
+   ```
+
+3. **Use conditional registration**: Check if the service is already registered before adding:
+
+   ```csharp
+   if (!services.Any(d => d.ServiceType == typeof(DbContextOptions<MyContext>)))
+   {
+       services.AddDbContext<MyContext>(options => 
+           options.UseSqlServer("connection"));
+   }
+   ```
+
+4. **Use the new `ConfigureDbContext` method**: This allows you to configure options without registering the context itself:
+
+   ```csharp
+   services.ConfigureDbContext<MyContext>(options => 
+       options.UseSqlServer("connection"));
+   
+   services.AddDbContext<MyContext>(); // Register the context without configuration
+   ```
+
+Note that this change primarily affects scenarios where multiple database providers are configured for the same context, which could result in the error:
+
+> Services for database providers 'Microsoft.EntityFrameworkCore.SqlServer', 'Microsoft.EntityFrameworkCore.InMemory' have been registered in the service provider. Only a single database provider can be registered in a service provider.
 
 ## Medium-impact changes
 
