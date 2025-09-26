@@ -325,6 +325,28 @@ Limitations:
 * Only dictionaries with string keys are supported.
 * Support for querying into primitive collections was added in EF Core 9.0.
 
+## Database triggers
+
+> [!NOTE]
+> Database trigger execution support was introduced in EF Core 9.0.
+
+Azure Cosmos DB supports pre- and post-triggers that run before or after database operations. EF Core can be configured to execute these triggers when performing save operations.
+
+> [!IMPORTANT]
+> Triggers are executed client-side by EF Core and are not enforced server-side by Azure Cosmos DB. This means triggers should not be used for security-related functionality such as authentication or auditing, as they can be bypassed by applications that access the database directly without using EF Core.
+
+To configure triggers on an entity type, use the <xref:Microsoft.EntityFrameworkCore.CosmosEntityTypeBuilderExtensions.HasTrigger*> method:
+
+[!code-csharp[TriggerConfiguration](../../../../samples/core/Cosmos/ModelBuilding/TriggerSample.cs?name=TriggerConfiguration)]
+
+The `HasTrigger` method requires:
+
+* **modelName**: The name of the trigger in Azure Cosmos DB
+* **triggerType**: Either `TriggerType.Pre` (executed before the operation) or `TriggerType.Post` (executed after the operation)
+* **triggerOperation**: The operation that should execute the trigger - `Create`, `Replace`, `Delete`, or `All`
+
+Before triggers can be executed, they must be created in Azure Cosmos DB using the Cosmos SDK or Azure portal. The trigger name configured in EF Core must match the trigger name in Azure Cosmos DB.
+
 ## Optimistic concurrency with eTags
 
 To configure an entity type to use [optimistic concurrency](xref:core/saving/concurrency) call <xref:Microsoft.EntityFrameworkCore.CosmosEntityTypeBuilderExtensions.UseETagConcurrency*>. This call will create an `_etag` property in [shadow state](xref:core/modeling/shadow-properties) and set it as the concurrency token.
