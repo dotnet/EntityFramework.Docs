@@ -653,7 +653,7 @@ services.AddDbContext<BlogContext>(options => options.UseSqlite(connectionString
 
 #### Why
 
-This was changed to be consistent with the new method `ConfigureDbContext` that can be used to add configuration either before or after the `Add*` methods. With the new `ConfigureDbContext` method, the last configuration call should take precedence to allow for proper configuration override scenarios.
+This was changed to provide consistent configuration behavior and support scenarios where multiple components need to configure the same `DbContext` type, with later configuration taking precedence over earlier ones.
 
 #### Mitigations
 

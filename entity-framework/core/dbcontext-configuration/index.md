@@ -94,6 +94,18 @@ Read further in this article to learn more about configuration options. See [Dep
 
 Starting with EF Core 8.0, when multiple `AddDbContext` calls are made with the same context type, the **last call takes precedence** over earlier calls. This change was made to provide consistent configuration behavior and allow for better configuration override scenarios.
 
+> [!IMPORTANT]
+> **Breaking change in EF Core 8.0**: In EF Core 7.0 and earlier, the first `AddDbContext` call would take precedence. Starting with EF Core 8.0, the last call takes precedence. See [breaking changes in EF Core 8.0](xref:core/what-is-new/ef-core-8.0/breaking-changes#AddDbContext) for more information and migration guidance.
+
+### When multiple AddDbContext calls occur
+
+Multiple `AddDbContext` calls for the same context type can happen in several scenarios:
+
+- **Library and application integration**: A library provides default configuration, and the application overrides it
+- **Modular applications**: Different modules or components configure the same context
+- **Environment-specific configuration**: Different configurations are applied based on conditions
+- **Testing scenarios**: Test-specific configurations override application defaults
+
 ### Basic usage with multiple AddDbContext calls
 
 When you register the same `DbContext` type multiple times, the final registration will be used:
@@ -138,9 +150,6 @@ services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlite(customConnectionString)
            .EnableSensitiveDataLogging());
 ```
-
-> [!IMPORTANT]
-> **Breaking change in EF Core 8.0**: In EF Core 7.0 and earlier, the first `AddDbContext` call would take precedence. Starting with EF Core 8.0, the last call takes precedence. See [breaking changes in EF Core 8.0](xref:core/what-is-new/ef-core-8.0/breaking-changes#AddDbContext) for more information and migration guidance.
 
 ### Alternative approaches for conditional configuration
 
