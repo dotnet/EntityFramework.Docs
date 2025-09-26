@@ -328,14 +328,14 @@ Limitations:
 ## Database triggers
 
 > [!NOTE]
-> Database trigger execution support was introduced in EF Core 9.0.
+> Database trigger execution support was introduced in EF Core 10.0.
 
 Azure Cosmos DB supports pre- and post-triggers that run before or after database operations. EF Core can be configured to execute these triggers when performing save operations.
 
 > [!IMPORTANT]
-> Triggers are executed client-side by EF Core and are not enforced server-side by Azure Cosmos DB. This means triggers should not be used for security-related functionality such as authentication or auditing, as they can be bypassed by applications that access the database directly without using EF Core.
+> Triggers are executed server-side by Azure Cosmos DB when EF Core performs operations, but they are not enforced - operations can be performed without running triggers if accessing the database directly. This means triggers should not be used for security-related functionality such as authentication or auditing, as they can be bypassed by applications that access the database directly without using EF Core.
 
-To configure triggers on an entity type, use the <xref:Microsoft.EntityFrameworkCore.CosmosEntityTypeBuilderExtensions.HasTrigger*> method:
+To configure triggers on an entity type, use the `HasTrigger` method:
 
 [!code-csharp[TriggerConfiguration](../../../../samples/core/Cosmos/ModelBuilding/TriggerSample.cs?name=TriggerConfiguration)]
 

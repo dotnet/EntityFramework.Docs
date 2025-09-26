@@ -1,18 +1,40 @@
 using Microsoft.Azure.Cosmos.Scripts;
 using Microsoft.EntityFrameworkCore;
+using System.Threading.Tasks;
 
 namespace Cosmos.ModelBuilding;
 
 public static class TriggerSample
 {
-    public static void ConfigureTriggers()
+    public static async Task ConfigureTriggers()
     {
         var contextOptions = new DbContextOptionsBuilder<TriggerContext>()
             .UseCosmos("https://localhost:8081", "account-key", "sample");
         
         using var context = new TriggerContext(contextOptions.Options);
         
-        // Triggers would be configured in OnModelCreating when the API is available
+        // Ensure database is created
+        await context.Database.EnsureCreatedAsync();
+        
+        // Create a new product - this will trigger the PreInsertTrigger
+        var product = new Product 
+        { 
+            Id = 1, 
+            Name = "Sample Product", 
+            Price = 19.99m, 
+            Category = "Electronics" 
+        };
+        
+        context.Products.Add(product);
+        await context.SaveChangesAsync();
+        
+        // Update the product - this will trigger the UpdateTrigger
+        product.Price = 24.99m;
+        await context.SaveChangesAsync();
+        
+        // Delete the product - this will trigger the PostDeleteTrigger
+        context.Products.Remove(product);
+        await context.SaveChangesAsync();
     }
 }
 
@@ -24,21 +46,21 @@ public class TriggerContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        #region TriggerConfiguration
         modelBuilder.Entity<Product>(entity =>
         {
             entity.HasPartitionKey(p => p.Category);
             
-            // Configure pre-trigger for create operations (EF Core 9+)
+            #region TriggerConfiguration
+            // Configure pre-trigger for create operations (requires EF Core 10.0+ and .NET 10)
             // entity.HasTrigger("PreInsertTrigger", TriggerType.Pre, TriggerOperation.Create);
             
-            // Configure post-trigger for delete operations (EF Core 9+)
+            // Configure post-trigger for delete operations (requires EF Core 10.0+ and .NET 10)
             // entity.HasTrigger("PostDeleteTrigger", TriggerType.Post, TriggerOperation.Delete);
             
-            // Configure trigger for replace operations (EF Core 9+)
+            // Configure trigger for replace operations (requires EF Core 10.0+ and .NET 10)
             // entity.HasTrigger("UpdateTrigger", TriggerType.Pre, TriggerOperation.Replace);
+            #endregion
         });
-        #endregion
     }
 }
 
