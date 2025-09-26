@@ -26,8 +26,8 @@ This page documents API and behavior changes that have the potential to break ex
 | [ExecuteUpdateAsync now accepts a regular, non-expression lambda](#ExecuteUpdateAsync-lambda)                   | Low        |
 | [Compiled models now throw exception for value converters with private methods](#compiled-model-private-methods) | Low        |
 | [Complex type column names are now uniquified](#complex-type-column-uniquification)                           | Low        |
-| [IDiscriminatorPropertySetConvention signature changed](#discriminator-convention-signature)                  | Low        |
 | [Nested complex type properties use full path in column names](#nested-complex-type-column-names)             | Low        |
+| [IDiscriminatorPropertySetConvention signature changed](#discriminator-convention-signature)                  | Low        |
 
 ## Low-impact changes
 
@@ -214,41 +214,17 @@ public sealed class BooleanToCharConverter : ValueConverter<bool, char>
 }
 ```
 
-Running `dotnet ef dbcontext optimize` would generate code that attempted to reference these private methods, causing CS0122 compilation errors.
-
 #### New behavior
 
 Starting with EF Core 10.0, EF generates code that directly references the conversion methods themselves. If these methods are private, compilation will fail.
 
 #### Why
 
-This change improves performance by generating more direct code, but requires that conversion methods be accessible to the generated code.
+This change was necessary to support NativeAOT.
 
 #### Mitigations
 
-Make the methods referenced by value converters public or internal instead of private:
-
-```c#
-public sealed class BooleanToCharConverter : ValueConverter<bool, char>
-{
-    public static readonly BooleanToCharConverter Default = new();
-
-    public BooleanToCharConverter()
-        : base(v => ConvertToChar(v), v => ConvertToBoolean(v))
-    {
-    }
-
-    public static char ConvertToChar(bool value) // Now public
-    {
-        return value ? 'Y' : 'N';
-    }
-
-    public static bool ConvertToBoolean(char value) // Now public
-    {
-        return value == 'Y';
-    }
-}
-```
+Make the methods referenced by value converters public or internal instead of private.
 
 <a name="complex-type-column-uniquification"></a>
 
@@ -258,7 +234,7 @@ public sealed class BooleanToCharConverter : ValueConverter<bool, char>
 
 #### Old behavior
 
-Previously, when mapping complex types to table columns, if multiple complex type properties had the same column name, they would silently share the same column.
+Previously, when mapping complex types to table columns, if multiple properties in different complex types had the same column name, they would silently share the same column.
 
 #### New behavior
 
@@ -266,25 +242,51 @@ Starting with EF Core 10.0, complex type column names are uniquified by appendin
 
 #### Why
 
-This prevents data corruption that could occur when multiple properties unintentionally mapped to the same column.
+This prevents data corruption that could occur when multiple properties are unintentionally mapped to the same column.
 
 #### Mitigations
 
-If you need specific column names, configure them explicitly:
+If you need multiple properties to share the same column, configure them explicitly:
 
 ```c#
 modelBuilder.Entity<Customer>(b =>
 {
-    b.ComplexProperty(c => c.ShippingAddress, p => p.Property(a => a.Street).HasColumnName("ShippingStreet"));
-    b.ComplexProperty(c => c.BillingAddress, p => p.Property(a => a.Street).HasColumnName("BillingStreet"));
+    b.ComplexProperty(c => c.ShippingAddress, p => p.Property(a => a.Street).HasColumnName("Street"));
+    b.ComplexProperty(c => c.BillingAddress, p => p.Property(a => a.Street).HasColumnName("Street"));
 });
+```
+
+<a name="nested-complex-type-column-names"></a>
+
+### Nested complex type properties use full path in column names
+
+#### Old behavior
+
+Previously, properties on nested complex types were mapped to columns using just the declaring type name. For example, `EntityType.Owned.Complex.Property` was mapped to column `Complex_Property`.
+
+#### New behavior
+
+Starting with EF Core 10.0, properties on nested complex types use the full path to the property as part of the column name. For example, `EntityType.Owned.Complex.Property` is now mapped to column `Owned_Complex_Property`.
+
+#### Why
+
+This provides better column name uniqueness and makes it clearer which property maps to which column.
+
+#### Mitigations
+
+If you need to maintain the old column names, configure them explicitly:
+
+```c#
+modelBuilder.Entity<EntityType>()
+    .ComplexProperty(e => e.Owned)
+    .ComplexProperty(o => o.Complex)
+    .Property(c => c.Property)
+    .HasColumnName("Complex_Property");
 ```
 
 <a name="discriminator-convention-signature"></a>
 
 ### IDiscriminatorPropertySetConvention signature changed
-
-[Tracking Issue #4970](https://github.com/dotnet/EntityFramework.Docs/issues/4970)
 
 #### Old behavior
 
@@ -309,41 +311,6 @@ public virtual void ProcessDiscriminatorPropertySet(
     Type type,
     MemberInfo memberInfo,
     IConventionContext<IConventionProperty> context)
-```
-
-<a name="nested-complex-type-column-names"></a>
-
-### Nested complex type properties use full path in column names
-
-[Tracking Issue #4947](https://github.com/dotnet/EntityFramework.Docs/issues/4947)
-
-#### Old behavior
-
-Previously, properties on nested complex types were mapped to columns using just the declaring type name. For example, `EntityType.Owned.Complex.Property` was mapped to column `Complex_Property`.
-
-#### New behavior
-
-Starting with EF Core 10.0, properties on nested complex types use the full path to the property as part of the column name. For example, `EntityType.Owned.Complex.Property` is now mapped to column `Owned_Complex_Property`.
-
-#### Why
-
-This provides better column name uniqueness and makes it clearer which property maps to which column.
-
-#### Mitigations
-
-If you need to maintain the old column names, configure them explicitly:
-
-```c#
-modelBuilder.Entity<EntityType>(b =>
-{
-    b.ComplexProperty(e => e.Owned, owned =>
-    {
-        owned.ComplexProperty(o => o.Complex, complex =>
-        {
-            complex.Property(c => c.Property).HasColumnName("Complex_Property");
-        });
-    });
-});
 ```
 
 <a name="MDS-breaking-changes"></a>

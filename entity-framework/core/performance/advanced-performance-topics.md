@@ -295,7 +295,7 @@ Compiled models have some limitations:
 
 * [Global query filters are not supported](https://github.com/dotnet/efcore/issues/24897).
 * [Lazy loading and change-tracking proxies are not supported](https://github.com/dotnet/efcore/issues/24902).
-* [Value converters that reference private methods are not supported](#value-converters-private-methods). Make referenced methods public or internal instead.
+* Value converters that reference private methods are not supported. Make referenced methods public or internal instead.
 * [The model must be manually synchronized by regenerating it any time the model definition or configuration change](https://github.com/dotnet/efcore/issues/24894).
 * Custom IModelCacheKeyFactory implementations are not supported. However, you can compile multiple models and load the appropriate one as needed.
 
