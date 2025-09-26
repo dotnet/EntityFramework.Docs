@@ -1,6 +1,7 @@
 ﻿using System.IO;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
+using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Migrations.Design;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -12,19 +13,24 @@ public class CustomTools
     {
         var projectDir = Directory.GetCurrentDirectory();
         var rootNamespace = "ConsoleApp1";
-        var outputDir = "Migraitons";
+        var outputDir = "Migrations";
 
         #region CustomTools
-        var db = new MyDbContext();
+        using var db = new MyDbContext();
 
         // Create design-time services
         var serviceCollection = new ServiceCollection();
+        
+        // Add the core design-time services
         serviceCollection.AddEntityFrameworkDesignTimeServices();
+        
+        // Add services from the DbContext
         serviceCollection.AddDbContextDesignTimeServices(db);
+
         var serviceProvider = serviceCollection.BuildServiceProvider();
 
         // Add a migration
-        var migrationsScaffolder = serviceProvider.GetService<IMigrationsScaffolder>();
+        var migrationsScaffolder = serviceProvider.GetRequiredService<IMigrationsScaffolder>();
         var migration = migrationsScaffolder.ScaffoldMigration(migrationName, rootNamespace);
         migrationsScaffolder.Save(projectDir, migration, outputDir);
         #endregion
@@ -33,4 +39,16 @@ public class CustomTools
 
 internal class MyDbContext : DbContext
 {
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    {
+        optionsBuilder.UseSqlServer("Server=(localdb)\\MSSQLLocalDB;Database=MyDatabase;Trusted_Connection=true;");
+    }
+
+    public DbSet<Blog> Blogs { get; set; }
+}
+
+internal class Blog
+{
+    public int Id { get; set; }
+    public string Title { get; set; }
 }
