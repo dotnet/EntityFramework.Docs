@@ -310,6 +310,7 @@ The following table contains examples of common methods called on `DbContextOpti
 | <xref:Microsoft.EntityFrameworkCore.DbContextOptionsBuilder.ConfigureWarnings*>          | Ignore or throw for warnings and other events               | [Logging, Events, and Diagnostics](xref:core/logging-events-diagnostics/index)
 | <xref:Microsoft.EntityFrameworkCore.DbContextOptionsBuilder.AddInterceptors*>            | Registers EF Core interceptors                              | [Logging, Events, and Diagnostics](xref:core/logging-events-diagnostics/index)
 | <xref:Microsoft.EntityFrameworkCore.DbContextOptionsBuilder.EnableServiceProviderCaching*> | Controls caching of the internal service provider          | [Service Provider Caching](#service-provider-caching)
+| <xref:Microsoft.EntityFrameworkCore.DbContextOptionsBuilder.UseMemoryCache*>             | Configures the memory cache used by EF Core                | [Memory Cache Integration](#memory-cache-integration)
 | <xref:Microsoft.EntityFrameworkCore.ProxiesExtensions.UseLazyLoadingProxies*>            | Use dynamic proxies for lazy-loading                        | [Lazy Loading](xref:core/querying/related-data/lazy)
 | <xref:Microsoft.EntityFrameworkCore.ProxiesExtensions.UseChangeTrackingProxies*>         | Use dynamic proxies for change-tracking                     | Coming soon...
 
@@ -451,8 +452,7 @@ The <xref:Microsoft.EntityFrameworkCore.DbContextOptionsBuilder.EnableServicePro
 - Lower memory overhead when multiple contexts share configurations
 
 **When to disable caching**: You might want to disable service provider caching (`false`) in these scenarios:
-- **Testing environments**: To ensure each test gets a fresh service provider
-- **Dynamic configurations**: When `DbContext` configurations change dynamically at runtime. This is especially true if configurations change dynamically
+- **Testing environments and dynamic configurations**: To ensure each test gets a fresh service provider, and when `DbContext` configurations change dynamically at runtime
 
 ```csharp
 public void ConfigureServices(IServiceCollection services)
@@ -464,7 +464,7 @@ public void ConfigureServices(IServiceCollection services)
 }
 ```
 
-### Memory Cache Integration
+## Memory Cache Integration
 
 EF Core integrates with ASP.NET Core's memory caching infrastructure through `IMemoryCache`. However, this is not used for the internal service provider caching described above.
 
