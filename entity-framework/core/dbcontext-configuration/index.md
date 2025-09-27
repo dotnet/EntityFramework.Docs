@@ -425,11 +425,9 @@ Any code that explicitly executes multiple threads in parallel should ensure tha
 
 Using dependency injection, this can be achieved by either registering the context as scoped, and creating scopes (using `IServiceScopeFactory`) for each thread, or by registering the `DbContext` as transient (using the overload of `AddDbContext` which takes a `ServiceLifetime` parameter).
 
-## Service Provider Caching
+## EnableServiceProviderCaching
 
 EF Core uses an internal service provider to manage services required for database operations, including query compilation, model building, and other core functionality. By default, EF Core caches these internal service providers to improve performance when multiple `DbContext` instances share the same configuration.
-
-### EnableServiceProviderCaching
 
 The <xref:Microsoft.EntityFrameworkCore.DbContextOptionsBuilder.EnableServiceProviderCaching*> method controls whether EF Core caches the internal service provider:
 
@@ -447,11 +445,13 @@ The <xref:Microsoft.EntityFrameworkCore.DbContextOptionsBuilder.EnableServicePro
 [!code-csharp[EnableServiceProviderCaching](../../../samples/core/Miscellaneous/CompiledModels/BlogsContext.cs?range=18-22&highlight=2)]
 
 **Default behavior**: Service provider caching is **enabled by default** (`true`). This means:
+
 - Service providers are cached and reused across `DbContext` instances with the same configuration
 - Better performance for applications that create many `DbContext` instances
 - Lower memory overhead when multiple contexts share configurations
 
 **When to disable caching**: You might want to disable service provider caching (`false`) in these scenarios:
+
 - **Testing environments and dynamic configurations**: To ensure each test gets a fresh service provider, and when `DbContext` configurations change dynamically at runtime
 
 ```csharp
