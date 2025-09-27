@@ -452,83 +452,34 @@ The <xref:Microsoft.EntityFrameworkCore.DbContextOptionsBuilder.EnableServicePro
 
 **When to disable caching**: You might want to disable service provider caching (`false`) in these scenarios:
 - **Testing environments**: To ensure each test gets a fresh service provider
-- **Compiled models**: When using [compiled models](xref:core/performance/advanced-performance-topics#compiled-models), caching may not provide benefits
-- **Dynamic configurations**: When `DbContext` configurations change dynamically at runtime
-- **Memory-sensitive applications**: When you want to minimize memory usage and don't mind the performance cost
-
-### Memory Cache Integration
-
-EF Core integrates with ASP.NET Core's memory caching infrastructure through `IMemoryCache`. This is separate from the internal service provider caching described above.
-
-#### EF Core 3.0+ Memory Cache Changes
-
-Starting with EF Core 3.0, there were important changes to how memory caching is handled:
-
-**AddDbContext and Memory Cache**: Prior to EF Core 3.0, calling `AddDbContext` or `AddDbContextPool` automatically registered `IMemoryCache` services. Starting with EF Core 3.0, these methods no longer automatically call `AddMemoryCache()`.
-
-**If your application needs `IMemoryCache`**, you must explicitly register it:
+- **Dynamic configurations**: When `DbContext` configurations change dynamically at runtime. This is especially true if configurations change dynamically
 
 ```csharp
 public void ConfigureServices(IServiceCollection services)
 {
-    services.AddMemoryCache(); // Explicit registration required in EF Core 3.0+
-    services.AddDbContext<ApplicationDbContext>(options =>
-        options.UseSqlServer(connectionString));
-}
-```
-
-**AddEntityFramework* Methods**: The `AddEntityFramework*` methods (like `AddEntityFrameworkSqlServer`) now register `IMemoryCache` with a size limit to prevent unbounded memory growth:
-
-```csharp
-public void ConfigureServices(IServiceCollection services)
-{
-    // This automatically registers IMemoryCache with size limits
-    services.AddEntityFrameworkSqlServer();
-    
-    // Or register your own IMemoryCache implementation beforehand
-    services.AddMemoryCache(options =>
-    {
-        options.SizeLimit = 1000; // Custom size limit
-    });
-    services.AddEntityFrameworkSqlServer();
-}
-```
-
-### Performance Considerations
-
-**Service Provider Caching Performance Impact**:
-- **Enabled (default)**: Faster `DbContext` creation, lower memory usage for multiple instances
-- **Disabled**: Slower `DbContext` creation, but more predictable memory usage
-
-**Memory Cache Performance Impact**:
-- EF Core uses `IMemoryCache` for various internal caching operations
-- Query plan caching relies on memory caching infrastructure
-- Without proper memory cache configuration, you may experience degraded performance
-
-### Best Practices
-
-1. **Keep service provider caching enabled** unless you have a specific reason to disable it
-2. **Explicitly register `IMemoryCache`** in EF Core 3.0+ applications that need it
-3. **Configure memory cache size limits** to prevent unbounded memory growth
-4. **Disable service provider caching in tests** to ensure isolation between test runs
-5. **Monitor memory usage** in applications with dynamic configurations
-
-### Example: Configuring Both Caching Options
-
-```csharp
-public void ConfigureServices(IServiceCollection services)
-{
-    // Configure memory cache with size limit
-    services.AddMemoryCache(options =>
-    {
-        options.SizeLimit = 1000;
-        options.CompactionPercentage = 0.25;
-    });
-
     services.AddDbContext<ApplicationDbContext>(options =>
         options
             .UseSqlServer(connectionString)
             .EnableServiceProviderCaching(true)); // Default, but shown for clarity
+}
+```
+
+### Memory Cache Integration
+
+EF Core integrates with ASP.NET Core's memory caching infrastructure through `IMemoryCache`. However, this is not used for the internal service provider caching described above.
+
+EF Core automatically configures `IMemoryCache` with a default size limit of 10240 for internal caching operations such as query compilation and model building. You should call `AddMemoryCache` if you need to change these defaults. For reference, a compiled query has a cache size of 10, while the built model has a cache size of 100.
+
+```csharp
+public void ConfigureServices(IServiceCollection services)
+{
+    services.AddMemoryCache(options =>
+    {
+        options.SizeLimit = 20480; // Custom size limit for EF Core caching
+    });
+    
+    services.AddDbContext<ApplicationDbContext>(options =>
+        options.UseSqlServer(connectionString));
 }
 ```
 
