@@ -450,7 +450,7 @@ The <xref:Microsoft.EntityFrameworkCore.DbContextOptionsBuilder.EnableServicePro
 - Better performance for applications that create many `DbContext` instances
 - Lower memory overhead when multiple contexts share configurations
 
-**When to disable caching**: You might want to disable service provider caching (`false`) for testing environments to ensure each test gets a fresh service provider, or when `DbContext` configurations change dynamically at runtime.
+**When to disable caching**: You might want to disable service provider caching (`false`) for testing environments to ensure each test gets a fresh service provider when `DbContext` configurations change test-to-test.
 
 ```csharp
 public void ConfigureServices(IServiceCollection services)
