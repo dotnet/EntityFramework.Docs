@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Sqlite.Metadata;
 
 namespace EFCore.Sqlite.ValueGeneration;
 
-internal class SqliteValueGenerationStrategyNoneContext : DbContext
+public class SqliteValueGenerationStrategyNoneContext : DbContext
 {
     public DbSet<Post> Posts { get; set; }
 

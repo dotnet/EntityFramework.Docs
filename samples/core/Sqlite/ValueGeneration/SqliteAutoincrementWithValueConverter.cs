@@ -11,7 +11,7 @@ public readonly struct BlogId
     public static implicit operator BlogId(int value) => new(value);
 }
 
-internal class SqliteAutoincrementWithValueConverterContext : DbContext
+public class SqliteAutoincrementWithValueConverterContext : DbContext
 {
     public DbSet<BlogPost> Blogs { get; set; }
 

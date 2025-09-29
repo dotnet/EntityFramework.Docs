@@ -636,6 +636,8 @@ Thanks to [@aradalvand](https://github.com/aradalvand) for proposing and pushing
 
 SQLite AUTOINCREMENT is now a first-class feature with full support through conventions and the Fluent API. Previously, properties with value converters couldn't configure AUTOINCREMENT and would cause false pending model change warnings.
 
+For more information, see [SQLite Value Generation](xref:core/providers/sqlite/value-generation).
+
 <a name="other-improvements"></a>
 
 ## Other improvements
