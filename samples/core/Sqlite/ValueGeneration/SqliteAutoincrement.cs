@@ -11,7 +11,7 @@ internal class SqliteAutoincrementContext : DbContext
     {
         modelBuilder.Entity<Blog>()
             .Property(b => b.Id)
-            .HasAnnotation("Sqlite:Autoincrement", true);
+            .UseAutoincrement();
     }
     #endregion
 

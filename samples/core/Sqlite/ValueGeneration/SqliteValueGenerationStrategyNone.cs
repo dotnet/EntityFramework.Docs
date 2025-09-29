@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Sqlite.Metadata;
 
 namespace EFCore.Sqlite.ValueGeneration;
 
@@ -11,7 +12,7 @@ internal class SqliteValueGenerationStrategyNoneContext : DbContext
     {
         modelBuilder.Entity<Post>()
             .Property(p => p.Id)
-            .HasAnnotation("Sqlite:ValueGenerationStrategy", "None");
+            .Metadata.SetValueGenerationStrategy(SqliteValueGenerationStrategy.None);
     }
     #endregion
 

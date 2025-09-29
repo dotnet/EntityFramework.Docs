@@ -21,7 +21,7 @@ internal class SqliteAutoincrementWithValueConverterContext : DbContext
         modelBuilder.Entity<BlogPost>()
             .Property(b => b.Id)
             .HasConversion<int>()
-            .HasAnnotation("Sqlite:Autoincrement", true);
+            .UseAutoincrement();
     }
     #endregion
 
