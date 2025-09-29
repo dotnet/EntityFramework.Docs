@@ -442,8 +442,8 @@
           href: core/providers/cosmos/vector-search.md
         - name: Full text search
           href: core/providers/cosmos/full-text-search.md
-        - name: Atomicity of SaveChanges
-          href: core/providers/cosmos/savechanges-atomicity.md
+        - name: Save data
+          href: core/providers/cosmos/saving.md
         - name: Azure Cosmos DB limitations
           href: core/providers/cosmos/limitations.md
         - name: End-to-end sample

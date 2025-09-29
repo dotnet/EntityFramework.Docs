@@ -1,11 +1,11 @@
 ---
-title: Azure Cosmos DB Provider - Atomicity of SaveChanges - EF Core
-description: Explains the atomicity of SaveChanges within the Entity Framework Core Azure Cosmos DB provider as compared to other providers
+title: Saving data - Azure Cosmos DB Provider - EF Core
+description: Explains saving data with the Azure Cosmos DB Provider as compared to other providers
 author: JoasE
 ms.date: 09/10/2025
-uid: core/providers/cosmos/savechanges-atomicity
+uid: core/providers/cosmos/saving
 ---
-# EF Core Azure Cosmos DB Provider Atomicity of SaveChanges
+# Saving data
 
 Azure Cosmos DB does not support transactions in the relational database sense. That is, there is no concept of a single atomic transaction spanning arbitrary operations across containers or partitions. This is a common limitation of document databases, where the focus is on scalability and availability rather than strict transactional semantics.
 
