@@ -15,32 +15,9 @@ By convention, numeric primary key columns that are configured to have their val
 
 ### Configuring AUTOINCREMENT
 
-By convention, integer primary keys are automatically configured with AUTOINCREMENT when they don't have an explicitly assigned value. However, you may need to explicitly configure a property to use SQLite AUTOINCREMENT when the property has a value conversion from a non-integer type, or when overriding conventions:
+By convention, integer primary keys are automatically configured with AUTOINCREMENT when they are not composite and don't have a foreign key on them. However, you may need to explicitly configure a property to use SQLite AUTOINCREMENT when the property has a value conversion from a non-integer type, or when overriding conventions:
 
 [!code-csharp[Main](../../../../samples/core/Sqlite/ValueGeneration/SqliteAutoincrementWithValueConverter.cs?name=SqliteAutoincrementWithValueConverter&highlight=6)]
-
-Starting with EF Core 10, you can also use the new Fluent API:
-
-```csharp
-protected override void OnModelCreating(ModelBuilder modelBuilder)
-{
-    modelBuilder.Entity<BlogPost>()
-        .Property(b => b.Id)
-        .HasConversion<int>()
-        .UseAutoincrement();
-}
-```
-
-This is equivalent to using the more general value generation API:
-
-```csharp
-protected override void OnModelCreating(ModelBuilder modelBuilder)
-{
-    modelBuilder.Entity<Blog>()
-        .Property(b => b.Id)
-        .ValueGeneratedOnAdd();
-}
-```
 
 ## Disabling AUTOINCREMENT for default SQLite value generation
 
