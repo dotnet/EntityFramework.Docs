@@ -32,10 +32,10 @@
     items:
     - name: Welcome!
       href: core/index.md
-    - name: "What's new in EF Core 9.0"
-      href: core/what-is-new/ef-core-9.0/whatsnew.md
-    - name: "Breaking changes in EF Core 9.0"
-      href: core/what-is-new/ef-core-9.0/breaking-changes.md
+    - name: "What's new in EF Core 10.0"
+      href: core/what-is-new/ef-core-10.0/whatsnew.md
+    - name: "Breaking changes in EF Core 10.0"
+      href: core/what-is-new/ef-core-10.0/breaking-changes.md
     - name: Getting started
       items:
       - name: EF Core Overview
@@ -61,7 +61,7 @@
         href: core/what-is-new/index.md
       - name: Release planning process
         href: core/what-is-new/release-planning.md
-      - name: EF Core 10.0
+      - name: EF Core 10.0 (RC)
         items:
           - name: "What's new?"
             href: core/what-is-new/ef-core-10.0/whatsnew.md
