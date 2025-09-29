@@ -628,6 +628,14 @@ await context.Blogs.ExecuteUpdateAsync(s =>
 
 Thanks to [@aradalvand](https://github.com/aradalvand) for proposing and pushing for this change (in [#32018](https://github.com/dotnet/efcore/issues/32018)).
 
+<a name="sqlite"></a>
+
+## SQLite
+
+### Improved AUTOINCREMENT support
+
+SQLite AUTOINCREMENT is now a first-class feature with full support through conventions and the Fluent API. Previously, properties with value converters couldn't configure AUTOINCREMENT and would cause false pending model change warnings.
+
 <a name="other-improvements"></a>
 
 ## Other improvements

@@ -15,20 +15,21 @@ By convention, numeric primary key columns that are configured to have their val
 
 ### Configuring AUTOINCREMENT
 
-Starting with EF Core 10, you can explicitly configure a property to use SQLite AUTOINCREMENT using the new Fluent API:
+By convention, integer primary keys are automatically configured with AUTOINCREMENT when they don't have an explicitly assigned value. However, you may need to explicitly configure a property to use SQLite AUTOINCREMENT when the property has a value conversion from a non-integer type, or when overriding conventions:
+
+[!code-csharp[Main](../../../../samples/core/Sqlite/ValueGeneration/SqliteAutoincrementWithValueConverter.cs?name=SqliteAutoincrementWithValueConverter&highlight=6)]
+
+Starting with EF Core 10, you can also use the new Fluent API:
 
 ```csharp
 protected override void OnModelCreating(ModelBuilder modelBuilder)
 {
-    modelBuilder.Entity<Blog>()
+    modelBuilder.Entity<BlogPost>()
         .Property(b => b.Id)
+        .HasConversion<int>()
         .UseAutoincrement();
 }
 ```
-
-You can also configure AUTOINCREMENT using the annotation API:
-
-[!code-csharp[Main](../../../../samples/core/Sqlite/ValueGeneration/SqliteAutoincrement.cs?name=SqliteAutoincrement&highlight=5)]
 
 This is equivalent to using the more general value generation API:
 
@@ -41,21 +42,22 @@ protected override void OnModelCreating(ModelBuilder modelBuilder)
 }
 ```
 
-By convention, integer primary keys are automatically configured with AUTOINCREMENT when they don't have an explicitly assigned value.
-
-### Working with value converters
-
-Starting with EF Core 10, SQLite AUTOINCREMENT works properly with value converters. Previously, properties with value converters weren't able to configure AUTOINCREMENT. For example:
-
-[!code-csharp[Main](../../../../samples/core/Sqlite/ValueGeneration/SqliteAutoincrementWithValueConverter.cs?name=SqliteAutoincrementWithValueConverter&highlight=6)]
-
-In earlier versions of EF Core, this scenario would not work correctly and migrations would keep regenerating the same AlterColumn operation even without model changes.
-
 ## Disabling AUTOINCREMENT for default SQLite value generation
 
 In some cases, you may want to disable AUTOINCREMENT and use SQLite's default value generation behavior instead. You can do this using the Metadata API:
 
 [!code-csharp[Main](../../../../samples/core/Sqlite/ValueGeneration/SqliteValueGenerationStrategyNone.cs?name=SqliteValueGenerationStrategyNone&highlight=5)]
+
+Starting with EF Core 10, you can also use the strongly-typed Metadata API:
+
+```csharp
+protected override void OnModelCreating(ModelBuilder modelBuilder)
+{
+    modelBuilder.Entity<Post>()
+        .Property(p => p.Id)
+        .Metadata.SetValueGenerationStrategy(SqliteValueGenerationStrategy.None);
+}
+```
 
 Alternatively, you can disable value generation entirely:
 
@@ -68,7 +70,7 @@ protected override void OnModelCreating(ModelBuilder modelBuilder)
 }
 ```
 
-This means that it's up to the application to supply a value for the property before saving to the database.
+This means that it's up to the application to supply a value for the property before saving to the database. Note that this still won't disable the default value generation server-side, so non-EF usages could still get a generated value. To completely disable value generation the user can change the column type from `INTEGER` to `INT`.
 
 ## Migration behavior
 
