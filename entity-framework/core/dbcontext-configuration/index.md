@@ -452,7 +452,7 @@ The <xref:Microsoft.EntityFrameworkCore.DbContextOptionsBuilder.EnableServicePro
 
 **When to disable caching**: You might want to disable service provider caching (`false`) in these scenarios:
 
-- **Testing environments and dynamic configurations**: To ensure each test gets a fresh service provider, and when `DbContext` configurations change dynamically at runtime
+**Testing environments and dynamic configurations**: To ensure each test gets a fresh service provider, when `DbContext` configurations change dynamically at runtime
 
 ```csharp
 public void ConfigureServices(IServiceCollection services)
