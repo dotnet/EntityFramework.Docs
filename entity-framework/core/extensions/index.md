@@ -52,12 +52,6 @@ Entity Framework Visual Editor is a Visual Studio extension that adds an O/RM de
 
 [Visual Studio Marketplace](https://marketplace.visualstudio.com/items?itemName=michaelsawczyn.EFDesigner2022)
 
-### IWAPI
-
-IWAPI (Instant Web API) is a scaffolding engine for .NET Core that can automate the generation of DbContext classes, entities, models and creates a working Web API from any SQL Server database.
-
-[Website](https://instantwebapi.com/)
-
 ### efmig
 
 efmig is a multi-platform GUI application that speeds up daily development when working with Entity Framework Core. It covers the most popular use cases such as migration code and script generation with simple, one-click interface. For EF Core: 2-8.
