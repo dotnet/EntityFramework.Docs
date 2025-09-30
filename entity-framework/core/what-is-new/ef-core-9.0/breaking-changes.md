@@ -29,6 +29,7 @@ EF Core 9 targets .NET 8. This means that existing applications that target .NET
 | [Exception is thrown when applying migrations in an explicit transaction](#migrations-transaction)        | High       |
 | [`Microsoft.EntityFrameworkCore.Design` not found when using EF tools](#tools-design)                     | Medium     |
 | [`EF.Functions.Unhex()` now returns `byte[]?`](#unhex)                                                    | Low        |
+| [Compiled models now reference value converter methods directly](#compiled-model-private-methods)         | Low        |
 | [SqlFunctionExpression's nullability arguments' arity validated](#sqlfunctionexpression-nullability)      | Low        |
 | [`ToString()` method now returns empty string for `null` instances](#nullable-tostring)                   | Low        |
 | [Shared framework dependencies were updated to 9.0.x](#shared-framework-dependencies)                     | Low        |
@@ -227,6 +228,41 @@ var binaryData = await context.Blogs.Select(b => EF.Functions.Unhex(b.HexString)
 ```
 
 Otherwise, add runtime checks for null on the return value of Unhex().
+
+<a name="compiled-model-private-methods"></a>
+
+### Compiled models now reference value converter methods directly
+
+[Tracking Issue #35033](https://github.com/dotnet/efcore/issues/35033)
+
+#### Old behavior
+
+Previously, when using value converters with compiled models (using `dotnet ef dbcontext optimize`), EF would reference the converter type and everything worked correctly.
+
+```c#
+public sealed class BooleanToCharConverter() : ValueConverter<bool, char>(v => ConvertToChar(v), v => ConvertToBoolean(v))
+{
+    public static readonly BooleanToCharConverter Default = new();
+
+    private static char ConvertToChar(bool value) // Private method
+        => value ? 'Y' : 'N';
+
+    private static bool ConvertToBoolean(char value) // Private method
+        => value == 'Y';
+}
+```
+
+#### New behavior
+
+Starting with EF Core 9.0, EF generates code that directly references the conversion methods themselves. If these methods are private, compilation will fail.
+
+#### Why
+
+This change was necessary to support NativeAOT.
+
+#### Mitigations
+
+Make the methods referenced by value converters public or internal instead of private.
 
 <a name="sqlfunctionexpression-nullability"></a>
 

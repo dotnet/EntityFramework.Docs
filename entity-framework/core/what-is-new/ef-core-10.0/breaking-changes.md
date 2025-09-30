@@ -24,7 +24,6 @@ This page documents API and behavior changes that have the potential to break ex
 |:--------------------------------------------------------------------------------------------------------------- | -----------|
 | [SQL Server json data type used by default on Azure SQL and compatibility level 170](#sqlserver-json-data-type) | Low        |
 | [ExecuteUpdateAsync now accepts a regular, non-expression lambda](#ExecuteUpdateAsync-lambda)                   | Low        |
-| [Compiled models now throw exception for value converters with private methods](#compiled-model-private-methods) | Low        |
 | [Complex type column names are now uniquified](#complex-type-column-uniquification)                             | Low        |
 | [Nested complex type properties use full path in column names](#nested-complex-type-column-names)               | Low        |
 | [IDiscriminatorPropertySetConvention signature changed](#discriminator-convention-signature)                    | Low        |
@@ -181,41 +180,6 @@ await context.Blogs.ExecuteUpdateAsync(s =>
     }
 });
 ```
-
-<a name="compiled-model-private-methods"></a>
-
-### Compiled models now throw exception for value converters with private methods
-
-[Tracking Issue #35033](https://github.com/dotnet/efcore/issues/35033)
-
-#### Old behavior
-
-Previously, when using value converters with compiled models (using `dotnet ef dbcontext optimize`), EF would reference the converter type and everything worked correctly.
-
-```c#
-public sealed class BooleanToCharConverter() : ValueConverter<bool, char>(v => ConvertToChar(v), v => ConvertToBoolean(v))
-{
-    public static readonly BooleanToCharConverter Default = new();
-
-    private static char ConvertToChar(bool value) // Private method
-        => value ? 'Y' : 'N';
-
-    private static bool ConvertToBoolean(char value) // Private method
-        => value == 'Y';
-}
-```
-
-#### New behavior
-
-Starting with EF Core 10.0, EF generates code that directly references the conversion methods themselves. If these methods are private, compilation will fail.
-
-#### Why
-
-This change was necessary to support NativeAOT.
-
-#### Mitigations
-
-Make the methods referenced by value converters public or internal instead of private.
 
 <a name="complex-type-column-uniquification"></a>
 
