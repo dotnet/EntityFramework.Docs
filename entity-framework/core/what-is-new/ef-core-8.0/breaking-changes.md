@@ -629,35 +629,48 @@ protected override void OnModelCreating(ModelBuilder modelBuilder)
 
 Previously, when multiple calls to `AddDbContext`, `AddDbContextPool`, `AddDbContextFactory` or `AddPooledDbContextFactory` were made with the same context type but conflicting configuration, the first one won.
 
-For example:
-
-```csharp
-services.AddDbContext<BlogContext>(options => options.UseSqlServer(connectionString1));
-services.AddDbContext<BlogContext>(options => options.UseSqlite(connectionString2)); // This was ignored
-
-// The context would use SQL Server (connectionString1)
-```
-
 #### New behavior
 
 Starting with EF Core 8.0, the configuration from the last call will take precedence.
 
-Using the same example:
-
-```csharp
-services.AddDbContext<BlogContext>(options => options.UseSqlServer(connectionString1)); // This is now ignored
-services.AddDbContext<BlogContext>(options => options.UseSqlite(connectionString2));
-
-// The context will now use SQLite (connectionString2)
-```
-
 #### Why
 
-This was changed to provide consistent configuration behavior and support scenarios where multiple components need to configure the same `DbContext` type, with later configuration taking precedence over earlier ones.
+This was changed to be consistent with the new method `ConfigureDbContext`, that enables configuration composability for non-conflicting configurations. See [DbContext configuration](xref:core/dbcontext-configuration/index#configuredbcontext) for more information.
 
 #### Mitigations
 
-Reverse the order of `Add*` calls if you were depending on the previous behavior.
+If your application depends on the previous behavior where the first registration wins, you have several options:
+
+1. **Reorder your registrations**: Place the registration with the configuration you want to use last:
+
+   ```csharp
+   services.AddDbContext<MyContext>(options => 
+       options.UseSqlServer("connection1")); // This will be ignored now
+   
+   services.AddDbContext<MyContext>(options => 
+       options.UseSqlServer("connection2")); // This will be used
+   ```
+
+2. **Remove previous registrations**: If possible, remove the conflicting registration.
+
+3. **Use conditional registration**: Check if the service is already registered before adding:
+
+   ```csharp
+   if (!services.Any(d => d.ServiceType == typeof(DbContextOptions<MyContext>)))
+   {
+       services.AddDbContext<MyContext>(options => 
+           options.UseSqlServer("connection"));
+   }
+   ```
+
+4. **Use the new `ConfigureDbContext` method**: This allows you to configure options without registering the context itself. See [DbContext configuration](xref:core/dbcontext-configuration/index#configuredbcontext) for more information:
+
+   ```csharp
+   services.ConfigureDbContext<MyContext>(options => 
+       options.UseSqlServer("connection"));
+   
+   services.AddDbContext<MyContext>(); // Register the context without configuration
+   ```
 
 <a name="attributeConventionBase"></a>
 

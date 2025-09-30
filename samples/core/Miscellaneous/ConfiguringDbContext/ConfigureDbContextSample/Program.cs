@@ -24,53 +24,72 @@ public class Blog
 }
 #endregion
 
+#region TestingExtensions
+public static class TestingExtensions
+{
+    public static IServiceCollection AddTestingConfiguration<TContext>(
+        this IServiceCollection services) 
+        where TContext : DbContext
+    {
+        services.ConfigureDbContext<TContext>(options =>
+            options.EnableSensitiveDataLogging()
+                   .EnableDetailedErrors()
+                   .LogTo(Console.WriteLine));
+        
+        return services;
+    }
+}
+#endregion
+
 public class Program
 {
     public static void Main(string[] args)
     {
-        BasicAddDbContextExample();
-        MultipleAddDbContextCallsExample();
-        ConditionalConfigurationExample();
+        BasicConfigureDbContextExample();
+        ReusableComponentExample();
+        ConfigurationCompositionExample();
     }
 
-    private static void BasicAddDbContextExample()
+    private static void BasicConfigureDbContextExample()
     {
-        Console.WriteLine("=== Basic AddDbContext Example ===");
+        Console.WriteLine("=== Basic ConfigureDbContext Example ===");
         
-        #region BasicAddDbContext
+        #region BasicConfigureDbContext
         var services = new ServiceCollection();
 
-        // DbContext registration with configuration
-        services.AddDbContext<BlogContext>(options =>
-            options.UseInMemoryDatabase("BasicExample")
-                   .EnableSensitiveDataLogging()
+        // Configure non-provider-specific options
+        services.ConfigureDbContext<BlogContext>(options =>
+            options.EnableSensitiveDataLogging()
                    .EnableDetailedErrors());
 
+        // Add the context with provider configuration
+        services.AddDbContext<BlogContext>(options =>
+            options.UseInMemoryDatabase("BasicExample"));
+
         var serviceProvider = services.BuildServiceProvider();
         #endregion
 
         using var scope = serviceProvider.CreateScope();
         var context = scope.ServiceProvider.GetRequiredService<BlogContext>();
         
-        Console.WriteLine($"Context configured successfully with provider: {context.Database.ProviderName}");
+        Console.WriteLine($"Context configured with provider: {context.Database.ProviderName}");
+        Console.WriteLine("ConfigureDbContext was called before AddDbContext");
         Console.WriteLine();
     }
 
-    private static void MultipleAddDbContextCallsExample()
+    private static void ReusableComponentExample()
     {
-        Console.WriteLine("=== Multiple AddDbContext Calls Example (EF Core 8.0 Behavior) ===");
+        Console.WriteLine("=== Reusable Component Example ===");
         
-        #region MultipleAddDbContextCalls
+        #region ReusableComponent
         var services = new ServiceCollection();
 
-        // First configuration - will be overridden in EF Core 8.0
-        services.AddDbContext<BlogContext>(options =>
-            options.UseInMemoryDatabase("FirstDatabase"));
-
-        // Second configuration - this takes precedence (EF Core 8.0 behavior)
-        services.AddDbContext<BlogContext>(options =>
-            options.UseInMemoryDatabase("SecondDatabase")
-                   .EnableSensitiveDataLogging());
+        // Use the testing extension method
+        services.AddTestingConfiguration<BlogContext>();
+        
+        // Add the context with provider
+        services.AddDbContext<BlogContext>(options => 
+            options.UseInMemoryDatabase("TestDb"));
 
         var serviceProvider = services.BuildServiceProvider();
         #endregion
@@ -78,35 +97,29 @@ public class Program
         using var scope = serviceProvider.CreateScope();
         var context = scope.ServiceProvider.GetRequiredService<BlogContext>();
         
-        Console.WriteLine($"Provider: {context.Database.ProviderName}");
-        Console.WriteLine("Note: In EF Core 8.0, the second AddDbContext call takes precedence over the first one.");
-        Console.WriteLine("This is different from EF Core 7.0 and earlier where the first call would win.");
+        Console.WriteLine($"Context configured for testing with provider: {context.Database.ProviderName}");
+        Console.WriteLine("Testing configuration added via extension method");
         Console.WriteLine();
     }
 
-    private static void ConditionalConfigurationExample()
+    private static void ConfigurationCompositionExample()
     {
-        Console.WriteLine("=== Conditional Configuration Example ===");
+        Console.WriteLine("=== Configuration Composition Example ===");
         
-        #region ConditionalConfiguration
+        #region ConfigurationComposition
         var services = new ServiceCollection();
-        
-        // Mock environment and configuration services
-        var isDevelopment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == "Development";
-        
-        services.AddDbContext<BlogContext>((serviceProvider, options) =>
-        {
-            if (isDevelopment)
-            {
-                options.UseInMemoryDatabase("DevelopmentDatabase")
-                       .EnableSensitiveDataLogging()
-                       .EnableDetailedErrors();
-            }
-            else
-            {
-                options.UseInMemoryDatabase("ProductionDatabase");
-            }
-        });
+
+        // First: add logging
+        services.ConfigureDbContext<BlogContext>(options =>
+            options.LogTo(Console.WriteLine));
+
+        // Second: add the provider
+        services.AddDbContext<BlogContext>(options =>
+            options.UseInMemoryDatabase("CompositionExample"));
+
+        // Third: add sensitive data logging
+        services.ConfigureDbContext<BlogContext>(options =>
+            options.EnableSensitiveDataLogging());
 
         var serviceProvider = services.BuildServiceProvider();
         #endregion
@@ -114,8 +127,8 @@ public class Program
         using var scope = serviceProvider.CreateScope();
         var context = scope.ServiceProvider.GetRequiredService<BlogContext>();
         
-        Console.WriteLine($"Context configured for environment: {(isDevelopment ? "Development" : "Production")}");
-        Console.WriteLine($"Provider: {context.Database.ProviderName}");
+        Console.WriteLine($"Context configured with provider: {context.Database.ProviderName}");
+        Console.WriteLine("All three configurations were composed together");
         Console.WriteLine();
     }
 }
