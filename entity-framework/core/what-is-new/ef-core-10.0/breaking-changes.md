@@ -193,24 +193,15 @@ await context.Blogs.ExecuteUpdateAsync(s =>
 Previously, when using value converters with compiled models (using `dotnet ef dbcontext optimize`), EF would reference the converter type and everything worked correctly.
 
 ```c#
-public sealed class BooleanToCharConverter : ValueConverter<bool, char>
+public sealed class BooleanToCharConverter() : ValueConverter<bool, char>(v => ConvertToChar(v), v => ConvertToBoolean(v))
 {
     public static readonly BooleanToCharConverter Default = new();
 
-    public BooleanToCharConverter()
-        : base(v => ConvertToChar(v), v => ConvertToBoolean(v))
-    {
-    }
-
     private static char ConvertToChar(bool value) // Private method
-    {
-        return value ? 'Y' : 'N';
-    }
+        => value ? 'Y' : 'N';
 
     private static bool ConvertToBoolean(char value) // Private method
-    {
-        return value == 'Y';
-    }
+        => value == 'Y';
 }
 ```
 
