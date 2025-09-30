@@ -25,9 +25,9 @@ This page documents API and behavior changes that have the potential to break ex
 | [SQL Server json data type used by default on Azure SQL and compatibility level 170](#sqlserver-json-data-type) | Low        |
 | [ExecuteUpdateAsync now accepts a regular, non-expression lambda](#ExecuteUpdateAsync-lambda)                   | Low        |
 | [Compiled models now throw exception for value converters with private methods](#compiled-model-private-methods) | Low        |
-| [Complex type column names are now uniquified](#complex-type-column-uniquification)                           | Low        |
-| [Nested complex type properties use full path in column names](#nested-complex-type-column-names)             | Low        |
-| [IDiscriminatorPropertySetConvention signature changed](#discriminator-convention-signature)                  | Low        |
+| [Complex type column names are now uniquified](#complex-type-column-uniquification)                             | Low        |
+| [Nested complex type properties use full path in column names](#nested-complex-type-column-names)               | Low        |
+| [IDiscriminatorPropertySetConvention signature changed](#discriminator-convention-signature)                    | Low        |
 
 ## Low-impact changes
 
