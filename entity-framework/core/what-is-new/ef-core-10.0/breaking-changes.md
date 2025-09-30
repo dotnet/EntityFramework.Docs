@@ -24,6 +24,9 @@ This page documents API and behavior changes that have the potential to break ex
 |:--------------------------------------------------------------------------------------------------------------- | -----------|
 | [SQL Server json data type used by default on Azure SQL and compatibility level 170](#sqlserver-json-data-type) | Low        |
 | [ExecuteUpdateAsync now accepts a regular, non-expression lambda](#ExecuteUpdateAsync-lambda)                   | Low        |
+| [Complex type column names are now uniquified](#complex-type-column-uniquification)                             | Low        |
+| [Nested complex type properties use full path in column names](#nested-complex-type-column-names)               | Low        |
+| [IDiscriminatorPropertySetConvention signature changed](#discriminator-convention-signature)                    | Low        |
 
 ## Low-impact changes
 
@@ -176,6 +179,93 @@ await context.Blogs.ExecuteUpdateAsync(s =>
         s.SetProperty(b => b.Name, "foo");
     }
 });
+```
+
+<a name="complex-type-column-uniquification"></a>
+
+### Complex type column names are now uniquified
+
+[Tracking Issue #4970](https://github.com/dotnet/EntityFramework.Docs/issues/4970)
+
+#### Old behavior
+
+Previously, when mapping complex types to table columns, if multiple properties in different complex types had the same column name, they would silently share the same column.
+
+#### New behavior
+
+Starting with EF Core 10.0, complex type column names are uniquified by appending a number at the end if another column with the same name exists on the table.
+
+#### Why
+
+This prevents data corruption that could occur when multiple properties are unintentionally mapped to the same column.
+
+#### Mitigations
+
+If you need multiple properties to share the same column, configure them explicitly:
+
+```c#
+modelBuilder.Entity<Customer>(b =>
+{
+    b.ComplexProperty(c => c.ShippingAddress, p => p.Property(a => a.Street).HasColumnName("Street"));
+    b.ComplexProperty(c => c.BillingAddress, p => p.Property(a => a.Street).HasColumnName("Street"));
+});
+```
+
+<a name="nested-complex-type-column-names"></a>
+
+### Nested complex type properties use full path in column names
+
+#### Old behavior
+
+Previously, properties on nested complex types were mapped to columns using just the declaring type name. For example, `EntityType.Complex.NestedComplex.Property` was mapped to column `NestedComplex_Property`.
+
+#### New behavior
+
+Starting with EF Core 10.0, properties on nested complex types use the full path to the property as part of the column name. For example, `EntityType.Complex.NestedComplex.Property` is now mapped to column `Complex_NestedComplex_Property`.
+
+#### Why
+
+This provides better column name uniqueness and makes it clearer which property maps to which column.
+
+#### Mitigations
+
+If you need to maintain the old column names, configure them explicitly:
+
+```c#
+modelBuilder.Entity<EntityType>()
+    .ComplexProperty(e => e.Complex)
+    .ComplexProperty(o => o.NestedComplex)
+    .Property(c => c.Property)
+    .HasColumnName("NestedComplex_Property");
+```
+
+<a name="discriminator-convention-signature"></a>
+
+### IDiscriminatorPropertySetConvention signature changed
+
+#### Old behavior
+
+Previously, `IDiscriminatorPropertySetConvention.ProcessDiscriminatorPropertySet` took `IConventionEntityTypeBuilder` as a parameter.
+
+#### New behavior
+
+Starting with EF Core 10.0, the method signature changed to take `IConventionTypeBaseBuilder` instead of `IConventionEntityTypeBuilder`.
+
+#### Why
+
+This change allows the convention to work with both entity types and complex types.
+
+#### Mitigations
+
+Update your custom convention implementations to use the new signature:
+
+```c#
+public virtual void ProcessDiscriminatorPropertySet(
+    IConventionTypeBaseBuilder typeBaseBuilder, // Changed from IConventionEntityTypeBuilder
+    string name,
+    Type type,
+    MemberInfo memberInfo,
+    IConventionContext<IConventionProperty> context)
 ```
 
 <a name="MDS-breaking-changes"></a>
