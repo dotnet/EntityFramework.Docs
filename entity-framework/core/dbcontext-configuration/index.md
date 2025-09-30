@@ -2,7 +2,7 @@
 title: DbContext Lifetime, Configuration, and Initialization - EF Core
 description: Patterns for creating and managing DbContext instances with or without dependency injection
 author: SamMonoRT
-ms.date: 11/07/2020
+ms.date: 09/30/2025
 uid: core/dbcontext-configuration/index
 ---
 
@@ -431,18 +431,17 @@ EF Core uses an internal service provider to manage services required for databa
 
 The <xref:Microsoft.EntityFrameworkCore.DbContextOptionsBuilder.EnableServiceProviderCaching*> method controls whether EF Core caches the internal service provider:
 
-<!--
-    public class ApplicationDbContext : DbContext
+```csharp
+public class ApplicationDbContext : DbContext
+{
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            optionsBuilder
-                .EnableServiceProviderCaching(false)
-                .UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=Test");
-        }
+        optionsBuilder
+            .EnableServiceProviderCaching(false)
+            .UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=Test");
     }
--->
-[!code-csharp[EnableServiceProviderCaching](../../../samples/core/Miscellaneous/CompiledModels/BlogsContext.cs?range=18-22&highlight=2)]
+}
+```
 
 **Default behavior**: Service provider caching is **enabled by default** (`true`). This means:
 
