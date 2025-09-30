@@ -2,7 +2,7 @@
 title: DbContext Lifetime, Configuration, and Initialization - EF Core
 description: Patterns for creating and managing DbContext instances with or without dependency injection
 author: SamMonoRT
-ms.date: 11/07/2020
+ms.date: 09/30/2025
 uid: core/dbcontext-configuration/index
 ---
 
@@ -156,7 +156,7 @@ For non-conflicting options (like adding logging, interceptors, or other setting
 
 For conflicting options, the last configuration wins. See [breaking changes in EF Core 8.0](xref:core/what-is-new/ef-core-8.0/breaking-changes#AddDbContext) for more information about this behavior change.
 
-> [!WARNING]
+> [!NOTE]
 > Configuring a different provider will not remove the previous provider configuration. This can lead to errors when creating the context. To completely replace the provider, you need to remove the context registration and re-add it, or create a new service collection.
 
 <!-- See also [Using Dependency Injection](TODO) for advanced dependency injection configuration with EF Core. -->

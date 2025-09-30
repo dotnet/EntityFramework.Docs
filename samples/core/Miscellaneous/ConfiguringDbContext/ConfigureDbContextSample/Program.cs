@@ -5,7 +5,6 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace ConfigureDbContextSample;
 
-#region BlogContext
 public class BlogContext : DbContext
 {
     public BlogContext(DbContextOptions<BlogContext> options) : base(options)
@@ -21,7 +20,6 @@ public class Blog
     public required string Title { get; set; }
     public string? Content { get; set; }
 }
-#endregion
 
 public class Program
 {
@@ -48,7 +46,6 @@ public class Program
 
         var serviceProvider = services.BuildServiceProvider();
         #endregion
-
         using var scope = serviceProvider.CreateScope();
         var context = scope.ServiceProvider.GetRequiredService<BlogContext>();
         
@@ -72,7 +69,6 @@ public class Program
 
         var serviceProvider = services.BuildServiceProvider();
         #endregion
-
         Console.WriteLine("Provider-specific configuration applied");
         Console.WriteLine();
     }
@@ -95,7 +91,6 @@ public class Program
 
         var serviceProvider = services.BuildServiceProvider();
         #endregion
-
         using var scope = serviceProvider.CreateScope();
         var context = scope.ServiceProvider.GetRequiredService<BlogContext>();
         
