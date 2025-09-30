@@ -23,7 +23,7 @@ public class Blog
     public string? Content { get; set; }
 }
 
-public static class ConfigureDbContextExamples
+public static class ConfigureDbContextSample
 {
     public static void Run()
     {
