@@ -43,9 +43,9 @@ public class Program
 
         services.AddDbContext<BlogContext>(options =>
             options.UseInMemoryDatabase("BasicExample"));
+        #endregion
 
         var serviceProvider = services.BuildServiceProvider();
-        #endregion
         using var scope = serviceProvider.CreateScope();
         var context = scope.ServiceProvider.GetRequiredService<BlogContext>();
         
@@ -66,9 +66,9 @@ public class Program
 
         services.AddDbContext<BlogContext>(options =>
             options.UseSqlServer("connectionString"));
+        #endregion
 
         var serviceProvider = services.BuildServiceProvider();
-        #endregion
         Console.WriteLine("Provider-specific configuration applied");
         Console.WriteLine();
     }
@@ -88,9 +88,9 @@ public class Program
 
         services.ConfigureDbContext<BlogContext>(options =>
             options.EnableSensitiveDataLogging());
+        #endregion
 
         var serviceProvider = services.BuildServiceProvider();
-        #endregion
         using var scope = serviceProvider.CreateScope();
         var context = scope.ServiceProvider.GetRequiredService<BlogContext>();
         
