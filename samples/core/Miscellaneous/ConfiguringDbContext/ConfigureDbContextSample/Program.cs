@@ -1,8 +1,7 @@
 using System;
+using System.Linq;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
 
 namespace ConfigureDbContextSample;
 
@@ -24,29 +23,12 @@ public class Blog
 }
 #endregion
 
-#region TestingExtensions
-public static class TestingExtensions
-{
-    public static IServiceCollection AddTestingConfiguration<TContext>(
-        this IServiceCollection services) 
-        where TContext : DbContext
-    {
-        services.ConfigureDbContext<TContext>(options =>
-            options.EnableSensitiveDataLogging()
-                   .EnableDetailedErrors()
-                   .LogTo(Console.WriteLine));
-        
-        return services;
-    }
-}
-#endregion
-
 public class Program
 {
     public static void Main(string[] args)
     {
         BasicConfigureDbContextExample();
-        ReusableComponentExample();
+        ProviderSpecificConfigurationExample();
         ConfigurationCompositionExample();
     }
 
@@ -57,12 +39,10 @@ public class Program
         #region BasicConfigureDbContext
         var services = new ServiceCollection();
 
-        // Configure non-provider-specific options
         services.ConfigureDbContext<BlogContext>(options =>
             options.EnableSensitiveDataLogging()
                    .EnableDetailedErrors());
 
-        // Add the context with provider configuration
         services.AddDbContext<BlogContext>(options =>
             options.UseInMemoryDatabase("BasicExample"));
 
@@ -73,32 +53,27 @@ public class Program
         var context = scope.ServiceProvider.GetRequiredService<BlogContext>();
         
         Console.WriteLine($"Context configured with provider: {context.Database.ProviderName}");
-        Console.WriteLine("ConfigureDbContext was called before AddDbContext");
         Console.WriteLine();
     }
 
-    private static void ReusableComponentExample()
+    private static void ProviderSpecificConfigurationExample()
     {
-        Console.WriteLine("=== Reusable Component Example ===");
+        Console.WriteLine("=== Provider-Specific Configuration Example ===");
         
-        #region ReusableComponent
+        #region ProviderSpecificConfiguration
         var services = new ServiceCollection();
 
-        // Use the testing extension method
-        services.AddTestingConfiguration<BlogContext>();
-        
-        // Add the context with provider
-        services.AddDbContext<BlogContext>(options => 
-            options.UseInMemoryDatabase("TestDb"));
+        services.ConfigureDbContext<BlogContext>(options =>
+            options.UseSqlServer(sqlOptions => 
+                sqlOptions.EnableRetryOnFailure()));
+
+        services.AddDbContext<BlogContext>(options =>
+            options.UseSqlServer("connectionString"));
 
         var serviceProvider = services.BuildServiceProvider();
         #endregion
 
-        using var scope = serviceProvider.CreateScope();
-        var context = scope.ServiceProvider.GetRequiredService<BlogContext>();
-        
-        Console.WriteLine($"Context configured for testing with provider: {context.Database.ProviderName}");
-        Console.WriteLine("Testing configuration added via extension method");
+        Console.WriteLine("Provider-specific configuration applied");
         Console.WriteLine();
     }
 
@@ -109,15 +84,12 @@ public class Program
         #region ConfigurationComposition
         var services = new ServiceCollection();
 
-        // First: add logging
         services.ConfigureDbContext<BlogContext>(options =>
             options.LogTo(Console.WriteLine));
 
-        // Second: add the provider
         services.AddDbContext<BlogContext>(options =>
             options.UseInMemoryDatabase("CompositionExample"));
 
-        // Third: add sensitive data logging
         services.ConfigureDbContext<BlogContext>(options =>
             options.EnableSensitiveDataLogging());
 
@@ -128,7 +100,6 @@ public class Program
         var context = scope.ServiceProvider.GetRequiredService<BlogContext>();
         
         Console.WriteLine($"Context configured with provider: {context.Database.ProviderName}");
-        Console.WriteLine("All three configurations were composed together");
         Console.WriteLine();
     }
 }

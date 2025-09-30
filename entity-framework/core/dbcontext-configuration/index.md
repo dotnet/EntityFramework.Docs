@@ -94,67 +94,43 @@ Read further in this article to learn more about configuration options. See [Dep
 
 ## ConfigureDbContext for configuration composition
 
-Starting with EF Core 9.0, you can use `ConfigureDbContext` to apply additional configuration to a `DbContext` either before or after the `AddDbContext` call. This is particularly useful for composing non-conflicting, non-provider-specific configuration in reusable components or tests.
+Starting with EF Core 9.0, you can use <xref:Microsoft.Extensions.DependencyInjection.EntityFrameworkServiceCollectionExtensions.ConfigureDbContext*> to apply additional configuration to a `DbContext` either before or after the `AddDbContext` call. This is particularly useful for composing non-conflicting configuration in reusable components or tests.
 
 ### Basic ConfigureDbContext usage
 
-`ConfigureDbContext` allows you to add configuration without replacing the entire provider configuration:
+`ConfigureDbContext` allows you to add configuration in a reusable library or component without replacing the entire provider configuration:
 
-```csharp
-// In a reusable library or component
-services.ConfigureDbContext<ApplicationDbContext>(options =>
-    options.EnableSensitiveDataLogging()
-           .EnableDetailedErrors());
+<!--
+        var services = new ServiceCollection();
 
-// Later, in the application
-services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseSqlServer(connectionString));
-```
-
-Both configurations will be applied - the logging and error settings from `ConfigureDbContext`, and the SQL Server provider from `AddDbContext`.
-
-### Using ConfigureDbContext in reusable components
-
-`ConfigureDbContext` is especially useful when creating reusable components that need to add configuration without knowing or modifying the database provider:
-
-```csharp
-// In a testing utility library
-public static class TestingExtensions
-{
-    public static IServiceCollection AddTestingConfiguration<TContext>(
-        this IServiceCollection services) 
-        where TContext : DbContext
-    {
-        services.ConfigureDbContext<TContext>(options =>
+        services.ConfigureDbContext<BlogContext>(options =>
             options.EnableSensitiveDataLogging()
-                   .EnableDetailedErrors()
-                   .LogTo(Console.WriteLine));
-        
-        return services;
-    }
-}
+                   .EnableDetailedErrors());
 
-// In your test
-services.AddTestingConfiguration<ApplicationDbContext>();
-services.AddDbContext<ApplicationDbContext>(options => 
-    options.UseInMemoryDatabase("TestDb"));
-```
+        services.AddDbContext<BlogContext>(options =>
+            options.UseInMemoryDatabase("BasicExample"));
+
+        var serviceProvider = services.BuildServiceProvider();
+-->
+[!code-csharp[BasicConfigureDbContext](../../../samples/core/Miscellaneous/ConfiguringDbContext/ConfigureDbContextSample/Program.cs?name=BasicConfigureDbContext)]
 
 ### Provider-specific configuration without connection strings
 
-When you need to apply provider-specific configuration but don't have the connection string, you can use provider-specific configuration methods like `ConfigureSqlEngine`:
+To apply provider-specific configuration you can use provider-specific configuration methods without supplying the connection string. The SQL Server provider also includes `ConfigureSqlEngine` for this case. See [SQL Server-specific batching behavior](xref:core/providers/sql-server/misc#configuresqlengine) for more information.
 
-```csharp
-// Configure SQL Server-specific options without knowing the connection string
-services.ConfigureDbContext<ApplicationDbContext>(options =>
-    options.UseSqlServer(sqlOptions => 
-        sqlOptions.EnableRetryOnFailure()
-                  .CommandTimeout(30)));
+<!--
+        var services = new ServiceCollection();
 
-// Later, add the context with the connection string
-services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseSqlServer(connectionString));
-```
+        services.ConfigureDbContext<BlogContext>(options =>
+            options.UseSqlServer(sqlOptions => 
+                sqlOptions.EnableRetryOnFailure()));
+
+        services.AddDbContext<BlogContext>(options =>
+            options.UseSqlServer("connectionString"));
+
+        var serviceProvider = services.BuildServiceProvider();
+-->
+[!code-csharp[ProviderSpecificConfiguration](../../../samples/core/Miscellaneous/ConfiguringDbContext/ConfigureDbContextSample/Program.cs?name=ProviderSpecificConfiguration)]
 
 ### ConfigureDbContext and AddDbContext precedence
 
@@ -162,23 +138,26 @@ When both `ConfigureDbContext` and `AddDbContext` are used, or when multiple cal
 
 For non-conflicting options (like adding logging, interceptors, or other settings), all configurations are composed together:
 
-```csharp
-// First: add logging
-services.ConfigureDbContext<ApplicationDbContext>(options =>
-    options.LogTo(Console.WriteLine));
+<!--
+        var services = new ServiceCollection();
 
-// Second: add the provider
-services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseSqlServer(connectionString));
+        services.ConfigureDbContext<BlogContext>(options =>
+            options.LogTo(Console.WriteLine));
 
-// Third: add sensitive data logging
-services.ConfigureDbContext<ApplicationDbContext>(options =>
-    options.EnableSensitiveDataLogging());
+        services.AddDbContext<BlogContext>(options =>
+            options.UseInMemoryDatabase("CompositionExample"));
 
-// Result: All three configurations are applied
-```
+        services.ConfigureDbContext<BlogContext>(options =>
+            options.EnableSensitiveDataLogging());
 
-For conflicting options (like specifying different database providers), the last configuration wins. See [breaking changes in EF Core 8.0](xref:core/what-is-new/ef-core-8.0/breaking-changes#AddDbContext) for more information about this behavior change.
+        var serviceProvider = services.BuildServiceProvider();
+-->
+[!code-csharp[ConfigurationComposition](../../../samples/core/Miscellaneous/ConfiguringDbContext/ConfigureDbContextSample/Program.cs?name=ConfigurationComposition)]
+
+For conflicting options, the last configuration wins. See [breaking changes in EF Core 8.0](xref:core/what-is-new/ef-core-8.0/breaking-changes#AddDbContext) for more information about this behavior change.
+
+> [!WARNING]
+> Configuring a different provider will not remove the previous provider configuration. This can lead to errors when creating the context. To completely replace the provider, you need to remove the context registration and re-add it, or create a new service collection.
 
 <!-- See also [Using Dependency Injection](TODO) for advanced dependency injection configuration with EF Core. -->
 
