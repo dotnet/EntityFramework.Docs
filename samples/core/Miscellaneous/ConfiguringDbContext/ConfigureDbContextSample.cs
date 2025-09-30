@@ -1,3 +1,5 @@
+#nullable enable
+
 using System;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
@@ -21,9 +23,9 @@ public class Blog
     public string? Content { get; set; }
 }
 
-public class Program
+public static class ConfigureDbContextExamples
 {
-    public static void Main(string[] args)
+    public static void Run()
     {
         BasicConfigureDbContextExample();
         ProviderSpecificConfigurationExample();

@@ -112,7 +112,7 @@ Starting with EF Core 9.0, you can use <xref:Microsoft.Extensions.DependencyInje
 
         var serviceProvider = services.BuildServiceProvider();
 -->
-[!code-csharp[BasicConfigureDbContext](../../../samples/core/Miscellaneous/ConfiguringDbContext/ConfigureDbContextSample/Program.cs?name=BasicConfigureDbContext)]
+[!code-csharp[BasicConfigureDbContext](../../../samples/core/Miscellaneous/ConfiguringDbContext/ConfigureDbContextSample.cs?name=BasicConfigureDbContext)]
 
 ### Provider-specific configuration without connection strings
 
@@ -130,7 +130,7 @@ To apply provider-specific configuration you can use provider-specific configura
 
         var serviceProvider = services.BuildServiceProvider();
 -->
-[!code-csharp[ProviderSpecificConfiguration](../../../samples/core/Miscellaneous/ConfiguringDbContext/ConfigureDbContextSample/Program.cs?name=ProviderSpecificConfiguration)]
+[!code-csharp[ProviderSpecificConfiguration](../../../samples/core/Miscellaneous/ConfiguringDbContext/ConfigureDbContextSample.cs?name=ProviderSpecificConfiguration)]
 
 ### ConfigureDbContext and AddDbContext precedence
 
@@ -152,7 +152,7 @@ For non-conflicting options (like adding logging, interceptors, or other setting
 
         var serviceProvider = services.BuildServiceProvider();
 -->
-[!code-csharp[ConfigurationComposition](../../../samples/core/Miscellaneous/ConfiguringDbContext/ConfigureDbContextSample/Program.cs?name=ConfigurationComposition)]
+[!code-csharp[ConfigurationComposition](../../../samples/core/Miscellaneous/ConfiguringDbContext/ConfigureDbContextSample.cs?name=ConfigurationComposition)]
 
 For conflicting options, the last configuration wins. See [breaking changes in EF Core 8.0](xref:core/what-is-new/ef-core-8.0/breaking-changes#AddDbContext) for more information about this behavior change.
 
