@@ -2,7 +2,7 @@
 title: Tools & Extensions - EF Core
 description: External tools and extensions for Entity Framework Core
 author: ErikEJ
-ms.date: 05/22/2024
+ms.date: 09/30/2025
 uid: core/extensions/index
 ---
 
@@ -51,12 +51,6 @@ EF Core Sidekick is a Visual Studio extension that enhances the power of auto co
 Entity Framework Visual Editor is a Visual Studio extension that adds an O/RM designer for visual design of EF 6, and EF Core classes. Code is generated using T4 templates so can be customized to suit any needs. It supports inheritance, unidirectional and bidirectional associations, enumerations, and the ability to color-code your classes and add text blocks to explain potentially arcane parts of your design. For EF Core: 2-8.
 
 [Visual Studio Marketplace](https://marketplace.visualstudio.com/items?itemName=michaelsawczyn.EFDesigner2022)
-
-### IWAPI
-
-IWAPI (Instant Web API) is a scaffolding engine for .NET Core that can automate the generation of DbContext classes, entities, models and creates a working Web API from any SQL Server database.
-
-[Website](https://instantwebapi.com/)
 
 ### efmig
 
