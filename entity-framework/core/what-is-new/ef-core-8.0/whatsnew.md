@@ -8,7 +8,7 @@ uid: core/what-is-new/ef-core-8.0/whatsnew
 
 # What's New in EF Core 8
 
-EF Core 8.0 (EF8) was [released in November 2023](https://devblogs.microsoft.com/dotnet/announcing-ef8/).
+EF Core 8.0 (EF8) was [released in November 2023](https://devblogs.microsoft.com/dotnet/announcing-ef8/) and is a Long Term Support (LTS) release. EF8 will be supported until November 10, 2026.
 
 > [!TIP]
 > You can run and debug into the samples by [downloading the sample code from GitHub](https://github.com/dotnet/EntityFramework.Docs). Each section links to the source code specific to that section.
