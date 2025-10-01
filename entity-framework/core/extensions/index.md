@@ -280,6 +280,12 @@ A library that provides seamless auditing capabilities for Entity Framework Core
 
 [GitHub repository](https://github.com/ShadyNagy/EntityFrameworkCore.AuditInterceptor) | [NuGet](https://www.nuget.org/packages/EntityFrameworkCore.AuditInterceptor)
 
+### PhenX.EntityFrameworkCore.BulkInsert
+
+A high-performance bulk insert extension for Entity Framework Core. Supports SQL Server, PostgreSQL, SQLite, MySQL and Oracle. For EF Core: 8-9.
+
+[Website](https://phenx.github.io/PhenX.EntityFrameworkCore.BulkInsert/) | [GitHub repository](https://github.com/PhenX/PhenX.EntityFrameworkCore.BulkInsert)
+
 ### SanderTenBrinke.EntityFrameworkCore.Extensions.SqlServer.DataMasking
 
 This package focuses on adding data masking support for SQL Server to EF Core. For EF Core: 8-9.
