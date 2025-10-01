@@ -11,31 +11,6 @@ Some services used by the tools are only used at design time. These services are
 
 [!code-csharp[Main](../../../samples/core/Miscellaneous/CommandLine/DesignTimeServices.cs#DesignTimeServices)]
 
-### Advanced customizations
-
-You can override individual methods in design-time services. For example, to customize how type names are generated in scaffolded code, you can override the `ShouldUseFullName` method in `CSharpHelper`:
-
-```csharp
-public class MyDesignTimeServices : IDesignTimeServices
-{
-    public void ConfigureDesignTimeServices(IServiceCollection services)
-        => services.AddSingleton<ICSharpHelper, MyCSharpHelper>();
-}
-
-public class MyCSharpHelper : CSharpHelper
-{
-    public MyCSharpHelper(ITypeMappingSource typeMappingSource) : base(typeMappingSource)
-    {
-    }
-
-    public override bool ShouldUseFullName(Type type)
-    {
-        // Custom logic to determine when to use full type names
-        return base.ShouldUseFullName(type);
-    }
-}
-```
-
 ## Referencing Microsoft.EntityFrameworkCore.Design
 
 Microsoft.EntityFrameworkCore.Design is a DevelopmentDependency package. This means that the dependency won't flow transitively into other projects, and that you cannot, by default, reference its types.
@@ -43,7 +18,7 @@ Microsoft.EntityFrameworkCore.Design is a DevelopmentDependency package. This me
 In order to reference its types and override design-time services, update the PackageReference item's metadata in your project file.
 
 ```xml
-<PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.0">
+<PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="9.0.0">
   <PrivateAssets>all</PrivateAssets>
   <!-- Remove IncludeAssets to allow compiling against the assembly -->
   <!--<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>-->
@@ -89,6 +64,3 @@ These services can also be useful for creating your own tools. For example, when
 You can build a service provider containing these services using the AddEntityFrameworkDesignTimeServices and AddDbContextDesignTimeServices extension methods.
 
 [!code-csharp[](../../../samples/core/Miscellaneous/CommandLine/CustomTools.cs#CustomTools)]
-
-> [!NOTE]
-> In EF Core 6.0 and later, the design-time services registration has been streamlined. The `AddEntityFrameworkDesignTimeServices()` method automatically registers all necessary design-time services, and `AddDbContextDesignTimeServices(context)` adds the DbContext-specific services from the provided context instance.

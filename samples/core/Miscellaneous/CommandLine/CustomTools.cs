@@ -1,8 +1,10 @@
 ﻿using System.IO;
+using System.Reflection;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Migrations.Design;
+using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace CommandLine;
@@ -20,12 +22,15 @@ public class CustomTools
 
         // Create design-time services
         var serviceCollection = new ServiceCollection();
-        
-        // Add the core design-time services
-        serviceCollection.AddEntityFrameworkDesignTimeServices();
-        
-        // Add services from the DbContext
         serviceCollection.AddDbContextDesignTimeServices(db);
+        
+        var provider = db.GetService<IDatabaseProvider>().Name;
+        var providerAssembly = Assembly.Load(new AssemblyName(provider));
+        var providerServicesAttribute = providerAssembly.GetCustomAttribute<DesignTimeProviderServicesAttribute>();
+        var designTimeServicesType = providerAssembly.GetType(providerServicesAttribute.TypeName, throwOnError: true);
+        ((IDesignTimeServices)Activator.CreateInstance(designTimeServicesType)!).ConfigureDesignTimeServices(serviceCollection);
+
+        serviceCollection.AddEntityFrameworkDesignTimeServices();
 
         var serviceProvider = serviceCollection.BuildServiceProvider();
 
