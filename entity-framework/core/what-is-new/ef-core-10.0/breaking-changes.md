@@ -20,11 +20,105 @@ This page documents API and behavior changes that have the potential to break ex
 > [!NOTE]
 > If you are using Microsoft.Data.Sqlite, please see the [separate section below on Microsoft.Data.Sqlite breaking changes](#MDS-breaking-changes).
 
-| **Breaking change**                                                                                       | **Impact** |
-|:----------------------------------------------------------------------------------------------------------|------------|
-| [ExecuteUpdateAsync now accepts a regular, non-expression lambda](#ExecuteUpdateAsync-lambda)             | Low        |
+| **Breaking change**                                                                                             | **Impact** |
+|:--------------------------------------------------------------------------------------------------------------- | -----------|
+| [SQL Server json data type used by default on Azure SQL and compatibility level 170](#sqlserver-json-data-type) | Low        |
+| [ExecuteUpdateAsync now accepts a regular, non-expression lambda](#ExecuteUpdateAsync-lambda)                   | Low        |
+| [Complex type column names are now uniquified](#complex-type-column-uniquification)                             | Low        |
+| [Nested complex type properties use full path in column names](#nested-complex-type-column-names)               | Low        |
+| [IDiscriminatorPropertySetConvention signature changed](#discriminator-convention-signature)                    | Low        |
 
 ## Low-impact changes
+
+<a name="sqlserver-json-data-type"></a>
+
+### SQL Server json data type used by default on Azure SQL and compatibility level 170
+
+[Tracking Issue #36372](https://github.com/dotnet/efcore/issues/36372)
+
+#### Old behavior
+
+Previously, when mapping primitive collections or owned types to JSON in the database, the SQL Server provider stored the JSON data in an `nvarchar(max)` column:
+
+```c#
+public class Blog
+{
+    // ...
+
+    // Primitive collection, mapped to nvarchar(max) JSON column
+    public string[] Tags { get; set; }
+    // Owned entity type mapped to nvarchar(max) JSON column
+    public List<Post> Posts { get; set; }
+}
+
+protected override void OnModelCreating(ModelBuilder modelBuilder)
+{
+    modelBuilder.Entity<Blog>().OwnsMany(b => b.Posts, b => b.ToJson());
+}
+```
+
+For the above, EF previously generated the following table:
+
+```sql
+CREATE TABLE [Blogs] (
+    ...
+    [Tags] nvarchar(max),
+    [Posts] nvarchar(max)
+);
+```
+
+#### New behavior
+
+With EF 10, if you configure EF with <xref:Microsoft.EntityFrameworkCore.SqlServerDbContextOptionsExtensions.UseAzureSql*> ([see documentation](xref:core/providers/sql-server/index#usage-and-configuration)), or configure EF with a compatibility level of 170 or above ([see documentation](xref:core/providers/sql-server/index#compatibility-level)), EF will map to the new JSON data type instead:
+
+```sql
+CREATE TABLE [Blogs] (
+    ...
+    [Tags] json
+    [Posts] json
+);
+```
+
+Although the new JSON data type is the recommended way to store JSON data in SQL Server going forward, there may be some behavioral differences when transitioning from `nvarchar(max)`, and some specific querying forms may not be supported. For example, SQL Server does not support the DISTINCT operator over JSON arrays, and queries attempting to do so will fail.
+
+Note that if you have an existing table and are using <xref:Microsoft.EntityFrameworkCore.SqlServerDbContextOptionsExtensions.UseAzureSql*>, upgrading to EF 10 will cause a migration to be generated which alters all existing `nvarchar(max)` JSON columns to `json`. This alter operation is supported and should get applied seamlessly and without any issues, but is a non-trivial change to your database.
+
+> [!NOTE]
+> For 10.0.0 rc1, support for the new JSON data type has been temporarily disabled for Azure SQL Database, due to lacking support. These issues are expected to be resolved by the time EF 10.0 is released, and the JSON data type will become the default until then.
+
+#### Why
+
+The new JSON data type introduced by SQL Server is a superior, 1st-class way to store and interact with JSON data in the database; it notably brings significant performance improvements ([see documentation](/sql/t-sql/data-types/json-data-type)). All applications using Azure SQL Database or SQL Server 2025 are encouraged to migrate to the new JSON data type.
+
+#### Mitigations
+
+If you are targeting Azure SQL Database and do not wish to transition to the new JSON data type right away, you can configure EF with a compatibility level lower than 170:
+
+```c#
+protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+{
+    optionsBuilder.UseAzureSql("<connection string>", o => o.UseCompatibilityLevel(160));
+}
+```
+
+If you're targeting on-premises SQL Server, the default compatibility level with `UseSqlServer` is currently 150 (SQL Server 2019), so the JSON data type is not used.
+
+As an alternative, you can explicitly set the column type on specific properties to be `nvarchar(max)`:
+
+```c#
+public class Blog
+{
+    public string[] Tags { get; set; }
+    public List<Post> Posts { get; set; }
+}
+
+protected override void OnModelCreating(ModelBuilder modelBuilder)
+{
+    modelBuilder.Entity<Blog>().PrimitiveCollection(b => b.Tags).HasColumnType("nvarchar(max)");
+    modelBuilder.Entity<Blog>().OwnsMany(b => b.Posts, b => b.ToJson().HasColumnType("nvarchar(max)"));
+    modelBuilder.Entity<Blog>().ComplexProperty(e => e.Posts, b => b.ToJson());
+}
+```
 
 <a name="ExecuteUpdateAsync-lambda"></a>
 
@@ -87,6 +181,93 @@ await context.Blogs.ExecuteUpdateAsync(s =>
 });
 ```
 
+<a name="complex-type-column-uniquification"></a>
+
+### Complex type column names are now uniquified
+
+[Tracking Issue #4970](https://github.com/dotnet/EntityFramework.Docs/issues/4970)
+
+#### Old behavior
+
+Previously, when mapping complex types to table columns, if multiple properties in different complex types had the same column name, they would silently share the same column.
+
+#### New behavior
+
+Starting with EF Core 10.0, complex type column names are uniquified by appending a number at the end if another column with the same name exists on the table.
+
+#### Why
+
+This prevents data corruption that could occur when multiple properties are unintentionally mapped to the same column.
+
+#### Mitigations
+
+If you need multiple properties to share the same column, configure them explicitly:
+
+```c#
+modelBuilder.Entity<Customer>(b =>
+{
+    b.ComplexProperty(c => c.ShippingAddress, p => p.Property(a => a.Street).HasColumnName("Street"));
+    b.ComplexProperty(c => c.BillingAddress, p => p.Property(a => a.Street).HasColumnName("Street"));
+});
+```
+
+<a name="nested-complex-type-column-names"></a>
+
+### Nested complex type properties use full path in column names
+
+#### Old behavior
+
+Previously, properties on nested complex types were mapped to columns using just the declaring type name. For example, `EntityType.Complex.NestedComplex.Property` was mapped to column `NestedComplex_Property`.
+
+#### New behavior
+
+Starting with EF Core 10.0, properties on nested complex types use the full path to the property as part of the column name. For example, `EntityType.Complex.NestedComplex.Property` is now mapped to column `Complex_NestedComplex_Property`.
+
+#### Why
+
+This provides better column name uniqueness and makes it clearer which property maps to which column.
+
+#### Mitigations
+
+If you need to maintain the old column names, configure them explicitly:
+
+```c#
+modelBuilder.Entity<EntityType>()
+    .ComplexProperty(e => e.Complex)
+    .ComplexProperty(o => o.NestedComplex)
+    .Property(c => c.Property)
+    .HasColumnName("NestedComplex_Property");
+```
+
+<a name="discriminator-convention-signature"></a>
+
+### IDiscriminatorPropertySetConvention signature changed
+
+#### Old behavior
+
+Previously, `IDiscriminatorPropertySetConvention.ProcessDiscriminatorPropertySet` took `IConventionEntityTypeBuilder` as a parameter.
+
+#### New behavior
+
+Starting with EF Core 10.0, the method signature changed to take `IConventionTypeBaseBuilder` instead of `IConventionEntityTypeBuilder`.
+
+#### Why
+
+This change allows the convention to work with both entity types and complex types.
+
+#### Mitigations
+
+Update your custom convention implementations to use the new signature:
+
+```c#
+public virtual void ProcessDiscriminatorPropertySet(
+    IConventionTypeBaseBuilder typeBaseBuilder, // Changed from IConventionEntityTypeBuilder
+    string name,
+    Type type,
+    MemberInfo memberInfo,
+    IConventionContext<IConventionProperty> context)
+```
+
 <a name="MDS-breaking-changes"></a>
 
 ## Microsoft.Data.Sqlite breaking changes
@@ -95,9 +276,9 @@ await context.Blogs.ExecuteUpdateAsync(s =>
 
 | **Breaking change**                                                                                       | **Impact** |
 |:----------------------------------------------------------------------------------------------------------|------------|
-| [Using GetDateTimeOffset without an offset now assumes UTC](#DateTimeOffset-read)                          | High       |
+| [Using GetDateTimeOffset without an offset now assumes UTC](#DateTimeOffset-read)                         | High       |
 | [Writing DateTimeOffset into REAL column now writes in UTC](#DateTimeOffset-write)                        | High       |
-| [Using GetDateTime with an offset now returns value in UTC](#DateTime-read)                                | High       |
+| [Using GetDateTime with an offset now returns value in UTC](#DateTime-read)                               | High       |
 
 ### High-impact changes
 

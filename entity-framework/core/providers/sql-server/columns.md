@@ -11,11 +11,7 @@ This page details column configuration options that are specific to the SQL Serv
 
 ## Unicode and UTF-8
 
-SQL Server 2019 introduced [introduced UTF-8](/sql/relational-databases/collations/collation-and-unicode-support#utf8) support, which allows storing UTF-8 data in `char` and `varchar` columns by configuring them with special UTF-8 collations.
-
-### [EF Core 7.0](#tab/ef-core-7)
-
-EF Core 7.0 includes first-class support for UTF-8 columns. To configure them, simply configure the column's type to `char` or `varchar`, specify a UTF-8 collation (ending with `_UTF8`), and specify that the column should be Unicode:
+SQL Server 2019 introduced [introduced UTF-8](/sql/relational-databases/collations/collation-and-unicode-support#utf8) support, which allows storing UTF-8 data in `char` and `varchar` columns by configuring them with special UTF-8 collations. You can use UTF-8 columns with EF simply by configuring the column's type to `char` or `varchar`, specify a UTF-8 collation (ending with `_UTF8`), and specifying that the column should be Unicode:
 
 ```c#
 protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -27,25 +23,6 @@ protected override void OnModelCreating(ModelBuilder modelBuilder)
         .IsUnicode();
 }
 ```
-
-#### [Older versions](#tab/older-versions)
-
-In EF Core versions prior to 7.0, UTF-8 columns do not work out-of-the-box with EF Core's SQL Server provider. To map a string property to a `varchar(x)` column, the Fluent or Data Annotation API is typically used to disable Unicode ([see these docs](xref:core/modeling/entity-properties#unicode)). While this causes the correct column type to be created in the database, it also makes EF Core send database parameters in a way which is incompatible with UTF-8 data: `DbType.AnsiString` is used (signifying non-Unicode data), but `DbType.String` is needed to properly send Unicode data.
-
-As a result, you'll have to configure the EF property as a regular `nvarchar` column, ensuring that parameters are sent with the correct `DbType`:
-
-```c#
-protected override void OnModelCreating(ModelBuilder modelBuilder)
-{
-    modelBuilder.Entity<Blog>()
-        .Property(b => b.Name)
-        .UseCollation("LATIN1_GENERAL_100_CI_AS_SC_UTF8");
-}
-```
-
-Once you've created the migration for the column, edit it and manually change the column's type from `nvarchar` to `varchar`.
-
-***
 
 ## Sparse columns
 
