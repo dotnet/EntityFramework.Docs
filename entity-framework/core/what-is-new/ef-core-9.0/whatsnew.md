@@ -8,7 +8,7 @@ uid: core/what-is-new/ef-core-9.0/whatsnew
 
 # What's New in EF Core 9
 
-EF Core 9 (EF9) is the next release after EF Core 8 and is scheduled for release in November 2024.
+EF Core 9.0 (EF9) was released in November 2024 and is a Short Term Support (STS) release. EF9 will be supported until November 10, 2026.
 
 EF9 is available as [daily builds](https://github.com/dotnet/efcore/blob/main/docs/DailyBuilds.md) which contain all the latest EF9 features and API tweaks. The samples here make use of these daily builds.
 
