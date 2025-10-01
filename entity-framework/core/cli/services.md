@@ -11,6 +11,28 @@ Some services used by the tools are only used at design time. These services are
 
 [!code-csharp[Main](../../../samples/core/Miscellaneous/CommandLine/DesignTimeServices.cs#DesignTimeServices)]
 
+### Customizing individual services
+
+You can also override individual methods in design-time services. For example, to customize how type names are generated in scaffolded code to always use fully-qualified names (which can help avoid compilation errors due to ambiguous type references), you can override the `ShouldUseFullName` method in `CSharpHelper`:
+
+```csharp
+public class MyDesignTimeServices : IDesignTimeServices
+{
+    public void ConfigureDesignTimeServices(IServiceCollection services)
+        => services.AddSingleton<ICSharpHelper, MyCSharpHelper>();
+}
+
+public class MyCSharpHelper : CSharpHelper
+{
+    public MyCSharpHelper(ITypeMappingSource typeMappingSource) : base(typeMappingSource)
+    {
+    }
+
+    public override bool ShouldUseFullName(Type type)
+        => true; // Always use fully-qualified type names
+}
+```
+
 ## Referencing Microsoft.EntityFrameworkCore.Design
 
 Microsoft.EntityFrameworkCore.Design is a DevelopmentDependency package. This means that the dependency won't flow transitively into other projects, and that you cannot, by default, reference its types.

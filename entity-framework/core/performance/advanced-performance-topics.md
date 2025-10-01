@@ -302,6 +302,10 @@ Because of these limitations, you should only use compiled models if your EF Cor
 
 If supporting any of these features is critical to your success, then please vote for the appropriate issues linked above.
 
+### Handling compilation errors due to ambiguous type references
+
+When compiling models with types that have the same name but exist in different namespaces, the generated code may produce compilation errors due to ambiguous type references. To resolve this, you can customize the code generation to use fully-qualified type names by overriding `CSharpHelper.ShouldUseFullName` to return `true`. See [Design-time services](xref:core/cli/services) for information on how to override design-time services like `ICSharpHelper`.
+
 ## Reducing runtime overhead
 
 As with any layer, EF Core adds a bit of runtime overhead compared to coding directly against lower-level database APIs. This runtime overhead is unlikely to impact most real-world applications in a significant way; the other topics in this performance guide, such as query efficiency, index usage and minimizing roundtrips, are far more important. In addition, even for highly-optimized applications, network latency and database I/O will usually dominate any time spent inside EF Core itself. However, for high-performance, low-latency applications where every bit of perf is important, the following recommendations can be used to reduce EF Core overhead to a minimum:
