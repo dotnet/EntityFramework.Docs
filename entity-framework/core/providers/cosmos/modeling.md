@@ -2,7 +2,7 @@
 title: Modeling - Azure Cosmos DB Provider - EF Core
 description: Configuring the model with the Azure Cosmos DB EF Core Provider
 author: roji
-ms.date: 09/19/2024
+ms.date: 09/26/2024
 uid: core/providers/cosmos/modeling
 ---
 # Configuring the model with the EF Core Azure Cosmos DB Provider
@@ -334,3 +334,25 @@ To configure an entity type to use [optimistic concurrency](xref:core/saving/con
 To make it easier to resolve concurrency errors you can map the eTag to a CLR property using <xref:Microsoft.EntityFrameworkCore.CosmosPropertyBuilderExtensions.IsETagConcurrency*>.
 
 [!code-csharp[Main](../../../../samples/core/Cosmos/ModelBuilding/OrderContext.cs?name=ETagProperty)]
+
+## Database triggers
+
+> [!NOTE]
+> Database trigger execution support was introduced in EF Core 10.0.
+
+Azure Cosmos DB supports pre- and post-triggers that run before or after database operations. EF Core can be configured to execute these triggers when performing save operations.
+
+> [!IMPORTANT]
+> Triggers are executed server-side by Azure Cosmos DB when EF Core performs operations, but they are not enforced - operations can be performed without running triggers if accessing the database directly. This means triggers should not be used for security-related functionality such as authentication or auditing, as they can be bypassed by applications that access the database directly without using EF Core.
+
+To configure triggers on an entity type, use the `HasTrigger` method:
+
+[!code-csharp[TriggerConfiguration](../../../../samples/core/Cosmos/ModelBuilding/TriggerSample.cs?name=TriggerConfiguration)]
+
+The `HasTrigger` method requires:
+
+* **modelName**: The name of the trigger in Azure Cosmos DB
+* **triggerType**: Either `TriggerType.Pre` (executed before the operation) or `TriggerType.Post` (executed after the operation)
+* **triggerOperation**: The operation that should execute the trigger - `Create`, `Replace`, `Delete`, or `All`
+
+Before triggers can be executed, they must be created in Azure Cosmos DB using the Cosmos SDK or Azure portal. The trigger name configured in EF Core must match the trigger name in Azure Cosmos DB.
