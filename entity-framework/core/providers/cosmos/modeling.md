@@ -325,6 +325,16 @@ Limitations:
 * Only dictionaries with string keys are supported.
 * Support for querying into primitive collections was added in EF Core 9.0.
 
+## Optimistic concurrency with eTags
+
+To configure an entity type to use [optimistic concurrency](xref:core/saving/concurrency) call <xref:Microsoft.EntityFrameworkCore.CosmosEntityTypeBuilderExtensions.UseETagConcurrency*>. This call will create an `_etag` property in [shadow state](xref:core/modeling/shadow-properties) and set it as the concurrency token.
+
+[!code-csharp[Main](../../../../samples/core/Cosmos/ModelBuilding/OrderContext.cs?name=ETag)]
+
+To make it easier to resolve concurrency errors you can map the eTag to a CLR property using <xref:Microsoft.EntityFrameworkCore.CosmosPropertyBuilderExtensions.IsETagConcurrency*>.
+
+[!code-csharp[Main](../../../../samples/core/Cosmos/ModelBuilding/OrderContext.cs?name=ETagProperty)]
+
 ## Database triggers
 
 > [!NOTE]
@@ -346,13 +356,3 @@ The `HasTrigger` method requires:
 * **triggerOperation**: The operation that should execute the trigger - `Create`, `Replace`, `Delete`, or `All`
 
 Before triggers can be executed, they must be created in Azure Cosmos DB using the Cosmos SDK or Azure portal. The trigger name configured in EF Core must match the trigger name in Azure Cosmos DB.
-
-## Optimistic concurrency with eTags
-
-To configure an entity type to use [optimistic concurrency](xref:core/saving/concurrency) call <xref:Microsoft.EntityFrameworkCore.CosmosEntityTypeBuilderExtensions.UseETagConcurrency*>. This call will create an `_etag` property in [shadow state](xref:core/modeling/shadow-properties) and set it as the concurrency token.
-
-[!code-csharp[Main](../../../../samples/core/Cosmos/ModelBuilding/OrderContext.cs?name=ETag)]
-
-To make it easier to resolve concurrency errors you can map the eTag to a CLR property using <xref:Microsoft.EntityFrameworkCore.CosmosPropertyBuilderExtensions.IsETagConcurrency*>.
-
-[!code-csharp[Main](../../../../samples/core/Cosmos/ModelBuilding/OrderContext.cs?name=ETagProperty)]
