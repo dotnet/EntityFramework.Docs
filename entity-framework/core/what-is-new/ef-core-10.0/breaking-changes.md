@@ -1,8 +1,8 @@
 ---
 title: Breaking changes in EF Core 10 (EF10) - EF Core
 description: List of breaking changes introduced in Entity Framework Core 10 (EF10)
-author: maumar
-ms.date: 01/05/2025
+author: roji
+ms.date: 10/09/2025
 uid: core/what-is-new/ef-core-10.0/breaking-changes
 ---
 
@@ -22,6 +22,7 @@ This page documents API and behavior changes that have the potential to break ex
 
 | **Breaking change**                                                                                             | **Impact** |
 |:--------------------------------------------------------------------------------------------------------------- | -----------|
+| [Application Name is now injected into the connection string](#sqlserver-application-name)                      | Low        |
 | [SQL Server json data type used by default on Azure SQL and compatibility level 170](#sqlserver-json-data-type) | Low        |
 | [ExecuteUpdateAsync now accepts a regular, non-expression lambda](#ExecuteUpdateAsync-lambda)                   | Low        |
 | [Complex type column names are now uniquified](#complex-type-column-uniquification)                             | Low        |
@@ -29,6 +30,20 @@ This page documents API and behavior changes that have the potential to break ex
 | [IDiscriminatorPropertySetConvention signature changed](#discriminator-convention-signature)                    | Low        |
 
 ## Low-impact changes
+
+<a name="sqlserver-application-name"></a>
+
+### Application Name is now injected into the connection string
+
+[Tracking Issue #35730](https://github.com/dotnet/efcore/issues/35730)
+
+#### New behavior
+
+When a connection string without an `Application Name` is passed to EF, EF now inserts an `Application Name` containing anonymous information about the EF and SqlClient versions being used. In the vast majority of cases, this doesn't impact the application in any way, but can affect behavior in some edge cases. For example, if you connect to the same database with both EF and another non-EF data access technology (e.g. Dapper, ADO.NET), SqlClient will use a different internal connection pool, as EF will now use a different, updated connection string (one where `Application Name` has been injected). If this sort of mixed access is done within a `TransactionScope`, this can cause escalation to a distributed transaction where previously none was necessary, due of the usage of two connection strings which SqlClient identifies as two distinct databases.
+
+#### Mitigations
+
+A mitigation is to simply define an `Application Name` in your connection string. Once one is defined, EF does not overwrite it and the original connection string is preserved exactly as-is.
 
 <a name="sqlserver-json-data-type"></a>
 
@@ -82,9 +97,6 @@ CREATE TABLE [Blogs] (
 Although the new JSON data type is the recommended way to store JSON data in SQL Server going forward, there may be some behavioral differences when transitioning from `nvarchar(max)`, and some specific querying forms may not be supported. For example, SQL Server does not support the DISTINCT operator over JSON arrays, and queries attempting to do so will fail.
 
 Note that if you have an existing table and are using <xref:Microsoft.EntityFrameworkCore.SqlServerDbContextOptionsExtensions.UseAzureSql*>, upgrading to EF 10 will cause a migration to be generated which alters all existing `nvarchar(max)` JSON columns to `json`. This alter operation is supported and should get applied seamlessly and without any issues, but is a non-trivial change to your database.
-
-> [!NOTE]
-> For 10.0.0 rc1, support for the new JSON data type has been temporarily disabled for Azure SQL Database, due to lacking support. These issues are expected to be resolved by the time EF 10.0 is released, and the JSON data type will become the default until then.
 
 #### Why
 
