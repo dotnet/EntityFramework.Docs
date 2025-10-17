@@ -16,6 +16,7 @@ The .NET Data Community Standups are live-streamed monthly (roughly) on Wednesda
 
 | Date         | Area                  | Title                                                                                    |
 |--------------|-----------------------|------------------------------------------------------------------------------------------|
+| Oct 16, 2025 | Migrations            | [Jeremy Miller shares his view on migrations and Marten](#Oct16_2025)               |
 | Sep 18, 2025 | ORMs                  | [Jiri and Nick talk about experience with Dapper and EF Core](#Sep18_2025)               |
 | Aug 21, 2025 | ORMs                  | [Learning about jOOQ with Lukas Eder](#Aug21_2025)                                       |
 | Jul 17, 2025 | Couchbase             | [Couchbase has an EF Core provider](#Jul17_2025)                                         |
@@ -107,6 +108,25 @@ The .NET Data Community Standups are live-streamed monthly (roughly) on Wednesda
 | May 6, 2020  | Welcome!              | [Introducing the EF Core Community Standup](#one)                                        |
 
 ## 2025
+
+<a name="Oct16_2025"></a>
+
+### Oct 16: [Jeremy Miller shares his view on migrations and Marten](https://www.youtube.com/live/_ICoF0utyt4?si=Mrcy0WbQ8f74dOXE)
+
+Join the .NET Data Community team as we welcome Jeremy Miller, developer of Marten, to share his insights on database migrations and the evolving capabilities of Marten.
+
+Featuring:
+
+- [Jeremy Miller](https://jeremydmiller.com/) (Special guest)
+- [Jiri Cincura](https://www.tabsoverspaces.com/) (Host)
+
+Links:
+
+- [Bluesky post](https://bsky.app/profile/jeremydmiller.bsky.social/post/3lp7m2renvk2u)
+- [Marten](https://martendb.io/)
+- [Wolverine](https://wolverinefx.io/)
+- [JasperFX](https://jasperfx.net/)
+- [Sable](https://bloomberg.github.io/sable/)
 
 <a name="Sep18_2025"></a>
 
