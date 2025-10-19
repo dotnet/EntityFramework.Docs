@@ -118,7 +118,7 @@ The type of relationship is determined by whether the navigation and its inverse
 
 Discovery of each of these types of relationship is shown in the examples below:
 
-A single, one-to-many relationship is discovered between `Blog` and `Post` is discovered by pairing the `Blog.Posts` and `Post.Blog` navigations:
+A single, one-to-many relationship is discovered between `Blog` and `Post` by pairing the `Blog.Posts` and `Post.Blog` navigations:
 
 <!--
         public class Blog
