@@ -13,7 +13,7 @@ This step-by-step walkthrough shows how to build a simple Windows Forms (WinForm
 The screen shots and code listings in this walkthrough are taken from Visual Studio 2022 17.3.0.
 
 > [!TIP]
-> You can view this article's [sample on GitHub](https://github.com/dotnet/EntityFramework.Docs/tree/live/samples/core/WinForms).
+> You can view this article's [sample on GitHub](https://github.com/dotnet/EntityFramework.Docs/tree/main/samples/core/WinForms).
 
 ## Prerequisites
 

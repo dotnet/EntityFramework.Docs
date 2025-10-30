@@ -13,7 +13,7 @@ Each <xref:Microsoft.EntityFrameworkCore.DbContext> instance tracks changes made
 This document presents an overview of Entity Framework Core (EF Core) change tracking and how it relates to queries and updates.
 
 > [!TIP]
-> You can run and debug into all the code in this document by [downloading the sample code from GitHub](https://github.com/dotnet/EntityFramework.Docs/tree/live/samples/core/ChangeTracking/ChangeTrackingInEFCore).
+> You can run and debug into all the code in this document by [downloading the sample code from GitHub](https://github.com/dotnet/EntityFramework.Docs/tree/main/samples/core/ChangeTracking/ChangeTrackingInEFCore).
 
 ## How to track entities
 
