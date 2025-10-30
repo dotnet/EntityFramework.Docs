@@ -4,6 +4,7 @@ description: Reference guide for the Entity Framework Core Visual Studio Package
 author: SamMonoRT
 ms.date: 11/08/2024
 uid: core/cli/powershell
+ms.custom: sfi-ropc-nochange
 ---
 # Entity Framework Core tools reference - Package Manager Console in Visual Studio
 

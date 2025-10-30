@@ -3,6 +3,7 @@ title: Testability and Entity Framework 4.0 - EF6
 description: Testability and Entity Framework 4.0
 author: SamMonoRT
 ms.date: 10/23/2016
+ms.custom: sfi-ropc-nochange
 ---
 # Testability and Entity Framework 4.0
 Scott Allen

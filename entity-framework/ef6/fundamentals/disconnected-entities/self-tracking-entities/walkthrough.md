@@ -4,6 +4,7 @@ description: Self-tracking entities walkthrough for Entity Framework 6
 author: SamMonoRT
 ms.date: 10/23/2016
 uid: ef6/fundamentals/disconnected-entities/self-tracking-entities/walkthrough
+ms.custom: sfi-ropc-nochange
 ---
 # Self-Tracking Entities Walkthrough
 > [!IMPORTANT]
