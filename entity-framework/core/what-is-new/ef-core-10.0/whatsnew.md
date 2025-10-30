@@ -560,7 +560,7 @@ await context.Blogs.ExecuteUpdateAsync(s =>
     s.SetProperty(b => b.Details.Views, b => b.Details.Views + 1));
 ```
 
-This generates the following for SQL Server 2025, using the efficient, new [`modify`](/sql/t-sql/data-types/json-data-type#the-modify-method) function to increment the JSON property `Views` by one:
+This generates the following for SQL Server 2025, using the efficient, new [`modify`](/sql/t-sql/data-types/json-data-type#the-modify-method ) function to increment the JSON property `Views` by one:
 
 ```sql
 UPDATE [b]
