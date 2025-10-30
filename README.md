@@ -6,7 +6,7 @@ Documentation issues for both EF Core and EF6 should be filed in this repo. Prod
 
 **We accept pull requests!**
 
-## Fixing typos/spelling/grammar/etc
+## Fixing typos/spelling/grammar/etc.
 
 Consider sending a pull request rather than filing an issue. This can be done entirely from the web:
 
