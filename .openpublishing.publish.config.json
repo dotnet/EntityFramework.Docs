@@ -27,7 +27,7 @@
   ],
   "sync_notification_subscribers": [],
   "branches_to_filter": [],
-  "git_repository_branch_open_to_public_contributors": "main",
+  "git_repository_branch_open_to_public_contributors": "live",
   "skip_source_output_uploading": false,
   "need_preview_pull_request": true,
   "need_pr_comments": false,
@@ -47,10 +47,6 @@
   ],
   "branch_target_mapping": {
     "live": [
-      "Publish",
-      "Pdf"
-    ],
-    "main": [
       "Publish",
       "Pdf"
     ]
