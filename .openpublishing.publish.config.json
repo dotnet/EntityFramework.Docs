@@ -27,7 +27,7 @@
   ],
   "sync_notification_subscribers": [],
   "branches_to_filter": [],
-  "git_repository_branch_open_to_public_contributors": "live",
+  "git_repository_branch_open_to_public_contributors": "main",
   "need_preview_pull_request": true,
   "need_pr_comments": false,
   "dependent_repositories": [
