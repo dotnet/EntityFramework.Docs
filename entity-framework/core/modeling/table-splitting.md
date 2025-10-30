@@ -33,7 +33,7 @@ In addition to the required configuration we call `Property(o => o.Status).HasCo
 [!code-csharp[TableSplittingConfiguration](../../../samples/core/Modeling/TableSplitting/TableSplittingContext.cs?name=TableSplitting)]
 
 > [!TIP]
-> See the [full sample project](https://github.com/dotnet/EntityFramework.Docs/tree/live/samples/core/Modeling/TableSplitting) for more context.
+> See the [full sample project](https://github.com/dotnet/EntityFramework.Docs/tree/main/samples/core/Modeling/TableSplitting) for more context.
 
 ### Usage
 

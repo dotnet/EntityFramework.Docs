@@ -35,7 +35,7 @@ The `poolSize` parameter of the `PooledDbContextFactory` constructor sets the ma
 
 ### Benchmarks
 
-Following are the benchmark results for fetching a single row from a SQL Server database running locally on the same machine, with and without context pooling. As always, results will change with the number of rows, the latency to your database server and other factors. Importantly, this benchmarks single-threaded pooling performance, while a real-world contended scenario may have different results; benchmark on your platform before making any decisions. [The source code is available here](https://github.com/dotnet/EntityFramework.Docs/tree/live/samples/core/Benchmarks/ContextPooling.cs), feel free to use it as a basis for your own measurements.
+Following are the benchmark results for fetching a single row from a SQL Server database running locally on the same machine, with and without context pooling. As always, results will change with the number of rows, the latency to your database server and other factors. Importantly, this benchmarks single-threaded pooling performance, while a real-world contended scenario may have different results; benchmark on your platform before making any decisions. [The source code is available here](https://github.com/dotnet/EntityFramework.Docs/tree/main/samples/core/Benchmarks/ContextPooling.cs), feel free to use it as a basis for your own measurements.
 
 |                Method | NumBlogs |     Mean |    Error |   StdDev |   Gen 0 | Gen 1 | Gen 2 | Allocated |
 |---------------------- |--------- |---------:|---------:|---------:|--------:|------:|------:|----------:|
@@ -72,7 +72,7 @@ Finally, arrange for a context to get injected from our Scoped factory:
 
 As this point, your controllers automatically get injected with a context instance that has the right tenant ID, without having to know anything about it.
 
-The full source code for this sample is available [here](https://github.com/dotnet/EntityFramework.Docs/tree/live/samples/core/Performance/AspNetContextPoolingWithState).
+The full source code for this sample is available [here](https://github.com/dotnet/EntityFramework.Docs/tree/main/samples/core/Performance/AspNetContextPoolingWithState).
 
 > [!NOTE]
 > Although EF Core takes care of resetting internal state for `DbContext` and its related services, it generally does not reset state in the underlying database driver, which is outside of EF. For example, if you manually open and use a `DbConnection` or otherwise manipulate ADO.NET state, it's up to you to restore that state before returning the context instance to the pool, e.g. by closing the connection. Failure to do so may cause state to get leaked across unrelated requests.

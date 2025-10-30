@@ -13,7 +13,7 @@ Mapping attributes are used to modify or override the configuration discovered b
 > This document only covers mapping attributes in the context of relationship configuration. Other uses of mapping attributes are covered in the relevant sections of the wider [modeling documentation](xref:core/modeling/index).
 
 > [!TIP]
-> The code below can be found in [MappingAttributes.cs](https://github.com/dotnet/EntityFramework.Docs/tree/live/samples/core/Modeling/Relationships/MappingAttributes.cs).
+> The code below can be found in [MappingAttributes.cs](https://github.com/dotnet/EntityFramework.Docs/tree/main/samples/core/Modeling/Relationships/MappingAttributes.cs).
 
 ## Where to get mapping attributes
 

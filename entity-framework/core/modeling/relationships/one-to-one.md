@@ -12,7 +12,7 @@ One-to-one relationships are used when one entity is associated with at most one
 This document is structured around lots of examples. The examples start with common cases, which also introduce concepts. Later examples cover less common kinds of configuration. A good approach here is to understand the first few examples and concepts, and then go to the later examples based on your specific needs. Based on this approach, we will start with simple "required" and "optional" one-to-one relationships.
 
 > [!TIP]
-> The code for all the examples below can be found in [OneToOne.cs](https://github.com/dotnet/EntityFramework.Docs/tree/live/samples/core/Modeling/Relationships/OneToOne.cs).
+> The code for all the examples below can be found in [OneToOne.cs](https://github.com/dotnet/EntityFramework.Docs/tree/main/samples/core/Modeling/Relationships/OneToOne.cs).
 
 ## Required one-to-one
 

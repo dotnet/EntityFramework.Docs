@@ -665,7 +665,7 @@ The first option has advantages in many situations--we'll take a quick look at i
 Starting with Preview 4, EF8 now includes built-in support for the second option, using JSON as the serialization format. JSON works well for this since modern relational databases include built-in mechanisms for querying and manipulating JSON, such that the JSON column can, effectively, be treated as a table when needed, without the overhead of actually creating that table. These same mechanisms allow JSON to be passed in parameters and then used in similar way to table-valued parameters in queries--more about this later.
 
 > [!TIP]
-> The code shown here comes from [PrimitiveCollectionsSample.cs](https://github.com/dotnet/EntityFramework.Docs/tree/live/samples/core/Miscellaneous/NewInEFCore8/PrimitiveCollectionsSample.cs).
+> The code shown here comes from [PrimitiveCollectionsSample.cs](https://github.com/dotnet/EntityFramework.Docs/tree/main/samples/core/Miscellaneous/NewInEFCore8/PrimitiveCollectionsSample.cs).
 
 ### Primitive collection properties
 
@@ -1017,7 +1017,7 @@ In all the examples above, column for primitive collection contains JSON. Howeve
 [!code-csharp[Pub](../../../../samples/core/Miscellaneous/NewInEFCore8/PrimitiveCollectionsInJsonSample.cs?name=Pub)]
 
 > [!TIP]
-> The code shown here comes from [PrimitiveCollectionsInJsonSample.cs](https://github.com/dotnet/EntityFramework.Docs/tree/live/samples/core/Miscellaneous/NewInEFCore8/PrimitiveCollectionsInJsonSample.cs).
+> The code shown here comes from [PrimitiveCollectionsInJsonSample.cs](https://github.com/dotnet/EntityFramework.Docs/tree/main/samples/core/Miscellaneous/NewInEFCore8/PrimitiveCollectionsInJsonSample.cs).
 
 We can now run a variation of our final query that, this time, extracts data from the JSON document, including queries into the primitive collections contained in the document:
 
@@ -1120,7 +1120,7 @@ CREATE TABLE [Beer] (
 EF8 includes improvements to the [JSON column mapping support introduced in EF7](xref:core/what-is-new/ef-core-7.0/whatsnew#json-columns).
 
 > [!TIP]
-> The code shown here comes from [JsonColumnsSample.cs](https://github.com/dotnet/EntityFramework.Docs/tree/live/samples/core/Miscellaneous/NewInEFCore8/JsonColumnsSample.cs).
+> The code shown here comes from [JsonColumnsSample.cs](https://github.com/dotnet/EntityFramework.Docs/tree/main/samples/core/Miscellaneous/NewInEFCore8/JsonColumnsSample.cs).
 
 ### Translate element access into JSON arrays
 
@@ -1241,7 +1241,7 @@ EF7 introduced support for mapping to JSON columns when using Azure SQL/SQL Serv
 The existing [documentation from What's New in EF7](xref:core/what-is-new/ef-core-7.0/whatsnew#json-columns) provides detailed information on JSON mapping, queries, and updates. This documentation now also applies to SQLite.
 
 > [!TIP]
-> The code shown in the EF7 documentation has been updated to also run on SQLite can can be found in [JsonColumnsSample.cs](https://github.com/dotnet/EntityFramework.Docs/tree/live/samples/core/Miscellaneous/NewInEFCore8/JsonColumnsSample.cs).
+> The code shown in the EF7 documentation has been updated to also run on SQLite can can be found in [JsonColumnsSample.cs](https://github.com/dotnet/EntityFramework.Docs/tree/main/samples/core/Miscellaneous/NewInEFCore8/JsonColumnsSample.cs).
 
 #### Queries into JSON columns
 
@@ -1347,7 +1347,7 @@ The `HierarchyId` type can be used for properties of an entity type. For example
 [!code-csharp[Halfling](../../../../samples/core/Miscellaneous/NewInEFCore8/HierarchyIdSample.cs?name=Halfling)]
 
 > [!TIP]
-> The code shown here and in the examples below comes from [HierarchyIdSample.cs](https://github.com/dotnet/EntityFramework.Docs/tree/live/samples/core/Miscellaneous/NewInEFCore8/HierarchyIdSample.cs).
+> The code shown here and in the examples below comes from [HierarchyIdSample.cs](https://github.com/dotnet/EntityFramework.Docs/tree/main/samples/core/Miscellaneous/NewInEFCore8/HierarchyIdSample.cs).
 
 > [!TIP]
 > If desired, `HierarchyId` is suitable for use as a key property type.
@@ -1661,7 +1661,7 @@ Following the update, querying for the descendents of "Mungo" returns "Bungo", "
 EF7 introduced [raw SQL queries returning scalar types](xref:core/querying/sql-queries#querying-scalar-(non-entity)-types). This is enhanced in EF8 to include raw SQL queries returning any mappable CLR type, without including that type in the EF model.
 
 > [!TIP]
-> The code shown here comes from [RawSqlSample.cs](https://github.com/dotnet/EntityFramework.Docs/tree/live/samples/core/Miscellaneous/NewInEFCore8/RawSqlSample.cs).
+> The code shown here comes from [RawSqlSample.cs](https://github.com/dotnet/EntityFramework.Docs/tree/main/samples/core/Miscellaneous/NewInEFCore8/RawSqlSample.cs).
 
 Queries using unmapped types are executed using <xref:Microsoft.EntityFrameworkCore.RelationalDatabaseFacadeExtensions.SqlQuery*> or <xref:Microsoft.EntityFrameworkCore.RelationalDatabaseFacadeExtensions.SqlQueryRaw*>. The former uses string interpolation to parameterize the query, which helps ensure that all non-constant values are parameterized. For example, consider the following database table:
 
@@ -1850,7 +1850,7 @@ The returned `IQueryable` can be composed upon when it is the result of a view o
 EF8 adds support for [lazy-loading of navigations](xref:core/querying/related-data/lazy) on entities that are not being tracked by the `DbContext`. This means a no-tracking query can be followed by lazy-loading of navigations on the entities returned by the no-tracking query.
 
 > [!TIP]
-> The code for the lazy-loading examples shown below comes from [LazyLoadingSample.cs](https://github.com/dotnet/EntityFramework.Docs/tree/live/samples/core/Miscellaneous/NewInEFCore8/LazyLoadingSample.cs).
+> The code for the lazy-loading examples shown below comes from [LazyLoadingSample.cs](https://github.com/dotnet/EntityFramework.Docs/tree/main/samples/core/Miscellaneous/NewInEFCore8/LazyLoadingSample.cs).
 
 For example, consider a no-tracking query for blogs:
 
@@ -1943,7 +1943,7 @@ EF8 contains new public APIs so that applications can now use these data structu
 [!code-csharp[LookupByPrimaryKey](../../../../samples/core/Miscellaneous/NewInEFCore8/LookupByKeySample.cs?name=LookupByPrimaryKey)]
 
 > [!TIP]
-> The code shown here comes from [LookupByKeySample.cs](https://github.com/dotnet/EntityFramework.Docs/tree/live/samples/core/Miscellaneous/NewInEFCore8/LookupByKeySample.cs).
+> The code shown here comes from [LookupByKeySample.cs](https://github.com/dotnet/EntityFramework.Docs/tree/main/samples/core/Miscellaneous/NewInEFCore8/LookupByKeySample.cs).
 
 The [`FindEntry`](https://github.com/dotnet/efcore/blob/81886272a761df8fafe4970b895b1e1fe35effb8/src/EFCore/ChangeTracking/LocalView.cs#L543) method returns either the <xref:Microsoft.EntityFrameworkCore.ChangeTracking.EntityEntry`1> for the tracked entity, or `null` if no entity with the given key is being tracked. Like all methods on `LocalView`, the database is never queried, even if the entity is not found. The returned entry contains the entity itself, as well as tracking information. For example:
 
@@ -2082,7 +2082,7 @@ public class OpeningHours
 [!code-csharp[BritishSchools](../../../../samples/core/Miscellaneous/NewInEFCore8/DateOnlyTimeOnlySample.cs?name=BritishSchools)]
 
 > [!TIP]
-> The code shown here comes from [DateOnlyTimeOnlySample.cs](https://github.com/dotnet/EntityFramework.Docs/tree/live/samples/core/Miscellaneous/NewInEFCore8/DateOnlyTimeOnlySample.cs).
+> The code shown here comes from [DateOnlyTimeOnlySample.cs](https://github.com/dotnet/EntityFramework.Docs/tree/main/samples/core/Miscellaneous/NewInEFCore8/DateOnlyTimeOnlySample.cs).
 
 > [!NOTE]
 > This model represents only British schools and stores times as local (GMT) times. Handling different timezones would complicate this code significantly. Note that using `DateTimeOffset` would not help here, since opening and closing times have different offsets depending whether daylight saving time is active or not.
@@ -2283,7 +2283,7 @@ b.Property(e => e.LeaseDate).HasDefaultValueSql("getutcdate()");
 ```
 
 > [!TIP]
-> The code shown below comes from [DefaultConstraintSample.cs](https://github.com/dotnet/EntityFramework.Docs/tree/live/samples/core/Miscellaneous/NewInEFCore8/DefaultConstraintSample.cs).
+> The code shown below comes from [DefaultConstraintSample.cs](https://github.com/dotnet/EntityFramework.Docs/tree/main/samples/core/Miscellaneous/NewInEFCore8/DefaultConstraintSample.cs).
 
 In order for EF to make use of this, it must determine when and when not to send a value for the column. By default, EF uses the CLR default as a sentinel for this. That is, when the value of `Status` or `LeaseDate` in the examples above are the CLR defaults for these types, then EF _interprets that to mean that the property has not been set_, and so does not send a value to the database. This works well for reference types--for example, if the `string` property `Status` is `null`, then EF doesn't send `null` to the database, but rather does not include any value so that the database default (`"Hidden"`) is used. Likewise, for the `DateTime` property `LeaseDate`, EF will not insert the CLR default value of `1/1/0001 12:00:00 AM`, but will instead omit this value so that database default is used.
 

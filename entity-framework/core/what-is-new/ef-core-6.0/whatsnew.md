@@ -11,7 +11,7 @@ uid: core/what-is-new/ef-core-6.0/whatsnew
 EF Core 6.0 has [shipped to NuGet](https://www.nuget.org/packages/Microsoft.EntityFrameworkCore/). This page contains an overview of interesting changes introduced in this release.
 
 > [!TIP]
-> You can run and debug into the samples shown below by [downloading the sample code from GitHub](https://github.com/dotnet/EntityFramework.Docs/tree/live/samples/core/Miscellaneous/NewInEFCore6).
+> You can run and debug into the samples shown below by [downloading the sample code from GitHub](https://github.com/dotnet/EntityFramework.Docs/tree/main/samples/core/Miscellaneous/NewInEFCore6).
 
 ## SQL Server temporal tables
 
@@ -682,7 +682,7 @@ If supporting any of these features is critical to your success, then please vot
 ### Benchmarks
 
 > [!TIP]
-> You can try compiling a large model and running a benchmark on it by [downloading the sample code from GitHub](https://github.com/dotnet/EntityFramework.Docs/tree/live/samples/core/Miscellaneous/CompiledModels).
+> You can try compiling a large model and running a benchmark on it by [downloading the sample code from GitHub](https://github.com/dotnet/EntityFramework.Docs/tree/main/samples/core/Miscellaneous/CompiledModels).
 
 The model in the GitHub repo referenced above contains 449 entity types, 6390 properties, and 720 relationships. This is a moderately large model. Using [BenchmarkDotNet](https://www.nuget.org/packages/BenchmarkDotNet) to measure, the average time to first query is 1.02 seconds on a reasonably powerful laptop. Using compiled models brings this down to 117 milliseconds on the same hardware. An 8x to 10x improvement like this stays relatively constant as the model size increases.
 
@@ -712,7 +712,7 @@ After these improvements, the gap between the popular "micro-ORM" [Dapper](https
 EF Core 6.0 contains many improvements to the Azure Cosmos DB database provider.
 
 > [!TIP]
-> You can run and debug into all the the Cosmos-specific samples by [downloading the sample code from GitHub](https://github.com/dotnet/EntityFramework.Docs/tree/live/samples/core/Miscellaneous/NewInEFCore6.Cosmos).
+> You can run and debug into all the the Cosmos-specific samples by [downloading the sample code from GitHub](https://github.com/dotnet/EntityFramework.Docs/tree/main/samples/core/Miscellaneous/NewInEFCore6.Cosmos).
 
 ### Default to implicit ownership
 
@@ -2622,7 +2622,7 @@ modelBuilder
 -->
 [!code-csharp[WithDifferentTable](../../../../samples/core/Miscellaneous/NewInEFCore6/OptionalDependentsSample.cs?name=WithDifferentTable)]
 
-See the [OptionalDependentsSample](https://github.com/dotnet/EntityFramework.Docs/tree/live/samples/core/Miscellaneous/NewInEFCore6) in GitHub for more examples of optional dependents, including cases with nested optional dependents.
+See the [OptionalDependentsSample](https://github.com/dotnet/EntityFramework.Docs/tree/main/samples/core/Miscellaneous/NewInEFCore6) in GitHub for more examples of optional dependents, including cases with nested optional dependents.
 
 ## New mapping attributes
 
@@ -3568,7 +3568,7 @@ The EF Core codebase now uses [C# nullable reference types (NRTs)](/dotnet/cshar
 ## Microsoft.Data.Sqlite 6.0
 
 > [!TIP]
-> You can run and debug into all the samples shown below by [downloading the sample code from GitHub](https://github.com/dotnet/EntityFramework.Docs/tree/live/samples/core/Miscellaneous/NewInEFCore6).
+> You can run and debug into all the samples shown below by [downloading the sample code from GitHub](https://github.com/dotnet/EntityFramework.Docs/tree/main/samples/core/Miscellaneous/NewInEFCore6).
 
 ### Connection Pooling
 

@@ -10,7 +10,7 @@ uid: core/saving/basic
 <xref:Microsoft.EntityFrameworkCore.DbContext.SaveChanges?displayProperty=nameWithType> is one of two techniques for saving changes to the database with EF. With this method, you perform one or more *tracked changes* (add, update, delete), and then apply those changes by calling the `SaveChanges` method. As an alternative, <xref:Microsoft.EntityFrameworkCore.RelationalQueryableExtensions.ExecuteUpdate*> and <xref:Microsoft.EntityFrameworkCore.RelationalQueryableExtensions.ExecuteDelete*> can be used without involving the change tracker. For an introductory comparison of these two techniques, see the [Overview page](xref:core/saving/index) on saving data.
 
 > [!TIP]
-> You can view this article's [sample](https://github.com/dotnet/EntityFramework.Docs/tree/live/samples/core/Saving/Basics/) on GitHub.
+> You can view this article's [sample](https://github.com/dotnet/EntityFramework.Docs/tree/main/samples/core/Saving/Basics/) on GitHub.
 
 ## Adding Data
 
