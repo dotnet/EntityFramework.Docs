@@ -8,7 +8,7 @@ uid: core/saving/concurrency
 # Handling Concurrency Conflicts
 
 > [!TIP]
-> You can view this article's [sample](https://github.com/dotnet/EntityFramework.Docs/tree/live/samples/core/Saving/Concurrency/) on GitHub.
+> You can view this article's [sample](https://github.com/dotnet/EntityFramework.Docs/tree/main/samples/core/Saving/Concurrency/) on GitHub.
 
 In most scenarios, databases are used concurrently by multiple application instances, each performing modifications to data independently of each other. When the same data gets modified at the same time, inconsistencies and data corruption can occur, e.g. when two clients modify different columns in the same row which are related in some way. This page discusses mechanisms for ensuring that your data stays consistent in the face of such concurrent changes.
 
