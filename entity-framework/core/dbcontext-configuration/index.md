@@ -2,7 +2,7 @@
 title: DbContext Lifetime, Configuration, and Initialization - EF Core
 description: Patterns for creating and managing DbContext instances with or without dependency injection
 author: SamMonoRT
-ms.date: 11/07/2020
+ms.date: 09/30/2025
 uid: core/dbcontext-configuration/index
 ---
 
@@ -309,6 +309,8 @@ The following table contains examples of common methods called on `DbContextOpti
 | <xref:Microsoft.EntityFrameworkCore.DbContextOptionsBuilder.EnableDetailedErrors*>       | More detailed query errors (at the expense of performance)  | [Logging, Events, and Diagnostics](xref:core/logging-events-diagnostics/index)
 | <xref:Microsoft.EntityFrameworkCore.DbContextOptionsBuilder.ConfigureWarnings*>          | Ignore or throw for warnings and other events               | [Logging, Events, and Diagnostics](xref:core/logging-events-diagnostics/index)
 | <xref:Microsoft.EntityFrameworkCore.DbContextOptionsBuilder.AddInterceptors*>            | Registers EF Core interceptors                              | [Logging, Events, and Diagnostics](xref:core/logging-events-diagnostics/index)
+| <xref:Microsoft.EntityFrameworkCore.DbContextOptionsBuilder.EnableServiceProviderCaching*> | Controls caching of the internal service provider          | [Service Provider Caching](#service-provider-caching)
+| <xref:Microsoft.EntityFrameworkCore.DbContextOptionsBuilder.UseMemoryCache*>             | Configures the memory cache used by EF Core                | [Memory Cache Integration](#memory-cache-integration)
 | <xref:Microsoft.EntityFrameworkCore.ProxiesExtensions.UseLazyLoadingProxies*>            | Use dynamic proxies for lazy-loading                        | [Lazy Loading](xref:core/querying/related-data/lazy)
 | <xref:Microsoft.EntityFrameworkCore.ProxiesExtensions.UseChangeTrackingProxies*>         | Use dynamic proxies for change-tracking                     | Coming soon...
 
@@ -422,6 +424,61 @@ This is safe from concurrent access issues in most ASP.NET Core applications bec
 Any code that explicitly executes multiple threads in parallel should ensure that `DbContext` instances aren't ever accessed concurrently.
 
 Using dependency injection, this can be achieved by either registering the context as scoped, and creating scopes (using `IServiceScopeFactory`) for each thread, or by registering the `DbContext` as transient (using the overload of `AddDbContext` which takes a `ServiceLifetime` parameter).
+
+## EnableServiceProviderCaching
+
+EF Core uses an internal service provider to manage services required for database operations, including query compilation, model building, and other core functionality. By default, EF Core caches these internal service providers to improve performance when multiple `DbContext` instances share the same configuration.
+
+The <xref:Microsoft.EntityFrameworkCore.DbContextOptionsBuilder.EnableServiceProviderCaching*> method controls whether EF Core caches the internal service provider:
+
+```csharp
+public class ApplicationDbContext : DbContext
+{
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    {
+        optionsBuilder
+            .EnableServiceProviderCaching(false)
+            .UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=Test");
+    }
+}
+```
+
+**Default behavior**: Service provider caching is **enabled by default** (`true`). This means:
+
+- Service providers are cached and reused across `DbContext` instances with the same configuration
+- Better performance for applications that create many `DbContext` instances
+- Lower memory overhead when multiple contexts share configurations
+
+**When to disable caching**: You might want to disable service provider caching (`false`) for testing environments to ensure each test gets a fresh service provider when `DbContext` configurations change test-to-test.
+
+```csharp
+public void ConfigureServices(IServiceCollection services)
+{
+    services.AddDbContext<ApplicationDbContext>(options =>
+        options
+            .UseSqlServer(connectionString)
+            .EnableServiceProviderCaching(true)); // Default, but shown for clarity
+}
+```
+
+## Memory Cache Integration
+
+EF Core integrates with ASP.NET Core's memory caching infrastructure through `IMemoryCache`. However, this is not used for the internal service provider caching described above.
+
+EF Core automatically configures `IMemoryCache` with a default size limit of 10240 for internal caching operations such as query compilation and model building. You should call `AddMemoryCache` if you need to change these defaults. For reference, a compiled query has a cache size of 10, while the built model has a cache size of 100.
+
+```csharp
+public void ConfigureServices(IServiceCollection services)
+{
+    services.AddMemoryCache(options =>
+    {
+        options.SizeLimit = 20480; // Custom size limit for EF Core caching
+    });
+    
+    services.AddDbContext<ApplicationDbContext>(options =>
+        options.UseSqlServer(connectionString));
+}
+```
 
 ## More reading
 
