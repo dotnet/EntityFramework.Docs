@@ -628,20 +628,11 @@ await context.Blogs.ExecuteUpdateAsync(s =>
 
 Thanks to [@aradalvand](https://github.com/aradalvand) for proposing and pushing for this change (in [#32018](https://github.com/dotnet/efcore/issues/32018)).
 
-<a name="sqlite"></a>
-
-## SQLite
-
-### Improved AUTOINCREMENT support
-
-SQLite AUTOINCREMENT is now a first-class feature with full support through conventions and the Fluent API. Previously, properties with value converters couldn't configure AUTOINCREMENT and would cause false pending model change warnings.
-
-For more information, see [SQLite Value Generation](xref:core/providers/sqlite/value-generation).
-
 <a name="other-improvements"></a>
 
 ## Other improvements
 
+- AUTOINCREMENT can now be disabled for SQLite and is also supported for properties with value converters. For more information, see [SQLite Value Generation](xref:core/providers/sqlite/value-generation).
 - Make SQL Server scaffolding compatible with Azure Data Explorer ([#34832](https://github.com/dotnet/efcore/pull/34832), contributed by [@barnuri](https://github.com/barnuri)).
 - Associate the DatabaseRoot with the scoped options instance and not the singleton options ([#34477](https://github.com/dotnet/efcore/pull/34477), contributed by [@koenigst](https://github.com/koenigst)).
 - Redact inlined constants from log when sensitive logging is off ([#35724](https://github.com/dotnet/efcore/pull/35724)).

@@ -11,7 +11,7 @@ This page details value generation configuration and patterns that are specific 
 
 ## AUTOINCREMENT columns
 
-By convention, numeric primary key columns that are configured to have their values generated on add are set up with SQLite's AUTOINCREMENT feature. Starting with EF Core 10, SQLite AUTOINCREMENT is a first-class feature with full support through conventions and the Fluent API.
+By convention, numeric primary key columns that are configured to have their values generated on add are set up with [SQLite's AUTOINCREMENT feature](https://sqlite.org/autoinc.html). Starting with EF Core 10, SQLite AUTOINCREMENT is implemented through conventions and the Fluent API, so it can be enabled or disabled as necessary.
 
 ### Configuring AUTOINCREMENT
 
@@ -21,51 +21,29 @@ By convention, integer primary keys are automatically configured with AUTOINCREM
 
 ## Disabling AUTOINCREMENT for default SQLite value generation
 
-In some cases, you may want to disable AUTOINCREMENT and use SQLite's default value generation behavior instead. You can do this using the Metadata API:
+AUTOINCREMENT imposes extra CPU, memory, disk space, and disk I/O overhead compared to the default key generation algorithm in SQLite - [ROWID](https://sqlite.org/lang_createtable.html#rowid). The downside of `ROWID` is that it reuses values from deleted rows. If your scenario wouldn't be affected by this, you may want to disable AUTOINCREMENT and use SQLite's default value generation behavior instead. You can do this using the Metadata API:
 
+<!--
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        modelBuilder.Entity<Blog>()
+            .Property(b => b.Id)
+            .Metadata.SetValueGenerationStrategy(SqliteValueGenerationStrategy.None);
+    }
+-->
 [!code-csharp[Main](../../../../samples/core/Sqlite/ValueGeneration/SqliteValueGenerationStrategyNone.cs?name=SqliteValueGenerationStrategyNone&highlight=5)]
-
-Starting with EF Core 10, you can also use the strongly-typed Metadata API:
-
-```csharp
-protected override void OnModelCreating(ModelBuilder modelBuilder)
-{
-    modelBuilder.Entity<Post>()
-        .Property(p => p.Id)
-        .Metadata.SetValueGenerationStrategy(SqliteValueGenerationStrategy.None);
-}
-```
 
 Alternatively, you can disable value generation entirely:
 
-```csharp
-protected override void OnModelCreating(ModelBuilder modelBuilder)
-{
-    modelBuilder.Entity<Blog>()
-        .Property(b => b.Id)
-        .ValueGeneratedNever();
-}
-```
-
-This means that it's up to the application to supply a value for the property before saving to the database. Note that this still won't disable the default value generation server-side, so non-EF usages could still get a generated value. To completely disable value generation the user can change the column type from `INTEGER` to `INT`.
-
-## Migration behavior
-
-When EF Core generates migrations for SQLite AUTOINCREMENT columns, the generated migration will include the `Sqlite:Autoincrement` annotation:
-
-```csharp
-migrationBuilder.CreateTable(
-    name: "Blogs",
-    columns: table => new
+<!--
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        Id = table.Column<int>(type: "INTEGER", nullable: false)
-            .Annotation("Sqlite:Autoincrement", true),
-        Title = table.Column<string>(type: "TEXT", nullable: true)
-    },
-    constraints: table =>
-    {
-        table.PrimaryKey("PK_Blogs", x => x.Id);
-    });
-```
+        modelBuilder.Entity<Blog>()
+            .Property(b => b.Id)
+            .ValueGeneratedNever();
+    }
+-->
+[!code-csharp[Main](../../../../samples/core/Sqlite/ValueGeneration/SqliteValueGeneratedNever.cs?name=SqliteValueGeneratedNever&highlight=5)]
 
-This ensures that the AUTOINCREMENT feature is properly applied when the migration is executed against the SQLite database.
+This means that it's up to the application to supply a value for the property before saving to the database. Note that this still won't disable the default value generation server-side, so non-EF usages could still get a generated value. To [completely disable value generation](https://sqlite.org/lang_createtable.html#rowids_and_the_integer_primary_key) the user can change the column type from `INTEGER` to `INT`.
+

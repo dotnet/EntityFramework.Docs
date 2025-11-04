@@ -13,12 +13,12 @@ public readonly struct BlogId
 
 public class SqliteAutoincrementWithValueConverterContext : DbContext
 {
-    public DbSet<BlogPost> Blogs { get; set; }
+    public DbSet<Blog> Blogs { get; set; }
 
     #region SqliteAutoincrementWithValueConverter
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<BlogPost>()
+        modelBuilder.Entity<Blog>()
             .Property(b => b.Id)
             .HasConversion<int>()
             .UseAutoincrement();
@@ -29,7 +29,7 @@ public class SqliteAutoincrementWithValueConverterContext : DbContext
         => optionsBuilder.UseSqlite("Data Source=sample.db");
 }
 
-public class BlogPost
+public class Blog
 {
     public BlogId Id { get; set; }
     public string Title { get; set; }
