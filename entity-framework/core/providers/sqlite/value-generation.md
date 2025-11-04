@@ -17,7 +17,7 @@ By convention, numeric primary key columns that are configured to have their val
 
 By convention, integer primary keys are automatically configured with AUTOINCREMENT when they are not composite and don't have a foreign key on them. However, you may need to explicitly configure a property to use SQLite AUTOINCREMENT when the property has a value conversion from a non-integer type, or when overriding conventions:
 
-[!code-csharp[Main](../../../../samples/core/Sqlite/ValueGeneration/SqliteAutoincrementWithValueConverter.cs?name=SqliteAutoincrementWithValueConverter&highlight=6)]
+[!code-csharp[Main](../../../../samples/core/Sqlite/ValueGeneration/SqliteAutoincrementWithValueConverter.cs?name=SqliteAutoincrementWithValueConverter&highlight=4)]
 
 ## Disabling AUTOINCREMENT for default SQLite value generation
 
@@ -46,4 +46,3 @@ Alternatively, you can disable value generation entirely:
 [!code-csharp[Main](../../../../samples/core/Sqlite/ValueGeneration/SqliteValueGeneratedNever.cs?name=SqliteValueGeneratedNever&highlight=5)]
 
 This means that it's up to the application to supply a value for the property before saving to the database. Note that this still won't disable the default value generation server-side, so non-EF usages could still get a generated value. To [completely disable value generation](https://sqlite.org/lang_createtable.html#rowids_and_the_integer_primary_key) the user can change the column type from `INTEGER` to `INT`.
-
