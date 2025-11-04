@@ -423,10 +423,10 @@ Using dependency injection, this can be achieved by either registering the conte
 
 <a name="configuredbcontext"></a>
 
-## ConfigureDbContext for configuration composition (intermediate)
+## ConfigureDbContext for configuration composition
 
 > [!NOTE]
-> This section covers intermediate-level usage of EF Core primarily intended for reusable libraries and components (such as Aspire). Most applications should use the `AddDbContext` pattern described earlier in this article.
+> This section covers intermediate-level usage of EF Core primarily intended for reusable libraries and components. Most applications should use the `AddDbContextFactory` pattern described earlier in this article.
 
 Starting with EF Core 9.0, you can use <xref:Microsoft.Extensions.DependencyInjection.EntityFrameworkServiceCollectionExtensions.ConfigureDbContext*> to apply additional configuration to a `DbContext` either before or after the `AddDbContext` call. This is particularly useful for composing non-conflicting configuration in reusable components or tests.
 
