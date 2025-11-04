@@ -90,77 +90,6 @@ The final result is an `ApplicationDbContext` instance created for each request 
 
 Read further in this article to learn more about configuration options. See [Dependency injection in ASP.NET Core](/aspnet/core/fundamentals/dependency-injection) for more information.
 
-<a name="configuredbcontext"></a>
-
-## ConfigureDbContext for configuration composition
-
-Starting with EF Core 9.0, you can use <xref:Microsoft.Extensions.DependencyInjection.EntityFrameworkServiceCollectionExtensions.ConfigureDbContext*> to apply additional configuration to a `DbContext` either before or after the `AddDbContext` call. This is particularly useful for composing non-conflicting configuration in reusable components or tests.
-
-### Basic ConfigureDbContext usage
-
-`ConfigureDbContext` allows you to add configuration in a reusable library or component without replacing the entire provider configuration:
-
-<!--
-        var services = new ServiceCollection();
-
-        services.ConfigureDbContext<BlogContext>(options =>
-            options.EnableSensitiveDataLogging()
-                   .EnableDetailedErrors());
-
-        services.AddDbContext<BlogContext>(options =>
-            options.UseInMemoryDatabase("BasicExample"));
-
-        var serviceProvider = services.BuildServiceProvider();
--->
-[!code-csharp[BasicConfigureDbContext](../../../samples/core/Miscellaneous/ConfiguringDbContext/ConfigureDbContextSample.cs?name=BasicConfigureDbContext)]
-
-### Provider-specific configuration without connection strings
-
-To apply provider-specific configuration you can use provider-specific configuration methods without supplying the connection string. The SQL Server provider also includes `ConfigureSqlEngine` for this case. See [SQL Server-specific batching behavior](xref:core/providers/sql-server/misc#configuresqlengine) for more information.
-
-<!--
-        var services = new ServiceCollection();
-
-        services.ConfigureDbContext<BlogContext>(options =>
-            options.UseSqlServer(sqlOptions => 
-                sqlOptions.EnableRetryOnFailure()));
-
-        services.AddDbContext<BlogContext>(options =>
-            options.UseSqlServer("connectionString"));
-
-        var serviceProvider = services.BuildServiceProvider();
--->
-[!code-csharp[ProviderSpecificConfiguration](../../../samples/core/Miscellaneous/ConfiguringDbContext/ConfigureDbContextSample.cs?name=ProviderSpecificConfiguration)]
-
-### ConfigureDbContext and AddDbContext precedence
-
-When both `ConfigureDbContext` and `AddDbContext` are used, or when multiple calls to these methods are made, the configuration is applied in the order the methods are called, with later calls taking precedence for conflicting options.
-
-For non-conflicting options (like adding logging, interceptors, or other settings), all configurations are composed together:
-
-<!--
-        var services = new ServiceCollection();
-
-        services.ConfigureDbContext<BlogContext>(options =>
-            options.LogTo(Console.WriteLine));
-
-        services.AddDbContext<BlogContext>(options =>
-            options.UseInMemoryDatabase("CompositionExample"));
-
-        services.ConfigureDbContext<BlogContext>(options =>
-            options.EnableSensitiveDataLogging());
-
-        var serviceProvider = services.BuildServiceProvider();
--->
-[!code-csharp[ConfigurationComposition](../../../samples/core/Miscellaneous/ConfiguringDbContext/ConfigureDbContextSample.cs?name=ConfigurationComposition)]
-
-For conflicting options, the last configuration wins. See [breaking changes in EF Core 8.0](xref:core/what-is-new/ef-core-8.0/breaking-changes#AddDbContext) for more information about this behavior change.
-
-> [!NOTE]
-> Configuring a different provider will not remove the previous provider configuration. This can lead to errors when creating the context. To completely replace the provider, you need to remove the context registration and re-add it, or create a new service collection.
-
-<!-- See also [Using Dependency Injection](TODO) for advanced dependency injection configuration with EF Core. -->
-
 ## Basic DbContext initialization with 'new'
 
 `DbContext` instances can be constructed with `new` in C#. Configuration can be performed by overriding the `OnConfiguring` method, or by passing options to the constructor. For example:
@@ -491,6 +420,80 @@ This is safe from concurrent access issues in most ASP.NET Core applications bec
 Any code that explicitly executes multiple threads in parallel should ensure that `DbContext` instances aren't ever accessed concurrently.
 
 Using dependency injection, this can be achieved by either registering the context as scoped, and creating scopes (using `IServiceScopeFactory`) for each thread, or by registering the `DbContext` as transient (using the overload of `AddDbContext` which takes a `ServiceLifetime` parameter).
+
+<a name="configuredbcontext"></a>
+
+## ConfigureDbContext for configuration composition (intermediate)
+
+> [!NOTE]
+> This section covers intermediate-level usage of EF Core primarily intended for reusable libraries and components (such as Aspire). Most applications should use the `AddDbContext` pattern described earlier in this article.
+
+Starting with EF Core 9.0, you can use <xref:Microsoft.Extensions.DependencyInjection.EntityFrameworkServiceCollectionExtensions.ConfigureDbContext*> to apply additional configuration to a `DbContext` either before or after the `AddDbContext` call. This is particularly useful for composing non-conflicting configuration in reusable components or tests.
+
+### Basic ConfigureDbContext usage
+
+`ConfigureDbContext` allows you to add configuration in a reusable library or component without replacing the entire provider configuration:
+
+<!--
+        var services = new ServiceCollection();
+
+        services.ConfigureDbContext<BlogContext>(options =>
+            options.EnableSensitiveDataLogging()
+                   .EnableDetailedErrors());
+
+        services.AddDbContext<BlogContext>(options =>
+            options.UseInMemoryDatabase("BasicExample"));
+
+        var serviceProvider = services.BuildServiceProvider();
+-->
+[!code-csharp[BasicConfigureDbContext](../../../samples/core/Miscellaneous/ConfiguringDbContext/ConfigureDbContextSample.cs?name=BasicConfigureDbContext)]
+
+### Provider-specific configuration without connection strings
+
+To apply provider-specific configuration you can use provider-specific configuration methods without supplying the connection string. The SQL Server provider also includes `ConfigureSqlEngine` for this case. See [SQL Server-specific batching behavior](xref:core/providers/sql-server/misc#configuresqlengine) for more information.
+
+<!--
+        var services = new ServiceCollection();
+
+        services.ConfigureDbContext<BlogContext>(options =>
+            options.UseSqlServer(sqlOptions => 
+                sqlOptions.EnableRetryOnFailure()));
+
+        services.AddDbContext<BlogContext>(options =>
+            options.UseSqlServer("connectionString"));
+
+        var serviceProvider = services.BuildServiceProvider();
+-->
+[!code-csharp[ProviderSpecificConfiguration](../../../samples/core/Miscellaneous/ConfiguringDbContext/ConfigureDbContextSample.cs?name=ProviderSpecificConfiguration)]
+
+### ConfigureDbContext and AddDbContext precedence
+
+When both `ConfigureDbContext` and `AddDbContext` are used, or when multiple calls to these methods are made, the configuration is applied in the order the methods are called, with later calls taking precedence for conflicting options.
+
+For non-conflicting options (like adding logging, interceptors, or other settings), all configurations are composed together:
+
+<!--
+        var services = new ServiceCollection();
+
+        services.ConfigureDbContext<BlogContext>(options =>
+            options.LogTo(Console.WriteLine));
+
+        services.AddDbContext<BlogContext>(options =>
+            options.UseInMemoryDatabase("CompositionExample"));
+
+        services.ConfigureDbContext<BlogContext>(options =>
+            options.EnableSensitiveDataLogging());
+
+        var serviceProvider = services.BuildServiceProvider();
+-->
+[!code-csharp[ConfigurationComposition](../../../samples/core/Miscellaneous/ConfiguringDbContext/ConfigureDbContextSample.cs?name=ConfigurationComposition)]
+
+For conflicting options, the last configuration wins. See [breaking changes in EF Core 8.0](xref:core/what-is-new/ef-core-8.0/breaking-changes#AddDbContext) for more information about this behavior change.
+
+> [!NOTE]
+> Configuring a different provider will not remove the previous provider configuration. This can lead to errors when creating the context. To completely replace the provider, you need to remove the context registration and re-add it, or create a new service collection.
+
+<!-- See also [Using Dependency Injection](TODO) for advanced dependency injection configuration with EF Core. -->
 
 ## More reading
 
