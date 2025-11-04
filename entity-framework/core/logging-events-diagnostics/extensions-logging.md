@@ -24,25 +24,11 @@ Other application types can use the [GenericHost](/dotnet/core/extensions/generi
 
 `Microsoft.Extensions.Logging` requires creation of a <xref:Microsoft.Extensions.Logging.LoggerFactory>. This factory should be stored as a static/global instance somewhere and used each time a DbContext is created. For example, it is common to store the logger factory as a static property on the DbContext.
 
-### [EF Core 3.0 and above](#tab/v3)
-
 <!--
         public static readonly ILoggerFactory MyLoggerFactory
             = LoggerFactory.Create(builder => { builder.AddConsole(); });
 -->
 [!code-csharp[Main](../../../samples/core/Miscellaneous/Logging/Logging/BloggingContext.cs#DefineLoggerFactory)]
-
-### [EF Core 2.1](#tab/v2)
-
-```csharp
-public static readonly LoggerFactory MyLoggerFactory
-    = new LoggerFactory(new[] { new ConsoleLoggerProvider((_, __) => true, true) });
-```
-
-> [!WARNING]
-> In EF Core 2.1, It is very important that applications do not create a new LoggerFactory instance for each DbContext instance. Doing so will result in a memory leak and poor performance. This has been fixed in EF Core 3.0 and above.
-
-***
 
 This singleton/global instance should then be registered with EF Core on the <xref:Microsoft.EntityFrameworkCore.DbContextOptionsBuilder>. For example:
 
