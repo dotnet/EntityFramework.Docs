@@ -116,13 +116,13 @@ Flexible projection magic for EF Core. Use properties, methods, and extension me
 
 ### Entity Framework Plus
 
-Extends your DbContext with features such as: Include Filter, Auditing, Caching, Query Future, Batch Delete, Batch Update, and more. For EF Core: 2-9.
+Extends your DbContext with features such as: Include Filter, Auditing, Caching, Query Future, Batch Delete, Batch Update, and more. For EF Core: 2-10.
 
 [Website](https://entityframework-plus.net/) | [GitHub repository](https://github.com/zzzprojects/EntityFramework-Plus) | [NuGet](https://www.nuget.org/packages/Z.EntityFramework.Plus.EFCore)
 
 ### Entity Framework Extensions
 
-Extends your DbContext with high-performance bulk operations: BulkSaveChanges, BulkInsert, BulkUpdate, BulkDelete, BulkMerge, and more. For EF Core: 2-9.
+Extends your DbContext with high-performance bulk operations: BulkSaveChanges, BulkInsert, BulkUpdate, BulkDelete, BulkMerge, and more. For EF Core: 2-10.
 
 [Website](https://entityframework-extensions.net/) | [NuGet](https://www.nuget.org/packages/Z.EntityFramework.Extensions.EFCore/)
 
