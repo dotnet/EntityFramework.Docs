@@ -141,14 +141,14 @@ protected override void OnModelCreating(ModelBuilder modelBuilder)
 
 #### Old behavior
 
-In EF Core 9 and earlier, parameterized collections in LINQ queries (such as those used with `.Contains()`) were translated to SQL using a JSON array parameter with `OPENJSON` on SQL Server:
+In EF Core 9 and earlier, parameterized collections in LINQ queries (such as those used with `.Contains()`) were translated to SQL using a JSON array parameter by default. Consider the following query:
 
 ```c#
 int[] ids = [1, 2, 3];
 var blogs = await context.Blogs.Where(b => ids.Contains(b.Id)).ToListAsync();
 ```
 
-This generated SQL like:
+On SQL Server, this generated the following SQL:
 
 ```sql
 @__ids_0='[1,2,3]'
@@ -171,10 +171,6 @@ FROM [Blogs] AS [b]
 WHERE [b].[Id] IN (@ids1, @ids2, @ids3)
 ```
 
-When the number of values in the collection approaches limits (e.g., SQL Server's 2,100 parameter limit), this can cause runtime errors such as `System.DivideByZeroException` or exceed database parameter limits.
-
-EF also "pads" the parameter list to reduce the number of different SQL statements generated. For example, a collection with 8 values generates SQL with 10 parameters, with the extra parameters containing duplicate values.
-
 #### Why
 
 The new default translation provides the query planner with cardinality information about the collection, which can lead to better query plans in many scenarios. The multiple parameter approach balances between plan cache efficiency (by parameterizing) and query optimization (by providing cardinality).
@@ -183,7 +179,7 @@ However, different workloads may benefit from different translation strategies d
 
 #### Mitigations
 
-If you encounter issues with the new default behavior (such as parameter limit errors or performance regressions), you can configure the translation mode globally:
+If you encounter issues with the new default behavior (such as performance regressions), you can configure the translation mode globally:
 
 ```c#
 protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -193,15 +189,28 @@ protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 ```
 
 Available modes are:
+
 - `ParameterTranslationMode.MultipleParameters` - The new default (multiple scalar parameters)
-- `ParameterTranslationMode.Constant` - Inlines values as constants (pre-EF8 behavior)
-- `ParameterTranslationMode.SingleJsonParameter` - Uses JSON array parameter (EF8-9 default)
+- `ParameterTranslationMode.Constant` - Inlines values as constants (pre-EF8 default behavior)
+- `ParameterTranslationMode.Parameter` - Uses JSON array parameter (EF8-9 default)
 
 You can also control the translation on a per-query basis:
 
 ```c#
 // Use constants instead of parameters for this specific query
-var blogs = await context.Blogs.Where(b => EF.Constant(ids).Contains(b.Id)).ToListAsync();
+var blogs = await context.Blogs
+    .Where(b => EF.Constant(ids).Contains(b.Id))
+    .ToListAsync();
+
+// Use a single parameter (e.g. JSON parameter with OPENJSON) instead of parameters for this specific query
+var blogs = await context.Blogs
+    .Where(b => EF.Parameter(ids).Contains(b.Id))
+    .ToListAsync();
+
+// Use a multiple scalar parameters for this specific query. This is the default in EF 10, but is useful if the default was changed globally:
+var blogs = await context.Blogs
+    .Where(b => EF.Parameter(ids).Contains(b.Id))
+    .ToListAsync();
 ```
 
 For more information about parameterized collection translation, [see the documentation](xref:core/what-is-new/ef-core-10.0/whatsnew#parameterized-collection-translation).
