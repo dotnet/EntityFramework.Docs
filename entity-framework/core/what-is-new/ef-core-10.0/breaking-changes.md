@@ -204,7 +204,7 @@ You can also control the translation on a per-query basis:
 var blogs = await context.Blogs.Where(b => EF.Constant(ids).Contains(b.Id)).ToListAsync();
 ```
 
-For more information about parameterized collection translation, [see the documentation](xref:core/what-is-new/ef-core-10.0/whatsnew#improved-translation-for-parameterized-collection).
+For more information about parameterized collection translation, [see the documentation](xref:core/what-is-new/ef-core-10.0/whatsnew#parameterized-collection-translation).
 
 <a name="ExecuteUpdateAsync-lambda"></a>
 
