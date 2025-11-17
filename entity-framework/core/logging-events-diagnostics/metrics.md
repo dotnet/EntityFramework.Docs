@@ -118,7 +118,7 @@ Inside your .NET application, the process ID is available as `Process.GetCurrent
 Finally, launch `dotnet-counters` as follows:
 
 ```console
-dotnet counters monitor Microsoft.EntityFrameworkCore -p <PID>
+dotnet counters monitor --counters Microsoft.EntityFrameworkCore -p <PID>
 ```
 
 `dotnet-counters` will now attach to your running process and start reporting continuous counter data:
