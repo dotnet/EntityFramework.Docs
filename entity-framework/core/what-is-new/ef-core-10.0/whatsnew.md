@@ -8,7 +8,7 @@ uid: core/what-is-new/ef-core-10.0/whatsnew
 
 # What's New in EF Core 10
 
-EF Core 8.0 (EF8) was released in November 2025 and is a Long Term Support (LTS) release. EF8 will be supported until November 10, 2028.
+EF Core 10.0 (EF10) was released in November 2025 and is a Long Term Support (LTS) release. EF10 will be supported until November 10, 2028.
 
 > [!TIP]
 > You can run and debug into the samples by [downloading the sample code from GitHub](https://github.com/dotnet/EntityFramework.Docs). Each section below links to the source code specific to that section.
