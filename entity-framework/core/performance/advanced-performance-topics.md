@@ -2,7 +2,7 @@
 title: Advanced Performance Topics - EF Core
 description: Advanced performance topics for Entity Framework Core
 author: roji
-ms.date: 9/26/2023
+ms.date: 11/21/2025
 uid: core/performance/advanced-performance-topics
 ---
 # Advanced Performance Topics
@@ -151,6 +151,9 @@ Note that there is no need to parameterize each and every query: it's perfectly 
 
 > [!NOTE]
 > EF Core's [metrics](xref:core/logging-events-diagnostics/metrics) report the Query Cache Hit Rate. In a normal application, this metric reaches 100% soon after program startup, once most queries have executed at least once. If this metric remains stable below 100%, that is an indication that your application may be doing something which defeats the query cache - it's a good idea to investigate that.
+>
+> [!TIP]
+> EF Core uses `IMemoryCache` for internal caching of compiled queries and models. You can configure the cache size limit if needed - see [Memory Cache Integration](#memory-cache-integration) for more information.
 
 > [!NOTE]
 > How the database manages caches query plans is database-dependent. For example, SQL Server implicitly maintains an LRU query plan cache, whereas PostgreSQL does not (but prepared statements can produce a very similar end effect). Consult your database documentation for more details.
@@ -319,3 +322,19 @@ As with any layer, EF Core adds a bit of runtime overhead compared to coding dir
 * Consider disabling thread safety checks by setting `EnableThreadSafetyChecks` to false in your context configuration.
   * Using the same `DbContext` instance concurrently from different threads isn't supported. EF Core has a safety feature which detects this programming bug in many cases (but not all), and immediately throws an informative exception. However, this safety feature adds some runtime overhead.
   * **WARNING:** Only disable thread safety checks after thoroughly testing that your application doesn't contain such concurrency bugs.
+
+## Memory Cache Integration
+
+EF Core integrates with ASP.NET Core's memory caching infrastructure through `IMemoryCache`. However, this is not used for the internal service provider caching.
+
+EF Core automatically configures `IMemoryCache` with a default size limit of 10240 for internal caching operations such as query compilation and model building. You should call `AddMemoryCache` if you need to change these defaults. For reference, a compiled query has a cache size of 10, while the built model has a cache size of 100.
+
+```csharp
+public void ConfigureServices(IServiceCollection services)
+{
+    services.AddMemoryCache(options => options.SizeLimit = 20480); // Custom size limit for EF Core caching
+    
+    services.AddDbContext<ApplicationDbContext>(options =>
+        options.UseSqlServer(connectionString));
+}
+```
