@@ -207,9 +207,9 @@ var blogs = await context.Blogs
     .Where(b => EF.Parameter(ids).Contains(b.Id))
     .ToListAsync();
 
-// Use a multiple scalar parameters for this specific query. This is the default in EF 10, but is useful if the default was changed globally:
+// Use multiple scalar parameters for this specific query. This is the default in EF 10, but is useful if the default was changed globally:
 var blogs = await context.Blogs
-    .Where(b => EF.Parameter(ids).Contains(b.Id))
+    .Where(b => EF.MultipleParameters(ids).Contains(b.Id))
     .ToListAsync();
 ```
 
