@@ -340,6 +340,8 @@
         href: core/testing/testing-with-the-database.md
       - name: Testing without your production database system
         href: core/testing/testing-without-the-database.md
+      - name: Advanced testing topics
+        href: core/testing/advanced-topics.md
 
     - name: Performance
       items:
