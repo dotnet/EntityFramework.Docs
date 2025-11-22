@@ -24,6 +24,7 @@ This page documents API and behavior changes that have the potential to break ex
 |:--------------------------------------------------------------------------------------------------------------- | -----------|
 | [Application Name is now injected into the connection string](#sqlserver-application-name)                      | Low        |
 | [SQL Server json data type used by default on Azure SQL and compatibility level 170](#sqlserver-json-data-type) | Low        |
+| [Parameterized collections now use multiple parameters by default](#parameterized-collections)                  | Low        |
 | [ExecuteUpdateAsync now accepts a regular, non-expression lambda](#ExecuteUpdateAsync-lambda)                   | Low        |
 | [Complex type column names are now uniquified](#complex-type-column-uniquification)                             | Low        |
 | [Nested complex type properties use full path in column names](#nested-complex-type-column-names)               | Low        |
@@ -131,6 +132,88 @@ protected override void OnModelCreating(ModelBuilder modelBuilder)
     modelBuilder.Entity<Blog>().ComplexProperty(e => e.Posts, b => b.ToJson());
 }
 ```
+
+<a name="parameterized-collections"></a>
+
+### Parameterized collections now use multiple parameters by default
+
+[Tracking Issue #36368](https://github.com/dotnet/efcore/issues/36368)
+
+#### Old behavior
+
+In EF Core 9 and earlier, parameterized collections in LINQ queries (such as those used with `.Contains()`) were translated to SQL using a JSON array parameter by default. Consider the following query:
+
+```c#
+int[] ids = [1, 2, 3];
+var blogs = await context.Blogs.Where(b => ids.Contains(b.Id)).ToListAsync();
+```
+
+On SQL Server, this generated the following SQL:
+
+```sql
+@__ids_0='[1,2,3]'
+
+SELECT [b].[Id], [b].[Name]
+FROM [Blogs] AS [b]
+WHERE [b].[Id] IN (
+    SELECT [i].[value]
+    FROM OPENJSON(@__ids_0) WITH ([value] int '$') AS [i]
+)
+```
+
+#### New behavior
+
+Starting with EF Core 10.0, parameterized collections are now translated using multiple scalar parameters by default:
+
+```sql
+SELECT [b].[Id], [b].[Name]
+FROM [Blogs] AS [b]
+WHERE [b].[Id] IN (@ids1, @ids2, @ids3)
+```
+
+#### Why
+
+The new default translation provides the query planner with cardinality information about the collection, which can lead to better query plans in many scenarios. The multiple parameter approach balances between plan cache efficiency (by parameterizing) and query optimization (by providing cardinality).
+
+However, different workloads may benefit from different translation strategies depending on collection sizes, query patterns, and database characteristics.
+
+#### Mitigations
+
+If you encounter issues with the new default behavior (such as performance regressions), you can configure the translation mode globally:
+
+```c#
+protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    => optionsBuilder
+        .UseSqlServer("<CONNECTION STRING>", 
+            o => o.UseParameterizedCollectionMode(ParameterTranslationMode.Constant));
+```
+
+Available modes are:
+
+- `ParameterTranslationMode.MultipleParameters` - The new default (multiple scalar parameters)
+- `ParameterTranslationMode.Constant` - Inlines values as constants (pre-EF8 default behavior)
+- `ParameterTranslationMode.Parameter` - Uses JSON array parameter (EF8-9 default)
+
+You can also control the translation on a per-query basis:
+
+```c#
+// Use constants instead of parameters for this specific query
+var blogs = await context.Blogs
+    .Where(b => EF.Constant(ids).Contains(b.Id))
+    .ToListAsync();
+
+// Use a single parameter (e.g. JSON parameter with OPENJSON) instead of parameters for this specific query
+var blogs = await context.Blogs
+    .Where(b => EF.Parameter(ids).Contains(b.Id))
+    .ToListAsync();
+
+// Use multiple scalar parameters for this specific query. This is the default in EF 10, but is useful if the default was changed globally:
+var blogs = await context.Blogs
+    .Where(b => EF.MultipleParameters(ids).Contains(b.Id))
+    .ToListAsync();
+```
+
+For more information about parameterized collection translation, [see the documentation](xref:core/what-is-new/ef-core-10.0/whatsnew#parameterized-collection-translation).
 
 <a name="ExecuteUpdateAsync-lambda"></a>
 
