@@ -627,19 +627,50 @@ protected override void OnModelCreating(ModelBuilder modelBuilder)
 
 #### Old behavior
 
-Previously, when multiple calls to `AddDbContext`, `AddDbContextPool`, `AddDbContextFactory` or `AddPooledDbContextFactor` were made with the same context type but conflicting configuration, the first one won.
+Previously, when multiple calls to `AddDbContext`, `AddDbContextPool`, `AddDbContextFactory` or `AddPooledDbContextFactory` were made with the same context type but conflicting configuration, the first one won.
 
 #### New behavior
 
-Starting with EF Core 8.0, the configuration from the last call one will take precedence.
+Starting with EF Core 8.0, the configuration from the last call will take precedence.
 
 #### Why
 
-This was changed to be consistent with the new method `ConfigureDbContext` that can be used to add configuration either before or after the `Add*` methods.
+This was changed to be consistent with the new method `ConfigureDbContext`, that enables configuration composability for non-conflicting configurations. See [DbContext configuration](xref:core/dbcontext-configuration/index#configuredbcontext) for more information.
 
 #### Mitigations
 
-Reverse the order of `Add*` calls.
+If your application depends on the previous behavior where the first registration wins, you have several options:
+
+1. **Reorder your registrations**: Place the registration with the configuration you want to use last:
+
+   ```csharp
+   services.AddDbContext<MyContext>(options => 
+       options.UseSqlServer("connection1")); // This will be ignored now
+   
+   services.AddDbContext<MyContext>(options => 
+       options.UseSqlServer("connection2")); // This will be used
+   ```
+
+2. **Remove previous registrations**: If possible, remove the conflicting registration.
+
+3. **Use conditional registration**: Check if the service is already registered before adding:
+
+   ```csharp
+   if (!services.Any(d => d.ServiceType == typeof(DbContextOptions<MyContext>)))
+   {
+       services.AddDbContext<MyContext>(options => 
+           options.UseSqlServer("connection"));
+   }
+   ```
+
+4. **Use the new `ConfigureDbContext` method**: This allows you to configure options without registering the context itself. See [DbContext configuration](xref:core/dbcontext-configuration/index#configuredbcontext) for more information:
+
+   ```csharp
+   services.ConfigureDbContext<MyContext>(options => 
+       options.UseSqlServer("connection"));
+   
+   services.AddDbContext<MyContext>(); // Register the context without configuration
+   ```
 
 <a name="attributeConventionBase"></a>
 
