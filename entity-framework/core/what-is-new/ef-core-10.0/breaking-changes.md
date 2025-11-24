@@ -137,7 +137,7 @@ protected override void OnModelCreating(ModelBuilder modelBuilder)
 
 ### Parameterized collections now use multiple parameters by default
 
-[Tracking Issue #36368](https://github.com/dotnet/efcore/issues/36368)
+[Tracking Issue #34346](https://github.com/dotnet/efcore/issues/34346)
 
 #### Old behavior
 
