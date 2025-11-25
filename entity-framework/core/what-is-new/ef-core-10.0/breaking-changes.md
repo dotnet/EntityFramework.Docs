@@ -29,7 +29,7 @@ This page documents API and behavior changes that have the potential to break ex
 | [Complex type column names are now uniquified](#complex-type-column-uniquification)                             | Low        |
 | [Nested complex type properties use full path in column names](#nested-complex-type-column-names)               | Low        |
 | [IDiscriminatorPropertySetConvention signature changed](#discriminator-convention-signature)                    | Low        |
-| [IRelationalCommandDiagnosticsLogger methods add logCommandText parameter](#irelationalcommanddiagnosticslogger-logcommandtext) | Low        |
+| [IRelationalCommandDiagnosticsLogger methods add logCommandText parameter](#logger-logcommandtext)              | Low        |
 
 ## Low-impact changes
 
@@ -364,7 +364,7 @@ public virtual void ProcessDiscriminatorPropertySet(
     IConventionContext<IConventionProperty> context)
 ```
 
-<a name="irelationalcommanddiagnosticslogger-logcommandtext"></a>
+<a name="logger-logcommandtext"></a>
 
 ### IRelationalCommandDiagnosticsLogger methods add logCommandText parameter
 
