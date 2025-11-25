@@ -29,6 +29,7 @@ This page documents API and behavior changes that have the potential to break ex
 | [Complex type column names are now uniquified](#complex-type-column-uniquification)                             | Low        |
 | [Nested complex type properties use full path in column names](#nested-complex-type-column-names)               | Low        |
 | [IDiscriminatorPropertySetConvention signature changed](#discriminator-convention-signature)                    | Low        |
+| [IRelationalCommandDiagnosticsLogger methods add logCommandText parameter](#irelationalcommanddiagnosticslogger-logcommandtext) | Low        |
 
 ## Low-impact changes
 
@@ -362,6 +363,45 @@ public virtual void ProcessDiscriminatorPropertySet(
     MemberInfo memberInfo,
     IConventionContext<IConventionProperty> context)
 ```
+
+<a name="irelationalcommanddiagnosticslogger-logcommandtext"></a>
+
+### IRelationalCommandDiagnosticsLogger methods add logCommandText parameter
+
+[Tracking Issue #35757](https://github.com/dotnet/efcore/issues/35757)
+
+#### Old behavior
+
+Previously, methods on `IRelationalCommandDiagnosticsLogger` such as `CommandReaderExecuting`, `CommandReaderExecuted`, `CommandScalarExecuting`, and others accepted a `command` parameter representing the database command being executed.
+
+#### New behavior
+
+Starting with EF Core 10.0, these methods now require an additional `logCommandText` parameter. This parameter contains the SQL command text that will be logged, which may have sensitive data redacted when <xref:Microsoft.EntityFrameworkCore.DbContextOptionsBuilder.EnableSensitiveDataLogging> is not enabled.
+
+#### Why
+
+This change supports the new feature to [redact inlined constants from logging by default](xref:core/what-is-new/ef-core-10.0/whatsnew#redact-inlined-constants-from-logging-by-default). When EF inlines parameter values into SQL (e.g., when using `EF.Constant()`), those values are now redacted from logs unless sensitive data logging is explicitly enabled. The `logCommandText` parameter provides the redacted SQL for logging purposes, while the `command` parameter contains the actual SQL that gets executed.
+
+#### Mitigations
+
+If you have a custom implementation of `IRelationalCommandDiagnosticsLogger`, you'll need to update your method signatures to include the new `logCommandText` parameter. For example:
+
+```c#
+public InterceptionResult<DbDataReader> CommandReaderExecuting(
+    IRelationalConnection connection,
+    DbCommand command,
+    DbContext context,
+    Guid commandId,
+    Guid connectionId,
+    DateTimeOffset startTime,
+    string logCommandText) // New parameter
+{
+    // Use logCommandText for logging purposes
+    // Use command for execution-related logic
+}
+```
+
+The `logCommandText` parameter contains the SQL to be logged (with inlined constants potentially redacted), while `command.CommandText` contains the actual SQL that will be executed against the database.
 
 <a name="MDS-breaking-changes"></a>
 
