@@ -33,22 +33,46 @@ Use [HasPerformanceLevelSql](/dotnet/api/Microsoft.EntityFrameworkCore.SqlServer
 > [!TIP]
 > You can find all the supported values in the [ALTER DATABASE documentation](/sql/t-sql/statements/alter-database-transact-sql?view=azuresqldb-current&preserve-view=true).
 
-## SaveChanges, database triggers and unsupported computed columns
+## SaveChanges, triggers and the OUTPUT clause
 
-Starting with EF Core 7.0, EF Core saves changes to the database with significantly optimized SQL; unfortunately, this technique is not supported on SQL Server if the target table has database triggers, or certain kinds of computed columns. For more information on this SQL Server limitation, see the documentation on the [OUTPUT clause](/sql/t-sql/queries/output-clause-transact-sql#remarks).
+When EF Core saves changes to the database, it does so with an optimized technique using the T-SQL [OUTPUT clause](/sql/t-sql/queries/output-clause-transact-sql#remarks). Unfortunately, the OUTPUT clause has some limitations; it notably cannot be used with tables that have triggers, for example.
 
-You can let EF Core know that the target table has a trigger; doing so will revert to the previous, less efficient technique. This can be done by configuring the corresponding entity type as follows:
+If you run into a limitation related to the use of the OUTPUT clause, you can disable it on a specific table via <xref:Microsoft.EntityFrameworkCore.SqlServerEntityTypeExtensions.UseSqlOutputClause*>:
 
-[!code-csharp[Main](../../../../samples/core/SqlServer/Misc/TriggersContext.cs?name=TriggerConfiguration&highlight=4)]
+```c#
+protected override void OnModelCreating(ModelBuilder modelBuilder)
+{
+    modelBuilder.Entity<Blog>()
+        .ToTable(tb => tb.UseSqlOutputClause(false));
+}
+```
 
-Note that doing this doesn't actually make EF Core create or manage the trigger in any way - it currently only informs EF Core that triggers are present on the table. As a result, any trigger name can be used, and this can also be used if an unsupported computed column is in use (regardless of triggers).
+Doing this will make EF switch to an older, less efficient technique for updating the table.
 
-If most or all of your tables have triggers, you can opt out of using the newer, efficient technique for all your model's tables by using the following [model building convention](xref:core/modeling/bulk-configuration#conventions):
+If most or all of your tables have triggers, you can configure this for all your model's tables by using the following [model building convention](xref:core/modeling/bulk-configuration#conventions):
 
-[!code-csharp[Main](../../../../samples/core/SqlServer/Misc/TriggersContext.cs?name=BlankTriggerAddingConvention)]
+```c#
+public class NoOutputClauseConvention : IModelFinalizingConvention
+{
+    public virtual void ProcessModelFinalizing(
+        IConventionModelBuilder modelBuilder,
+        IConventionContext<IConventionModelBuilder> context)
+    {
+        foreach (var entityType in modelBuilder.Metadata.GetEntityTypes())
+        {
+            var table = StoreObjectIdentifier.Create(entityType, StoreObjectType.Table);
+            if (table is not null)
+            {
+                entityType.Builder.UseSqlOutputClause(false);
+            }
 
-Use the convention on your `DbContext` by overriding `ConfigureConventions`:
+            foreach (var fragment in entityType.GetMappingFragments(StoreObjectType.Table))
+            {
+                entityType.Builder.UseSqlOutputClause(false, fragment.StoreObject);
+            }
+        }
+    }
+}
+```
 
-[!code-csharp[Main](../../../../samples/core/SqlServer/Misc/TriggersContext.cs?name=ConfigureConventions)]
-
-This effectively calls `HasTrigger` on all your model's tables, instead of you having to do it manually for each and every table.
+This effectively calls <xref:Microsoft.EntityFrameworkCore.SqlServerEntityTypeExtensions.UseSqlOutputClause*> on all your model's tables, instead of you having to do it manually for each and every table.
