@@ -16,7 +16,8 @@ The .NET Data Community Standups are live-streamed monthly (roughly) on Wednesda
 
 | Date         | Area                  | Title                                                                                    |
 |--------------|-----------------------|------------------------------------------------------------------------------------------|
-| Oct 16, 2025 | Migrations            | [Jeremy Miller shares his view on migrations and Marten](#Oct16_2025)               |
+| Nov 20, 2025 | Release               | [EF 10 release celebration 🎉](#Nov20_2025)                                              |
+| Oct 16, 2025 | Migrations            | [Jeremy Miller shares his view on migrations and Marten](#Oct16_2025)                    |
 | Sep 18, 2025 | ORMs                  | [Jiri and Nick talk about experience with Dapper and EF Core](#Sep18_2025)               |
 | Aug 21, 2025 | ORMs                  | [Learning about jOOQ with Lukas Eder](#Aug21_2025)                                       |
 | Jul 17, 2025 | Couchbase             | [Couchbase has an EF Core provider](#Jul17_2025)                                         |
@@ -108,6 +109,19 @@ The .NET Data Community Standups are live-streamed monthly (roughly) on Wednesda
 | May 6, 2020  | Welcome!              | [Introducing the EF Core Community Standup](#one)                                        |
 
 ## 2025
+
+<a name="Nov20_2025"></a>
+
+### Nov 20: [EF 10 release celebration 🎉](https://www.youtube.com/live/3Aqd_arD6Vo?si=dWGNOSEnw1G2frfc)
+
+Join the EF team to celebrate EF 10 release, ask questions and get juicy behind the scenes stories. 😉
+
+Featuring:
+
+- [Andriy Svyryd](https://github.com/AndriySvyryd) (Special guest)
+- [Shay Rojansky](https://www.roji.org/) (Special guest)
+- [Jiri Cincura](https://www.tabsoverspaces.com/) (Special guest)
+- [Sam Patel](https://github.com/SamMonoRT) (Special guest)
 
 <a name="Oct16_2025"></a>
 
