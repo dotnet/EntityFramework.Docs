@@ -2633,6 +2633,8 @@ Or to opt-out of `RETURNING` when using the SQLite provider:
  modelBuilder.Entity<Customer>().ToTable(tb => tb.UseSqlReturningClause(false));
 ```
 
+See the [SQL Server](xref:core/providers/sql-server/misc#savechanges-triggers-and-the-output-clause) and [SQLite](xref:core/providers/sqlite/misc#savechanges-and-the-returning-clause) documentation pages for more details.
+
 ## Other minor changes
 
 In addition to the enhancements described above, there have been many smaller changes made to EF8. This includes:
