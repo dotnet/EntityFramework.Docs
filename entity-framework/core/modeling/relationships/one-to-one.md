@@ -176,7 +176,7 @@ Any one-to-one relationship where the foreign key is not discovered by conventio
 [!code-csharp[OneToOneRequiredPkToPkConfig](../../../../samples/core/Modeling/Relationships/OneToOne.cs?name=OneToOneRequiredPkToPkConfig)]
 
 > [!TIP]
-> `HasPrincipalKey` can also used for this purpose, but doing so is less common.
+> `HasPrincipalKey` can also be used for this purpose, but doing so is less common.
 
 When no property is specified in the call to `HasForeignKey`, and the primary key is suitable, then it is used as the foreign key. For cases where the navigations, foreign key, or required/optional nature of the relationship are not discovered by convention, these things can be configured explicitly. For example:
 
