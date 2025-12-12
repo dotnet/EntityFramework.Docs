@@ -45,7 +45,7 @@ The use of data annotations across many technologies and for both mapping and va
 [!code-csharp[RequiredOnForeignKey](../../../../samples/core/Modeling/Relationships/MappingAttributes.cs?name=RequiredOnForeignKey)]
 
 > [!NOTE]
-> When using [C# nullable reference types](/dotnet/csharp/tutorials/nullable-reference-types), the `BlogId` property in this example is already non-nullable, which means the `[Required]` attribute will have no affect.
+> When using [C# nullable reference types](/dotnet/csharp/tutorials/nullable-reference-types), the `BlogId` property in this example is already non-nullable, which means the `[Required]` attribute will have no effect.
 
 `[Required]` placed on the dependent navigation has the same effect. That is, making the foreign key non-nullable, and thereby making the relationship required. For example:
 
