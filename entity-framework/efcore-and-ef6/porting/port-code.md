@@ -4,6 +4,7 @@ description: Specific information on porting an Entity Framework 6 code-based mo
 author: SamMonoRT
 ms.date: 12/09/2021
 uid: efcore-and-ef6/porting/port-code
+ms.custom: sfi-ropc-nochange
 ---
 # Porting an EF6 Code-Based Model to EF Core
 
