@@ -22,6 +22,7 @@ This page documents API and behavior changes that have the potential to break ex
 
 | **Breaking change**                                                                                             | **Impact** |
 |:--------------------------------------------------------------------------------------------------------------- | -----------|
+| [EF tools now require framework to be specified for multi-targeted projects](#ef-tools-multi-targeting)         | Medium     |
 | [Application Name is now injected into the connection string](#sqlserver-application-name)                      | Low        |
 | [SQL Server json data type used by default on Azure SQL and compatibility level 170](#sqlserver-json-data-type) | Low        |
 | [Parameterized collections now use multiple parameters by default](#parameterized-collections)                  | Low        |
@@ -29,6 +30,55 @@ This page documents API and behavior changes that have the potential to break ex
 | [Complex type column names are now uniquified](#complex-type-column-uniquification)                             | Low        |
 | [Nested complex type properties use full path in column names](#nested-complex-type-column-names)               | Low        |
 | [IDiscriminatorPropertySetConvention signature changed](#discriminator-convention-signature)                    | Low        |
+| [IRelationalCommandDiagnosticsLogger methods add logCommandText parameter](#logger-logcommandtext)              | Low        |
+
+## Medium-impact changes
+
+<a name="ef-tools-multi-targeting"></a>
+
+### EF tools now require framework to be specified for multi-targeted projects
+
+[Tracking Issue #37230](https://github.com/dotnet/efcore/issues/37230)
+
+#### Old behavior
+
+Previously, the EF tools (dotnet-ef) could be used on projects targeting multiple frameworks without specifying which framework to use.
+
+#### New behavior
+
+Starting with EF Core 10.0, when running EF tools on a project that targets multiple frameworks (using `<TargetFrameworks>` instead of `<TargetFramework>`), you must explicitly specify which target framework to use with the `--framework` option. Without this option, the following error will be thrown:
+
+> The project targets multiple frameworks. Use the --framework option to specify which target framework to use.
+
+#### Why
+
+In EF Core 10, the tools started relying on the `ResolvePackageAssets` MSBuild task to get more accurate information about project dependencies. However, this task is not available if the project is targeting multiple target frameworks (TFMs). The solution requires users to select which framework should be used.
+
+#### Mitigations
+
+When running any EF tools command on a project that targets multiple frameworks, specify the target framework using the `--framework` option. For example:
+
+```bash
+dotnet ef migrations add MyMigration --framework net9.0
+```
+
+```bash
+dotnet ef database update --framework net9.0
+```
+
+```bash
+dotnet ef migrations script --framework net9.0
+```
+
+If your project file looks like this:
+
+```xml
+<PropertyGroup>
+  <TargetFrameworks>net8.0;net9.0</TargetFrameworks>
+</PropertyGroup>
+```
+
+You'll need to choose one of the frameworks (e.g., `net9.0`) when running the EF tools.
 
 ## Low-impact changes
 
@@ -137,7 +187,7 @@ protected override void OnModelCreating(ModelBuilder modelBuilder)
 
 ### Parameterized collections now use multiple parameters by default
 
-[Tracking Issue #36368](https://github.com/dotnet/efcore/issues/36368)
+[Tracking Issue #34346](https://github.com/dotnet/efcore/issues/34346)
 
 #### Old behavior
 
@@ -362,6 +412,45 @@ public virtual void ProcessDiscriminatorPropertySet(
     MemberInfo memberInfo,
     IConventionContext<IConventionProperty> context)
 ```
+
+<a name="logger-logcommandtext"></a>
+
+### IRelationalCommandDiagnosticsLogger methods add logCommandText parameter
+
+[Tracking Issue #35757](https://github.com/dotnet/efcore/issues/35757)
+
+#### Old behavior
+
+Previously, methods on `IRelationalCommandDiagnosticsLogger` such as `CommandReaderExecuting`, `CommandReaderExecuted`, `CommandScalarExecuting`, and others accepted a `command` parameter representing the database command being executed.
+
+#### New behavior
+
+Starting with EF Core 10.0, these methods now require an additional `logCommandText` parameter. This parameter contains the SQL command text that will be logged, which may have sensitive data redacted when <xref:Microsoft.EntityFrameworkCore.DbContextOptionsBuilder.EnableSensitiveDataLogging> is not enabled.
+
+#### Why
+
+This change supports the new feature to [redact inlined constants from logging by default](xref:core/what-is-new/ef-core-10.0/whatsnew#redact-inlined-constants-from-logging-by-default). When EF inlines parameter values into SQL (e.g., when using `EF.Constant()`), those values are now redacted from logs unless sensitive data logging is explicitly enabled. The `logCommandText` parameter provides the redacted SQL for logging purposes, while the `command` parameter contains the actual SQL that gets executed.
+
+#### Mitigations
+
+If you have a custom implementation of `IRelationalCommandDiagnosticsLogger`, you'll need to update your method signatures to include the new `logCommandText` parameter. For example:
+
+```c#
+public InterceptionResult<DbDataReader> CommandReaderExecuting(
+    IRelationalConnection connection,
+    DbCommand command,
+    DbContext context,
+    Guid commandId,
+    Guid connectionId,
+    DateTimeOffset startTime,
+    string logCommandText) // New parameter
+{
+    // Use logCommandText for logging purposes
+    // Use command for execution-related logic
+}
+```
+
+The `logCommandText` parameter contains the SQL to be logged (with inlined constants potentially redacted), while `command.CommandText` contains the actual SQL that will be executed against the database.
 
 <a name="MDS-breaking-changes"></a>
 

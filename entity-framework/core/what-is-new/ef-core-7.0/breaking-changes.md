@@ -131,7 +131,9 @@ The performance improvements linked to the new method are significant enough tha
 
 #### Mitigations
 
-Starting with EF Core 8.0, the use or not of the "OUTPUT" clause can be configured explicitly. For example:
+In EF7 or later, if the target table has a trigger, then you can let EF Core know this, and EF will revert to the previous, less efficient technique. This can be done by configuring the corresponding entity type as follows:
+
+##### [EF 8+](#tab/data-annotations)
 
 ```csharp
 protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -141,21 +143,19 @@ protected override void OnModelCreating(ModelBuilder modelBuilder)
 }
 ```
 
-In EF7 or later, If the target table has a trigger, then you can let EF Core know this, and EF will revert to the previous, less efficient technique. This can be done by configuring the corresponding entity type as follows:
+##### [EF 7](#tab/fluent-api)
 
-[!code-csharp[Main](../../../../samples/core/SqlServer/Misc/TriggersContext.cs?name=TriggerConfiguration&highlight=4)]
+```csharp
+protected override void OnModelCreating(ModelBuilder modelBuilder)
+{
+    modelBuilder.Entity<Blog>()
+        .ToTable(tb => tb.HasTrigger("SomeTrigger"));
+}
+```
 
-Note that doing this doesn't actually make EF Core create or manage the trigger in any way - it currently only informs EF Core that triggers are present on the table. As a result, any trigger name can be used. Specifying a trigger can be used to revert the old behavior _even if there isn't actually a trigger in the table_.
+---
 
-If most or all of your tables have triggers, you can opt out of using the newer, efficient technique for all your model's tables by using the following model building convention:
-
-[!code-csharp[Main](../../../../samples/core/SqlServer/Misc/TriggersContext.cs?name=BlankTriggerAddingConvention)]
-
-Use the convention on your `DbContext` by overriding `ConfigureConventions`:
-
-[!code-csharp[Main](../../../../samples/core/SqlServer/Misc/TriggersContext.cs?name=ConfigureConventions)]
-
-This effectively calls `HasTrigger` on all your model's tables, instead of you having to do it manually for each and every table.
+For more information, including on how to configure this for all your tables, see the [SQL Server documentation](xref:core/providers/sql-server/misc#savechanges-triggers-and-the-output-clause).
 
 <a name="sqlitetriggers"></a>
 

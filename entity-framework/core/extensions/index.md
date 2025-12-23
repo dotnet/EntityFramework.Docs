@@ -246,7 +246,7 @@ For EF Core: 6-8.
 
 ### Microsoft.EntityFrameworkCore.DynamicLinq
 
-The Dynamic LINQ library let you execute query with dynamic string and provide some utilities methods such as ParseLambda, Parse, and CreateClass. For EF Core: 2-9.
+The Dynamic LINQ library let you execute query with dynamic string and provide some utilities methods such as ParseLambda, Parse, and CreateClass. For EF Core: 2-10.
 
 [Website](https://dynamic-linq.net/) | [GitHub repository](https://github.com/zzzprojects/System.Linq.Dynamic.Core) | [NuGet](https://www.nuget.org/packages/Microsoft.EntityFrameworkCore.DynamicLinq)
 
@@ -286,15 +286,21 @@ This package focuses on adding data masking support for SQL Server to EF Core. F
 
 [GitHub repository](https://github.com/sander1095/EntityFrameworkCore.Extensions.SqlServer.DataMasking) | [NuGet](https://www.nuget.org/packages/SanderTenBrinke.EntityFrameworkCore.Extensions.SqlServer.DataMasking)
 
+### EFCommenter
+
+All xml summaries of entities, properties, and enums will be added as comments on the corresponding database tables and columns. For EF Core: 9.
+
+[GitHub repository](https://github.com/roohial57/DotNetComponent_EFCommenter) | [NuGet](https://www.nuget.org/packages/EFCommenter)
+
 ## API Integrations
 
 These packages are designed to integrate directly with EF Core to expose various APIs.
 
-### .NET Aspire
+### Aspire
 
-Enhance the local development experience by simplifying the management of your cloud-native app's configuration and interconnections. For EF Core: 8.
+Enhance the local development experience by simplifying the management of your cloud-native app's configuration and interconnections. For EF Core: 8-10.
 
-[Website](/dotnet/aspire/get-started/aspire-overview) | [GitHub repository](https://github.com/dotnet/aspire) | [NuGet](https://www.nuget.org/profiles/aspire)
+[Website](https://aspire.dev) | [GitHub repository](https://github.com/dotnet/aspire) | [NuGet](https://www.nuget.org/profiles/aspire)
 
 ### HotChocolate
 

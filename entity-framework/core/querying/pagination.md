@@ -34,7 +34,7 @@ The recommended alternative to offset-based pagination - sometimes called *keyse
 
 Assuming an index is defined on `PostId`, this query is very efficient, and also isn't sensitive to any concurrent changes happening in lower Id values.
 
-Keyset pagination is appropriate for pagination interfaces where the user navigates forwards and backwards, but does not support random access, where the user can jump to any specific page. Random access pagination requires using offset pagination as explained above; because of the shortcomings of offset pagination, carefully consider if random access pagination really is required for your use case, or if next/previous page navigation is enough. If random access pagination is necessary, a robust implementation could use keyset pagination when navigation to the next/previous page, and offset navigation when jumping to any other page.
+Keyset pagination is appropriate for pagination interfaces where the user navigates forwards and backwards, but does not support random access, where the user can jump to any specific page. Random access pagination requires using offset pagination as explained above; because of the shortcomings of offset pagination, carefully consider if random access pagination really is required for your use case, or if next/previous page navigation is enough. If random access pagination is necessary, a robust implementation could use keyset pagination when navigating to the next/previous page, and offset navigation when jumping to any other page.
 
 ### Multiple pagination keys
 
