@@ -142,7 +142,7 @@ If your query filter needs to access a tenant ID or similar contextual informati
 ```c#
 private sealed class CustomerEntityConfiguration : IEntityTypeConfiguration<Customer>
 {
-    private readonly SomeDbContext _context == null!;
+    private readonly SomeDbContext _context = null!;
 
     public void Configure(EntityTypeBuilder<Customer> builder)
     {
