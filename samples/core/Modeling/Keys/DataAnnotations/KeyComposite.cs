@@ -9,7 +9,7 @@ internal class MyContext : DbContext
 
 #region KeyComposite
 [PrimaryKey(nameof(State), nameof(LicensePlate))]
-internal class Car
+public class Car
 {
     public string State { get; set; }
     public string LicensePlate { get; set; }
