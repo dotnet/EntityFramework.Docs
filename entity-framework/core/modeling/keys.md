@@ -36,7 +36,7 @@ You can also configure multiple properties to be the key of an entity - this is 
 
 <!--
 [PrimaryKey(nameof(State), nameof(LicensePlate))]
-Public class Car
+public class Car
 {
     public string State { get; set; }
     public string LicensePlate { get; set; }
