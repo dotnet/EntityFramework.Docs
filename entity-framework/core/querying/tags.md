@@ -70,7 +70,7 @@ ORDER BY [p].[Location].STDistance(@__myLocation_0) DESC
 
 ## Tagging with file name and line number
 
-Queries can be automatically tagged with the file name and line number where the LINQ query is defined in source code. This is done using the `TagWithCallSite()` method:
+Queries can be automatically tagged with the file name and line number where the LINQ query is defined in source code. This is done using the <xref:Microsoft.EntityFrameworkCore.EntityFrameworkQueryableExtensions.TagWithCallSite*> method:
 
 ```csharp
 var myLocation = new Point(1, 2);
