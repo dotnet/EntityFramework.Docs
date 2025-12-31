@@ -77,7 +77,7 @@ Starting with EF Core 6.0, queries can be automatically tagged with the file nam
 This query translates to:
 
 ```sql
--- file: ...\samples\core\Querying\Tags\Program.cs:49
+-- file: ...\samples\core\Querying\Tags\Program.cs:48
 
 SELECT TOP(@__p_1) [p].[Id], [p].[Location]
 FROM [People] AS [p]
@@ -93,7 +93,7 @@ This produces:
 ```sql
 -- GetClosestPeople
 
--- file: ...\samples\core\Querying\Tags\Program.cs:57
+-- file: ...\samples\core\Querying\Tags\Program.cs:58
 
 SELECT TOP(@__p_1) [p].[Id], [p].[Location]
 FROM [People] AS [p]
