@@ -9,7 +9,7 @@ internal class MyContext : DbContext
 }
 
 #region KeySingle
-internal class Car
+public class Car
 {
     [Key]
     public string LicensePlate { get; set; }

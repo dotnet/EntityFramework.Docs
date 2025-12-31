@@ -15,7 +15,7 @@ internal class MyContext : DbContext
     #endregion
 }
 
-internal class Car
+public class Car
 {
     public string LicensePlate { get; set; }
 
