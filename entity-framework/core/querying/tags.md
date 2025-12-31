@@ -74,7 +74,7 @@ Starting with EF Core 6.0, queries can be automatically tagged with the file nam
 
 [!code-csharp[Main](../../../samples/core/Querying/Tags/Program.cs#TagWithCallSite)]
 
-This query translates to:
+This query translates to (the actual line number will reflect where the query is defined in the source file):
 
 ```sql
 -- file: ...\samples\core\Querying\Tags\Program.cs:48
