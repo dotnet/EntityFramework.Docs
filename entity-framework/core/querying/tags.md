@@ -68,6 +68,38 @@ FROM [People] AS [p]
 ORDER BY [p].[Location].STDistance(@__myLocation_0) DESC
 ```
 
+## Tagging with file name and line number
+
+Starting with EF Core 6.0, queries can be automatically tagged with the file name and line number where the LINQ query is defined in source code. This is done using the `TagWithCallSite()` method:
+
+[!code-csharp[Main](../../../samples/core/Querying/Tags/Program.cs#TagWithCallSite)]
+
+This query translates to:
+
+```sql
+-- file: ...\samples\core\Querying\Tags\Program.cs:49
+
+SELECT TOP(@__p_1) [p].[Id], [p].[Location]
+FROM [People] AS [p]
+ORDER BY [p].[Location].STDistance(@__myLocation_0) DESC
+```
+
+The `TagWithCallSite()` method can be combined with `TagWith()` to provide both custom tags and call site information:
+
+[!code-csharp[Main](../../../samples/core/Querying/Tags/Program.cs#TagWithCallSiteAndTag)]
+
+This produces:
+
+```sql
+-- GetClosestPeople
+
+-- file: ...\samples\core\Querying\Tags\Program.cs:57
+
+SELECT TOP(@__p_1) [p].[Id], [p].[Location]
+FROM [People] AS [p]
+ORDER BY [p].[Location].STDistance(@__myLocation_0) DESC
+```
+
 ## Known limitations
 
 **Query tags aren't parameterizable:**

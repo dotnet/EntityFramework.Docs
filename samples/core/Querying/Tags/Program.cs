@@ -40,6 +40,26 @@ internal class Program
 string").ToListAsync();
             #endregion
         }
+
+        using (var context = new SpatialContext())
+        {
+            #region TagWithCallSite
+            var myLocation = new Point(1, 2);
+            var closestPeople = await (from f in context.People.TagWithCallSite()
+                                 orderby f.Location.Distance(myLocation) descending
+                                 select f).Take(5).ToListAsync();
+            #endregion
+        }
+
+        using (var context = new SpatialContext())
+        {
+            #region TagWithCallSiteAndTag
+            var myLocation = new Point(1, 2);
+            var closestPeople = await (from f in context.People.TagWith("GetClosestPeople").TagWithCallSite()
+                                 orderby f.Location.Distance(myLocation) descending
+                                 select f).Take(5).ToListAsync();
+            #endregion
+        }
     }
 
     #region QueryableMethods
