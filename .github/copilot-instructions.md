@@ -2,18 +2,17 @@
 
 ## Repository Overview
 
-This repository contains the **Entity Framework Core (EF Core) and Entity Framework 6 (EF6) documentation** published at <https://learn.microsoft.com/ef/>. It is a **documentation-focused repository** with markdown files (305 .md files) and C# code samples (~89 sample projects). The repo is ~122 MB with documentation (~12 MB) and samples (~110 MB).
+This repository contains the **Entity Framework Core (EF Core) and Entity Framework 6 (EF6) documentation** published at <https://learn.microsoft.com/ef/>. It is a **documentation-focused repository** with markdown documentation files and C# code samples.
 
 **Key Technologies:**
 - **Documentation**: Markdown, DocFX, Microsoft Learn publishing platform
-- **Samples**: .NET 10.0 (SDK 10.0.100+), C#, Entity Framework Core/EF6, SQL Server, SQLite, Cosmos DB
-- **Tooling**: Node.js 20.x, markdownlint-cli, .NET SDK
+- **Samples**: Latest public release of .NET, C#, Entity Framework Core/EF6, SQL Server, SQLite, Cosmos DB
 
 ## Critical Build & Validation Instructions
 
 ### Prerequisites
-- **.NET SDK 10.0.100+** is required (check with `dotnet --version`)
-- **Node.js 20.x** for markdown linting (check with `node --version`)
+- **.NET SDK** (latest public release) is required (check with `dotnet --version`)
+- **Node.js** for markdown linting (check with `node --version`)
 
 ### Markdown Linting (ALWAYS RUN BEFORE COMMITTING)
 
@@ -31,96 +30,52 @@ markdownlint "**/*.md" -i "entity-framework/ef6/"
 ### Building Code Samples
 
 **Location:** All samples are in `samples/` directory
-- `samples/core/` - EF Core samples (89 projects, Samples.sln solution file)
+- `samples/core/` - EF Core samples
 - `samples/end2end/PlanetaryDocs/` - Complete end-to-end Blazor application
 
-**Building Individual Samples:**
+Samples are standard .NET projects. Build them with:
 ```bash
 cd samples/end2end/PlanetaryDocs
 dotnet build
 ```
 
-**Result:** Builds successfully in ~16 seconds with some expected warnings (CS0618, BL0007)
-
-**Building All Core Samples:**
+Or build all core samples:
 ```bash
 cd samples/core
 dotnet build
 ```
 
-**KNOWN ISSUE:** Building `samples/core/Samples.sln` may fail intermittently with NuGet package download errors from Azure DevOps feeds ("Resource temporarily unavailable"). This is a transient network issue with preview package feeds (10.0.0-preview packages). **Retry the build** if this occurs. Individual samples build reliably.
+**Note:** Building `samples/core/Samples.sln` may fail intermittently with NuGet package download errors. This is a transient network issue. Retry the build if this occurs.
 
-**Testing Samples:**
-```bash
-cd samples/core
-dotnet build
-```
-**CI Workflow:** `.github/workflows/build-samples.yml`
-- Runs on PRs to `live` branch with changes to `samples/core/**` or `samples/end2end/**`
-- Uses .NET 10.0 SDK on ubuntu-24.04
-- Builds `samples/core` and `samples/end2end/PlanetaryDocs`
-
-### NuGet Configuration
-**File:** `samples/NuGet.Config` specifies only nuget.org as package source
-**Global Config:** `samples/global.json` pins SDK to 10.0.100
+**CI Workflow:** `.github/workflows/build-samples.yml` runs on PRs to `live` branch with changes to `samples/`
 
 ## Repository Structure
 
-### Documentation Files
+### Documentation
 ```
 entity-framework/
-├── docfx.json           # DocFX configuration for building documentation
-├── core/                # EF Core documentation (~200 files)
-│   ├── index.md
-│   ├── get-started/
-│   ├── modeling/
-│   ├── querying/
-│   ├── saving/
-│   ├── change-tracking/
-│   ├── managing-schemas/
-│   ├── providers/       # Database provider documentation
-│   ├── performance/
-│   ├── testing/
-│   ├── what-is-new/     # Version-specific features
-│   └── ...
-├── ef6/                 # EF6 documentation (~100 files, excluded from markdownlint, generally not to be touched)
+├── docfx.json           # DocFX configuration
+├── core/                # EF Core documentation
+├── ef6/                 # EF6 documentation (excluded from markdownlint)
 ├── efcore-and-ef6/      # Comparison and porting guides
 └── breadcrumb/          # Navigation breadcrumbs
-
-Root files:
-├── .markdownlint.json              # Markdown linting rules
-├── .openpublishing.publish.config.json  # Microsoft Learn publishing config
-├── .openpublishing.redirection.json     # URL redirections
-├── README.md                       # Main repository README
-├── CONTRIBUTING.md                 # Contribution guidelines
-└── .github/
-    ├── workflows/
-    │   ├── markdownlint.yml        # Markdown lint CI
-    │   └── build-samples.yml       # Sample build CI
-    └── dependabot.yml              # Weekly NuGet updates
 ```
 
-### Code Samples Structure
+### Configuration Files
+- `.markdownlint.json` - Markdown linting rules
+- `.openpublishing.publish.config.json` - Microsoft Learn publishing config
+- `.openpublishing.redirection.json` - URL redirections (update when renaming/moving files)
+- `.github/workflows/markdownlint.yml` - Markdown lint CI
+- `.github/workflows/build-samples.yml` - Sample build CI
+
+### Samples
 ```
 samples/
-├── global.json          # .NET SDK version (10.0.100)
-├── NuGet.Config         # Package sources (nuget.org only)
-├── core/
+├── core/                # EF Core samples
 │   ├── Samples.sln      # Solution with all core samples
-│   ├── .editorconfig    # Code style rules
-│   ├── GetStarted/
-│   ├── Modeling/
-│   ├── Querying/
-│   ├── Saving/
-│   ├── Testing/
-│   └── ...              # 89 total project files
+│   └── .editorconfig    # Code style rules
 └── end2end/
-    └── PlanetaryDocs/   # Complete Blazor app with Cosmos DB
-        ├── PlanetaryDocs.sln
-        ├── PlanetaryDocs/           # Blazor web app
-        ├── PlanetaryDocs.Domain/    # Domain models
-        ├── PlanetaryDocs.DataAccess/  # EF Core data layer
-        └── Tests/DomainTests/       # xUnit tests (129 tests)
+    └── PlanetaryDocs/   # Complete Blazor app
 ```
 
 ## Making Changes
@@ -132,8 +87,7 @@ samples/
 
 **Code Snippet Syntax:**
 - Reference external code files (preferred): `[!code-csharp[Main](../../../samples/core/saving/Program.cs)]`
-- With line range: `[!code-csharp[Main](../../../samples/core/saving/Program.cs?range=1-10)]`
-- With C# region: `[!code-csharp[Main](../../../samples/core/saving/Program.cs?name=snippet_Example)]`
+- With C# region (always prefer over line ranges): `[!code-csharp[Main](../../../samples/core/saving/Program.cs?name=snippet_Example)]`
 - With highlighting: `[!code-csharp[Main](../../../samples/core/saving/Program.cs?highlight=1-3,10)]`
 
 **Static Content:** Images and files in `_static/` folders within each documentation area
@@ -142,27 +96,22 @@ samples/
 1. Ensure code snippets reference actual sample files in `samples/` directory
 2. Run `markdownlint "**/*.md" -i "entity-framework/ef6/"` before committing
 3. Match folder structure: docs in `entity-framework/core/` align with samples in `samples/core/`
-4. When referencing an API, use docfx `<xref>` rather than code fencing to link to the API documentation.
-5. When adding, removing or renaming pages, update the `entity-framework/toc.yml` file to make the changes appear in the doc site's table of contents.
+4. When referencing an API, use docfx `<xref>` rather than code fencing to link to the API documentation
+5. When adding, removing or renaming pages, update the `entity-framework/toc.yml` file to make the changes appear in the doc site's table of contents
+6. If renaming or moving files, update `.openpublishing.redirection.json` to add redirects from old URLs
 
 ### Sample Code Changes
 
 **ALWAYS:**
-1. Ensure samples build successfully: `cd samples/core && dotnet build`
+1. Ensure samples build successfully: `cd samples/end2end/PlanetaryDocs && dotnet build`
 2. Follow existing code style (see `samples/core/.editorconfig`)
 3. Use C# regions (`#region snippet_Name`) for code referenced in documentation
+4. When editing samples, verify that documentation referencing those samples still uses correct line numbers for highlighting
 
 **Common Sample Patterns:**
 - Console applications showing specific EF Core features
 - Each sample folder typically has one `.csproj` file
 - Samples use in-memory SQLite or SQL Server LocalDB
-
-## VS Code Configuration
-
-**Recommended Extension:** `docsmsft.docs-authoring-pack` (see `.vscode/extensions.json`)
-
-**Custom Dictionary Words** (`.vscode/settings.json`):
-- dbcontext, LINQ, navigations, queryable, savepoints, subquery, etc.
 
 ## Testing Documentation Locally with DocFX
 
