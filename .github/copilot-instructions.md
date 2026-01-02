@@ -45,8 +45,6 @@ cd samples/core
 dotnet build
 ```
 
-**Note:** Building `samples/core/Samples.sln` may fail intermittently with NuGet package download errors. This is a transient network issue. Retry the build if this occurs.
-
 **CI Workflow:** `.github/workflows/build-samples.yml` runs on PRs to `live` branch with changes to `samples/`
 
 ## Repository Structure
