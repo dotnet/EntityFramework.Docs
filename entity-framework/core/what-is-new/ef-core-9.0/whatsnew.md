@@ -153,7 +153,7 @@ In EF 9.0, the LINQ translation capabilities of the the Azure Cosmos DB provider
 * Support for aggregate operators such as `Count` and `Sum`.
 * Additional function translations (see the [function mappings documentation](xref:core/providers/cosmos/querying#function-mappings) for the full list of supported translations):
   * Translations for `DateTime` and `DateTimeOffset` component members (`DateTime.Year`, `DateTimeOffset.Month`...).
-  * `EF.Functions.IsDefined` and `EF.Functions.CoalesceUndefined` now allow dealing with `undefined` values.
+  * <xref:Microsoft.EntityFrameworkCore.CosmosDbFunctionsExtensions.IsDefined*> and <xref:Microsoft.EntityFrameworkCore.CosmosDbFunctionsExtensions.CoalesceUndefined*> now allow dealing with `undefined` values.
   * `string.Contains`, `StartsWith` and `EndsWith` now support `StringComparison.OrdinalIgnoreCase`.
 
 For the full list of querying improvements, see [this issue](https://github.com/dotnet/efcore/issues/33033):
@@ -229,7 +229,7 @@ public class BloggingContext
 }
 ```
 
-Once that's done, use the `EF.Functions.VectorDistance()` function in LINQ queries to perform vector similarity search:
+Once that's done, use the <xref:Microsoft.EntityFrameworkCore.CosmosDbFunctionsExtensions.VectorDistance*> function in LINQ queries to perform vector similarity search:
 
 ```c#
 var blogs = await context.Blogs
@@ -256,7 +256,7 @@ foreach (var post in page.Values)
 }
 ```
 
-The new `ToPageAsync` operator returns a `CosmosPage`, which exposes a continuation token that can be used to efficiently resume the query at a later point, fetching the next 10 items:
+The new <xref:Microsoft.EntityFrameworkCore.CosmosQueryableExtensions.ToPageAsync*> operator returns a <xref:Microsoft.EntityFrameworkCore.Cosmos.Query.CosmosPage>, which exposes a continuation token that can be used to efficiently resume the query at a later point, fetching the next 10 items:
 
 ```c#
 var nextPage = await context.Sessions.OrderBy(s => s.Id).ToPageAsync(10, continuationToken);
@@ -266,7 +266,7 @@ For more information, [see the documentation section on pagination](xref:core/pr
 
 ### FromSql for safer SQL querying
 
-The Azure Cosmos DB provider has allowed SQL querying via <xref:Microsoft.EntityFrameworkCore.CosmosQueryableExtensions.FromSqlRaw*>. However, that API can be susceptible to SQL injection attacks when user-provided data is interpolated or concatenated into the SQL. In EF 9.0, you can now use the new `FromSql` method, which always integrates parameterized data as a parameter outside the SQL:
+The Azure Cosmos DB provider has allowed SQL querying via <xref:Microsoft.EntityFrameworkCore.CosmosQueryableExtensions.FromSqlRaw*>. However, that API can be susceptible to SQL injection attacks when user-provided data is interpolated or concatenated into the SQL. In EF 9.0, you can now use the new <xref:Microsoft.EntityFrameworkCore.CosmosQueryableExtensions.FromSql*> method, which always integrates parameterized data as a parameter outside the SQL:
 
 ```c#
 var maxAngle = 8;
@@ -279,7 +279,7 @@ For more information, [see the documentation section on pagination](xref:core/pr
 
 ### Role-based access
 
-Azure Cosmos DB for NoSQL includes a [built-in role-based access control (RBAC) system](/azure/cosmos-db/role-based-access-control). This is now supported by EF9 for all data plane operations. However, Azure Cosmos DB SDK does not support RBAC for management plane operations in Azure Cosmos DB. Use Azure Management API instead of `EnsureCreatedAsync` with RBAC.
+Azure Cosmos DB for NoSQL includes a [built-in role-based access control (RBAC) system](/azure/cosmos-db/role-based-access-control). This is now supported by EF9 for all data plane operations. However, Azure Cosmos DB SDK does not support RBAC for management plane operations in Azure Cosmos DB. Use Azure Management API instead of <xref:Microsoft.EntityFrameworkCore.Infrastructure.DatabaseFacade.EnsureCreatedAsync*> with RBAC.
 
 ### Synchronous I/O is now blocked by default
 
@@ -1099,10 +1099,10 @@ The majority of operations performed during migrations are protected by a transa
 
 ### Improved data seeding
 
-EF9 introduced a convenient way to perform data seeding, that is populating the database with initial data. `DbContextOptionsBuilder` now contains `UseSeeding` and `UseAsyncSeeding` methods which get executed when the DbContext is initialized (as part of `EnsureCreatedAsync`).
+EF9 introduced a convenient way to perform data seeding, that is populating the database with initial data. <xref:Microsoft.EntityFrameworkCore.DbContextOptionsBuilder> now contains <xref:Microsoft.EntityFrameworkCore.Infrastructure.DbContextOptionsBuilder.UseSeeding*> and <xref:Microsoft.EntityFrameworkCore.Infrastructure.DbContextOptionsBuilder.UseAsyncSeeding*> methods which get executed when the DbContext is initialized (as part of <xref:Microsoft.EntityFrameworkCore.Infrastructure.DatabaseFacade.EnsureCreatedAsync*>).
 
 > [!NOTE]
-> If the application had ran previously, the database may already contain the sample data (which would have been added on the first initialization of the context). As such, `UseSeeding` `UseAsyncSeeding` should check if data exists before attempting to populate the database. This can be achieved by issuing a simple EF query.
+> If the application had ran previously, the database may already contain the sample data (which would have been added on the first initialization of the context). As such, <xref:Microsoft.EntityFrameworkCore.Infrastructure.DbContextOptionsBuilder.UseSeeding*> <xref:Microsoft.EntityFrameworkCore.Infrastructure.DbContextOptionsBuilder.UseAsyncSeeding*> should check if data exists before attempting to populate the database. This can be achieved by issuing a simple EF query.
 
 Here is an example of how these methods can be used:
 
