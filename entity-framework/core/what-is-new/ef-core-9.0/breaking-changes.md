@@ -44,11 +44,11 @@ EF Core 9 targets .NET 8. This means that existing applications that target .NET
 
 #### Old behavior
 
-If the model has pending changes compared to the last migration they are not applied with the rest of the migrations when `Migrate` is called.
+If the model has pending changes compared to the last migration they are not applied with the rest of the migrations when <xref:Microsoft.EntityFrameworkCore.RelationalDatabaseFacadeExtensions.Migrate*> is called.
 
 #### New behavior
 
-Starting with EF Core 9.0, if the model has pending changes compared to the last migration an exception is thrown when `dotnet ef database update`, `Migrate` or `MigrateAsync` is called:
+Starting with EF Core 9.0, if the model has pending changes compared to the last migration an exception is thrown when `dotnet ef database update`, <xref:Microsoft.EntityFrameworkCore.RelationalDatabaseFacadeExtensions.Migrate*> or <xref:Microsoft.EntityFrameworkCore.RelationalDatabaseFacadeExtensions.MigrateAsync*> is called:
 > :::no-loc text="The model for context 'DbContext' has pending changes. Add a new migration before updating the database. This exception can be suppressed or logged by passing event ID 'RelationalEventId.PendingModelChangesWarning' to the 'ConfigureWarnings' method in 'DbContext.OnConfiguring' or 'AddDbContext'.":::
 
 #### Why
@@ -60,16 +60,16 @@ Forgetting to add a new migration after making model changes is a common mistake
 There are several common situations when this exception can be thrown:
 
 - There are no migrations at all. This is common when the database is updated through other means.
-  - **Mitigation**: If you don't plan to use migrations for managing the database schema then remove the `Migrate` or `MigrateAsync` call, otherwise add a migration.
+  - **Mitigation**: If you don't plan to use migrations for managing the database schema then remove the <xref:Microsoft.EntityFrameworkCore.RelationalDatabaseFacadeExtensions.Migrate*> or <xref:Microsoft.EntityFrameworkCore.RelationalDatabaseFacadeExtensions.MigrateAsync*> call, otherwise add a migration.
 - There is at least one migration, but the model snapshot is missing. This is common for migrations created manually.
   - **Mitigation**: Add a new migration using EF tooling, this will update the model snapshot.
-- The model wasn't modified by the developer, but it's built in a non-deterministic way causing EF to detect it as modified. This is common when `new DateTime()`, `DateTime.Now`, `DateTime.UtcNow`, or `Guid.NewGuid()` are used in objects supplied to `HasData()`.
-  - **Mitigation**: Add a new migration, examine its contents to locate the cause, and replace the dynamic data with a static, hardcoded value in the model. The migration should be recreated after the model is fixed. If dynamic data has to be used for seeding consider using [the new seeding pattern](/ef/core/what-is-new/ef-core-9.0/whatsnew#improved-data-seeding) instead of `HasData()`.
+- The model wasn't modified by the developer, but it's built in a non-deterministic way causing EF to detect it as modified. This is common when `new DateTime()`, `DateTime.Now`, `DateTime.UtcNow`, or `Guid.NewGuid()` are used in objects supplied to <xref:Microsoft.EntityFrameworkCore.Metadata.Builders.EntityTypeBuilder`1.HasData*>.
+  - **Mitigation**: Add a new migration, examine its contents to locate the cause, and replace the dynamic data with a static, hardcoded value in the model. The migration should be recreated after the model is fixed. If dynamic data has to be used for seeding consider using [the new seeding pattern](/ef/core/what-is-new/ef-core-9.0/whatsnew#improved-data-seeding) instead of <xref:Microsoft.EntityFrameworkCore.Metadata.Builders.EntityTypeBuilder`1.HasData*>.
 - The last migration was created for a different provider than the one used to apply the migrations.
   - **Mitigation**: This is an unsupported scenario. The warning can be suppressed using the code snippet below, but this scenario will likely stop working in a future EF Core release. The recommended solution is [to generate a separate set of migrations for each provider](xref:core/managing-schemas/migrations/providers).
 - The migrations are generated, modified or chosen dynamically by replacing some of the EF services.
   - **Mitigation**: The warning is a false positive in this case and should be suppressed:  
-    `options.ConfigureWarnings(w => w.Ignore(RelationalEventId.PendingModelChangesWarning))`
+    `options.ConfigureWarnings(w => w.Ignore(<xref:Microsoft.EntityFrameworkCore.Diagnostics.RelationalEventId.PendingModelChangesWarning>))`
 - You are using ASP.NET Core Identity and change options that affect the model, such as:
 
     ```csharp
@@ -136,7 +136,7 @@ await dbContext.Database.CreateExecutionStrategy().ExecuteAsync(async () =>
 
 #### New behavior
 
-Starting with EF Core 9.0, `Migrate` and `MigrateAsync` calls will start a transaction and execute the commands using an `ExecutionStrategy` and if your app uses the above pattern an exception is thrown:
+Starting with EF Core 9.0, <xref:Microsoft.EntityFrameworkCore.RelationalDatabaseFacadeExtensions.Migrate*> and <xref:Microsoft.EntityFrameworkCore.RelationalDatabaseFacadeExtensions.MigrateAsync*> calls will start a transaction and execute the commands using an `ExecutionStrategy` and if your app uses the above pattern an exception is thrown:
 > :::no-loc text="An error was generated for warning 'Microsoft.EntityFrameworkCore.Migrations.MigrationsUserTransactionWarning': A transaction was started before applying migrations. This prevents a database lock to be acquired and hence the database will not be protected from concurrent migration applications. The transactions and execution strategy are already managed by EF as needed. Remove the external transaction. This exception can be suppressed or logged by passing event ID 'RelationalEventId.MigrationsUserTransactionWarning' to the 'ConfigureWarnings' method in 'DbContext.OnConfiguring' or 'AddDbContext'.":::
 
 #### Why
@@ -154,7 +154,7 @@ await dbContext.Database.MigrateAsync(cancellationToken);
 Otherwise, if your scenario requires an explicit transaction and you have other mechanism in place to prevent concurrent migration application, then ignore the warning:
   
 ```csharp
-options.ConfigureWarnings(w => w.Ignore(RelationalEventId.MigrationsUserTransactionWarning))
+options.ConfigureWarnings(w => w.Ignore(<xref:Microsoft.EntityFrameworkCore.Diagnostics.RelationalEventId.MigrationsUserTransactionWarning>))
 ```
 
 ## Medium-impact changes
@@ -371,7 +371,7 @@ An emerging JSON practice uses a `$type` property in scenarios where a document'
 
 ##### Mitigations
 
-The easiest mitigation is to simply configure the name of the discriminator property to be `Discriminator`, just as before:
+The easiest mitigation is to simply configure the name of the discriminator property to be `Discriminator`, just as before using <xref:Microsoft.EntityFrameworkCore.CosmosEntityTypeBuilderExtensions.HasDiscriminator*>:
 
 ```csharp
 modelBuilder.Entity<Session>().HasDiscriminator<string>("Discriminator");
@@ -403,7 +403,7 @@ EF 9.0 generally changed the mapping to be more aligned with common Azure Cosmos
 
 ##### Mitigations
 
-The easiest mitigation is to simply configure EF to include the discriminator in the JSON `id` property, as before. A new configuration option has been introduced for this purpose:
+The easiest mitigation is to simply configure EF to include the discriminator in the JSON `id` property, as before using <xref:Microsoft.EntityFrameworkCore.CosmosEntityTypeBuilderExtensions.HasDiscriminatorInJsonId*>. A new configuration option has been introduced for this purpose:
 
 ```csharp
 modelBuilder.Entity<Session>().HasDiscriminatorInJsonId();
@@ -433,13 +433,13 @@ EF 9.0 generally changed the mapping to be more aligned with common Azure Cosmos
 
 ##### Mitigations
 
-If you would like to preserve EF Core 8 behavior the easiest mitigation is to use a new configuration option that has been introduced for this purpose:
+If you would like to preserve EF Core 8 behavior the easiest mitigation is to use <xref:Microsoft.EntityFrameworkCore.CosmosEntityTypeBuilderExtensions.HasShadowId*>, a new configuration option that has been introduced for this purpose:
 
 ```csharp
 modelBuilder.Entity<Session>().HasShadowId();
 ```
 
-Doing this for all your top-level entity types will make EF behave just like before. Or you could apply it to all entity types in the model with one call:
+Doing this for all your top-level entity types will make EF behave just like before. Or you could apply it to all entity types in the model with one call using <xref:Microsoft.EntityFrameworkCore.CosmosModelBuilderExtensions.HasShadowIds*>:
 
 ```csharp
 modelBuilder.HasShadowIds();
