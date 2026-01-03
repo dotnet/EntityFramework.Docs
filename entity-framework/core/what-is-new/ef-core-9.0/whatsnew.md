@@ -367,7 +367,7 @@ GROUP BY [s].[StoreAddress_City], [s].[StoreAddress_Country], [s].[StoreAddress_
 > [!TIP]
 > The code shown here comes from [ExecuteUpdateSample.cs](https://github.com/dotnet/EntityFramework.Docs/tree/main/samples/core/Miscellaneous/NewInEFCore9/ExecuteUpdateSample.cs).
 
-Similarly, in EF9 `ExecuteUpdate` has also been improved to accept complex type properties. However, each member of the complex type must be specified explicitly. For example:
+Similarly, in EF9 <xref:Microsoft.EntityFrameworkCore.RelationalQueryableExtensions.ExecuteUpdateAsync*> has also been improved to accept complex type properties. However, each member of the complex type must be specified explicitly. For example:
 
 <!--
             #region UpdateComplexType
@@ -392,7 +392,7 @@ FROM [Stores] AS [s]
 WHERE [s].[Region] = N'Germany'
 ```
 
-Previously, you had to manually list out the different properties of the complex type in your `ExecuteUpdate` call.
+Previously, you had to manually list out the different properties of the complex type in your <xref:Microsoft.EntityFrameworkCore.RelationalQueryableExtensions.ExecuteUpdateAsync*> call.
 
 <a name="prune"></a>
 
@@ -610,7 +610,7 @@ Notice that EF created a constant in the SQL for ".NET Blog" because this value 
 
 On the other hand, the value of `id` is parameterized, since the same query may be executed with many different values for `id`. Creating a constant in this case would result in pollution of the query cache with lots of queries that differ only in `id` values. This is very bad for overall performance of the database.
 
-Generally speaking, these defaults should not be changed. However, EF Core 8.0.2 introduces an `EF.Constant` method which forces EF to use a constant even if a parameter would be used by default. For example:
+Generally speaking, these defaults should not be changed. However, EF Core 8.0.2 introduces an <xref:Microsoft.EntityFrameworkCore.EF.Constant*> method which forces EF to use a constant even if a parameter would be used by default. For example:
 
 <!--
         #region ForceConstant
@@ -630,9 +630,9 @@ FROM [Posts] AS [p]
 WHERE [p].[Title] = N'.NET Blog' AND [p].[Id] = 1
 ```
 
-#### The `EF.Parameter` method
+#### The EF.Parameter method
 
-EF9 introduces the `EF.Parameter` method to do the opposite. That is, force EF to use a parameter even if the value is a constant in code. For example:
+EF9 introduces the <xref:Microsoft.EntityFrameworkCore.EF.Parameter*> method to do the opposite. That is, force EF to use a parameter even if the value is a constant in code. For example:
 
 <!--
         #region ForceParameter
@@ -679,9 +679,9 @@ WHERE [p].[Title] = N'.NET Blog' AND [p].[Id] IN (
 )
 ```
 
-This allows having the same SQL query for different parameterized collections (only the parameter value changes), but in some situations it can lead to performance issues as the database isn't able to optimally plan for the query. The `EF.Constant` method can be used to revert to the previous translation.
+This allows having the same SQL query for different parameterized collections (only the parameter value changes), but in some situations it can lead to performance issues as the database isn't able to optimally plan for the query. The <xref:Microsoft.EntityFrameworkCore.EF.Constant*> method can be used to revert to the previous translation.
 
-The following query uses `EF.Constant` to that effect:
+The following query uses <xref:Microsoft.EntityFrameworkCore.EF.Constant*> to that effect:
 
 <!--
 #region ForceConstantPrimitiveCollection
@@ -703,7 +703,7 @@ WHERE [p].[Title] = N'.NET Blog' AND [p].[Id] IN (1, 2, 3)
 Moreover, EF9 introduces `TranslateParameterizedCollectionsToConstants` [context option](/ef/core/dbcontext-configuration/#dbcontextoptions) that can be used to prevent primitive collection parameterization for all queries. We also added a complementing `TranslateParameterizedCollectionsToParameters` which forces parameterization of primitive collections explicitly (this is the default behavior).
 
 > [!TIP]
-> The `EF.Parameter` method overrides the context option. If you want to prevent parameterization of primitive collections for most of your queries (but not all), you can set the context option `TranslateParameterizedCollectionsToConstants` and use `EF.Parameter` for the queries or individual variables that you want to parameterize.
+> The <xref:Microsoft.EntityFrameworkCore.EF.Parameter*> method overrides the context option. If you want to prevent parameterization of primitive collections for most of your queries (but not all), you can set the context option `TranslateParameterizedCollectionsToConstants` and use <xref:Microsoft.EntityFrameworkCore.EF.Parameter*> for the queries or individual variables that you want to parameterize.
 
 <a name="inlinedsubs"></a>
 
@@ -1285,7 +1285,7 @@ INNER JOIN "Pubs" AS "p" ON "w"."ClosestPubId" = "p"."Id"
 
 EF9 supports specification of the [SQL Server fill-factor](/sql/relational-databases/indexes/specify-fill-factor-for-an-index) when using EF Core Migrations to create keys and indexes. From the SQL Server docs, "When an index is created or rebuilt, the fill-factor value determines the percentage of space on each leaf-level page to be filled with data, reserving the remainder on each page as free space for future growth."
 
-The fill-factor can be set on a single or composite primary and alternate keys and indexes. For example:
+The fill-factor can be set on a single or composite primary and alternate keys and indexes using <xref:Microsoft.EntityFrameworkCore.SqlServerIndexBuilderExtensions.HasFillFactor*>. For example:
 
 <!--
             #region FillFactor
@@ -1424,7 +1424,7 @@ In EF9, this can be simplified down to the following:
 
 ### Update ApplyConfigurationsFromAssembly to call non-public constructors
 
-In previous versions of EF Core, the `ApplyConfigurationsFromAssembly` method only instantiated configuration types with a public, parameterless constructors. In EF9, we have both [improved the error messages generated when this fails](https://github.com/dotnet/efcore/pull/32577), and also enabled instantiation by non-public constructor. This is useful when co-locating configuration in a private nested class which should never be instantiated by application code. For example:
+In previous versions of EF Core, the <xref:Microsoft.EntityFrameworkCore.ModelBuilder.ApplyConfigurationsFromAssembly*> method only instantiated configuration types with a public, parameterless constructors. In EF9, we have both [improved the error messages generated when this fails](https://github.com/dotnet/efcore/pull/32577), and also enabled instantiation by non-public constructor. This is useful when co-locating configuration in a private nested class which should never be instantiated by application code. For example:
 
 ```csharp
 public class Country
