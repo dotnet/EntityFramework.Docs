@@ -51,6 +51,8 @@ builder.Services.AddDbContext<MyContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("MyContext")));
 ```
 
+The EF SQL Server provider uses [Microsoft.Data.SqlClient](/sql/connect/ado-net/overview-sqlclient-driver) as its underlying ADO.NET provider. For more information on the connection strings accepted by SqlClient, [see this page](/sql/connect/ado-net/connection-string-syntax).
+
 ### [Azure SQL](#tab/azure-sql)
 
 ```c#
