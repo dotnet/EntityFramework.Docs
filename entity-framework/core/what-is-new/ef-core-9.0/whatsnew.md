@@ -256,7 +256,7 @@ foreach (var post in page.Values)
 }
 ```
 
-The new <xref:Microsoft.EntityFrameworkCore.CosmosQueryableExtensions.ToPageAsync*> operator returns a <xref:Microsoft.EntityFrameworkCore.CosmosPage>, which exposes a continuation token that can be used to efficiently resume the query at a later point, fetching the next 10 items:
+The new <xref:Microsoft.EntityFrameworkCore.CosmosQueryableExtensions.ToPageAsync*> operator returns a <xref:Microsoft.EntityFrameworkCore.CosmosPage`1>, which exposes a continuation token that can be used to efficiently resume the query at a later point, fetching the next 10 items:
 
 ```c#
 var nextPage = await context.Sessions.OrderBy(s => s.Id).ToPageAsync(10, continuationToken);

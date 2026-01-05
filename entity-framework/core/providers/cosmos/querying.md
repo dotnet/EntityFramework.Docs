@@ -144,7 +144,7 @@ foreach (var session in firstPage.Values)
 }
 ```
 
-Rather than terminating the LINQ query with `ToListAsync` or similar, we use the <xref:Microsoft.EntityFrameworkCore.CosmosQueryableExtensions.ToPageAsync*> method, instructing it to get at most 10 items in every page (note that there may be fewer items in the database). Since this is our first query, we'd like to get results from the beginning, and pass `null` as the continuation token. <xref:Microsoft.EntityFrameworkCore.CosmosQueryableExtensions.ToPageAsync*> returns a <xref:Microsoft.EntityFrameworkCore.CosmosPage>, which exposes a continuation token and the values in the page (up to 10 items). Your program will typically send those values to the client, along with the continuation token; this will allow resuming the query later and fetching more results.
+Rather than terminating the LINQ query with `ToListAsync` or similar, we use the <xref:Microsoft.EntityFrameworkCore.CosmosQueryableExtensions.ToPageAsync*> method, instructing it to get at most 10 items in every page (note that there may be fewer items in the database). Since this is our first query, we'd like to get results from the beginning, and pass `null` as the continuation token. <xref:Microsoft.EntityFrameworkCore.CosmosQueryableExtensions.ToPageAsync*> returns a <xref:Microsoft.EntityFrameworkCore.CosmosPage`1>, which exposes a continuation token and the values in the page (up to 10 items). Your program will typically send those values to the client, along with the continuation token; this will allow resuming the query later and fetching more results.
 
 Let's assume the user now clicks on the "Next" button in their UI, asking for the next 10 items. You can then execute the query as follows:
 
