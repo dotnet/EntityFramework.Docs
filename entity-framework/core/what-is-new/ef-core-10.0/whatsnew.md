@@ -39,7 +39,7 @@ public class Blog
 }
 ```
 
-Then, insert embedding data by populating the Embedding property and calling `SaveChangesAsync()` as usual:
+Then, insert embedding data by populating the Embedding property and calling <xref:Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync*> as usual:
 
 ```c#
 IEmbeddingGenerator<string, Embedding<float>> embeddingGenerator = /* Set up your preferred embedding generator */;
@@ -53,7 +53,7 @@ context.Blogs.Add(new Blog
 await context.SaveChangesAsync();
 ```
 
-Finally, use the [`EF.Functions.VectorDistance()`](/sql/t-sql/functions/vector-distance-transact-sql) function in your LINQ queries to perform similarity search for a given user query:
+Finally, use the <xref:Microsoft.EntityFrameworkCore.SqlServerDbFunctionsExtensions.VectorDistance*> function in your LINQ queries to perform similarity search for a given user query:
 
 ```c#
 var sqlVector = /* some user query which we should search for similarity */;
@@ -71,7 +71,7 @@ For more information on vector search, [see the documentation](xref:core/provide
 
 EF 10 also fully supports the new [json data type](/sql/t-sql/data-types/json-data-type), also available on Azure SQL Database and on SQL Server 2025. While SQL Server has included JSON functionality for several versions, the data itself was stored in plain textual columns in the database; the new data type provides significant efficiency improvements and a safer way to store and interact with JSON.
 
-With EF 10, if you've configured EF with `UseAzureSql()` or with a compatibility level of 170 or higher (SQL Server 2025), EF automatically defaults to using the new JSON data type. For example, the following entity type has a primitive collection (Tags, an array of strings) and Details (mapped as a complex type):
+With EF 10, if you've configured EF with <xref:Microsoft.EntityFrameworkCore.SqlServerDbContextOptionsExtensions.UseAzureSql*> or with a compatibility level of 170 or higher (SQL Server 2025), EF automatically defaults to using the new JSON data type. For example, the following entity type has a primitive collection (Tags, an array of strings) and Details (mapped as a complex type):
 
 ```c#
 public class Blog
@@ -126,7 +126,7 @@ Note that if your EF application already uses JSON via `nvarchar` columns, these
 
 ### Custom default constraint names
 
-EF 10 now allows you to specify a name for default constraints, rather than letting the database generate them:
+EF 10 now allows you to specify a name for default constraints using <xref:Microsoft.EntityFrameworkCore.RelationalPropertyBuilderExtensions.HasDefaultValueSql*>, rather than letting the database generate them:
 
 ```c#
 protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -137,7 +137,7 @@ protected override void OnModelCreating(ModelBuilder modelBuilder)
 }
 ```
 
-You can also enable automatic naming by EF of all default constraints:
+You can also enable automatic naming by EF of all default constraints using <xref:Microsoft.EntityFrameworkCore.SqlServerModelBuilderExtensions.UseNamedDefaultConstraints*>:
 
 ```c#
 protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -185,19 +185,19 @@ public class BloggingContext
 }
 ```
 
-Once the model is configured, we can use full-text search operations in queries using methods provided in `EF.Functions`:
+Once the model is configured, we can use full-text search operations in queries using methods provided in <xref:Microsoft.EntityFrameworkCore.EF.Functions*>:
 
 ```c#
 var cosmosBlogs = await context.Blogs.Where(x => EF.Functions.FullTextContains(x.Contents, "cosmos")).ToListAsync();
 ```
 
-The following full-text operations are currently supported: [`FullTextContains`](/azure/cosmos-db/nosql/query/fulltextcontains), [`FullTextContainsAll`](/azure/cosmos-db/nosql/query/fulltextcontainsall), [`FullTextContainsAny`](/azure/cosmos-db/nosql/query/fulltextcontainsany), [`FullTextScore`](/azure/cosmos-db/nosql/query/fulltextscore).
+The following full-text operations are currently supported: <xref:Microsoft.EntityFrameworkCore.CosmosDbFunctionsExtensions.FullTextContains*>, <xref:Microsoft.EntityFrameworkCore.CosmosDbFunctionsExtensions.FullTextContainsAll*>, <xref:Microsoft.EntityFrameworkCore.CosmosDbFunctionsExtensions.FullTextContainsAny*>, <xref:Microsoft.EntityFrameworkCore.CosmosDbFunctionsExtensions.FullTextScore*>.
 
 For more information on Cosmos full-text search, see the [documentation](xref:core/providers/cosmos/full-text-search).
 
 ### Hybrid search
 
-EF Core now supports [`RRF`](/azure/cosmos-db/nosql/query/rrf) (Reciprocal Rank Fusion) function, which combines vector similarity search and full-text search (i.e. hybrid search). Here is an example query using hybrid search:
+EF Core now supports <xref:Microsoft.EntityFrameworkCore.CosmosDbFunctionsExtensions.Rrf*> (Reciprocal Rank Fusion) function, which combines vector similarity search and full-text search (i.e. hybrid search). Here is an example query using hybrid search:
 
 ```c#
 float[] myVector = /* generate vector data from text, image, etc. */
@@ -309,7 +309,7 @@ CREATE TABLE [Customers] (
 );
 ```
 
-Unlike table splitting, JSON mapping allows collections within the mapped type. You can query and update properties inside your JSON documents just like any other non-JSON property, and perform efficient bulk updating on them via `ExecuteUpdateAsync` ([see release note](#execute-update-json)).
+Unlike table splitting, JSON mapping allows collections within the mapped type. You can query and update properties inside your JSON documents just like any other non-JSON property, and perform efficient bulk updating on them via <xref:Microsoft.EntityFrameworkCore.RelationalQueryableExtensions.ExecuteUpdateAsync*> ([see release note](#execute-update-json)).
 
 ### Struct support
 
@@ -338,7 +338,7 @@ customer.BillingAddress = customer.ShippingAddress;
 await context.SaveChangesAsync(); // ERROR
 ```
 
-In contrast, since complex types have value semantics, assigning them simply copies their properties over, as expected. For the same reasons, bulk assignment of owned entity types is not supported, whereas complex types fully support `ExecuteUpdateAsync` in EF 10 ([see release note](#execute-update-json)).
+In contrast, since complex types have value semantics, assigning them simply copies their properties over, as expected. For the same reasons, bulk assignment of owned entity types is not supported, whereas complex types fully support <xref:Microsoft.EntityFrameworkCore.RelationalQueryableExtensions.ExecuteUpdateAsync*> in EF 10 ([see release note](#execute-update-json)).
 
 Similarly, comparing a customer's shipping and billing addresses in LINQ queries does not work as expected, since entity types are compared by their identities; complex types, on the other hand, are compared by their contents, producing the expected result.
 
@@ -527,7 +527,7 @@ ORDER BY [b0].[Name], [b0].[Id]
 > [!NOTE]
 > ExecuteUpdate support for JSON requires mapping your types as complex types ([see above](#json)), and does not work when your types are mapped as owned entities.
 
-Although EF has support JSON columns for some time and allows updating them via `SaveChanges`, `ExecuteUpdate` lacked support for them. EF10 now allows referencing JSON columns and properties within them in `ExecuteUpdate`, allowing efficient bulk updating of document-modeled data within relational databases.
+Although EF has support JSON columns for some time and allows updating them via <xref:Microsoft.EntityFrameworkCore.DbContext.SaveChanges*>, <xref:Microsoft.EntityFrameworkCore.RelationalQueryableExtensions.ExecuteUpdateAsync*> lacked support for them. EF10 now allows referencing JSON columns and properties within them in <xref:Microsoft.EntityFrameworkCore.RelationalQueryableExtensions.ExecuteUpdateAsync*>, allowing efficient bulk updating of document-modeled data within relational databases.
 
 For example, given the following model, mapping the `BlogDetails` type to a complex JSON column in the database:
 
@@ -551,7 +551,7 @@ protected override void OnModelCreating(ModelBuilder modelBuilder)
 }
 ```
 
-You can now use `ExecuteUpdate` as usual, referencing properties within `BlogDetails`:
+You can now use <xref:Microsoft.EntityFrameworkCore.RelationalQueryableExtensions.ExecuteUpdateAsync*> as usual, referencing properties within `BlogDetails`:
 
 ```c#
 await context.Blogs.ExecuteUpdateAsync(s =>
