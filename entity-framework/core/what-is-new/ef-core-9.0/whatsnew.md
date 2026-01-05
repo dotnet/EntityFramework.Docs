@@ -256,7 +256,7 @@ foreach (var post in page.Values)
 }
 ```
 
-The new <xref:Microsoft.EntityFrameworkCore.CosmosQueryableExtensions.ToPageAsync*> operator returns a <xref:Microsoft.EntityFrameworkCore.Cosmos.Query.CosmosPage>, which exposes a continuation token that can be used to efficiently resume the query at a later point, fetching the next 10 items:
+The new <xref:Microsoft.EntityFrameworkCore.CosmosQueryableExtensions.ToPageAsync*> operator returns a `CosmosPage`, which exposes a continuation token that can be used to efficiently resume the query at a later point, fetching the next 10 items:
 
 ```c#
 var nextPage = await context.Sessions.OrderBy(s => s.Id).ToPageAsync(10, continuationToken);
@@ -1099,10 +1099,10 @@ The majority of operations performed during migrations are protected by a transa
 
 ### Improved data seeding
 
-EF9 introduced a convenient way to perform data seeding, that is populating the database with initial data. <xref:Microsoft.EntityFrameworkCore.DbContextOptionsBuilder> now contains <xref:Microsoft.EntityFrameworkCore.Infrastructure.DbContextOptionsBuilder.UseSeeding*> and <xref:Microsoft.EntityFrameworkCore.Infrastructure.DbContextOptionsBuilder.UseAsyncSeeding*> methods which get executed when the DbContext is initialized (as part of <xref:Microsoft.EntityFrameworkCore.Infrastructure.DatabaseFacade.EnsureCreatedAsync*>).
+EF9 introduced a convenient way to perform data seeding, that is populating the database with initial data. <xref:Microsoft.EntityFrameworkCore.DbContextOptionsBuilder> now contains `UseSeeding` and `UseAsyncSeeding` methods which get executed when the DbContext is initialized (as part of <xref:Microsoft.EntityFrameworkCore.Infrastructure.DatabaseFacade.EnsureCreatedAsync*>).
 
 > [!NOTE]
-> If the application had ran previously, the database may already contain the sample data (which would have been added on the first initialization of the context). As such, <xref:Microsoft.EntityFrameworkCore.Infrastructure.DbContextOptionsBuilder.UseSeeding*> <xref:Microsoft.EntityFrameworkCore.Infrastructure.DbContextOptionsBuilder.UseAsyncSeeding*> should check if data exists before attempting to populate the database. This can be achieved by issuing a simple EF query.
+> If the application had ran previously, the database may already contain the sample data (which would have been added on the first initialization of the context). As such, `UseSeeding` `UseAsyncSeeding` should check if data exists before attempting to populate the database. This can be achieved by issuing a simple EF query.
 
 Here is an example of how these methods can be used:
 

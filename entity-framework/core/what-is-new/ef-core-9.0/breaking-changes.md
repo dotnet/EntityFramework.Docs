@@ -371,7 +371,7 @@ An emerging JSON practice uses a `$type` property in scenarios where a document'
 
 ##### Mitigations
 
-The easiest mitigation is to simply configure the name of the discriminator property to be `Discriminator`, just as before using <xref:Microsoft.EntityFrameworkCore.CosmosEntityTypeBuilderExtensions.HasDiscriminator*>:
+The easiest mitigation is to simply configure the name of the discriminator property to be `Discriminator`, just as before:
 
 ```csharp
 modelBuilder.Entity<Session>().HasDiscriminator<string>("Discriminator");
