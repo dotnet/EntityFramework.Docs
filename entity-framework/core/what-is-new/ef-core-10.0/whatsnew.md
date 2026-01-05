@@ -637,7 +637,7 @@ Thanks to [@aradalvand](https://github.com/aradalvand) for proposing and pushing
 
 ### Redact inlined constants from logging by default
 
-When logging executed SQL, EF does not log parameter values by default, since these may contain sensitive or personally-identifiable information (PII); <xref:Microsoft.EntityFrameworkCore.DbContextOptionsBuilder.EnableSensitiveDataLogging> can be used to enable logging parameter values in diagnostic or debugging scenarios ([see documentation](xref:core/logging-events-diagnostics/extensions-logging#sensitive-data)).
+When logging executed SQL, EF does not log parameter values by default, since these may contain sensitive or personally-identifiable information (PII); <xref:Microsoft.EntityFrameworkCore.DbContextOptionsBuilder.EnableSensitiveDataLogging*> can be used to enable logging parameter values in diagnostic or debugging scenarios ([see documentation](xref:core/logging-events-diagnostics/extensions-logging#sensitive-data)).
 
 However, EF sometimes inlines parameters into the SQL statement rather than sending them separately; in those scenarios, the potentially sensitive values were logged. EF10 no longer does this, redacting such inlined parameters by default and replacing them with a question mark character (`?`). For example, let's say we have a function that accepts a list of roles, and returns the list of users which have one of those roles:
 
@@ -669,7 +669,7 @@ FROM [Blogs] AS [b]
 WHERE [b].[Role] IN (?, ?)
 ```
 
-If the roles represent sensitive information, this prevents that information from leaking into the application logs. As with regular parameters, full logging can be reenabled via <xref:Microsoft.EntityFrameworkCore.DbContextOptionsBuilder.EnableSensitiveDataLogging>.
+If the roles represent sensitive information, this prevents that information from leaking into the application logs. As with regular parameters, full logging can be reenabled via <xref:Microsoft.EntityFrameworkCore.DbContextOptionsBuilder.EnableSensitiveDataLogging*>.
 
 ### Warn for string concatenation with raw SQL APIs
 

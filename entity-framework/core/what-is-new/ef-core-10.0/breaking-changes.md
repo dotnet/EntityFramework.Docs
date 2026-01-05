@@ -425,7 +425,7 @@ Previously, methods on `IRelationalCommandDiagnosticsLogger` such as `CommandRea
 
 #### New behavior
 
-Starting with EF Core 10.0, these methods now require an additional `logCommandText` parameter. This parameter contains the SQL command text that will be logged, which may have sensitive data redacted when <xref:Microsoft.EntityFrameworkCore.DbContextOptionsBuilder.EnableSensitiveDataLogging> is not enabled.
+Starting with EF Core 10.0, these methods now require an additional `logCommandText` parameter. This parameter contains the SQL command text that will be logged, which may have sensitive data redacted when <xref:Microsoft.EntityFrameworkCore.DbContextOptionsBuilder.EnableSensitiveDataLogging*> is not enabled.
 
 #### Why
 
