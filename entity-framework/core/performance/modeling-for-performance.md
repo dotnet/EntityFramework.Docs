@@ -58,7 +58,7 @@ However, measuring shows that TPT is in most cases the inferior mapping techniqu
 
 TPC has similar performance characteristics to TPH, but is slightly slower when selecting entities of all types as this involves several tables. However, TPC really excels when querying for entities of a single leaf type - the query only uses a single table and needs no filtering.
 
-For a concrete example, [see this benchmark](https://github.com/dotnet/EntityFramework.Docs/tree/live/samples/core/Benchmarks/Inheritance.cs) which sets up a simple model with a 7-type hierarchy; 5000 rows are seeded for each type - totalling 35000 rows - and the benchmark simply loads all rows from the database:
+For a concrete example, [see this benchmark](https://github.com/dotnet/EntityFramework.Docs/tree/main/samples/core/Benchmarks/Inheritance.cs) which sets up a simple model with a 7-type hierarchy; 5000 rows are seeded for each type - totalling 35000 rows - and the benchmark simply loads all rows from the database:
 
 | Method |     Mean |   Error |   StdDev |     Gen 0 |     Gen 1 | Allocated |
 |------- |---------:|--------:|---------:|----------:|----------:|----------:|

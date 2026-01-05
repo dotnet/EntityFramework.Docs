@@ -9,7 +9,7 @@ internal class MyContext : DbContext
 }
 
 #region KeyId
-internal class Car
+public class Car
 {
     public string Id { get; set; }
 
@@ -17,7 +17,7 @@ internal class Car
     public string Model { get; set; }
 }
 
-internal class Truck
+public class Truck
 {
     public string TruckId { get; set; }
 

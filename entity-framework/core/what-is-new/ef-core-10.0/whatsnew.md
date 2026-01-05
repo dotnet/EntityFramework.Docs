@@ -1,21 +1,21 @@
 ---
 title: What's New in EF Core 10
 description: Overview of new features in EF Core 10
-author: maumar
-ms.date: 01/05/2025
+author: roji
+ms.date: 10/02/2025
 uid: core/what-is-new/ef-core-10.0/whatsnew
 ---
 
 # What's New in EF Core 10
 
-EF Core 10 (EF10) is the next release after EF Core 9 and is scheduled for release in November 2025.
-
-EF10 is available as a preview. See [.NET 10 release notes](https://github.com/dotnet/core/tree/main/release-notes/10.0) to get information about the latest preview. This article will be updated as new preview releases are made available.
+EF Core 10.0 (EF10) was released in November 2025 and is a Long Term Support (LTS) release. EF10 will be supported until November 10, 2028.
 
 > [!TIP]
 > You can run and debug into the samples by [downloading the sample code from GitHub](https://github.com/dotnet/EntityFramework.Docs). Each section below links to the source code specific to that section.
 
 EF10 requires the .NET 10 SDK to build and requires the .NET 10 runtime to run. EF10 will not run on earlier .NET versions, and will not run on .NET Framework.
+
+The below release notes list the major improvements in the release; [the full list of issues for the release can be found here](https://github.com/dotnet/efcore/issues?q=is%3Aissue%20milestone%3A10.0.0).
 
 <a name="sql-server"></a>
 
@@ -122,9 +122,6 @@ WHERE JSON_VALUE([b].[Details], '$.Viewers' RETURNING int) > 3
 
 Note that if your EF application already uses JSON via `nvarchar` columns, these columns will be automatically changed to `json` with the first migration. You can opt out of this by manually setting the column type to `nvarchar(max)`, or configuring a compatibility level lower than 170.
 
-> [!NOTE]
-> For 10.0.0 rc1, support for the new JSON data type has been temporarily disabled for Azure SQL Database, due to lacking support. These issues are expected to be resolved by the time EF 10.0 is released, and the JSON data type will become the default until then.
-
 <a name="default-constraint-names"></a>
 
 ### Custom default constraint names
@@ -229,6 +226,12 @@ For more information on Cosmos vector search, [see the documentation](xref:core/
 In previous versions of EF Core, evolving the model when using Azure Cosmos DB was quite painful. Specifically, when adding a new required property to the entity, EF would no longer be able to materialize that entity. The reason was that EF expected a value for the new property (since it was required), but the document created before the change didn't contain those values. The workaround was to mark the property as optional first, manually add default values for the property, and only then change it to required.
 
 In EF 10 we improved this experience - EF will now materialize a default value for a required property, if no data is present for it in the document, rather than throw.
+
+<a name="other-cosmos-improvements"></a>
+
+## Other Cosmos improvements
+
+- Use ExecutionStrategy for query execution (for retrying) ([#35692](https://github.com/dotnet/efcore/issues/35692)).
 
 <a name="complex-types"></a>
 
@@ -522,7 +525,7 @@ ORDER BY [b0].[Name], [b0].[Id]
 ## ExecuteUpdate support for relational JSON columns
 
 > [!NOTE]
-> ExecuteUpdate support for JSON requires mapping your types as complex types, and does not work when you types are mapped as owned entities.
+> ExecuteUpdate support for JSON requires mapping your types as complex types ([see above](#json)), and does not work when your types are mapped as owned entities.
 
 Although EF has support JSON columns for some time and allows updating them via `SaveChanges`, `ExecuteUpdate` lacked support for them. EF10 now allows referencing JSON columns and properties within them in `ExecuteUpdate`, allowing efficient bulk updating of document-modeled data within relational databases.
 
@@ -555,7 +558,7 @@ await context.Blogs.ExecuteUpdateAsync(s =>
     s.SetProperty(b => b.Details.Views, b => b.Details.Views + 1));
 ```
 
-This generates the following for SQL Server 2025, using the efficient, new `modify` function to increment the JSON property `Views` by one:
+This generates the following for SQL Server 2025, using the efficient, new [`modify`](/sql/t-sql/data-types/json-data-type#the-modify-method) function to increment the JSON property `Views` by one:
 
 ```sql
 UPDATE [b]
@@ -630,10 +633,64 @@ Thanks to [@aradalvand](https://github.com/aradalvand) for proposing and pushing
 
 <a name="other-improvements"></a>
 
+## Security-related improvements
+
+### Redact inlined constants from logging by default
+
+When logging executed SQL, EF does not log parameter values by default, since these may contain sensitive or personally-identifiable information (PII); <xref:Microsoft.EntityFrameworkCore.DbContextOptionsBuilder.EnableSensitiveDataLogging> can be used to enable logging parameter values in diagnostic or debugging scenarios ([see documentation](xref:core/logging-events-diagnostics/extensions-logging#sensitive-data)).
+
+However, EF sometimes inlines parameters into the SQL statement rather than sending them separately; in those scenarios, the potentially sensitive values were logged. EF10 no longer does this, redacting such inlined parameters by default and replacing them with a question mark character (`?`). For example, let's say we have a function that accepts a list of roles, and returns the list of users which have one of those roles:
+
+```c#
+Task<List<User>> GetUsersByRoles(BlogContext context, string[] roles)
+    => context.Users.Where(b => roles.Contains(b.Role)).ToListAsync();
+```
+
+Although the roles here are parameterized (may differ across invocations), we know that the actual sets of roles queried will be quite limited. We can therefore tell EF to *inline* the roles, so that the database's planner can plan execution separately for this query with its specific set of roles:
+
+```c#
+Task<List<User>> GetUsersByRoles(BlogContext context, string[] roles)
+    => context.Users.Where(b => EF.Constant(roles).Contains(b.Role)).ToListAsync();
+```
+
+On previous versions of EF, this produced the following SQL:
+
+```sql
+SELECT [u].[Id], [u].[Role]
+FROM [Users] AS [u]
+WHERE [u].[Role] IN (N'Administrator', N'Manager')
+```
+
+EF10 sends the same SQL to the database, but logs the following SQL, where the roles have been redacted:
+
+```sql
+SELECT [b].[Id], [b].[Role]
+FROM [Blogs] AS [b]
+WHERE [b].[Role] IN (?, ?)
+```
+
+If the roles represent sensitive information, this prevents that information from leaking into the application logs. As with regular parameters, full logging can be reenabled via <xref:Microsoft.EntityFrameworkCore.DbContextOptionsBuilder.EnableSensitiveDataLogging>.
+
+### Warn for string concatenation with raw SQL APIs
+
+SQL injection is one of the most serious security vulnerabilities in database applications; if unsanitized external input is inserted into SQL queries, a malicious user may be able to perform SQL injection, executing arbitrary SQL on your database. For more information about EF's SQL querying APIs and SQL injection, [see the documentation](xref:core/querying/sql-queries#passing-parameters).
+
+While EF users rarely deal with SQL directly, EF does provide SQL-based APIs for the cases where they're needed. Most of these APIs are safe in the face of SQL injection; for example <xref:Microsoft.EntityFrameworkCore.RelationalQueryableExtensions.FromSql*> accepts a .NET `FormattableString`, and any parameter will automatically be send as a separate SQL parameter, preventing SQL injection. However, in some scenarios it's necessary to build up a dynamic SQL query by piecing together multiple fragments; <xref:Microsoft.EntityFrameworkCore.RelationalQueryableExtensions.FromSqlRaw*> is designed specifically for this, and requires the user to ensure that all fragments are trusted or properly sanitized.
+
+Starting with EF10, EF has an analyzer which warns if concatenation is performed within a "raw" SQL method invocation:
+
+```c#
+var users = context.Users.FromSqlRaw("SELECT * FROM Users WHERE [" + fieldName + "] IS NULL");
+```
+
+If `fieldName` is trusted or has been properly sanitized, the warning can be safely suppressed.
+
 ## Other improvements
 
+- Stop spanning all migrations with a single transaction ([#35096](https://github.com/dotnet/efcore/issues/35096)). This reverts a change done in EF9 which caused issues in various migration scenarios.
 - Make SQL Server scaffolding compatible with Azure Data Explorer ([#34832](https://github.com/dotnet/efcore/pull/34832), contributed by [@barnuri](https://github.com/barnuri)).
 - Associate the DatabaseRoot with the scoped options instance and not the singleton options ([#34477](https://github.com/dotnet/efcore/pull/34477), contributed by [@koenigst](https://github.com/koenigst)).
-- Redact inlined constants from log when sensitive logging is off ([#35724](https://github.com/dotnet/efcore/pull/35724)).
 - Improve LoadExtension to work correctly with dotnet run and lib* named libs ([#35617](https://github.com/dotnet/efcore/pull/35617), contributed by [@krwq](https://github.com/krwq)).
 - Changes to AsyncLocal usage for better lazy loading performance ([#35835](https://github.com/dotnet/efcore/pull/35835), contributed by [@henriquewr](https://github.com/henriquewr)).
+
+[The full list of issues for the release can be found here](https://github.com/dotnet/efcore/issues?q=is%3Aissue%20milestone%3A10.0.0).

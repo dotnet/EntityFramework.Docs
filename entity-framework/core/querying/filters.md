@@ -10,7 +10,7 @@ uid: core/querying/filters
 Global query filters allow attaching a filter to an entity type and having that filter applied whenever a query on that entity type is executed; think of them as an additional LINQ `Where` operator that's added whenever the entity type is queried. Such filters are useful in a variety of cases.
 
 > [!TIP]
-> You can view this article's [sample](https://github.com/dotnet/EntityFramework.Docs/tree/live/samples/core/Querying/QueryFilters) on GitHub.
+> You can view this article's [sample](https://github.com/dotnet/EntityFramework.Docs/tree/main/samples/core/Querying/QueryFilters) on GitHub.
 
 ## Basic example - soft deletion
 
@@ -142,7 +142,7 @@ If your query filter needs to access a tenant ID or similar contextual informati
 ```c#
 private sealed class CustomerEntityConfiguration : IEntityTypeConfiguration<Customer>
 {
-    private readonly SomeDbContext _context == null!;
+    private readonly SomeDbContext _context = null!;
 
     public void Configure(EntityTypeBuilder<Customer> builder)
     {

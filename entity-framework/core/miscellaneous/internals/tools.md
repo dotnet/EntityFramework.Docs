@@ -114,7 +114,7 @@ In a nutshell, here are some of the strategies it uses.
 
 ### Design-time services
 
-In addition to the application services and the internal DbContext services, there is a third set of [design-time services](xref:core/cli/services). These aren't added to internal service provider since they're never needed at runtime. The design-time services are built by [DesignTimeServicesBuilder](https://github.com/dotnet/efcore/blob/main/src/EFCore.Design/Design/Internal/DesignTimeServicesBuilder.cs). There are two main path--one with a context instance and one without. The one without is primarily used when scaffolding a new DbContext. There are several extensibility points here to allow the user, providers, and extensions to override and customize the services.
+In addition to the application services and the internal DbContext services, there is a third set of [design-time services](xref:core/cli/services). These aren't added to internal service provider since they're never needed at runtime. The design-time services are built by [DesignTimeServicesBuilder](https://github.com/dotnet/efcore/blob/main/src/EFCore.Design/Design/Internal/DesignTimeServicesBuilder.cs). There are two main paths--one with a context instance and one without. The one without is primarily used when scaffolding a new DbContext. There are several extensibility points here to allow the user, providers, and extensions to override and customize the services.
 
 The user can customize services by adding an implementation of `IDesignTimeServices` to the startup assembly.
 

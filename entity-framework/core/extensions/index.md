@@ -2,7 +2,7 @@
 title: Tools & Extensions - EF Core
 description: External tools and extensions for Entity Framework Core
 author: ErikEJ
-ms.date: 05/22/2024
+ms.date: 09/30/2025
 uid: core/extensions/index
 ---
 
@@ -51,12 +51,6 @@ EF Core Sidekick is a Visual Studio extension that enhances the power of auto co
 Entity Framework Visual Editor is a Visual Studio extension that adds an O/RM designer for visual design of EF 6, and EF Core classes. Code is generated using T4 templates so can be customized to suit any needs. It supports inheritance, unidirectional and bidirectional associations, enumerations, and the ability to color-code your classes and add text blocks to explain potentially arcane parts of your design. For EF Core: 2-8.
 
 [Visual Studio Marketplace](https://marketplace.visualstudio.com/items?itemName=michaelsawczyn.EFDesigner2022)
-
-### IWAPI
-
-IWAPI (Instant Web API) is a scaffolding engine for .NET Core that can automate the generation of DbContext classes, entities, models and creates a working Web API from any SQL Server database.
-
-[Website](https://instantwebapi.com/)
 
 ### efmig
 
@@ -122,13 +116,13 @@ Flexible projection magic for EF Core. Use properties, methods, and extension me
 
 ### Entity Framework Plus
 
-Extends your DbContext with features such as: Include Filter, Auditing, Caching, Query Future, Batch Delete, Batch Update, and more. For EF Core: 2-9.
+Extends your DbContext with features such as: Include Filter, Auditing, Caching, Query Future, Batch Delete, Batch Update, and more. For EF Core: 2-10.
 
 [Website](https://entityframework-plus.net/) | [GitHub repository](https://github.com/zzzprojects/EntityFramework-Plus) | [NuGet](https://www.nuget.org/packages/Z.EntityFramework.Plus.EFCore)
 
 ### Entity Framework Extensions
 
-Extends your DbContext with high-performance bulk operations: BulkSaveChanges, BulkInsert, BulkUpdate, BulkDelete, BulkMerge, and more. For EF Core: 2-9.
+Extends your DbContext with high-performance bulk operations: BulkSaveChanges, BulkInsert, BulkUpdate, BulkDelete, BulkMerge, and more. For EF Core: 2-10.
 
 [Website](https://entityframework-extensions.net/) | [NuGet](https://www.nuget.org/packages/Z.EntityFramework.Extensions.EFCore/)
 
@@ -252,7 +246,7 @@ For EF Core: 6-8.
 
 ### Microsoft.EntityFrameworkCore.DynamicLinq
 
-The Dynamic LINQ library let you execute query with dynamic string and provide some utilities methods such as ParseLambda, Parse, and CreateClass. For EF Core: 2-9.
+The Dynamic LINQ library let you execute query with dynamic string and provide some utilities methods such as ParseLambda, Parse, and CreateClass. For EF Core: 2-10.
 
 [Website](https://dynamic-linq.net/) | [GitHub repository](https://github.com/zzzprojects/System.Linq.Dynamic.Core) | [NuGet](https://www.nuget.org/packages/Microsoft.EntityFrameworkCore.DynamicLinq)
 
@@ -280,21 +274,33 @@ A library that provides seamless auditing capabilities for Entity Framework Core
 
 [GitHub repository](https://github.com/ShadyNagy/EntityFrameworkCore.AuditInterceptor) | [NuGet](https://www.nuget.org/packages/EntityFrameworkCore.AuditInterceptor)
 
+### PhenX.EntityFrameworkCore.BulkInsert
+
+A high-performance bulk insert extension for Entity Framework Core. Supports SQL Server, PostgreSQL, SQLite, MySQL and Oracle. For EF Core: 8-9.
+
+[Website](https://phenx.github.io/PhenX.EntityFrameworkCore.BulkInsert/) | [GitHub repository](https://github.com/PhenX/PhenX.EntityFrameworkCore.BulkInsert)
+
 ### SanderTenBrinke.EntityFrameworkCore.Extensions.SqlServer.DataMasking
 
 This package focuses on adding data masking support for SQL Server to EF Core. For EF Core: 8-9.
 
 [GitHub repository](https://github.com/sander1095/EntityFrameworkCore.Extensions.SqlServer.DataMasking) | [NuGet](https://www.nuget.org/packages/SanderTenBrinke.EntityFrameworkCore.Extensions.SqlServer.DataMasking)
 
+### EFCommenter
+
+All xml summaries of entities, properties, and enums will be added as comments on the corresponding database tables and columns. For EF Core: 9.
+
+[GitHub repository](https://github.com/roohial57/DotNetComponent_EFCommenter) | [NuGet](https://www.nuget.org/packages/EFCommenter)
+
 ## API Integrations
 
 These packages are designed to integrate directly with EF Core to expose various APIs.
 
-### .NET Aspire
+### Aspire
 
-Enhance the local development experience by simplifying the management of your cloud-native app's configuration and interconnections. For EF Core: 8.
+Enhance the local development experience by simplifying the management of your cloud-native app's configuration and interconnections. For EF Core: 8-10.
 
-[Website](/dotnet/aspire/get-started/aspire-overview) | [GitHub repository](https://github.com/dotnet/aspire) | [NuGet](https://www.nuget.org/profiles/aspire)
+[Website](https://aspire.dev) | [GitHub repository](https://github.com/dotnet/aspire) | [NuGet](https://www.nuget.org/profiles/aspire)
 
 ### HotChocolate
 

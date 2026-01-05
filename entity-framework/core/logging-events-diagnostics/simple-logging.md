@@ -9,7 +9,7 @@ uid: core/logging-events-diagnostics/simple-logging
 # Simple Logging
 
 > [!TIP]
-> You can [download this article's sample](https://github.com/dotnet/EntityFramework.Docs/tree/live/samples/core/Miscellaneous/Logging/SimpleLogging) from GitHub.
+> You can [download this article's sample](https://github.com/dotnet/EntityFramework.Docs/tree/main/samples/core/Miscellaneous/Logging/SimpleLogging) from GitHub.
 
 Entity Framework Core (EF Core) simple logging can be used to easily obtain logs while developing and debugging applications. This form of logging requires minimal configuration and no additional NuGet packages.
 

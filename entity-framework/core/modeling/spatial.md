@@ -18,6 +18,7 @@ EF Core Provider                        | Spatial NuGet Package
 Microsoft.EntityFrameworkCore.SqlServer | [Microsoft.EntityFrameworkCore.SqlServer.NetTopologySuite](https://www.nuget.org/packages/Microsoft.EntityFrameworkCore.SqlServer.NetTopologySuite)
 Microsoft.EntityFrameworkCore.Sqlite    | [Microsoft.EntityFrameworkCore.Sqlite.NetTopologySuite](https://www.nuget.org/packages/Microsoft.EntityFrameworkCore.Sqlite.NetTopologySuite)
 Microsoft.EntityFrameworkCore.InMemory  | [NetTopologySuite](https://www.nuget.org/packages/NetTopologySuite)
+Oracle.EntityFrameworkCore              | [Oracle.EntityFrameworkCore.NetTopologySuite](https://www.nuget.org/packages/Oracle.EntityFrameworkCore.NetTopologySuite)
 Npgsql.EntityFrameworkCore.PostgreSQL   | [Npgsql.EntityFrameworkCore.PostgreSQL.NetTopologySuite](https://www.nuget.org/packages/Npgsql.EntityFrameworkCore.PostgreSQL.NetTopologySuite)
 Pomelo.EntityFrameworkCore.MySql        | [Pomelo.EntityFrameworkCore.MySql.NetTopologySuite](https://www.nuget.org/packages/Pomelo.EntityFrameworkCore.MySql.NetTopologySuite)
 Devart.Data.MySql.EFCore                | [Devart.Data.MySql.EFCore.NetTopologySuite](https://www.nuget.org/packages/Devart.Data.MySql.EFCore.NetTopologySuite)
@@ -99,6 +100,7 @@ Be sure to read your provider's documentation for additional information on work
 
 * [Spatial Data in the SQL Server Provider](xref:core/providers/sql-server/spatial)
 * [Spatial Data in the SQLite Provider](xref:core/providers/sqlite/spatial)
+* [Spatial Data in Oracle Data Provider for .NET](https://docs.oracle.com/en/database/oracle/oracle-database/26/odpnt/SpatialDataandNetTopologySuite.html)
 * [Spatial Data in the Npgsql Provider](https://www.npgsql.org/efcore/mapping/nts.html)
 
 ### Other resources

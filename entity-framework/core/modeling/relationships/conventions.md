@@ -13,7 +13,7 @@ EF Core uses a set of [conventions](xref:core/modeling/bulk-configuration#conven
 > The conventions described here can be overridden by explicit configuration of the relationship using either [mapping attributes](xref:core/modeling/relationships/mapping-attributes) or the model building API.
 
 > [!TIP]
-> The code below can be found in [RelationshipConventions.cs](https://github.com/dotnet/EntityFramework.Docs/tree/live/samples/core/Modeling/Relationships/RelationshipConventions.cs).
+> The code below can be found in [RelationshipConventions.cs](https://github.com/dotnet/EntityFramework.Docs/tree/main/samples/core/Modeling/Relationships/RelationshipConventions.cs).
 
 ## Discovering navigations
 
@@ -118,7 +118,7 @@ The type of relationship is determined by whether the navigation and its inverse
 
 Discovery of each of these types of relationship is shown in the examples below:
 
-A single, one-to-many relationship is discovered between `Blog` and `Post` is discovered by pairing the `Blog.Posts` and `Post.Blog` navigations:
+A single, one-to-many relationship between `Blog` and `Post` is discovered by pairing the `Blog.Posts` and `Post.Blog` navigations:
 
 <!--
         public class Blog

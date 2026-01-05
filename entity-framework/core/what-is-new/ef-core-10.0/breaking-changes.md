@@ -1,8 +1,8 @@
 ---
 title: Breaking changes in EF Core 10 (EF10) - EF Core
 description: List of breaking changes introduced in Entity Framework Core 10 (EF10)
-author: maumar
-ms.date: 01/05/2025
+author: roji
+ms.date: 10/09/2025
 uid: core/what-is-new/ef-core-10.0/breaking-changes
 ---
 
@@ -22,10 +22,79 @@ This page documents API and behavior changes that have the potential to break ex
 
 | **Breaking change**                                                                                             | **Impact** |
 |:--------------------------------------------------------------------------------------------------------------- | -----------|
+| [EF tools now require framework to be specified for multi-targeted projects](#ef-tools-multi-targeting)         | Medium     |
+| [Application Name is now injected into the connection string](#sqlserver-application-name)                      | Low        |
 | [SQL Server json data type used by default on Azure SQL and compatibility level 170](#sqlserver-json-data-type) | Low        |
+| [Parameterized collections now use multiple parameters by default](#parameterized-collections)                  | Low        |
 | [ExecuteUpdateAsync now accepts a regular, non-expression lambda](#ExecuteUpdateAsync-lambda)                   | Low        |
+| [Complex type column names are now uniquified](#complex-type-column-uniquification)                             | Low        |
+| [Nested complex type properties use full path in column names](#nested-complex-type-column-names)               | Low        |
+| [IDiscriminatorPropertySetConvention signature changed](#discriminator-convention-signature)                    | Low        |
+| [IRelationalCommandDiagnosticsLogger methods add logCommandText parameter](#logger-logcommandtext)              | Low        |
+
+## Medium-impact changes
+
+<a name="ef-tools-multi-targeting"></a>
+
+### EF tools now require framework to be specified for multi-targeted projects
+
+[Tracking Issue #37230](https://github.com/dotnet/efcore/issues/37230)
+
+#### Old behavior
+
+Previously, the EF tools (dotnet-ef) could be used on projects targeting multiple frameworks without specifying which framework to use.
+
+#### New behavior
+
+Starting with EF Core 10.0, when running EF tools on a project that targets multiple frameworks (using `<TargetFrameworks>` instead of `<TargetFramework>`), you must explicitly specify which target framework to use with the `--framework` option. Without this option, the following error will be thrown:
+
+> The project targets multiple frameworks. Use the --framework option to specify which target framework to use.
+
+#### Why
+
+In EF Core 10, the tools started relying on the `ResolvePackageAssets` MSBuild task to get more accurate information about project dependencies. However, this task is not available if the project is targeting multiple target frameworks (TFMs). The solution requires users to select which framework should be used.
+
+#### Mitigations
+
+When running any EF tools command on a project that targets multiple frameworks, specify the target framework using the `--framework` option. For example:
+
+```bash
+dotnet ef migrations add MyMigration --framework net9.0
+```
+
+```bash
+dotnet ef database update --framework net9.0
+```
+
+```bash
+dotnet ef migrations script --framework net9.0
+```
+
+If your project file looks like this:
+
+```xml
+<PropertyGroup>
+  <TargetFrameworks>net8.0;net9.0</TargetFrameworks>
+</PropertyGroup>
+```
+
+You'll need to choose one of the frameworks (e.g., `net9.0`) when running the EF tools.
 
 ## Low-impact changes
+
+<a name="sqlserver-application-name"></a>
+
+### Application Name is now injected into the connection string
+
+[Tracking Issue #35730](https://github.com/dotnet/efcore/issues/35730)
+
+#### New behavior
+
+When a connection string without an `Application Name` is passed to EF, EF now inserts an `Application Name` containing anonymous information about the EF and SqlClient versions being used. In the vast majority of cases, this doesn't impact the application in any way, but can affect behavior in some edge cases. For example, if you connect to the same database with both EF and another non-EF data access technology (e.g. Dapper, ADO.NET), SqlClient will use a different internal connection pool, as EF will now use a different, updated connection string (one where `Application Name` has been injected). If this sort of mixed access is done within a `TransactionScope`, this can cause escalation to a distributed transaction where previously none was necessary, due of the usage of two connection strings which SqlClient identifies as two distinct databases.
+
+#### Mitigations
+
+A mitigation is to simply define an `Application Name` in your connection string. Once one is defined, EF does not overwrite it and the original connection string is preserved exactly as-is.
 
 <a name="sqlserver-json-data-type"></a>
 
@@ -80,9 +149,6 @@ Although the new JSON data type is the recommended way to store JSON data in SQL
 
 Note that if you have an existing table and are using <xref:Microsoft.EntityFrameworkCore.SqlServerDbContextOptionsExtensions.UseAzureSql*>, upgrading to EF 10 will cause a migration to be generated which alters all existing `nvarchar(max)` JSON columns to `json`. This alter operation is supported and should get applied seamlessly and without any issues, but is a non-trivial change to your database.
 
-> [!NOTE]
-> For 10.0.0 rc1, support for the new JSON data type has been temporarily disabled for Azure SQL Database, due to lacking support. These issues are expected to be resolved by the time EF 10.0 is released, and the JSON data type will become the default until then.
-
 #### Why
 
 The new JSON data type introduced by SQL Server is a superior, 1st-class way to store and interact with JSON data in the database; it notably brings significant performance improvements ([see documentation](/sql/t-sql/data-types/json-data-type)). All applications using Azure SQL Database or SQL Server 2025 are encouraged to migrate to the new JSON data type.
@@ -116,6 +182,88 @@ protected override void OnModelCreating(ModelBuilder modelBuilder)
     modelBuilder.Entity<Blog>().ComplexProperty(e => e.Posts, b => b.ToJson());
 }
 ```
+
+<a name="parameterized-collections"></a>
+
+### Parameterized collections now use multiple parameters by default
+
+[Tracking Issue #34346](https://github.com/dotnet/efcore/issues/34346)
+
+#### Old behavior
+
+In EF Core 9 and earlier, parameterized collections in LINQ queries (such as those used with `.Contains()`) were translated to SQL using a JSON array parameter by default. Consider the following query:
+
+```c#
+int[] ids = [1, 2, 3];
+var blogs = await context.Blogs.Where(b => ids.Contains(b.Id)).ToListAsync();
+```
+
+On SQL Server, this generated the following SQL:
+
+```sql
+@__ids_0='[1,2,3]'
+
+SELECT [b].[Id], [b].[Name]
+FROM [Blogs] AS [b]
+WHERE [b].[Id] IN (
+    SELECT [i].[value]
+    FROM OPENJSON(@__ids_0) WITH ([value] int '$') AS [i]
+)
+```
+
+#### New behavior
+
+Starting with EF Core 10.0, parameterized collections are now translated using multiple scalar parameters by default:
+
+```sql
+SELECT [b].[Id], [b].[Name]
+FROM [Blogs] AS [b]
+WHERE [b].[Id] IN (@ids1, @ids2, @ids3)
+```
+
+#### Why
+
+The new default translation provides the query planner with cardinality information about the collection, which can lead to better query plans in many scenarios. The multiple parameter approach balances between plan cache efficiency (by parameterizing) and query optimization (by providing cardinality).
+
+However, different workloads may benefit from different translation strategies depending on collection sizes, query patterns, and database characteristics.
+
+#### Mitigations
+
+If you encounter issues with the new default behavior (such as performance regressions), you can configure the translation mode globally:
+
+```c#
+protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    => optionsBuilder
+        .UseSqlServer("<CONNECTION STRING>", 
+            o => o.UseParameterizedCollectionMode(ParameterTranslationMode.Constant));
+```
+
+Available modes are:
+
+- `ParameterTranslationMode.MultipleParameters` - The new default (multiple scalar parameters)
+- `ParameterTranslationMode.Constant` - Inlines values as constants (pre-EF8 default behavior)
+- `ParameterTranslationMode.Parameter` - Uses JSON array parameter (EF8-9 default)
+
+You can also control the translation on a per-query basis:
+
+```c#
+// Use constants instead of parameters for this specific query
+var blogs = await context.Blogs
+    .Where(b => EF.Constant(ids).Contains(b.Id))
+    .ToListAsync();
+
+// Use a single parameter (e.g. JSON parameter with OPENJSON) instead of parameters for this specific query
+var blogs = await context.Blogs
+    .Where(b => EF.Parameter(ids).Contains(b.Id))
+    .ToListAsync();
+
+// Use multiple scalar parameters for this specific query. This is the default in EF 10, but is useful if the default was changed globally:
+var blogs = await context.Blogs
+    .Where(b => EF.MultipleParameters(ids).Contains(b.Id))
+    .ToListAsync();
+```
+
+For more information about parameterized collection translation, [see the documentation](xref:core/what-is-new/ef-core-10.0/whatsnew#parameterized-collection-translation).
 
 <a name="ExecuteUpdateAsync-lambda"></a>
 
@@ -177,6 +325,132 @@ await context.Blogs.ExecuteUpdateAsync(s =>
     }
 });
 ```
+
+<a name="complex-type-column-uniquification"></a>
+
+### Complex type column names are now uniquified
+
+[Tracking Issue #4970](https://github.com/dotnet/EntityFramework.Docs/issues/4970)
+
+#### Old behavior
+
+Previously, when mapping complex types to table columns, if multiple properties in different complex types had the same column name, they would silently share the same column.
+
+#### New behavior
+
+Starting with EF Core 10.0, complex type column names are uniquified by appending a number at the end if another column with the same name exists on the table.
+
+#### Why
+
+This prevents data corruption that could occur when multiple properties are unintentionally mapped to the same column.
+
+#### Mitigations
+
+If you need multiple properties to share the same column, configure them explicitly:
+
+```c#
+modelBuilder.Entity<Customer>(b =>
+{
+    b.ComplexProperty(c => c.ShippingAddress, p => p.Property(a => a.Street).HasColumnName("Street"));
+    b.ComplexProperty(c => c.BillingAddress, p => p.Property(a => a.Street).HasColumnName("Street"));
+});
+```
+
+<a name="nested-complex-type-column-names"></a>
+
+### Nested complex type properties use full path in column names
+
+#### Old behavior
+
+Previously, properties on nested complex types were mapped to columns using just the declaring type name. For example, `EntityType.Complex.NestedComplex.Property` was mapped to column `NestedComplex_Property`.
+
+#### New behavior
+
+Starting with EF Core 10.0, properties on nested complex types use the full path to the property as part of the column name. For example, `EntityType.Complex.NestedComplex.Property` is now mapped to column `Complex_NestedComplex_Property`.
+
+#### Why
+
+This provides better column name uniqueness and makes it clearer which property maps to which column.
+
+#### Mitigations
+
+If you need to maintain the old column names, configure them explicitly:
+
+```c#
+modelBuilder.Entity<EntityType>()
+    .ComplexProperty(e => e.Complex)
+    .ComplexProperty(o => o.NestedComplex)
+    .Property(c => c.Property)
+    .HasColumnName("NestedComplex_Property");
+```
+
+<a name="discriminator-convention-signature"></a>
+
+### IDiscriminatorPropertySetConvention signature changed
+
+#### Old behavior
+
+Previously, `IDiscriminatorPropertySetConvention.ProcessDiscriminatorPropertySet` took `IConventionEntityTypeBuilder` as a parameter.
+
+#### New behavior
+
+Starting with EF Core 10.0, the method signature changed to take `IConventionTypeBaseBuilder` instead of `IConventionEntityTypeBuilder`.
+
+#### Why
+
+This change allows the convention to work with both entity types and complex types.
+
+#### Mitigations
+
+Update your custom convention implementations to use the new signature:
+
+```c#
+public virtual void ProcessDiscriminatorPropertySet(
+    IConventionTypeBaseBuilder typeBaseBuilder, // Changed from IConventionEntityTypeBuilder
+    string name,
+    Type type,
+    MemberInfo memberInfo,
+    IConventionContext<IConventionProperty> context)
+```
+
+<a name="logger-logcommandtext"></a>
+
+### IRelationalCommandDiagnosticsLogger methods add logCommandText parameter
+
+[Tracking Issue #35757](https://github.com/dotnet/efcore/issues/35757)
+
+#### Old behavior
+
+Previously, methods on `IRelationalCommandDiagnosticsLogger` such as `CommandReaderExecuting`, `CommandReaderExecuted`, `CommandScalarExecuting`, and others accepted a `command` parameter representing the database command being executed.
+
+#### New behavior
+
+Starting with EF Core 10.0, these methods now require an additional `logCommandText` parameter. This parameter contains the SQL command text that will be logged, which may have sensitive data redacted when <xref:Microsoft.EntityFrameworkCore.DbContextOptionsBuilder.EnableSensitiveDataLogging> is not enabled.
+
+#### Why
+
+This change supports the new feature to [redact inlined constants from logging by default](xref:core/what-is-new/ef-core-10.0/whatsnew#redact-inlined-constants-from-logging-by-default). When EF inlines parameter values into SQL (e.g., when using `EF.Constant()`), those values are now redacted from logs unless sensitive data logging is explicitly enabled. The `logCommandText` parameter provides the redacted SQL for logging purposes, while the `command` parameter contains the actual SQL that gets executed.
+
+#### Mitigations
+
+If you have a custom implementation of `IRelationalCommandDiagnosticsLogger`, you'll need to update your method signatures to include the new `logCommandText` parameter. For example:
+
+```c#
+public InterceptionResult<DbDataReader> CommandReaderExecuting(
+    IRelationalConnection connection,
+    DbCommand command,
+    DbContext context,
+    Guid commandId,
+    Guid connectionId,
+    DateTimeOffset startTime,
+    string logCommandText) // New parameter
+{
+    // Use logCommandText for logging purposes
+    // Use command for execution-related logic
+}
+```
+
+The `logCommandText` parameter contains the SQL to be logged (with inlined constants potentially redacted), while `command.CommandText` contains the actual SQL that will be executed against the database.
 
 <a name="MDS-breaking-changes"></a>
 

@@ -12,7 +12,7 @@ One-to-one relationships are used when one entity is associated with at most one
 This document is structured around lots of examples. The examples start with common cases, which also introduce concepts. Later examples cover less common kinds of configuration. A good approach here is to understand the first few examples and concepts, and then go to the later examples based on your specific needs. Based on this approach, we will start with simple "required" and "optional" one-to-one relationships.
 
 > [!TIP]
-> The code for all the examples below can be found in [OneToOne.cs](https://github.com/dotnet/EntityFramework.Docs/tree/live/samples/core/Modeling/Relationships/OneToOne.cs).
+> The code for all the examples below can be found in [OneToOne.cs](https://github.com/dotnet/EntityFramework.Docs/tree/main/samples/core/Modeling/Relationships/OneToOne.cs).
 
 ## Required one-to-one
 
@@ -176,7 +176,7 @@ Any one-to-one relationship where the foreign key is not discovered by conventio
 [!code-csharp[OneToOneRequiredPkToPkConfig](../../../../samples/core/Modeling/Relationships/OneToOne.cs?name=OneToOneRequiredPkToPkConfig)]
 
 > [!TIP]
-> `HasPrincipalKey` can also used for this purpose, but doing so is less common.
+> `HasPrincipalKey` can also be used for this purpose, but doing so is less common.
 
 When no property is specified in the call to `HasForeignKey`, and the primary key is suitable, then it is used as the foreign key. For cases where the navigations, foreign key, or required/optional nature of the relationship are not discovered by convention, these things can be configured explicitly. For example:
 

@@ -12,7 +12,7 @@ Query tags help correlate LINQ queries in code with generated SQL queries captur
 You annotate a LINQ query using the new `TagWith()` method:
 
 > [!TIP]
-> You can view this article's [sample](https://github.com/dotnet/EntityFramework.Docs/tree/live/samples/core/Querying/Tags) on GitHub.
+> You can view this article's [sample](https://github.com/dotnet/EntityFramework.Docs/tree/main/samples/core/Querying/Tags) on GitHub.
 
 [!code-csharp[Main](../../../samples/core/Querying/Tags/Program.cs#BasicQueryTag)]
 
@@ -62,6 +62,27 @@ Produces the following SQL:
 
 -- This is a multi-line
 -- string
+
+SELECT TOP(@__p_1) [p].[Id], [p].[Location]
+FROM [People] AS [p]
+ORDER BY [p].[Location].STDistance(@__myLocation_0) DESC
+```
+
+## Tagging with file name and line number
+
+Queries can be automatically tagged with the file name and line number where the LINQ query is defined in source code. This is done using the <xref:Microsoft.EntityFrameworkCore.EntityFrameworkQueryableExtensions.TagWithCallSite*> method:
+
+```csharp
+var myLocation = new Point(1, 2);
+var closestPeople = await (from f in context.People.TagWithCallSite()
+                     orderby f.Location.Distance(myLocation) descending
+                     select f).Take(5).ToListAsync();
+```
+
+This query translates to (the actual line number will reflect where the query is defined in the source file):
+
+```sql
+-- file: C:\Work\EntityFramework.Docs\samples\Program.cs:23
 
 SELECT TOP(@__p_1) [p].[Id], [p].[Location]
 FROM [People] AS [p]

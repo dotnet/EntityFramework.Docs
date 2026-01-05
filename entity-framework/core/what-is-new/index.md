@@ -2,7 +2,7 @@
 title: EF Core releases and planning
 description: Current EF Core releases and schedule/planning details for future releases
 author: SamMonoRT
-ms.date: 11/13/2024
+ms.date: 11/20/2025
 uid: core/what-is-new/index
 ---
 
@@ -12,6 +12,7 @@ uid: core/what-is-new/index
 
 | Release                                                                                | Target framework  | Supported until           | Links                                                                                                                                                                                  |
 |----------------------------------------------------------------------------------------|-------------------|---------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| [EF Core 10.0](https://www.nuget.org/packages/Microsoft.EntityFrameworkCore)           | .NET 10           | November 10, 2028         | [What's new](xref:core/what-is-new/ef-core-10.0/whatsnew) / [Breaking changes](xref:core/what-is-new/ef-core-10.0/breaking-changes)                                                      |
 | [EF Core 9.0](https://www.nuget.org/packages/Microsoft.EntityFrameworkCore)            | .NET 8            | November 10, 2026         | [What's new](xref:core/what-is-new/ef-core-9.0/whatsnew) / [Breaking changes](xref:core/what-is-new/ef-core-9.0/breaking-changes)                                                      |
 | [EF Core 8.0](https://www.nuget.org/packages/Microsoft.EntityFrameworkCore)            | .NET 8            | November 10, 2026         | [What's new](xref:core/what-is-new/ef-core-8.0/whatsnew) / [Breaking changes](xref:core/what-is-new/ef-core-8.0/breaking-changes)                                                      |
 | ~~[EF Core 7.0](https://www.nuget.org/packages/Microsoft.EntityFrameworkCore/7.0.0)~~  | .NET 6            | Expired May 14, 2024      | [What's new](xref:core/what-is-new/ef-core-7.0/whatsnew) / [Breaking changes](xref:core/what-is-new/ef-core-7.0/breaking-changes)                                                      |
@@ -33,8 +34,8 @@ Entity Framework Core releases and support are aligned with .NET releases and su
 
 ## Guidance on updating to new releases
 
-* Supported releases are patched for security and other critical bugs. Always use the latest patch of a given release. For example, for EF Core 9.0, use 9.0.x for the highest 'x' available.
-* Major version updates (for example, from EF Core 8 to EF Core 9) often have breaking changes. Thorough testing is advised when updating across major versions. Use the breaking changes links above for guidance on dealing with breaking changes.
+* Supported releases are patched for security and other critical bugs. Always use the latest patch of a given release. For example, for EF Core 10.0, use 10.0.x for the highest 'x' available.
+* Major version updates (for example, from EF Core 9 to EF Core 10) often have breaking changes. Thorough testing is advised when updating across major versions. Use the breaking changes links above for guidance on dealing with breaking changes.
 * Minor version updates do not typically contain breaking changes. However, thorough testing is still advised since new features can introduce regressions.
 
 ## Release planning and schedules
@@ -45,6 +46,6 @@ Patch releases usually ship monthly, but have a long lead time.
 
 See the [release planning process](xref:core/what-is-new/release-planning) for more information on how we decide what to ship in each release. We typically don't do detailed planning for further out than the next major or minor release.
 
-## EF Core 10.0
+## EF Core 11.0
 
-The next planned stable release is **EF Core 10.0**, or just **EF10**, scheduled for **November 2025**.
+The next planned stable release is **EF Core 11.0**, or just **EF11**, scheduled for **November 2026**.

@@ -2,7 +2,7 @@
 title: Advanced Performance Topics - EF Core
 description: Advanced performance topics for Entity Framework Core
 author: roji
-ms.date: 9/26/2023
+ms.date: 11/21/2025
 uid: core/performance/advanced-performance-topics
 ---
 # Advanced Performance Topics
@@ -35,7 +35,7 @@ The `poolSize` parameter of the `PooledDbContextFactory` constructor sets the ma
 
 ### Benchmarks
 
-Following are the benchmark results for fetching a single row from a SQL Server database running locally on the same machine, with and without context pooling. As always, results will change with the number of rows, the latency to your database server and other factors. Importantly, this benchmarks single-threaded pooling performance, while a real-world contended scenario may have different results; benchmark on your platform before making any decisions. [The source code is available here](https://github.com/dotnet/EntityFramework.Docs/tree/live/samples/core/Benchmarks/ContextPooling.cs), feel free to use it as a basis for your own measurements.
+Following are the benchmark results for fetching a single row from a SQL Server database running locally on the same machine, with and without context pooling. As always, results will change with the number of rows, the latency to your database server and other factors. Importantly, this benchmarks single-threaded pooling performance, while a real-world contended scenario may have different results; benchmark on your platform before making any decisions. [The source code is available here](https://github.com/dotnet/EntityFramework.Docs/tree/main/samples/core/Benchmarks/ContextPooling.cs), feel free to use it as a basis for your own measurements.
 
 |                Method | NumBlogs |     Mean |    Error |   StdDev |   Gen 0 | Gen 1 | Gen 2 | Allocated |
 |---------------------- |--------- |---------:|---------:|---------:|--------:|------:|------:|----------:|
@@ -72,7 +72,7 @@ Finally, arrange for a context to get injected from our Scoped factory:
 
 As this point, your controllers automatically get injected with a context instance that has the right tenant ID, without having to know anything about it.
 
-The full source code for this sample is available [here](https://github.com/dotnet/EntityFramework.Docs/tree/live/samples/core/Performance/AspNetContextPoolingWithState).
+The full source code for this sample is available [here](https://github.com/dotnet/EntityFramework.Docs/tree/main/samples/core/Performance/AspNetContextPoolingWithState).
 
 > [!NOTE]
 > Although EF Core takes care of resetting internal state for `DbContext` and its related services, it generally does not reset state in the underlying database driver, which is outside of EF. For example, if you manually open and use a `DbConnection` or otherwise manipulate ADO.NET state, it's up to you to restore that state before returning the context instance to the pool, e.g. by closing the connection. Failure to do so may cause state to get leaked across unrelated requests.
@@ -89,7 +89,7 @@ When EF receives a LINQ query tree for execution, it must first "compile" that t
 
 However, EF must still perform certain tasks before it can make use of the internal query cache. For example, your query's expression tree must be recursively compared with the expression trees of cached queries, to find the correct cached query. The overhead for this initial processing is negligible in the majority of EF applications, especially when compared to other costs associated with query execution (network I/O, actual query processing and disk I/O at the database...). However, in certain high-performance scenarios it may be desirable to eliminate it.
 
-EF supports *compiled queries*, which allow the explicit compilation of a LINQ query into a .NET delegate. Once this delegate is acquired, it can be invoked directly to execute the query, without providing the LINQ expression tree. This technique bypasses the cache lookup, and provides the most optimized way to execute a query in EF Core. Following are some benchmark results comparing compiled and non-compiled query performance; benchmark on your platform before making any decisions. [The source code is available here](https://github.com/dotnet/EntityFramework.Docs/blob/live/samples/core/Benchmarks/CompiledQueries.cs), feel free to use it as a basis for your own measurements.
+EF supports *compiled queries*, which allow the explicit compilation of a LINQ query into a .NET delegate. Once this delegate is acquired, it can be invoked directly to execute the query, without providing the LINQ expression tree. This technique bypasses the cache lookup, and provides the most optimized way to execute a query in EF Core. Following are some benchmark results comparing compiled and non-compiled query performance; benchmark on your platform before making any decisions. [The source code is available here](https://github.com/dotnet/EntityFramework.Docs/blob/main/samples/core/Benchmarks/CompiledQueries.cs), feel free to use it as a basis for your own measurements.
 
 |               Method | NumBlogs |     Mean |    Error |   StdDev |  Gen 0 | Allocated |
 |--------------------- |--------- |---------:|---------:|---------:|-------:|----------:|
@@ -151,6 +151,9 @@ Note that there is no need to parameterize each and every query: it's perfectly 
 
 > [!NOTE]
 > EF Core's [metrics](xref:core/logging-events-diagnostics/metrics) report the Query Cache Hit Rate. In a normal application, this metric reaches 100% soon after program startup, once most queries have executed at least once. If this metric remains stable below 100%, that is an indication that your application may be doing something which defeats the query cache - it's a good idea to investigate that.
+>
+> [!TIP]
+> EF Core uses `IMemoryCache` for internal caching of compiled queries and models. You can configure the cache size limit if needed - see [Memory Cache Integration](#memory-cache-integration) for more information.
 
 > [!NOTE]
 > How the database manages caches query plans is database-dependent. For example, SQL Server implicitly maintains an LRU query plan cache, whereas PostgreSQL does not (but prepared statements can produce a very similar end effect). Consult your database documentation for more details.
@@ -295,12 +298,17 @@ Compiled models have some limitations:
 
 * [Global query filters are not supported](https://github.com/dotnet/efcore/issues/24897).
 * [Lazy loading and change-tracking proxies are not supported](https://github.com/dotnet/efcore/issues/24902).
+* Value converters that reference private methods are not supported. Make referenced methods public or internal instead.
 * [The model must be manually synchronized by regenerating it any time the model definition or configuration change](https://github.com/dotnet/efcore/issues/24894).
 * Custom IModelCacheKeyFactory implementations are not supported. However, you can compile multiple models and load the appropriate one as needed.
 
 Because of these limitations, you should only use compiled models if your EF Core startup time is too slow. Compiling small models is typically not worth it.
 
 If supporting any of these features is critical to your success, then please vote for the appropriate issues linked above.
+
+### Handling compilation errors due to ambiguous type references
+
+When compiling models with types that have the same name but exist in different namespaces, the generated code may produce compilation errors due to ambiguous type references. To resolve this, you can customize the code generation to use fully-qualified type names by overriding `CSharpHelper.ShouldUseFullName` to return `true`. See [Design-time services](xref:core/cli/services) for information on how to override design-time services like `ICSharpHelper`.
 
 ## Reducing runtime overhead
 
@@ -314,3 +322,19 @@ As with any layer, EF Core adds a bit of runtime overhead compared to coding dir
 * Consider disabling thread safety checks by setting `EnableThreadSafetyChecks` to false in your context configuration.
   * Using the same `DbContext` instance concurrently from different threads isn't supported. EF Core has a safety feature which detects this programming bug in many cases (but not all), and immediately throws an informative exception. However, this safety feature adds some runtime overhead.
   * **WARNING:** Only disable thread safety checks after thoroughly testing that your application doesn't contain such concurrency bugs.
+
+## Memory Cache Integration
+
+EF Core integrates with ASP.NET Core's memory caching infrastructure through `IMemoryCache`. However, this is not used for the internal service provider caching.
+
+EF Core automatically configures `IMemoryCache` with a default size limit of 10240 for internal caching operations such as query compilation and model building. You should call `AddMemoryCache` if you need to change these defaults. For reference, a compiled query has a cache size of 10, while the built model has a cache size of 100.
+
+```csharp
+public void ConfigureServices(IServiceCollection services)
+{
+    services.AddMemoryCache(options => options.SizeLimit = 20480); // Custom size limit for EF Core caching
+    
+    services.AddDbContext<ApplicationDbContext>(options =>
+        options.UseSqlServer(connectionString));
+}
+```

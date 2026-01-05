@@ -78,7 +78,7 @@ Owned entity types can be configured in a similar fashion:
 
 [!code-csharp[LanguageDetailsSeed](../../../samples/core/Modeling/DataSeeding/ManagingDataContext.cs?name=LanguageDetailsSeed)]
 
-See the [full sample project](https://github.com/dotnet/EntityFramework.Docs/tree/live/samples/core/Modeling/DataSeeding) for more context.
+See the [full sample project](https://github.com/dotnet/EntityFramework.Docs/tree/main/samples/core/Modeling/DataSeeding) for more context.
 
 Once the data has been added to the model, [migrations](xref:core/managing-schemas/migrations/index) should be used to apply the changes.
 

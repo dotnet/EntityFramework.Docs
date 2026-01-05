@@ -9,14 +9,14 @@ uid: core/testing/testing-with-the-database
 
 In this page, we discuss techniques for writing automated tests which involve the database system against which the application runs in production. Alternate testing approaches exist, where the production database system is swapped out by test doubles; see the [testing overview page](xref:core/testing/index) for more information. Note that testing against a different database than what is used in production (e.g. Sqlite) is not covered here, since the different database is used as a test double; this approach is covered in [Testing without your production database system](xref:core/testing/testing-without-the-database).
 
-The main hurdle with testing which involves a real database is to ensure proper test isolation, so that tests running in parallel (or even in serial) don't interfere with each other. The full sample code for the below can be viewed [here](https://github.com/dotnet/EntityFramework.Docs/blob/live/samples/core/Testing/TestingWithTheDatabase).
+The main hurdle with testing which involves a real database is to ensure proper test isolation, so that tests running in parallel (or even in serial) don't interfere with each other. The full sample code for the below can be viewed [here](https://github.com/dotnet/EntityFramework.Docs/blob/main/samples/core/Testing/TestingWithTheDatabase).
 
 > [!TIP]
 > This page shows [xUnit](https://xunit.net/) techniques, but similar concepts exist in other testing frameworks, including [NUnit](https://nunit.org/).
 
 ## Setting up your database system
 
-Most database systems nowadays can be easily installed, both in CI environments and on developer machines. While it's frequently easy enough to install the database via the regular installation mechanism, ready-to-use Docker images are available for most major databases and can make installation particularly easy in CI. For the developer environment, [GitHub Workspaces](https://docs.github.com/en/codespaces/overview), [Dev Container](https://code.visualstudio.com/docs/remote/create-dev-container) can set up all needed services and dependencies - including the database. While this requires an initial investment in setup, once that's done you have a working testing environment and can concentrate on more important things.
+Most database systems nowadays can be easily installed, both in CI environments and on developer machines. While it's frequently easy enough to install the database via the regular installation mechanism, ready-to-use Docker images are available for most major databases and can make installation particularly easy in CI. Libraries like [Testcontainers](https://testcontainers.com/modules/dotnet/) can further simplify this by automatically managing containerized database instances during testing. For the developer environment, [GitHub Workspaces](https://docs.github.com/en/codespaces/overview), [Dev Container](https://code.visualstudio.com/docs/remote/create-dev-container) can set up all needed services and dependencies - including the database. While this requires an initial investment in setup, once that's done you have a working testing environment and can concentrate on more important things.
 
 In certain cases, databases have a special edition or version which can be helpful for testing. When using SQL Server, [LocalDB](/sql/database-engine/configure-windows/sql-server-express-localdb) can be used to run tests locally with virtually no setup at all, spinning up the database instance on demand and possibly saving resources on less powerful developer machines. However, LocalDB is not without its issues:
 
@@ -96,7 +96,7 @@ Finally, we make our test class disposable, arranging for the fixture's `Cleanup
 
 Note that since xUnit only ever instantiates the collection fixture once, there is no need for us to use locking around database creation and seeding as we did above.
 
-The full sample code for the above can be viewed [here](https://github.com/dotnet/EntityFramework.Docs/blob/live/samples/core/Testing/TestingWithTheDatabase/TransactionalBloggingControllerTest.cs).
+The full sample code for the above can be viewed [here](https://github.com/dotnet/EntityFramework.Docs/blob/main/samples/core/Testing/TestingWithTheDatabase/TransactionalBloggingControllerTest.cs).
 
 > [!TIP]
 > If you have multiple test classes with tests which modify the database, you can still run them in parallel by having different fixtures, each referencing its own database. Creating and using many test databases isn't problematic and should be done whenever it's helpful.
