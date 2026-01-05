@@ -68,6 +68,27 @@ FROM [People] AS [p]
 ORDER BY [p].[Location].STDistance(@__myLocation_0) DESC
 ```
 
+## Tagging with file name and line number
+
+Queries can be automatically tagged with the file name and line number where the LINQ query is defined in source code. This is done using the <xref:Microsoft.EntityFrameworkCore.EntityFrameworkQueryableExtensions.TagWithCallSite*> method:
+
+```csharp
+var myLocation = new Point(1, 2);
+var closestPeople = await (from f in context.People.TagWithCallSite()
+                     orderby f.Location.Distance(myLocation) descending
+                     select f).Take(5).ToListAsync();
+```
+
+This query translates to (the actual line number will reflect where the query is defined in the source file):
+
+```sql
+-- file: C:\Work\EntityFramework.Docs\samples\Program.cs:23
+
+SELECT TOP(@__p_1) [p].[Id], [p].[Location]
+FROM [People] AS [p]
+ORDER BY [p].[Location].STDistance(@__myLocation_0) DESC
+```
+
 ## Known limitations
 
 **Query tags aren't parameterizable:**
