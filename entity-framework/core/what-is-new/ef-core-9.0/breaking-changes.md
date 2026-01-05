@@ -154,7 +154,7 @@ await dbContext.Database.MigrateAsync(cancellationToken);
 Otherwise, if your scenario requires an explicit transaction and you have other mechanism in place to prevent concurrent migration application, then ignore the warning:
   
 ```csharp
-options.ConfigureWarnings(w => w.Ignore(<xref:Microsoft.EntityFrameworkCore.Diagnostics.RelationalEventId.MigrationsUserTransactionWarning>))
+options.ConfigureWarnings(w => w.Ignore(RelationalEventId.MigrationsUserTransactionWarning))
 ```
 
 ## Medium-impact changes

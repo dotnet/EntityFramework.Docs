@@ -53,7 +53,7 @@ context.Blogs.Add(new Blog
 await context.SaveChangesAsync();
 ```
 
-Finally, use the <xref:Microsoft.EntityFrameworkCore.SqlServerDbFunctionsExtensions.VectorDistance*> function in your LINQ queries to perform similarity search for a given user query:
+Finally, use the <xref:Microsoft.EntityFrameworkCore.SqlServerDbFunctionsExtensions.VectorDistance*> [function](/sql/t-sql/functions/vector-distance-transact-sql) in your LINQ queries to perform similarity search for a given user query:
 
 ```c#
 var sqlVector = /* some user query which we should search for similarity */;
@@ -191,13 +191,13 @@ Once the model is configured, we can use full-text search operations in queries 
 var cosmosBlogs = await context.Blogs.Where(x => EF.Functions.FullTextContains(x.Contents, "cosmos")).ToListAsync();
 ```
 
-The following full-text operations are currently supported: <xref:Microsoft.EntityFrameworkCore.CosmosDbFunctionsExtensions.FullTextContains*>, <xref:Microsoft.EntityFrameworkCore.CosmosDbFunctionsExtensions.FullTextContainsAll*>, <xref:Microsoft.EntityFrameworkCore.CosmosDbFunctionsExtensions.FullTextContainsAny*>, <xref:Microsoft.EntityFrameworkCore.CosmosDbFunctionsExtensions.FullTextScore*>.
+The following full-text operations are currently supported: <xref:Microsoft.EntityFrameworkCore.CosmosDbFunctionsExtensions.FullTextContains*>, <xref:Microsoft.EntityFrameworkCore.CosmosDbFunctionsExtensions.FullTextContainsAll*>, <xref:Microsoft.EntityFrameworkCore.CosmosDbFunctionsExtensions.FullTextContainsAny*>, <xref:Microsoft.EntityFrameworkCore.CosmosDbFunctionsExtensions.FullTextScore*>. See the Azure Cosmos DB documentation for details: [`FullTextContains`](/azure/cosmos-db/nosql/query/fulltextcontains), [`FullTextContainsAll`](/azure/cosmos-db/nosql/query/fulltextcontainsall), [`FullTextContainsAny`](/azure/cosmos-db/nosql/query/fulltextcontainsany), [`FullTextScore`](/azure/cosmos-db/nosql/query/fulltextscore).
 
 For more information on Cosmos full-text search, see the [documentation](xref:core/providers/cosmos/full-text-search).
 
 ### Hybrid search
 
-EF Core now supports <xref:Microsoft.EntityFrameworkCore.CosmosDbFunctionsExtensions.Rrf*> (Reciprocal Rank Fusion) function, which combines vector similarity search and full-text search (i.e. hybrid search). Here is an example query using hybrid search:
+EF Core now supports <xref:Microsoft.EntityFrameworkCore.CosmosDbFunctionsExtensions.Rrf*> ([Reciprocal Rank Fusion](/azure/cosmos-db/nosql/query/rrf)) function, which combines vector similarity search and full-text search (i.e. hybrid search). Here is an example query using hybrid search:
 
 ```c#
 float[] myVector = /* generate vector data from text, image, etc. */
