@@ -2,7 +2,7 @@
 title: Provider-facing changes in EF Core 11 (EF11) - EF Core
 description: List of provider-facing changes introduced in Entity Framework Core 11 (EF11)
 author: roji
-ms.date: 16/01/2026
+ms.date: 01/16/2026
 uid: core/what-is-new/ef-core-11.0/provider-facing-changes
 ---
 
