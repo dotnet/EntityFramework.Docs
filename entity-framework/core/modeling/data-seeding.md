@@ -21,25 +21,25 @@ There are several ways this can be accomplished in EF Core:
 
 ## Configuration options `UseSeeding` and `UseAsyncSeeding` methods
 
-EF 9 introduced `UseSeeding` and `UseAsyncSeeding` methods, which provide a convenient way of seeding the database with initial data. These methods aim to improve the experience of using custom initialization logic (explained below). They provide one clear location where all the data seeding code can be placed. Moreover, the code inside `UseSeeding` and `UseAsyncSeeding` methods is protected by the [migration locking mechanism](/ef/core/what-is-new/ef-core-9.0/whatsnew#concurrent-migrations) to prevent concurrency issues.
+EF 9 introduced <xref:Microsoft.EntityFrameworkCore.DbContextOptionsBuilder.UseSeeding*> and <xref:Microsoft.EntityFrameworkCore.DbContextOptionsBuilder.UseAsyncSeeding*> methods, which provide a convenient way of seeding the database with initial data. These methods aim to improve the experience of using custom initialization logic (explained below). They provide one clear location where all the data seeding code can be placed. Moreover, the code inside <xref:Microsoft.EntityFrameworkCore.DbContextOptionsBuilder.UseSeeding*> and <xref:Microsoft.EntityFrameworkCore.DbContextOptionsBuilder.UseAsyncSeeding*> methods is protected by the [migration locking mechanism](/ef/core/what-is-new/ef-core-9.0/whatsnew#concurrent-migrations) to prevent concurrency issues.
 
-The new seeding methods are called as part of [`EnsureCreated`](xref:Microsoft.EntityFrameworkCore.Storage.IDatabaseCreator.EnsureCreated) operation, [`Migrate`](/dotnet/api/microsoft.entityframeworkcore.relationaldatabasefacadeextensions.migrate) and `dotnet ef database update` command, even if there are no model changes and no migrations were applied.
+The new seeding methods are called as part of <xref:Microsoft.EntityFrameworkCore.Storage.IDatabaseCreator.EnsureCreated*> operation, <xref:Microsoft.EntityFrameworkCore.RelationalDatabaseFacadeExtensions.Migrate*> and `dotnet ef database update` command, even if there are no model changes and no migrations were applied.
 
 > [!TIP]
-> Using `UseSeeding` and `UseAsyncSeeding` is the recommended way of seeding the database with initial data when working with EF Core.
+> Using <xref:Microsoft.EntityFrameworkCore.DbContextOptionsBuilder.UseSeeding*> and <xref:Microsoft.EntityFrameworkCore.DbContextOptionsBuilder.UseAsyncSeeding*> is the recommended way of seeding the database with initial data when working with EF Core.
 
 These methods can be set up in the [options configuration step](/ef/core/dbcontext-configuration/#dbcontextoptions). Here is an example:
 
 [!code-csharp[ContextOptionSeeding](../../../samples/core/Modeling/DataSeeding/DataSeedingContext.cs?name=ContextOptionSeeding)]
 
 > [!NOTE]
-> `UseSeeding` is called from the `EnsureCreated` method, and `UseAsyncSeeding` is called from the `EnsureCreatedAsync` method. When using this feature, it is recommended to implement both `UseSeeding` and `UseAsyncSeeding` methods using similar logic, even if the code using EF is asynchronous. EF Core tooling currently relies on the synchronous version of the method and will not seed the database correctly if the `UseSeeding` method is not implemented.
+> <xref:Microsoft.EntityFrameworkCore.DbContextOptionsBuilder.UseSeeding*> is called from the <xref:Microsoft.EntityFrameworkCore.Storage.IDatabaseCreator.EnsureCreated*> method, and <xref:Microsoft.EntityFrameworkCore.DbContextOptionsBuilder.UseAsyncSeeding*> is called from the <xref:Microsoft.EntityFrameworkCore.Storage.IDatabaseCreator.EnsureCreatedAsync*> method. When using this feature, it is recommended to implement both <xref:Microsoft.EntityFrameworkCore.DbContextOptionsBuilder.UseSeeding*> and <xref:Microsoft.EntityFrameworkCore.DbContextOptionsBuilder.UseAsyncSeeding*> methods using similar logic, even if the code using EF is asynchronous. EF Core tooling currently relies on the synchronous version of the method and will not seed the database correctly if the <xref:Microsoft.EntityFrameworkCore.DbContextOptionsBuilder.UseSeeding*> method is not implemented.
 
 <a name="custom-initialization-logic"></a>
 
 ## Custom initialization logic
 
-A straightforward and powerful way to perform data seeding is to use [`DbContext.SaveChangesAsync()`](xref:core/saving/index) before the main application logic begins execution. It is recommended to use `UseSeeding` and `UseAsyncSeeding` for that purpose, however sometimes using these methods is not a good solution. An example scenario is when seeding requires using two different contexts in one transaction. Below is a code sample performing custom initialization in the application directly:
+A straightforward and powerful way to perform data seeding is to use <xref:Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync*> before the main application logic begins execution. It is recommended to use <xref:Microsoft.EntityFrameworkCore.DbContextOptionsBuilder.UseSeeding*> and <xref:Microsoft.EntityFrameworkCore.DbContextOptionsBuilder.UseAsyncSeeding*> for that purpose, however sometimes using these methods is not a good solution. An example scenario is when seeding requires using two different contexts in one transaction. Below is a code sample performing custom initialization in the application directly:
 
 [!code-csharp[Main](../../../samples/core/Modeling/DataSeeding/Program.cs?name=CustomSeeding)]
 
@@ -85,10 +85,10 @@ Once the data has been added to the model, [migrations](xref:core/managing-schem
 > [!TIP]
 > If you need to apply migrations as part of an automated deployment you can [create a SQL script](xref:core/managing-schemas/migrations/applying#sql-scripts) that can be previewed before execution.
 
-Alternatively, you can use `context.Database.EnsureCreatedAsync()` to create a new database containing the managed data, for example for a test database or when using the in-memory provider or any non-relational database. Note that if the database already exists, `EnsureCreatedAsync()` will neither update the schema nor managed data in the database. For relational databases you shouldn't call `EnsureCreatedAsync()` if you plan to use Migrations.
+Alternatively, you can use <xref:Microsoft.EntityFrameworkCore.Infrastructure.DatabaseFacade.EnsureCreatedAsync*> to create a new database containing the managed data, for example for a test database or when using the in-memory provider or any non-relational database. Note that if the database already exists, <xref:Microsoft.EntityFrameworkCore.Infrastructure.DatabaseFacade.EnsureCreatedAsync*> will neither update the schema nor managed data in the database. For relational databases you shouldn't call <xref:Microsoft.EntityFrameworkCore.Infrastructure.DatabaseFacade.EnsureCreatedAsync*> if you plan to use Migrations.
 
 > [!NOTE]
-> Populating the database using the `HasData` method used to be referred to as "data seeding". This naming sets incorrect expectations, as the feature has a number of limitations and is only appropriate for specific types of data. That is why we decided to rename it to "model managed data". `UseSeeding` and `UseAsyncSeeding` methods should be used for general purpose data seeding.
+> Populating the database using the <xref:Microsoft.EntityFrameworkCore.Metadata.Builders.EntityTypeBuilder`1.HasData*> method used to be referred to as "data seeding". This naming sets incorrect expectations, as the feature has a number of limitations and is only appropriate for specific types of data. That is why we decided to rename it to "model managed data". <xref:Microsoft.EntityFrameworkCore.DbContextOptionsBuilder.UseSeeding*> and <xref:Microsoft.EntityFrameworkCore.DbContextOptionsBuilder.UseAsyncSeeding*> methods should be used for general purpose data seeding.
 
 ### Limitations of model managed data
 
@@ -99,7 +99,7 @@ This type of data is managed by migrations and the script to update the data tha
 
 Therefore this feature is most useful for static data that's not expected to change outside of migrations and does not depend on anything else in the database, for example ZIP codes.
 
-If your scenario includes any of the following it is recommended to use `UseSeeding` and `UseAsyncSeeding` methods described in the first section:
+If your scenario includes any of the following it is recommended to use <xref:Microsoft.EntityFrameworkCore.DbContextOptionsBuilder.UseSeeding*> and <xref:Microsoft.EntityFrameworkCore.DbContextOptionsBuilder.UseAsyncSeeding*> methods described in the first section:
 
 * Temporary data for testing
 * Data that depends on database state
@@ -113,6 +113,6 @@ If your scenario includes any of the following it is recommended to use `UseSeed
 
 ## Manual migration customization
 
-When a migration is added the changes to the data specified with `HasData` are transformed to calls to `InsertData()`, `UpdateData()`, and `DeleteData()`. One way of working around some of the limitations of `HasData` is to manually add these calls or [custom operations](xref:core/managing-schemas/migrations/operations) to the migration instead.
+When a migration is added the changes to the data specified with <xref:Microsoft.EntityFrameworkCore.Metadata.Builders.EntityTypeBuilder`1.HasData*> are transformed to calls to `InsertData()`, `UpdateData()`, and `DeleteData()`. One way of working around some of the limitations of <xref:Microsoft.EntityFrameworkCore.Metadata.Builders.EntityTypeBuilder`1.HasData*> is to manually add these calls or [custom operations](xref:core/managing-schemas/migrations/operations) to the migration instead.
 
 [!code-csharp[CustomInsert](../../../samples/core/Modeling/DataSeeding/Migrations/20241016041555_Initial.cs?name=CustomInsert)]

@@ -153,7 +153,7 @@ In EF 9.0, the LINQ translation capabilities of the the Azure Cosmos DB provider
 * Support for aggregate operators such as `Count` and `Sum`.
 * Additional function translations (see the [function mappings documentation](xref:core/providers/cosmos/querying#function-mappings) for the full list of supported translations):
   * Translations for `DateTime` and `DateTimeOffset` component members (`DateTime.Year`, `DateTimeOffset.Month`...).
-  * `EF.Functions.IsDefined` and `EF.Functions.CoalesceUndefined` now allow dealing with `undefined` values.
+  * <xref:Microsoft.EntityFrameworkCore.CosmosDbFunctionsExtensions.IsDefined*> and <xref:Microsoft.EntityFrameworkCore.CosmosDbFunctionsExtensions.CoalesceUndefined*> now allow dealing with `undefined` values.
   * `string.Contains`, `StartsWith` and `EndsWith` now support `StringComparison.OrdinalIgnoreCase`.
 
 For the full list of querying improvements, see [this issue](https://github.com/dotnet/efcore/issues/33033):
@@ -229,7 +229,7 @@ public class BloggingContext
 }
 ```
 
-Once that's done, use the `EF.Functions.VectorDistance()` function in LINQ queries to perform vector similarity search:
+Once that's done, use the <xref:Microsoft.EntityFrameworkCore.CosmosDbFunctionsExtensions.VectorDistance*> function in LINQ queries to perform vector similarity search:
 
 ```c#
 var blogs = await context.Blogs
@@ -256,7 +256,7 @@ foreach (var post in page.Values)
 }
 ```
 
-The new `ToPageAsync` operator returns a `CosmosPage`, which exposes a continuation token that can be used to efficiently resume the query at a later point, fetching the next 10 items:
+The new <xref:Microsoft.EntityFrameworkCore.CosmosQueryableExtensions.ToPageAsync*> operator returns a <xref:Microsoft.EntityFrameworkCore.CosmosPage`1>, which exposes a continuation token that can be used to efficiently resume the query at a later point, fetching the next 10 items:
 
 ```c#
 var nextPage = await context.Sessions.OrderBy(s => s.Id).ToPageAsync(10, continuationToken);
@@ -266,7 +266,7 @@ For more information, [see the documentation section on pagination](xref:core/pr
 
 ### FromSql for safer SQL querying
 
-The Azure Cosmos DB provider has allowed SQL querying via <xref:Microsoft.EntityFrameworkCore.CosmosQueryableExtensions.FromSqlRaw*>. However, that API can be susceptible to SQL injection attacks when user-provided data is interpolated or concatenated into the SQL. In EF 9.0, you can now use the new `FromSql` method, which always integrates parameterized data as a parameter outside the SQL:
+The Azure Cosmos DB provider has allowed SQL querying via <xref:Microsoft.EntityFrameworkCore.CosmosQueryableExtensions.FromSqlRaw*>. However, that API can be susceptible to SQL injection attacks when user-provided data is interpolated or concatenated into the SQL. In EF 9.0, you can now use the new <xref:Microsoft.EntityFrameworkCore.CosmosQueryableExtensions.FromSql*> method, which always integrates parameterized data as a parameter outside the SQL:
 
 ```c#
 var maxAngle = 8;
@@ -279,7 +279,7 @@ For more information, [see the documentation section on pagination](xref:core/pr
 
 ### Role-based access
 
-Azure Cosmos DB for NoSQL includes a [built-in role-based access control (RBAC) system](/azure/cosmos-db/role-based-access-control). This is now supported by EF9 for all data plane operations. However, Azure Cosmos DB SDK does not support RBAC for management plane operations in Azure Cosmos DB. Use Azure Management API instead of `EnsureCreatedAsync` with RBAC.
+Azure Cosmos DB for NoSQL includes a [built-in role-based access control (RBAC) system](/azure/cosmos-db/role-based-access-control). This is now supported by EF9 for all data plane operations. However, Azure Cosmos DB SDK does not support RBAC for management plane operations in Azure Cosmos DB. Use Azure Management API instead of <xref:Microsoft.EntityFrameworkCore.Infrastructure.DatabaseFacade.EnsureCreatedAsync*> with RBAC.
 
 ### Synchronous I/O is now blocked by default
 
@@ -367,7 +367,7 @@ GROUP BY [s].[StoreAddress_City], [s].[StoreAddress_Country], [s].[StoreAddress_
 > [!TIP]
 > The code shown here comes from [ExecuteUpdateSample.cs](https://github.com/dotnet/EntityFramework.Docs/tree/main/samples/core/Miscellaneous/NewInEFCore9/ExecuteUpdateSample.cs).
 
-Similarly, in EF9 `ExecuteUpdate` has also been improved to accept complex type properties. However, each member of the complex type must be specified explicitly. For example:
+Similarly, in EF9 <xref:Microsoft.EntityFrameworkCore.RelationalQueryableExtensions.ExecuteUpdateAsync*> has also been improved to accept complex type properties. However, each member of the complex type must be specified explicitly. For example:
 
 <!--
             #region UpdateComplexType
@@ -392,7 +392,7 @@ FROM [Stores] AS [s]
 WHERE [s].[Region] = N'Germany'
 ```
 
-Previously, you had to manually list out the different properties of the complex type in your `ExecuteUpdate` call.
+Previously, you had to manually list out the different properties of the complex type in your <xref:Microsoft.EntityFrameworkCore.RelationalQueryableExtensions.ExecuteUpdateAsync*> call.
 
 <a name="prune"></a>
 
@@ -610,7 +610,7 @@ Notice that EF created a constant in the SQL for ".NET Blog" because this value 
 
 On the other hand, the value of `id` is parameterized, since the same query may be executed with many different values for `id`. Creating a constant in this case would result in pollution of the query cache with lots of queries that differ only in `id` values. This is very bad for overall performance of the database.
 
-Generally speaking, these defaults should not be changed. However, EF Core 8.0.2 introduces an `EF.Constant` method which forces EF to use a constant even if a parameter would be used by default. For example:
+Generally speaking, these defaults should not be changed. However, EF Core 8.0.2 introduces an <xref:Microsoft.EntityFrameworkCore.EF.Constant*> method which forces EF to use a constant even if a parameter would be used by default. For example:
 
 <!--
         #region ForceConstant
@@ -630,9 +630,9 @@ FROM [Posts] AS [p]
 WHERE [p].[Title] = N'.NET Blog' AND [p].[Id] = 1
 ```
 
-#### The `EF.Parameter` method
+#### The EF.Parameter method
 
-EF9 introduces the `EF.Parameter` method to do the opposite. That is, force EF to use a parameter even if the value is a constant in code. For example:
+EF9 introduces the <xref:Microsoft.EntityFrameworkCore.EF.Parameter*> method to do the opposite. That is, force EF to use a parameter even if the value is a constant in code. For example:
 
 <!--
         #region ForceParameter
@@ -679,9 +679,9 @@ WHERE [p].[Title] = N'.NET Blog' AND [p].[Id] IN (
 )
 ```
 
-This allows having the same SQL query for different parameterized collections (only the parameter value changes), but in some situations it can lead to performance issues as the database isn't able to optimally plan for the query. The `EF.Constant` method can be used to revert to the previous translation.
+This allows having the same SQL query for different parameterized collections (only the parameter value changes), but in some situations it can lead to performance issues as the database isn't able to optimally plan for the query. The <xref:Microsoft.EntityFrameworkCore.EF.Constant*> method can be used to revert to the previous translation.
 
-The following query uses `EF.Constant` to that effect:
+The following query uses <xref:Microsoft.EntityFrameworkCore.EF.Constant*> to that effect:
 
 <!--
 #region ForceConstantPrimitiveCollection
@@ -703,7 +703,7 @@ WHERE [p].[Title] = N'.NET Blog' AND [p].[Id] IN (1, 2, 3)
 Moreover, EF9 introduces `TranslateParameterizedCollectionsToConstants` [context option](/ef/core/dbcontext-configuration/#dbcontextoptions) that can be used to prevent primitive collection parameterization for all queries. We also added a complementing `TranslateParameterizedCollectionsToParameters` which forces parameterization of primitive collections explicitly (this is the default behavior).
 
 > [!TIP]
-> The `EF.Parameter` method overrides the context option. If you want to prevent parameterization of primitive collections for most of your queries (but not all), you can set the context option `TranslateParameterizedCollectionsToConstants` and use `EF.Parameter` for the queries or individual variables that you want to parameterize.
+> The <xref:Microsoft.EntityFrameworkCore.EF.Parameter*> method overrides the context option. If you want to prevent parameterization of primitive collections for most of your queries (but not all), you can set the context option `TranslateParameterizedCollectionsToConstants` and use <xref:Microsoft.EntityFrameworkCore.EF.Parameter*> for the queries or individual variables that you want to parameterize.
 
 <a name="inlinedsubs"></a>
 
@@ -1099,10 +1099,10 @@ The majority of operations performed during migrations are protected by a transa
 
 ### Improved data seeding
 
-EF9 introduced a convenient way to perform data seeding, that is populating the database with initial data. `DbContextOptionsBuilder` now contains `UseSeeding` and `UseAsyncSeeding` methods which get executed when the DbContext is initialized (as part of `EnsureCreatedAsync`).
+EF9 introduced a convenient way to perform data seeding, that is populating the database with initial data. <xref:Microsoft.EntityFrameworkCore.DbContextOptionsBuilder> now contains <xref:Microsoft.EntityFrameworkCore.DbContextOptionsBuilder.UseSeeding*> and <xref:Microsoft.EntityFrameworkCore.DbContextOptionsBuilder.UseAsyncSeeding*> methods which get executed when the DbContext is initialized (as part of <xref:Microsoft.EntityFrameworkCore.Infrastructure.DatabaseFacade.EnsureCreatedAsync*>).
 
 > [!NOTE]
-> If the application had ran previously, the database may already contain the sample data (which would have been added on the first initialization of the context). As such, `UseSeeding` `UseAsyncSeeding` should check if data exists before attempting to populate the database. This can be achieved by issuing a simple EF query.
+> If the application had ran previously, the database may already contain the sample data (which would have been added on the first initialization of the context). As such, <xref:Microsoft.EntityFrameworkCore.DbContextOptionsBuilder.UseSeeding*> <xref:Microsoft.EntityFrameworkCore.DbContextOptionsBuilder.UseAsyncSeeding*> should check if data exists before attempting to populate the database. This can be achieved by issuing a simple EF query.
 
 Here is an example of how these methods can be used:
 
@@ -1285,7 +1285,7 @@ INNER JOIN "Pubs" AS "p" ON "w"."ClosestPubId" = "p"."Id"
 
 EF9 supports specification of the [SQL Server fill-factor](/sql/relational-databases/indexes/specify-fill-factor-for-an-index) when using EF Core Migrations to create keys and indexes. From the SQL Server docs, "When an index is created or rebuilt, the fill-factor value determines the percentage of space on each leaf-level page to be filled with data, reserving the remainder on each page as free space for future growth."
 
-The fill-factor can be set on a single or composite primary and alternate keys and indexes. For example:
+The fill-factor can be set on a single or composite primary and alternate keys and indexes using <xref:Microsoft.EntityFrameworkCore.SqlServerIndexBuilderExtensions.HasFillFactor*>. For example:
 
 <!--
             #region FillFactor
@@ -1424,7 +1424,7 @@ In EF9, this can be simplified down to the following:
 
 ### Update ApplyConfigurationsFromAssembly to call non-public constructors
 
-In previous versions of EF Core, the `ApplyConfigurationsFromAssembly` method only instantiated configuration types with a public, parameterless constructors. In EF9, we have both [improved the error messages generated when this fails](https://github.com/dotnet/efcore/pull/32577), and also enabled instantiation by non-public constructor. This is useful when co-locating configuration in a private nested class which should never be instantiated by application code. For example:
+In previous versions of EF Core, the <xref:Microsoft.EntityFrameworkCore.ModelBuilder.ApplyConfigurationsFromAssembly*> method only instantiated configuration types with a public, parameterless constructors. In EF9, we have both [improved the error messages generated when this fails](https://github.com/dotnet/efcore/pull/32577), and also enabled instantiation by non-public constructor. This is useful when co-locating configuration in a private nested class which should never be instantiated by application code. For example:
 
 ```csharp
 public class Country
