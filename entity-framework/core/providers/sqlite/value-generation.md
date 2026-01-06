@@ -45,4 +45,4 @@ Alternatively, you can configure EF to not treat the property as value-generated
 -->
 [!code-csharp[Main](../../../../samples/core/Sqlite/ValueGeneration/SqliteValueGeneratedNever.cs?name=SqliteValueGeneratedNever&highlight=5)]
 
-This means that it's up to the application to supply a value for the property before saving to the database. Note that this still won't disable the default value generation server-side, so non-EF usages could still get a generated value. To [completely disable value generation](https://sqlite.org/lang_createtable.html#rowids_and_the_integer_primary_key) the user can change the column type from `INTEGER` to `INT`.
+This means that it's up to the application to supply a value for the property before saving to the database. Note that this still won't disable the default value generation server-side, so non-EF usages could still get a generated value. To [completely disable value generation](https://sqlite.org/lang_createtable.html#rowids_and_the_integer_primary_key), change the column type from `INTEGER` to `INT`.
