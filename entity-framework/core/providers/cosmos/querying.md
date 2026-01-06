@@ -144,7 +144,7 @@ foreach (var session in firstPage.Values)
 }
 ```
 
-Rather than terminating the LINQ query with `ToListAsync` or similar, we use the `ToPageAsync` method, instructing it to get at most 10 items in every page (note that there may be fewer items in the database). Since this is our first query, we'd like to get results from the beginning, and pass `null` as the continuation token. `ToPageAsync` returns a `CosmosPage`, which exposes a continuation token and the values in the page (up to 10 items). Your program will typically send those values to the client, along with the continuation token; this will allow resuming the query later and fetching more results.
+Rather than terminating the LINQ query with `ToListAsync` or similar, we use the <xref:Microsoft.EntityFrameworkCore.CosmosQueryableExtensions.ToPageAsync*> method, instructing it to get at most 10 items in every page (note that there may be fewer items in the database). Since this is our first query, we'd like to get results from the beginning, and pass `null` as the continuation token. <xref:Microsoft.EntityFrameworkCore.CosmosQueryableExtensions.ToPageAsync*> returns a <xref:Microsoft.EntityFrameworkCore.CosmosPage`1>, which exposes a continuation token and the values in the page (up to 10 items). Your program will typically send those values to the client, along with the continuation token; this will allow resuming the query later and fetching more results.
 
 Let's assume the user now clicks on the "Next" button in their UI, asking for the next 10 items. You can then execute the query as follows:
 
@@ -164,7 +164,7 @@ To learn more about pagination in Azure Cosmos DB, [see this page](/azure/cosmos
 > [!NOTE]
 > Azure Cosmos DB does not support backwards pagination, and does not provide a count of the total pages or items.
 >
-> `ToPageAsync` is currently annotated as experimental, since it may be replaced with a more generic EF pagination API that isn't Azure Cosmos DB specific. Although using the current API will generate a compilation warning (`EF9102`), doing so should be safe - future changes may require minor tweaks in the API shape.
+> <xref:Microsoft.EntityFrameworkCore.CosmosQueryableExtensions.ToPageAsync*> is currently annotated as experimental, since it may be replaced with a more generic EF pagination API that isn't Azure Cosmos DB specific. Although using the current API will generate a compilation warning (`EF9102`), doing so should be safe - future changes may require minor tweaks in the API shape.
 
 ## `FindAsync`
 
@@ -209,7 +209,7 @@ FROM (
 ) s
 ```
 
-Note that `FromSql` was introduced in EF 9.0. In previous versions, `FromSqlRaw` can be used instead, although note that that method is vulnerable to SQL injection attacks.
+Note that <xref:Microsoft.EntityFrameworkCore.CosmosQueryableExtensions.FromSql*> was introduced in EF 9.0. In previous versions, <xref:Microsoft.EntityFrameworkCore.CosmosQueryableExtensions.FromSqlRaw*> can be used instead, although note that that method is vulnerable to SQL injection attacks.
 
 For more information on SQL querying, see the [relational documentation on SQL queries](xref:core/querying/sql-queries); most of that content is relevant for the Azure Cosmos DB provider as well.
 
@@ -300,15 +300,15 @@ stringValue.TrimStart()                                           | [LTRIM(@stri
 
 .NET                                                                        | SQL                                                                                                           | Added in
 --------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------- | -----
-EF.Functions.VectorDistance(vector1, vector2).                              | [VectorDistance(vector1, vector2)](/azure/cosmos-db/nosql/query/vectordistance)                               | EF 9
-EF.Functions.VectorDistance(vector1, vector2, bruteForce)                   | [VectorDistance(vector1, vector2, bruteForce)](/azure/cosmos-db/nosql/query/vectordistance)                   | EF 9
-EF.Functions.VectorDistance(vector1, vector2, bruteForce, distanceFunction) | [VectorDistance(vector1, vector2, bruteForce, distanceFunction)](/azure/cosmos-db/nosql/query/vectordistance) | EF 9
-EF.Functions.FullTextContains(property, keyword)                            | [FullTextContains(property, keyword)](/azure/cosmos-db/nosql/query/fulltextcontains)                          | EF 10
-EF.Functions.FullTextContainsAll(property, keyword1, keyword2)              | [FullTextContainsAll(property, keyword1, keyword2)](/azure/cosmos-db/nosql/query/fulltextcontainsall)         | EF 10
-EF.Functions.FullTextContainsAny(property, keyword1, keyword2)              | [FullTextContainsAny(property, keyword1, keyword2)](/azure/cosmos-db/nosql/query/fulltextcontainsany)         | EF 10
-EF.Functions.FullTextScore(property, keyword1, keyword2)                    | [FullTextScore(property, keyword1, keyword2)](/azure/cosmos-db/nosql/query/fulltextscore)                     | EF 10
-EF.Functions.Rrf(search1, search2)                                          | [RRF(property, search1, search2)](/azure/cosmos-db/nosql/query/rrf).                                          | EF 10
-EF.Functions.Rrf(new[] { search1, search2 }, weights)                       | [RRF(property, search1, search2, weights)](/azure/cosmos-db/nosql/query/rrf)                                  | EF 10
+<xref:Microsoft.EntityFrameworkCore.CosmosDbFunctionsExtensions.VectorDistance*>(vector1, vector2).                              | [VectorDistance(vector1, vector2)](/azure/cosmos-db/nosql/query/vectordistance)                               | EF 9
+<xref:Microsoft.EntityFrameworkCore.CosmosDbFunctionsExtensions.VectorDistance*>(vector1, vector2, bruteForce)                   | [VectorDistance(vector1, vector2, bruteForce)](/azure/cosmos-db/nosql/query/vectordistance)                   | EF 9
+<xref:Microsoft.EntityFrameworkCore.CosmosDbFunctionsExtensions.VectorDistance*>(vector1, vector2, bruteForce, distanceFunction) | [VectorDistance(vector1, vector2, bruteForce, distanceFunction)](/azure/cosmos-db/nosql/query/vectordistance) | EF 9
+<xref:Microsoft.EntityFrameworkCore.CosmosDbFunctionsExtensions.FullTextContains*>(property, keyword)                            | [FullTextContains(property, keyword)](/azure/cosmos-db/nosql/query/fulltextcontains)                          | EF 10
+<xref:Microsoft.EntityFrameworkCore.CosmosDbFunctionsExtensions.FullTextContainsAll*>(property, keyword1, keyword2)              | [FullTextContainsAll(property, keyword1, keyword2)](/azure/cosmos-db/nosql/query/fulltextcontainsall)         | EF 10
+<xref:Microsoft.EntityFrameworkCore.CosmosDbFunctionsExtensions.FullTextContainsAny*>(property, keyword1, keyword2)              | [FullTextContainsAny(property, keyword1, keyword2)](/azure/cosmos-db/nosql/query/fulltextcontainsany)         | EF 10
+<xref:Microsoft.EntityFrameworkCore.CosmosDbFunctionsExtensions.FullTextScore*>(property, keyword1, keyword2)                    | [FullTextScore(property, keyword1, keyword2)](/azure/cosmos-db/nosql/query/fulltextscore)                     | EF 10
+<xref:Microsoft.EntityFrameworkCore.CosmosDbFunctionsExtensions.Rrf*>(search1, search2)                                          | [RRF(property, search1, search2)](/azure/cosmos-db/nosql/query/rrf).                                          | EF 10
+<xref:Microsoft.EntityFrameworkCore.CosmosDbFunctionsExtensions.Rrf*>(new[] { search1, search2 }, weights)                       | [RRF(property, search1, search2, weights)](/azure/cosmos-db/nosql/query/rrf)                                  | EF 10
 
 For more information on vector search, see [the documentation](xref:core/providers/cosmos/vector-search). For more information on full-text search, see [the documentation](xref:core/providers/cosmos/full-text-search).
 
@@ -317,7 +317,7 @@ For more information on vector search, see [the documentation](xref:core/provide
 .NET                                                                                    | SQL                                                                                                           | Added in
 --------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------- | -----
 collection.Contains(item)                                                               | @item IN @collection
-EF.Functions.CoalesceUndefined(x, y)<sup>1</sup>                                        | [x ?? y](/azure/cosmos-db/nosql/query/ternary-coalesce-operators#coalesce-operator)                           | EF 9
-EF.Functions.IsDefined(x)                                                               | [IS_DEFINED(x)](/azure/cosmos-db/nosql/query/is-defined)                                                      | EF 9
+<xref:Microsoft.EntityFrameworkCore.CosmosDbFunctionsExtensions.CoalesceUndefined*>(x, y)<sup>1</sup>                                        | [x ?? y](/azure/cosmos-db/nosql/query/ternary-coalesce-operators#coalesce-operator)                           | EF 9
+<xref:Microsoft.EntityFrameworkCore.CosmosDbFunctionsExtensions.IsDefined*>(x)                                                               | [IS_DEFINED(x)](/azure/cosmos-db/nosql/query/is-defined)                                                      | EF 9
 
-<sup>1</sup> Note that `EF.Functions.CoalesceUndefined` coalesces `undefined`, not `null`. To coalesce `null`, use the regular C# `??` operator.
+<sup>1</sup> Note that <xref:Microsoft.EntityFrameworkCore.CosmosDbFunctionsExtensions.CoalesceUndefined*> coalesces `undefined`, not `null`. To coalesce `null`, use the regular C# `??` operator.

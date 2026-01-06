@@ -346,7 +346,7 @@ This prevents data corruption that could occur when multiple properties are unin
 
 #### Mitigations
 
-If you need multiple properties to share the same column, configure them explicitly:
+If you need multiple properties to share the same column, configure them explicitly using <xref:Microsoft.EntityFrameworkCore.Metadata.Builders.ComplexPropertyBuilder.Property*> and <xref:Microsoft.EntityFrameworkCore.RelationalPropertyBuilderExtensions.HasColumnName*>:
 
 ```c#
 modelBuilder.Entity<Customer>(b =>
@@ -374,7 +374,7 @@ This provides better column name uniqueness and makes it clearer which property 
 
 #### Mitigations
 
-If you need to maintain the old column names, configure them explicitly:
+If you need to maintain the old column names, configure them explicitly using <xref:Microsoft.EntityFrameworkCore.Metadata.Builders.ComplexPropertyBuilder.Property*> and <xref:Microsoft.EntityFrameworkCore.RelationalPropertyBuilderExtensions.HasColumnName*>:
 
 ```c#
 modelBuilder.Entity<EntityType>()
@@ -425,7 +425,7 @@ Previously, methods on `IRelationalCommandDiagnosticsLogger` such as `CommandRea
 
 #### New behavior
 
-Starting with EF Core 10.0, these methods now require an additional `logCommandText` parameter. This parameter contains the SQL command text that will be logged, which may have sensitive data redacted when <xref:Microsoft.EntityFrameworkCore.DbContextOptionsBuilder.EnableSensitiveDataLogging> is not enabled.
+Starting with EF Core 10.0, these methods now require an additional `logCommandText` parameter. This parameter contains the SQL command text that will be logged, which may have sensitive data redacted when <xref:Microsoft.EntityFrameworkCore.DbContextOptionsBuilder.EnableSensitiveDataLogging*> is not enabled.
 
 #### Why
 
