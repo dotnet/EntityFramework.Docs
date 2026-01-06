@@ -687,6 +687,7 @@ If `fieldName` is trusted or has been properly sanitized, the warning can be saf
 
 ## Other improvements
 
+- AUTOINCREMENT can now be disabled for SQLite and is also supported for properties with value converters. For more information, see [SQLite Value Generation](xref:core/providers/sqlite/value-generation).
 - Stop spanning all migrations with a single transaction ([#35096](https://github.com/dotnet/efcore/issues/35096)). This reverts a change done in EF9 which caused issues in various migration scenarios.
 - Make SQL Server scaffolding compatible with Azure Data Explorer ([#34832](https://github.com/dotnet/efcore/pull/34832), contributed by [@barnuri](https://github.com/barnuri)).
 - Associate the DatabaseRoot with the scoped options instance and not the singleton options ([#34477](https://github.com/dotnet/efcore/pull/34477), contributed by [@koenigst](https://github.com/koenigst)).

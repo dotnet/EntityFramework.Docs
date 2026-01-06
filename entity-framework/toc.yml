@@ -425,6 +425,8 @@
           href: core/providers/sqlite/limitations.md
         - name: Function mappings
           href: core/providers/sqlite/functions.md
+        - name: Value generation
+          href: core/providers/sqlite/value-generation.md
         - name: Spatial data
           displayName: GIS
           href: core/providers/sqlite/spatial.md
