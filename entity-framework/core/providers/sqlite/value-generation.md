@@ -33,7 +33,7 @@ AUTOINCREMENT imposes extra CPU, memory, disk space, and disk I/O overhead compa
 -->
 [!code-csharp[Main](../../../../samples/core/Sqlite/ValueGeneration/SqliteValueGenerationStrategyNone.cs?name=SqliteValueGenerationStrategyNone&highlight=5)]
 
-Alternatively, you can disable value generation entirely:
+Alternatively, you can configure EF to not treat the property as value-generated:
 
 <!--
     protected override void OnModelCreating(ModelBuilder modelBuilder)
