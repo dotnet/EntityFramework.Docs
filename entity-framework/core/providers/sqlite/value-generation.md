@@ -15,7 +15,7 @@ By convention, numeric primary key columns that are configured to have their val
 
 ### Configuring AUTOINCREMENT
 
-By convention, integer primary keys are automatically configured with AUTOINCREMENT when they are not composite and don't have a foreign key on them. However, you may need to explicitly configure a property to use SQLite AUTOINCREMENT when the property has a value conversion from a non-integer type, or when overriding conventions:
+By convention, integer primary keys are automatically configured with AUTOINCREMENT when they are not part of a composite key and don't have a foreign key on them. However, you may need to explicitly configure a property to use SQLite AUTOINCREMENT when the property has a value conversion from a non-integer type, or when overriding conventions:
 
 [!code-csharp[Main](../../../../samples/core/Sqlite/ValueGeneration/SqliteAutoincrementWithValueConverter.cs?name=SqliteAutoincrementWithValueConverter&highlight=4)]
 
