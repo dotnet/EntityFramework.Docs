@@ -11,7 +11,7 @@ This page details value generation configuration and patterns that are specific 
 
 ## AUTOINCREMENT columns
 
-By convention, numeric primary key columns that are configured to have their values generated on add are set up with [SQLite's AUTOINCREMENT feature](https://sqlite.org/autoinc.html). Starting with EF Core 10, SQLite AUTOINCREMENT is implemented through conventions and the Fluent API, so it can be enabled or disabled as necessary.
+By convention, numeric primary key columns that are configured to have their values generated on add are set up with [SQLite's AUTOINCREMENT feature](https://sqlite.org/autoinc.html). Starting with EF Core 10, SQLite AUTOINCREMENT can also be enabled or disabled via configuration.
 
 ### Configuring AUTOINCREMENT
 
