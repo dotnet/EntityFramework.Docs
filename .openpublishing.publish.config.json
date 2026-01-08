@@ -23,7 +23,8 @@
   ],
   "notification_subscribers": [
     "sampatel@microsoft.com",
-    "jiricincura@microsoft.com"
+    "jiricincura@microsoft.com",
+    "Shay.Rojansky@microsoft.com"
   ],
   "sync_notification_subscribers": [],
   "branches_to_filter": [],
