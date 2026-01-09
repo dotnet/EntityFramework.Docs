@@ -227,6 +227,13 @@ The new default translation provides the query planner with cardinality informat
 
 However, different workloads may benefit from different translation strategies depending on collection sizes, query patterns, and database characteristics.
 
+> [!NOTE]
+> While the new default translation will not cause any behavioral change or performance regression in the majority of cases, the change in how queries are translated to SQL may have adverse consequences in some scenarios.
+>
+> Applications that were built with EF Core 8 or 9, and rely on the performance characteristics of the JSON array parameter translation (using `OPENJSON` or similar database-specific functions) may experience performance differences when upgrading to EF Core 10. This is especially relevant for queries with large collections or specific query patterns that benefited from the previous translation strategy.
+>
+> If you experience performance regressions after upgrading, consider using the mitigation strategies below to revert to the previous behavior globally or for specific queries.
+
 #### Mitigations
 
 If you encounter issues with the new default behavior (such as performance regressions), you can configure the translation mode globally:
