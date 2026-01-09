@@ -26,12 +26,6 @@ The EF team produces "community standup" videos, where we discuss various aspect
 * [IQueryable, LINQ and the EF Core query pipeline](https://www.youtube.com/watch?v=1Ld3dtnTrMw&list=PLdo4fOcmZ0oX0ObHwBrJ0vJpZ7PiYMqeA)
 * [Model Building](https://www.youtube.com/watch?v=FYz0rAxQkC8&list=PLdo4fOcmZ0oX0ObHwBrJ0vJpZ7PiYMqeA)
 
-## Keeping up-to-date with provider changes
-
-Starting with work after the 2.1 release, we have created a [log of changes](xref:core/providers/provider-log) that may need corresponding changes in provider code. This is intended to help when updating an existing provider to work with a new version of EF Core.
-
-Prior to 2.1, we used the [`providers-beware`](https://github.com/dotnet/efcore/labels/providers-beware) and [`providers-fyi`](https://github.com/dotnet/efcore/labels/providers-fyi) labels on our GitHub issues and pull requests for a similar purpose. We will continue to use these labels on issues to give an indication which work items in a given release may also require work to be done in providers. A `providers-beware` label typically means that the implementation of a work item may break providers, while a `providers-fyi` label typically means that providers will not be broken, but code may need to be changed anyway, for example, to enable new functionality.
-
 ## Suggested naming of third party providers
 
 We suggest using the following naming for NuGet packages. This is consistent with the names of packages delivered by the EF Core team.

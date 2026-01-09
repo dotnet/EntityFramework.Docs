@@ -456,8 +456,6 @@
         href: core/providers/in-memory/index.md
       - name: Write a database provider
         href: core/providers/writing-a-provider.md
-      - name: Provider-impacting changes
-        href: core/providers/provider-log.md
 
     - name: Tools & extensions
       href: core/extensions/index.md
