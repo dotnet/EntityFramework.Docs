@@ -40,7 +40,6 @@ Translates to:
 
 ```sql
 -- GetNearestPeople
-
 -- Limit
 
 SELECT TOP(@__p_1) [p].[Id], [p].[Location]
@@ -57,9 +56,7 @@ Produces the following SQL:
 
 ```sql
 -- GetNearestPeople
-
 -- Limit
-
 -- This is a multi-line
 -- string
 
