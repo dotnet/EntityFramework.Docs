@@ -133,13 +133,13 @@ When executing this query, EF Core will extract the values of the `tenantId`, `u
 
 ```output
 info: 6/10/2024 19:06:00.017 CosmosEventId.ExecutingSqlQuery[30100] (Microsoft.EntityFrameworkCore.Database.Command) 
-      Executing SQL query for container 'UserSessionContext' in partition '["Microsoft","99a410d7-e467-4cc5-92de-148f3fc53f4c",7.0]' [Parameters=[]]
+      Executing SQL query for container 'UserSessionContext' in partition '["Microsoft","00aa00aa-bb11-cc22-dd33-44ee44ee44ee",7.0]' [Parameters=[]]
       SELECT c
       FROM root c
       WHERE ((c["Discriminator"] = "UserSession") AND CONTAINS(c["Username"], "a"))
 ```
 
-Notice that the partition key comparisons have been removed from the `WHERE` clause, and are instead used as the partition key for efficient execution: `["Microsoft","99a410d7-e467-4cc5-92de-148f3fc53f4c",7.0]`.
+Notice that the partition key comparisons have been removed from the `WHERE` clause, and are instead used as the partition key for efficient execution: `["Microsoft","00aa00aa-bb11-cc22-dd33-44ee44ee44ee",7.0]`.
 
 For more information, see the documentation on [querying with partition keys](xref:core/providers/cosmos/querying#partition-keys).
 
