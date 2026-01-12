@@ -51,8 +51,6 @@ builder.Services.AddDbContext<MyContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("MyContext")));
 ```
 
-The EF SQL Server provider uses [Microsoft.Data.SqlClient](/sql/connect/ado-net/overview-sqlclient-driver) as its underlying ADO.NET provider. For more information on the connection strings accepted by SqlClient, [see this page](/sql/connect/ado-net/connection-string-syntax).
-
 ### [Azure SQL](#tab/azure-sql)
 
 ```c#
@@ -101,6 +99,8 @@ builder.Services.AddDbContext<MyContext>(options =>
 
 ***
 
+The EF SQL Server provider uses [Microsoft.Data.SqlClient](/sql/connect/ado-net/overview-sqlclient-driver) as its underlying ADO.NET provider. For more information on the connection strings accepted by SqlClient, [see this page](/sql/connect/ado-net/connection-string-syntax).
+
 ## Compatibility level
 
 You can optionally configure EF with the compatibility level of your database; higher compatibility levels allow for newer features, and configuring EF accordingly makes it use those features. If you do not explicitly configure a compatibility level, a reasonable default will be chosen that may not take advantage of the newest features. As a result, it's recommended to explicitly configure the compatibility level you'd like to have.
@@ -110,7 +110,7 @@ Note that this only covers EF's own configuration of the compatibility level - a
 To configure EF with a compatibility level, use `UseCompatibilityLevel()` as follows:
 
 ```c#
-optionsBuilder.UseSqlServer("<CONNECTION STRING>", o => o.UseCompatibilityLevel());
+optionsBuilder.UseSqlServer("<CONNECTION STRING>", o => o.UseCompatibilityLevel(170));
 ```
 
 ## Connection resiliency
