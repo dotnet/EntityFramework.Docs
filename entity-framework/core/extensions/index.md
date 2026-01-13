@@ -268,6 +268,12 @@ Persisted computed properties in EF Core that update automatically on save chang
 
 [GitHub repository](https://github.com/lucaslorentz/auto-compute) | [NuGet](https://www.nuget.org/packages/LLL.AutoCompute.EFCore)
 
+### EntityFramework.OrderBy
+
+Applies default ordering to Entity Framework queries based on fluent configuration, ensuring consistent and deterministic query results. Supports nested collections in `.Include()` expressions, multi-column ordering, and automatic database index creation for ordering columns.
+
+[GitHub repository](https://github.com/SimonCropp/EntityFramework.OrderBy) | [NuGet](https://www.nuget.org/packages/EfOrderBy)
+
 ### EntityFrameworkCore.AuditInterceptor
 
 A library that provides seamless auditing capabilities for Entity Framework Core. It automatically tracks entity changes including who made the changes and when they were made. The library integrates with .NET Dependency Injection and supports various auditing scenarios through a simple configuration process. For EF Core: 6-8.
