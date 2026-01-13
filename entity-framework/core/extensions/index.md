@@ -104,7 +104,7 @@ Extends [Verify](https://github.com/VerifyTests/Verify) to allow snapshot testin
 
 ### LocalDb
 
-Provides a wrapper around [SQL Server Express LocalDB](/sql/database-engine/configure-windows/sql-server-express-localdb) to simplify running tests against Entity Framework. For EF Core: 3-8.
+Provides a wrapper around [SQL Server Express LocalDB](/sql/database-engine/configure-windows/sql-server-express-localdb) to simplify running tests against Entity Framework.
 
 [GitHub repository](https://github.com/SimonCropp/LocalDb) | [NuGet](https://www.nuget.org/packages/EfLocalDb)
 
@@ -267,6 +267,12 @@ Update an entity graph in store to a given one by inserting, updating and removi
 Persisted computed properties in EF Core that update automatically on save changes. For EF Core: 8.
 
 [GitHub repository](https://github.com/lucaslorentz/auto-compute) | [NuGet](https://www.nuget.org/packages/LLL.AutoCompute.EFCore)
+
+### EntityFramework.OrderBy
+
+Applies default ordering to Entity Framework queries based on fluent configuration, ensuring consistent and deterministic query results. Supports nested collections in `.Include()` expressions, multi-column ordering, and automatic database index creation for ordering columns.
+
+[GitHub repository](https://github.com/SimonCropp/EntityFramework.OrderBy) | [NuGet](https://www.nuget.org/packages/EfOrderBy)
 
 ### EntityFrameworkCore.AuditInterceptor
 
