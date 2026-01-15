@@ -140,7 +140,7 @@ Time-to-live for individual entities can be set using a property mapped to "ttl"
 [!code-csharp[TimeToLiveProperty](../../../../samples/core/Miscellaneous/NewInEFCore6.Cosmos/CosmosModelConfigurationSample.cs?name=TimeToLiveProperty)]
 
 > [!NOTE]
-> A default time-to-live must configured on the entity type for the "ttl" to have any effect. See [_Time to Live (TTL) in Azure Cosmos DB_](/azure/cosmos-db/nosql/time-to-live) for more information.
+> A default time-to-live must configured on the entity type for the "ttl" to have any effect. See [_Time to Live (TTL) in Azure Cosmos DB_](/azure/cosmos-db/time-to-live) for more information.
 
 The time-to-live property is then set before the entity is saved. For example:
 
