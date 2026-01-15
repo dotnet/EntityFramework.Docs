@@ -4,6 +4,7 @@ description: Using DiagnosticListener for global consumption of EF Core diagnost
 author: SamMonoRT
 ms.date: 10/16/2020
 uid: core/logging-events-diagnostics/diagnostic-listeners
+ms.custom: sfi-ropc-nochange
 ---
 
 # Using Diagnostic Listeners in EF Core

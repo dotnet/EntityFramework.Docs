@@ -4,6 +4,7 @@ description: Managing connection strings under different environments with Entit
 author: SamMonoRT
 ms.date: 10/27/2016
 uid: core/miscellaneous/connection-strings
+ms.custom: sfi-ropc-nochange
 ---
 # Connection Strings
 

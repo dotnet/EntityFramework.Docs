@@ -4,6 +4,7 @@ description: Microsoft.EntityFramework.SqlServer guide
 author: SamMonoRT
 ms.date: 06/11/2024
 uid: ef6/what-is-new/microsoft-ef6-sqlserver
+ms.custom: sfi-ropc-nochange
 ---
 
 # Entity Framework 6 SQL Server provider based on Microsoft.Data.SqlClient

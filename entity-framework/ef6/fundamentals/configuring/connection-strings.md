@@ -4,6 +4,7 @@ description: Connection strings and models in Entity Framework 6
 author: SamMonoRT
 ms.date: 10/23/2016
 uid: ef6/fundamentals/configuring/connection-strings
+ms.custom: sfi-ropc-nochange
 ---
 # Connection strings and models
 This article covers how Entity Framework discovers which database connection to use, and how to change it. Models created with Code First and the EF Designer are covered. 

@@ -4,6 +4,7 @@ description: Overview of new features in EF Core 8
 author: SamMonoRT
 ms.date: 11/13/2023
 uid: core/what-is-new/ef-core-8.0/whatsnew
+ms.custom: sfi-ropc-nochange
 ---
 
 # What's New in EF Core 8

@@ -4,6 +4,7 @@ description: Connection management in Entity Framework 6
 author: SamMonoRT
 ms.date: 10/23/2016
 uid: ef6/fundamentals/connection-management
+ms.custom: sfi-ropc-nochange
 ---
 # Connection management
 This page describes the behavior of Entity Framework with regard to passing connections to the context and the functionality of the **Database.Connection.Open()** API.  

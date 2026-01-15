@@ -4,6 +4,7 @@ description: Changes and improvements in Entity Framework Core 2.0
 author: SamMonoRT
 ms.date: 02/20/2018
 uid: core/what-is-new/ef-core-2.0
+ms.custom: sfi-ropc-nochange
 ---
 
 # New features in EF Core 2.0

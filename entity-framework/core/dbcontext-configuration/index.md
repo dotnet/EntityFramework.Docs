@@ -4,6 +4,7 @@ description: Patterns for creating and managing DbContext instances with or with
 author: SamMonoRT
 ms.date: 09/30/2025
 uid: core/dbcontext-configuration/index
+ms.custom: sfi-ropc-nochange
 ---
 
 # DbContext Lifetime, Configuration, and Initialization
