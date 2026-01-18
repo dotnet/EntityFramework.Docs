@@ -304,7 +304,7 @@ CREATE TABLE [Customers] (
     [Id] int NOT NULL IDENTITY,
     [Name] nvarchar(max) NOT NULL,
     [ShippingAddress] json NOT NULL,
-    [BillingAddress] json NULL,
+    [BillingAddress] json NOT NULL,
     CONSTRAINT [PK_Customers] PRIMARY KEY ([Id])
 );
 ```
