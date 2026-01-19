@@ -3,7 +3,7 @@ name: Markdownlint
 on:
   push:
     paths:
-      - "**/*.md"
+      - "entity-framework/**/*.md"
       - "!entity-framework/ef6/**"
       - ".markdownlint.json"
       - ".github/workflows/markdownlint.yml"
@@ -31,4 +31,4 @@ jobs:
       run: |
         echo "::add-matcher::.github/workflows/markdownlint-problem-matcher.json"
         npm i -g markdownlint-cli
-        markdownlint "**/*.md" -i "entity-framework/ef6/"
+        markdownlint "entity-framework/**/*.md" -i "entity-framework/ef6/"
