@@ -4,6 +4,7 @@ description: Configuration file settings in Entity Framework 6
 author: SamMonoRT
 ms.date: 10/23/2016
 uid: ef6/fundamentals/configuring/config-file
+ms.custom: sfi-ropc-nochange
 ---
 # Configuration File Settings
 Entity Framework allows a number of settings to be specified from the configuration file. In general EF follows a ‘convention over configuration’ principle: all the settings discussed in this post have a default behavior, you only need to worry about changing the setting when the default no longer satisfies your requirements. 

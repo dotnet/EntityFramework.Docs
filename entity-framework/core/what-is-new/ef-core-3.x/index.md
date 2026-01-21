@@ -4,6 +4,7 @@ description: Changes and improvements in Entity Framework Core 3.x
 author: SamMonoRT
 ms.date: 09/05/2020
 uid: core/what-is-new/ef-core-3.x/index
+ms.custom: sfi-ropc-nochange
 ---
 
 # New features in Entity Framework Core 3.x

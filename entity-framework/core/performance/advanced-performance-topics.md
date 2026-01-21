@@ -4,6 +4,7 @@ description: Advanced performance topics for Entity Framework Core
 author: roji
 ms.date: 11/21/2025
 uid: core/performance/advanced-performance-topics
+ms.custom: sfi-ropc-nochange
 ---
 # Advanced Performance Topics
 
