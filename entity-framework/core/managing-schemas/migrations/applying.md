@@ -4,6 +4,7 @@ description: Strategies for applying schema migrations to production and develop
 author: SamMonoRT
 ms.date: 10/29/2024
 uid: core/managing-schemas/migrations/applying
+ms.custom: sfi-ropc-nochange
 ---
 # Applying Migrations
 

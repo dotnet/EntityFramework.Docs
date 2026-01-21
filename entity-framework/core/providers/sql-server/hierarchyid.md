@@ -4,6 +4,7 @@ description: Using hierarchical data with the Entity Framework Core Microsoft SQ
 author: SamMonoRT
 ms.date: 03/11/2023
 uid: core/providers/sql-server/hierarchyid
+ms.custom: sfi-ropc-nochange
 ---
 # Hierarchical Data in the SQL Server EF Core Provider
 

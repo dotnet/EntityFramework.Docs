@@ -4,6 +4,7 @@ description: Code First to an Existing Database in Entity Framework 6
 author: SamMonoRT
 ms.date: 10/23/2016
 uid: ef6/modeling/code-first/workflows/existing-database
+ms.custom: sfi-ropc-nochange
 ---
 # Code First to an Existing Database
 This step-by-step walkthrough provides an introduction to Code First development targeting an existing database. Code First allows you to define your model using C\# or VB.Net classes. Optionally additional configuration can be performed using attributes on your classes and properties or by using a fluent API.

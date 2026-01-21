@@ -4,6 +4,7 @@ description: Using migrate.exe in Entity Framework 6
 author: SamMonoRT
 ms.date: 10/23/2016
 uid: ef6/modeling/code-first/migrations/migrate-exe
+ms.custom: sfi-ropc-nochange
 ---
 # Using migrate.exe
 Code First Migrations can be used to update a database from inside visual studio, but can also be executed via the command line tool migrate.exe. This page will give a quick overview on how to use migrate.exe to execute migrations against a database.

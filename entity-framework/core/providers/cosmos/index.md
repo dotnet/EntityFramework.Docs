@@ -4,6 +4,7 @@ description: Documentation for the database provider that allows Entity Framewor
 author: AndriySvyryd
 ms.date: 02/12/2023
 uid: core/providers/cosmos/index
+ms.custom: sfi-ropc-nochange
 ---
 # EF Core Azure Cosmos DB Provider
 
