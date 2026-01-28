@@ -110,8 +110,7 @@ Provides a wrapper around [SQL Server Express LocalDB](/sql/database-engine/conf
 
 ### EfCore.InMemory.Transactions
 
-Seamless transaction support for EF Core InMemory provider. Eliminates "transactions with isolation level are not supported" errors in tests without changing production code. Provides safe extension methods and NoOpDbContextTransaction for UnitOfWork patterns. 
-For EF Core: 8-10.
+Seamless transaction support for EF Core InMemory provider. Eliminates "transactions with isolation level are not supported" errors in tests without changing production code. Provides safe extension methods and NoOpDbContextTransaction for UnitOfWork patterns. For EF Core: 8-10.
 
 [GitHub repository](https://github.com/ShadyNagy/EfCore.InMemory.Transactions) | [NuGet](https://www.nuget.org/packages/EfCore.InMemory.Transactions)
 
