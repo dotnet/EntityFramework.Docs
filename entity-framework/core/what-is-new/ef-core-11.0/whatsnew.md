@@ -127,3 +127,27 @@ var result = await context.Documents.FindAsync(id);
 For more information, see [Cosmos DB saving documentation](xref:core/providers/cosmos/saving#session-token-management).
 
 This feature was contributed by [@JoasE](https://github.com/JoasE) - many thanks!
+
+## Migrations
+
+<a name="migrations-add-and-apply"></a>
+
+### Create and apply migrations in one step
+
+The `dotnet ef database update` command now supports creating and applying a migration in a single step using the new `--add` option. This uses Roslyn to compile the migration at runtime, enabling scenarios like .NET Aspire and containerized applications where recompilation isn't possible:
+
+```dotnetcli
+dotnet ef database update InitialCreate --add
+```
+
+This command scaffolds a new migration named `InitialCreate`, compiles it using Roslyn, and immediately applies it to the database. The migration files are still saved to disk for source control and future recompilation. The same options available for `dotnet ef migrations add` can be used:
+
+```dotnetcli
+dotnet ef database update AddProducts --add --output-dir Migrations/Products --namespace MyApp.Migrations
+```
+
+In PowerShell, use the `-Add` parameter:
+
+```powershell
+Update-Database -Migration InitialCreate -Add
+```
