@@ -61,6 +61,14 @@
         href: core/what-is-new/index.md
       - name: Release planning process
         href: core/what-is-new/release-planning.md
+      - name: EF Core 11.0
+        items:
+          - name: "What's new?"
+            href: core/what-is-new/ef-core-11.0/whatsnew.md
+          - name: Breaking changes
+            href: core/what-is-new/ef-core-11.0/breaking-changes.md
+          - name: Provider-facing changes
+            href: core/what-is-new/ef-core-11.0/provider-facing-changes.md
       - name: EF Core 10.0
         items:
           - name: "What's new?"
