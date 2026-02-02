@@ -96,3 +96,34 @@ protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 For more information, see [Cosmos DB saving documentation](xref:core/providers/cosmos/saving#bulk-execution).
 
 This feature was contributed by [@JoasE](https://github.com/JoasE) - many thanks!
+
+<a name="cosmos-session-tokens"></a>
+
+### Session token management
+
+Azure Cosmos DB uses session tokens to track read-your-writes consistency within a session. When running in an environment with multiple instances (e.g., with round-robin load balancing), you may need to manually manage session tokens to ensure consistency across requests.
+
+EF Core now provides APIs to retrieve and set session tokens on a `DbContext`. To enable manual session token management, configure the <xref:Microsoft.EntityFrameworkCore.Cosmos.Infrastructure.SessionTokenManagementMode>:
+
+```csharp
+protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    => optionsBuilder.UseCosmos(
+        "<connection string>",
+        databaseName: "OrdersDB",
+        options => options.SessionTokenManagementMode(SessionTokenManagementMode.SemiAutomatic));
+```
+
+You can then retrieve and use session tokens:
+
+```csharp
+// After performing operations, retrieve the session token
+var sessionToken = context.Database.GetSessionToken();
+
+// Later, in a different context instance, apply the session token before reading
+context.Database.UseSessionToken(sessionToken);
+var result = await context.Documents.FindAsync(id);
+```
+
+For more information, see [Cosmos DB saving documentation](xref:core/providers/cosmos/saving#session-token-management).
+
+This feature was contributed by [@JoasE](https://github.com/JoasE) - many thanks!
