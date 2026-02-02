@@ -76,3 +76,23 @@ protected override void OnModelCreating(ModelBuilder modelBuilder)
 This enhancement removes a significant limitation when modeling complex domain hierarchies, allowing you to combine the flexibility of TPT/TPC inheritance with the power of complex types and JSON columns.
 
 For more information on inheritance mapping strategies, see [Inheritance](xref:core/modeling/inheritance).
+
+## Cosmos DB
+
+<a name="cosmos-bulk-execution"></a>
+
+### Bulk execution
+
+Azure Cosmos DB supports _bulk execution_, which allows multiple document operations to be executed in parallel, significantly improving throughput when saving many entities at once. EF Core now supports enabling bulk execution:
+
+```csharp
+protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    => optionsBuilder.UseCosmos(
+        "<connection string>",
+        databaseName: "OrdersDB",
+        options => options.BulkExecutionEnabled());
+```
+
+For more information, see [Cosmos DB saving documentation](xref:core/providers/cosmos/saving#bulk-execution).
+
+This feature was contributed by [@JoasE](https://github.com/JoasE) - many thanks!
