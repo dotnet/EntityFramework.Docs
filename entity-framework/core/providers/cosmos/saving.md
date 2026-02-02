@@ -20,7 +20,7 @@ Note that unlike with relational databases, Azure Cosmos DB doesn't provide tran
 
 By default, EF Core executes document operations sequentially when calling `SaveChangesAsync`. When saving a large number of entities, this can be slow as each operation waits for the previous one to complete before starting.
 
-Azure Cosmos DB supports _bulk execution_, which allows multiple document operations to be executed in parallel, significantly improving throughput when saving many entities at once. This is especially useful for data loading scenarios, batch operations, or any situation where you need to save many entities.
+Azure Cosmos DB supports _bulk execution_, which allows multiple document operations to be executed in parallel and across DbContext instances, significantly improving throughput when saving many entities at once. This is especially useful for data loading scenarios, batch operations, or any situation where you need to save many entities.
 
 To enable bulk execution, configure your context using the <xref:Microsoft.EntityFrameworkCore.Infrastructure.CosmosDbContextOptionsBuilder.BulkExecutionEnabled*> option:
 
@@ -72,7 +72,7 @@ Mode               | Description
 `FullyAutomatic`   | The default mode. Uses the underlying Cosmos DB SDK automatic session token management. `GetSessionTokens` and `UseSessionTokens` methods will throw when invoked.
 `SemiAutomatic`    | Allows overwriting the SDK's automatic session token management via `UseSessionTokens`. If `UseSessionTokens` has not been called for a container, the SDK's automatic management is used. EF tracks session tokens which can be retrieved via `GetSessionTokens`.
 `Manual`           | Fully replaces SDK automatic session token management. Only session tokens specified via `UseSessionTokens` or tracked by EF operations are used.
-`EnforcedManual`   | Same as `Manual`, but throws an exception if `UseSessionTokens` was not called before executing a read operation.
+`EnforcedManual`   | Same as `Manual`, but throws an exception if `UseSessionTokens` wasn't called for the container before executing an operation on it.
 
 ### Retrieving session tokens
 

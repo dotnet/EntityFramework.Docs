@@ -83,7 +83,7 @@ For more information on inheritance mapping strategies, see [Inheritance](xref:c
 
 ### Bulk execution
 
-Azure Cosmos DB supports _bulk execution_, which allows multiple document operations to be executed in parallel, significantly improving throughput when saving many entities at once. EF Core now supports enabling bulk execution:
+Azure Cosmos DB supports _bulk execution_, which allows multiple document operations to be executed in parallel and across DbContext instances, significantly improving throughput when saving many entities at once. EF Core now supports enabling bulk execution:
 
 ```csharp
 protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
