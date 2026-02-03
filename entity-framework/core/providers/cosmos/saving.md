@@ -11,16 +11,42 @@ uid: core/providers/cosmos/saving
 
 Saving data with the Azure Cosmos DB provider works in a similar fashion to other providers. You add, modify or remove entities, and then call <xref:Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync*> to persist those changes to the database. For more information on the basics of saving, see [Saving data](xref:core/saving/index).
 
-Note that unlike with relational databases, Azure Cosmos DB doesn't provide transaction guarantees by default across multiple documents.
+## Transactionality and transactional batches
+
+> [!NOTE]
+> Transactional batches support is being introduced in EF Core 11, which is currently in preview.
+
+Azure Cosmos DB provides limited support for atomic transactions; this is a common limitation of document databases, where the focus is on scalability and availability rather than strict transactional semantics. Azure Cosmos DB does support [transactional batches](/azure/cosmos-db/nosql/transactional-batch), which allow operations to be executed together as a batch within a single partition (see additional limitations below). Atomicity is guaranteed within a single batch: if any operation fails, the entire batch is rolled back and none of its changes are applied. However, once a batch is written, it cannot be rolled back or deferred, and atomicity cannot be enforced across multiple batches. Transactional batches also provide a performance benefit, as multiple documents can be updated in a single roundtrip, rather than performing a roundtrip for each update.
+
+Starting with EF 11, the EF Core Azure Cosmos DB provider leverages transactional batches by default whenever possible, providing a best-effort approximation of atomicity (and optimal performance) when saving changes. The batching behavior can be controlled by the <xref:Microsoft.EntityFrameworkCore.Storage.IDatabase.AutoTransactionBehavior> property, allowing developers to trade off between performance, consistency guarantees, and failure behavior depending on the application’s needs.
+
+* **Auto** (default) – Operations are grouped into transactional batches by the container and partition they affect, and with a maximum of 100 changes per batch; these batches are then executed sequentially. If a batch fails, execution stops immediately and no subsequent changes are saved. Any batches that were successfully saved before the failure remain saved. This generally provides good performance for performing multiple operations within the same partition with a best-effort approximation of atomicity.
+* **Never** – All operations are performed individually and sequentially, in the exact order they were tracked. This avoids batching and can be slower, especially for large numbers of changes. This was the behavior prior to version 11.
+* **Always** – Requires that all operations can be executed as a single transaction batch; if any operation cannot be included in a batch (e.g. because they affect different partitions), an exception is thrown. This allows you to guarantee full atomicity (and a single roundtrip) when executing `SaveChangesAsync`, but it is then up to you to manually ensure that all operations can be performed in a transactional batch.
+
+Here is an example of using <xref:Microsoft.EntityFrameworkCore.Storage.IDatabase.AutoTransactionBehavior.Always>, which causes `SaveChangesAsync` to fail because too many operations are attempted:
+
+```csharp
+using var context = new BlogsContext();
+context.Database.AutoTransactionBehavior = AutoTransactionBehavior.Always;
+context.AddRange(Enumerable.Range(0, 101).Select(i => new Post())); // 101 entries exceeds the batch item limit of 100.
+await context.SaveChangesAsync(); // Throws InvalidOperationException since the changes cannot be saved in a single batch.
+```
+
+### Limitations
+
+* Transactional batches can only be performed within a single partition.
+* Transactional batches can contain only up to 100 operations, and cannot surpass 2MB of data in total.
+* Azure Cosmos DB does not allow document writes with [pre- or post-triggers](/azure/cosmos-db/nosql/stored-procedures-triggers-udfs#triggers) to be part of a transactional batch. Because of this, any entities configured with triggers are executed separately and before any transactional batches. This can affect ordering and consistency in mixed scenarios.
 
 ## Bulk execution
 
 > [!NOTE]
 > Bulk execution is being introduced in EF Core 11, which is currently in preview.
 
-By default, EF Core executes document operations sequentially when calling `SaveChangesAsync`. When saving a large number of entities, this can be slow as each operation waits for the previous one to complete before starting.
+Prior to version 11, the Azure Cosmos DB provider executed document operations sequentially when calling `SaveChangesAsync`; when saving a large number of entities, this was slow as each operation waits for the previous one to complete before starting. Version 11 enables [transactional batches](#transactionality-and-transactional-batches), which allow operations to be batched together for better performance. However, transactional batches can only be used against a single partition, and have various limitations (see the documentation above.
 
-Azure Cosmos DB supports _bulk execution_, which allows multiple document operations to be executed in parallel and across DbContext instances, significantly improving throughput when saving many entities at once. This is especially useful for data loading scenarios, batch operations, or any situation where you need to save many entities.
+An alternative approach is to use Azure Cosmos DB supports _bulk execution_, which allows multiple document operations to be executed in parallel and across DbContext instances, significantly improving throughput when saving many entities at once. This is especially useful for data loading scenarios, batch operations, or any situation where you need to save many entities.
 
 To enable bulk execution, configure your context using the <xref:Microsoft.EntityFrameworkCore.Infrastructure.CosmosDbContextOptionsBuilder.BulkExecutionEnabled*> option:
 

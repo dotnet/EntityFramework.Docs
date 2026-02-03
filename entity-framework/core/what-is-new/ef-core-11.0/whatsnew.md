@@ -79,6 +79,22 @@ For more information on inheritance mapping strategies, see [Inheritance](xref:c
 
 ## Cosmos DB
 
+<a name="cosmos-transactional-batches"></a>
+
+### Transactional batches
+
+Azure Cosmos DB supports [transactional batches](/azure/cosmos-db/nosql/transactional-batch), which allow multiple operations to be executed atomically and in a single roundtrip against a single partition. Starting with EF Core 11, the provider leverages transactional batches by default, providing best-effort atomicity and improved performance when saving changes.
+
+The batching behavior can be controlled via the <xref:Microsoft.EntityFrameworkCore.Storage.IDatabase.AutoTransactionBehavior> property:
+
+* **Auto** (default): Operations are grouped into transactional batches by container and partition. Batches are executed sequentially; if a batch fails, subsequent batches are not executed.
+* **Never**: All operations are performed individually and sequentially (the pre-11 behavior).
+* **Always**: Requires all operations to fit in a single transactional batch; throws if they cannot.
+
+For more information, [see the documentation](xref:core/providers/cosmos/saving#transactionality-and-transactional-batches).
+
+This feature was contributed by [@JoasE](https://github.com/JoasE) - many thanks!
+
 <a name="cosmos-bulk-execution"></a>
 
 ### Bulk execution
@@ -93,7 +109,7 @@ protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         options => options.BulkExecutionEnabled());
 ```
 
-For more information, see [Cosmos DB saving documentation](xref:core/providers/cosmos/saving#bulk-execution).
+For more information, [see the documentation](xref:core/providers/cosmos/saving#bulk-execution).
 
 This feature was contributed by [@JoasE](https://github.com/JoasE) - many thanks!
 
@@ -124,7 +140,7 @@ context.Database.UseSessionToken(sessionToken);
 var result = await context.Documents.FindAsync(id);
 ```
 
-For more information, see [Cosmos DB saving documentation](xref:core/providers/cosmos/saving#session-token-management).
+For more information, [see the documentation](xref:core/providers/cosmos/saving#session-token-management).
 
 This feature was contributed by [@JoasE](https://github.com/JoasE) - many thanks!
 
