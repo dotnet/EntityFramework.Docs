@@ -21,7 +21,7 @@ EF11 requires the .NET 11 SDK to build and requires the .NET 11 runtime to run. 
 
 ### Complex types and JSON columns on entity types with TPT/TPC inheritance
 
-EF Core has supported [complex types](xref:core/modeling/value-properties#complex-types) (previously called owned types) and JSON columns for several versions, allowing you to model and persist nested, structured data within your entities. However, until now these features could not be used on entities with TPT (table-per-type) or TPC (table-per-concrete-type) inheritance.
+EF Core has supported complex types and JSON columns for several versions, allowing you to model and persist nested, structured data within your entities. However, until now these features could not be used on entities with TPT (table-per-type) or TPC (table-per-concrete-type) inheritance.
 
 Starting with EF 11, you can now use complex types and JSON columns on entity types with TPT and TPC inheritance mappings. For example, consider the following entity types with a TPT inheritance strategy:
 
@@ -83,9 +83,9 @@ For more information on inheritance mapping strategies, see [Inheritance](xref:c
 
 ### Transactional batches
 
-Azure Cosmos DB supports [transactional batches](/azure/cosmos-db/nosql/transactional-batch), which allow multiple operations to be executed atomically and in a single roundtrip against a single partition. Starting with EF Core 11, the provider leverages transactional batches by default, providing best-effort atomicity and improved performance when saving changes.
+Azure Cosmos DB supports [transactional batches](/azure/cosmos-db/transactional-batch), which allow multiple operations to be executed atomically and in a single roundtrip against a single partition. Starting with EF Core 11, the provider leverages transactional batches by default, providing best-effort atomicity and improved performance when saving changes.
 
-The batching behavior can be controlled via the <xref:Microsoft.EntityFrameworkCore.Storage.IDatabase.AutoTransactionBehavior> property:
+The batching behavior can be controlled via the <xref:Microsoft.EntityFrameworkCore.AutoTransactionBehavior> property:
 
 * **Auto** (default): Operations are grouped into transactional batches by container and partition. Batches are executed sequentially; if a batch fails, subsequent batches are not executed.
 * **Never**: All operations are performed individually and sequentially (the pre-11 behavior).
@@ -119,7 +119,7 @@ This feature was contributed by [@JoasE](https://github.com/JoasE) - many thanks
 
 Azure Cosmos DB uses session tokens to track read-your-writes consistency within a session. When running in an environment with multiple instances (e.g., with round-robin load balancing), you may need to manually manage session tokens to ensure consistency across requests.
 
-EF Core now provides APIs to retrieve and set session tokens on a `DbContext`. To enable manual session token management, configure the <xref:Microsoft.EntityFrameworkCore.Cosmos.Infrastructure.SessionTokenManagementMode>:
+EF Core now provides APIs to retrieve and set session tokens on a `DbContext`. To enable manual session token management, configure the `SessionTokenManagementMode()`:
 
 ```csharp
 protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

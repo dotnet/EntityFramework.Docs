@@ -16,15 +16,15 @@ Saving data with the Azure Cosmos DB provider works in a similar fashion to othe
 > [!NOTE]
 > Transactional batches support is being introduced in EF Core 11, which is currently in preview.
 
-Azure Cosmos DB provides limited support for atomic transactions; this is a common limitation of document databases, where the focus is on scalability and availability rather than strict transactional semantics. Azure Cosmos DB does support [transactional batches](/azure/cosmos-db/nosql/transactional-batch), which allow operations to be executed together as a batch within a single partition (see additional limitations below). Atomicity is guaranteed within a single batch: if any operation fails, the entire batch is rolled back and none of its changes are applied. However, once a batch is written, it cannot be rolled back or deferred, and atomicity cannot be enforced across multiple batches. Transactional batches also provide a performance benefit, as multiple documents can be updated in a single roundtrip, rather than performing a roundtrip for each update.
+Azure Cosmos DB provides limited support for atomic transactions; this is a common limitation of document databases, where the focus is on scalability and availability rather than strict transactional semantics. Azure Cosmos DB does support [transactional batches](/azure/cosmos-db/transactional-batch), which allow operations to be executed together as a batch within a single partition (see additional limitations below). Atomicity is guaranteed within a single batch: if any operation fails, the entire batch is rolled back and none of its changes are applied. However, once a batch is written, it cannot be rolled back or deferred, and atomicity cannot be enforced across multiple batches. Transactional batches also provide a performance benefit, as multiple documents can be updated in a single roundtrip, rather than performing a roundtrip for each update.
 
-Starting with EF 11, the EF Core Azure Cosmos DB provider leverages transactional batches by default whenever possible, providing a best-effort approximation of atomicity (and optimal performance) when saving changes. The batching behavior can be controlled by the <xref:Microsoft.EntityFrameworkCore.Storage.IDatabase.AutoTransactionBehavior> property, allowing developers to trade off between performance, consistency guarantees, and failure behavior depending on the application’s needs.
+Starting with EF 11, the EF Core Azure Cosmos DB provider leverages transactional batches by default whenever possible, providing a best-effort approximation of atomicity (and optimal performance) when saving changes. The batching behavior can be controlled by the <xref:Microsoft.EntityFrameworkCore.AutoTransactionBehavior> property, allowing developers to trade off between performance, consistency guarantees, and failure behavior depending on the application’s needs.
 
 * **Auto** (default) – Operations are grouped into transactional batches by the container and partition they affect, and with a maximum of 100 changes per batch; these batches are then executed sequentially. If a batch fails, execution stops immediately and no subsequent changes are saved. Any batches that were successfully saved before the failure remain saved. This generally provides good performance for performing multiple operations within the same partition with a best-effort approximation of atomicity.
 * **Never** – All operations are performed individually and sequentially, in the exact order they were tracked. This avoids batching and can be slower, especially for large numbers of changes. This was the behavior prior to version 11.
 * **Always** – Requires that all operations can be executed as a single transaction batch; if any operation cannot be included in a batch (e.g. because they affect different partitions), an exception is thrown. This allows you to guarantee full atomicity (and a single roundtrip) when executing `SaveChangesAsync`, but it is then up to you to manually ensure that all operations can be performed in a transactional batch.
 
-Here is an example of using <xref:Microsoft.EntityFrameworkCore.Storage.IDatabase.AutoTransactionBehavior.Always>, which causes `SaveChangesAsync` to fail because too many operations are attempted:
+Here is an example of using <xref:Microsoft.EntityFrameworkCore.AutoTransactionBehavior.Always>, which causes `SaveChangesAsync` to fail because too many operations are attempted:
 
 ```csharp
 using var context = new BlogsContext();
@@ -37,7 +37,7 @@ await context.SaveChangesAsync(); // Throws InvalidOperationException since the 
 
 * Transactional batches can only be performed within a single partition.
 * Transactional batches can contain only up to 100 operations, and cannot surpass 2MB of data in total.
-* Azure Cosmos DB does not allow document writes with [pre- or post-triggers](/azure/cosmos-db/nosql/stored-procedures-triggers-udfs#triggers) to be part of a transactional batch. Because of this, any entities configured with triggers are executed separately and before any transactional batches. This can affect ordering and consistency in mixed scenarios.
+* Azure Cosmos DB does not allow document writes with [pre- or post-triggers](/azure/cosmos-db/stored-procedures-triggers-udfs#triggers) to be part of a transactional batch. Because of this, any entities configured with triggers are executed separately and before any transactional batches. This can affect ordering and consistency in mixed scenarios.
 
 ## Bulk execution
 
@@ -48,7 +48,7 @@ Prior to version 11, the Azure Cosmos DB provider executed document operations s
 
 An alternative approach is to use Azure Cosmos DB supports _bulk execution_, which allows multiple document operations to be executed in parallel and across DbContext instances, significantly improving throughput when saving many entities at once. This is especially useful for data loading scenarios, batch operations, or any situation where you need to save many entities.
 
-To enable bulk execution, configure your context using the <xref:Microsoft.EntityFrameworkCore.Infrastructure.CosmosDbContextOptionsBuilder.BulkExecutionEnabled*> option:
+To enable bulk execution, configure your context using the `BulkExecutionEnabled()` option:
 
 ```csharp
 protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -81,7 +81,7 @@ By default, the Azure Cosmos DB .NET SDK manages session tokens automatically wi
 
 ### Configuring session token management mode
 
-To enable manual session token management, configure the <xref:Microsoft.EntityFrameworkCore.Cosmos.Infrastructure.SessionTokenManagementMode> when setting up your context:
+To enable manual session token management, configure `SessionTokenManagementMode()` when setting up your context:
 
 ```csharp
 protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
