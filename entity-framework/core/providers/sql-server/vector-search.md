@@ -150,3 +150,63 @@ var searchResults = await context.Blogs
 ```
 
 This allows you to filter on the similarity score, present it users, etc.
+
+## Hybrid search
+
+*Hybrid search* combines vector similarity search with traditional [full-text search](xref:core/providers/sql-server/full-text-search) to deliver more relevant results. Vector search excels at finding semantically similar content, while full-text search is better at exact keyword matching. By combining both approaches and using Reciprocal Rank Fusion (RRF) to merge the results, you can build more intelligent search experiences.
+
+The following example shows how to implement hybrid search using EF Core, combining `FreeTextTable()` and `VectorSearch()` in a single query:
+
+```csharp
+const int k = 10;
+
+var results = await context.Articles
+    // Perform full-text search
+    .FreeTextTable<Article, int>(textualQuery, topN: 10)
+    // Perform vector (semantic) search, joining the results of both searches together
+    .LeftJoin(
+        context.Articles.VectorSearch(b => b.Embedding, queryEmbedding, "cosine", topN: 10),
+        fts => fts.Key,
+        vs => vs.Value.Id,
+        (fts, vs) => new
+        {
+            Article = vs.Value,
+            FullTextRank = fts.Rank,
+            VectorDistance = (double?)vs.Distance
+        })
+    // Apply Reciprocal Rank Fusion (RRF) to combine the results
+    .Select(x => new
+    {
+        x.Article,
+        RrfScore = (1.0 / (k + x.FullTextRank)) + (1.0 / (k + x.VectorDistance) ?? 0.0)
+    })
+    .OrderByDescending(x => x.RrfScore)
+    .Take(k)
+    .Select(x => x.Article)
+    .ToListAsync();
+```
+
+This query:
+
+1. Performs a full-text search on `Article`
+2. Performs a vector search on `Article` and combines the results to the full-text search results via a LEFT JOIN
+3. Calculates the RRF score by combining both the full text and the semantic ranking
+4. Orders by RRF score, takes the desired number of results and projects out the original `Article` entities.
+
+> [!NOTE]
+> Rather than using a LEFT JOIN, a FULL OUTER JOIN would be more suitable for this scenario; this would allow highly-ranking results from either search side to be included in the final result, even if that result does not appear at all on the other side. With the above LEFT JOIN approach, if a result has a very high vector similarity score, it never gets included in the final result if that result doesn't also have a high full-text score. However, EF doesn't currently support FULL OUTER JOIN; upvote [#37633](https://github.com/dotnet/efcore/issues/37633) if this is something you'd like to see supported.
+
+The query produces the following SQL:
+
+```sql
+SELECT TOP(@p3) [a0].[Id], [a0].[Content], [a0].[Embedding], [a0].[Title]
+FROM FREETEXTTABLE([Articles], *, @p, @p1) AS [f]
+LEFT JOIN VECTOR_SEARCH(
+    TABLE = [Articles] AS [a0],
+    COLUMN = [Embedding],
+    SIMILAR_TO = @p2,
+    METRIC = 'cosine',
+    TOP_N = @p3
+) AS [v] ON [f].[KEY] = [a0].[Id]
+ORDER BY 1.0E0 / CAST(10 + [f].[RANK] AS float) + ISNULL(1.0E0 / (10.0E0 + [v].[Distance]), 0.0E0) DESC
+```
