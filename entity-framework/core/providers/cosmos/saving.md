@@ -22,7 +22,7 @@ Starting with EF 11, the EF Core Azure Cosmos DB provider leverages transactiona
 
 * **Auto** (default) – EF automatically groups operations into transactional batches, which are executed sequentially. If a batch fails, execution stops immediately and no subsequent changes are saved, while any previously successful batches remain committed. This generally provides good performance when performing multiple operations that can be grouped by partition key value, with a best-effort approximation of atomicity.
 * **Never** – All operations are performed individually and sequentially, in the exact order they were tracked. This avoids batching and can be slower, especially for large numbers of changes. This was the behavior prior to version 11.
-* **Always** – Requires that all operations can be executed as a single transaction batch; if any operation cannot be included in a batch (see [Limitations](#Limitations)), an exception is thrown. This allows you to guarantee full atomicity (and a single roundtrip) when executing `SaveChangesAsync`, but it is then up to you to manually ensure that all operations can be performed in a transactional batch.
+* **Always** – Requires that all operations can be executed as a single transaction batch; if any operation cannot be included in a batch (see [Limitations](#limitations)), an exception is thrown. This allows you to guarantee full atomicity (and a single roundtrip) when executing `SaveChangesAsync`, but it is then up to you to manually ensure that all operations can be performed in a transactional batch.
 
 Here is an example of using <xref:Microsoft.EntityFrameworkCore.AutoTransactionBehavior.Always>, which causes `SaveChangesAsync` to fail because too many operations are attempted:
 
