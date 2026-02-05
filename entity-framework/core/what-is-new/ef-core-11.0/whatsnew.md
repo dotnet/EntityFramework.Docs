@@ -171,6 +171,35 @@ For more information, [see the documentation](xref:core/providers/cosmos/saving#
 
 This feature was contributed by [@JoasE](https://github.com/JoasE) - many thanks!
 
+## SQL Server
+
+<a name="sql-server-json-contains"></a>
+
+### Translate Contains over primitive collections using JSON_CONTAINS
+
+SQL Server 2025 introduced the [`JSON_CONTAINS`](/sql/t-sql/functions/json-contains-transact-sql) function, which checks whether a value exists in a JSON document. Starting with EF Core 11, LINQ `Contains` queries over primitive (or scalar) collections stored as JSON are translated to use this function, replacing the previous, less efficient `OPENJSON`-based translation.
+
+For example, the following query checks whether a blog's `Tags` collection contains a specific tag:
+
+```csharp
+var blogs = await context.Blogs
+    .Where(b => b.Tags.Contains("ef-core"))
+    .ToListAsync();
+```
+
+This generates the following SQL:
+
+```sql
+SELECT [b].[Id], [b].[Name], [b].[Tags]
+FROM [Blogs] AS [b]
+WHERE JSON_CONTAINS([b].[Tags], 'ef-core') = 1
+```
+
+`JSON_CONTAINS()` can notably make use of a [JSON index](/sql/t-sql/statements/create-json-index-transact-sql), if one is defined.
+
+> [!NOTE]
+> `JSON_CONTAINS` does not support searching for null values. As a result, this translation is only applied when EF can determine that at least one side is non-nullable — either the item being searched for (e.g. a non-null constant or a non-nullable column), or the collection's elements. When this cannot be determined, EF falls back to the previous `OPENJSON`-based translation.
+
 ## Migrations
 
 <a name="migrations-add-and-apply"></a>
