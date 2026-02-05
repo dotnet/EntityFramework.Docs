@@ -132,7 +132,7 @@ You can also append session tokens to the existing ones. This is useful when you
 // Append a session token for the default container
 context.Database.AppendSessionToken(sessionToken);
 
-// Append session tokens for all containers
+// Append session tokens for the specified containers
 context.Database.AppendSessionTokens(sessionTokens);
 ```
 
