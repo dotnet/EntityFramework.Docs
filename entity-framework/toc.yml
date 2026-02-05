@@ -450,6 +450,8 @@
           href: core/providers/cosmos/modeling.md
         - name: Querying
           href: core/providers/cosmos/querying.md
+        - name: Saving data
+          href: core/providers/cosmos/saving.md
         - name: Work with unstructured data
           href: core/providers/cosmos/unstructured-data.md
         - name: Vector search
