@@ -247,5 +247,6 @@ nullable.GetValueOrDefault(defaultValue) | COALESCE(@nullable, @defaultValue)
 ## See also
 
 * [Vector Search Function Mappings](xref:core/providers/sql-server/vector-search)
+* [Full-Text Search Function Mappings](xref:core/providers/sql-server/full-text-search)
 * [Spatial Function Mappings](xref:core/providers/sql-server/spatial#spatial-function-mappings)
 * [HierarchyId Function Mappings](xref:core/providers/sql-server/hierarchyid#function-mappings)
