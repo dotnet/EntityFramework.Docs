@@ -167,3 +167,66 @@ In PowerShell, use the `-Add` parameter:
 ```powershell
 Update-Database -Migration InitialCreate -Add
 ```
+
+## SQL Server
+
+<a name="sqlserver-vector-search"></a>
+
+### VECTOR_SEARCH() and vector indexes
+
+> [!WARNING]
+> `VECTOR_SEARCH()` and vector indexes are currently experimental features in SQL Server and are subject to change. The APIs in EF Core for these features are also subject to change.
+
+In EF Core 10, we introduced translation for `EF.Functions.VectorDistance()`, which is a scalar function that computes the distance between two vectors. This function can be used in LINQ queries for vector similarity search, allowing you to find the most similar embeddings to a given embedding. However, `VectorDistance()` computes an _exact_ distance between the given vectors.
+
+When querying large datasets, SQL Server 2025 also supports performing _approximate_ search over a [vector index](/sql/t-sql/statements/create-vector-index-transact-sql), which provides much better performance at the expense of returning items that are approximately similar - rather than exactly similar - to the query. EF 11 now supports creating vector indexes through migrations:
+
+```csharp
+protected override void OnModelCreating(ModelBuilder modelBuilder)
+{
+    modelBuilder.Entity<Blog>()
+        .HasVectorIndex(b => b.Embedding, "cosine");
+}
+```
+
+Once you have a vector index, you can use the `VectorSearch()` extension method on your `DbSet` to perform an approximate search:
+
+```csharp
+var blogs = await context.Blogs
+    .VectorSearch(b => b.Embedding, "cosine", embedding, topN: 5)
+    .ToListAsync();
+```
+
+This translates to the SQL Server [`VECTOR_SEARCH()`](/sql/t-sql/functions/vector-search-transact-sql) table-valued function, which performs an approximate search over the vector index. The `topN` parameter specifies the number of results to return.
+
+`VectorSearch()` returns `VectorSearchResult<TEntity>`, allowing you to access the distance alongside the entity.
+
+For more information, see the [full documentation on vector search](xref:core/providers/sql-server/vector-search).
+
+<a name="sqlserver-full-text-tvf"></a>
+
+### Full-text search table-valued functions
+
+EF Core has long provided support for SQL Server's full-text search predicates `FREETEXT()` and `CONTAINS()`, via `EF.Functions.FreeText()` and `EF.Functions.Contains()`. These predicates can be used in LINQ `Where()` clauses to filter results based on search criteria.
+
+However, SQL Server also has table-valued function versions of these functions, [`FREETEXTTABLE()`](/sql/relational-databases/system-functions/freetexttable-transact-sql) and [`CONTAINSTABLE()`](/sql/relational-databases/system-functions/containstable-transact-sql), which also return a ranking score along with the results, providing additional flexibility over the predicate versions. EF 11 now supports these table-valued functions:
+
+```csharp
+// Using FreeTextTable with a search query
+var results = await context.Blogs
+    .FreeTextTable(b => b.FullName, "John")
+    .Select(r => new { Blog = r.Value, Rank = r.Rank })
+    .OrderByDescending(r => r.Rank)
+    .ToListAsync();
+
+// Using ContainsTable with a search query
+var results = await context.Blogs
+    .ContainsTable(b => b.FullName, "John")
+    .Select(r => new { Blog = r.Value, Rank = r.Rank })
+    .OrderByDescending(r => r.Rank)
+    .ToListAsync();
+```
+
+Both methods return `FullTextSearchResult<TEntity>`, giving you access to both the entity and the ranking value from SQL Server's full-text engine. This allows for more sophisticated result ordering and filtering based on relevance scores.
+
+For more information, see the [full documentation on full-text search](xref:core/providers/sql-server/full-text-search).
