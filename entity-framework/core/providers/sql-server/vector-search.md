@@ -10,7 +10,7 @@ uid: core/providers/sql-server/vector-search
 > [!NOTE]
 > Vector support was introduced in EF Core 10.0, and is only supported with SQL Server 2025 and above.
 
-The SQL Server vector data type allows storing *embeddings*, which are representation of meaning that can be efficiently searched over for similarity, powering AI workloads such as semantic search and retrieval-augmented generation (RAG).
+The SQL Server vector data type allows storing *embeddings*, which are representations of meaning that can be efficiently searched over for similarity, powering AI workloads such as semantic search and retrieval-augmented generation (RAG).
 
 ## Setting up vector properties
 
@@ -48,7 +48,7 @@ protected override void OnModelCreating(ModelBuilder modelBuilder)
 
 ***
 
-Once your property is added and the corresponding column created in the database, you can start inserting embeddings. Embedding generation is done outside of the database, usually via a service, and the details for doing this are out of scope for this documentation. However, [the .NET Microsoft.Extensions.AI libraries](/dotnet/ai/microsoft-extensions-ai) contains [`IEmbeddingGenerator`](/dotnet/ai/microsoft-extensions-ai#create-embeddings), which is an abstraction over embedding generators that has implementations for the major providers.
+Once your property is added and the corresponding column created in the database, you can start inserting embeddings. Embedding generation is done outside of the database, usually via a service, and the details for doing this are out of scope for this documentation. However, [the .NET Microsoft.Extensions.AI library](/dotnet/ai/microsoft-extensions-ai) contains [`IEmbeddingGenerator`](/dotnet/ai/microsoft-extensions-ai#create-embeddings), which is an abstraction over embedding generators that has implementations for the major providers.
 
 Once you've chosen your embedding generator and set it up, use it to generate embeddings and insert them as follows:
 
@@ -72,7 +72,7 @@ The [`EF.Functions.VectorDistance()`](/sql/t-sql/functions/vector-distance-trans
 
 ```c#
 var sqlVector = new SqlVector<float>(await embeddingGenerator.GenerateVectorAsync("Some user query to be vectorized"));
-var topSimilarBlogs = context.Blogs
+var topSimilarBlogs = await context.Blogs
     .OrderBy(b => EF.Functions.VectorDistance("cosine", b.Embedding, sqlVector))
     .Take(3)
     .ToListAsync();
@@ -128,6 +128,11 @@ Once you have a vector index, use the `VectorSearch()` extension method on your 
 var blogs = await context.Blogs
     .VectorSearch(b => b.Embedding, "cosine", embedding, topN: 5)
     .ToListAsync();
+
+foreach (var (article, score) in blogs)
+{
+    Console.WriteLine($"Article {article.Id} with score {score}");
+}
 ```
 
 This translates to the following SQL:
@@ -144,12 +149,12 @@ The `topN` parameter specifies the maximum number of results to return.
 ```csharp
 var searchResults = await context.Blogs
     .VectorSearch(b => b.Embedding, "cosine", embedding, topN: 5)
-    .Where(r => r.Distance > 0.005)
+    .Where(r => r.Distance < 0.05)
     .Select(r => new { Blog = r.Value, Distance = r.Distance })
     .ToListAsync();
 ```
 
-This allows you to filter on the similarity score, present it users, etc.
+This allows you to filter on the similarity score, present it to users, etc.
 
 ## Hybrid search
 
@@ -158,14 +163,15 @@ This allows you to filter on the similarity score, present it users, etc.
 The following example shows how to implement hybrid search using EF Core, combining `FreeTextTable()` and `VectorSearch()` in a single query:
 
 ```csharp
-const int k = 10;
+string textualQuery = ...;
+SqlVector<float> queryEmbedding = ...;
 
 var results = await context.Articles
     // Perform full-text search
-    .FreeTextTable<Article, int>(textualQuery, topN: 10)
+    .FreeTextTable<Article, int>(textualQuery, topN: 20)
     // Perform vector (semantic) search, joining the results of both searches together
     .LeftJoin(
-        context.Articles.VectorSearch(b => b.Embedding, queryEmbedding, "cosine", topN: 10),
+        context.Articles.VectorSearch(b => b.Embedding, queryEmbedding, "cosine", topN: 20),
         fts => fts.Key,
         vs => vs.Value.Id,
         (fts, vs) => new
@@ -181,7 +187,7 @@ var results = await context.Articles
         RrfScore = (1.0 / (k + x.FullTextRank)) + (1.0 / (k + x.VectorDistance) ?? 0.0)
     })
     .OrderByDescending(x => x.RrfScore)
-    .Take(k)
+    .Take(10)
     .Select(x => x.Article)
     .ToListAsync();
 ```

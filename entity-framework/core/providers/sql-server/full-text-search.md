@@ -101,6 +101,11 @@ var results = await context.Articles
         (a, ftt) => new { Article = a, ftt.Rank })
     .OrderByDescending(r => r.Rank)
     .ToListAsync();
+
+foreach (var result in results)
+{
+    Console.WriteLine($"Article {result.Article.Id} with rank {result.Rank}");
+}
 ```
 
 Note that you must provide the generic type parameters; `Article` corresponds to the entity type being searched, where `int` is the full-text search key specified when creating the index, and which is returned by `FREETEXTTABLE()`.
