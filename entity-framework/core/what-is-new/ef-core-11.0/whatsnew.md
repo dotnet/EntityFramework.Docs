@@ -98,7 +98,7 @@ SELECT TOP(1) [b].[Id], [b].[Name]
 FROM [Blogs] AS [b]
 ORDER BY (
     SELECT COUNT(*)
-    FROM [Post] AS [p]
+    FROM [Posts] AS [p]
     WHERE [b].[Id] = [p].[BlogId]) DESC
 ```
 
