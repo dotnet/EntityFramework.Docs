@@ -77,6 +77,33 @@ This enhancement removes a significant limitation when modeling complex domain h
 
 For more information on inheritance mapping strategies, see [Inheritance](xref:core/modeling/inheritance).
 
+## LINQ and SQL translation
+
+<a name="linq-maxby-minby"></a>
+
+### MaxBy and MinBy
+
+EF Core now supports translating the LINQ `MaxByAsync` and `MinByAsync` methods (and their sync counterparts). These methods allow you to find the element with the maximum or minimum value for a given key selector, rather than just the maximum or minimum value itself.
+
+For example, to find the blog with the most posts:
+
+```csharp
+var blogWithMostPosts = await context.Blogs.MaxByAsync(b => b.Posts.Count());
+```
+
+This translates to the following SQL:
+
+```sql
+SELECT TOP(1) [b].[Id], [b].[Name]
+FROM [Blogs] AS [b]
+ORDER BY (
+    SELECT COUNT(*)
+    FROM [Posts] AS [p]
+    WHERE [b].[Id] = [p].[BlogId]) DESC
+```
+
+Similarly, `MinByAsync` orders ascending and returns the element with the minimum value for the key selector.
+
 ## Cosmos DB
 
 <a name="cosmos-transactional-batches"></a>
