@@ -11,6 +11,7 @@ The Azure Cosmos DB database provider targets the Azure Cosmos DB NoSQL store, w
 
 Common EF Core patterns that either do not apply, or are a pit-of-failure, when using a document database include:
 
+- Azure Cosmos DB does not provide relational-style transactions or full ACID guarantees across any number of operations and tables. However, the EF Core Azure Cosmos DB provider does use [Transactional batches](/azure/cosmos-db/transactional-batch) when possible; see [Saving data](xref:core/providers/cosmos/saving) for further details.
 - Schema migration is not supported, since there is no defined schema for the documents. However, there could be other mechanisms for dealing with evolving data shapes that do make sense with Azure Cosmos DB NoSQL, For example, [Schema versioning pattern with Azure Cosmos DB](https://github.com/dotnet/efcore/issues/23753), and [Azure Cosmos DB data migration](https://github.com/dotnet/efcore/issues/11099).
 - Reverse-engineering (scaffolding) a model from an existing database is not supported. Again, this is not supported because there is no defined database schema to scaffold from. However, see [Use shape of documents in the Azure Cosmos DB database to scaffold a schema](https://github.com/dotnet/efcore/issues/30290).
 - Schema concepts defined on the EF model, like indexes and constraints, are ignored when using a document database, since there is no schema. Note that Azure Cosmos DB NoSQL performs [automatic indexing of documents](/azure/cosmos-db/index-overview).
