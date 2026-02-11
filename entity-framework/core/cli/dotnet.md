@@ -130,10 +130,11 @@ Deletes the database.
 
 Options:
 
-| Option                   | Short             | Description                                              |
-|:-------------------------|:------------------|:---------------------------------------------------------|
-| <nobr>`--force`</nobr>   | <nobr>`-f`</nobr> | Don't confirm.                                           |
-| <nobr>`--dry-run`</nobr> |                   | Show which database would be dropped, but don't drop it. |
+| Option                                    | Short             | Description                                                                                                                     |
+|:------------------------------------------|:------------------|:--------------------------------------------------------------------------------------------------------------------------------|
+| <nobr>`--force`</nobr>                    | <nobr>`-f`</nobr> | Don't confirm.                                                                                                                  |
+| <nobr>`--dry-run`</nobr>                  |                   | Show which database would be dropped, but don't drop it.                                                                        |
+| <nobr>`--connection <CONNECTION>`</nobr>  |                   | The connection string to the database. Defaults to the one specified in `AddDbContext` or `OnConfiguring`. Added in EF Core 11. |
 
 The [common options](#common-options) are listed above.
 
@@ -341,11 +342,16 @@ Removes the last migration, rolling back the code changes that were done for the
 
 Options:
 
-| Option                 | Short             | Description                                                                     |
-|:-----------------------|:------------------|:--------------------------------------------------------------------------------|
-| <nobr>`--force`</nobr> | <nobr>`-f`</nobr> | Revert the latest migration, rolling back both code and database changes that were done for the latest migration. Continues to roll back only the code changes if an error occurs while connecting to the database. |
+| Option                                   | Short             | Description                                                                                          |
+|:-----------------------------------------|:------------------|:-----------------------------------------------------------------------------------------------------|
+| <nobr>`--force`</nobr>                   | <nobr>`-f`</nobr> | Revert the latest migration, rolling back both code and database changes that were done for the latest migration. Continues to roll back only the code changes if an error occurs while connecting to the database. |
+| <nobr>`--connection <CONNECTION>`</nobr> |                   | The connection string to the database. Defaults to the one specified in `AddDbContext` or `OnConfiguring`. Added in EF Core 11. |
+| <nobr>`--offline`</nobr>                 |                   | Remove the migration without connecting to the database. Added in EF Core 11.                        |
 
 The [common options](#common-options) are listed above.
+
+> [!NOTE]
+> The `--offline` and `--force` options cannot be used together, since `--force` requires a database connection to check if the migration has been applied before reverting it.
 
 ## `dotnet ef migrations script`
 

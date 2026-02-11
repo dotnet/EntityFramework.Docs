@@ -195,6 +195,36 @@ In PowerShell, use the `-Add` parameter:
 Update-Database -Migration InitialCreate -Add
 ```
 
+<a name="migrations-remove-connection-offline"></a>
+
+### Connection and offline options for migrations remove
+
+The `dotnet ef migrations remove` and `database drop` commands now accept `--connection` parameters, allowing you to specify the database connection string directly without needing to configure a default connection in your `DbContext`. Additionally, `migrations remove` supports the new `--offline` option to remove a migration without connecting to the database:
+
+```console
+# Remove migration with specific connection
+dotnet ef migrations remove --connection "Server=prod;Database=MyDb;..."
+
+# Remove migration without connecting to database (offline mode)
+dotnet ef migrations remove --offline
+
+# Revert and remove applied migration
+dotnet ef migrations remove --force
+
+# Drop specific database by connection string
+dotnet ef database drop --connection "Server=test;Database=MyDb;..." --force
+```
+
+The `--offline` option skips the database connection check entirely, which is useful when the database is inaccessible or when you're certain the migration hasn't been applied. Note that `--offline` and `--force` cannot be used together, since `--force` requires a database connection to check if the migration has been applied before reverting it.
+
+In PowerShell, use the `-Connection` and `-Offline` parameters:
+
+```powershell
+Remove-Migration -Connection "Server=prod;Database=MyDb;..."
+Remove-Migration -Offline
+Drop-Database -Connection "Server=test;Database=MyDb;..." -Force
+```
+
 ## SQL Server
 
 <a name="sqlserver-vector-search"></a>
