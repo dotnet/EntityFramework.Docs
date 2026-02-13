@@ -16,6 +16,7 @@ The .NET Data Community Standups are live-streamed monthly (roughly) on Wednesda
 
 | Date         | Area                  | Title                                                                                    |
 |--------------|-----------------------|------------------------------------------------------------------------------------------|
+| Feb 12, 2026 | AI                    | [Adam tells us about Microsoft.Extensions.DataIngestion](#Feb12_2026)                    |
 | Nov 20, 2025 | Release               | [EF 10 release celebration 🎉](#Nov20_2025)                                              |
 | Oct 16, 2025 | Migrations            | [Jeremy Miller shares his view on migrations and Marten](#Oct16_2025)                    |
 | Sep 18, 2025 | ORMs                  | [Jiri and Nick talk about experience with Dapper and EF Core](#Sep18_2025)               |
@@ -107,6 +108,25 @@ The .NET Data Community Standups are live-streamed monthly (roughly) on Wednesda
 | Jun 24, 2020 | Blazor                | [EF Core in Blazor](#blazor)                                                             |
 | Jun 10, 2020 | EF Core Power Tools   | [EF Core Power Tools](#power-tools1)                                                     |
 | May 6, 2020  | Welcome!              | [Introducing the EF Core Community Standup](#one)                                        |
+
+## 2026
+
+<a name="Feb12_2026"></a>
+
+### Feb 12: [Adam tells us about Microsoft.Extensions.DataIngestion](https://www.youtube.com/live/pQivzi4n6jM?si=Ms9H0O3Mgw147hhj)
+
+Microsoft.Extensions.DataIngestion is new addition into Microsoft.Extensions collection and this one touches databases and AI. Exciting. Adam Sitnik, who worked on implementation, tells us what's what and maybe some behind the scenes.
+
+Featuring:
+
+- [Adam Sitnik](https://github.com/adamsitnik) (Special guest)
+- [Jiri Cincura](https://www.tabsoverspaces.com/) (Host)
+
+Links:
+
+- [Introducing Data Ingestion Building Blocks (Preview)](https://devblogs.microsoft.com/dotnet/introducing-data-ingestion-building-blocks-preview/)
+- [dotnet/extensions GitHub](https://github.com/dotnet/extensions)
+- Template: `Microsoft.Extensions.AI.Templates`
 
 ## 2025
 
