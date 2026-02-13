@@ -260,9 +260,34 @@ This translates to the SQL Server [`VECTOR_SEARCH()`](/sql/t-sql/functions/vecto
 
 For more information, see the [full documentation on vector search](xref:core/providers/sql-server/vector-search).
 
-<a name="sqlserver-full-text-tvf"></a>
+<a name="sqlserver-full-text"></a>
 
-### Full-text search table-valued functions
+### Full-text search improvements
+
+#### Full-text search catalog and index creation
+
+SQL Server's [full-text search](/sql/relational-databases/search/full-text-search) requires a full-text catalog and index to be set up on your database before you can use it. EF 11 now allows configuring full-text catalogs and indexes in your model, so that [EF migrations](xref:core/managing-schemas/migrations/index) can automatically create and manage them for you:
+
+```csharp
+// In your OnModelCreating:
+modelBuilder.HasFullTextCatalog("ftCatalog");
+
+modelBuilder.Entity<Blog>()
+    .HasFullTextIndex(b => b.FullName)
+    .HasKeyIndex("PK_Blogs")
+    .OnCatalog("ftCatalog");
+```
+
+This generates the following SQL in a migration:
+
+```sql
+CREATE FULLTEXT CATALOG [ftCatalog];
+CREATE FULLTEXT INDEX ON [Blogs]([FullName]) KEY INDEX [PK_Blogs] ON [ftCatalog];
+```
+
+Previously, full-text catalog and index creation had to be managed manually by adding SQL to migrations. For full details on setting up full-text catalogs and indexes, see the [full-text search documentation](xref:core/providers/sql-server/full-text-search#setting-up-full-text-search).
+
+#### Full-text search table-valued functions
 
 EF Core has long provided support for SQL Server's full-text search predicates `FREETEXT()` and `CONTAINS()`, via `EF.Functions.FreeText()` and `EF.Functions.Contains()`. These predicates can be used in LINQ `Where()` clauses to filter results based on search criteria.
 
