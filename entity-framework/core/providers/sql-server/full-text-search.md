@@ -13,12 +13,82 @@ EF Core's SQL Server provider supports both full-text search *predicates* (for f
 
 ## Setting up full-text search
 
-Before using full-text search, you must:
+Before using full-text search, you must create a [full-text catalog](/sql/t-sql/statements/create-fulltext-catalog-transact-sql) on your database, and a [full-text index](/sql/t-sql/statements/create-fulltext-index-transact-sql) on the columns you want to search.
 
-1. **Create a full-text catalog** on your database
-2. **Create a full-text index** on the columns you want to search
+### [EF Core 11+](#tab/ef-core-11)
 
-This setup is done at the SQL Server level and is outside the scope of EF Core. For more information, see the [SQL Server full-text search documentation](/sql/relational-databases/search/get-started-with-full-text-search).
+> [!NOTE]
+> Full-text catalog and index management in migrations was introduced in EF Core 11.
+
+You can configure full-text catalogs and indexes directly in your EF model. When you add a [migration](xref:core/managing-schemas/migrations/index), EF will generate the appropriate SQL to create (or alter) the catalog and index for you.
+
+First, define a full-text catalog on the model, then configure a full-text index on your entity type:
+
+```csharp
+protected override void OnModelCreating(ModelBuilder modelBuilder)
+{
+    modelBuilder.HasFullTextCatalog("ftCatalog");
+
+    modelBuilder.Entity<Article>()
+        .HasFullTextIndex(a => a.Contents)
+        .HasKeyIndex("PK_Articles")
+        .OnCatalog("ftCatalog");
+}
+```
+
+The `HasKeyIndex()` method specifies the unique, non-nullable, single-column index used as the full-text key for the table (typically the primary key index). `OnCatalog()` assigns the full-text index to a specific catalog.
+
+You can also configure multiple columns and additional options such as per-column languages and change tracking:
+
+```csharp
+modelBuilder.Entity<Article>()
+    .HasFullTextIndex(a => new { a.Title, a.Contents })
+    .HasKeyIndex("PK_Articles")
+    .OnCatalog("ftCatalog")
+    .WithChangeTracking(FullTextChangeTracking.Manual)
+    .HasLanguage("Title", "English")
+    .HasLanguage("Contents", "French");
+```
+
+The full-text catalog can also be configured as the default catalog, and with accent sensitivity:
+
+```csharp
+modelBuilder.HasFullTextCatalog("ftCatalog")
+    .IsDefault()
+    .IsAccentSensitive(false);
+```
+
+### [Older versions](#tab/older-versions)
+
+On older versions of EF Core, you can set up full-text search by adding raw SQL to a migration. Add an empty migration and then edit it to include the full-text catalog and index creation SQL:
+
+```csharp
+protected override void Up(MigrationBuilder migrationBuilder)
+{
+    migrationBuilder.Sql(
+        sql: "CREATE FULLTEXT CATALOG ftCatalog AS DEFAULT;",
+        suppressTransaction: true);
+
+    migrationBuilder.Sql(
+        sql: "CREATE FULLTEXT INDEX ON Articles(Contents) KEY INDEX PK_Articles;",
+        suppressTransaction: true);
+}
+
+protected override void Down(MigrationBuilder migrationBuilder)
+{
+    migrationBuilder.Sql(
+        sql: "DROP FULLTEXT INDEX ON Articles;",
+        suppressTransaction: true);
+
+    migrationBuilder.Sql(
+        sql: "DROP FULLTEXT CATALOG ftCatalog;",
+        suppressTransaction: true);
+}
+```
+
+---
+
+For more information, see the [SQL Server full-text search documentation](/sql/relational-databases/search/get-started-with-full-text-search).
 
 ## Full-text predicates
 
