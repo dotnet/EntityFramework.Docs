@@ -2,56 +2,34 @@
 title: Migrations in Team Environments - EF Core
 description: Best practices for managing migrations and resolving conflicts in team environments with Entity Framework Core
 author: SamMonoRT
-ms.date: 10/30/2017
+ms.date: 02/18/2026
 uid: core/managing-schemas/migrations/teams
 ---
 # Migrations in Team Environments
 
-When working with Migrations in team environments, pay extra attention to the model snapshot file. This file can tell you if your teammate's migration merges cleanly with yours or if you need to resolve a conflict by re-creating your
-migration before sharing it.
+When working with Migrations in team environments, problems can arise when when migrations are added by multiple developers around the same time; recall that migrations aren't simply SQL scripts, but also include a snapshot of the model at the time of that migration. Possible issues include:
 
-## Merging
+1. Developer A renames some table to X, while developer B renames the same table to Y.
+2. Developer A and B both create work branches at the same time, and generate a migration in their branches. If developer A merges their branch and then developer B does the same, the latest migration (developer B's) will have a context snapshot that does not include the changes from developer A's migration.
 
-When you merge migrations from your teammates, you may get conflicts in your model snapshot file. If both changes are unrelated, the merge is trivial and the two migrations can coexist. For example, you may get a merge conflict in the customer entity type configuration that looks like this:
+As a result, it is highly recommended to coordinate in advance and to avoid working concurrently on migrations in multiple branches.
 
-```output
-<<<<<<< Mine
-b.Property<bool>("Deactivated");
-=======
-b.Property<int>("LoyaltyPoints");
->>>>>>> Theirs
-```
+## Detecting diverged migration trees
 
-Since both of these properties need to exist in the final model, complete the merge by adding both properties. In many
-cases, your version control system may automatically merge such changes for you.
+> [!NOTE]
+> This feature is being introduced in EF Core 11, which is currently in preview.
 
-```csharp
-b.Property<bool>("Deactivated");
-b.Property<int>("LoyaltyPoints");
-```
+Starting with EF 11, the model snapshot records the ID of the latest migration. This means that if two developers each create a migration on separate branches, merging those branches will produce a source control conflict in the model snapshot file — since both branches modify the latest migration ID. This conflict is an important signal: it tells you that the migration trees have diverged, and one of them must be discarded before proceeding.
 
-In these cases, your migration and your teammate's migration are independent of each other. Since either of them could be applied first, you don't need to make any additional changes to your migration before sharing it with your team.
+To resolve this, follow the steps in [Resolving diverged migration trees](#resolving-diverged-migration-trees) below: abort the merge, remove your migration (keeping your model changes), merge your teammate's changes, and then re-add your migration.
 
-## Resolving conflicts
+## Resolving diverged migration trees
 
-Sometimes you encounter a true conflict when merging the model snapshot model. For example, you and your teammate may each have renamed the same property.
-
-```output
-<<<<<<< Mine
-b.Property<string>("Username");
-=======
-b.Property<string>("Alias");
->>>>>>> Theirs
-```
-
-If you encounter this kind of conflict, resolve it by re-creating your migration. Follow these steps:
+If, when merging a branch, a diverged migration tree is detected, resolve it by re-creating your migration. Follow these steps:
 
 1. Abort the merge and rollback to your working directory before the merge
 2. Remove your migration (but keep your model changes)
 3. Merge your teammate's changes into your working directory
 4. Re-add your migration
 
-After doing this, the two migrations can be applied in the correct order. Their migration is applied first, renaming
-the column to *Alias*, thereafter your migration renames it to *Username*.
-
-Your migration can safely be shared with the rest of the team.
+After doing this, your later migration is cleanly based on top of any migrations that have been added in the meantime, and its context snapshot contains all previous changes. Your migration can safely be shared with the rest of the team.
