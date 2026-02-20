@@ -391,3 +391,7 @@ WHERE JSON_CONTAINS([b].[JsonData], 8, N'$.Rating') = 1
 `EF.Functions.JsonContains()` accepts the JSON value to search in, the value to search for, and optionally a JSON path and a search mode. It can be used with scalar string properties, complex types, and owned entity types mapped to JSON columns.
 
 For the full `JSON_CONTAINS` SQL Server documentation, see [`JSON_CONTAINS`](/sql/t-sql/functions/json-contains-transact-sql).
+
+## Other improvements
+
+* The EF command-line tool now writes all logging and status messages to standard error, reserving standard output only for the command's actual expected output. For example, when generating a migration SQL script with `dotnet ef migrations script`, only the SQL is written to standard output.
