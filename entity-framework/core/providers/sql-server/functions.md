@@ -236,7 +236,8 @@ stringValue.TrimStart()                                                 | LTRIM(
 
 .NET                                                              | SQL                                                       | Added in
 ----------------------------------------------------------------- | --------------------------------------------------------- | --------
-EF.Functions.JsonContains(json, searchValue, path?, searchMode?)  | JSON_CONTAINS(@json, @searchValue, @path?, @searchMode?)  | EF Core 11.0
+EF.Functions.JsonContains(json, searchValue, path?, searchMode?)  | JSON_CONTAINS(@json, @searchValue, @path?, @searchMode?)  | EF 11.0
+EF.Functions.JsonPathExists(json, path)                           | JSON_PATH_EXISTS(@json, @path)                            | EF 11.0
 
 ## Miscellaneous functions
 
