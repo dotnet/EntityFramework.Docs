@@ -7,17 +7,17 @@ uid: core/managing-schemas/migrations/teams
 ---
 # Migrations in Team Environments
 
-When working with Migrations in team environments, problems can arise when when migrations are added by multiple developers around the same time; recall that migrations aren't simply SQL scripts, but also include a snapshot of the model at the time of that migration. Possible issues include:
+When working with Migrations in team environments, problems can arise when migrations are added by multiple developers around the same time; note that migrations aren't simply SQL scripts but also include a snapshot of the model at the time of that migration. Possible issues include:
 
 1. Developer A renames some table to X, while developer B renames the same table to Y.
 2. Developer A and B both create work branches at the same time, and generate a migration in their branches. If developer A merges their branch and then developer B does the same, the latest migration (developer B's) will have a context snapshot that does not include the changes from developer A's migration.
 
-As a result, it is highly recommended to coordinate in advance and to avoid working concurrently on migrations in multiple branches.
+As a result, it is highly recommended to coordinate in advance and to avoid working concurrently on migrations in multiple branches when possible.
 
 ## Detecting diverged migration trees
 
 > [!NOTE]
-> This feature is being introduced in EF Core 11, which is currently in preview.
+> This feature is being introduced in EF Core 11 from preview-3 onwards.
 
 Starting with EF 11, the model snapshot records the ID of the latest migration. This means that if two developers each create a migration on separate branches, merging those branches will produce a source control conflict in the model snapshot file — since both branches modify the latest migration ID. This conflict is an important signal: it tells you that the migration trees have diverged, and one of them must be discarded before proceeding.
 
@@ -32,4 +32,4 @@ If, when merging a branch, a diverged migration tree is detected, resolve it by 
 3. Merge your teammate's changes into your working directory
 4. Re-add your migration
 
-After doing this, your later migration is cleanly based on top of any migrations that have been added in the meantime, and its context snapshot contains all previous changes. Your migration can safely be shared with the rest of the team.
+After doing this, your migration is cleanly based on top of any migrations that have been added in the other branch, and its context snapshot contains all previous changes. Your migration can now be safely shared with the rest of the team.
