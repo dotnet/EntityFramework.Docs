@@ -211,6 +211,16 @@ This feature was contributed by [@JoasE](https://github.com/JoasE) - many thanks
 
 ## Migrations
 
+<a name="migrations-snapshot-latest-id"></a>
+
+### Latest migration ID recorded in model snapshot
+
+When working in team environments, it's common for multiple developers to create migrations on separate branches. When these branches are merged, the migration trees can diverge, leading to issues that are sometimes difficult to detect.
+
+Starting with EF Core 11, the model snapshot now records the ID of the latest migration. When two developers create migrations on divergent branches, both branches will modify this value in the model snapshot, causing a source control merge conflict. This conflict alerts the team that they need to resolve the divergence - typically by discarding one of the migration trees and creating a new, unified migration.
+
+For more information on managing migrations in team environments, see [Migrations in Team Environments](xref:core/managing-schemas/migrations/teams).
+
 <a name="migrations-add-and-apply"></a>
 
 ### Create and apply migrations in one step
