@@ -325,7 +325,7 @@ For more information, see the [full documentation on full-text search](xref:core
 
 <a name="sql-server-json-contains"></a>
 
-### Translate Contains over primitive collections using JSON_CONTAINS
+### Contains operations using JSON_CONTAINS
 
 SQL Server 2025 introduced the [`JSON_CONTAINS`](/sql/t-sql/functions/json-contains-transact-sql) function, which checks whether a value exists in a JSON document. Starting with EF Core 11, when targeting SQL Server 2025, LINQ `Contains` queries over primitive (or scalar) collections stored as JSON are translated to use this function, replacing the previous, less efficient `OPENJSON`-based translation.
 
@@ -368,3 +368,27 @@ WHERE JSON_CONTAINS([b].[Tags], 'ef-core') = 1
 
 > [!NOTE]
 > `JSON_CONTAINS` does not support searching for null values. As a result, this translation is only applied when EF can determine that at least one side is non-nullable — either the item being searched for (e.g. a non-null constant or a non-nullable column), or the collection's elements. When this cannot be determined, EF falls back to the previous `OPENJSON`-based translation.
+
+#### EF.Functions.JsonContains()
+
+In the section above, EF Core automatically translates LINQ `Contains` queries over primitive collections to use the SQL Server `JSON_CONTAINS` function. In some cases, however, you may want to directly invoke `JSON_CONTAINS` yourself, for example to search for a value at a specific path, or to specify a search mode. For these cases, EF Core 11 introduces `EF.Functions.JsonContains()`.
+
+The following query checks whether a blog's JSON data contains a specific value at a given path:
+
+```csharp
+var blogs = await context.Blogs
+    .Where(b => EF.Functions.JsonContains(b.JsonData, 8, "$.Rating") == 1)
+    .ToListAsync();
+```
+
+This generates the following SQL:
+
+```sql
+SELECT [b].[Id], [b].[Name], [b].[JsonData]
+FROM [Blogs] AS [b]
+WHERE JSON_CONTAINS([b].[JsonData], 8, N'$.Rating') = 1
+```
+
+`EF.Functions.JsonContains()` accepts the JSON value to search in, the value to search for, and optionally a JSON path and a search mode. It can be used with scalar string properties, complex types, and owned entity types mapped to JSON columns.
+
+For the full `JSON_CONTAINS` SQL Server documentation, see [`JSON_CONTAINS`](/sql/t-sql/functions/json-contains-transact-sql).
