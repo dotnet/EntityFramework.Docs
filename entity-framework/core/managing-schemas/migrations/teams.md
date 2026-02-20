@@ -7,10 +7,9 @@ uid: core/managing-schemas/migrations/teams
 ---
 # Migrations in Team Environments
 
-When working with Migrations in team environments, problems can arise when migrations are added by multiple developers around the same time; note that migrations aren't simply SQL scripts but also include a snapshot of the model at the time of that migration. Possible issues include:
+When working with Migrations in team environments, various problems can arise when migrations are added by multiple developers around the same time; note that migrations aren't simply SQL scripts but also include a snapshot of the model at the time of that migration.
 
-1. Developer A renames some table to X, while developer B renames the same table to Y.
-2. Developer A and B both create work branches at the same time, and generate a migration in their branches. If developer A merges their branch and then developer B does the same, the latest migration (developer B's) will have a context snapshot that does not include the changes from developer A's migration.
+For example, imagine developer A and B both create work branches at the same time, and generate a migration in their branches. If developer A merges their branch and then developer B does the same, the latest migration (developer B's) will have a context snapshot that does not include the changes from developer A's migration. This can cause various forms of corruption in later migrations.
 
 As a result, it is highly recommended to coordinate in advance and to avoid working concurrently on migrations in multiple branches when possible.
 
