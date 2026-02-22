@@ -10,7 +10,7 @@ Given an EF issue by the user, this custom agent generates documentation for fea
 
 ## Target branch
 
-* The EF repo has automation to automatically add a label indicating in which preview/rc has been completed; the label is applied to the issue (not PR), and has the form `preview-3` or `rc-2` with the number adjusted.
+* The EF repo has automation to automatically add a label indicating in which preview/rc the feature has been completed; the label is applied to the issue (not PR), and has the form `preview-3` or `rc-2` with the number adjusted.
 * The docs repo should have a corresponding branch, containing documentation to be published live when that preview/rc is published.
 * When the workflow is launched, check the issue, find the preview/rc label, and submit the PR against the corresponding branch in the doc repo (dotnet/EntityFramework.Docs).
 * If the label is missing, abort and post a comment to the triggering issue.
