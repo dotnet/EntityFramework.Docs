@@ -18,7 +18,7 @@ Reverse engineering is the process of scaffolding entity type classes and a [DbC
 
 ## Prerequisites
 
-- Before scaffolding, you'll need to install either the [PMC tools](xref:core/cli/powershell), which work on Visual Studio only, or the [.NET CLI tools](xref:core/cli/dotnet), which across all platforms supported by .NET.
+- Before scaffolding, you'll need to install either the [PMC tools](xref:core/cli/powershell), which work on Visual Studio only, or the [.NET CLI tools](xref:core/cli/dotnet), which work across all platforms supported by .NET.
 - Install the NuGet package for `Microsoft.EntityFrameworkCore.Design` in the project you are scaffolding to.
 - Install the NuGet package for the [database provider](xref:core/providers/index) that targets the database schema you want to scaffold from.
 
