@@ -2,7 +2,7 @@
 title: Interceptors - EF Core
 description: Interception for database operations and other events
 author: SamMonoRT
-ms.date: 11/15/2021
+ms.date: 02/26/2026
 uid: core/logging-events-diagnostics/interceptors
 ms.custom: sfi-ropc-nochange
 ---
@@ -14,6 +14,20 @@ Entity Framework Core (EF Core) interceptors enable interception, modification, 
 Interceptors are different from logging and diagnostics in that they allow modification or suppression of the operation being intercepted. [Simple logging](xref:core/logging-events-diagnostics/simple-logging) or [Microsoft.Extensions.Logging](xref:core/logging-events-diagnostics/extensions-logging) are better choices for logging.
 
 Interceptors are registered per DbContext instance when the context is configured. Use a [diagnostic listener](xref:core/logging-events-diagnostics/diagnostic-listeners) to get the same information but for all DbContext instances in the process.
+
+## Available interceptors
+
+The following table shows the available interceptor interfaces:
+
+| Interceptor                                                                     | Operations intercepted                                                                                                                                                     | [Singleton](#singleton-interceptors) |
+|:--------------------------------------------------------------------------------|:---------------------------------------------------------------------------------------------------------------------------------------------------------------------------|:--------------------------------------:|
+| <xref:Microsoft.EntityFrameworkCore.Diagnostics.IDbCommandInterceptor>          | Creating commands</br>Executing commands</br>Command failures</br>Disposing the command's DbDataReader                                                                     | No                                     |
+| <xref:Microsoft.EntityFrameworkCore.Diagnostics.IDbConnectionInterceptor>       | Opening and closing connections</br>Creating connections</br>Connection failures                                                                                            | No                                     |
+| <xref:Microsoft.EntityFrameworkCore.Diagnostics.IDbTransactionInterceptor>      | Creating transactions</br>Using existing transactions</br>Committing transactions</br>Rolling back transactions</br>Creating and using savepoints</br>Transaction failures | No                                     |
+| <xref:Microsoft.EntityFrameworkCore.Diagnostics.ISaveChangesInterceptor>        | SavingChanges/SavedChanges</br>SaveChangesFailed</br>Optimistic concurrency handling                                                                                       | No                                     |
+| <xref:Microsoft.EntityFrameworkCore.Diagnostics.IMaterializationInterceptor>    | Creating, initializing, and finalizing entity instances from query results                                                                                                  | Yes                                    |
+| <xref:Microsoft.EntityFrameworkCore.Diagnostics.IQueryExpressionInterceptor>    | Modifying the LINQ expression tree before a query is compiled                                                                                                               | Yes                                    |
+| <xref:Microsoft.EntityFrameworkCore.Diagnostics.IIdentityResolutionInterceptor> | Resolving identity conflicts when tracking entities                                                                                                                         | Yes                                    |
 
 ## Registering interceptors
 
@@ -49,6 +63,48 @@ public class TaggedQueryCommandInterceptorContext : BlogsContext
 
 Every interceptor instance must implement one or more interface derived from <xref:Microsoft.EntityFrameworkCore.Diagnostics.IInterceptor>. Each instance should only be registered once even if it implements multiple interception interfaces; EF Core will route events for each interface as appropriate.
 
+### Singleton interceptors
+
+Some interceptors implement <xref:Microsoft.EntityFrameworkCore.Diagnostics.ISingletonInterceptor> (see table above); these interceptors are registered as singleton services in EF Core's internal service provider, meaning a single instance is shared across all `DbContext` instances that use the same service provider.
+
+Because singleton interceptors become part of EF Core's internal service configuration, each distinct interceptor instance causes a new internal service provider to be built. Passing a **new instance** of a singleton interceptor each time a `DbContext` is configured--for example, in `AddDbContext`--will eventually trigger a `ManyServiceProvidersCreatedWarning` and degrade performance.
+
+> [!WARNING]
+> Always reuse the same singleton interceptor instance for all `DbContext` instances. Do not create a new instance each time the context is configured.
+
+For example, the following is **incorrect** because a new interceptor instance is created for each context configuration:
+
+```csharp
+// Don't do this! A new instance each time causes a new internal service provider to be built.
+services.AddDbContext<CustomerContext>(
+    b => b.UseSqlServer(connectionString)
+          .AddInterceptors(new MyMaterializationInterceptor()));
+```
+
+Instead, reuse the same instance:
+
+```csharp
+// Correct: reuse a single interceptor instance
+var interceptor = new MyMaterializationInterceptor();
+services.AddDbContext<CustomerContext>(
+    b => b.UseSqlServer(connectionString)
+          .AddInterceptors(interceptor));
+```
+
+Or use a static field:
+
+```csharp
+public class CustomerContext : DbContext
+{
+    private static readonly MyMaterializationInterceptor _interceptor = new();
+
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        => optionsBuilder.AddInterceptors(_interceptor);
+}
+```
+
+Because these interceptors are singletons, they must be thread-safe. They should generally not hold mutable state. If you need to access scoped services (such as the current `DbContext`), use the <xref:Microsoft.EntityFrameworkCore.Diagnostics.MaterializationInterceptionData.Context> or similar properties on the event data passed to each interceptor method.
+
 ## Database interception
 
 > [!NOTE]
@@ -59,7 +115,7 @@ Low-level database interception is split into the three interfaces shown in the 
 | Interceptor                                                            | Database operations intercepted
 |:-----------------------------------------------------------------------|-------------------------------------------------
 | <xref:Microsoft.EntityFrameworkCore.Diagnostics.IDbCommandInterceptor> | Creating commands</br>Executing commands</br>Command failures</br>Disposing the command's DbDataReader
-| <xref:Microsoft.EntityFrameworkCore.Diagnostics.IDbConnectionInterceptor> | Opening and closing connections</br>Connection failures
+| <xref:Microsoft.EntityFrameworkCore.Diagnostics.IDbConnectionInterceptor> | Opening and closing connections</br>Creating connections</br>Connection failures
 | <xref:Microsoft.EntityFrameworkCore.Diagnostics.IDbTransactionInterceptor> | Creating transactions</br>Using existing transactions</br>Committing transactions</br>Rolling back transactions</br>Creating and using savepoints</br>Transaction failures
 
 The base classes <xref:Microsoft.EntityFrameworkCore.Diagnostics.DbCommandInterceptor>, <xref:Microsoft.EntityFrameworkCore.Diagnostics.DbConnectionInterceptor>, and <xref:Microsoft.EntityFrameworkCore.Diagnostics.DbTransactionInterceptor> contain no-op implementations for each method in the corresponding interface. Use the base classes to avoid the need to implement unused interception methods.
@@ -184,6 +240,91 @@ public class AadAuthenticationInterceptor : DbConnectionInterceptor
 
 > [!WARNING]
 > in some situations the access token may not be cached automatically the Azure Token Provider. Depending on the kind of token requested, you may need to implement your own caching here.
+
+### Example: Lazy initialization of a connection string
+
+Connection strings are often static assets read from a configuration file. These can easily be passed to `UseSqlServer` or similar when configuring a `DbContext`. However, sometimes the connection string can change for each context instance. For example, each tenant in a multi-tenant system may have a different connection string.
+
+An <xref:Microsoft.EntityFrameworkCore.Diagnostics.IDbConnectionInterceptor> can be used to handle dynamic connections and connection strings. This starts with the ability to configure the `DbContext` without any connection string. For example:
+
+```csharp
+services.AddDbContext<CustomerContext>(
+    b => b.UseSqlServer());
+```
+
+One of the `IDbConnectionInterceptor` methods can then be implemented to configure the connection before it is used. `ConnectionOpeningAsync` is a good choice, since it can perform an async operation to obtain the connection string, find an access token, and so on. For example, imagine a service scoped to the current request that understands the current tenant:
+
+```csharp
+services.AddScoped<ITenantConnectionStringFactory, TestTenantConnectionStringFactory>();
+```
+
+> [!WARNING]
+> Performing an asynchronous lookup for a connection string, access token, or similar every time it is needed can be very slow. Consider caching these things and only refreshing the cached string or token periodically. For example, access tokens can often be used for a significant period of time before needing to be refreshed.
+
+This can be injected into each `DbContext` instance using constructor injection:
+
+```csharp
+public class CustomerContext : DbContext
+{
+    private readonly ITenantConnectionStringFactory _connectionStringFactory;
+
+    public CustomerContext(
+        DbContextOptions<CustomerContext> options,
+        ITenantConnectionStringFactory connectionStringFactory)
+        : base(options)
+    {
+        _connectionStringFactory = connectionStringFactory;
+    }
+
+    // ...
+}
+```
+
+This service is then used when constructing the interceptor implementation for the context:
+
+```csharp
+protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    => optionsBuilder.AddInterceptors(
+        new ConnectionStringInitializationInterceptor(_connectionStringFactory));
+```
+
+Finally, the interceptor uses this service to obtain the connection string asynchronously and set it the first time that the connection is used:
+
+```csharp
+public class ConnectionStringInitializationInterceptor : DbConnectionInterceptor
+{
+    private readonly ITenantConnectionStringFactory _connectionStringFactory;
+
+    public ConnectionStringInitializationInterceptor(ITenantConnectionStringFactory connectionStringFactory)
+    {
+        _connectionStringFactory = connectionStringFactory;
+    }
+
+    public override InterceptionResult ConnectionOpening(
+        DbConnection connection,
+        ConnectionEventData eventData,
+        InterceptionResult result)
+        => throw new NotSupportedException("Synchronous connections not supported.");
+
+    public override async ValueTask<InterceptionResult> ConnectionOpeningAsync(
+        DbConnection connection, ConnectionEventData eventData, InterceptionResult result,
+        CancellationToken cancellationToken = new())
+    {
+        if (string.IsNullOrEmpty(connection.ConnectionString))
+        {
+            connection.ConnectionString = (await _connectionStringFactory.GetConnectionStringAsync(cancellationToken));
+        }
+
+        return result;
+    }
+}
+```
+
+> [!NOTE]
+> The connection string is only obtained the first time that a connection is used. After that, the connection string stored on the `DbConnection` will be used without looking up a new connection string.
+
+> [!TIP]
+> This interceptor overrides the non-async `ConnectionOpening` method to throw since the service to get the connection string must be called from an async code path.
 
 ### Example: Advanced command interception for caching
 
@@ -387,6 +528,78 @@ Free beer for unicorns
 ```
 
 Notice from the log output that the application continues to use the cached message until the timeout expires, at which point the database is queried again for any new message.
+
+### Example: Logging SQL Server query statistics
+
+This example shows two interceptors that work together to send SQL Server query statistics to the application log. To generate the statistics, we need an <xref:Microsoft.EntityFrameworkCore.Diagnostics.IDbCommandInterceptor> to do two things.
+
+First, the interceptor will prefix commands with `SET STATISTICS IO ON`, which tells SQL Server to send statistics to the client after a result set has been consumed:
+
+```csharp
+public override ValueTask<InterceptionResult<DbDataReader>> ReaderExecutingAsync(
+    DbCommand command,
+    CommandEventData eventData,
+    InterceptionResult<DbDataReader> result,
+    CancellationToken cancellationToken = default)
+{
+    command.CommandText = "SET STATISTICS IO ON;" + Environment.NewLine + command.CommandText;
+
+    return new(result);
+}
+```
+
+Second, the interceptor will implement the `DataReaderClosingAsync` method, which is called after the <xref:System.Data.Common.DbDataReader> has finished consuming results, but _before_ it has been closed. When SQL Server is sending statistics, it puts them in a second result on the reader, so at this point the interceptor reads that result by calling `NextResultAsync` which populates statistics onto the connection.
+
+```csharp
+public override async ValueTask<InterceptionResult> DataReaderClosingAsync(
+    DbCommand command,
+    DataReaderClosingEventData eventData,
+    InterceptionResult result)
+{
+    await eventData.DataReader.NextResultAsync();
+
+    return result;
+}
+```
+
+The second interceptor is needed to obtain the statistics from the connection and write them out to the application's logger. For this, we'll use an <xref:Microsoft.EntityFrameworkCore.Diagnostics.IDbConnectionInterceptor>, implementing the `ConnectionCreated` method. `ConnectionCreated` is called immediately after EF Core has created a connection, and so can be used to perform additional configuration of that connection. In this case, the interceptor obtains an `ILogger` and then hooks into the <xref:Microsoft.Data.SqlClient.SqlConnection.InfoMessage?displayProperty=nameWithType> event to log the messages.
+
+```csharp
+public override DbConnection ConnectionCreated(ConnectionCreatedEventData eventData, DbConnection result)
+{
+    var logger = eventData.Context!.GetService<ILoggerFactory>().CreateLogger("InfoMessageLogger");
+    ((SqlConnection)eventData.Connection).InfoMessage += (_, args) =>
+    {
+        logger.LogInformation(1, args.Message);
+    };
+    return result;
+}
+```
+
+> [!IMPORTANT]
+> The `ConnectionCreating` and `ConnectionCreated` methods are only called when EF Core creates a `DbConnection`. They will not be called if the application creates the `DbConnection` and passes it to EF Core.
+
+### Filtering by command source
+
+The <xref:Microsoft.EntityFrameworkCore.Diagnostics.CommandEventData> supplied to diagnostics sources and interceptors contains a <xref:Microsoft.EntityFrameworkCore.Diagnostics.CommandSource> property indicating which part of EF was responsible for creating the command. This can be used as a filter in the interceptor. For example, we may want an interceptor that only applies to commands that come from `SaveChanges`:
+
+```csharp
+public class CommandSourceInterceptor : DbCommandInterceptor
+{
+    public override InterceptionResult<DbDataReader> ReaderExecuting(
+        DbCommand command, CommandEventData eventData, InterceptionResult<DbDataReader> result)
+    {
+        if (eventData.CommandSource == CommandSource.SaveChanges)
+        {
+            Console.WriteLine($"Saving changes for {eventData.Context!.GetType().Name}:");
+            Console.WriteLine();
+            Console.WriteLine(command.CommandText);
+        }
+
+        return result;
+    }
+}
+```
 
 ## SaveChanges interception
 
@@ -749,4 +962,391 @@ Audit 8450f57a-5030-4211-a534-eb66b8da7040 from 10/14/2020 9:10:17 PM to 10/14/2
 Audit 201fef4d-66a7-43ad-b9b6-b57e9d3f37b3 from 10/14/2020 9:10:17 PM to 10/14/2020 9:10:17 PM was not successful.
   Inserting Post with Id: '3' BlogId: '' Title: 'EF Core 3.1!'
   Error: SQLite Error 19: 'UNIQUE constraint failed: Post.Id'.
+```
+
+### Example: Optimistic concurrency interception
+
+EF Core supports the [optimistic concurrency pattern](xref:core/saving/concurrency) by checking that the number of rows actually affected by an update or delete is the same as the number of rows expected to be affected. This is often coupled with a concurrency token; that is, a column value that will only match its expected value if the row has not been updated since the expected value was read.
+
+EF signals a violation of optimistic concurrency by throwing a <xref:Microsoft.EntityFrameworkCore.DbUpdateConcurrencyException>. <xref:Microsoft.EntityFrameworkCore.Diagnostics.ISaveChangesInterceptor> has methods `ThrowingConcurrencyException` and `ThrowingConcurrencyExceptionAsync` that are called before the `DbUpdateConcurrencyException` is thrown. These interception points allow the exception to be suppressed, possibly coupled with async database changes to resolve the violation.
+
+For example, if two requests attempt to delete the same entity at almost the same time, then the second delete may fail because the row in the database no longer exists. This may be fine--the end result is that the entity has been deleted anyway. The following interceptor demonstrates how this can be done:
+
+```csharp
+public class SuppressDeleteConcurrencyInterceptor : ISaveChangesInterceptor
+{
+    public InterceptionResult ThrowingConcurrencyException(
+        ConcurrencyExceptionEventData eventData,
+        InterceptionResult result)
+    {
+        if (eventData.Entries.All(e => e.State == EntityState.Deleted))
+        {
+            Console.WriteLine("Suppressing Concurrency violation for command:");
+            Console.WriteLine(((RelationalConcurrencyExceptionEventData)eventData).Command.CommandText);
+
+            return InterceptionResult.Suppress();
+        }
+
+        return result;
+    }
+
+    public ValueTask<InterceptionResult> ThrowingConcurrencyExceptionAsync(
+        ConcurrencyExceptionEventData eventData,
+        InterceptionResult result,
+        CancellationToken cancellationToken = default)
+        => new(ThrowingConcurrencyException(eventData, result));
+}
+```
+
+There are several things worth noting about this interceptor:
+
+* Both the synchronous and asynchronous interception methods are implemented. This is important if the application may call either `SaveChanges` or `SaveChangesAsync`. However, if all application code is async, then only `ThrowingConcurrencyExceptionAsync` needs to be implemented. Likewise, if the application never uses asynchronous database methods, then only `ThrowingConcurrencyException` needs to be implemented. This is generally true for all interceptors with sync and async methods.
+* The interceptor has access to <xref:Microsoft.EntityFrameworkCore.ChangeTracking.EntityEntry> objects for the entities being saved. In this case, this is used to check whether or not the concurrency violation is happening for a delete operation.
+* If the application is using a relational database provider, then the <xref:Microsoft.EntityFrameworkCore.Diagnostics.ConcurrencyExceptionEventData> object can be cast to a <xref:Microsoft.EntityFrameworkCore.Diagnostics.RelationalConcurrencyExceptionEventData> object. This provides additional, relational-specific information about the database operation being performed. In this case, the relational command text is printed to the console.
+* Returning `InterceptionResult.Suppress()` tells EF Core to suppress the action it was about to take--in this case, throwing the `DbUpdateConcurrencyException`. This ability to _change the behavior of EF Core_, rather than just observing what EF Core is doing, is one of the most powerful features of interceptors.
+
+## Materialization interception
+
+<xref:Microsoft.EntityFrameworkCore.Diagnostics.IMaterializationInterceptor> supports interception before and after an entity instance is created, and before and after properties of that instance are initialized. The interceptor can change or replace the entity instance at each point. This allows:
+
+* Setting unmapped properties or calling methods needed for validation, computed values, or flags.
+* Using a factory to create instances.
+* Creating a different entity instance than EF would normally create, such as an instance from a cache, or of a proxy type.
+* Injecting services into an entity instance.
+
+> [!NOTE]
+> `IMaterializationInterceptor` is a singleton interceptor, meaning a single instance is shared between all `DbContext` instances.
+
+### Example: Simple actions on entity creation
+
+Imagine that we want to keep track of the time that an entity was retrieved from the database, perhaps so it can be displayed to a user editing the data. To accomplish this, we first define an interface:
+
+```csharp
+public interface IHasRetrieved
+{
+    DateTime Retrieved { get; set; }
+}
+```
+
+Using an interface is common with interceptors since it allows the same interceptor to work with many different entity types. For example:
+
+```csharp
+public class Customer : IHasRetrieved
+{
+    public int Id { get; set; }
+    public string Name { get; set; } = null!;
+    public string? PhoneNumber { get; set; }
+
+    [NotMapped]
+    public DateTime Retrieved { get; set; }
+}
+```
+
+Notice that the `[NotMapped]` attribute is used to indicate that this property is used only while working with the entity, and should not be persisted to the database.
+
+The interceptor must then implement the appropriate method from `IMaterializationInterceptor` and set the time retrieved:
+
+```csharp
+public class SetRetrievedInterceptor : IMaterializationInterceptor
+{
+    public object InitializedInstance(MaterializationInterceptionData materializationData, object instance)
+    {
+        if (instance is IHasRetrieved hasRetrieved)
+        {
+            hasRetrieved.Retrieved = DateTime.UtcNow;
+        }
+        
+        return instance;
+    }
+}
+```
+
+An instance of this interceptor is registered when configuring the `DbContext`:
+
+```csharp
+public class CustomerContext : DbContext
+{
+    private static readonly SetRetrievedInterceptor _setRetrievedInterceptor = new();
+    
+    public DbSet<Customer> Customers => Set<Customer>();
+
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) 
+        => optionsBuilder
+            .AddInterceptors(_setRetrievedInterceptor)
+            .UseSqlite("Data Source = customers.db");
+}
+```
+
+> [!TIP]
+> This interceptor is stateless, which is common, so a single instance is created and shared between all `DbContext` instances.
+
+Now, whenever a `Customer` is queried from the database, the `Retrieved` property will be set automatically. For example:
+
+```csharp
+await using (var context = new CustomerContext())
+{
+    var customer = await context.Customers.SingleAsync(e => e.Name == "Alice");
+    Console.WriteLine($"Customer '{customer.Name}' was retrieved at '{customer.Retrieved.ToLocalTime()}'");
+}
+```
+
+Produces output:
+
+```output
+Customer 'Alice' was retrieved at '9/22/2022 5:25:54 PM'
+```
+
+### Example: Injecting services into entities
+
+EF Core already has built-in support for injecting some special services into context instances; for example, see [Lazy loading without proxies](xref:core/querying/related-data/lazy#lazy-loading-without-proxies), which works by injecting the `ILazyLoader` service.
+
+An `IMaterializationInterceptor` can be used to generalize this to any service. The following example shows how to inject an <xref:Microsoft.Extensions.Logging.ILogger> into entities such that they can perform their own logging.
+
+> [!NOTE]
+> Injecting services into entities couples those entity types to the injected services, which some people consider to be an anti-pattern.
+
+As before, an interface is used to define what can be done.
+
+```csharp
+public interface IHasLogger
+{
+    ILogger? Logger { get; set; }
+}
+```
+
+And entity types that will log must implement this interface. For example:
+
+```csharp
+public class Customer : IHasLogger
+{
+    private string? _phoneNumber;
+
+    public int Id { get; set; }
+    public string Name { get; set; } = null!;
+
+    public string? PhoneNumber
+    {
+        get => _phoneNumber;
+        set
+        {
+            Logger?.LogInformation(1, $"Updating phone number for '{Name}' from '{_phoneNumber}' to '{value}'.");
+
+            _phoneNumber = value;
+        }
+    }
+
+    [NotMapped]
+    public ILogger? Logger { get; set; }
+}
+```
+
+This time, the interceptor must implement `IMaterializationInterceptor.InitializedInstance`, which is called after every entity instance has been created and its property values have been initialized. The interceptor obtains an `ILogger` from the context and initializes `IHasLogger.Logger` with it:
+
+```csharp
+public class LoggerInjectionInterceptor : IMaterializationInterceptor
+{
+    private ILogger? _logger;
+
+    public object InitializedInstance(MaterializationInterceptionData materializationData, object instance)
+    {
+        if (instance is IHasLogger hasLogger)
+        {
+            _logger ??= materializationData.Context.GetService<ILoggerFactory>().CreateLogger("CustomersLogger");
+            hasLogger.Logger = _logger;
+        }
+
+        return instance;
+    }
+}
+```
+
+This time a new instance of the interceptor is used for each `DbContext` instance, since the `ILogger` obtained can change per `DbContext` instance, and the `ILogger` is cached on the interceptor:
+
+```csharp
+protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    => optionsBuilder.AddInterceptors(new LoggerInjectionInterceptor());
+```
+
+Now, whenever the `Customer.PhoneNumber` is changed, this change will be logged to the application's log. For example:
+
+```output
+info: CustomersLogger[1]
+      Updating phone number for 'Alice' from '+1 515 555 0123' to '+1 515 555 0125'.
+```
+
+## Query expression interception
+
+<xref:Microsoft.EntityFrameworkCore.Diagnostics.IQueryExpressionInterceptor> allows interception of the [LINQ expression tree](xref:core/querying/how-query-works) for a query before it is compiled. This can be used to dynamically modify queries in ways that apply across the application.
+
+> [!NOTE]
+> `IQueryExpressionInterceptor` is a singleton interceptor, meaning a single instance is typically shared between all `DbContext` instances.
+
+> [!WARNING]
+> Interceptors are powerful, but it's easy to get things wrong when working with expression trees. Always consider if there is an easier way of achieving what you want, such as modifying the query directly.
+
+### Example: Inject ordering into queries for stable sorting
+
+Consider a method that returns a page of customers:
+
+```csharp
+Task<List<Customer>> GetPageOfCustomers(string sortProperty, int page)
+{
+    using var context = new CustomerContext();
+
+    return context.Customers
+        .OrderBy(e => EF.Property<object>(e, sortProperty))
+        .Skip(page * 20).Take(20).ToListAsync();
+}
+```
+
+> [!TIP]
+> This query uses the <xref:Microsoft.EntityFrameworkCore.EF.Property*?displayProperty=nameWithType> method to specify the property to sort by. This allows the application to dynamically pass in the property name, allowing sorting by any property of the entity type. Be aware that sorting by non-indexed columns can be slow.
+
+This will work fine as long as the property used for sorting always returns a stable ordering. But this may not always be the case. For example, the LINQ query above generates the following on SQLite when ordering by `Customer.City`:
+
+```sql
+SELECT "c"."Id", "c"."City", "c"."Name", "c"."PhoneNumber"
+FROM "Customers" AS "c"
+ORDER BY "c"."City"
+LIMIT @__p_1 OFFSET @__p_0
+```
+
+If there are multiple customers with the same `City`, then the ordering of this query is not stable. This could lead to missing or duplicate results as the user pages through the data.
+
+A common way to fix this problem is to perform a secondary sorting by primary key. However, rather than manually adding this to every query, an interceptor can add the secondary ordering dynamically. To facilitate this, we define an interface for any entity that has an integer primary key:
+
+```csharp
+public interface IHasIntKey
+{
+    int Id { get; }
+}
+```
+
+This interface is implemented by the entity types of interest:
+
+```csharp
+public class Customer : IHasIntKey
+{
+    public int Id { get; set; }
+    public string Name { get; set; } = null!;
+    public string? City { get; set; }
+    public string? PhoneNumber { get; set; }
+}
+```
+
+We then need an interceptor that implements <xref:Microsoft.EntityFrameworkCore.Diagnostics.IQueryExpressionInterceptor>:
+
+```csharp
+public class KeyOrderingExpressionInterceptor : IQueryExpressionInterceptor
+{
+    public Expression QueryCompilationStarting(Expression queryExpression, QueryExpressionEventData eventData)
+        => new KeyOrderingExpressionVisitor().Visit(queryExpression);
+
+    private class KeyOrderingExpressionVisitor : ExpressionVisitor
+    {
+        private static readonly MethodInfo ThenByMethod
+            = typeof(Queryable).GetMethods()
+                .Single(m => m.Name == nameof(Queryable.ThenBy) && m.GetParameters().Length == 2);
+
+        protected override Expression VisitMethodCall(MethodCallExpression? methodCallExpression)
+        {
+            var methodInfo = methodCallExpression!.Method;
+            if (methodInfo.DeclaringType == typeof(Queryable)
+                && methodInfo.Name == nameof(Queryable.OrderBy)
+                && methodInfo.GetParameters().Length == 2)
+            {
+                var sourceType = methodCallExpression.Type.GetGenericArguments()[0];
+                if (typeof(IHasIntKey).IsAssignableFrom(sourceType))
+                {
+                    var lambdaExpression = (LambdaExpression)((UnaryExpression)methodCallExpression.Arguments[1]).Operand;
+                    var entityParameterExpression = lambdaExpression.Parameters[0];
+
+                    return Expression.Call(
+                        ThenByMethod.MakeGenericMethod(
+                            sourceType,
+                            typeof(int)),
+                        methodCallExpression,
+                        Expression.Lambda(
+                            typeof(Func<,>).MakeGenericType(entityParameterExpression.Type, typeof(int)),
+                            Expression.Property(entityParameterExpression, nameof(IHasIntKey.Id)),
+                            entityParameterExpression));
+                }
+            }
+
+            return base.VisitMethodCall(methodCallExpression);
+        }
+    }
+}
+```
+
+This probably looks pretty complicated--and it is! Working with expression trees is typically not easy. Let's look at what's happening:
+
+* Fundamentally, the interceptor encapsulates an <xref:System.Linq.Expressions.ExpressionVisitor>. The visitor overrides <xref:System.Linq.Expressions.ExpressionVisitor.VisitMethodCall*>, which will be called whenever there is a call to a method in the query expression tree.
+
+* The visitor checks whether or not this is a call to the <xref:System.Linq.Queryable.OrderBy*> method we are interested in.
+* If it is, then the visitor further checks if the generic method call is for a type that implements our `IHasIntKey` interface.
+* At this point we know that the method call is of the form `OrderBy(e => ...)`. We extract the lambda expression from this call and get the parameter used in that expression--that is, the `e`.
+* We now build a new <xref:System.Linq.Expressions.MethodCallExpression> using the <xref:System.Linq.Expressions.Expression.Call*?displayProperty=nameWithType> builder method. In this case, the method being called is `ThenBy(e => e.Id)`. We build this using the parameter extracted above and a property access to the `Id` property of the `IHasIntKey` interface.
+* The input into this call is the original `OrderBy(e => ...)`, and so the end result is an expression for `OrderBy(e => ...).ThenBy(e => e.Id)`.
+* This modified expression is returned from the visitor, which means the LINQ query has now been appropriately modified to include a `ThenBy` call.
+* EF Core continues and compiles this query expression into the appropriate SQL for the database being used.
+
+Registering this interceptor and executing `GetPageOfCustomers` now generates the following SQL:
+
+```sql
+SELECT "c"."Id", "c"."City", "c"."Name", "c"."PhoneNumber"
+FROM "Customers" AS "c"
+ORDER BY "c"."City", "c"."Id"
+LIMIT @__p_1 OFFSET @__p_0
+```
+
+This will now always produce a stable ordering, even if there are multiple customers with the same `City`.
+
+In many cases, the same thing can be achieved more simply by modifying the query directly. For example:
+
+```csharp
+Task<List<Customer>> GetPageOfCustomers2(string sortProperty, int page)
+{
+    using var context = new CustomerContext();
+
+    return context.Customers
+        .OrderBy(e => EF.Property<object>(e, sortProperty))
+        .ThenBy(e => e.Id)
+        .Skip(page * 20).Take(20).ToListAsync();
+}
+```
+
+In this case the `ThenBy` is simply added to the query. Yes, it may need to be done separately to every query, but it's simple, easy to understand, and will always work.
+
+## Identity resolution interception
+
+<xref:Microsoft.EntityFrameworkCore.Diagnostics.IIdentityResolutionInterceptor> allows interception of identity resolution conflicts when the <xref:Microsoft.EntityFrameworkCore.DbContext> starts tracking new entity instances.
+
+> [!NOTE]
+> This interceptor is currently only called when `DbContext.Update`, `DbContext.Attach`, and similar methods are used to track entities that are already being tracked with the same key. It is not called for entities returned from queries. This may change in a future release; [see this issue](https://github.com/dotnet/efcore/issues/37574).
+
+A `DbContext` can only track one entity instance with any given primary key value. This means multiple instances of an entity with the same key value must be resolved to a single instance. An interceptor of this type is called with the existing tracked instance and the new instance and must apply any property values and relationship changes from the new instance into the existing instance. The new instance is then discarded.
+
+EF Core provides a built-in implementation, <xref:Microsoft.EntityFrameworkCore.Diagnostics.UpdatingIdentityResolutionInterceptor>, which updates the existing tracked entity with values from the new instance. This can be registered when configuring the context:
+
+```csharp
+protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    => optionsBuilder
+        .AddInterceptors(new UpdatingIdentityResolutionInterceptor());
+```
+
+To implement custom identity resolution logic, create a class that implements `IIdentityResolutionInterceptor` and override the `UpdateTrackedInstance` method:
+
+```csharp
+public class CustomIdentityResolutionInterceptor : IIdentityResolutionInterceptor
+{
+    public void UpdateTrackedInstance(
+        IdentityResolutionInterceptionData interceptionData,
+        EntityEntry existingEntry,
+        object newEntity)
+    {
+        // Custom logic to merge property values from newEntity into the existing tracked entity
+        existingEntry.CurrentValues.SetValues(newEntity);
+    }
+}
 ```

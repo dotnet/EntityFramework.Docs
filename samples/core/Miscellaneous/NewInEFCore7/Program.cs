@@ -35,16 +35,6 @@ public class Program
 
         await SimpleMaterializationSample.Simple_actions_on_entity_creation();
 
-        await QueryInterceptionSample.LINQ_expression_tree_interception();
-
-        await OptimisticConcurrencyInterceptionSample.Optimistic_concurrency_interception();
-
-        await InjectLoggerSample.Injecting_services_into_entities();
-
-        await LazyConnectionStringSample.Lazy_initialization_of_a_connection_string();
-
-        await QueryStatisticsLoggerSample.Executing_commands_after_consuming_a_result_set();
-
         await UngroupedColumnsQuerySample.Subqueries_dont_reference_ungrouped_columns_from_outer_query_SqlServer();
 
         await GroupByEntityTypeSample.GroupBy_entity_type_Sqlite();

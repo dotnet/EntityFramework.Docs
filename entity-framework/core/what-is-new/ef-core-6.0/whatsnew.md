@@ -3428,9 +3428,9 @@ This validation can be disabled if necessary. For example:
 
 GitHub Issue: [#23719](https://github.com/dotnet/efcore/issues/23719). This feature was contributed by [@Giorgi](https://github.com/Giorgi). Many thanks!
 
-The `CommandEventData` supplied to diagnostics sources and interceptors now contains an enum value indicating which part of EF was responsible for creating the command. This can be used as a filter in the diagnostics or interceptor. For example, we may want an interceptor that only applies to commands that come from `SaveChanges`:
+The <xref:Microsoft.EntityFrameworkCore.Diagnostics.CommandEventData> supplied to diagnostics sources and interceptors now contains a <xref:Microsoft.EntityFrameworkCore.Diagnostics.CommandSource> enum value indicating which part of EF was responsible for creating the command. This can be used to filter interceptor behavior, for example to only intercept commands originating from `SaveChanges`:
 
-<!--
+```csharp
 public class CommandSourceInterceptor : DbCommandInterceptor
 {
     public override InterceptionResult<DbDataReader> ReaderExecuting(
@@ -3446,8 +3446,7 @@ public class CommandSourceInterceptor : DbCommandInterceptor
         return result;
     }
 }
--->
-[!code-csharp[Interceptor](../../../../samples/core/Miscellaneous/NewInEFCore6/CommandSourceSample.cs?name=Interceptor)]
+```
 
 This filters the interceptor to only `SaveChanges` events when used in an application which also generates migrations and queries. For example:
 
@@ -3461,6 +3460,8 @@ SELECT [Id]
 FROM [Customers]
 WHERE @@ROWCOUNT = 1 AND [Id] = scope_identity();
 ```
+
+For more information, see [Filtering by command source](xref:core/logging-events-diagnostics/interceptors#filtering-by-command-source).
 
 ### Better temporary values handling
 

@@ -40,7 +40,6 @@ public class Program
         await HasConversionSample.Can_set_value_converter_type_using_generic_method();
         MinimalApiSample.Add_a_DbContext_and_provider();
         await ToInMemoryQuerySample.Can_query_keyless_types_from_in_memory_database();
-        await CommandSourceSample.Interceptors_get_the_source_of_the_command();
         await ScaffoldingSample.Reverse_engineer_from_database();
         await ManyToManyConfigurationSample.Many_to_many_relationships_may_need_less_configuration();
         await ConvertNullsSample.Value_converters_can_convert_nulls();
