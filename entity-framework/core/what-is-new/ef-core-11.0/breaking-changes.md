@@ -95,5 +95,5 @@ There was no hard dependency on the code in `Microsoft.EntityFrameworkCore.Desig
 If your project relies on `Microsoft.EntityFrameworkCore.Design` being brought in transitively through the tools packages, add a direct reference to it in your project:
 
 ```xml
-<PackageReference Include="Microsoft.EntityFrameworkCore.Design" PrivateAssets="all" />
+<PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="11.0.0" PrivateAssets="all" />
 ```
