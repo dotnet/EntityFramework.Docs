@@ -338,7 +338,7 @@ Change your app to target net9.0 to get the previous behavior.
 
 ### EF tools no longer support .NET Framework projects
 
-[Tracking Issue #37739](https://github.com/dotnet/efcore/issues/37739)
+[Tracking Issue #37745](https://github.com/dotnet/efcore/issues/37745)
 
 #### Old behavior
 
@@ -350,7 +350,7 @@ Starting with EF Core 9.0, the EF Core tools no longer work with projects target
 
 #### Why
 
-EF Core 9 targets .NET 8. The EF Core tools require the startup project to target a compatible .NET version and no longer support .NET Framework projects.
+The current version of EF Core tools works with all supported EF Core versions and there are no longer any supported EF Core versions that work on .NET Framework.
 
 #### Mitigations
 
