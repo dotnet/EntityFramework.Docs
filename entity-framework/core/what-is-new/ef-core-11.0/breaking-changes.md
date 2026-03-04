@@ -19,6 +19,7 @@ This page documents API and behavior changes that have the potential to break ex
 | **Breaking change**                                                                                             | **Impact** |
 |:--------------------------------------------------------------------------------------------------------------- | -----------|
 | [Sync I/O via the Azure Cosmos DB provider has been fully removed](#cosmos-nosync)                              | Medium     |
+| [EF tools no longer support .NET Framework projects](#ef-tools-no-netfx)                                        | Medium     |
 
 ### Medium-impact changes
 
@@ -43,3 +44,33 @@ Synchronous blocking on asynchronous methods ("sync-over-async") is highly disco
 ##### Mitigations
 
 Convert your code to use async I/O APIs instead of sync I/O ones. For example, replace calls to `SaveChanges()` with `await SaveChangesAsync()`.
+
+<a name="ef-tools-no-netfx"></a>
+
+#### EF tools no longer support .NET Framework projects
+
+[Tracking Issue #37739](https://github.com/dotnet/efcore/issues/37739)
+
+##### Old behavior
+
+Previously, the EF Core tools (`dotnet-ef` CLI and Package Manager Console tools) could be used with projects targeting .NET Framework. The tools packages included .NET Framework (net472) binaries and could execute commands against .NET Framework startup projects.
+
+Additionally, the `Microsoft.EntityFrameworkCore.Tools` NuGet package had a dependency on `Microsoft.EntityFrameworkCore.Design`.
+
+##### New behavior
+
+Starting with EF Core 11.0, the EF tools no longer support .NET Framework projects. If the startup project targets .NET Framework, the following error is thrown:
+
+> Startup project '&lt;project name&gt;' targets framework '.NETFramework'. The Entity Framework Core .NET Command-line Tools don't support .NET Framework projects. Consider updating the project to target .NET.
+
+Additionally, the `Microsoft.EntityFrameworkCore.Tools` and `Microsoft.EntityFrameworkCore.Tasks` NuGet packages no longer have a dependency on `Microsoft.EntityFrameworkCore.Design`.
+
+##### Why
+
+There was no hard dependency on the code in `Microsoft.EntityFrameworkCore.Design`, and this dependency was causing issues when using the latest `Microsoft.EntityFrameworkCore.Tools` with projects targeting older frameworks. Removing the dependency and the .NET Framework support simplifies the tools packages.
+
+##### Mitigations
+
+Update your project to target .NET (e.g., .NET 10 or later). If your project currently targets .NET Framework, see the [porting guide](/dotnet/core/porting/) for information on migrating to .NET.
+
+If you need to use EF Core tools with a .NET Framework project, use an earlier version of the tools (EF Core 10.0 or earlier).
