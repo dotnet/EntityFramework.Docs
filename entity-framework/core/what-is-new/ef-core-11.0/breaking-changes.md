@@ -20,7 +20,7 @@ This page documents API and behavior changes that have the potential to break ex
 |:--------------------------------------------------------------------------------------------------------------- | -----------|
 | [Sync I/O via the Azure Cosmos DB provider has been fully removed](#cosmos-nosync)                              | Medium     |
 | [EF tools no longer support .NET Framework projects](#ef-tools-no-netfx)                                        | Low        |
-| [EF tools packages no longer reference Microsoft.EntityFrameworkCore.Design](#ef-tools-no-design-dep)            | Low        |
+| [EF tools packages no longer reference Microsoft.EntityFrameworkCore.Design](#ef-tools-no-design-dep) | Low        |
 
 ### Medium-impact changes
 
