@@ -19,7 +19,7 @@ This page documents API and behavior changes that have the potential to break ex
 | **Breaking change**                                                                                             | **Impact** |
 |:--------------------------------------------------------------------------------------------------------------- | -----------|
 | [Sync I/O via the Azure Cosmos DB provider has been fully removed](#cosmos-nosync)                              | Medium     |
-| [EF Core now throws by default when no migrations are found](#migrations-not-found)                             | Medium     |
+| [EF Core now throws by default when no migrations are found](#migrations-not-found)                             | Low        |
 | [`EFOptimizeContext` MSBuild property has been removed](#ef-optimize-context-removed)                            | Low        |
 | [EF tools packages no longer reference Microsoft.EntityFrameworkCore.Design](#ef-tools-no-design-dep) | Low        |
 
@@ -47,6 +47,8 @@ Synchronous blocking on asynchronous methods ("sync-over-async") is highly disco
 
 Convert your code to use async I/O APIs instead of sync I/O ones. For example, replace calls to `SaveChanges()` with `await SaveChangesAsync()`.
 
+## Low-impact changes
+
 <a name="migrations-not-found"></a>
 
 ### EF Core now throws by default when no migrations are found
@@ -59,7 +61,7 @@ Previously, when calling <xref:Microsoft.EntityFrameworkCore.RelationalDatabaseF
 
 #### New behavior
 
-Starting with EF Core 11.0, EF Core throws an exception by default when no migrations are found in the assembly. This is consistent with the `PendingModelChangesWarning` behavior [introduced in EF 9.0](xref:core/what-is-new/ef-core-9.0/breaking-changes#pending-model-changes), which was updated in 9.0.1 to exclude the case when there are no migrations at all. This change now covers that case by throwing for the <xref:Microsoft.EntityFrameworkCore.Diagnostics.RelationalEventId.MigrationsNotFound> event.
+Starting with EF Core 11.0, EF Core throws an exception by default when no migrations are found in the assembly. This is consistent with the `PendingModelChangesWarning` behavior [introduced in EF 9.0](xref:core/what-is-new/ef-core-9.0/breaking-changes#pending-model-changes).
 
 #### Why
 
@@ -78,8 +80,6 @@ Or to log the event instead of throwing:
 ```csharp
 options.ConfigureWarnings(w => w.Log(RelationalEventId.MigrationsNotFound))
 ```
-
-## Low-impact changes
 
 <a name="ef-optimize-context-removed"></a>
 
