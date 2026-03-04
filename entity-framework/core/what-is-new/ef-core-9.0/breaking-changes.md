@@ -33,6 +33,7 @@ EF Core 9 targets .NET 8. This means that existing applications that target .NET
 | [SqlFunctionExpression's nullability arguments' arity validated](#sqlfunctionexpression-nullability)      | Low        |
 | [`ToString()` method now returns empty string for `null` instances](#nullable-tostring)                   | Low        |
 | [Shared framework dependencies were updated to 9.0.x](#shared-framework-dependencies)                     | Low        |
+| [EF tools no longer support .NET Framework projects](#ef-tools-no-netfx)                                  | Low        |
 
 ## High-impact changes
 
@@ -332,6 +333,28 @@ The matching dependency versions contain the latest security fixes and using the
 #### Mitigations
 
 Change your app to target net9.0 to get the previous behavior.
+
+<a name="ef-tools-no-netfx"></a>
+
+### EF tools no longer support .NET Framework projects
+
+[Tracking Issue #37739](https://github.com/dotnet/efcore/issues/37739)
+
+#### Old behavior
+
+Previously, the EF Core tools (`dotnet-ef` CLI and Package Manager Console tools) worked with projects targeting .NET Framework.
+
+#### New behavior
+
+Starting with EF Core 9.0, the EF Core tools no longer work with projects targeting .NET Framework. The tools produce an error when the startup project targets .NET Framework.
+
+#### Why
+
+EF Core 9 targets .NET 8. The EF Core tools require the startup project to target a compatible .NET version and no longer support .NET Framework projects.
+
+#### Mitigations
+
+Update your project to target .NET (e.g., .NET 8 or later). If your project currently targets .NET Framework, see the [porting guide](/dotnet/core/porting/) for information on migrating to .NET.
 
 ## Azure Cosmos DB breaking changes
 

@@ -19,7 +19,6 @@ This page documents API and behavior changes that have the potential to break ex
 | **Breaking change**                                                                                             | **Impact** |
 |:--------------------------------------------------------------------------------------------------------------- | -----------|
 | [Sync I/O via the Azure Cosmos DB provider has been fully removed](#cosmos-nosync)                              | Medium     |
-| [EF tools no longer support .NET Framework projects](#ef-tools-no-netfx)                                        | Low        |
 | [EF tools packages no longer reference Microsoft.EntityFrameworkCore.Design](#ef-tools-no-design-dep) | Low        |
 
 ## Medium-impact changes
@@ -47,30 +46,6 @@ Synchronous blocking on asynchronous methods ("sync-over-async") is highly disco
 Convert your code to use async I/O APIs instead of sync I/O ones. For example, replace calls to `SaveChanges()` with `await SaveChangesAsync()`.
 
 ## Low-impact changes
-
-<a name="ef-tools-no-netfx"></a>
-
-### EF tools no longer support .NET Framework projects
-
-[Tracking Issue #37739](https://github.com/dotnet/efcore/issues/37739)
-
-#### Old behavior
-
-Previously, the EF Core tools (`dotnet-ef` CLI and Package Manager Console tools) did not work with projects targeting .NET Framework, but the error message was unclear.
-
-#### New behavior
-
-Starting with EF Core 11.0, the EF tools produce a clear error message when the startup project targets .NET Framework:
-
-> Startup project '&lt;project name&gt;' targets framework '.NETFramework'. The Entity Framework Core .NET Command-line Tools don't support .NET Framework projects. Consider updating the project to target .NET.
-
-#### Why
-
-The EF Core tools already did not work with .NET Framework projects in EF Core 10.0, but the error produced was not clear. This change provides a more informative error message to help users understand the issue.
-
-#### Mitigations
-
-Update your project to target .NET (e.g., .NET 10 or later). If your project currently targets .NET Framework, see the [porting guide](/dotnet/core/porting/) for information on migrating to .NET.
 
 <a name="ef-tools-no-design-dep"></a>
 
