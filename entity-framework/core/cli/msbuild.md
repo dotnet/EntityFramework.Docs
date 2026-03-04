@@ -30,16 +30,13 @@ If the project specifies `<PublishAot>true</PublishAot>` then by default the MSB
 
 | MSBuild property   | Description                                                                                                                                                                                                     |
 |--------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| EFOptimizeContext  | Set to `true` to enable MSBuild integration. **EF Core 9-10 only; removed in EF Core 11.** |
-| EFScaffoldModelStage | Set to `publish`, `build` or `none` to indicate at which stage the compiled model will be generated. Defaults to `publish`. **EF Core 9-10**: requires `EFOptimizeContext` to be `true`. **EF Core 11+**: automatically enabled without `EFOptimizeContext`. |
-| EFPrecompileQueriesStage | Set to `publish`, `build` or `none` to indicate at which stage the precompiled queries will be generated. Defaults to `publish`. **EF Core 9-10**: requires `EFOptimizeContext` to be `true`. **EF Core 11+**: automatically enabled without `EFOptimizeContext`. |
+| EFOptimizeContext  | Set to `true` to enable MSBuild integration.                                                                                                                                                                |
+| EFScaffoldModelStage | Set to `publish`, `build` or `none` to indicate at which stage the compiled model will be generated. Defaults to `publish`.                        |
+| EFPrecompileQueriesStage | Set to `publish`, `build` or `none` to indicate at which stage the precompiled queries will be generated. Defaults to `publish`.                        |
 | DbContextName      | The derived `DbContext` class to use. Class name only or fully qualified with namespaces. If this option is omitted, EF Core will perform generation for all context classes in the project. |
 | EFTargetNamespace  | The namespace to use for all generated classes. If this option is omitted, EF Core will use `$(RootNamespace)`.                      |
 | EFOutputDir        | The folder to put the generated files before the project is compiled. If this option is omitted, EF Core will use `$(IntermediateOutputPath)`.                      |
 | EFNullable        | Whether nullable reference types will be used in the generated code. If this option is omitted, EF Core will use `$(Nullable)`.                      |
-
-> [!NOTE]
-> Starting with EF Core 11, the `EFOptimizeContext` property has been [removed](xref:core/what-is-new/ef-core-11.0/breaking-changes#ef-optimize-context-removed). The `EFScaffoldModelStage` and `EFPrecompileQueriesStage` properties now work independently and don't require an additional enablement flag.
 
 ## Limitations
 
