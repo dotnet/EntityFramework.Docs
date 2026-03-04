@@ -19,6 +19,8 @@ This page documents API and behavior changes that have the potential to break ex
 | **Breaking change**                                                                                             | **Impact** |
 |:--------------------------------------------------------------------------------------------------------------- | -----------|
 | [Sync I/O via the Azure Cosmos DB provider has been fully removed](#cosmos-nosync)                              | Medium     |
+| [EF Core now throws by default when no migrations are found](#migrations-not-found)                             | Medium     |
+| [`EFOptimizeContext` MSBuild property has been removed](#ef-optimize-context-removed)                            | Low        |
 | [EF tools packages no longer reference Microsoft.EntityFrameworkCore.Design](#ef-tools-no-design-dep) | Low        |
 
 ## Medium-impact changes
@@ -45,7 +47,74 @@ Synchronous blocking on asynchronous methods ("sync-over-async") is highly disco
 
 Convert your code to use async I/O APIs instead of sync I/O ones. For example, replace calls to `SaveChanges()` with `await SaveChangesAsync()`.
 
+<a name="migrations-not-found"></a>
+
+### EF Core now throws by default when no migrations are found
+
+[Tracking Issue #35218](https://github.com/dotnet/efcore/issues/35218)
+
+#### Old behavior
+
+Previously, when calling <xref:Microsoft.EntityFrameworkCore.RelationalDatabaseFacadeExtensions.Migrate*> or <xref:Microsoft.EntityFrameworkCore.RelationalDatabaseFacadeExtensions.MigrateAsync*> on a database with no migrations in the assembly, EF Core logged an informational message and returned without applying any changes.
+
+#### New behavior
+
+Starting with EF Core 11.0, EF Core throws an exception by default when no migrations are found in the assembly. This is consistent with the `PendingModelChangesWarning` behavior [introduced in EF 9.0](xref:core/what-is-new/ef-core-9.0/breaking-changes#pending-model-changes), which was updated in 9.0.1 to exclude the case when there are no migrations at all. This change now covers that case by throwing for the <xref:Microsoft.EntityFrameworkCore.Diagnostics.RelationalEventId.MigrationsNotFound> event.
+
+#### Why
+
+Calling `Migrate()` or `MigrateAsync()` when no migrations exist typically indicates a misconfiguration. Rather than silently continuing and leaving the database in a potentially incorrect state, EF Core now alerts developers to this issue immediately.
+
+#### Mitigations
+
+If you intentionally call `Migrate()` without having any migrations (for example, because you manage the database schema through other means), suppress the exception by configuring warnings:
+
+```csharp
+options.ConfigureWarnings(w => w.Ignore(RelationalEventId.MigrationsNotFound))
+```
+
+Or to log the event instead of throwing:
+
+```csharp
+options.ConfigureWarnings(w => w.Log(RelationalEventId.MigrationsNotFound))
+```
+
 ## Low-impact changes
+
+<a name="ef-optimize-context-removed"></a>
+
+### `EFOptimizeContext` MSBuild property has been removed
+
+[Tracking Issue #35079](https://github.com/dotnet/efcore/issues/35079)
+
+#### Old behavior
+
+Previously, the `EFOptimizeContext` MSBuild property could be set to `true` to enable compiled model and precompiled query code generation during build or publish:
+
+```xml
+<EFOptimizeContext Condition="'$(Configuration)'=='Release'">true</EFOptimizeContext>
+```
+
+#### New behavior
+
+Starting with EF Core 11.0, the `EFOptimizeContext` MSBuild property has been removed. Code generation is now controlled exclusively through the `EFScaffoldModelStage` and `EFPrecompileQueriesStage` properties. When `PublishAOT` is set to `true`, code generation is automatically enabled during publish without needing any additional property.
+
+#### Why
+
+The `EFScaffoldModelStage` and `EFPrecompileQueriesStage` properties already provide fine-grained control over when code generation occurs. `EFOptimizeContext` was a redundant enablement gate.
+
+#### Mitigations
+
+Replace usages of `EFOptimizeContext` with the `EFScaffoldModelStage` and `EFPrecompileQueriesStage` properties. These can be set to `publish` or `build` to control at which stage code generation occurs:
+
+```xml
+<EFScaffoldModelStage>publish</EFScaffoldModelStage>
+<EFPrecompileQueriesStage>publish</EFPrecompileQueriesStage>
+```
+
+Any other value (for example, `none`) disables the corresponding generation.
+
+If you have `PublishAOT` set to `true`, code generation is automatically enabled during publish and no additional configuration is needed.
 
 <a name="ef-tools-no-design-dep"></a>
 
