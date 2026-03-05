@@ -2,7 +2,7 @@
 title: EF Core MSBuild tasks - EF Core
 description: Reference guide for the Entity Framework Core .NET MSBuild tasks
 author: AndriySvyryd
-ms.date: 01/17/2025
+ms.date: 03/04/2026
 uid: core/cli/msbuild
 ---
 
@@ -37,6 +37,9 @@ If the project specifies `<PublishAot>true</PublishAot>` then by default the MSB
 | EFTargetNamespace  | The namespace to use for all generated classes. If this option is omitted, EF Core will use `$(RootNamespace)`.                      |
 | EFOutputDir        | The folder to put the generated files before the project is compiled. If this option is omitted, EF Core will use `$(IntermediateOutputPath)`.                      |
 | EFNullable        | Whether nullable reference types will be used in the generated code. If this option is omitted, EF Core will use `$(Nullable)`.                      |
+
+> [!NOTE]
+> Starting with EF Core 11, the `EFOptimizeContext` property has been [removed](xref:core/what-is-new/ef-core-11.0/breaking-changes#ef-optimize-context-removed). The `EFScaffoldModelStage` and `EFPrecompileQueriesStage` properties now work independently and don't require an additional enablement flag.
 
 ## Limitations
 
