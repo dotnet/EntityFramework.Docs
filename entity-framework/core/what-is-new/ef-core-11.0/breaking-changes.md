@@ -69,7 +69,7 @@ Calling `Migrate()` or `MigrateAsync()` when no migrations exist typically indic
 
 #### Mitigations
 
-If you intentionally call `Migrate()` without having any migrations (for example, because you manage the database schema through other means), suppress the exception by configuring warnings:
+If you intentionally call `Migrate()` without having any migrations (for example, because you manage the database schema through other means), remove the `Migrate()` call or suppress the exception by configuring warnings:
 
 ```csharp
 options.ConfigureWarnings(w => w.Ignore(RelationalEventId.MigrationsNotFound))
