@@ -189,6 +189,32 @@ This can be changed in the model building API using `HasConstraintName`. For exa
 > [!TIP]
 > The constraint name is not used by the EF runtime. It is only used when creating a database schema using [EF Core Migrations](xref:core/managing-schemas/migrations/index).
 
+### Excluding foreign key constraints from migrations
+
+> [!NOTE]
+> This feature is being introduced in EF Core 11, which is currently in preview.
+
+Sometimes it is useful to have the foreign key relationship represented in the EF model, but without creating the corresponding foreign key constraint in the database. This can happen with legacy databases where constraints don't exist, or in data synchronization scenarios where the order of inserting related entities might temporarily violate referential integrity constraints. In these cases, use `ExcludeForeignKeyFromMigrations` to prevent EF from generating the foreign key constraint in migrations (and `EnsureCreated`):
+
+```csharp
+modelBuilder.Entity<Blog>()
+    .HasMany(e => e.Posts)
+    .WithOne(e => e.Blog)
+    .HasForeignKey(e => e.BlogId)
+    .ExcludeForeignKeyFromMigrations();
+```
+
+With this configuration, EF will not create a foreign key constraint in the database, but the relationship is still tracked in the EF model and can be used normally for loading related data, change tracking, etc. EF will still create a database index for the foreign key column, since indexes benefit queries regardless of whether a constraint exists.
+
+To apply this across all foreign keys in the model (e.g. to globally disable all foreign key constraints), you can iterate over all foreign keys in `OnModelCreating`:
+
+```csharp
+foreach (var foreignKey in modelBuilder.Model.GetEntityTypes().SelectMany(e => e.GetForeignKeys()))
+{
+    foreignKey.SetIsExcludedFromMigrations(true);
+}
+```
+
 ### Indexes for foreign keys
 
 By convention, EF creates a database index for the property or properties of a foreign key. See [_Model building conventions_](xref:core/modeling/relationships/conventions) for more information about the types of indexes created by convention.
