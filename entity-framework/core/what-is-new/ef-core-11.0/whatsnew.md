@@ -235,6 +235,24 @@ This feature was contributed by [@JoasE](https://github.com/JoasE) - many thanks
 
 ## Migrations
 
+<a name="migrations-exclude-fk"></a>
+
+### Excluding foreign key constraints from migrations
+
+It is now possible to configure a foreign key relationship in the EF model while preventing the corresponding database constraint from being created by migrations. This is useful for legacy databases without existing constraints, or in data synchronization scenarios where referential integrity constraints might conflict with the synchronization order:
+
+```csharp
+modelBuilder.Entity<Blog>()
+    .HasMany(e => e.Posts)
+    .WithOne(e => e.Blog)
+    .HasForeignKey(e => e.BlogId)
+    .ExcludeForeignKeyFromMigrations();
+```
+
+The relationship is fully supported in EF for queries, change tracking, etc. Only the foreign key constraint in the database is suppressed; a database index is still created on the foreign key column.
+
+For more information, see [Excluding foreign key constraints from migrations](xref:core/modeling/relationships/foreign-and-principal-keys#excluding-foreign-key-constraints-from-migrations).
+
 <a name="migrations-snapshot-latest-id"></a>
 
 ### Latest migration ID recorded in model snapshot
