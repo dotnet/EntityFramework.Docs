@@ -66,6 +66,9 @@ await context.SaveChangesAsync();
 
 Once you have embeddings saved to your database, you're ready to perform vector similarity search over them.
 
+> [!NOTE]
+> Starting with EF Core 11, vector properties are not loaded by default when querying entities, since vectors are typically large and are rarely needed to be read back. Prior to EF Core 11, vector properties were always loaded like any other property.
+
 ## Exact search with VECTOR_DISTANCE()
 
 The [`EF.Functions.VectorDistance()`](/sql/t-sql/functions/vector-distance-transact-sql) function computes the *exact* distance between two vectors. Use it to perform similarity search for a given user query:
@@ -138,7 +141,7 @@ foreach (var (article, score) in blogs)
 This translates to the following SQL:
 
 ```sql
-SELECT [v].[Id], [v].[Embedding], [v].[Name]
+SELECT [v].[Id], [v].[Name]
 FROM VECTOR_SEARCH([Blogs], 'Embedding', @__embedding, 'metric = cosine', @__topN)
 ```
 
@@ -205,7 +208,7 @@ This query:
 The query produces the following SQL:
 
 ```sql
-SELECT TOP(@p3) [a0].[Id], [a0].[Content], [a0].[Embedding], [a0].[Title]
+SELECT TOP(@p3) [a0].[Id], [a0].[Content], [a0].[Title]
 FROM FREETEXTTABLE([Articles], *, @p, @p1) AS [f]
 LEFT JOIN VECTOR_SEARCH(
     TABLE = [Articles] AS [a0],

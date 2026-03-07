@@ -22,6 +22,7 @@ This page documents API and behavior changes that have the potential to break ex
 | [EF Core now throws by default when no migrations are found](#migrations-not-found)                             | Low        |
 | [`EFOptimizeContext` MSBuild property has been removed](#ef-optimize-context-removed)                            | Low        |
 | [EF tools packages no longer reference Microsoft.EntityFrameworkCore.Design](#ef-tools-no-design-dep) | Low        |
+| [SqlVector properties are no longer loaded by default](#sqlvector-not-auto-loaded)                              | Low        |
 
 ## Medium-impact changes
 
@@ -140,4 +141,37 @@ If your project relies on `Microsoft.EntityFrameworkCore.Design` being brought i
 
 ```xml
 <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="11.0.0" PrivateAssets="all" />
+```
+
+<a name="sqlvector-not-auto-loaded"></a>
+
+### SqlVector properties are no longer loaded by default
+
+[Tracking Issue #37279](https://github.com/dotnet/efcore/issues/37279)
+
+#### Old behavior
+
+Previously, when querying entities with `SqlVector<T>` properties, EF Core included the vector column in `SELECT` statements and populated the property on the returned entity.
+
+#### New behavior
+
+Starting with EF Core 11.0, `SqlVector<T>` properties are no longer included in `SELECT` statements when materializing entities. The property will be `null` on returned entities.
+
+Vector properties can still be used in `WHERE` and `ORDER BY` clauses—including with `VectorDistance()` and `VectorSearch()`—they just won't be included in the entity projection.
+
+#### Why
+
+Vector columns can be very large, containing hundreds or thousands of floating-point values. In the vast majority of cases, vectors are written to the database and then used for search, without needing to be read back. Excluding them from `SELECT` by default avoids unnecessary data transfer.
+
+#### Mitigations
+
+> [!NOTE]
+> A mechanism for opting vector properties back into automatic loading will be introduced later in the EF Core 11 release.
+
+If you need to read back vector values, use an explicit projection:
+
+```csharp
+var embeddings = await context.Blogs
+    .Select(b => new { b.Id, b.Embedding })
+    .ToListAsync();
 ```

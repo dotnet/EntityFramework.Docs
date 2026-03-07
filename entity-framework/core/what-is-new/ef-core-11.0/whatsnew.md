@@ -312,6 +312,25 @@ This translates to the SQL Server [`VECTOR_SEARCH()`](/sql/t-sql/functions/vecto
 
 For more information, see the [full documentation on vector search](xref:core/providers/sql-server/vector-search).
 
+<a name="sqlserver-vector-not-auto-loaded"></a>
+
+### Vector properties not loaded by default
+
+EF Core 11 changes how vector properties are loaded: `SqlVector<T>` columns are no longer included in `SELECT` statements when materializing entities. Since vectors can be quite large—containing hundreds or thousands of floating-point numbers—this avoids unnecessary data transfer in the common case where vectors are ingested and used for search but not read back.
+
+```csharp
+// Vector column is excluded from the projected entity
+var blogs = await context.Blogs.OrderBy(b => b.Name).ToListAsync();
+// Generates: SELECT [b].[Id], [b].[Name] FROM [Blogs] AS [b]
+
+// Explicit projection still loads the vector
+var embeddings = await context.Blogs
+    .Select(b => new { b.Id, b.Embedding })
+    .ToListAsync();
+```
+
+Vector properties can still be used in `WHERE` and `ORDER BY` clauses—including with `VectorDistance()` and `VectorSearch()`—and EF will correctly include them in the SQL, just not in the entity projection.
+
 <a name="sqlserver-full-text-tvf"></a>
 
 ### Full-text search table-valued functions
