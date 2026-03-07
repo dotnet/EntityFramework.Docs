@@ -66,64 +66,8 @@ await context.SaveChangesAsync();
 
 Once you have embeddings saved to your database, you're ready to perform vector similarity search over them.
 
-## Vector properties not loaded by default
-
 > [!NOTE]
-> This feature is being introduced in EF Core 11, which is currently in preview.
-
-In the vast majority of cases, vector properties (embeddings) are ingested into the database and then used for vector search, without ever needing to be read back. Since vector columns can be quite large—containing hundreds or thousands of floating-point values—EF Core 11 no longer loads them by default.
-
-When querying entities that contain vector properties, EF excludes the vector column from the SQL `SELECT` statement:
-
-```csharp
-var blogs = await context.Blogs.OrderBy(b => b.Name).ToListAsync();
-```
-
-This generates the following SQL, which does **not** include the `Embedding` column:
-
-```sql
-SELECT [b].[Id], [b].[Name]
-FROM [Blogs] AS [b]
-ORDER BY [b].[Name]
-```
-
-The `Embedding` property on the returned entities will be `null` (or the sentinel value for the type), and if change tracking is enabled, the change tracker will record the property as not loaded (`entry.Property(e => e.Embedding).IsLoaded == false`).
-
-Vector properties can still be used in filters and orderings—EF will correctly reference the column in `WHERE` and `ORDER BY` clauses while still omitting it from the projected entity. For example, `VectorDistance()` still generates the correct SQL even though the embedding is not returned:
-
-```csharp
-var topSimilarBlogs = await context.Blogs
-    .OrderBy(b => EF.Functions.VectorDistance("cosine", b.Embedding, sqlVector))
-    .Take(3)
-    .ToListAsync();
-```
-
-```sql
-SELECT TOP(3) [b].[Id], [b].[Name]
-FROM [Blogs] AS [b]
-ORDER BY VECTOR_DISTANCE('cosine', [b].[Embedding], @sqlVector)
-```
-
-If you need to explicitly load a vector property, use a projection:
-
-```csharp
-var embeddings = await context.Blogs
-    .Select(b => new { b.Id, b.Embedding })
-    .ToListAsync();
-```
-
-The underlying mechanism is the `IsAutoLoaded` metadata flag. While EF automatically sets this to `false` for `SqlVector<T>` properties by convention, you can configure it for any non-key property as well:
-
-```csharp
-protected override void OnModelCreating(ModelBuilder modelBuilder)
-{
-    modelBuilder.Entity<Blog>()
-        .Property(b => b.LargeData)
-        .Metadata.IsAutoLoaded = false;
-}
-```
-
-Properties with `IsAutoLoaded = false` are excluded from entity projections in queries but can still be used in filters, orderings, and explicit projections. Note that key properties, discriminator properties, concurrency tokens, and constructor-bound properties cannot be configured as not auto-loaded.
+> Starting with EF Core 11, vector properties are not loaded by default when querying entities, since vectors are typically large and are rarely needed to be read back. Prior to EF Core 11, vector properties were always loaded like any other property.
 
 ## Exact search with VECTOR_DISTANCE()
 

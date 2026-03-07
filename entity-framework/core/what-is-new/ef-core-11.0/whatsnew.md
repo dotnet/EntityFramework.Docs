@@ -329,11 +329,7 @@ var embeddings = await context.Blogs
     .ToListAsync();
 ```
 
-Vector properties can still be used in `WHERE` and `ORDER BY` clauses—including with `VectorDistance()` and `VectorSearch()`—and EF will correctly include them in the SQL, just not in the entity projection. The change tracker marks non-loaded properties with `IsLoaded = false`.
-
-The underlying mechanism is the `IsAutoLoaded` metadata flag. EF sets this to `false` for vector properties by convention, but it can also be configured for any other non-key property.
-
-For more information, see [Vector properties not loaded by default](xref:core/providers/sql-server/vector-search#vector-properties-not-loaded-by-default).
+Vector properties can still be used in `WHERE` and `ORDER BY` clauses—including with `VectorDistance()` and `VectorSearch()`—and EF will correctly include them in the SQL, just not in the entity projection.
 
 <a name="sqlserver-full-text-tvf"></a>
 
