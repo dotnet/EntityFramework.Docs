@@ -69,7 +69,7 @@ There are several common situations when this exception can be thrown:
   - **Mitigation**: This is an unsupported scenario. The warning can be suppressed using the code snippet below, but this scenario will likely stop working in a future EF Core release. The recommended solution is [to generate a separate set of migrations for each provider](xref:core/managing-schemas/migrations/providers).
 - The migrations are generated, modified or chosen dynamically by replacing some of the EF services.
   - **Mitigation**: The warning is a false positive in this case and should be suppressed:  
-    `options.ConfigureWarnings(w => w.Ignore(<xref:Microsoft.EntityFrameworkCore.Diagnostics.RelationalEventId.PendingModelChangesWarning>))`
+    `options.ConfigureWarnings(w => w.Ignore(Microsoft.EntityFrameworkCore.Diagnostics.RelationalEventId.PendingModelChangesWarning))`
 - You are using ASP.NET Core Identity and change options that affect the model, such as:
 
     ```csharp
