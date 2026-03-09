@@ -79,55 +79,6 @@ For more information on inheritance mapping strategies, see [Inheritance](xref:c
 
 ## LINQ and SQL translation
 
-<a name="linq-maxby-minby"></a>
-
-### MaxBy and MinBy
-
-EF Core now supports translating the LINQ `MaxByAsync` and `MinByAsync` methods (and their sync counterparts). These methods allow you to find the element with the maximum or minimum value for a given key selector, rather than just the maximum or minimum value itself.
-
-For example, to find the blog with the most posts:
-
-```csharp
-var blogWithMostPosts = await context.Blogs.MaxByAsync(b => b.Posts.Count());
-```
-
-This translates to the following SQL:
-
-```sql
-SELECT TOP(1) [b].[Id], [b].[Name]
-FROM [Blogs] AS [b]
-ORDER BY (
-    SELECT COUNT(*)
-    FROM [Posts] AS [p]
-    WHERE [b].[Id] = [p].[BlogId]) DESC
-```
-
-Similarly, `MinByAsync` orders ascending and returns the element with the minimum value for the key selector.
-
-### EF.Functions.JsonPathExists()
-
-EF Core 11 introduces `EF.Functions.JsonPathExists()`, which checks whether a given JSON path exists in a JSON document. On SQL Server, this translates to the [`JSON_PATH_EXISTS`](/sql/t-sql/functions/json-path-exists-transact-sql) function (available since SQL Server 2022).
-
-The following query filters blogs to those whose JSON data contains an `OptionalInt` property:
-
-```csharp
-var blogs = await context.Blogs
-    .Where(b => EF.Functions.JsonPathExists(b.JsonData, "$.OptionalInt"))
-    .ToListAsync();
-```
-
-This generates the following SQL:
-
-```sql
-SELECT [b].[Id], [b].[Name], [b].[JsonData]
-FROM [Blogs] AS [b]
-WHERE JSON_PATH_EXISTS([b].[JsonData], N'$.OptionalInt') = 1
-```
-
-`EF.Functions.JsonPathExists()` accepts a JSON value and a JSON path to check for. It can be used with scalar string properties, complex types, and owned entity types mapped to JSON columns.
-
-For the full `JSON_PATH_EXISTS` SQL Server documentation, see [`JSON_PATH_EXISTS`](/sql/t-sql/functions/json-path-exists-transact-sql).
-
 <a name="linq-to-one-join-pruning"></a>
 
 ### Better SQL for to-one joins
@@ -189,6 +140,55 @@ ORDER BY [b].[BlogId]
 ```
 
 Both optimizations can have a significant positive impact on query performance, especially when multiple reference navigations are included.
+
+<a name="linq-maxby-minby"></a>
+
+### MaxBy and MinBy
+
+EF Core now supports translating the LINQ `MaxByAsync` and `MinByAsync` methods (and their sync counterparts). These methods allow you to find the element with the maximum or minimum value for a given key selector, rather than just the maximum or minimum value itself.
+
+For example, to find the blog with the most posts:
+
+```csharp
+var blogWithMostPosts = await context.Blogs.MaxByAsync(b => b.Posts.Count());
+```
+
+This translates to the following SQL:
+
+```sql
+SELECT TOP(1) [b].[Id], [b].[Name]
+FROM [Blogs] AS [b]
+ORDER BY (
+    SELECT COUNT(*)
+    FROM [Posts] AS [p]
+    WHERE [b].[Id] = [p].[BlogId]) DESC
+```
+
+Similarly, `MinByAsync` orders ascending and returns the element with the minimum value for the key selector.
+
+### EF.Functions.JsonPathExists()
+
+EF Core 11 introduces `EF.Functions.JsonPathExists()`, which checks whether a given JSON path exists in a JSON document. On SQL Server, this translates to the [`JSON_PATH_EXISTS`](/sql/t-sql/functions/json-path-exists-transact-sql) function (available since SQL Server 2022).
+
+The following query filters blogs to those whose JSON data contains an `OptionalInt` property:
+
+```csharp
+var blogs = await context.Blogs
+    .Where(b => EF.Functions.JsonPathExists(b.JsonData, "$.OptionalInt"))
+    .ToListAsync();
+```
+
+This generates the following SQL:
+
+```sql
+SELECT [b].[Id], [b].[Name], [b].[JsonData]
+FROM [Blogs] AS [b]
+WHERE JSON_PATH_EXISTS([b].[JsonData], N'$.OptionalInt') = 1
+```
+
+`EF.Functions.JsonPathExists()` accepts a JSON value and a JSON path to check for. It can be used with scalar string properties, complex types, and owned entity types mapped to JSON columns.
+
+For the full `JSON_PATH_EXISTS` SQL Server documentation, see [`JSON_PATH_EXISTS`](/sql/t-sql/functions/json-path-exists-transact-sql).
 
 ## Cosmos DB
 
