@@ -128,6 +128,68 @@ WHERE JSON_PATH_EXISTS([b].[JsonData], N'$.OptionalInt') = 1
 
 For the full `JSON_PATH_EXISTS` SQL Server documentation, see [`JSON_PATH_EXISTS`](/sql/t-sql/functions/json-path-exists-transact-sql).
 
+<a name="linq-to-one-join-pruning"></a>
+
+### Better SQL for to-one joins
+
+EF Core 11 generates better SQL when querying with to-one (reference) navigation includes in two ways.
+
+First, when using split queries (`AsSplitQuery()`), EF previously added unnecessary joins to reference navigations in the SQL generated for collection queries. For example, consider the following query:
+
+```csharp
+var blogs = context.Blogs
+    .Include(b => b.BlogType)
+    .Include(b => b.Posts)
+    .AsSplitQuery()
+    .ToList();
+```
+
+EF Core previously generated a split query for `Posts` that unnecessarily joined `BlogType`:
+
+```sql
+-- Before EF Core 11
+SELECT [p].[Id], [p].[BlogId], [p].[Title], [b].[Id], [b0].[Id]
+FROM [Blogs] AS [b]
+INNER JOIN [BlogType] AS [b0] ON [b].[BlogTypeId] = [b0].[Id]
+INNER JOIN [Post] AS [p] ON [b].[Id] = [p].[BlogId]
+ORDER BY [b].[Id], [b0].[Id]
+```
+
+In EF Core 11, the unneeded join is pruned:
+
+```sql
+-- EF Core 11
+SELECT [p].[Id], [p].[BlogId], [p].[Title], [b].[Id]
+FROM [Blogs] AS [b]
+INNER JOIN [Post] AS [p] ON [b].[Id] = [p].[BlogId]
+ORDER BY [b].[Id]
+```
+
+Second, EF no longer adds redundant keys from reference navigations to `ORDER BY` clauses. Because a reference navigation's key is functionally determined by the parent entity's key (via the foreign key), it does not need to appear separately. For example:
+
+```csharp
+var blogs = context.Blogs
+    .Include(b => b.Owner)
+    .Include(b => b.Posts)
+    .ToList();
+```
+
+EF Core previously included `[p].[PersonId]` in the `ORDER BY`, even though `[b].[BlogId]` already uniquely identifies the row:
+
+```sql
+-- Before EF Core 11
+ORDER BY [b].[BlogId], [p].[PersonId]
+```
+
+In EF Core 11, the redundant column is omitted:
+
+```sql
+-- EF Core 11
+ORDER BY [b].[BlogId]
+```
+
+Both optimizations can have a significant positive impact on query performance, especially when multiple reference navigations are included.
+
 ## Cosmos DB
 
 <a name="cosmos-transactional-batches"></a>
