@@ -149,9 +149,10 @@ Drops the database.
 
 Parameters:
 
-| Parameter              | Description                                              |
-|:-----------------------|:---------------------------------------------------------|
-| <nobr>`-WhatIf`</nobr> | Show which database would be dropped, but don't drop it. |
+| Parameter                           | Description                                                                                                                     |
+|:------------------------------------|:--------------------------------------------------------------------------------------------------------------------------------|
+| <nobr>`-WhatIf`</nobr>              | Show which database would be dropped, but don't drop it.                                                                        |
+| <nobr>`-Connection <String>`</nobr> | The connection string to the database. Defaults to the one specified in `AddDbContext` or `OnConfiguring`. Added in EF Core 11. |
 
 The [common parameters](#common-parameters) are listed above.
 
@@ -210,11 +211,16 @@ Removes the last migration (rolls back the code changes that were done for the m
 
 Parameters:
 
-| Parameter             | Description                                                                     |
-|:----------------------|:--------------------------------------------------------------------------------|
-| <nobr>`-Force`</nobr> | Revert the migration (roll back the changes that were applied to the database). |
+| Parameter                           | Description                                                                                                  |
+|:------------------------------------|:-------------------------------------------------------------------------------------------------------------|
+| <nobr>`-Force`</nobr>               | Revert the migration (roll back the changes that were applied to the database).                              |
+| <nobr>`-Connection <String>`</nobr> | The connection string to the database. Defaults to the one specified in `AddDbContext` or `OnConfiguring`. Added in EF Core 11. |
+| <nobr>`-Offline`</nobr>             | Remove the migration without connecting to the database. Added in EF Core 11.                                |
 
 The [common parameters](#common-parameters) are listed above.
+
+> [!NOTE]
+> The `-Offline` and `-Force` parameters cannot be used together, since `-Force` requires a database connection to check if the migration has been applied before reverting it.
 
 ## Scaffold-DbContext
 

@@ -77,6 +77,33 @@ This enhancement removes a significant limitation when modeling complex domain h
 
 For more information on inheritance mapping strategies, see [Inheritance](xref:core/modeling/inheritance).
 
+## LINQ and SQL translation
+
+<a name="linq-maxby-minby"></a>
+
+### MaxBy and MinBy
+
+EF Core now supports translating the LINQ `MaxByAsync` and `MinByAsync` methods (and their sync counterparts). These methods allow you to find the element with the maximum or minimum value for a given key selector, rather than just the maximum or minimum value itself.
+
+For example, to find the blog with the most posts:
+
+```csharp
+var blogWithMostPosts = await context.Blogs.MaxByAsync(b => b.Posts.Count());
+```
+
+This translates to the following SQL:
+
+```sql
+SELECT TOP(1) [b].[Id], [b].[Name]
+FROM [Blogs] AS [b]
+ORDER BY (
+    SELECT COUNT(*)
+    FROM [Posts] AS [p]
+    WHERE [b].[Id] = [p].[BlogId]) DESC
+```
+
+Similarly, `MinByAsync` orders ascending and returns the element with the minimum value for the key selector.
+
 ## Cosmos DB
 
 <a name="cosmos-transactional-batches"></a>
@@ -167,3 +194,167 @@ In PowerShell, use the `-Add` parameter:
 ```powershell
 Update-Database -Migration InitialCreate -Add
 ```
+
+<a name="migrations-remove-connection-offline"></a>
+
+### Connection and offline options for migrations remove
+
+The `dotnet ef migrations remove` and `database drop` commands now accept `--connection` parameters, allowing you to specify the database connection string directly without needing to configure a default connection in your `DbContext`. Additionally, `migrations remove` supports the new `--offline` option to remove a migration without connecting to the database:
+
+```console
+# Remove migration with specific connection
+dotnet ef migrations remove --connection "Server=prod;Database=MyDb;..."
+
+# Remove migration without connecting to database (offline mode)
+dotnet ef migrations remove --offline
+
+# Revert and remove applied migration
+dotnet ef migrations remove --force
+
+# Drop specific database by connection string
+dotnet ef database drop --connection "Server=test;Database=MyDb;..." --force
+```
+
+The `--offline` option skips the database connection check entirely, which is useful when the database is inaccessible or when you're certain the migration hasn't been applied. Note that `--offline` and `--force` cannot be used together, since `--force` requires a database connection to check if the migration has been applied before reverting it.
+
+In PowerShell, use the `-Connection` and `-Offline` parameters:
+
+```powershell
+Remove-Migration -Connection "Server=prod;Database=MyDb;..."
+Remove-Migration -Offline
+Drop-Database -Connection "Server=test;Database=MyDb;..." -Force
+```
+
+## SQL Server
+
+<a name="sqlserver-vector-search"></a>
+
+### VECTOR_SEARCH() and vector indexes
+
+> [!WARNING]
+> `VECTOR_SEARCH()` and vector indexes are currently experimental features in SQL Server and are subject to change. The APIs in EF Core for these features are also subject to change.
+
+In EF Core 10, we introduced translation for `EF.Functions.VectorDistance()`, which is a scalar function that computes the distance between two vectors. This function can be used in LINQ queries for vector similarity search, allowing you to find the most similar embeddings to a given embedding. However, `VectorDistance()` computes an _exact_ distance between the given vectors.
+
+When querying large datasets, SQL Server 2025 also supports performing _approximate_ search over a [vector index](/sql/t-sql/statements/create-vector-index-transact-sql), which provides much better performance at the expense of returning items that are approximately similar - rather than exactly similar - to the query. EF 11 now supports creating vector indexes through migrations:
+
+```csharp
+protected override void OnModelCreating(ModelBuilder modelBuilder)
+{
+    modelBuilder.Entity<Blog>()
+        .HasVectorIndex(b => b.Embedding, "cosine");
+}
+```
+
+Once you have a vector index, you can use the `VectorSearch()` extension method on your `DbSet` to perform an approximate search:
+
+```csharp
+var blogs = await context.Blogs
+    .VectorSearch(b => b.Embedding, "cosine", embedding, topN: 5)
+    .ToListAsync();
+```
+
+This translates to the SQL Server [`VECTOR_SEARCH()`](/sql/t-sql/functions/vector-search-transact-sql) table-valued function, which performs an approximate search over the vector index. The `topN` parameter specifies the number of results to return.
+
+`VectorSearch()` returns `VectorSearchResult<TEntity>`, allowing you to access the distance alongside the entity.
+
+For more information, see the [full documentation on vector search](xref:core/providers/sql-server/vector-search).
+
+<a name="sqlserver-full-text"></a>
+
+### Full-text search improvements
+
+#### Full-text search catalog and index creation
+
+SQL Server's [full-text search](/sql/relational-databases/search/full-text-search) requires a full-text catalog and index to be set up on your database before you can use it. EF 11 now allows configuring full-text catalogs and indexes in your model, so that [EF migrations](xref:core/managing-schemas/migrations/index) can automatically create and manage them for you:
+
+```csharp
+// In your OnModelCreating:
+modelBuilder.HasFullTextCatalog("ftCatalog");
+
+modelBuilder.Entity<Blog>()
+    .HasFullTextIndex(b => b.FullName)
+    .HasKeyIndex("PK_Blogs")
+    .OnCatalog("ftCatalog");
+```
+
+This generates the following SQL in a migration:
+
+```sql
+CREATE FULLTEXT CATALOG [ftCatalog];
+CREATE FULLTEXT INDEX ON [Blogs]([FullName]) KEY INDEX [PK_Blogs] ON [ftCatalog];
+```
+
+Previously, full-text catalog and index creation had to be managed manually by adding SQL to migrations. For full details on setting up full-text catalogs and indexes, see the [full-text search documentation](xref:core/providers/sql-server/full-text-search#setting-up-full-text-search).
+
+#### Full-text search table-valued functions
+
+EF Core has long provided support for SQL Server's full-text search predicates `FREETEXT()` and `CONTAINS()`, via `EF.Functions.FreeText()` and `EF.Functions.Contains()`. These predicates can be used in LINQ `Where()` clauses to filter results based on search criteria.
+
+However, SQL Server also has table-valued function versions of these functions, [`FREETEXTTABLE()`](/sql/relational-databases/system-functions/freetexttable-transact-sql) and [`CONTAINSTABLE()`](/sql/relational-databases/system-functions/containstable-transact-sql), which also return a ranking score along with the results, providing additional flexibility over the predicate versions. EF 11 now supports these table-valued functions:
+
+```csharp
+// Using FreeTextTable with a search query
+var results = await context.Blogs
+    .FreeTextTable(b => b.FullName, "John")
+    .Select(r => new { Blog = r.Value, Rank = r.Rank })
+    .OrderByDescending(r => r.Rank)
+    .ToListAsync();
+
+// Using ContainsTable with a search query
+var results = await context.Blogs
+    .ContainsTable(b => b.FullName, "John")
+    .Select(r => new { Blog = r.Value, Rank = r.Rank })
+    .OrderByDescending(r => r.Rank)
+    .ToListAsync();
+```
+
+Both methods return `FullTextSearchResult<TEntity>`, giving you access to both the entity and the ranking value from SQL Server's full-text engine. This allows for more sophisticated result ordering and filtering based on relevance scores.
+
+For more information, see the [full documentation on full-text search](xref:core/providers/sql-server/full-text-search).
+
+<a name="sql-server-json-contains"></a>
+
+### Translate Contains over primitive collections using JSON_CONTAINS
+
+SQL Server 2025 introduced the [`JSON_CONTAINS`](/sql/t-sql/functions/json-contains-transact-sql) function, which checks whether a value exists in a JSON document. Starting with EF Core 11, when targeting SQL Server 2025, LINQ `Contains` queries over primitive (or scalar) collections stored as JSON are translated to use this function, replacing the previous, less efficient `OPENJSON`-based translation.
+
+The following query checks whether a blog's `Tags` collection contains a specific tag:
+
+```csharp
+var blogs = await context.Blogs
+    .Where(b => b.Tags.Contains("ef-core"))
+    .ToListAsync();
+```
+
+Before EF 11 - or when targeting older SQL Server versions - this generates the following SQL:
+
+```sql
+SELECT [b].[Id], [b].[Name], [b].[Tags]
+FROM [Blogs] AS [b]
+WHERE N'ef-core' IN (
+    SELECT [t].[value]
+    FROM OPENJSON([b].[Tags]) WITH ([value] nvarchar(max) '$') AS [t]
+)
+```
+
+With EF 11, configure EF to target SQL Server 2025 by setting the compatibility level as follows:
+
+```csharp
+protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    => optionsBuilder
+        .UseSqlServer("<CONNECTION STRING>", o => o.UseCompatibilityLevel(170));
+```
+
+At that point, EF will instead generate the following SQL:
+
+```sql
+SELECT [b].[Id], [b].[Name], [b].[Tags]
+FROM [Blogs] AS [b]
+WHERE JSON_CONTAINS([b].[Tags], 'ef-core') = 1
+```
+
+`JSON_CONTAINS()` can notably make use of a [JSON index](/sql/t-sql/statements/create-json-index-transact-sql), if one is defined.
+
+> [!NOTE]
+> `JSON_CONTAINS` does not support searching for null values. As a result, this translation is only applied when EF can determine that at least one side is non-nullable — either the item being searched for (e.g. a non-null constant or a non-nullable column), or the collection's elements. When this cannot be determined, EF falls back to the previous `OPENJSON`-based translation.
