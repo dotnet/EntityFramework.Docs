@@ -157,7 +157,7 @@ Previously, when querying entities with `SqlVector<T>` properties, EF Core inclu
 
 Starting with EF Core 11.0, `SqlVector<T>` properties are no longer included in `SELECT` statements when materializing entities. The property will be `null` on returned entities.
 
-Vector properties can still be used in `WHERE` and `ORDER BY` clauses—including with `VectorDistance()` and `VectorSearch()`—they just won't be included in the entity projection.
+Vector properties can still be used in `WHERE` and `ORDER BY` clauses—including with `VectorDistance()` and `VectorSearch()`; they just won't be included in the entity projection.
 
 #### Why
 

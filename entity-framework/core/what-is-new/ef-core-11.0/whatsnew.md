@@ -302,7 +302,7 @@ Once you have a vector index, you can use the `VectorSearch()` extension method 
 
 ```csharp
 var blogs = await context.Blogs
-    .VectorSearch(b => b.Embedding, "cosine", embedding, topN: 5)
+    .VectorSearch(b => b.Embedding, embedding, "cosine", topN: 5)
     .ToListAsync();
 ```
 
@@ -321,7 +321,7 @@ EF Core 11 changes how vector properties are loaded: `SqlVector<T>` columns are 
 ```csharp
 // Vector column is excluded from the projected entity
 var blogs = await context.Blogs.OrderBy(b => b.Name).ToListAsync();
-// Generates: SELECT [b].[Id], [b].[Name] FROM [Blogs] AS [b]
+// Generates: SELECT [b].[Id], [b].[Name] FROM [Blogs] AS [b] ...
 
 // Explicit projection still loads the vector
 var embeddings = await context.Blogs

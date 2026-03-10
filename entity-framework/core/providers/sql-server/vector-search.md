@@ -129,7 +129,7 @@ Once you have a vector index, use the `VectorSearch()` extension method on your 
 
 ```csharp
 var blogs = await context.Blogs
-    .VectorSearch(b => b.Embedding, "cosine", embedding, topN: 5)
+    .VectorSearch(b => b.Embedding, embedding, "cosine", topN: 5)
     .ToListAsync();
 
 foreach (var (article, score) in blogs)
@@ -141,7 +141,7 @@ foreach (var (article, score) in blogs)
 This translates to the following SQL:
 
 ```sql
-SELECT [v].[Id], [v].[Name]
+SELECT [v].[Id], [v].[Name], [v].[Distance]
 FROM VECTOR_SEARCH([Blogs], 'Embedding', @__embedding, 'metric = cosine', @__topN)
 ```
 
@@ -151,7 +151,7 @@ The `topN` parameter specifies the maximum number of results to return.
 
 ```csharp
 var searchResults = await context.Blogs
-    .VectorSearch(b => b.Embedding, "cosine", embedding, topN: 5)
+    .VectorSearch(b => b.Embedding, embedding, "cosine", topN: 5)
     .Where(r => r.Distance < 0.05)
     .Select(r => new { Blog = r.Value, Distance = r.Distance })
     .ToListAsync();
