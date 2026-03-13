@@ -83,6 +83,21 @@ For more information on inheritance mapping strategies, see [Inheritance](xref:c
 
 Complex types are now fully supported in the Azure Cosmos DB provider, embedded as nested JSON objects or arrays. For more information, [see the Cosmos DB section below](#cosmos-complex-types).
 
+<a name="complex-types-stabilization"></a>
+
+### Stabilization and bug fixes
+
+Significant effort has gone into making sure that complex type support is stable and bug-free, to unblock using complex types as an alternative to the owned entity mapping approach. Bugs fixed include:
+
+* [Error querying on complex type whose container is mapped to a table and a view](https://github.com/dotnet/efcore/issues/34706)
+* [Problem with ComplexProperty in EF9, when using the TPT approach](https://github.com/dotnet/efcore/issues/35392)
+* [Comparison of complex types does not compare properties within nested complex types](https://github.com/dotnet/efcore/issues/37391)
+* [Assignment of complex type does not assign nested properties correctly (ExecuteUpdate)](https://github.com/dotnet/efcore/issues/37395)
+* [Map two classes with same nullable complex properties to same column → NullReferenceException](https://github.com/dotnet/efcore/issues/37335)
+* [Complex property stored as JSON marked non-nullable in TPH class hierarchy](https://github.com/dotnet/efcore/issues/37404)
+* [EntityEntry.ReloadAsync throws when nullable complex property is null](https://github.com/dotnet/efcore/issues/37559)
+* [Unnecessary columns in SQL with Complex Types + object closures in projections](https://github.com/dotnet/efcore/issues/37551)
+
 ## LINQ and SQL translation
 
 <a name="linq-to-one-join-pruning"></a>
@@ -195,6 +210,185 @@ WHERE JSON_PATH_EXISTS([b].[JsonData], N'$.OptionalInt') = 1
 `EF.Functions.JsonPathExists()` accepts a JSON value and a JSON path to check for. It can be used with scalar string properties, complex types, and owned entity types mapped to JSON columns.
 
 For the full `JSON_PATH_EXISTS` SQL Server documentation, see [`JSON_PATH_EXISTS`](/sql/t-sql/functions/json-path-exists-transact-sql).
+
+## SQL Server
+
+<a name="sqlserver-vector-search"></a>
+
+### VECTOR_SEARCH() and vector indexes
+
+> [!WARNING]
+> `VECTOR_SEARCH()` and vector indexes are currently experimental features in SQL Server and are subject to change. The APIs in EF Core for these features are also subject to change.
+
+In EF Core 10, we introduced translation for `EF.Functions.VectorDistance()`, which is a scalar function that computes the distance between two vectors. This function can be used in LINQ queries for vector similarity search, allowing you to find the most similar embeddings to a given embedding. However, `VectorDistance()` computes an _exact_ distance between the given vectors.
+
+When querying large datasets, SQL Server 2025 also supports performing _approximate_ search over a [vector index](/sql/t-sql/statements/create-vector-index-transact-sql), which provides much better performance at the expense of returning items that are approximately similar - rather than exactly similar - to the query. EF 11 now supports creating vector indexes through migrations:
+
+```csharp
+protected override void OnModelCreating(ModelBuilder modelBuilder)
+{
+    modelBuilder.Entity<Blog>()
+        .HasVectorIndex(b => b.Embedding, "cosine");
+}
+```
+
+Once you have a vector index, you can use the `VectorSearch()` extension method on your `DbSet` to perform an approximate search:
+
+```csharp
+var blogs = await context.Blogs
+    .VectorSearch(b => b.Embedding, embedding, "cosine", topN: 5)
+    .ToListAsync();
+```
+
+This translates to the SQL Server [`VECTOR_SEARCH()`](/sql/t-sql/functions/vector-search-transact-sql) table-valued function, which performs an approximate search over the vector index. The `topN` parameter specifies the number of results to return.
+
+`VectorSearch()` returns `VectorSearchResult<TEntity>`, allowing you to access the distance alongside the entity.
+
+For more information, see the [full documentation on vector search](xref:core/providers/sql-server/vector-search).
+
+<a name="sqlserver-vector-not-auto-loaded"></a>
+
+### Vector properties not loaded by default
+
+EF Core 11 changes how vector properties are loaded: `SqlVector<T>` columns are no longer included in `SELECT` statements when materializing entities. Since vectors can be quite large—containing hundreds or thousands of floating-point numbers—this avoids unnecessary data transfer in the common case where vectors are ingested and used for search but not read back.
+
+```csharp
+// Vector column is excluded from the projected entity
+var blogs = await context.Blogs.OrderBy(b => b.Name).ToListAsync();
+// Generates: SELECT [b].[Id], [b].[Name] FROM [Blogs] AS [b] ...
+
+// Explicit projection still loads the vector
+var embeddings = await context.Blogs
+    .Select(b => new { b.Id, b.Embedding })
+    .ToListAsync();
+```
+
+Vector properties can still be used in `WHERE` and `ORDER BY` clauses—including with `VectorDistance()` and `VectorSearch()`—and EF will correctly include them in the SQL, just not in the entity projection.
+
+<a name="sqlserver-full-text"></a>
+
+### Full-text search improvements
+
+#### Full-text search catalog and index creation
+
+SQL Server's [full-text search](/sql/relational-databases/search/full-text-search) requires a full-text catalog and index to be set up on your database before you can use it. EF 11 now allows configuring full-text catalogs and indexes in your model, so that [EF migrations](xref:core/managing-schemas/migrations/index) can automatically create and manage them for you:
+
+```csharp
+// In your OnModelCreating:
+modelBuilder.HasFullTextCatalog("ftCatalog");
+
+modelBuilder.Entity<Blog>()
+    .HasFullTextIndex(b => b.FullName)
+    .HasKeyIndex("PK_Blogs")
+    .OnCatalog("ftCatalog");
+```
+
+This generates the following SQL in a migration:
+
+```sql
+CREATE FULLTEXT CATALOG [ftCatalog];
+CREATE FULLTEXT INDEX ON [Blogs]([FullName]) KEY INDEX [PK_Blogs] ON [ftCatalog];
+```
+
+Previously, full-text catalog and index creation had to be managed manually by adding SQL to migrations. For full details on setting up full-text catalogs and indexes, see the [full-text search documentation](xref:core/providers/sql-server/full-text-search#setting-up-full-text-search).
+
+<a name="sqlserver-full-text-tvf"></a>
+
+#### Full-text search table-valued functions
+
+EF Core has long provided support for SQL Server's full-text search predicates `FREETEXT()` and `CONTAINS()`, via `EF.Functions.FreeText()` and `EF.Functions.Contains()`. These predicates can be used in LINQ `Where()` clauses to filter results based on search criteria.
+
+However, SQL Server also has table-valued function versions of these functions, [`FREETEXTTABLE()`](/sql/relational-databases/system-functions/freetexttable-transact-sql) and [`CONTAINSTABLE()`](/sql/relational-databases/system-functions/containstable-transact-sql), which also return a ranking score along with the results, providing additional flexibility over the predicate versions. EF 11 now supports these table-valued functions:
+
+```csharp
+// Using FreeTextTable with a search query
+var results = await context.Blogs
+    .FreeTextTable(b => b.FullName, "John")
+    .Select(r => new { Blog = r.Value, Rank = r.Rank })
+    .OrderByDescending(r => r.Rank)
+    .ToListAsync();
+
+// Using ContainsTable with a search query
+var results = await context.Blogs
+    .ContainsTable(b => b.FullName, "John")
+    .Select(r => new { Blog = r.Value, Rank = r.Rank })
+    .OrderByDescending(r => r.Rank)
+    .ToListAsync();
+```
+
+Both methods return `FullTextSearchResult<TEntity>`, giving you access to both the entity and the ranking value from SQL Server's full-text engine. This allows for more sophisticated result ordering and filtering based on relevance scores.
+
+For more information, see the [full documentation on full-text search](xref:core/providers/sql-server/full-text-search).
+
+<a name="sql-server-json-contains"></a>
+
+### Contains operations using JSON_CONTAINS
+
+SQL Server 2025 introduced the [`JSON_CONTAINS`](/sql/t-sql/functions/json-contains-transact-sql) function, which checks whether a value exists in a JSON document. Starting with EF Core 11, when targeting SQL Server 2025, LINQ `Contains` queries over primitive (or scalar) collections stored as JSON are translated to use this function, replacing the previous, less efficient `OPENJSON`-based translation.
+
+The following query checks whether a blog's `Tags` collection contains a specific tag:
+
+```csharp
+var blogs = await context.Blogs
+    .Where(b => b.Tags.Contains("ef-core"))
+    .ToListAsync();
+```
+
+Before EF 11 - or when targeting older SQL Server versions - this generates the following SQL:
+
+```sql
+SELECT [b].[Id], [b].[Name], [b].[Tags]
+FROM [Blogs] AS [b]
+WHERE N'ef-core' IN (
+    SELECT [t].[value]
+    FROM OPENJSON([b].[Tags]) WITH ([value] nvarchar(max) '$') AS [t]
+)
+```
+
+With EF 11, configure EF to target SQL Server 2025 by setting the compatibility level as follows:
+
+```csharp
+protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    => optionsBuilder
+        .UseSqlServer("<CONNECTION STRING>", o => o.UseCompatibilityLevel(170));
+```
+
+At that point, EF will instead generate the following SQL:
+
+```sql
+SELECT [b].[Id], [b].[Name], [b].[Tags]
+FROM [Blogs] AS [b]
+WHERE JSON_CONTAINS([b].[Tags], 'ef-core') = 1
+```
+
+`JSON_CONTAINS()` can notably make use of a [JSON index](/sql/t-sql/statements/create-json-index-transact-sql), if one is defined.
+
+> [!NOTE]
+> `JSON_CONTAINS` does not support searching for null values. As a result, this translation is only applied when EF can determine that at least one side is non-nullable — either the item being searched for (e.g. a non-null constant or a non-nullable column), or the collection's elements. When this cannot be determined, EF falls back to the previous `OPENJSON`-based translation.
+
+#### EF.Functions.JsonContains()
+
+In the section above, EF Core automatically translates LINQ `Contains` queries over primitive collections to use the SQL Server `JSON_CONTAINS` function. In some cases, however, you may want to directly invoke `JSON_CONTAINS` yourself, for example to search for a value at a specific path, or to specify a search mode. For these cases, EF Core 11 introduces `EF.Functions.JsonContains()`.
+
+The following query checks whether a blog's JSON data contains a specific value at a given path:
+
+```csharp
+var blogs = await context.Blogs
+    .Where(b => EF.Functions.JsonContains(b.JsonData, 8, "$.Rating") == 1)
+    .ToListAsync();
+```
+
+This generates the following SQL:
+
+```sql
+SELECT [b].[Id], [b].[Name], [b].[JsonData]
+FROM [Blogs] AS [b]
+WHERE JSON_CONTAINS([b].[JsonData], 8, N'$.Rating') = 1
+```
+
+`EF.Functions.JsonContains()` accepts the JSON value to search in, the value to search for, and optionally a JSON path and a search mode. It can be used with scalar string properties, complex types, and owned entity types mapped to JSON columns.
+
+For the full `JSON_CONTAINS` SQL Server documentation, see [`JSON_CONTAINS`](/sql/t-sql/functions/json-contains-transact-sql).
 
 ## Cosmos DB
 
@@ -376,185 +570,6 @@ Remove-Migration -Connection "Server=prod;Database=MyDb;..."
 Remove-Migration -Offline
 Drop-Database -Connection "Server=test;Database=MyDb;..." -Force
 ```
-
-## SQL Server
-
-<a name="sqlserver-vector-search"></a>
-
-### VECTOR_SEARCH() and vector indexes
-
-> [!WARNING]
-> `VECTOR_SEARCH()` and vector indexes are currently experimental features in SQL Server and are subject to change. The APIs in EF Core for these features are also subject to change.
-
-In EF Core 10, we introduced translation for `EF.Functions.VectorDistance()`, which is a scalar function that computes the distance between two vectors. This function can be used in LINQ queries for vector similarity search, allowing you to find the most similar embeddings to a given embedding. However, `VectorDistance()` computes an _exact_ distance between the given vectors.
-
-When querying large datasets, SQL Server 2025 also supports performing _approximate_ search over a [vector index](/sql/t-sql/statements/create-vector-index-transact-sql), which provides much better performance at the expense of returning items that are approximately similar - rather than exactly similar - to the query. EF 11 now supports creating vector indexes through migrations:
-
-```csharp
-protected override void OnModelCreating(ModelBuilder modelBuilder)
-{
-    modelBuilder.Entity<Blog>()
-        .HasVectorIndex(b => b.Embedding, "cosine");
-}
-```
-
-Once you have a vector index, you can use the `VectorSearch()` extension method on your `DbSet` to perform an approximate search:
-
-```csharp
-var blogs = await context.Blogs
-    .VectorSearch(b => b.Embedding, embedding, "cosine", topN: 5)
-    .ToListAsync();
-```
-
-This translates to the SQL Server [`VECTOR_SEARCH()`](/sql/t-sql/functions/vector-search-transact-sql) table-valued function, which performs an approximate search over the vector index. The `topN` parameter specifies the number of results to return.
-
-`VectorSearch()` returns `VectorSearchResult<TEntity>`, allowing you to access the distance alongside the entity.
-
-For more information, see the [full documentation on vector search](xref:core/providers/sql-server/vector-search).
-
-<a name="sqlserver-vector-not-auto-loaded"></a>
-
-### Vector properties not loaded by default
-
-EF Core 11 changes how vector properties are loaded: `SqlVector<T>` columns are no longer included in `SELECT` statements when materializing entities. Since vectors can be quite large—containing hundreds or thousands of floating-point numbers—this avoids unnecessary data transfer in the common case where vectors are ingested and used for search but not read back.
-
-```csharp
-// Vector column is excluded from the projected entity
-var blogs = await context.Blogs.OrderBy(b => b.Name).ToListAsync();
-// Generates: SELECT [b].[Id], [b].[Name] FROM [Blogs] AS [b] ...
-
-// Explicit projection still loads the vector
-var embeddings = await context.Blogs
-    .Select(b => new { b.Id, b.Embedding })
-    .ToListAsync();
-```
-
-Vector properties can still be used in `WHERE` and `ORDER BY` clauses—including with `VectorDistance()` and `VectorSearch()`—and EF will correctly include them in the SQL, just not in the entity projection.
-
-<a name="sqlserver-full-text"></a>
-
-### Full-text search improvements
-
-#### Full-text search catalog and index creation
-
-SQL Server's [full-text search](/sql/relational-databases/search/full-text-search) requires a full-text catalog and index to be set up on your database before you can use it. EF 11 now allows configuring full-text catalogs and indexes in your model, so that [EF migrations](xref:core/managing-schemas/migrations/index) can automatically create and manage them for you:
-
-```csharp
-// In your OnModelCreating:
-modelBuilder.HasFullTextCatalog("ftCatalog");
-
-modelBuilder.Entity<Blog>()
-    .HasFullTextIndex(b => b.FullName)
-    .HasKeyIndex("PK_Blogs")
-    .OnCatalog("ftCatalog");
-```
-
-This generates the following SQL in a migration:
-
-```sql
-CREATE FULLTEXT CATALOG [ftCatalog];
-CREATE FULLTEXT INDEX ON [Blogs]([FullName]) KEY INDEX [PK_Blogs] ON [ftCatalog];
-```
-
-Previously, full-text catalog and index creation had to be managed manually by adding SQL to migrations. For full details on setting up full-text catalogs and indexes, see the [full-text search documentation](xref:core/providers/sql-server/full-text-search#setting-up-full-text-search).
-
-<a name="sqlserver-full-text-tvf"></a>
-
-#### Full-text search table-valued functions
-
-EF Core has long provided support for SQL Server's full-text search predicates `FREETEXT()` and `CONTAINS()`, via `EF.Functions.FreeText()` and `EF.Functions.Contains()`. These predicates can be used in LINQ `Where()` clauses to filter results based on search criteria.
-
-However, SQL Server also has table-valued function versions of these functions, [`FREETEXTTABLE()`](/sql/relational-databases/system-functions/freetexttable-transact-sql) and [`CONTAINSTABLE()`](/sql/relational-databases/system-functions/containstable-transact-sql), which also return a ranking score along with the results, providing additional flexibility over the predicate versions. EF 11 now supports these table-valued functions:
-
-```csharp
-// Using FreeTextTable with a search query
-var results = await context.Blogs
-    .FreeTextTable(b => b.FullName, "John")
-    .Select(r => new { Blog = r.Value, Rank = r.Rank })
-    .OrderByDescending(r => r.Rank)
-    .ToListAsync();
-
-// Using ContainsTable with a search query
-var results = await context.Blogs
-    .ContainsTable(b => b.FullName, "John")
-    .Select(r => new { Blog = r.Value, Rank = r.Rank })
-    .OrderByDescending(r => r.Rank)
-    .ToListAsync();
-```
-
-Both methods return `FullTextSearchResult<TEntity>`, giving you access to both the entity and the ranking value from SQL Server's full-text engine. This allows for more sophisticated result ordering and filtering based on relevance scores.
-
-For more information, see the [full documentation on full-text search](xref:core/providers/sql-server/full-text-search).
-
-<a name="sql-server-json-contains"></a>
-
-### Contains operations using JSON_CONTAINS
-
-SQL Server 2025 introduced the [`JSON_CONTAINS`](/sql/t-sql/functions/json-contains-transact-sql) function, which checks whether a value exists in a JSON document. Starting with EF Core 11, when targeting SQL Server 2025, LINQ `Contains` queries over primitive (or scalar) collections stored as JSON are translated to use this function, replacing the previous, less efficient `OPENJSON`-based translation.
-
-The following query checks whether a blog's `Tags` collection contains a specific tag:
-
-```csharp
-var blogs = await context.Blogs
-    .Where(b => b.Tags.Contains("ef-core"))
-    .ToListAsync();
-```
-
-Before EF 11 - or when targeting older SQL Server versions - this generates the following SQL:
-
-```sql
-SELECT [b].[Id], [b].[Name], [b].[Tags]
-FROM [Blogs] AS [b]
-WHERE N'ef-core' IN (
-    SELECT [t].[value]
-    FROM OPENJSON([b].[Tags]) WITH ([value] nvarchar(max) '$') AS [t]
-)
-```
-
-With EF 11, configure EF to target SQL Server 2025 by setting the compatibility level as follows:
-
-```csharp
-protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-    => optionsBuilder
-        .UseSqlServer("<CONNECTION STRING>", o => o.UseCompatibilityLevel(170));
-```
-
-At that point, EF will instead generate the following SQL:
-
-```sql
-SELECT [b].[Id], [b].[Name], [b].[Tags]
-FROM [Blogs] AS [b]
-WHERE JSON_CONTAINS([b].[Tags], 'ef-core') = 1
-```
-
-`JSON_CONTAINS()` can notably make use of a [JSON index](/sql/t-sql/statements/create-json-index-transact-sql), if one is defined.
-
-> [!NOTE]
-> `JSON_CONTAINS` does not support searching for null values. As a result, this translation is only applied when EF can determine that at least one side is non-nullable — either the item being searched for (e.g. a non-null constant or a non-nullable column), or the collection's elements. When this cannot be determined, EF falls back to the previous `OPENJSON`-based translation.
-
-#### EF.Functions.JsonContains()
-
-In the section above, EF Core automatically translates LINQ `Contains` queries over primitive collections to use the SQL Server `JSON_CONTAINS` function. In some cases, however, you may want to directly invoke `JSON_CONTAINS` yourself, for example to search for a value at a specific path, or to specify a search mode. For these cases, EF Core 11 introduces `EF.Functions.JsonContains()`.
-
-The following query checks whether a blog's JSON data contains a specific value at a given path:
-
-```csharp
-var blogs = await context.Blogs
-    .Where(b => EF.Functions.JsonContains(b.JsonData, 8, "$.Rating") == 1)
-    .ToListAsync();
-```
-
-This generates the following SQL:
-
-```sql
-SELECT [b].[Id], [b].[Name], [b].[JsonData]
-FROM [Blogs] AS [b]
-WHERE JSON_CONTAINS([b].[JsonData], 8, N'$.Rating') = 1
-```
-
-`EF.Functions.JsonContains()` accepts the JSON value to search in, the value to search for, and optionally a JSON path and a search mode. It can be used with scalar string properties, complex types, and owned entity types mapped to JSON columns.
-
-For the full `JSON_CONTAINS` SQL Server documentation, see [`JSON_CONTAINS`](/sql/t-sql/functions/json-contains-transact-sql).
 
 ## Other improvements
 
