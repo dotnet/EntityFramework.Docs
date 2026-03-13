@@ -77,6 +77,19 @@ This enhancement removes a significant limitation when modeling complex domain h
 
 For more information on inheritance mapping strategies, see [Inheritance](xref:core/modeling/inheritance).
 
+### Stabilization and bug fixes
+
+Significant effort has gone into making sure that complex type support is stable and bug-free, to unblock using it as an alternative to the owned entity mapping approach. Bugs fixed include:
+
+* [Error querying on complex type whose container is mapped to a table and a view](https://github.com/dotnet/efcore/issues/34706)
+* [Problem with ComplexProperty in EF9, when using the TPT approach](https://github.com/dotnet/efcore/issues/35392)
+* [Comparison of complex types does not compare properties within nested complex types](https://github.com/dotnet/efcore/issues/37391)
+* [Assignment of complex type does not assign nested properties correctly (ExecuteUpdate)](https://github.com/dotnet/efcore/issues/37395)
+* [Map two classes with same nullable complex properties to same column → NullReferenceException](https://github.com/dotnet/efcore/issues/37335)
+* [Complex property stored as JSON marked non-nullable in TPH class hierarchy](https://github.com/dotnet/efcore/issues/37404)
+* [EntityEntry.ReloadAsync throws when nullable complex property is null](https://github.com/dotnet/efcore/issues/37559)
+* [Unnecessary columns in SQL with Complex Types + object closures in projections](https://github.com/dotnet/efcore/issues/37551)
+
 ## LINQ and SQL translation
 
 <a name="linq-to-one-join-pruning"></a>
@@ -189,155 +202,6 @@ WHERE JSON_PATH_EXISTS([b].[JsonData], N'$.OptionalInt') = 1
 `EF.Functions.JsonPathExists()` accepts a JSON value and a JSON path to check for. It can be used with scalar string properties, complex types, and owned entity types mapped to JSON columns.
 
 For the full `JSON_PATH_EXISTS` SQL Server documentation, see [`JSON_PATH_EXISTS`](/sql/t-sql/functions/json-path-exists-transact-sql).
-
-## Cosmos DB
-
-<a name="cosmos-transactional-batches"></a>
-
-### Transactional batches
-
-Azure Cosmos DB supports [transactional batches](/azure/cosmos-db/transactional-batch), which allow multiple operations to be executed atomically and in a single roundtrip against a single partition. Starting with EF Core 11, the provider leverages transactional batches by default, providing best-effort atomicity and improved performance when saving changes.
-
-The batching behavior can be controlled via the <xref:Microsoft.EntityFrameworkCore.AutoTransactionBehavior> property:
-
-* **Auto** (default): Operations are grouped into transactional batches by container and partition. Batches are executed sequentially; if a batch fails, subsequent batches are not executed.
-* **Never**: All operations are performed individually and sequentially (the pre-11 behavior).
-* **Always**: Requires all operations to fit in a single transactional batch; throws if they cannot.
-
-For more information, [see the documentation](xref:core/providers/cosmos/saving#transactionality-and-transactional-batches).
-
-This feature was contributed by [@JoasE](https://github.com/JoasE) - many thanks!
-
-<a name="cosmos-bulk-execution"></a>
-
-### Bulk execution
-
-Azure Cosmos DB supports _bulk execution_, which allows multiple document operations to be executed in parallel and across DbContext instances, significantly improving throughput when saving many entities at once. EF Core now supports enabling bulk execution:
-
-```csharp
-protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-    => optionsBuilder.UseCosmos(
-        "<connection string>",
-        databaseName: "OrdersDB",
-        options => options.BulkExecutionEnabled());
-```
-
-For more information, [see the documentation](xref:core/providers/cosmos/saving#bulk-execution).
-
-This feature was contributed by [@JoasE](https://github.com/JoasE) - many thanks!
-
-<a name="cosmos-session-tokens"></a>
-
-### Session token management
-
-Azure Cosmos DB uses session tokens to track read-your-writes consistency within a session. When running in an environment with multiple instances (e.g., with round-robin load balancing), you may need to manually manage session tokens to ensure consistency across requests.
-
-EF Core now provides APIs to retrieve and set session tokens on a `DbContext`. To enable manual session token management, configure the `SessionTokenManagementMode()`:
-
-```csharp
-protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-    => optionsBuilder.UseCosmos(
-        "<connection string>",
-        databaseName: "OrdersDB",
-        options => options.SessionTokenManagementMode(SessionTokenManagementMode.SemiAutomatic));
-```
-
-You can then retrieve and use session tokens:
-
-```csharp
-// After performing operations, retrieve the session token
-var sessionToken = context.Database.GetSessionToken();
-
-// Later, in a different context instance, apply the session token before reading
-context.Database.UseSessionToken(sessionToken);
-var result = await context.Documents.FindAsync(id);
-```
-
-For more information, [see the documentation](xref:core/providers/cosmos/saving#session-token-management).
-
-This feature was contributed by [@JoasE](https://github.com/JoasE) - many thanks!
-
-## Migrations
-
-<a name="migrations-exclude-fk"></a>
-
-### Excluding foreign key constraints from migrations
-
-It is now possible to configure a foreign key relationship in the EF model while preventing the corresponding database constraint from being created by migrations. This is useful for legacy databases without existing constraints, or in data synchronization scenarios where referential integrity constraints might conflict with the synchronization order:
-
-```csharp
-modelBuilder.Entity<Blog>()
-    .HasMany(e => e.Posts)
-    .WithOne(e => e.Blog)
-    .HasForeignKey(e => e.BlogId)
-    .ExcludeForeignKeyFromMigrations();
-```
-
-The relationship is fully supported in EF for queries, change tracking, etc. Only the foreign key constraint in the database is suppressed; a database index is still created on the foreign key column.
-
-For more information, see [Excluding foreign key constraints from migrations](xref:core/modeling/relationships/foreign-and-principal-keys#excluding-foreign-key-constraints-from-migrations).
-
-<a name="migrations-snapshot-latest-id"></a>
-
-### Latest migration ID recorded in model snapshot
-
-When working in team environments, it's common for multiple developers to create migrations on separate branches. When these branches are merged, the migration trees can diverge, leading to issues that are sometimes difficult to detect.
-
-Starting with EF Core 11, the model snapshot now records the ID of the latest migration. When two developers create migrations on divergent branches, both branches will modify this value in the model snapshot, causing a source control merge conflict. This conflict alerts the team that they need to resolve the divergence - typically by discarding one of the migration trees and creating a new, unified migration.
-
-For more information on managing migrations in team environments, see [Migrations in Team Environments](xref:core/managing-schemas/migrations/teams).
-
-<a name="migrations-add-and-apply"></a>
-
-### Create and apply migrations in one step
-
-The `dotnet ef database update` command now supports creating and applying a migration in a single step using the new `--add` option. This uses Roslyn to compile the migration at runtime, enabling scenarios like .NET Aspire and containerized applications where recompilation isn't possible:
-
-```dotnetcli
-dotnet ef database update InitialCreate --add
-```
-
-This command scaffolds a new migration named `InitialCreate`, compiles it using Roslyn, and immediately applies it to the database. The migration files are still saved to disk for source control and future recompilation. The same options available for `dotnet ef migrations add` can be used:
-
-```dotnetcli
-dotnet ef database update AddProducts --add --output-dir Migrations/Products --namespace MyApp.Migrations
-```
-
-In PowerShell, use the `-Add` parameter:
-
-```powershell
-Update-Database -Migration InitialCreate -Add
-```
-
-<a name="migrations-remove-connection-offline"></a>
-
-### Connection and offline options for migrations remove
-
-The `dotnet ef migrations remove` and `database drop` commands now accept `--connection` parameters, allowing you to specify the database connection string directly without needing to configure a default connection in your `DbContext`. Additionally, `migrations remove` supports the new `--offline` option to remove a migration without connecting to the database:
-
-```console
-# Remove migration with specific connection
-dotnet ef migrations remove --connection "Server=prod;Database=MyDb;..."
-
-# Remove migration without connecting to database (offline mode)
-dotnet ef migrations remove --offline
-
-# Revert and remove applied migration
-dotnet ef migrations remove --force
-
-# Drop specific database by connection string
-dotnet ef database drop --connection "Server=test;Database=MyDb;..." --force
-```
-
-The `--offline` option skips the database connection check entirely, which is useful when the database is inaccessible or when you're certain the migration hasn't been applied. Note that `--offline` and `--force` cannot be used together, since `--force` requires a database connection to check if the migration has been applied before reverting it.
-
-In PowerShell, use the `-Connection` and `-Offline` parameters:
-
-```powershell
-Remove-Migration -Connection "Server=prod;Database=MyDb;..."
-Remove-Migration -Offline
-Drop-Database -Connection "Server=test;Database=MyDb;..." -Force
-```
 
 ## SQL Server
 
@@ -517,6 +381,155 @@ WHERE JSON_CONTAINS([b].[JsonData], 8, N'$.Rating') = 1
 `EF.Functions.JsonContains()` accepts the JSON value to search in, the value to search for, and optionally a JSON path and a search mode. It can be used with scalar string properties, complex types, and owned entity types mapped to JSON columns.
 
 For the full `JSON_CONTAINS` SQL Server documentation, see [`JSON_CONTAINS`](/sql/t-sql/functions/json-contains-transact-sql).
+
+## Cosmos DB
+
+<a name="cosmos-transactional-batches"></a>
+
+### Transactional batches
+
+Azure Cosmos DB supports [transactional batches](/azure/cosmos-db/transactional-batch), which allow multiple operations to be executed atomically and in a single roundtrip against a single partition. Starting with EF Core 11, the provider leverages transactional batches by default, providing best-effort atomicity and improved performance when saving changes.
+
+The batching behavior can be controlled via the <xref:Microsoft.EntityFrameworkCore.AutoTransactionBehavior> property:
+
+* **Auto** (default): Operations are grouped into transactional batches by container and partition. Batches are executed sequentially; if a batch fails, subsequent batches are not executed.
+* **Never**: All operations are performed individually and sequentially (the pre-11 behavior).
+* **Always**: Requires all operations to fit in a single transactional batch; throws if they cannot.
+
+For more information, [see the documentation](xref:core/providers/cosmos/saving#transactionality-and-transactional-batches).
+
+This feature was contributed by [@JoasE](https://github.com/JoasE) - many thanks!
+
+<a name="cosmos-bulk-execution"></a>
+
+### Bulk execution
+
+Azure Cosmos DB supports _bulk execution_, which allows multiple document operations to be executed in parallel and across DbContext instances, significantly improving throughput when saving many entities at once. EF Core now supports enabling bulk execution:
+
+```csharp
+protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    => optionsBuilder.UseCosmos(
+        "<connection string>",
+        databaseName: "OrdersDB",
+        options => options.BulkExecutionEnabled());
+```
+
+For more information, [see the documentation](xref:core/providers/cosmos/saving#bulk-execution).
+
+This feature was contributed by [@JoasE](https://github.com/JoasE) - many thanks!
+
+<a name="cosmos-session-tokens"></a>
+
+### Session token management
+
+Azure Cosmos DB uses session tokens to track read-your-writes consistency within a session. When running in an environment with multiple instances (e.g., with round-robin load balancing), you may need to manually manage session tokens to ensure consistency across requests.
+
+EF Core now provides APIs to retrieve and set session tokens on a `DbContext`. To enable manual session token management, configure the `SessionTokenManagementMode()`:
+
+```csharp
+protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    => optionsBuilder.UseCosmos(
+        "<connection string>",
+        databaseName: "OrdersDB",
+        options => options.SessionTokenManagementMode(SessionTokenManagementMode.SemiAutomatic));
+```
+
+You can then retrieve and use session tokens:
+
+```csharp
+// After performing operations, retrieve the session token
+var sessionToken = context.Database.GetSessionToken();
+
+// Later, in a different context instance, apply the session token before reading
+context.Database.UseSessionToken(sessionToken);
+var result = await context.Documents.FindAsync(id);
+```
+
+For more information, [see the documentation](xref:core/providers/cosmos/saving#session-token-management).
+
+This feature was contributed by [@JoasE](https://github.com/JoasE) - many thanks!
+
+## Migrations
+
+<a name="migrations-exclude-fk"></a>
+
+### Excluding foreign key constraints from migrations
+
+It is now possible to configure a foreign key relationship in the EF model while preventing the corresponding database constraint from being created by migrations. This is useful for legacy databases without existing constraints, or in data synchronization scenarios where referential integrity constraints might conflict with the synchronization order:
+
+```csharp
+modelBuilder.Entity<Blog>()
+    .HasMany(e => e.Posts)
+    .WithOne(e => e.Blog)
+    .HasForeignKey(e => e.BlogId)
+    .ExcludeForeignKeyFromMigrations();
+```
+
+The relationship is fully supported in EF for queries, change tracking, etc. Only the foreign key constraint in the database is suppressed; a database index is still created on the foreign key column.
+
+For more information, see [Excluding foreign key constraints from migrations](xref:core/modeling/relationships/foreign-and-principal-keys#excluding-foreign-key-constraints-from-migrations).
+
+<a name="migrations-snapshot-latest-id"></a>
+
+### Latest migration ID recorded in model snapshot
+
+When working in team environments, it's common for multiple developers to create migrations on separate branches. When these branches are merged, the migration trees can diverge, leading to issues that are sometimes difficult to detect.
+
+Starting with EF Core 11, the model snapshot now records the ID of the latest migration. When two developers create migrations on divergent branches, both branches will modify this value in the model snapshot, causing a source control merge conflict. This conflict alerts the team that they need to resolve the divergence - typically by discarding one of the migration trees and creating a new, unified migration.
+
+For more information on managing migrations in team environments, see [Migrations in Team Environments](xref:core/managing-schemas/migrations/teams).
+
+<a name="migrations-add-and-apply"></a>
+
+### Create and apply migrations in one step
+
+The `dotnet ef database update` command now supports creating and applying a migration in a single step using the new `--add` option. This uses Roslyn to compile the migration at runtime, enabling scenarios like .NET Aspire and containerized applications where recompilation isn't possible:
+
+```dotnetcli
+dotnet ef database update InitialCreate --add
+```
+
+This command scaffolds a new migration named `InitialCreate`, compiles it using Roslyn, and immediately applies it to the database. The migration files are still saved to disk for source control and future recompilation. The same options available for `dotnet ef migrations add` can be used:
+
+```dotnetcli
+dotnet ef database update AddProducts --add --output-dir Migrations/Products --namespace MyApp.Migrations
+```
+
+In PowerShell, use the `-Add` parameter:
+
+```powershell
+Update-Database -Migration InitialCreate -Add
+```
+
+<a name="migrations-remove-connection-offline"></a>
+
+### Connection and offline options for migrations remove
+
+The `dotnet ef migrations remove` and `database drop` commands now accept `--connection` parameters, allowing you to specify the database connection string directly without needing to configure a default connection in your `DbContext`. Additionally, `migrations remove` supports the new `--offline` option to remove a migration without connecting to the database:
+
+```console
+# Remove migration with specific connection
+dotnet ef migrations remove --connection "Server=prod;Database=MyDb;..."
+
+# Remove migration without connecting to database (offline mode)
+dotnet ef migrations remove --offline
+
+# Revert and remove applied migration
+dotnet ef migrations remove --force
+
+# Drop specific database by connection string
+dotnet ef database drop --connection "Server=test;Database=MyDb;..." --force
+```
+
+The `--offline` option skips the database connection check entirely, which is useful when the database is inaccessible or when you're certain the migration hasn't been applied. Note that `--offline` and `--force` cannot be used together, since `--force` requires a database connection to check if the migration has been applied before reverting it.
+
+In PowerShell, use the `-Connection` and `-Offline` parameters:
+
+```powershell
+Remove-Migration -Connection "Server=prod;Database=MyDb;..."
+Remove-Migration -Offline
+Drop-Database -Connection "Server=test;Database=MyDb;..." -Force
+```
 
 ## Other improvements
 
