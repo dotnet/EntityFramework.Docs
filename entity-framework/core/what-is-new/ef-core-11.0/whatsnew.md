@@ -77,9 +77,11 @@ This enhancement removes a significant limitation when modeling complex domain h
 
 For more information on inheritance mapping strategies, see [Inheritance](xref:core/modeling/inheritance).
 
+<a name="complex-types-stabilization"></a>
+
 ### Stabilization and bug fixes
 
-Significant effort has gone into making sure that complex type support is stable and bug-free, to unblock using it as an alternative to the owned entity mapping approach. Bugs fixed include:
+Significant effort has gone into making sure that complex type support is stable and bug-free, to unblock using complex types as an alternative to the owned entity mapping approach. Bugs fixed include:
 
 * [Error querying on complex type whose container is mapped to a table and a view](https://github.com/dotnet/efcore/issues/34706)
 * [Problem with ComplexProperty in EF9, when using the TPT approach](https://github.com/dotnet/efcore/issues/35392)
