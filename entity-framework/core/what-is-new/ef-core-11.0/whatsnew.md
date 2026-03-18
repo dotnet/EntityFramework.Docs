@@ -118,6 +118,35 @@ Similarly, `MinByAsync` orders ascending and returns the element with the minimu
 
 EF Core [complex types](xref:core/what-is-new/ef-core-10.0/whatsnew#complex-types) are now fully supported in the Azure Cosmos DB provider; they are embedded as nested JSON objects (or arrays, for collections) within the owning document, with support for queries, inserts, and updates.
 
+For example, given the following model:
+
+```csharp
+public class Order
+{
+    public int Id { get; set; }
+    public required ShippingAddress ShippingAddress { get; set; }
+}
+
+[ComplexType]
+public class ShippingAddress
+{
+    public required string Street { get; set; }
+    public required string City { get; set; }
+}
+```
+
+EF will embed the `ShippingAddress` as a nested JSON object in the `Order` document:
+
+```json
+{
+    "id": 1,
+    "ShippingAddress": {
+        "Street": "221 B Baker St",
+        "City": "London"
+    }
+}
+```
+
 This feature was contributed by [@JoasE](https://github.com/JoasE) - many thanks!
 
 <a name="cosmos-transactional-batches"></a>
