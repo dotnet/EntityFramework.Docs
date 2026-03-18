@@ -81,7 +81,7 @@ For more information on inheritance mapping strategies, see [Inheritance](xref:c
 
 ### Complex types in Azure Cosmos DB
 
-Complex types are now fully supported in the Azure Cosmos DB provider, embedded as nested JSON objects or arrays. For more information, [see the Cosmos DB documentation](xref:core/providers/cosmos/modeling#complex-types).
+Complex types are now fully supported in the Azure Cosmos DB provider, embedded as nested JSON objects or arrays. For more information, [see the Cosmos DB section below](#cosmos-complex-types).
 
 ## LINQ and SQL translation
 
@@ -117,8 +117,6 @@ Similarly, `MinByAsync` orders ascending and returns the element with the minimu
 ### Complex types
 
 EF Core [complex types](xref:core/what-is-new/ef-core-10.0/whatsnew#complex-types) are now fully supported in the Azure Cosmos DB provider; they are embedded as nested JSON objects (or arrays, for collections) within the owning document, with support for queries, inserts, and updates.
-
-For more information, [see the documentation](xref:core/providers/cosmos/modeling#complex-types).
 
 This feature was contributed by [@JoasE](https://github.com/JoasE) - many thanks!
 
