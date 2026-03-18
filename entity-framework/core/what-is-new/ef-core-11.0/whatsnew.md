@@ -118,15 +118,18 @@ Similarly, `MinByAsync` orders ascending and returns the element with the minimu
 
 EF Core [complex types](xref:core/what-is-new/ef-core-10.0/whatsnew#complex-types) are now fully supported in the Azure Cosmos DB provider; they are embedded as nested JSON objects (or arrays, for collections) within the owning document, with support for queries, inserts, and updates.
 
-For example, given the following model:
+For example, the following configures `ShippingAddress` as a complex type:
+
+### [Fluent API](#tab/fluent-api)
 
 ```csharp
-public class Order
-{
-    public int Id { get; set; }
-    public required ShippingAddress ShippingAddress { get; set; }
-}
+modelBuilder.Entity<Order>()
+    .ComplexProperty(o => o.ShippingAddress);
+```
 
+### [Data Annotations](#tab/data-annotations)
+
+```csharp
 [ComplexType]
 public class ShippingAddress
 {
@@ -135,17 +138,9 @@ public class ShippingAddress
 }
 ```
 
-EF will embed the `ShippingAddress` as a nested JSON object in the `Order` document:
+***
 
-```json
-{
-    "id": 1,
-    "ShippingAddress": {
-        "Street": "221 B Baker St",
-        "City": "London"
-    }
-}
-```
+Complex types are generally a better fit than owned types when mapping to JSON documents: unlike owned types, complex types have value semantics and no identity, which means they work better in scenarios such as comparing two embedded objects within the same document, or using them as keys.
 
 This feature was contributed by [@JoasE](https://github.com/JoasE) - many thanks!
 
