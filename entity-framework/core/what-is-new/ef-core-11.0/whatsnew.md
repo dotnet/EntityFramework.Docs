@@ -77,6 +77,12 @@ This enhancement removes a significant limitation when modeling complex domain h
 
 For more information on inheritance mapping strategies, see [Inheritance](xref:core/modeling/inheritance).
 
+<a name="complex-types-cosmos"></a>
+
+### Complex types in Azure Cosmos DB
+
+Complex types are now fully supported in the Azure Cosmos DB provider, embedded as nested JSON objects or arrays. For more information, [see the Cosmos DB documentation](xref:core/providers/cosmos/modeling#complex-types).
+
 ## LINQ and SQL translation
 
 <a name="linq-maxby-minby"></a>
@@ -105,6 +111,16 @@ ORDER BY (
 Similarly, `MinByAsync` orders ascending and returns the element with the minimum value for the key selector.
 
 ## Cosmos DB
+
+<a name="cosmos-complex-types"></a>
+
+### Complex types
+
+EF Core [complex types](xref:core/what-is-new/ef-core-10.0/whatsnew#complex-types) are now fully supported in the Azure Cosmos DB provider; they are embedded as nested JSON objects (or arrays, for collections) within the owning document, with support for queries, inserts, and updates.
+
+For more information, [see the documentation](xref:core/providers/cosmos/modeling#complex-types).
+
+This feature was contributed by [@JoasE](https://github.com/JoasE) - many thanks!
 
 <a name="cosmos-transactional-batches"></a>
 

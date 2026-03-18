@@ -2,7 +2,7 @@
 title: Modeling - Azure Cosmos DB Provider - EF Core
 description: Configuring the model with the Azure Cosmos DB EF Core Provider
 author: roji
-ms.date: 09/26/2024
+ms.date: 03/18/2026
 uid: core/providers/cosmos/modeling
 ---
 # Configuring the model with the EF Core Azure Cosmos DB Provider
@@ -324,6 +324,82 @@ Limitations:
 
 * Only dictionaries with string keys are supported.
 * Support for querying into primitive collections was added in EF Core 9.0.
+
+## Complex types
+
+> [!NOTE]
+> This feature is being introduced in EF Core 11, which is currently in preview.
+
+EF Core [complex types](xref:core/what-is-new/ef-core-10.0/whatsnew#complex-types) are fully supported with the Azure Cosmos DB provider. Like owned entities, complex types are embedded as nested JSON objects within the document of the owning entity. For example, consider the following model:
+
+```csharp
+public class Order
+{
+    public int Id { get; set; }
+    public required ShippingAddress ShippingAddress { get; set; }
+}
+
+[ComplexType]
+public class ShippingAddress
+{
+    public required string Street { get; set; }
+    public required string City { get; set; }
+    public required string PostalCode { get; set; }
+}
+```
+
+When saving an `Order`, EF embeds the `ShippingAddress` complex type as a nested JSON object:
+
+```json
+{
+    "Id": 1,
+    "ShippingAddress": {
+        "Street": "221 B Baker St",
+        "City": "London",
+        "PostalCode": "NW1 6XE"
+    }
+}
+```
+
+The JSON property name used for the complex type can be customized using <xref:Microsoft.EntityFrameworkCore.CosmosComplexPropertyBuilderExtensions.ToJsonProperty*>:
+
+```csharp
+modelBuilder.Entity<Order>()
+    .ComplexProperty(o => o.ShippingAddress, b => b.ToJsonProperty("Address"));
+```
+
+Collections of complex types are also supported and are embedded as JSON arrays:
+
+```csharp
+public class Order
+{
+    public int Id { get; set; }
+    public List<OrderLine> Lines { get; set; } = [];
+}
+
+[ComplexType]
+public class OrderLine
+{
+    public required string ProductName { get; set; }
+    public int Quantity { get; set; }
+}
+```
+
+This results in the following JSON structure:
+
+```json
+{
+    "Id": 1,
+    "Lines": [
+        { "ProductName": "Widget", "Quantity": 2 },
+        { "ProductName": "Gadget", "Quantity": 1 }
+    ]
+}
+```
+
+The JSON array property name can similarly be customized using `ToJsonProperty()` on the complex collection builder.
+
+This feature was contributed by [@JoasE](https://github.com/JoasE) - many thanks!
 
 ## Optimistic concurrency with eTags
 
