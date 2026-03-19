@@ -120,14 +120,14 @@ EF Core [complex types](xref:core/what-is-new/ef-core-10.0/whatsnew#complex-type
 
 For example, the following configures `ShippingAddress` as a complex type:
 
-### [Fluent API](#tab/fluent-api)
+#### [Fluent API](#tab/fluent-api)
 
 ```csharp
 modelBuilder.Entity<Order>()
     .ComplexProperty(o => o.ShippingAddress);
 ```
 
-### [Data Annotations](#tab/data-annotations)
+#### [Data Annotations](#tab/data-annotations)
 
 ```csharp
 [ComplexType]
@@ -140,7 +140,7 @@ public class ShippingAddress
 
 ***
 
-Complex types are generally a better fit than owned types when mapping to JSON documents: unlike owned types, complex types have value semantics and no identity, which means they work better in scenarios such as comparing two embedded objects within the same document, or using them as keys.
+Complex types are generally a better fit than owned types when mapping to JSON documents: unlike owned types, complex types have value semantics and no identity, which means they work better in scenarios such as comparing two embedded objects within the same document.
 
 This feature was contributed by [@JoasE](https://github.com/JoasE) - many thanks!
 
