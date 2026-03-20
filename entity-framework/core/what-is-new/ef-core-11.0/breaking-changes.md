@@ -16,6 +16,9 @@ This page documents API and behavior changes that have the potential to break ex
 
 ## Summary
 
+> [!NOTE]
+> If you are using Microsoft.Data.Sqlite, please see the [separate section below on Microsoft.Data.Sqlite breaking changes](#MDS-breaking-changes).
+
 | **Breaking change**                                                                                             | **Impact** |
 |:--------------------------------------------------------------------------------------------------------------- | -----------|
 | [Sync I/O via the Azure Cosmos DB provider has been fully removed](#cosmos-nosync)                              | Medium     |
@@ -52,24 +55,24 @@ Convert your code to use async I/O APIs instead of sync I/O ones. For example, r
 
 | **Breaking change**                                                                                       | **Impact** |
 |:----------------------------------------------------------------------------------------------------------|------------|
-| [Encryption-enabled SQLite bundle packages have been removed](#sqlite-encryption-removed)                 | High       |
+| [Encryption-enabled SQLite packages have been removed](#sqlite-encryption-removed)                        | High       |
 | [Some SQLitePCLRaw bundle packages have been removed](#sqlite-bundles-removed)                            | Medium     |
 
 ### High-impact changes
 
 <a name="sqlite-encryption-removed"></a>
 
-#### Encryption-enabled SQLite bundle packages have been removed
+#### Encryption-enabled SQLite packages have been removed
 
 [Tracking Issue #5108](https://github.com/dotnet/EntityFramework.Docs/issues/5108)
 
 ##### Old behavior
 
-Previously, the `SQLitePCLRaw.bundle_e_sqlcipher` and `SQLitePCLRaw.bundle_e_sqlite3mc` NuGet packages provided encryption-enabled SQLite builds at no cost.
+Previously, the `SQLitePCLRaw.bundle_e_sqlcipher` NuGet package provided encryption-enabled SQLite builds at no cost.
 
 ##### New behavior
 
-Starting with SQLitePCLRaw 3.0 (used by Microsoft.Data.Sqlite 11.0), the `SQLitePCLRaw.bundle_e_sqlcipher` and `SQLitePCLRaw.bundle_e_sqlite3mc` packages have been deprecated and removed from NuGet. No-cost encryption-enabled SQLite builds are no longer distributed.
+Starting with SQLitePCLRaw 3.0 (used by Microsoft.Data.Sqlite 11.0), the `SQLitePCLRaw.bundle_e_sqlcipher` package has been deprecated and removed from NuGet. No-cost encryption-enabled SQLite builds are no longer distributed.
 
 ##### Why
 
@@ -95,7 +98,7 @@ For more details, see [SQLite encryption options for use with SQLitePCLRaw](http
 
 ##### Old behavior
 
-Previously, the `SQLitePCLRaw.bundle_sqlite3`, `SQLitePCLRaw.bundle_winsqlite3`, and `SQLitePCLRaw.bundle_green` packages provided a convenient way to configure SQLitePCLRaw with the corresponding SQLite provider.
+Previously, the `SQLitePCLRaw.bundle_sqlite3`, `SQLitePCLRaw.bundle_winsqlite3`, `SQLitePCLRaw.bundle_green`, and `SQLitePCLRaw.bundle_e_sqlite3mc` packages provided a convenient way to configure SQLitePCLRaw with the corresponding SQLite provider.
 
 ##### New behavior
 
@@ -118,11 +121,11 @@ Replace the removed bundle package with the corresponding provider package and a
 <PackageReference Include="SQLitePCLRaw.bundle_winsqlite3" Version="2.x.x" />
 
 <!-- New -->
-<PackageReference Include="SQLitePCLRaw.core" Version="3.0.1" />
-<PackageReference Include="SQLitePCLRaw.provider.sqlite3" Version="3.0.1" />
+<PackageReference Include="SQLitePCLRaw.core" Version="3.x.x" />
+<PackageReference Include="SQLitePCLRaw.provider.sqlite3" Version="3.x.x" />
 <!-- or -->
-<PackageReference Include="SQLitePCLRaw.core" Version="3.0.1" />
-<PackageReference Include="SQLitePCLRaw.provider.winsqlite3" Version="3.0.1" />
+<PackageReference Include="SQLitePCLRaw.core" Version="3.x.x" />
+<PackageReference Include="SQLitePCLRaw.provider.winsqlite3" Version="3.x.x" />
 ```
 
 Then add explicit initialization before using SQLite:
@@ -138,14 +141,14 @@ SQLitePCL.raw.SetProvider(new SQLitePCL.SQLite3Provider_winsqlite3());
 **If using `bundle_green`**, the recommended migration path is to switch to `SQLitePCLRaw.bundle_e_sqlite3`. Alternatively, use `SQLitePCLRaw.config.e_sqlite3` paired with a separate native library package like `SourceGear.sqlite3`, which allows you to update the SQLite version independently:
 
 ```xml
-<PackageReference Include="SQLitePCLRaw.bundle_e_sqlite3" Version="3.0.1" />
+<PackageReference Include="SQLitePCLRaw.bundle_e_sqlite3" Version="3.x.x" />
 ```
 
 If you only target iOS and want to continue using the system SQLite library, reference the provider directly:
 
 ```xml
-<PackageReference Include="SQLitePCLRaw.core" Version="3.0.1" />
-<PackageReference Include="SQLitePCLRaw.provider.sqlite3" Version="3.0.1" />
+<PackageReference Include="SQLitePCLRaw.core" Version="3.x.x" />
+<PackageReference Include="SQLitePCLRaw.provider.sqlite3" Version="3.x.x" />
 ```
 
 And initialize it explicitly:
