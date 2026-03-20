@@ -79,7 +79,7 @@ The maintainer of SQLitePCLRaw no longer distributes encryption-enabled SQLite b
 
 If you need SQLite encryption, you have the following options:
 
-- **SQLite Encryption Extension (SEE)**: This is the official encryption implementation from the SQLite team. A paid license is required. See [sqlite.org/com/see.html](https://sqlite.org/com/see.html) for details. NuGet packages are available through [SourceGear's SQLite build service](https://github.com/ericsink/SQLitePCL.raw/wiki/SQLite-encryption-options-for-use-with-SQLitePCLRaw).
+- **SQLite Encryption Extension (SEE)**: This is the official encryption implementation from the SQLite team. A paid license is required. See [https://sqlite.org/com/see.html](https://sqlite.org/com/see.html) for details. NuGet packages are available through [SourceGear's SQLite build service](https://github.com/ericsink/SQLitePCL.raw/wiki/SQLite-encryption-options-for-use-with-SQLitePCLRaw).
 - **SQLCipher**: Purchase supported builds from [Zetetic](https://www.zetetic.net/sqlcipher/), or build the [open source code](https://github.com/sqlcipher/sqlcipher) yourself.
 - **SQLite3 Multiple Ciphers**: NuGet packages are available to customers of [SourceGear's SQLite build service](https://github.com/ericsink/SQLitePCL.raw/wiki/SQLite-encryption-options-for-use-with-SQLitePCLRaw).
 
@@ -135,7 +135,7 @@ SQLitePCL.raw.SetProvider(new SQLitePCL.SQLite3Provider_sqlite3());
 SQLitePCL.raw.SetProvider(new SQLitePCL.SQLite3Provider_winsqlite3());
 ```
 
-**If using `bundle_green`**, the recommended migration path is to switch to `SQLitePCLRaw.bundle_e_sqlite3` (or `SQLitePCLRaw.config.e_sqlite3` with `SourceGear.sqlite3`):
+**If using `bundle_green`**, the recommended migration path is to switch to `SQLitePCLRaw.bundle_e_sqlite3`. Alternatively, use `SQLitePCLRaw.config.e_sqlite3` paired with a separate native library package like `SourceGear.sqlite3`, which allows you to update the SQLite version independently:
 
 ```xml
 <PackageReference Include="SQLitePCLRaw.bundle_e_sqlite3" Version="3.0.1" />
