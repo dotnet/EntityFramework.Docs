@@ -8,14 +8,13 @@ uid: core/learn-more/community-standups
 
 # .NET Data Community Standups
 
-The .NET Data Community Standups are live-streamed monthly (roughly) on Wednesday (usually) to YouTube and Twitch. This is your opportunity to interact with the .NET Data team and community. All past episodes are [available on YouTube](https://aka.ms/efstandups) and are listed below with links to content from the shows.
-
-[Comment on GitHub](https://github.com/dotnet/efcore/issues/22700) with ideas for guests, demos, or anything else you want to see.
+The .NET Data Community Standups are live-streamed monthly (roughly) on Thursday (usually) to YouTube, Twitch, Facebook, and X. This is your opportunity to interact with the .NET Data team and community. All past episodes are [available on YouTube](https://aka.ms/efstandups) and are listed below with links to content from the shows.
 
 ## Summary
 
 | Date         | Area                  | Title                                                                                    |
 |--------------|-----------------------|------------------------------------------------------------------------------------------|
+| Mar 19, 2026 | DevArt                | [How dotConnect + Entity Developer simplify your workflow](#Mar19_2026)                  |
 | Feb 12, 2026 | AI                    | [Adam tells us about Microsoft.Extensions.DataIngestion](#Feb12_2026)                    |
 | Nov 20, 2025 | Release               | [EF 10 release celebration 🎉](#Nov20_2025)                                              |
 | Oct 16, 2025 | Migrations            | [Jeremy Miller shares his view on migrations and Marten](#Oct16_2025)                    |
@@ -110,6 +109,22 @@ The .NET Data Community Standups are live-streamed monthly (roughly) on Wednesda
 | May 6, 2020  | Welcome!              | [Introducing the EF Core Community Standup](#one)                                        |
 
 ## 2026
+
+<a name="Mar19_2026"></a>
+
+### Mar 19: [How dotConnect + Entity Developer simplify your workflow](https://www.youtube.com/live/2QX2qHvGbCE?si=xikIyOFYi3eTXLVx)
+
+Join us for a show where DevArt will show us how dotConnect and Entity Developer simplify your workflow in .NET development.
+
+Featuring:
+
+- [Yurii Hryhoriev](https://www.linkedin.com/in/yuriihryhoriev) (Special guest)
+- [Jiri Cincura](https://www.tabsoverspaces.com/) (Host)
+
+Links:
+
+- [dotConnect](https://www.devart.com/dotconnect/)
+- [Entity Developer](https://www.devart.com/entitydeveloper/)
 
 <a name="Feb12_2026"></a>
 
