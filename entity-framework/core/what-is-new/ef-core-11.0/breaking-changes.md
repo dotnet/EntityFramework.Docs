@@ -130,10 +130,16 @@ Then add explicit initialization before using SQLite:
 
 ```csharp
 // For sqlite3
-SQLitePCL.raw.SetProvider(new SQLitePCL.SQLite3Provider_sqlite3());
+static void Init()
+{
+    SQLitePCL.raw.SetProvider(new SQLitePCL.SQLite3Provider_sqlite3());
+}
 
 // For winsqlite3
-SQLitePCL.raw.SetProvider(new SQLitePCL.SQLite3Provider_winsqlite3());
+static void Init()
+{
+    SQLitePCL.raw.SetProvider(new SQLitePCL.SQLite3Provider_winsqlite3());
+}
 ```
 
 **If using `bundle_green`**, the recommended migration path is to switch to `SQLitePCLRaw.bundle_e_sqlite3`. Alternatively, use `SQLitePCLRaw.config.e_sqlite3` paired with a separate native library package like `SourceGear.sqlite3`, which allows you to update the SQLite version independently:
@@ -152,7 +158,10 @@ If you only target iOS and want to continue using the system SQLite library, ref
 And initialize it explicitly:
 
 ```csharp
-SQLitePCL.raw.SetProvider(new SQLitePCL.SQLite3Provider_sqlite3());
+static void Init()
+{
+    SQLitePCL.raw.SetProvider(new SQLitePCL.SQLite3Provider_sqlite3());
+}
 ```
 
 > [!NOTE]
