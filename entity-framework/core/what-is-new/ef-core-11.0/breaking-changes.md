@@ -55,10 +55,10 @@ Convert your code to use async I/O APIs instead of sync I/O ones. For example, r
 
 | **Breaking change**                                                                                       | **Impact** |
 |:----------------------------------------------------------------------------------------------------------|------------|
-| [Encryption-enabled SQLite packages have been removed](#sqlite-encryption-removed)                        | High       |
+| [Encryption-enabled SQLite packages have been removed](#sqlite-encryption-removed)                        | Medium     |
 | [Some SQLitePCLRaw bundle packages have been removed](#sqlite-bundles-removed)                            | Medium     |
 
-### High-impact changes
+### Medium-impact changes
 
 <a name="sqlite-encryption-removed"></a>
 
@@ -87,8 +87,6 @@ If you need SQLite encryption, you have the following options:
 - **SQLite3 Multiple Ciphers**: NuGet packages are available to customers of [SourceGear's SQLite build service](https://github.com/ericsink/SQLitePCL.raw/wiki/SQLite-encryption-options-for-use-with-SQLitePCLRaw).
 
 For more details, see [SQLite encryption options for use with SQLitePCLRaw](https://github.com/ericsink/SQLitePCL.raw/wiki/SQLite-encryption-options-for-use-with-SQLitePCLRaw) and [SQLitePCLRaw 3.0 Release Notes](https://github.com/ericsink/SQLitePCL.raw/blob/main/v3.md).
-
-### Medium-impact changes
 
 <a name="sqlite-bundles-removed"></a>
 
