@@ -23,6 +23,7 @@ This page documents API and behavior changes that have the potential to break ex
 | [`EFOptimizeContext` MSBuild property has been removed](#ef-optimize-context-removed)                            | Low        |
 | [EF tools packages no longer reference Microsoft.EntityFrameworkCore.Design](#ef-tools-no-design-dep) | Low        |
 | [SqlVector properties are no longer loaded by default](#sqlvector-not-auto-loaded)                              | Low        |
+| [Cosmos: empty owned collection navigations now return an empty collection instead of null](#cosmos-empty-collections) | Low   |
 
 ## Medium-impact changes
 
@@ -175,3 +176,41 @@ var embeddings = await context.Blogs
     .Select(b => new { b.Id, b.Embedding })
     .ToListAsync();
 ```
+
+<a name="cosmos-empty-collections"></a>
+
+### Cosmos: empty owned collection navigations now return an empty collection instead of null
+
+[Tracking Issue #36577](https://github.com/dotnet/efcore/issues/36577)
+
+#### Old behavior
+
+Previously, when querying entities via the Azure Cosmos DB provider where an owned collection navigation contained no items, the navigation property was `null` on the materialized entity.
+
+#### New behavior
+
+Starting with EF Core 11.0, the Azure Cosmos DB provider correctly initializes empty owned collection navigations, returning an empty collection instead of `null`.
+
+#### Why
+
+This was a bug: collection initialization was previously triggered only during enumeration of the collection's items. When there were no items, no enumeration occurred and the collection was left uninitialized (`null`).
+
+#### Mitigations
+
+If your code explicitly checks collection navigation properties for `null` as a way to detect that the collection is empty, update those checks to also handle the empty-collection case:
+
+```csharp
+// Before
+if (entity.OwnedCollection is null)
+{
+    // treated as empty
+}
+
+// After
+if (entity.OwnedCollection is null or { Count: 0 })
+{
+    // treated as empty
+}
+```
+
+Alternatively, since the collection is now always initialized when the entity exists in the store, `null` checks on owned collection navigations can simply be removed.
