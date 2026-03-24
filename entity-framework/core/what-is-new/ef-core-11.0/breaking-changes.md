@@ -20,10 +20,10 @@ This page documents API and behavior changes that have the potential to break ex
 |:--------------------------------------------------------------------------------------------------------------- | -----------|
 | [Sync I/O via the Azure Cosmos DB provider has been fully removed](#cosmos-nosync)                              | Medium     |
 | [EF Core now throws by default when no migrations are found](#migrations-not-found)                             | Low        |
-| [`EFOptimizeContext` MSBuild property has been removed](#ef-optimize-context-removed)                            | Low        |
-| [EF tools packages no longer reference Microsoft.EntityFrameworkCore.Design](#ef-tools-no-design-dep) | Low        |
+| [`EFOptimizeContext` MSBuild property has been removed](#ef-optimize-context-removed)                           | Low        |
+| [EF tools packages no longer reference Microsoft.EntityFrameworkCore.Design](#ef-tools-no-design-dep)           | Low        |
 | [SqlVector properties are no longer loaded by default](#sqlvector-not-auto-loaded)                              | Low        |
-| [Cosmos: empty owned collections now return an empty collection instead of null](#cosmos-empty-collections) | Low        |
+| [Cosmos: empty owned collections now return an empty collection instead of null](#cosmos-empty-collections)     | Low        |
 
 ## Medium-impact changes
 
