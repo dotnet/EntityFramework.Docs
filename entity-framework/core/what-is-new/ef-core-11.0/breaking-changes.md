@@ -51,6 +51,9 @@ Convert your code to use async I/O APIs instead of sync I/O ones. For example, r
 
 ## Microsoft.Data.Sqlite breaking changes
 
+> [!NOTE]
+> [SQLitePCLRaw](https://github.com/ericsink/SQLitePCL.raw) is an external, community-maintained library that is not owned or maintained by Microsoft. Microsoft.Data.Sqlite depends on it for its SQLite connectivity.
+
 ### Summary
 
 | **Breaking change**                                                                                       | **Impact** |
@@ -76,7 +79,7 @@ Starting with SQLitePCLRaw 3.0 (used by Microsoft.Data.Sqlite 11.0), the `SQLite
 
 ##### Why
 
-The maintainer of SQLitePCLRaw no longer distributes encryption-enabled SQLite builds without cost.
+The previous no-cost `SQLitePCLRaw.bundle_e_sqlcipher` package was barely maintained, which is a significant concern for encryption software where security vulnerabilities may go unpatched. The SQLitePCLRaw maintainer removed these builds in version 3.0 in favor of professionally maintained, paid alternatives that provide ongoing security updates.
 
 ##### Mitigations
 
