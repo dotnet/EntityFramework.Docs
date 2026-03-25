@@ -348,6 +348,7 @@ Extensive work has gone into making the Azure Cosmos DB provider better in 9.0. 
 | [Incorrectly translated queries are no longer translated](#cosmos-incorrect-translations)                                                            | Medium     |
 | [`HasIndex` now throws instead of being ignored](#cosmos-hasindex-throws)                                                                            | Low        |
 | [`IncludeRootDiscriminatorInJsonId` was renamed to `HasRootDiscriminatorInJsonId` after 9.0.0-rc.2](#cosmos-IncludeRootDiscriminatorInJsonId-rename) | Low        |
+| [The referenced Newtonsoft.Json version was updated from 10.0.2 to 13.0.1](#cosmos-newtonsoft-json-version)                                         | Low        |
 
 ### High-impact changes
 
@@ -688,3 +689,23 @@ Another related API was renamed to start with `Has` instead of `Include`, and so
 ##### Mitigations
 
 If your code is using the `IncludeRootDiscriminatorInJsonId` API, simply change it to reference `HasRootDiscriminatorInJsonId` instead.
+
+<a name="cosmos-newtonsoft-json-version"></a>
+
+#### The referenced Newtonsoft.Json version was updated from 10.0.2 to 13.0.1
+
+##### Old behavior
+
+The Cosmos provider referenced Newtonsoft.Json version 10.0.2.
+
+##### New behavior
+
+Starting with EF Core 9.0, the Cosmos provider references Newtonsoft.Json version 13.0.1.
+
+##### Why
+
+The previously referenced version of Newtonsoft.Json has known vulnerabilities. The version was updated to avoid depending on a package version with known security issues.
+
+##### Mitigations
+
+The upgrade to Newtonsoft.Json 13.0.1 should not cause issues in most cases. If your application uses Newtonsoft.Json directly and relies on a specific older version, you can update your application to be compatible with Newtonsoft.Json 13.0.1 or later. See the [Newtonsoft.Json release notes](https://github.com/JamesNK/Newtonsoft.Json/releases) for details on changes between versions.
