@@ -8,7 +8,7 @@ uid: core/managing-schemas/migrations/projects
 
 # Using a Separate Migrations Project
 
-You may want to store your migrations in a different project than the one containing your `DbContext`. This is recommended if your project is platform-specific, since EF tools don't support these projects. You can also use this strategy to maintain multiple sets of migrations, for example, one for development and another for release-to-release upgrades.
+You may want to store your migrations in a different project than the one containing your `DbContext`. This is recommended if your project uses a platform-specific project type that the EF tools don't support, such as WinUI, Xamarin, MAUI, Blazor, or Azure Functions, or if it targets a specific runtime identifier (RID). You can also use this strategy to maintain multiple sets of migrations, for example, one for development and another for release-to-release upgrades.
 
 > [!TIP]
 > You can view this article's [sample on GitHub](https://github.com/dotnet/EntityFramework.Docs/tree/main/samples/core/Schemas/ThreeProjectMigrations).
@@ -59,3 +59,6 @@ Add-Migration NewMigration -Project WebApplication1.Migrations
 ```
 
 ***
+
+> [!TIP]
+> If your application uses dependency injection, consider implementing <xref:Microsoft.EntityFrameworkCore.Design.IDesignTimeDbContextFactory`1> in your migrations project. This allows the EF tools to create your `DbContext` without needing to run the startup project. For more information, see [From a design-time factory](xref:core/cli/dbcontext-creation#from-a-design-time-factory).
