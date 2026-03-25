@@ -20,9 +20,10 @@ This page documents API and behavior changes that have the potential to break ex
 |:--------------------------------------------------------------------------------------------------------------- | -----------|
 | [Sync I/O via the Azure Cosmos DB provider has been fully removed](#cosmos-nosync)                              | Medium     |
 | [EF Core now throws by default when no migrations are found](#migrations-not-found)                             | Low        |
-| [`EFOptimizeContext` MSBuild property has been removed](#ef-optimize-context-removed)                            | Low        |
-| [EF tools packages no longer reference Microsoft.EntityFrameworkCore.Design](#ef-tools-no-design-dep) | Low        |
+| [`EFOptimizeContext` MSBuild property has been removed](#ef-optimize-context-removed)                           | Low        |
+| [EF tools packages no longer reference Microsoft.EntityFrameworkCore.Design](#ef-tools-no-design-dep)           | Low        |
 | [SqlVector properties are no longer loaded by default](#sqlvector-not-auto-loaded)                              | Low        |
+| [Cosmos: empty owned collections now return an empty collection instead of null](#cosmos-empty-collections)     | Low        |
 
 ## Medium-impact changes
 
@@ -174,4 +175,40 @@ If you need to read back vector values, use an explicit projection:
 var embeddings = await context.Blogs
     .Select(b => new { b.Id, b.Embedding })
     .ToListAsync();
+```
+
+<a name="cosmos-empty-collections"></a>
+
+### Cosmos: empty owned collections now return an empty collection instead of null
+
+[Tracking Issue #36577](https://github.com/dotnet/efcore/issues/36577)
+
+#### Old behavior
+
+Previously, when querying entities via the Azure Cosmos DB provider where an owned collection contained no items, the collection property was `null` on the materialized entity.
+
+#### New behavior
+
+Starting with EF Core 11.0, the Azure Cosmos DB provider correctly initializes empty owned collections, returning an empty collection instead of `null`.
+
+#### Why
+
+The previous behavior of materializing empty owned collections as `null` was a bug.
+
+#### Mitigations
+
+If your code explicitly checks owned collection properties for `null` to detect that the collection is empty, those checks can simply be removed, since the collection is now always initialized:
+
+```csharp
+// Before
+if (entity.OwnedCollection is null or { Count: 0 })
+{
+    // treated as empty
+}
+
+// After
+if (entity.OwnedCollection is { Count: 0 })
+{
+    // treated as empty
+}
 ```
