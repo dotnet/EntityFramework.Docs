@@ -24,6 +24,7 @@ This page documents API and behavior changes that have the potential to break ex
 | [EF tools packages no longer reference Microsoft.EntityFrameworkCore.Design](#ef-tools-no-design-dep)           | Low        |
 | [SqlVector properties are no longer loaded by default](#sqlvector-not-auto-loaded)                              | Low        |
 | [Cosmos: empty owned collections now return an empty collection instead of null](#cosmos-empty-collections)     | Low        |
+| [Microsoft.Data.SqlClient has been updated to 7.0](#sqlclient-7)                                               | Low        |
 
 ## Medium-impact changes
 
@@ -212,3 +213,35 @@ if (entity.OwnedCollection is { Count: 0 })
     // treated as empty
 }
 ```
+
+<a name="sqlclient-7"></a>
+
+### Microsoft.Data.SqlClient has been updated to 7.0
+
+[Tracking Issue: dotnet/efcore#37949](https://github.com/dotnet/efcore/pull/37949)
+
+#### Old behavior
+
+EF Core 10 used [Microsoft.Data.SqlClient](https://www.nuget.org/packages/Microsoft.Data.SqlClient/) 6.x, which included Azure/Entra ID authentication dependencies (such as `Azure.Core`, `Azure.Identity`, and `Microsoft.Identity.Client`) in the core package.
+
+#### New behavior
+
+EF Core 11 now depends on [Microsoft.Data.SqlClient](https://www.nuget.org/packages/Microsoft.Data.SqlClient/) 7.0. This version removes Azure/Entra ID (formerly Azure Active Directory) authentication dependencies from the core package. If your application uses Entra ID authentication (for example, `ActiveDirectoryDefault`, `ActiveDirectoryInteractive`, `ActiveDirectoryManagedIdentity`, or `ActiveDirectoryServicePrincipal`), you must now install the [`Microsoft.Data.SqlClient.Extensions.Azure`](https://www.nuget.org/packages/Microsoft.Data.SqlClient.Extensions.Azure/) package separately.
+
+In addition, `SqlAuthenticationMethod.ActiveDirectoryPassword` has been marked as obsolete.
+
+For more details, see the [Microsoft.Data.SqlClient 7.0 release notes](https://github.com/dotnet/SqlClient/blob/main/release-notes/7.0/7.0.0.md).
+
+#### Why
+
+This change was made in [Microsoft.Data.SqlClient](https://www.nuget.org/packages/Microsoft.Data.SqlClient/) to reduce dependency bloat for applications that don't use Azure authentication, which is especially beneficial for containerized deployments and local development.
+
+#### Mitigations
+
+If your application uses Entra ID authentication with SQL Server, add a reference to the `Microsoft.Data.SqlClient.Extensions.Azure` package in your project:
+
+```xml
+<PackageReference Include="Microsoft.Data.SqlClient.Extensions.Azure" Version="7.0.0" />
+```
+
+No code changes are required beyond adding this package reference. If you use `SqlAuthenticationMethod.ActiveDirectoryPassword`, migrate to a modern authentication method such as `ActiveDirectoryDefault` or `ActiveDirectoryInteractive`.
