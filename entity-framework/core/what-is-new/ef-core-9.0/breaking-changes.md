@@ -694,8 +694,6 @@ If your code is using the `IncludeRootDiscriminatorInJsonId` API, simply change 
 
 #### The referenced Newtonsoft.Json version was updated from 10.0.2 to 13.0.1
 
-[Tracking Issue #34666](https://github.com/dotnet/efcore/pull/34666)
-
 ##### Old behavior
 
 The Cosmos provider referenced Newtonsoft.Json version 10.0.2.
