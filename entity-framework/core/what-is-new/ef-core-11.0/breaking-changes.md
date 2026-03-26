@@ -19,6 +19,7 @@ This page documents API and behavior changes that have the potential to break ex
 | **Breaking change**                                                                                             | **Impact** |
 |:--------------------------------------------------------------------------------------------------------------- | -----------|
 | [Sync I/O via the Azure Cosmos DB provider has been fully removed](#cosmos-nosync)                              | Medium     |
+| [Microsoft.Data.SqlClient has been updated to 7.0](#sqlclient-7)                                                | Medium     |
 | [EF Core now throws by default when no migrations are found](#migrations-not-found)                             | Low        |
 | [`EFOptimizeContext` MSBuild property has been removed](#ef-optimize-context-removed)                           | Low        |
 | [EF tools packages no longer reference Microsoft.EntityFrameworkCore.Design](#ef-tools-no-design-dep)           | Low        |
@@ -48,6 +49,36 @@ Synchronous blocking on asynchronous methods ("sync-over-async") is highly disco
 #### Mitigations
 
 Convert your code to use async I/O APIs instead of sync I/O ones. For example, replace calls to `SaveChanges()` with `await SaveChangesAsync()`.
+
+<a name="sqlclient-7"></a>
+
+### Microsoft.Data.SqlClient has been updated to 7.0
+
+#### Old behavior
+
+EF Core 10 used [Microsoft.Data.SqlClient](https://www.nuget.org/packages/Microsoft.Data.SqlClient/) 6.x, which included Azure/Entra ID authentication dependencies (such as `Azure.Core`, `Azure.Identity`, and `Microsoft.Identity.Client`) in the core package.
+
+#### New behavior
+
+EF Core 11 now depends on [Microsoft.Data.SqlClient](https://www.nuget.org/packages/Microsoft.Data.SqlClient/) 7.0. This version removes Azure/Entra ID (formerly Azure Active Directory) authentication dependencies from the core package. If your application uses Entra ID authentication (for example, `ActiveDirectoryDefault`, `ActiveDirectoryInteractive`, `ActiveDirectoryManagedIdentity`, or `ActiveDirectoryServicePrincipal`), you must now install the [`Microsoft.Data.SqlClient.Extensions.Azure`](https://www.nuget.org/packages/Microsoft.Data.SqlClient.Extensions.Azure/) package separately.
+
+In addition, `SqlAuthenticationMethod.ActiveDirectoryPassword` has been marked as obsolete.
+
+For more details, see the [Microsoft.Data.SqlClient 7.0 release notes](https://github.com/dotnet/SqlClient/blob/main/release-notes/7.0/7.0.0.md).
+
+#### Why
+
+This change was made in [Microsoft.Data.SqlClient](https://www.nuget.org/packages/Microsoft.Data.SqlClient/) to reduce dependency bloat for applications that don't use Azure authentication, which is especially beneficial for containerized deployments and local development.
+
+#### Mitigations
+
+If your application uses Entra ID authentication with SQL Server, add a reference to the `Microsoft.Data.SqlClient.Extensions.Azure` package in your project:
+
+```xml
+<PackageReference Include="Microsoft.Data.SqlClient.Extensions.Azure" Version="7.0.0" />
+```
+
+No code changes are required beyond adding this package reference. If you use `SqlAuthenticationMethod.ActiveDirectoryPassword`, migrate to a modern authentication method such as `ActiveDirectoryDefault` or `ActiveDirectoryInteractive`.
 
 ## Low-impact changes
 
