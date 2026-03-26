@@ -218,8 +218,6 @@ if (entity.OwnedCollection is { Count: 0 })
 
 ### Microsoft.Data.SqlClient has been updated to 7.0
 
-[Tracking Issue: dotnet/efcore#37949](https://github.com/dotnet/efcore/pull/37949)
-
 #### Old behavior
 
 EF Core 10 used [Microsoft.Data.SqlClient](https://www.nuget.org/packages/Microsoft.Data.SqlClient/) 6.x, which included Azure/Entra ID authentication dependencies (such as `Azure.Core`, `Azure.Identity`, and `Microsoft.Identity.Client`) in the core package.
