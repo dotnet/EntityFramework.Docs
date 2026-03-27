@@ -34,7 +34,7 @@ Replace `Microsoft.EntityFrameworkCore.Sqlite` with `Microsoft.EntityFrameworkCo
   <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite.Core" Version="9.0.0" />
   <PackageReference Include="SQLitePCLRaw.provider.sqlite3" Version="2.1.10" />
 
-  <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite.NetTopologySuite" Version="9.0.0" />
+  <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite.NetTopologySuite" Version="10.0.0" />
 </ItemGroup>
 ```
 
