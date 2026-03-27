@@ -326,16 +326,19 @@ As with any layer, EF Core adds a bit of runtime overhead compared to coding dir
 
 ## Memory Cache Integration
 
-EF Core integrates with ASP.NET Core's memory caching infrastructure through `IMemoryCache`. However, this is not used for the internal service provider caching.
+EF Core uses `IMemoryCache` for internal caching operations such as query compilation and model building. By default, EF Core configures its own `IMemoryCache` with a size limit of 10240. For reference, a compiled query has a cache size of 10, while the built model has a cache size of 100.
 
-EF Core automatically configures `IMemoryCache` with a default size limit of 10240 for internal caching operations such as query compilation and model building. You should call `AddMemoryCache` if you need to change these defaults. For reference, a compiled query has a cache size of 10, while the built model has a cache size of 100.
+If you need to change the default cache size limit, register a custom `IMemoryCache` via `AddMemoryCache` and then use <xref:Microsoft.EntityFrameworkCore.DbContextOptionsBuilder.UseMemoryCache*> to make EF Core use it:
 
 ```csharp
 public void ConfigureServices(IServiceCollection services)
 {
     services.AddMemoryCache(options => options.SizeLimit = 20480); // Custom size limit for EF Core caching
-    
-    services.AddDbContext<ApplicationDbContext>(options =>
-        options.UseSqlServer(connectionString));
+
+    services.AddDbContext<ApplicationDbContext>((serviceProvider, options) =>
+    {
+        options.UseMemoryCache(serviceProvider.GetRequiredService<IMemoryCache>());
+        options.UseSqlServer(connectionString);
+    });
 }
 ```
