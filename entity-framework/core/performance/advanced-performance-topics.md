@@ -331,14 +331,16 @@ EF Core uses `IMemoryCache` for internal caching operations such as query compil
 If you need to change the default cache size limit, use <xref:Microsoft.EntityFrameworkCore.DbContextOptionsBuilder.UseMemoryCache*> to provide a custom `IMemoryCache` instance:
 
 ```csharp
+var memoryCache = new MemoryCache(new MemoryCacheOptions { SizeLimit = 20480 });
+
 services.AddDbContext<ApplicationDbContext>(options =>
 {
-    options.UseMemoryCache(new MemoryCache(new MemoryCacheOptions { SizeLimit = 20480 }));
+    options.UseMemoryCache(memoryCache);
     options.UseSqlServer(connectionString);
 });
 ```
 
-Alternatively, if you register a custom `IMemoryCache` via `AddMemoryCache` in DI, you can resolve it from the service provider:
+Alternatively, if you register a custom `IMemoryCache` via `AddMemoryCache` in DI, you can resolve it from the service provider. Note that this shares the cache between EF Core and any other services that use `IMemoryCache`, so the size limit should account for all consumers:
 
 ```csharp
 services.AddMemoryCache(options => options.SizeLimit = 20480);
