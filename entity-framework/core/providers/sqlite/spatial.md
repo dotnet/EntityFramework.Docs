@@ -24,7 +24,7 @@ brew install libspatialite
 Unfortunately, newer versions of PROJ (a dependency of SpatiaLite) are incompatible with EF's default [SQLitePCLRaw bundle](/dotnet/standard/data/sqlite/custom-versions#bundles). You can work around this by using the system SQLite library instead.
 
 > [!IMPORTANT]
-> Don't use `Microsoft.EntityFrameworkCore.Sqlite` with SpatiaLite on macOS and Linux. That package depends on `Microsoft.Data.Sqlite`, which brings in `SQLitePCLRaw.bundle_e_sqlite3`—a bundled version of SQLite that is incompatible with system-installed SpatiaLite. Using it may result in a silent crash at run time. Use `Microsoft.EntityFrameworkCore.Sqlite.Core` instead, together with the system SQLite provider as shown below.
+> Don't use `Microsoft.EntityFrameworkCore.Sqlite` or `Microsoft.Data.Sqlite` with SpatiaLite on macOS and Linux. Those packages depends on `Microsoft.Data.Sqlite`, which brings in `SQLitePCLRaw.bundle_e_sqlite3`—a bundled version of SQLite that is incompatible with system-installed SpatiaLite. Using it may result in a silent crash at run time. Use `Microsoft.EntityFrameworkCore.Sqlite.Core` or `Microsoft.Data.Sqlite.Core` instead, together with the system SQLite provider as shown below.
 
 Replace `Microsoft.EntityFrameworkCore.Sqlite` with `Microsoft.EntityFrameworkCore.Sqlite.Core` and reference the `SQLitePCLRaw.provider.sqlite3` package to use the system SQLite library:
 
