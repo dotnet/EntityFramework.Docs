@@ -123,10 +123,8 @@ Replace the removed bundle package with the corresponding provider package and a
 <PackageReference Include="SQLitePCLRaw.bundle_winsqlite3" Version="2.x.x" />
 
 <!-- New -->
-<PackageReference Include="SQLitePCLRaw.core" Version="3.x.x" />
 <PackageReference Include="SQLitePCLRaw.provider.sqlite3" Version="3.x.x" />
 <!-- or -->
-<PackageReference Include="SQLitePCLRaw.core" Version="3.x.x" />
 <PackageReference Include="SQLitePCLRaw.provider.winsqlite3" Version="3.x.x" />
 ```
 
