@@ -332,7 +332,7 @@ If you need to change the default cache size limit, use <xref:Microsoft.EntityFr
 
 ```csharp
 var memoryCache = new MemoryCache(new MemoryCacheOptions { SizeLimit = 20480 });
-services.AddSingleton(memoryCache);
+services.AddSingleton<IDisposable>(memoryCache);
 
 services.AddDbContext<ApplicationDbContext>(options =>
 {
@@ -341,9 +341,9 @@ services.AddDbContext<ApplicationDbContext>(options =>
 });
 ```
 
-The `MemoryCache` instance is registered as a singleton so that it will be disposed when the service provider is disposed. Registering it as the concrete type `MemoryCache` rather than `IMemoryCache` avoids replacing the app-wide memory cache.
+The `MemoryCache` instance is registered as `IDisposable` so that it will be disposed when the service provider is disposed, without replacing the app-wide `IMemoryCache`.
 
-Alternatively, if you register a custom `IMemoryCache` via `AddMemoryCache` in DI, you can resolve it from the service provider. Note that this shares the cache between EF Core and any other services that use `IMemoryCache`, so the size limit should account for all consumers:
+Alternatively, if you register a custom `IMemoryCache` via `AddMemoryCache` in DI, you can resolve it from the service provider. Note that this shares the cache between EF Core and any other services that use `IMemoryCache`, so the size limit should account for all consumers. When a `SizeLimit` is set, all cache entries from every consumer must specify a size; otherwise `IMemoryCache` will throw when entries are added:
 
 ```csharp
 services.AddMemoryCache(options => options.SizeLimit = 20480);
