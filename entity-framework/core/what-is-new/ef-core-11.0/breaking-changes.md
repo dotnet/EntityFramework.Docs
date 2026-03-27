@@ -2,7 +2,7 @@
 title: Breaking changes in EF Core 11 (EF11) - EF Core
 description: List of breaking changes introduced in Entity Framework Core 11 (EF11)
 author: roji
-ms.date: 11/09/2025
+ms.date: 03/27/2026
 uid: core/what-is-new/ef-core-11.0/breaking-changes
 ---
 
@@ -87,7 +87,8 @@ If you need SQLite encryption, you have the following options:
 
 - **SQLite Encryption Extension (SEE)**: This is the official encryption implementation from the SQLite team. A paid license is required. See [https://sqlite.org/com/see.html](https://sqlite.org/com/see.html) for details. NuGet packages are available through [SourceGear's SQLite build service](https://github.com/ericsink/SQLitePCL.raw/wiki/SQLite-encryption-options-for-use-with-SQLitePCLRaw).
 - **SQLCipher**: Purchase supported builds from [Zetetic](https://www.zetetic.net/sqlcipher/), or build the [open source code](https://github.com/sqlcipher/sqlcipher) yourself.
-- **SQLite3 Multiple Ciphers**: NuGet packages are available to customers of [SourceGear's SQLite build service](https://github.com/ericsink/SQLitePCL.raw/wiki/SQLite-encryption-options-for-use-with-SQLitePCLRaw).
+- **SQLite3 Multiple Ciphers**: NuGet packages are available from [SQLite3MultipleCiphers-NuGet](https://github.com/utelle/SQLite3MultipleCiphers-NuGet).
+  - If you need to open an existing database that was encrypted with SQLCipher, you must configure the cipher scheme in the connection string using URI parameters—for example: `Data Source=file:example.db?cipher=sqlcipher&legacy=4;Password=<password>`. See [How to open an existing database encrypted with SQLCipher](https://github.com/utelle/SQLite3MultipleCiphers-NuGet#how-to-open-an-existing-database-encrypted-with-sqlcipher) for details.
 
 For more details, see [SQLite encryption options for use with SQLitePCLRaw](https://github.com/ericsink/SQLitePCL.raw/wiki/SQLite-encryption-options-for-use-with-SQLitePCLRaw) and [SQLitePCLRaw 3.0 Release Notes](https://github.com/ericsink/SQLitePCL.raw/blob/main/v3.md).
 
@@ -122,10 +123,8 @@ Replace the removed bundle package with the corresponding provider package and a
 <PackageReference Include="SQLitePCLRaw.bundle_winsqlite3" Version="2.x.x" />
 
 <!-- New -->
-<PackageReference Include="SQLitePCLRaw.core" Version="3.x.x" />
 <PackageReference Include="SQLitePCLRaw.provider.sqlite3" Version="3.x.x" />
 <!-- or -->
-<PackageReference Include="SQLitePCLRaw.core" Version="3.x.x" />
 <PackageReference Include="SQLitePCLRaw.provider.winsqlite3" Version="3.x.x" />
 ```
 
