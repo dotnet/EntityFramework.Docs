@@ -2,7 +2,7 @@
 title: Breaking changes in EF Core 11 (EF11) - EF Core
 description: List of breaking changes introduced in Entity Framework Core 11 (EF11)
 author: roji
-ms.date: 11/09/2025
+ms.date: 03/27/2026
 uid: core/what-is-new/ef-core-11.0/breaking-changes
 ---
 
