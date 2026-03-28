@@ -326,16 +326,31 @@ As with any layer, EF Core adds a bit of runtime overhead compared to coding dir
 
 ## Memory Cache Integration
 
-EF Core integrates with ASP.NET Core's memory caching infrastructure through `IMemoryCache`. However, this is not used for the internal service provider caching.
+EF Core uses `IMemoryCache` for internal caching operations such as query compilation and model building. By default, EF Core configures its own `IMemoryCache` with a size limit of 10240. For reference, a compiled query has a cache size of 10, while the built model has a cache size of 100.
 
-EF Core automatically configures `IMemoryCache` with a default size limit of 10240 for internal caching operations such as query compilation and model building. You should call `AddMemoryCache` if you need to change these defaults. For reference, a compiled query has a cache size of 10, while the built model has a cache size of 100.
+If you need to change the default cache size limit, use <xref:Microsoft.EntityFrameworkCore.DbContextOptionsBuilder.UseMemoryCache*> to provide a custom `IMemoryCache` instance:
 
 ```csharp
-public void ConfigureServices(IServiceCollection services)
+var memoryCache = new MemoryCache(new MemoryCacheOptions { SizeLimit = 20480 });
+services.AddSingleton<IDisposable>(memoryCache);
+
+services.AddDbContext<ApplicationDbContext>(options =>
 {
-    services.AddMemoryCache(options => options.SizeLimit = 20480); // Custom size limit for EF Core caching
-    
-    services.AddDbContext<ApplicationDbContext>(options =>
-        options.UseSqlServer(connectionString));
-}
+    options.UseMemoryCache(memoryCache);
+    options.UseSqlServer(connectionString);
+});
+```
+
+The `MemoryCache` instance is registered as `IDisposable` so that it will be disposed when the service provider is disposed, without replacing the app-wide `IMemoryCache`.
+
+Alternatively, if you register a custom `IMemoryCache` via `AddMemoryCache` in DI, you can resolve it from the service provider. Note that this shares the cache between EF Core and any other services that use `IMemoryCache`, so the size limit should account for all consumers. When a `SizeLimit` is set, all cache entries from every consumer must specify a size; otherwise `IMemoryCache` will throw when entries are added:
+
+```csharp
+services.AddMemoryCache(options => options.SizeLimit = 20480);
+
+services.AddDbContext<ApplicationDbContext>((serviceProvider, options) =>
+{
+    options.UseMemoryCache(serviceProvider.GetRequiredService<IMemoryCache>());
+    options.UseSqlServer(connectionString);
+});
 ```
