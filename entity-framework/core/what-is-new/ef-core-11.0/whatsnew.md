@@ -273,8 +273,8 @@ modelBuilder.HasFullTextCatalog("ftCatalog");
 
 modelBuilder.Entity<Blog>()
     .HasFullTextIndex(b => b.FullName)
-    .HasKeyIndex("PK_Blogs")
-    .OnCatalog("ftCatalog");
+    .UseKeyIndex("PK_Blogs")
+    .UseCatalog("ftCatalog");
 ```
 
 This generates the following SQL in a migration:
@@ -297,14 +297,14 @@ However, SQL Server also has table-valued function versions of these functions, 
 ```csharp
 // Using FreeTextTable with a search query
 var results = await context.Blogs
-    .FreeTextTable(b => b.FullName, "John")
+    .FreeTextTable("John", b => b.FullName)
     .Select(r => new { Blog = r.Value, Rank = r.Rank })
     .OrderByDescending(r => r.Rank)
     .ToListAsync();
 
 // Using ContainsTable with a search query
 var results = await context.Blogs
-    .ContainsTable(b => b.FullName, "John")
+    .ContainsTable("John", b => b.FullName)
     .Select(r => new { Blog = r.Value, Rank = r.Rank })
     .OrderByDescending(r => r.Rank)
     .ToListAsync();
