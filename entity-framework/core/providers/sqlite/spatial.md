@@ -2,7 +2,7 @@
 title: SQLite Database Provider - Spatial Data - EF Core
 description: Using spatial data with the Entity Framework Core SQLite database provider
 author: SamMonoRT
-ms.date: 10/02/2020
+ms.date: 03/27/2026
 uid: core/providers/sqlite/spatial
 ---
 # Spatial Data in the SQLite EF Core Provider
@@ -23,21 +23,34 @@ brew install libspatialite
 
 Unfortunately, newer versions of PROJ (a dependency of SpatiaLite) are incompatible with EF's default [SQLitePCLRaw bundle](/dotnet/standard/data/sqlite/custom-versions#bundles). You can work around this by using the system SQLite library instead.
 
+> [!IMPORTANT]
+> Don't use `Microsoft.EntityFrameworkCore.Sqlite` or `Microsoft.Data.Sqlite` with SpatiaLite on macOS and Linux. Both packages pull in `SQLitePCLRaw.bundle_e_sqlite3` by default—a bundled version of SQLite that is incompatible with system-installed Sqlite. Using it may result in a silent crash at run time. Use `Microsoft.EntityFrameworkCore.Sqlite.Core` or `Microsoft.Data.Sqlite.Core` instead, together with the system SQLite provider as shown below.
+
+Replace `Microsoft.EntityFrameworkCore.Sqlite` with `Microsoft.EntityFrameworkCore.Sqlite.Core` and reference the `SQLitePCLRaw.provider.sqlite3` package to use the system SQLite library:
+
 ```xml
 <ItemGroup>
-  <!-- Use bundle_sqlite3 instead with SpatiaLite on macOS and Linux -->
-  <!--<PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="3.1.0" />-->
-  <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite.Core" Version="3.1.0" />
-  <PackageReference Include="SQLitePCLRaw.bundle_sqlite3" Version="2.0.4" />
+  <!-- Use Sqlite.Core with the system SQLite provider instead of Microsoft.EntityFrameworkCore.Sqlite -->
+  <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite.Core" Version="10.0.0" />
+  <PackageReference Include="SQLitePCLRaw.provider.sqlite3" Version="2.1.10" />
 
-  <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite.NetTopologySuite" Version="3.1.0" />
+  <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite.NetTopologySuite" Version="10.0.0" />
 </ItemGroup>
 ```
 
-On **macOS**, you'll also need set an environment variable before running your app so it uses Homebrew's version of SQLite. In Visual Studio for Mac, you can set this under **Project > Project Options > Run > Configurations > Default**
+> [!NOTE]
+> Starting with EF Core 11 (SQLitePCLRaw 3.0), replace the `SQLitePCLRaw.provider.sqlite3` version with `3.x.x`. See the [breaking changes](xref:core/what-is-new/ef-core-11.0/breaking-changes#sqlite-bundles-removed) for details.
+
+Then add explicit initialization before using SQLite:
+
+```csharp
+SQLitePCL.raw.SetProvider(new SQLitePCL.SQLite3Provider_sqlite3());
+```
+
+On **macOS**, you'll also need to set an environment variable before running your app so it uses Homebrew's version of SQLite:
 
 ```bash
-DYLD_LIBRARY_PATH=/usr/local/opt/sqlite/lib
+DYLD_LIBRARY_PATH="$(brew --prefix sqlite)/lib"
 ```
 
 ## Configuring SRID
