@@ -66,7 +66,7 @@ As an example, this will configure managed data for a `Country` in `OnModelCreat
 
 [!code-csharp[CountrySeed](../../../samples/core/Modeling/DataSeeding/ManagingDataContext.cs?name=CountrySeed)]
 
-To add entities that have a relationship the foreign key values need to be specified:
+To add entities that have a relationship, the foreign key values need to be specified:
 
 [!code-csharp[CitySeed](../../../samples/core/Modeling/DataSeeding/ManagingDataContext.cs?name=CitySeed)]
 
