@@ -53,6 +53,9 @@ On **macOS**, you'll also need to set an environment variable before running you
 DYLD_LIBRARY_PATH="$(brew --prefix sqlite)/lib"
 ```
 
+> [!NOTE]
+> The system-installed SQLite library may have different [compile-time options](https://sqlite.org/compile.html) than the bundled version provided by `SQLitePCLRaw.bundle_e_sqlite3`. This can affect the availability of features such as math functions and full-text search. Verify that the features your application relies on work as expected with the system SQLite.
+
 ## Configuring SRID
 
 In SpatiaLite, columns need to specify an SRID per column. The default SRID is `0`. Specify a different SRID using the HasSrid method.
