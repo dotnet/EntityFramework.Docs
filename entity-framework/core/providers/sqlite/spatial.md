@@ -25,6 +25,8 @@ Unfortunately, newer versions of PROJ (a dependency of SpatiaLite) are incompati
 
 > [!IMPORTANT]
 > Don't use `Microsoft.EntityFrameworkCore.Sqlite` or `Microsoft.Data.Sqlite` with SpatiaLite on macOS and Linux. Both packages pull in `SQLitePCLRaw.bundle_e_sqlite3` by default—a bundled version of SQLite that is incompatible with system-installed Sqlite. Using it may result in a silent crash at run time. Use `Microsoft.EntityFrameworkCore.Sqlite.Core` or `Microsoft.Data.Sqlite.Core` instead, together with the system SQLite provider as shown below.
+>
+> Also note that the system-installed SQLite library may have different [compile-time options](https://sqlite.org/compile.html) than the bundled version. This can affect the availability of features such as math functions and full-text search. Verify that the features your application relies on work as expected with the system SQLite.
 
 Replace `Microsoft.EntityFrameworkCore.Sqlite` with `Microsoft.EntityFrameworkCore.Sqlite.Core` and reference the `SQLitePCLRaw.provider.sqlite3` package to use the system SQLite library:
 
@@ -52,9 +54,6 @@ On **macOS**, you'll also need to set an environment variable before running you
 ```bash
 DYLD_LIBRARY_PATH="$(brew --prefix sqlite)/lib"
 ```
-
-> [!NOTE]
-> The system-installed SQLite library may have different [compile-time options](https://sqlite.org/compile.html) than the bundled version provided by `SQLitePCLRaw.bundle_e_sqlite3`. This can affect the availability of features such as math functions and full-text search. Verify that the features your application relies on work as expected with the system SQLite.
 
 ## Configuring SRID
 
