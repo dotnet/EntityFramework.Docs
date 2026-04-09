@@ -31,23 +31,23 @@ protected override void OnModelCreating(ModelBuilder modelBuilder)
 
     modelBuilder.Entity<Article>()
         .HasFullTextIndex(a => a.Contents)
-        .HasKeyIndex("PK_Articles")
-        .OnCatalog("ftCatalog");
+        .UseKeyIndex("PK_Articles")
+        .UseCatalog("ftCatalog");
 }
 ```
 
-The `HasKeyIndex()` method specifies the unique, non-nullable, single-column index used as the full-text key for the table (typically the primary key index). `OnCatalog()` assigns the full-text index to a specific catalog.
+The `UseKeyIndex()` method specifies the unique, non-nullable, single-column index used as the full-text key for the table (typically the primary key index). `UseCatalog()` assigns the full-text index to a specific catalog.
 
 You can also configure multiple columns and additional options such as per-column languages and change tracking:
 
 ```csharp
 modelBuilder.Entity<Article>()
     .HasFullTextIndex(a => new { a.Title, a.Contents })
-    .HasKeyIndex("PK_Articles")
-    .OnCatalog("ftCatalog")
-    .WithChangeTracking(FullTextChangeTracking.Manual)
-    .HasLanguage("Title", "English")
-    .HasLanguage("Contents", "French");
+    .UseKeyIndex("PK_Articles")
+    .UseCatalog("ftCatalog")
+    .HasChangeTracking(FullTextChangeTracking.Manual)
+    .UseLanguage("Title", "English")
+    .UseLanguage("Contents", "French");
 ```
 
 The full-text catalog can also be configured as the default catalog, and with accent sensitivity:
@@ -185,7 +185,7 @@ The above automatically searches across all columns registered for full-text sea
 ```csharp
 var results = await context.Articles
     .Join(
-        context.Articles.FreeTextTable<Article, int>(a => a.Contents, "veggies"),
+        context.Articles.FreeTextTable<Article, int>("veggies", a => a.Contents),
         a => a.Id,
         ftt => ftt.Key,
         (a, ftt) => new { Article = a, ftt.Rank })
@@ -197,7 +197,7 @@ var results = await context.Articles
 
 ```csharp
 var results = await context.Articles
-    .FreeTextTable(a => new { a.Title, a.Contents }, "veggies")
+    .FreeTextTable("veggies", a => new { a.Title, a.Contents })
     .Select(r => new { Article = r.Value, Rank = r.Rank })
     .OrderByDescending(r => r.Rank)
     .ToListAsync();
@@ -224,7 +224,7 @@ Both table-valued functions support a `topN` parameter to limit the number of re
 
 ```csharp
 var results = await context.Articles
-    .FreeTextTable(a => a.Contents, "veggies", topN: 10)
+    .FreeTextTable("veggies", a => a.Contents, topN: 10)
     .Select(r => new { Article = r.Value, Rank = r.Rank })
     .OrderByDescending(r => r.Rank)
     .ToListAsync();
@@ -236,7 +236,7 @@ Both table-valued functions support specifying a language term for linguistic ma
 
 ```csharp
 var results = await context.Articles
-    .FreeTextTable(a => a.Contents, "veggies", languageTerm: "English")
+    .FreeTextTable("veggies", a => a.Contents, languageTerm: "English")
     .Select(r => new { Article = r.Value, Rank = r.Rank })
     .ToListAsync();
 ```
