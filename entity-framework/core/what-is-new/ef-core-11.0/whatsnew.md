@@ -230,11 +230,13 @@ Once you have a vector index, you can use the `VectorSearch()` extension method 
 
 ```csharp
 var blogs = await context.Blogs
-    .VectorSearch(b => b.Embedding, embedding, "cosine", topN: 5)
+    .VectorSearch(b => b.Embedding, embedding, "cosine")
+    .OrderBy(r => r.Distance)
+    .Take(5)
     .ToListAsync();
 ```
 
-This translates to the SQL Server [`VECTOR_SEARCH()`](/sql/t-sql/functions/vector-search-transact-sql) table-valued function, which performs an approximate search over the vector index. The `topN` parameter specifies the number of results to return.
+This translates to the SQL Server [`VECTOR_SEARCH()`](/sql/t-sql/functions/vector-search-transact-sql) table-valued function, which performs an approximate search over the vector index. Compose with `OrderBy(r => r.Distance)` and `Take(...)` to limit the number of results returned.
 
 `VectorSearch()` returns `VectorSearchResult<TEntity>`, allowing you to access the distance alongside the entity.
 

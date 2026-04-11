@@ -129,7 +129,9 @@ Once you have a vector index, use the `VectorSearch()` extension method on your 
 
 ```csharp
 var blogs = await context.Blogs
-    .VectorSearch(b => b.Embedding, embedding, "cosine", topN: 5)
+    .VectorSearch(b => b.Embedding, embedding, "cosine")
+    .OrderBy(r => r.Distance)
+    .Take(5)
     .ToListAsync();
 
 foreach (var (blog, score) in blogs)
@@ -141,18 +143,26 @@ foreach (var (blog, score) in blogs)
 This translates to the following SQL:
 
 ```sql
-SELECT [v].[Id], [v].[Name], [v].[Distance]
-FROM VECTOR_SEARCH([Blogs], 'Embedding', @__embedding, 'metric = cosine', @__topN)
+SELECT TOP(@p) WITH APPROXIMATE [b].[Id], [b].[Name], [v].[Distance]
+FROM VECTOR_SEARCH(
+    TABLE = [Blogs] AS [b],
+    COLUMN = [Embedding],
+    SIMILAR_TO = @p1,
+    METRIC = 'cosine'
+) AS [v]
+ORDER BY [v].[Distance]
 ```
 
-The `topN` parameter specifies the maximum number of results to return.
+Compose `VectorSearch()` with `OrderBy(r => r.Distance)` and `Take(...)` to limit the number of results returned as required for approximate vector search.
 
 `VectorSearch()` returns `VectorSearchResult<TEntity>`, which allows you to access both the entity and the computed distance:
 
 ```csharp
 var searchResults = await context.Blogs
-    .VectorSearch(b => b.Embedding, embedding, "cosine", topN: 5)
+    .VectorSearch(b => b.Embedding, embedding, "cosine")
     .Where(r => r.Distance < 0.05)
+    .OrderBy(r => r.Distance)
+    .Take(5)
     .Select(r => new { Blog = r.Value, Distance = r.Distance })
     .ToListAsync();
 ```
@@ -175,7 +185,10 @@ var results = await context.Articles
     .FreeTextTable<Article, int>(textualQuery, topN: k)
     // Perform vector (semantic) search, joining the results of both searches together
     .LeftJoin(
-        context.Articles.VectorSearch(b => b.Embedding, queryEmbedding, "cosine", topN: k),
+        context.Articles
+            .VectorSearch(b => b.Embedding, queryEmbedding, "cosine")
+            .OrderBy(r => r.Distance)
+            .Take(k),
         fts => fts.Key,
         vs => vs.Value.Id,
         (fts, vs) => new
@@ -211,12 +224,15 @@ The query produces the following SQL:
 ```sql
 SELECT TOP(@p3) [a0].[Id], [a0].[Content], [a0].[Title]
 FROM FREETEXTTABLE([Articles], *, @p, @p1) AS [f]
-LEFT JOIN VECTOR_SEARCH(
-    TABLE = [Articles] AS [a0],
-    COLUMN = [Embedding],
-    SIMILAR_TO = @p2,
-    METRIC = 'cosine',
-    TOP_N = @p3
-) AS [v] ON [f].[KEY] = [a0].[Id]
-ORDER BY 1.0E0 / CAST(10 + [f].[RANK] AS float) + ISNULL(1.0E0 / (10.0E0 + [v].[Distance]), 0.0E0) DESC
+LEFT JOIN (
+    SELECT TOP(@p4) WITH APPROXIMATE [a0].[Id], [a0].[Content], [a0].[Title], [v].[Distance]
+    FROM VECTOR_SEARCH(
+        TABLE = [Articles] AS [a0],
+        COLUMN = [Embedding],
+        SIMILAR_TO = @p2,
+        METRIC = 'cosine'
+    ) AS [v]
+    ORDER BY [v].[Distance]
+) AS [v0] ON [f].[KEY] = [v0].[Id]
+ORDER BY 1.0E0 / CAST(10 + [f].[RANK] AS float) + ISNULL(1.0E0 / (10.0E0 + [v0].[Distance]), 0.0E0) DESC
 ```
