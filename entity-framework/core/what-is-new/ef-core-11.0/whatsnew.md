@@ -160,7 +160,9 @@ In EF Core 11, the redundant column is omitted:
 ORDER BY [b].[BlogId]
 ```
 
-Both optimizations can have a significant positive impact on query performance, especially when multiple reference navigations are included.
+Both optimizations can have a significant positive impact on query performance, especially when multiple reference navigations are included. A simple, common split query scenario showed a **29% improvement in querying performance**, as the database no longer has to perform the to-one join; single queries are also significantly improved by the removal of the ORDER BY, even if a bit less: one scenario showed a **22% improvement**.
+
+More details on the benchmark are available [here](https://github.com/dotnet/efcore/issues/29182#issuecomment-4231140289), and as always, actual performance in your application will vary based on your schema, data and a variety of other factors.
 
 <a name="linq-maxby-minby"></a>
 
@@ -264,6 +266,8 @@ var embeddings = await context.Blogs
 ```
 
 Vector properties can still be used in `WHERE` and `ORDER BY` clauses—including with `VectorDistance()` and `VectorSearch()`—and EF will correctly include them in the SQL, just not in the entity projection.
+
+This optimization can have a dramatic impact on application speed: a minimal benchmark showed an almost 9x (that's nine-fold) increase in performance, and that's while running against a local database. The optimization is even more impactful as latency to the database grows: when executing against a remote Azure SQL database, an improvement of around 22x was observed. More details on the benchmark are available [here](https://github.com/dotnet/efcore/issues/37279#issuecomment-4232243062), and as always, actual performance in your application will vary based on your entity, vector properties and latency.
 
 <a name="sqlserver-full-text"></a>
 
