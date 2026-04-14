@@ -151,7 +151,7 @@ migrationBuilder.Sql(
         @LastName nvarchar(50),
         @FirstName nvarchar(50)
     AS
-        RETURN @LastName + @FirstName;')");
+        SELECT @LastName + @FirstName;')");
 ```
 
 > [!TIP]
