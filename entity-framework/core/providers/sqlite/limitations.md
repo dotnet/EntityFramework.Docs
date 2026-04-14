@@ -92,17 +92,7 @@ dotnet ef database update --connection "Data Source=My.db"
 
 ## Concurrent migrations protection
 
-EF9 introduced a [migration locking mechanism](xref:core/managing-schemas/migrations/applying#migration-locking) when executing migrations. It aims to protect against multiple migration executions happening simultaneously, as that could leave the database in a corrupted state. This is one of the potential problems resulting from applying migrations at runtime using the <xref:Microsoft.EntityFrameworkCore.RelationalDatabaseFacadeExtensions.Migrate%2A> method (see [Applying migrations](xref:core/managing-schemas/migrations/applying) for more information). To mitigate this, EF creates an exclusive lock on the database before any migration operations are applied.
-
-Unfortunately, SQLite does not have a built-in application locking mechanism, so EF Core creates a separate table (`__EFMigrationsLock`) and uses it for locking. A row is inserted to acquire the lock and deleted to release it when the migration completes and the seeding code finishes execution. However, if the application terminates unexpectedly during migration (for example, the process is killed), the lock may not be released. If this happens, subsequent migration attempts will wait indefinitely for the lock.
-
-To resolve an abandoned lock, delete the `__EFMigrationsLock` table or its rows from the database:
-
-```sql
-DROP TABLE "__EFMigrationsLock";
-```
-
-For more information, see [Handling abandoned locks](xref:core/managing-schemas/migrations/applying#handling-abandoned-locks).
+EF9 introduced a [migration locking mechanism](xref:core/managing-schemas/migrations/applying#migration-locking) to protect against concurrent migration executions. Unlike SQL Server, SQLite doesn't have built-in application locks, so EF Core uses a `__EFMigrationsLock` table instead. If the application terminates unexpectedly, this lock may not be released; see [Handling abandoned locks](xref:core/managing-schemas/migrations/applying#handling-abandoned-locks) for details.
 
 ## See also
 

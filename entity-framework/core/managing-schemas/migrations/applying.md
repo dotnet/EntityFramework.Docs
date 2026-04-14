@@ -390,13 +390,13 @@ After clearing the lock, subsequent migration operations proceed normally. The t
 
 ### Migrations and explicit transactions
 
-Starting with EF Core 9, calling <xref:Microsoft.EntityFrameworkCore.RelationalDatabaseFacadeExtensions.MigrateAsync*> inside an explicit transaction throws a warning by default. This is because wrapping migrations in an external transaction prevents the migration lock from being acquired, which leaves the database unprotected from concurrent migration applications. EF Core manages its own transactions internally as needed during migration.
+Starting with EF Core 9, calling <xref:Microsoft.EntityFrameworkCore.RelationalDatabaseFacadeExtensions.MigrateAsync*> inside an explicit transaction throws an exception by default. This is because wrapping migrations in an external transaction prevents the migration lock from being acquired, which leaves the database unprotected from concurrent migration applications. EF Core manages its own transactions internally as needed during migration.
 
 If you were previously wrapping `MigrateAsync()` in an explicit transaction:
 
 ```csharp
-// This will throw a warning in EF Core 9+
-await strategy.ExecuteAsync(async () =>
+// This will throw an exception in EF Core 9+
+await dbContext.Database.CreateExecutionStrategy().ExecuteAsync(async () =>
 {
     await using var transaction = await dbContext.Database.BeginTransactionAsync();
     await dbContext.Database.MigrateAsync();
