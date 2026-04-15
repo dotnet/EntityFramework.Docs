@@ -438,6 +438,18 @@ Period properties remain configured with `ValueGenerated.OnAddOrUpdate`, so thei
 
 For more information, see the [full documentation on temporal tables](xref:core/providers/sql-server/temporal-tables#mapping-period-columns-to-clr-properties).
 
+<a name="sqlserver-datetimeoffset-translations"></a>
+
+### Additional DateTimeOffset and date/time translations
+
+EF Core 11 adds several new SQL Server translations for `DateTimeOffset`. Properties such as `DateTime`, `UtcDateTime`, and `LocalDateTime` are now translated, allowing you to extract a `DateTime` from a `DateTimeOffset` in different time zones directly in your queries. `Offset.TotalMinutes` is also translated, giving access to the offset component, and `ToOffset()` allows converting a `DateTimeOffset` to a different offset via SQL Server's `SWITCHOFFSET`.
+
+You can also now construct a `DateTimeOffset` from a `DateTime` directly in LINQ queries, using `new DateTimeOffset(dateTime)` or `new DateTimeOffset(dateTime, offset)`, which translates to SQL Server's `TODATETIMEOFFSET` function.
+
+In addition, `EF.Functions.DateTrunc()` is now available for truncating `DateTime`, `DateTimeOffset`, `DateOnly` and `TimeOnly` values to a specified precision (e.g. day, hour, minute), translating to SQL Server's [`DATETRUNC`](/sql/t-sql/functions/datetrunc-transact-sql) function.
+
+For the complete list of date/time function translations, see the [SQL Server function mappings page](xref:core/providers/sql-server/functions).
+
 ## Cosmos DB
 
 <a name="cosmos-complex-types"></a>
