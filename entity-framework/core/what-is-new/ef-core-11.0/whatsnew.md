@@ -442,7 +442,7 @@ For more information, see the [full documentation on temporal tables](xref:core/
 
 ### Additional DateTimeOffset and date/time translations
 
-EF Core 11 adds several new SQL Server translations for `DateTimeOffset`. Properties such as `DateTime`, `UtcDateTime`, and `LocalDateTime` are now translated, allowing you to extract a `DateTime` from a `DateTimeOffset` in different time zones directly in your queries. `Offset.TotalMinutes` is also translated, giving access to the offset component, and `ToOffset()` allows converting a `DateTimeOffset` to a different offset via SQL Server's `SWITCHOFFSET`.
+EF Core 11 adds several new SQL Server translations for `DateTimeOffset`. Properties such as `DateTime`, `UtcDateTime`, and `LocalDateTime` are now translated, allowing you to access the `DateTime` component directly in your queries: `DateTime` returns the date and time component without converting the offset, while `UtcDateTime` and `LocalDateTime` represent UTC and server-local conversions, respectively. `Offset.TotalMinutes` is also translated, giving access to the offset component, and `ToOffset(offset)` allows converting a `DateTimeOffset` to a different offset via SQL Server's `SWITCHOFFSET`.
 
 You can also now construct a `DateTimeOffset` from a `DateTime` directly in LINQ queries, using `new DateTimeOffset(dateTime)` or `new DateTimeOffset(dateTime, offset)`, which translates to SQL Server's `TODATETIMEOFFSET` function.
 
