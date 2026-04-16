@@ -2,7 +2,7 @@
 title: Applying Migrations - EF Core
 description: Strategies for applying schema migrations to production and development databases using Entity Framework Core
 author: SamMonoRT
-ms.date: 10/29/2024
+ms.date: 04/16/2026
 uid: core/managing-schemas/migrations/applying
 ms.custom: sfi-ropc-nochange
 ---
@@ -356,7 +356,7 @@ Migration locking applies when migrations are applied using any of the following
 [SQL scripts](#sql-scripts) are not affected by migration locking, since they are applied outside of EF Core.
 
 > [!WARNING]
-> The locking mechanism varies significantly across database providers and can involve provider-specific gotchas. For example, the SQLite provider uses a lock table that can become [abandoned if the process terminates unexpectedly](xref:core/providers/sqlite/limitations#concurrent-migrations-protection). Always consult your provider's documentation for details.
+> The locking mechanism varies significantly across database providers and can involve provider-specific issues. For example, the SQLite provider uses a lock table that can become [abandoned if the process terminates unexpectedly](xref:core/providers/sqlite/limitations#concurrent-migrations-protection). Always consult your provider's documentation for details.
 
 ### Limitations
 
