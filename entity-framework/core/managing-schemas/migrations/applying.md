@@ -355,64 +355,10 @@ Migration locking applies when migrations are applied using any of the following
 
 [SQL scripts](#sql-scripts) are not affected by migration locking, since they are applied outside of EF Core.
 
-> [!NOTE]
-> If you are using a third-party database provider, check the provider documentation to understand the locking behavior specific to your database. The information below covers the SQL Server and SQLite providers included with EF Core.
+> [!WARNING]
+> The locking mechanism varies significantly across database providers and can involve provider-specific gotchas. For example, the SQLite provider uses a lock table that can become [abandoned if the process terminates unexpectedly](xref:core/providers/sqlite/limitations#concurrent-migrations-protection). Always consult your provider's documentation for details.
 
-### How the lock works
+### Limitations
 
-The locking mechanism is provider-specific:
-
-* **SQL Server** uses `sp_getapplock` to acquire a session-level application lock named `__EFMigrationsLock`. This lock is automatically released when the database connection is closed, so it cannot become abandoned even if the application terminates unexpectedly.
-* **SQLite** does not have a built-in application locking mechanism, so EF Core creates a `__EFMigrationsLock` table and uses it to coordinate access. A row is inserted to acquire the lock and deleted to release it. This lock requires explicit release (see [Handling abandoned locks](#handling-abandoned-locks)).
-
-If another migration execution is already in progress, the new request waits until the lock becomes available.
-
-### Handling abandoned locks
-
-In most cases, the migration lock is released automatically when the operation completes or when the connection is closed. However, on **SQLite**, if the application terminates unexpectedly (for example, the process is killed during migration), the lock row in the `__EFMigrationsLock` table may not be cleaned up. This prevents any subsequent migration from completing, because each attempt will wait indefinitely for the lock to be released.
-
-To resolve an abandoned lock on SQLite, delete the `__EFMigrationsLock` table from the database:
-
-```sql
-DROP TABLE "__EFMigrationsLock";
-```
-
-Or, alternatively, delete all rows from the table:
-
-```sql
-DELETE FROM "__EFMigrationsLock";
-```
-
-After clearing the lock, subsequent migration operations proceed normally. The table is automatically recreated as needed.
-
-> [!NOTE]
-> This issue is specific to the SQLite provider. On SQL Server, the lock is session-based and is automatically released when the connection closes, so abandoned locks are not a concern.
-
-### Migrations and explicit transactions
-
-Starting with EF Core 9, calling <xref:Microsoft.EntityFrameworkCore.RelationalDatabaseFacadeExtensions.MigrateAsync*> inside an explicit transaction throws an exception by default. This is because wrapping migrations in an external transaction prevents the migration lock from being acquired, which leaves the database unprotected from concurrent migration applications. EF Core manages its own transactions internally as needed during migration.
-
-If you were previously wrapping `MigrateAsync()` in an explicit transaction:
-
-```csharp
-// This will throw an exception in EF Core 9+
-await dbContext.Database.CreateExecutionStrategy().ExecuteAsync(async () =>
-{
-    await using var transaction = await dbContext.Database.BeginTransactionAsync();
-    await dbContext.Database.MigrateAsync();
-    await transaction.CommitAsync();
-});
-```
-
-Remove the external transaction and `ExecutionStrategy`:
-
-```csharp
-// Recommended: let EF Core manage transactions
-await dbContext.Database.MigrateAsync();
-```
-
-If your scenario requires an explicit transaction and you have another mechanism in place to prevent concurrent migration application, you can suppress the warning:
-
-```csharp
-options.ConfigureWarnings(w => w.Ignore(RelationalEventId.MigrationsUserTransactionWarning))
-```
+* Wrapping <xref:Microsoft.EntityFrameworkCore.RelationalDatabaseFacadeExtensions.MigrateAsync*> in an explicit transaction is not supported. See [Exception is thrown when applying migrations in an explicit transaction](xref:core/what-is-new/ef-core-9.0/breaking-changes#migrations-transaction) for details.
+* On SQLite, abandoned migration locks can [block subsequent migrations](xref:core/providers/sqlite/limitations#concurrent-migrations-protection).

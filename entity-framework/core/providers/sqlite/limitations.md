@@ -92,7 +92,25 @@ dotnet ef database update --connection "Data Source=My.db"
 
 ## Concurrent migrations protection
 
-EF9 introduced a [migration locking mechanism](xref:core/managing-schemas/migrations/applying#migration-locking) to protect against concurrent migration executions. Unlike SQL Server, SQLite doesn't have built-in application locks, so EF Core uses a `__EFMigrationsLock` table instead. If the application terminates unexpectedly, this lock may not be released; see [Handling abandoned locks](xref:core/managing-schemas/migrations/applying#handling-abandoned-locks) for details.
+EF9 introduced a [migration locking mechanism](xref:core/managing-schemas/migrations/applying#migration-locking) to protect against concurrent migration executions. Unlike SQL Server, which uses a session-level application lock (`sp_getapplock`) that is automatically released when the connection closes, SQLite doesn't have built-in application locks. EF Core instead creates a `__EFMigrationsLock` table and inserts a row to acquire the lock.
+
+### Handling abandoned locks
+
+If the application terminates unexpectedly (for example, the process is killed during migration), the lock row in the `__EFMigrationsLock` table may not be cleaned up. This prevents any subsequent migration from completing, because each attempt will wait indefinitely for the lock to be released.
+
+To resolve an abandoned lock, drop the `__EFMigrationsLock` table from the database:
+
+```sql
+DROP TABLE "__EFMigrationsLock";
+```
+
+Or, alternatively, delete all rows from the table:
+
+```sql
+DELETE FROM "__EFMigrationsLock";
+```
+
+After clearing the lock, subsequent migration operations proceed normally. The table is automatically recreated as needed.
 
 ## See also
 
