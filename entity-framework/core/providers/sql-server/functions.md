@@ -1,8 +1,8 @@
 ---
 title: Function Mappings - Microsoft SQL Server Database Provider - EF Core
 description: Function Mappings of the Microsoft SQL Server database provider
-author: SamMonoRT
-ms.date: 7/26/2023
+author: roji
+ms.date: 4/14/2026
 uid: core/providers/sql-server/functions
 ---
 # Function Mappings of the Microsoft SQL Server Provider
@@ -106,19 +106,26 @@ dateTimeOffset.AddMonths(months)                            | DATEADD(month, @mo
 dateTimeOffset.AddSeconds(seconds)                          | DATEADD(second, @seconds, @dateTimeOffset)
 dateTimeOffset.AddYears(years)                              | DATEADD(year, @years, @dateTimeOffset)
 dateTimeOffset.Date                                         | CONVERT(date, @dateTimeOffset)
+dateTimeOffset.DateTime                                     | CONVERT(datetime2, @dateTimeOffset)                                             | EF Core 11.0
 dateTimeOffset.Day                                          | DATEPART(day, @dateTimeOffset)
 dateTimeOffset.DayOfYear                                    | DATEPART(dayofyear, @dateTimeOffset)
 dateTimeOffset.Hour                                         | DATEPART(hour, @dateTimeOffset)
+dateTimeOffset.LocalDateTime                                | CONVERT(datetime2, @dateTimeOffset AT TIME ZONE CURRENT_TIMEZONE_ID())          | EF Core 11.0
 dateTimeOffset.Microsecond                                  | DATEPART(microsecond, @dateTimeOffset) % 1000                                   | EF Core 10.0
 dateTimeOffset.Millisecond                                  | DATEPART(millisecond, @dateTimeOffset)
 dateTimeOffset.Minute                                       | DATEPART(minute, @dateTimeOffset)
 dateTimeOffset.Month                                        | DATEPART(month, @dateTimeOffset)
 dateTimeOffset.Nanosecond                                   | DATEPART(nanosecond, @dateTimeOffset) % 1000                                    | EF Core 10.0
+dateTimeOffset.Offset.TotalMinutes                          | CAST(DATEPART(tz, @dateTimeOffset) AS float)                                    | EF Core 11.0
 dateTimeOffset.Second                                       | DATEPART(second, @dateTimeOffset)
 dateTimeOffset.TimeOfDay                                    | CONVERT(time, @dateTimeOffset)
+dateTimeOffset.ToOffset(offset)                             | SWITCHOFFSET(@dateTimeOffset, @offset)                                          | EF Core 11.0
 dateTimeOffset.ToUnixTimeSeconds()                          | DATEDIFF_BIG(second, '1970-01-01T00:00:00.0000000+00:00', @dateTimeOffset)
 dateTimeOffset.ToUnixTimeMilliseconds()                     | DATEDIFF_BIG(millisecond, '1970-01-01T00:00:00.0000000+00:00', @dateTimeOffset)
+dateTimeOffset.UtcDateTime                                  | CONVERT(datetime2, @dateTimeOffset AT TIME ZONE 'UTC')                          | EF Core 11.0
 dateTimeOffset.Year                                         | DATEPART(year, @dateTimeOffset)
+new DateTimeOffset(dateTime)                                | TODATETIMEOFFSET(@dateTime, '+00:00')                                           | EF Core 11.0
+new DateTimeOffset(dateTime, offset)                        | TODATETIMEOFFSET(@dateTime, @offset)                                            | EF Core 11.0
 DateOnly.FromDateTime(dateTime)                             | CONVERT(date, @dateTime)
 dateOnly.AddDays(value)                                     | DATEADD(day, @value, @dateOnly)
 dateOnly.AddMonths(months)                                  | DATEADD(month, @months, @dateOnly)
@@ -143,6 +150,7 @@ EF.Functions.DateFromParts(year, month, day)                | DATEFROMPARTS(@yea
 EF.Functions.DateTime2FromParts(year, month, day, ...)      | DATETIME2FROMPARTS(@year, @month, @day, ...)
 EF.Functions.DateTimeFromParts(year, month, day, ...)       | DATETIMEFROMPARTS(@year, @month, @day, ...)
 EF.Functions.DateTimeOffsetFromParts(year, month, day, ...) | DATETIMEOFFSETFROMPARTS(@year, @month, @day, ...)
+EF.Functions.DateTrunc(datepart, value)                     | DATETRUNC(@datepart, @value)                                                    | EF Core 11.0
 EF.Functions.IsDate(expression)                             | ISDATE(@expression)
 EF.Functions.SmallDateTimeFromParts(year, month, day, ...)  | SMALLDATETIMEFROMPARTS(@year, @month, @day, ...)
 EF.Functions.TimeFromParts(hour, minute, second, ...)       | TIMEFROMPARTS(@hour, @minute, @second, ...)
