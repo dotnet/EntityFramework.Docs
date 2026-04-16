@@ -586,7 +586,7 @@ Either:
 In EF Core 6.0, calling `.ToTable((string)null, t => t.ExcludeFromMigrations())` was a valid way to configure a keyless entity type that is not mapped to a table and excluded from migrations. For example:
 
 ```csharp
-modelBuilder.Entity<StringSplitResult>().HasNoKey().ToTable(null, t => t.ExcludeFromMigrations());
+modelBuilder.Entity<StringSplitResult>().HasNoKey().ToTable((string)null, t => t.ExcludeFromMigrations());
 ```
 
 #### New behavior
