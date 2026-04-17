@@ -33,6 +33,7 @@ EF Core 7.0 targets .NET 6. This means that existing applications that target .N
 | [Navigations from new entities to deleted entities are not fixed up](#deleted-fixup)                                                     | Low        |
 | [Using `FromSqlRaw` and related methods from the wrong provider throws](#use-the-correct-method)                                         | Low        |
 | [Scaffolded `OnConfiguring` no longer calls `IsConfigured`](#is-configured)                                                              | Low        |
+| [`ToTable(null, ...)` throws `ArgumentNullException`](#totable-null)                                                                     | Low        |
 
 ## High-impact changes
 
@@ -573,3 +574,42 @@ Either:
 
 - Use the `--no-onconfiguring` (.NET CLI) or `-NoOnConfiguring` (Visual Studio Package Manager Console) argument when scaffolding from an existing database.
 - [Customize the T4 templates](xref:core/managing-schemas/scaffolding/templates) to add back the call to `IsConfigured`.
+
+<a name="totable-null"></a>
+
+### `ToTable(null, ...)` throws `ArgumentNullException`
+
+[Tracking Issue #19811](https://github.com/dotnet/efcore/issues/19811)
+
+#### Old behavior
+
+In EF Core 6.0, calling `.ToTable((string)null, t => t.ExcludeFromMigrations())` was a valid way to configure a keyless entity type that is not mapped to a table and excluded from migrations. For example:
+
+```csharp
+modelBuilder.Entity<StringSplitResult>().HasNoKey().ToTable((string)null, t => t.ExcludeFromMigrations());
+```
+
+#### New behavior
+
+Starting with EF Core 7.0, calling `.ToTable((string)null, ...)` with the `Action<TableBuilder>` overload throws a `System.ArgumentNullException` because the `name` parameter is no longer nullable.
+
+#### Why
+
+This is a side effect of the changes made to support [table facets configuration](https://github.com/dotnet/efcore/issues/19811), which restructured the `ToTable` overloads.
+
+#### Mitigations
+
+Split the two calls. First, configure the table facets using the table builder overload (without specifying a null name), and then unmap the entity type from the table:
+
+```csharp
+modelBuilder.Entity<StringSplitResult>(
+    entityBuilder =>
+    {
+        entityBuilder.HasNoKey();
+        entityBuilder.ToTable(t => t.ExcludeFromMigrations());
+        entityBuilder.ToTable((string?)null);
+    });
+```
+
+> [!NOTE]
+> Calling `.ToTable(t => t.ExcludeFromMigrations())` will map the entity type to its default table, so migrations will ignore it. However, querying the entity type will try to query the default table unless you also configure it with `ToView` or another mapping override. Calling `.ToTable((string?)null)` afterward unmaps it from the table.
