@@ -631,6 +631,24 @@ Remove-Migration -Offline
 Drop-Database -Connection "Server=test;Database=MyDb;..." -Force
 ```
 
+<a name="defaults-file"></a>
+
+### Defaults file for dotnet ef
+
+The `dotnet ef` CLI tool now supports loading default options from a `.config/dotnet-ef.json` configuration file. This removes the need to repeatedly specify the same arguments—such as `--project`, `--startup-project`, or `--context`—across multiple invocations.
+
+The file is discovered by walking up from the current working directory. When a matching CLI option is not provided, values from the configuration file are used. Explicit command-line options always take precedence.
+
+```json
+{
+  "project": "src/App.Infrastructure",
+  "startupProject": "src/App.Api",
+  "context": "AppDbContext"
+}
+```
+
+For more information, see [Defaults file](xref:core/cli/dotnet#defaults-file).
+
 ## Other improvements
 
 * The EF command-line tool now writes all logging and status messages to standard error, reserving standard output only for the command's actual expected output. For example, when generating a migration SQL script with `dotnet ef migrations script`, only the SQL is written to standard output.

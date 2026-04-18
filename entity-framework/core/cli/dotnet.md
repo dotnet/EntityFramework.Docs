@@ -124,6 +124,61 @@ dotnet ef database update -- --environment Production
 
 Any additional arguments are passed to the application.
 
+## Defaults file
+
+Starting with EF Core 11, you can provide default values for `dotnet ef` options using a JSON configuration file. This eliminates the need to repeatedly specify the same command-line arguments, such as `--project`, `--startup-project`, or `--context`, across multiple invocations.
+
+### File location and discovery
+
+Place a file named `dotnet-ef.json` inside a `.config` directory:
+
+```text
+<your-repo-or-project>/
+└── .config/
+    └── dotnet-ef.json
+```
+
+When `dotnet ef` runs, it searches for `.config/dotnet-ef.json` starting from the current working directory and walking up through parent directories. The first matching file found is used.
+
+### Supported properties
+
+The following properties can be specified in the `dotnet-ef.json` file:
+
+| Property         | Type    | Description                                                                                                                                                                                               |
+|:-----------------|:--------|:----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `project`        | string  | Relative or absolute path to the target project folder. Relative paths are resolved from the parent directory of the `.config` folder.                                                                    |
+| `startupProject` | string  | Relative or absolute path to the startup project folder. Relative paths are resolved from the parent directory of the `.config` folder.                                                                   |
+| `context`        | string  | The `DbContext` class to use. Class name only or fully qualified with namespaces.                                                                                                                         |
+| `framework`      | string  | The [Target Framework Moniker](/dotnet/standard/frameworks#supported-target-framework-versions).                                                                                                          |
+| `configuration`  | string  | The build configuration, for example: `Debug` or `Release`.                                                                                                                                               |
+| `runtime`        | string  | The identifier of the target runtime. For a list of Runtime Identifiers (RIDs), see the [RID catalog](/dotnet/core/rid-catalog).                                                                          |
+| `verbose`        | boolean | Enable verbose output.                                                                                                                                                                                    |
+| `noColor`        | boolean | Disable colored console output.                                                                                                                                                                           |
+| `prefixOutput`   | boolean | Prefix output lines with severity level.                                                                                                                                                                  |
+
+### Example
+
+```json
+{
+  "project": "src/App.Infrastructure",
+  "startupProject": "src/App.Api",
+  "framework": "net11.0",
+  "configuration": "Debug",
+  "context": "AppDbContext",
+  "runtime": "win-x64",
+  "verbose": true,
+  "noColor": false,
+  "prefixOutput": false
+}
+```
+
+### Precedence
+
+Explicit command-line options always take precedence over values from the defaults file. For example, if `dotnet-ef.json` specifies `"context": "AppDbContext"` and you run `dotnet ef migrations add --context OtherContext`, `OtherContext` is used.
+
+> [!NOTE]
+> The defaults file does not apply to commands that don't accept certain options. For example, the `context` property is not applied to `dbcontext scaffold` since that command creates a new context rather than using an existing one.
+
 ## `dotnet ef database drop`
 
 Deletes the database.
