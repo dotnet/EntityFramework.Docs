@@ -124,85 +124,6 @@ dotnet ef database update -- --environment Production
 
 Any additional arguments are passed to the application.
 
-## Configuration file
-
-> [!NOTE]
-> This feature was introduced in EF Core 11.
-
-Starting with EF Core 11, `dotnet ef` can load default option values from a JSON configuration file. This reduces the need to repeat the same command-line options across multiple invocations.
-
-### File location and discovery
-
-Place a file named `dotnet-ef.json` inside a `.config` directory:
-
-```text
-<repository root>/
-└── .config/
-    └── dotnet-ef.json
-```
-
-When `dotnet ef` runs, it walks up the directory tree from the current working directory and uses the first `.config/dotnet-ef.json` file it finds. This means you can place the file at the root of your repository and it will be used from any subdirectory.
-
-### Supported properties
-
-The configuration file is a JSON object with the following optional properties:
-
-```json
-{
-  "project": "src/App.Infrastructure",
-  "startupProject": "src/App.Api",
-  "framework": "net11.0",
-  "configuration": "Debug",
-  "context": "AppDbContext",
-  "runtime": "win-x64",
-  "verbose": true,
-  "noColor": false,
-  "prefixOutput": false
-}
-```
-
-| Property         | Type    | Description                                                                                                                                 |
-|:-----------------|:--------|:--------------------------------------------------------------------------------------------------------------------------------------------|
-| `project`        | string  | Relative path to the target project folder. Resolved relative to the parent of the `.config` directory containing the file.                 |
-| `startupProject` | string  | Relative path to the startup project folder. Resolved relative to the parent of the `.config` directory containing the file.                |
-| `framework`      | string  | The [Target Framework Moniker](/dotnet/standard/frameworks#supported-target-framework-versions) for the target framework.                    |
-| `configuration`  | string  | The build configuration, for example: `Debug` or `Release`.                                                                                 |
-| `context`        | string  | The `DbContext` class to use. Class name only or fully qualified with namespaces.                                                           |
-| `runtime`        | string  | The identifier of the target runtime to restore packages for. For a list of Runtime Identifiers (RIDs), see the [RID catalog](/dotnet/core/rid-catalog). |
-| `verbose`        | boolean | Enable verbose output.                                                                                                                      |
-| `noColor`        | boolean | Disable colored console output.                                                                                                             |
-| `prefixOutput`   | boolean | Prefix output lines with their severity level.                                                                                              |
-
-All properties are optional. Only include the properties you need.
-
-### CLI precedence
-
-Explicit command-line options always take precedence over values from the configuration file. For example, if the config file specifies `"project": "src/App.Infrastructure"` but you run:
-
-```dotnetcli
-dotnet ef migrations add Initial --project src/OtherProject
-```
-
-The `--project` value from the command line (`src/OtherProject`) is used.
-
-### Path resolution
-
-The `project` and `startupProject` paths in the configuration file are resolved relative to the parent directory of the `.config` folder containing the file, not relative to the current working directory. For example, given the following structure:
-
-```text
-my-repo/
-├── .config/
-│   └── dotnet-ef.json    ← contains "project": "src/App.Infrastructure"
-└── src/
-    └── App.Infrastructure/
-```
-
-The `project` path resolves to `my-repo/src/App.Infrastructure` regardless of where you run `dotnet ef` from within `my-repo`. Absolute paths are also supported.
-
-### Context injection
-
-The `context` value from the configuration file is only applied to commands that accept a `--context` option (such as `database update`, `dbcontext optimize`, `migrations add`, and others). If you specify `--context` or `-c` on the command line, the config value is ignored.
-
 ## `dotnet ef database drop`
 
 Deletes the database.
@@ -470,3 +391,78 @@ dotnet ef migrations script 20180904195021_InitialCreate
 * [Migrations](xref:core/managing-schemas/migrations/index)
 * [Reverse Engineering](xref:core/managing-schemas/scaffolding)
 * [Compiled models](xref:core/performance/advanced-performance-topics#compiled-models)
+
+## Configuration file
+
+> [!NOTE]
+> This feature was introduced in EF Core 11.
+
+Starting with EF Core 11, `dotnet ef` can load default option values from a JSON configuration file. This reduces the need to repeat the same command-line options across multiple invocations.
+
+### File location and discovery
+
+Place a file named `dotnet-ef.json` inside a `.config` directory:
+
+```text
+<repository root>/
+└── .config/
+    └── dotnet-ef.json
+```
+
+When `dotnet ef` runs, it walks up the directory tree from the current working directory and uses the first `.config/dotnet-ef.json` file it finds. This means you can place the file at the root of your repository and it will be used from any subdirectory.
+
+### Supported properties
+
+The configuration file is a JSON object with the following optional properties:
+
+```json
+{
+  "project": "src/App.Infrastructure",
+  "startupProject": "src/App.Api",
+  "framework": "net11.0",
+  "configuration": "Debug",
+  "context": "AppDbContext",
+  "runtime": "win-x64",
+  "verbose": true,
+  "noColor": false,
+  "prefixOutput": false
+}
+```
+
+| Property         | Type    | Description                                                                                                                                 |
+|:-----------------|:--------|:--------------------------------------------------------------------------------------------------------------------------------------------|
+| `project`        | string  | Relative path to the target project folder. Resolved relative to the parent of the `.config` directory containing the file.                 |
+| `startupProject` | string  | Relative path to the startup project folder. Resolved relative to the parent of the `.config` directory containing the file.                |
+| `framework`      | string  | The [Target Framework Moniker](/dotnet/standard/frameworks#supported-target-framework-versions) for the target framework.                    |
+| `configuration`  | string  | The build configuration, for example: `Debug` or `Release`.                                                                                 |
+| `context`        | string  | The `DbContext` class to use. Class name only or fully qualified with namespaces.                                                           |
+| `runtime`        | string  | The identifier of the target runtime to restore packages for. For a list of Runtime Identifiers (RIDs), see the [RID catalog](/dotnet/core/rid-catalog). |
+| `verbose`        | boolean | Enable verbose output.                                                                                                                      |
+| `noColor`        | boolean | Disable colored console output.                                                                                                             |
+| `prefixOutput`   | boolean | Prefix output lines with their severity level.                                                                                              |
+
+All properties are optional. Only include the properties you need.
+
+### CLI precedence
+
+Explicit command-line options always take precedence over values from the configuration file. For example, if the config file specifies `"project": "src/App.Infrastructure"` but you run:
+
+```dotnetcli
+dotnet ef migrations add Initial --project src/OtherProject
+```
+
+The `--project` value from the command line (`src/OtherProject`) is used.
+
+### Path resolution
+
+The `project` and `startupProject` paths in the configuration file are resolved relative to the parent directory of the `.config` folder containing the file, not relative to the current working directory. For example, given the following structure:
+
+```text
+my-repo/
+├── .config/
+│   └── dotnet-ef.json    ← contains "project": "src/App.Infrastructure"
+└── src/
+    └── App.Infrastructure/
+```
+
+The `project` path resolves to `my-repo/src/App.Infrastructure` regardless of where you run `dotnet ef` from within `my-repo`. Absolute paths are also supported.
