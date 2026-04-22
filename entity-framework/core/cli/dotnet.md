@@ -386,12 +386,6 @@ The following example creates a script for all migrations after the InitialCreat
 dotnet ef migrations script 20180904195021_InitialCreate
 ```
 
-## Additional resources
-
-* [Migrations](xref:core/managing-schemas/migrations/index)
-* [Reverse Engineering](xref:core/managing-schemas/scaffolding)
-* [Compiled models](xref:core/performance/advanced-performance-topics#compiled-models)
-
 ## Configuration file
 
 > [!NOTE]
@@ -443,26 +437,11 @@ The configuration file is a JSON object with the following optional properties:
 
 All properties are optional. Only include the properties you need.
 
-### CLI precedence
+> [!NOTE]
+> Explicit command-line options always take precedence over values from the configuration file.
 
-Explicit command-line options always take precedence over values from the configuration file. For example, if the config file specifies `"project": "src/App.Infrastructure"` but you run:
+## Additional resources
 
-```dotnetcli
-dotnet ef migrations add Initial --project src/OtherProject
-```
-
-The `--project` value from the command line (`src/OtherProject`) is used.
-
-### Path resolution
-
-The `project` and `startupProject` paths in the configuration file are resolved relative to the parent directory of the `.config` folder containing the file, not relative to the current working directory. For example, given the following structure:
-
-```text
-my-repo/
-├── .config/
-│   └── dotnet-ef.json    ← contains "project": "src/App.Infrastructure"
-└── src/
-    └── App.Infrastructure/
-```
-
-The `project` path resolves to `my-repo/src/App.Infrastructure` regardless of where you run `dotnet ef` from within `my-repo`. Absolute paths are also supported.
+* [Migrations](xref:core/managing-schemas/migrations/index)
+* [Reverse Engineering](xref:core/managing-schemas/scaffolding)
+* [Compiled models](xref:core/performance/advanced-performance-topics#compiled-models)
