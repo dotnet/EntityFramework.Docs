@@ -34,6 +34,7 @@ EF Core 9 targets .NET 8. This means that existing applications that target .NET
 | [`ToString()` method now returns empty string for `null` instances](#nullable-tostring)                   | Low        |
 | [Shared framework dependencies were updated to 9.0.x](#shared-framework-dependencies)                     | Low        |
 | [EF tools no longer support .NET Framework projects](#ef-tools-no-netfx)                                  | Low        |
+| [`EF.Constant()` and `EF.Parameter()` no longer work inside compiled queries](#ef-constant-compiled)      | Low        |
 
 ## High-impact changes
 
@@ -355,6 +356,38 @@ The current version of EF Core tools works with all supported EF Core versions a
 #### Mitigations
 
 Update your project to target .NET (e.g., .NET 8 or later). If your project currently targets .NET Framework, see the [porting guide](/dotnet/core/porting/) for information on migrating to .NET.
+
+<a name="ef-constant-compiled"></a>
+
+### `EF.Constant()` and `EF.Parameter()` no longer work inside compiled queries
+
+[Tracking Issue #33674](https://github.com/dotnet/efcore/issues/33674)
+
+#### Old behavior
+
+In EF Core 8, <xref:Microsoft.EntityFrameworkCore.EF.Constant*> and <xref:Microsoft.EntityFrameworkCore.EF.Parameter*> could be used inside compiled queries (<xref:Microsoft.EntityFrameworkCore.EF.CompileQuery*> and <xref:Microsoft.EntityFrameworkCore.EF.CompileAsyncQuery*>):
+
+```csharp
+var lookbackDays = 7;
+
+var compiledQuery = EF.CompileAsyncQuery(
+    (AppDbContext db) => db.Blogs
+        .Where(b => b.PublishedOn >= DateTime.Today.AddDays(EF.Constant(-lookbackDays))));
+```
+
+#### New behavior
+
+Starting with EF Core 9.0, using <xref:Microsoft.EntityFrameworkCore.EF.Constant*> or <xref:Microsoft.EntityFrameworkCore.EF.Parameter*> inside a compiled query throws an `InvalidCastException`:
+
+> :::no-loc text="Unable to cast object of type 'System.Linq.Expressions.ConstantExpression' to type 'System.Linq.Expressions.ParameterExpression'.":::
+
+#### Why
+
+The internal implementation of <xref:Microsoft.EntityFrameworkCore.EF.Constant*> was changed to avoid full query recompilation for each different constant value. The previous implementation introduced constant nodes early in the query pipeline (before query caching), causing expensive cache misses whenever a different value was passed to `EF.Constant()`. The new implementation processes these methods at a later stage, which is incompatible with compiled queries.
+
+#### Mitigations
+
+Either remove the <xref:Microsoft.EntityFrameworkCore.EF.Constant*> or <xref:Microsoft.EntityFrameworkCore.EF.Parameter*> call from the compiled query, or stop using a compiled query for that particular query. Note that removing `EF.Constant()` causes the value to be sent as a SQL parameter rather than inlined as a constant, which may affect query plan performance.
 
 ## Azure Cosmos DB breaking changes
 
