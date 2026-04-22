@@ -431,8 +431,8 @@ The configuration file is a JSON object with the following optional properties:
 
 | Property         | Type    | Description                                                                                                                                 |
 |:-----------------|:--------|:--------------------------------------------------------------------------------------------------------------------------------------------|
-| `project`        | string  | Relative path to the target project folder. Resolved relative to the parent of the `.config` directory containing the file.                 |
-| `startupProject` | string  | Relative path to the startup project folder. Resolved relative to the parent of the `.config` directory containing the file.                |
+| `project`        | string  | Relative or absolute path to the target project folder. Relative paths are resolved relative to the parent of the `.config` directory containing the file. |
+| `startupProject` | string  | Relative or absolute path to the startup project folder. Relative paths are resolved relative to the parent of the `.config` directory containing the file. |
 | `framework`      | string  | The [Target Framework Moniker](/dotnet/standard/frameworks#supported-target-framework-versions) for the target framework.                    |
 | `configuration`  | string  | The build configuration, for example: `Debug` or `Release`.                                                                                 |
 | `context`        | string  | The `DbContext` class to use. Class name only or fully qualified with namespaces.                                                           |
