@@ -14,6 +14,7 @@ The .NET Data Community Standups are live-streamed monthly (roughly) on Thursday
 
 | Date         | Area                  | Title                                                                                    |
 |--------------|-----------------------|------------------------------------------------------------------------------------------|
+| Apr 23, 2026 | Tools                 | [Lightweight Framework to Automate EF Components](#Apr23_2026)                           |
 | Mar 19, 2026 | DevArt                | [How dotConnect + Entity Developer simplify your workflow](#Mar19_2026)                  |
 | Feb 12, 2026 | AI                    | [Adam tells us about Microsoft.Extensions.DataIngestion](#Feb12_2026)                    |
 | Nov 20, 2025 | Release               | [EF 10 release celebration 🎉](#Nov20_2025)                                              |
@@ -109,6 +110,22 @@ The .NET Data Community Standups are live-streamed monthly (roughly) on Thursday
 | May 6, 2020  | Welcome!              | [Introducing the EF Core Community Standup](#one)                                        |
 
 ## 2026
+
+<a name="Apr23_2026"></a>
+
+### Apr 23: [Lightweight Framework to Automate EF Components](https://www.youtube.com/live/qTE6_VAMzS4?si=Q3lqINl3l_NQj4Mf)
+
+Join us for a stream where Klaus Kirchhoff introduces "Lightweight Framework to Automate EF Components".
+
+Featuring:
+
+- [Klaus Kirchhoff](https://jobbots24.de/) (Special guest)
+- [Jiri Cincura](https://www.tabsoverspaces.com/) (Host)
+- [Shay Rojansky](https://www.roji.org/) (Host)
+
+Links:
+
+- [jb24-DbFactory](https://jobbots24.de/#section3)
 
 <a name="Mar19_2026"></a>
 
