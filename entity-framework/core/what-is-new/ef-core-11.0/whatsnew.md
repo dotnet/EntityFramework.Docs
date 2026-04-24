@@ -2,7 +2,7 @@
 title: What's New in EF Core 11
 description: Overview of new features in EF Core 11
 author: roji
-ms.date: 02/02/2026
+ms.date: 04/22/2026
 uid: core/what-is-new/ef-core-11.0/whatsnew
 ---
 
@@ -630,6 +630,32 @@ Remove-Migration -Connection "Server=prod;Database=MyDb;..."
 Remove-Migration -Offline
 Drop-Database -Connection "Server=test;Database=MyDb;..." -Force
 ```
+
+<a name="dotnet-ef-config-file"></a>
+
+### Configuration file for dotnet ef
+
+The `dotnet ef` command-line tool now supports loading default option values from a `.config/dotnet-ef.json` configuration file. This eliminates the need to repeatedly specify the same options — such as `--project` and `--startup-project` — across every command invocation.
+
+When you run `dotnet ef`, the tool searches for a `.config/dotnet-ef.json` file by walking up the directory tree from the current working directory. The first file found is used. Here's an example configuration file:
+
+```json
+{
+  "project": "src/App.Infrastructure",
+  "startupProject": "src/App.Api",
+  "framework": "net11.0",
+  "configuration": "Debug",
+  "context": "AppDbContext",
+  "runtime": "win-x64",
+  "verbose": true,
+  "noColor": false,
+  "prefixOutput": false
+}
+```
+
+Explicit command-line options always take precedence over configuration file values. Path values for `project` and `startupProject` are resolved relative to the parent of the `.config` directory containing the file.
+
+For more information, see [Configuration file](xref:core/cli/dotnet#configuration-file).
 
 ## Other improvements
 
