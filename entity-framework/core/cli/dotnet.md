@@ -2,7 +2,7 @@
 title: EF Core tools reference (.NET CLI) - EF Core
 description: Reference guide for the Entity Framework Core .NET CLI tools
 author: SamMonoRT
-ms.date: 11/08/2024
+ms.date: 04/22/2026
 uid: core/cli/dotnet
 ---
 
@@ -385,6 +385,60 @@ The following example creates a script for all migrations after the InitialCreat
 ```dotnetcli
 dotnet ef migrations script 20180904195021_InitialCreate
 ```
+
+## Configuration file
+
+> [!NOTE]
+> This feature was introduced in EF Core 11.
+
+Starting with EF Core 11, `dotnet ef` can load default option values from a JSON configuration file. This reduces the need to repeat the same command-line options across multiple invocations.
+
+### File location and discovery
+
+Place a file named `dotnet-ef.json` inside a `.config` directory:
+
+```text
+<repository root>/
+└── .config/
+    └── dotnet-ef.json
+```
+
+When `dotnet ef` runs, it walks up the directory tree from the current working directory and uses the first `.config/dotnet-ef.json` file it finds. This means you can place the file at the root of your repository and it will be used from any subdirectory.
+
+### Supported properties
+
+The configuration file is a JSON object with the following optional properties:
+
+```json
+{
+  "project": "src/App.Infrastructure",
+  "startupProject": "src/App.Api",
+  "framework": "net11.0",
+  "configuration": "Debug",
+  "context": "AppDbContext",
+  "runtime": "win-x64",
+  "verbose": true,
+  "noColor": false,
+  "prefixOutput": false
+}
+```
+
+| Property         | Type    | Description                                                                                                                                 |
+|:-----------------|:--------|:--------------------------------------------------------------------------------------------------------------------------------------------|
+| `project`        | string  | Relative or absolute path to the target project folder. Relative paths are resolved relative to the parent of the `.config` directory containing the file. |
+| `startupProject` | string  | Relative or absolute path to the startup project folder. Relative paths are resolved relative to the parent of the `.config` directory containing the file. |
+| `framework`      | string  | The [Target Framework Moniker](/dotnet/standard/frameworks#supported-target-framework-versions) for the target framework.                    |
+| `configuration`  | string  | The build configuration, for example: `Debug` or `Release`.                                                                                 |
+| `context`        | string  | The `DbContext` class to use. Class name only or fully qualified with namespaces.                                                           |
+| `runtime`        | string  | The identifier of the target runtime to restore packages for. For a list of Runtime Identifiers (RIDs), see the [RID catalog](/dotnet/core/rid-catalog). |
+| `verbose`        | boolean | Enable verbose output.                                                                                                                      |
+| `noColor`        | boolean | Disable colored console output.                                                                                                             |
+| `prefixOutput`   | boolean | Prefix output lines with their severity level.                                                                                              |
+
+All properties are optional. Only include the properties you need.
+
+> [!NOTE]
+> Explicit command-line options always take precedence over values from the configuration file.
 
 ## Additional resources
 
