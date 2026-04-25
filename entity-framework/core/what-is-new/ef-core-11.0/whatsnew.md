@@ -234,15 +234,18 @@ protected override void OnModelCreating(ModelBuilder modelBuilder)
 }
 ```
 
-Once you have a vector index, you can use the `VectorSearch()` extension method on your `DbSet` to perform an approximate search:
+Once you have a vector index, you can use the `VectorSearch()` extension method on your `DbSet`, and chain `Take()` and `WithApproximate()` to perform an approximate search:
 
 ```csharp
 var blogs = await context.Blogs
-    .VectorSearch(b => b.Embedding, embedding, "cosine", topN: 5)
+    .VectorSearch(b => b.Embedding, embedding, "cosine")
+    .OrderBy(r => r.Distance)
+    .Take(5)
+    .WithApproximate()
     .ToListAsync();
 ```
 
-This translates to the SQL Server [`VECTOR_SEARCH()`](/sql/t-sql/functions/vector-search-transact-sql) table-valued function, which performs an approximate search over the vector index. The `topN` parameter specifies the number of results to return.
+This translates to the SQL Server [`VECTOR_SEARCH()`](/sql/t-sql/functions/vector-search-transact-sql) table-valued function. `Take()` specifies the number of results to return, and `WithApproximate()` instructs SQL Server to use the vector index for approximate nearest neighbor (ANN) search, adding `WITH APPROXIMATE` to the SQL `TOP` clause. Without `WithApproximate()`, an exact k-nearest neighbor (kNN) search is performed instead.
 
 `VectorSearch()` returns `VectorSearchResult<TEntity>`, allowing you to access the distance alongside the entity.
 
