@@ -96,14 +96,14 @@ SQL Server's `VECTOR_SEARCH()` table-valued function retrieves rows based on vec
 Use the `VectorSearch()` extension method on your `DbSet`, and chain `OrderBy()`, `Take()`, and `WithApproximate()` to perform an approximate nearest neighbor (ANN) search that uses a [vector index](/sql/t-sql/statements/create-vector-index-transact-sql):
 
 ```csharp
-var blogs = await context.Blogs
+var results = await context.Blogs
     .VectorSearch(b => b.Embedding, embedding, "cosine")
     .OrderBy(r => r.Distance)
     .Take(5)
     .WithApproximate()
     .ToListAsync();
 
-foreach (var result in blogs)
+foreach (var result in results)
 {
     Console.WriteLine($"Blog {result.Value.Id} with distance {result.Distance}");
 }
