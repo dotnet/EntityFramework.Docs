@@ -164,6 +164,30 @@ Both optimizations can have a significant positive impact on query performance, 
 
 More details on the benchmark are available [here](https://github.com/dotnet/efcore/issues/29182#issuecomment-4231140289), and as always, actual performance in your application will vary based on your schema, data and a variety of other factors.
 
+<a name="linq-strip-noop-casts"></a>
+
+### Stripping of no-op CASTs
+
+EF Core sometimes generated SQL `CAST` expressions that converted a column to the type it already stores — for example, `CAST([u].[Name] AS nvarchar(max))` on a column that is already `nvarchar(max)`. This commonly occurred with [value-converted](xref:core/modeling/value-conversions) properties whose CLR type has an implicit conversion to the provider type, but could also happen in other scenarios. Such redundant casts produce unnecessary work and can prevent the database from using indexes on the column.
+
+EF Core 11 now detects and strips these no-op `CAST` expressions during SQL post-processing. For example, the following query:
+
+```sql
+SELECT [u].[Id], [u].[Name]
+FROM [Users] AS [u]
+WHERE CAST([u].[Name] AS nvarchar(max)) LIKE N'Name%'
+```
+
+Now generates the cleaner:
+
+```sql
+SELECT [u].[Id], [u].[Name]
+FROM [Users] AS [u]
+WHERE [u].[Name] LIKE N'Name%'
+```
+
+This allows the database to use any index defined on the column, which can significantly improve query performance.
+
 <a name="linq-maxby-minby"></a>
 
 ### MaxBy and MinBy
