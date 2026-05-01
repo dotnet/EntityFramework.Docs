@@ -178,7 +178,7 @@ FROM [Users] AS [u]
 WHERE CAST([u].[Name] AS nvarchar(max)) LIKE N'Name%'
 ```
 
-Now generates the cleaner:
+Now generates cleaner SQL:
 
 ```sql
 SELECT [u].[Id], [u].[Name]
