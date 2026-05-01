@@ -83,6 +83,29 @@ For more information on inheritance mapping strategies, see [Inheritance](xref:c
 
 Complex types are now fully supported in the Azure Cosmos DB provider, embedded as nested JSON objects or arrays. For more information, [see the Cosmos DB section below](#cosmos-complex-types).
 
+<a name="complex-types-property-chaining"></a>
+
+### Configuring complex type properties via lambda chaining
+
+Previously, configuring a property on a complex type required first calling `ComplexProperty` to get the complex type builder, and then calling `Property` on it:
+
+```csharp
+modelBuilder.Entity<MyEntity>()
+    .ComplexProperty(e => e.Details)
+    .Property(d => d.Description)
+    .HasMaxLength(500);
+```
+
+EF Core 11 now allows configuring complex type properties directly by chaining member access in the lambda expression passed to `Property`:
+
+```csharp
+modelBuilder.Entity<MyEntity>()
+    .Property(e => e.Details.Description)
+    .HasMaxLength(500);
+```
+
+This simplifies model configuration by removing the need to explicitly navigate through intermediate complex type builders to reach the property you want to configure.
+
 <a name="complex-types-stabilization"></a>
 
 ### Stabilization and bug fixes
