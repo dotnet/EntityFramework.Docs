@@ -500,6 +500,10 @@ In addition, `EF.Functions.DateTrunc()` is now available for truncating `DateTim
 
 For the complete list of date/time function translations, see the [SQL Server function mappings page](xref:core/providers/sql-server/functions).
 
+### Other changes
+
+* <xref:Microsoft.EntityFrameworkCore.SqlServerDbContextOptionsExtensions.UseSqlServer*> now defaults to compatibility level 160 (SQL Server 2022), enabling SQL Server 2022-specific translations such as `LEAST` and `GREATEST` by default; see the [breaking change note](xref:core/what-is-new/ef-core-11.0/breaking-changes#sqlserver-compatibility-level-160) for more information.
+
 ## Cosmos DB
 
 <a name="cosmos-complex-types"></a>
