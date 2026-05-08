@@ -104,7 +104,7 @@ Previously, when generating the Cosmos `id` property value from a composite key 
 
 #### New behavior
 
-Starting with EF Core 11.0, these characters are no longer escaped in the generated `id` value. The `id` value will contain the raw key values without modification. Note that the `|` character is still used as a separator when `id` values are concatenated (i.e. when using a composite key or when the discriminator-in-id behavior is opted into), but no escaping is applied outside of that concatenation.
+Starting with EF Core 11.0, these characters are no longer escaped in the generated `id` value. The `id` value will contain the raw key values without modification. Note that when `id` values are concatenated (i.e. when using a composite key or when the discriminator-in-id behavior is opted into), the `|` character is used as a separator—and any `|` characters already present in key values are escaped to avoid ambiguity. No other escaping is applied.
 
 The old escape behavior can be re-enabled by setting an `AppContext` switch:
 
