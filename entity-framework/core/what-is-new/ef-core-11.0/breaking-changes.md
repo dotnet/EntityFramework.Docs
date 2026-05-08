@@ -23,13 +23,13 @@ This page documents API and behavior changes that have the potential to break ex
 |:--------------------------------------------------------------------------------------------------------------- | -----------|
 | [Sync I/O via the Azure Cosmos DB provider has been fully removed](#cosmos-nosync)                              | Medium     |
 | [Microsoft.Data.SqlClient has been updated to 7.0](#sqlclient-7)                                                | Medium     |
+| [Cosmos: illegal `id` characters are no longer escaped](#cosmos-no-id-escape)                                   | Medium     |
 | [SQL Server compatibility level now defaults to 160](#sqlserver-compatibility-level-160)                       | Low        |
 | [EF Core now throws by default when no migrations are found](#migrations-not-found)                             | Low        |
 | [`EFOptimizeContext` MSBuild property has been removed](#ef-optimize-context-removed)                           | Low        |
 | [EF tools packages no longer reference Microsoft.EntityFrameworkCore.Design](#ef-tools-no-design-dep)           | Low        |
 | [SqlVector properties are no longer loaded by default](#sqlvector-not-auto-loaded)                              | Low        |
 | [Cosmos: empty owned collections now return an empty collection instead of null](#cosmos-empty-collections)     | Low        |
-| [Cosmos: illegal `id` characters are no longer escaped](#cosmos-no-id-escape)                                   | Low        |
 
 ## Medium-impact changes
 
@@ -84,6 +84,45 @@ If your application uses Entra ID authentication with SQL Server, add a referenc
 ```
 
 No code changes are required beyond adding this package reference. If you use `SqlAuthenticationMethod.ActiveDirectoryPassword`, migrate to a modern authentication method such as `ActiveDirectoryDefault` or `ActiveDirectoryInteractive`.
+
+<a name="cosmos-no-id-escape"></a>
+
+### Cosmos: illegal `id` characters are no longer escaped
+
+[Tracking Issue #38244](https://github.com/dotnet/efcore/issues/38244)
+
+#### Old behavior
+
+Previously, when generating the Cosmos `id` property value from a composite key that contains multiple parts, the Azure Cosmos DB provider escaped certain characters that are illegal in Cosmos resource `id` values:
+
+| Character | Escaped as |
+|-----------|------------|
+| `/`       | `^2F`      |
+| `\`       | `^5C`      |
+| `?`       | `^3F`      |
+| `#`       | `^23`      |
+
+#### New behavior
+
+Starting with EF Core 11.0, these characters are no longer escaped in the generated `id` value. The `id` value will contain the raw key values without modification (except for the `|` separator-collision escape, which is still applied).
+
+The old escape behavior can be re-enabled by setting an `AppContext` switch:
+
+```csharp
+AppContext.SetSwitch("Microsoft.EntityFrameworkCore.EscapeIllegalIdCharacters", true);
+```
+
+#### Why
+
+The previous escaping scheme was non-injective: the escape character `^` was never itself escaped. This meant that a key value containing the literal string `^2F` would produce the same `id` as a key value containing `/`, resulting in silent data corruption where two entities with distinct primary keys would be mapped to the same Cosmos document. Stopping the escaping altogether fixes the collision problem.
+
+#### Mitigations
+
+If your application uses composite keys whose values can contain the characters `/`, `\`, `?`, or `#`, be aware of the following:
+
+- **Existing data**: Documents previously stored in Cosmos DB have `id` values using the old escape sequences (e.g. `Post|1|^2F`). After upgrading to EF Core 11, EF will generate unescaped `id` values (e.g. `Post|1|/`) and will no longer find those existing documents. To continue accessing existing data without migration, opt back into the old behavior using the `AppContext` switch described above—however, be aware that the id-collision bug will still be present.
+
+- **New data**: If you are creating a new application or database, avoid using these illegal characters in key values, as they are not valid in Cosmos DB resource `id` values. See the [Azure documentation](https://learn.microsoft.com/dotnet/api/microsoft.azure.documents.resource.id) for details.
 
 ## Low-impact changes
 
@@ -281,45 +320,6 @@ if (entity.OwnedCollection is { Count: 0 })
     // treated as empty
 }
 ```
-
-<a name="cosmos-no-id-escape"></a>
-
-### Cosmos: illegal `id` characters are no longer escaped
-
-[Tracking Issue #38244](https://github.com/dotnet/efcore/issues/38244)
-
-#### Old behavior
-
-Previously, when generating the Cosmos `id` property value from a composite key that contains multiple parts, the Azure Cosmos DB provider escaped certain characters that are illegal in Cosmos resource `id` values:
-
-| Character | Escaped as |
-|-----------|------------|
-| `/`       | `^2F`      |
-| `\`       | `^5C`      |
-| `?`       | `^3F`      |
-| `#`       | `^23`      |
-
-#### New behavior
-
-Starting with EF Core 11.0, these characters are no longer escaped in the generated `id` value. The `id` value will contain the raw key values without modification (except for the `|` separator-collision escape, which is still applied).
-
-The old escape behavior can be re-enabled by setting an `AppContext` switch:
-
-```csharp
-AppContext.SetSwitch("Microsoft.EntityFrameworkCore.EscapeIllegalIdCharacters", true);
-```
-
-#### Why
-
-The previous escaping scheme was non-injective: the escape character `^` was never itself escaped. This meant that a key value containing the literal string `^2F` would produce the same `id` as a key value containing `/`, resulting in silent data corruption where two entities with distinct primary keys would be mapped to the same Cosmos document. Stopping the escaping altogether fixes the collision problem.
-
-#### Mitigations
-
-If your application uses composite keys whose values can contain the characters `/`, `\`, `?`, or `#`, be aware of the following:
-
-- **Existing data**: Documents previously stored in Cosmos DB have `id` values using the old escape sequences (e.g. `Post|1|^2F`). After upgrading to EF Core 11, EF will generate unescaped `id` values (e.g. `Post|1|/`) and will no longer find those existing documents. To continue accessing existing data without migration, opt back into the old behavior using the `AppContext` switch described above—however, be aware that the id-collision bug will still be present.
-
-- **New data**: If you are creating a new application or database, avoid using these illegal characters in key values, as they are not valid in Cosmos DB resource `id` values. See the [Azure documentation](https://learn.microsoft.com/dotnet/api/microsoft.azure.documents.resource.id) for details.
 
 <a name="MDS-breaking-changes"></a>
 
