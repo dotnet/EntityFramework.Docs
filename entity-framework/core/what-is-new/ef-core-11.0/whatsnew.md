@@ -714,3 +714,4 @@ For more information, see [Configuration file](xref:core/cli/dotnet#configuratio
 ## Other improvements
 
 * The EF command-line tool now writes all logging and status messages to standard error, reserving standard output only for the command's actual expected output. For example, when generating a migration SQL script with `dotnet ef migrations script`, only the SQL is written to standard output.
+* An analyzer and code fix now warn when `ToAsyncEnumerable` is used instead of `AsAsyncEnumerable` on EF queries ([#37670](https://github.com/dotnet/efcore/issues/37670), many thanks to [@m-x-shokhzod](https://github.com/m-x-shokhzod)).
