@@ -436,7 +436,7 @@ Featuring:
 
 Links:
 
-- Product: [Hot Chocolate for GraphQL](https://chillicream.com/docs/hotchocolate)
+- Product: [Hot Chocolate for GraphQL](https://chillicream.com/docs/hotchocolate/v14)
 - Docs: [Hot Chocolate and Entity Framework Core](https://chillicream.com/docs/hotchocolate/v14/integrations/entity-framework)
 
 <a name="value-generation"></a>
