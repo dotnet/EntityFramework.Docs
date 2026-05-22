@@ -14,7 +14,7 @@ The .NET Data Community Standups are live-streamed monthly (roughly) on Thursday
 
 | Date         | Area                  | Title                                                                                    |
 |--------------|-----------------------|------------------------------------------------------------------------------------------|
-| May 21, 2026 | EF Core               | [8 Real-World Query Anti‑Patterns (and How to Fix Them)](#May21_2026)                    |
+| May 21, 2026 | EF Core               | [8 Real-World Query Anti-Patterns (and How to Fix Them)](#May21_2026)                    |
 | Apr 23, 2026 | Tools                 | [Lightweight Framework to Automate EF Components](#Apr23_2026)                           |
 | Mar 19, 2026 | DevArt                | [How dotConnect + Entity Developer simplify your workflow](#Mar19_2026)                  |
 | Feb 12, 2026 | AI                    | [Adam tells us about Microsoft.Extensions.DataIngestion](#Feb12_2026)                    |
