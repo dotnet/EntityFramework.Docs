@@ -114,7 +114,7 @@ The .NET Data Community Standups are live-streamed monthly (roughly) on Thursday
 
 <a name="May21_2026"></a>
 
-### May 21: [8 Real-World Query Anti‑Patterns (and How to Fix Them)](https://www.youtube.com/live/jlR6KFuFODI?si=PSCUNSrqo0-fVDJw)
+### May 21: [8 Real-World Query Anti-Patterns (and How to Fix Them)](https://www.youtube.com/live/jlR6KFuFODI?si=PSCUNSrqo0-fVDJw)
 
 Join us for another show, where Chris Woodruff teaches us about 8 query anti-patterns and how to fix them.
 
