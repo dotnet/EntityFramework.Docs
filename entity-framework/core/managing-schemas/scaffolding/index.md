@@ -136,6 +136,8 @@ Scaffold-DbContext ... -Tables Customer.Purchases, Contractor.Accounts, Contract
 
 Table and column names are fixed up to better match the .NET naming conventions for types and properties by default. Specifying `-UseDatabaseNames` (Visual Studio PMC) or `--use-database-names` (.NET CLI) will disable this behavior preserving the original database names as much as possible. Invalid .NET identifiers will still be fixed and synthesized names like navigation properties will still conform to .NET naming conventions.
 
+To disable the pluralizer when scaffolding reverse-engineered models, use `-NoPluralize` (Visual Studio PMC) or `--no-pluralize` (.NET CLI).
+
 For example, consider the following tables:
 
 ```sql
