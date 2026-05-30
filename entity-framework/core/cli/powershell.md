@@ -16,13 +16,13 @@ If you aren't using Visual Studio, we recommend the [EF Core Command-line Tools]
 
 ## Install the tools
 
-Install the Package Manager Console tools by running the following command in **Package Manager Console**:
+Install the Package Manager Console tools by running the following PowerShell command in **Package Manager Console**:
 
 ```powershell
 Install-Package Microsoft.EntityFrameworkCore.Tools
 ```
 
-Update the tools by running the following command in **Package Manager Console**.
+Update the tools by running the following PowerShell command in **Package Manager Console**.
 
 ```powershell
 Update-Package Microsoft.EntityFrameworkCore.Tools
