@@ -417,8 +417,8 @@ entity.HasMany(d => d.Tags)
     .WithMany(p => p.Posts)
     .UsingEntity<Dictionary<string, object>>(
         "PostTag",
-        l => l.HasOne<Tag>().WithMany().HasForeignKey("PostsId"),
-        r => r.HasOne<Post>().WithMany().HasForeignKey("TagsId"),
+        r => r.HasOne<Tag>().WithMany().HasForeignKey("TagsId"),
+        l => l.HasOne<Post>().WithMany().HasForeignKey("PostsId"),
         j =>
             {
                 j.HasKey("PostsId", "TagsId");
