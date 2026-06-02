@@ -187,7 +187,9 @@ Both optimizations can have a significant positive impact on query performance, 
 
 More details on the benchmark are available [here](https://github.com/dotnet/efcore/issues/29182#issuecomment-4231140289), and as always, actual performance in your application will vary based on your schema, data and a variety of other factors.
 
-#### Support for the new .NET 11 `FullJoin` operator
+<a name="linq-fulljoin"></a>
+
+### Support for the new .NET 11 `FullJoin` operator
 
 .NET 11 adds first-class LINQ support for `FullJoin`, which keeps rows from both input collections and matches them when keys are equal. EF Core 11 translates this operator to `FULL JOIN` on relational databases:
 
