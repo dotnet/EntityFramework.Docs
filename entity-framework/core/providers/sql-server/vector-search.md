@@ -196,25 +196,30 @@ SqlVector<float> queryEmbedding = ...;
 var results = await context.Articles
     // Perform full-text search
     .FreeTextTable<Article, int>(textualQuery, topN: k)
+    .Join(
+        context.Articles,
+        fts => fts.Key,
+        a => a.Id,
+        (fts, a) => new { Article = a, fts.Rank })
     // Perform vector (semantic) search, joining the results of both searches together
-    .LeftJoin(
+    .FullJoin(
         context.Articles.VectorSearch(b => b.Embedding, queryEmbedding, "cosine")
             .OrderBy(r => r.Distance)
             .Take(k)
             .WithApproximate(),
-        fts => fts.Key,
+        fts => fts.Article.Id,
         vs => vs.Value.Id,
         (fts, vs) => new
         {
-            Article = vs.Value,
-            FullTextRank = fts.Rank,
-            VectorDistance = (double?)vs.Distance
+            Article = fts != null ? fts.Article : vs.Value,
+            FullTextRank = fts == null ? null : (int?)fts.Rank,
+            VectorDistance = vs == null ? null : (double?)vs.Distance
         })
     // Apply Reciprocal Rank Fusion (RRF) to combine the results
     .Select(x => new
     {
         x.Article,
-        RrfScore = (1.0 / (k + x.FullTextRank)) + (1.0 / (k + x.VectorDistance) ?? 0.0)
+        RrfScore = (1.0 / (k + x.FullTextRank) ?? 0.0) + (1.0 / (k + x.VectorDistance) ?? 0.0)
     })
     .OrderByDescending(x => x.RrfScore)
     .Take(10)
@@ -225,19 +230,17 @@ var results = await context.Articles
 This query:
 
 1. Performs a full-text search on `Article`
-2. Performs a vector search on `Article` and combines the results to the full-text search results via a LEFT JOIN
+2. Performs a vector search on `Article` and combines the results with the full-text search results via a FULL JOIN
 3. Calculates the RRF score by combining both the full text and the semantic ranking
 4. Orders by RRF score, takes the desired number of results and projects out the original `Article` entities.
-
-> [!NOTE]
-> Rather than using a LEFT JOIN, a FULL OUTER JOIN would be more suitable for this scenario; this would allow highly-ranking results from either search side to be included in the final result, even if that result does not appear at all on the other side. With the above LEFT JOIN approach, if a result has a very high vector similarity score, it never gets included in the final result if that result doesn't also have a high full-text score. However, EF doesn't currently support FULL OUTER JOIN; upvote [#37633](https://github.com/dotnet/efcore/issues/37633) if this is something you'd like to see supported.
 
 The query produces the following SQL:
 
 ```sql
-SELECT TOP(@__p_4) [a0].[Id], [a0].[Content], [a0].[Title]
+SELECT TOP(@__p_4) COALESCE([a].[Id], [t].[Id]) AS [Id], COALESCE([a].[Content], [t].[Content]) AS [Content], COALESCE([a].[Title], [t].[Title]) AS [Title]
 FROM FREETEXTTABLE([Articles], *, @__textualQuery_0, @__k_1) AS [f]
-LEFT JOIN (
+INNER JOIN [Articles] AS [a] ON [f].[KEY] = [a].[Id]
+FULL JOIN (
     SELECT TOP(@__k_1) WITH APPROXIMATE [a].[Id], [a].[Content], [a].[Title], [v].[Distance]
     FROM VECTOR_SEARCH(
         TABLE = [Articles] AS [a],
@@ -246,6 +249,6 @@ LEFT JOIN (
         METRIC = 'cosine'
     ) AS [v]
     ORDER BY [v].[Distance]
-) AS [t] ON [f].[KEY] = [t].[Id]
-ORDER BY 1.0E0 / CAST(@__k_1 + [f].[RANK] AS float) + ISNULL(1.0E0 / (CAST(@__k_1 AS float) + [t].[Distance]), 0.0E0) DESC
+) AS [t] ON [a].[Id] = [t].[Id]
+ORDER BY ISNULL(1.0E0 / CAST(@__k_1 + [f].[RANK] AS float), 0.0E0) + ISNULL(1.0E0 / (CAST(@__k_1 AS float) + [t].[Distance]), 0.0E0) DESC
 ```

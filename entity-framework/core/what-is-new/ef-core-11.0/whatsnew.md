@@ -187,6 +187,30 @@ Both optimizations can have a significant positive impact on query performance, 
 
 More details on the benchmark are available [here](https://github.com/dotnet/efcore/issues/29182#issuecomment-4231140289), and as always, actual performance in your application will vary based on your schema, data and a variety of other factors.
 
+<a name="linq-fulljoin"></a>
+
+### Support for the new .NET 11 `FullJoin` operator
+
+.NET 11 adds first-class LINQ support for `FullJoin`, which keeps rows from both input collections and matches them when keys are equal. EF Core 11 translates this operator to `FULL JOIN` on relational databases:
+
+```csharp
+var results = await context.Customers
+    .FullJoin(
+        context.Orders,
+        c => c.Id,
+        o => o.CustomerId,
+        (c, o) => new { Customer = c, Order = o })
+    .ToListAsync();
+```
+
+This generates SQL similar to the following:
+
+```sql
+SELECT [c].[Id], [c].[Name], [o].[Id], [o].[CustomerId], [o].[OrderDate]
+FROM [Customers] AS [c]
+FULL JOIN [Orders] AS [o] ON [c].[Id] = [o].[CustomerId]
+```
+
 <a name="linq-strip-noop-casts"></a>
 
 ### Stripping of no-op CASTs
@@ -373,6 +397,46 @@ var results = await context.Blogs
 Both methods return `FullTextSearchResult<TEntity>`, giving you access to both the entity and the ranking value from SQL Server's full-text engine. This allows for more sophisticated result ordering and filtering based on relevance scores.
 
 For more information, see the [full documentation on full-text search](xref:core/providers/sql-server/full-text-search).
+
+<a name="sqlserver-hybrid-search"></a>
+
+#### Hybrid search
+
+SQL Server vector search can be combined with full-text table-valued functions to implement _hybrid search_: full-text search finds exact linguistic matches, vector search finds semantically similar results, and the two rankings are merged. EF Core 11's `FullJoin` support makes this pattern more complete, since highly-ranked rows from either side can contribute to the final results:
+
+```csharp
+var results = await context.Articles
+    .FreeTextTable<Article, int>(textualQuery, topN: k)
+    .Join(
+        context.Articles,
+        fts => fts.Key,
+        a => a.Id,
+        (fts, a) => new { Article = a, fts.Rank })
+    .FullJoin(
+        context.Articles.VectorSearch(a => a.Embedding, queryEmbedding, "cosine")
+            .OrderBy(r => r.Distance)
+            .Take(k)
+            .WithApproximate(),
+        fts => fts.Article.Id,
+        vs => vs.Value.Id,
+        (fts, vs) => new
+        {
+            Article = fts != null ? fts.Article : vs.Value,
+            FullTextRank = fts == null ? null : (int?)fts.Rank,
+            VectorDistance = vs == null ? null : (double?)vs.Distance
+        })
+    .Select(x => new
+    {
+        x.Article,
+        RrfScore = (1.0 / (k + x.FullTextRank) ?? 0.0) + (1.0 / (k + x.VectorDistance) ?? 0.0)
+    })
+    .OrderByDescending(x => x.RrfScore)
+    .Take(10)
+    .Select(x => x.Article)
+    .ToListAsync();
+```
+
+For more information, see the [SQL Server vector search documentation](xref:core/providers/sql-server/vector-search#hybrid-search).
 
 <a name="sql-server-json-contains"></a>
 
