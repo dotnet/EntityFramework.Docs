@@ -19,7 +19,7 @@ The screen shots and code listings in this walkthrough are taken from Visual Stu
 
 You need to have Visual Studio 2022 17.3 or later installed with the **.NET desktop workload** selected to complete this walkthrough. For more information about installing the latest version of Visual Studio, see [Install Visual Studio](/visualstudio/install/install-visual-studio).
 
-## Create the Application
+## Create the application
 
 1. Open Visual Studio
 2. On the start window, choose **Create new project**.
@@ -48,7 +48,7 @@ You need to have Visual Studio 2022 17.3 or later installed with the **.NET desk
 > [!NOTE]
 > The **Microsoft.EntityFrameworkCore.Sqlite** is the "database provider" package for using EF Core with a SQLite database. Similar packages are available for other database systems. Installing a database provider package automatically brings in all the dependencies needed to use EF Core with that database system. This includes the **Microsoft.EntityFrameworkCore** base package.
 
-## Define a Model
+## Define a model
 
 In this walkthrough we will implement a model using "Code First". This means that EF Core will create the database tables and schema based on the C# classes you define. See [Managing Database Schemas](xref:core/managing-schemas/index) to see how to use an existing database instead.
 

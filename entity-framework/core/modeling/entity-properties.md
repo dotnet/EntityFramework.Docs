@@ -78,7 +78,7 @@ In the following example, configuring a maximum length of 500 will cause a colum
 
 ***
 
-### Precision and Scale
+### Precision and scale
 
 Some relational data types support the precision and scale facets; these control what values can be stored, and how much storage is needed for the column. Which data types support precision and scale is database-dependent, but in most databases `decimal` and `DateTime` types do support these facets. For `decimal` properties, precision defines the maximum number of digits needed to express any value the column will contain, and scale defines the maximum number of decimal places needed. For `DateTime` properties, precision defines the maximum number of digits needed to express fractions of seconds, and scale is not used.
 
