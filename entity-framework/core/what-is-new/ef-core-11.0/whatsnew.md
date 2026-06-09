@@ -83,6 +83,29 @@ For more information on inheritance mapping strategies, see [Inheritance](xref:c
 
 Complex types are now fully supported in the Azure Cosmos DB provider, embedded as nested JSON objects or arrays. For more information, [see the Cosmos DB section below](#cosmos-complex-types).
 
+<a name="complex-types-property-chaining"></a>
+
+### Configuring complex type properties via lambda chaining
+
+Previously, configuring a property on a complex type required first calling `ComplexProperty` to get the complex type builder, and then calling `Property` on it:
+
+```csharp
+modelBuilder.Entity<MyEntity>()
+    .ComplexProperty(e => e.Details)
+    .Property(d => d.Description)
+    .HasMaxLength(500);
+```
+
+EF Core 11 now allows configuring complex type properties directly by chaining member access in the lambda expression passed to `Property`:
+
+```csharp
+modelBuilder.Entity<MyEntity>()
+    .Property(e => e.Details.Description)
+    .HasMaxLength(500);
+```
+
+This simplifies model configuration by removing the need to explicitly navigate through intermediate complex type builders to reach the property you want to configure.
+
 <a name="complex-types-stabilization"></a>
 
 ### Stabilization and bug fixes
@@ -164,6 +187,30 @@ Both optimizations can have a significant positive impact on query performance, 
 
 More details on the benchmark are available [here](https://github.com/dotnet/efcore/issues/29182#issuecomment-4231140289), and as always, actual performance in your application will vary based on your schema, data and a variety of other factors.
 
+<a name="linq-strip-noop-casts"></a>
+
+### Stripping of no-op CASTs
+
+EF Core sometimes generated SQL `CAST` expressions that converted a column to the type it already stores — for example, `CAST([u].[Name] AS nvarchar(max))` on a column that is already `nvarchar(max)`. This commonly occurred with [value-converted](xref:core/modeling/value-conversions) properties whose CLR type has an implicit conversion to the provider type, but could also happen in other scenarios. Such redundant casts produce unnecessary work and can prevent the database from using indexes on the column.
+
+EF Core 11 now detects and strips these no-op `CAST` expressions during SQL post-processing. For example, the following query:
+
+```sql
+SELECT [u].[Id], [u].[Name]
+FROM [Users] AS [u]
+WHERE CAST([u].[Name] AS nvarchar(max)) LIKE N'Name%'
+```
+
+Now generates cleaner SQL:
+
+```sql
+SELECT [u].[Id], [u].[Name]
+FROM [Users] AS [u]
+WHERE [u].[Name] LIKE N'Name%'
+```
+
+This allows the database to use any index defined on the column, which can significantly improve query performance.
+
 <a name="linq-maxby-minby"></a>
 
 ### MaxBy and MinBy
@@ -234,15 +281,18 @@ protected override void OnModelCreating(ModelBuilder modelBuilder)
 }
 ```
 
-Once you have a vector index, you can use the `VectorSearch()` extension method on your `DbSet` to perform an approximate search:
+Once you have a vector index, you can use the `VectorSearch()` extension method on your `DbSet`, and chain `Take()` and `WithApproximate()` to perform an approximate search:
 
 ```csharp
 var blogs = await context.Blogs
-    .VectorSearch(b => b.Embedding, embedding, "cosine", topN: 5)
+    .VectorSearch(b => b.Embedding, embedding, "cosine")
+    .OrderBy(r => r.Distance)
+    .Take(5)
+    .WithApproximate()
     .ToListAsync();
 ```
 
-This translates to the SQL Server [`VECTOR_SEARCH()`](/sql/t-sql/functions/vector-search-transact-sql) table-valued function, which performs an approximate search over the vector index. The `topN` parameter specifies the number of results to return.
+This translates to the SQL Server [`VECTOR_SEARCH()`](/sql/t-sql/functions/vector-search-transact-sql) table-valued function. `Take()` specifies the number of results to return, and `WithApproximate()` instructs SQL Server to use the vector index for approximate nearest neighbor (ANN) search, adding `WITH APPROXIMATE` to the SQL `TOP` clause. Without `WithApproximate()`, an exact k-nearest neighbor (kNN) search is performed instead.
 
 `VectorSearch()` returns `VectorSearchResult<TEntity>`, allowing you to access the distance alongside the entity.
 
@@ -449,6 +499,10 @@ You can also now construct a `DateTimeOffset` from a `DateTime` directly in LINQ
 In addition, `EF.Functions.DateTrunc()` is now available for truncating `DateTime`, `DateTimeOffset`, `DateOnly` and `TimeOnly` values to a specified precision (e.g. day, hour, minute), translating to SQL Server's [`DATETRUNC`](/sql/t-sql/functions/datetrunc-transact-sql) function.
 
 For the complete list of date/time function translations, see the [SQL Server function mappings page](xref:core/providers/sql-server/functions).
+
+### Other changes
+
+* <xref:Microsoft.EntityFrameworkCore.SqlServerDbContextOptionsExtensions.UseSqlServer*> now defaults to compatibility level 160 (SQL Server 2022), enabling SQL Server 2022-specific translations such as `LEAST` and `GREATEST` by default; see the [breaking change note](xref:core/what-is-new/ef-core-11.0/breaking-changes#sqlserver-compatibility-level-160) for more information.
 
 ## Cosmos DB
 
@@ -660,3 +714,4 @@ For more information, see [Configuration file](xref:core/cli/dotnet#configuratio
 ## Other improvements
 
 * The EF command-line tool now writes all logging and status messages to standard error, reserving standard output only for the command's actual expected output. For example, when generating a migration SQL script with `dotnet ef migrations script`, only the SQL is written to standard output.
+* An analyzer and code fix now warn when `ToAsyncEnumerable` is used instead of `AsAsyncEnumerable` on EF queries ([#37670](https://github.com/dotnet/efcore/issues/37670), many thanks to [@m-x-shokhzod](https://github.com/m-x-shokhzod)).
