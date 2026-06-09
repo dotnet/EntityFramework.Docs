@@ -2,7 +2,7 @@
 title: What's New in EF Core 11
 description: Overview of new features in EF Core 11
 author: roji
-ms.date: 04/22/2026
+ms.date: 06/09/2026
 uid: core/what-is-new/ef-core-11.0/whatsnew
 ---
 
@@ -105,6 +105,39 @@ modelBuilder.Entity<MyEntity>()
 ```
 
 This simplifies model configuration by removing the need to explicitly navigate through intermediate complex type builders to reach the property you want to configure.
+
+<a name="complex-types-keys-indexes"></a>
+
+### Keys and indexes on complex type properties
+
+Keys and indexes can now use scalar properties nested inside non-collection complex types:
+
+```csharp
+modelBuilder.Entity<Customer>()
+    .HasKey(c => c.CustomerId.Value);
+
+modelBuilder.Entity<Customer>()
+    .HasIndex(c => c.Address.PostalCode);
+```
+
+The same paths can be configured by name:
+
+```csharp
+modelBuilder.Entity<Customer>()
+    .HasIndex("Address.PostalCode");
+```
+
+For relational providers, indexes can also target paths inside complex types mapped to JSON columns. Complex collection paths use `[]` for all elements or a numeric indexer for a specific element:
+
+```csharp
+modelBuilder.Entity<Order>()
+    .ComplexCollection(o => o.Items, b => b.ToJson());
+
+modelBuilder.Entity<Order>()
+    .HasIndex("Items[].Sku");
+```
+
+For more information, see [Keys](xref:core/modeling/keys#keys-on-complex-type-properties) and [Indexes](xref:core/modeling/indexes#indexes-on-complex-type-properties).
 
 <a name="complex-types-stabilization"></a>
 
@@ -508,6 +541,29 @@ WHERE JSON_CONTAINS([b].[JsonData], 8, N'$.Rating') = 1
 
 For the full `JSON_CONTAINS` SQL Server documentation, see [`JSON_CONTAINS`](/sql/t-sql/functions/json-contains-transact-sql).
 
+<a name="sqlserver-json-indexes"></a>
+
+### JSON indexes
+
+EF Core 11 can create and scaffold [SQL Server JSON indexes](/sql/t-sql/statements/create-json-index-transact-sql) for paths inside complex types mapped to JSON columns:
+
+```csharp
+modelBuilder.Entity<Customer>()
+    .ComplexProperty(c => c.Contact, b => b.ToJson().HasColumnType("json"));
+
+modelBuilder.Entity<Customer>()
+    .HasIndex("Contact.Address.City");
+```
+
+This generates SQL similar to:
+
+```sql
+CREATE JSON INDEX [IX_Customers_Contact_Address_City]
+ON [Customers]([Contact]) FOR (N'$.Address.City');
+```
+
+For more information, see [JSON indexes](xref:core/providers/sql-server/index#json-indexes).
+
 <a name="sqlserver-temporal-clr-properties"></a>
 
 ### Temporal period properties mapped to CLR properties
@@ -601,6 +657,31 @@ public class ShippingAddress
 Complex types are generally a better fit than owned types when mapping to JSON documents: unlike owned types, complex types have value semantics and no identity, which means they work better in scenarios such as comparing two embedded objects within the same document.
 
 This feature was contributed by [@JoasE](https://github.com/JoasE) - many thanks!
+
+<a name="cosmos-indexes"></a>
+
+### Indexes and indexing policy
+
+EF Core 11 adds support for more Azure Cosmos DB indexing policy configuration. You can now disable automatic indexing, exclude individual paths when automatic indexing is enabled, and emit explicit single-property, composite, vector, and full-text indexes:
+
+```csharp
+modelBuilder.Entity<Order>(b =>
+{
+    b.HasAutomaticIndexing()
+        .Except("/InternalNotes/?");
+
+    b.HasIndex(o => new { o.CustomerId, o.OrderDate });
+});
+```
+
+Indexes can also traverse complex type properties and complex collections:
+
+```csharp
+modelBuilder.Entity<Order>()
+    .HasIndex(o => o.Items.Select(i => i.Sku));
+```
+
+For more information, see [Indexing policy](xref:core/providers/cosmos/modeling#indexing-policy).
 
 <a name="cosmos-transactional-batches"></a>
 
