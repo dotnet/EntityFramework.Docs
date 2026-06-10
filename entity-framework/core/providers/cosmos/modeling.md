@@ -84,7 +84,6 @@ To index only explicitly configured paths, disable automatic indexing and config
 ```csharp
 modelBuilder.Entity<Order>(b =>
 {
-    b.HasAutomaticIndexing(false);
     b.HasIndex(o => o.OrderNumber);
     b.HasIndex(o => new { o.CustomerId, o.OrderDate });
 });

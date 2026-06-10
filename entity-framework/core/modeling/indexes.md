@@ -83,6 +83,13 @@ modelBuilder.Entity<Order>()
     .HasIndex("Items[].Sku");
 ```
 
+The same index can be configured with a lambda expression using `Select`:
+
+```csharp
+modelBuilder.Entity<Order>()
+    .HasIndex(o => o.Items.Select(i => i.Sku));
+```
+
 Support for JSON-path indexes depends on the database provider. For example, the SQL Server provider creates SQL Server JSON indexes where supported, while the Azure Cosmos DB provider emits the configured paths into the container indexing policy.
 
 ## Index uniqueness
