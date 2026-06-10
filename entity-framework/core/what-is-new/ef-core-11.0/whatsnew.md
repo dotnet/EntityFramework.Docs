@@ -2,7 +2,7 @@
 title: What's New in EF Core 11
 description: Overview of new features in EF Core 11
 author: roji
-ms.date: 06/09/2026
+ms.date: 06/10/2026
 uid: core/what-is-new/ef-core-11.0/whatsnew
 ---
 
@@ -624,6 +624,45 @@ For the complete list of date/time function translations, see the [SQL Server fu
 
 * <xref:Microsoft.EntityFrameworkCore.SqlServerDbContextOptionsExtensions.UseSqlServer*> now defaults to compatibility level 160 (SQL Server 2022), enabling SQL Server 2022-specific translations such as `LEAST` and `GREATEST` by default; see the [breaking change note](xref:core/what-is-new/ef-core-11.0/breaking-changes#sqlserver-compatibility-level-160) for more information.
 
+## SQLite
+
+<a name="sqlite-ordered-string-aggregation"></a>
+
+### Ordering in string aggregation
+
+EF Core can translate `string.Join` and `string.Concat` over a grouping to SQLite's `group_concat` aggregate function. Starting with EF 11, these translations also support ordering the aggregated values, by applying `OrderBy`/`OrderByDescending` inside the aggregate. Previously, queries that ordered the values fell back to client evaluation.
+
+For example, the following query concatenates each blog's post titles, ordered by descending post `Id`:
+
+```csharp
+var blogs = await context.Blogs
+    .Select(b => new
+    {
+        b.Name,
+        Posts = string.Join(
+            ", ",
+            b.Posts.OrderByDescending(p => p.Id).Select(p => p.Title))
+    })
+    .ToListAsync();
+```
+
+This translates to the following SQL, which uses `group_concat` with an `ORDER BY` clause:
+
+```sql
+SELECT "b"."Name", COALESCE(group_concat("p"."Title", ', ' ORDER BY "p"."Id" DESC), '') AS "Posts"
+FROM "Blogs" AS "b"
+LEFT JOIN "Posts" AS "p" ON "b"."Id" = "p"."BlogId"
+GROUP BY "b"."Id", "b"."Name"
+```
+
+Ordering inside `group_concat` requires SQLite 3.44.0 or later.
+
+<a name="sqlite-uint128"></a>
+
+### UInt128 support
+
+`Microsoft.Data.Sqlite` can now bind <xref:System.UInt128> parameter values. The value is stored as a zero-padded, 39-digit text representation, which preserves correct ordering and comparison of values directly in the database.
+
 ## Cosmos DB
 
 <a name="cosmos-complex-types"></a>
@@ -855,6 +894,23 @@ When you run `dotnet ef`, the tool searches for a `.config/dotnet-ef.json` file 
 Explicit command-line options always take precedence over configuration file values. Path values for `project` and `startupProject` are resolved relative to the parent of the `.config` directory containing the file.
 
 For more information, see [Configuration file](xref:core/cli/dotnet#configuration-file).
+
+<a name="dotnet-ef-context-wildcard"></a>
+
+### Wildcard context support for migration commands
+
+When a project defines multiple `DbContext` types, several `dotnet ef` commands accept a wildcard (`*`) as the value of the `--context` option to target all contexts at once, instead of running the command separately for each one. The commands that support the wildcard are:
+
+* `dotnet ef migrations list` — lists the migrations for every context.
+* `dotnet ef migrations script` — generates and concatenates a script for every context.
+* `dotnet ef database update` — applies migrations to the database of every context (migration bundles are covered as well).
+* `dotnet ef database drop` — drops the database for every context.
+
+For example, the following command lists the migrations for all contexts in the project:
+
+```dotnetcli
+dotnet ef migrations list --context "*"
+```
 
 ## Other improvements
 
