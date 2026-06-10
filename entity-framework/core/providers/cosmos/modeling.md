@@ -79,7 +79,7 @@ modelBuilder.Entity<Order>()
     .Except("/InternalNotes/?");
 ```
 
-To index only explicitly configured paths, disable automatic indexing and configure indexes with `HasIndex`:
+To index only explicitly configured paths, configure indexes with `HasIndex`. Automatic indexing is disabled automatically as soon as any single-property index is defined, so there is no need to call `HasAutomaticIndexing(false)` explicitly:
 
 ```csharp
 modelBuilder.Entity<Order>(b =>
