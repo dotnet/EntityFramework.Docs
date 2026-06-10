@@ -638,7 +638,10 @@ Ordering inside `group_concat` requires SQLite 3.44.0 or later.
 
 ### UInt128 support
 
-`Microsoft.Data.Sqlite` can now bind <xref:System.UInt128> parameter values. The value is stored as a zero-padded, 39-digit text representation, which preserves correct ordering and comparison of values directly in the database. Note that reading <xref:System.UInt128> values from data readers is not yet supported.
+`Microsoft.Data.Sqlite` can now bind <xref:System.UInt128> parameter values. The value is stored as a zero-padded, 39-digit text representation, which preserves correct ordering and comparison of values directly in the database.
+
+> [!NOTE]
+> Reading <xref:System.UInt128> values from data readers is not yet supported.
 
 ## Cosmos DB
 
