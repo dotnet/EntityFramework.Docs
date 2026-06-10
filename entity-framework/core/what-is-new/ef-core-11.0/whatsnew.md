@@ -116,6 +116,29 @@ modelBuilder.Entity<Order>()
 
 For more information, see [Keys](xref:core/modeling/keys#keys-on-complex-type-properties) and [Indexes](xref:core/modeling/indexes#indexes-on-complex-type-properties).
 
+<a name="complex-types-property-chaining"></a>
+
+### Configuring complex type properties via lambda chaining
+
+Previously, configuring a property on a complex type required first calling `ComplexProperty` to get the complex type builder, and then calling `Property` on it:
+
+```csharp
+modelBuilder.Entity<MyEntity>()
+    .ComplexProperty(e => e.Details)
+    .Property(d => d.Description)
+    .HasMaxLength(500);
+```
+
+EF Core 11 now allows configuring complex type properties directly by chaining member access in the lambda expression passed to `Property`:
+
+```csharp
+modelBuilder.Entity<MyEntity>()
+    .Property(e => e.Details.Description)
+    .HasMaxLength(500);
+```
+
+This simplifies model configuration by removing the need to explicitly navigate through intermediate complex type builders to reach the property you want to configure.
+
 <a name="complex-types-stabilization"></a>
 
 ### Stabilization and bug fixes
@@ -676,29 +699,6 @@ public class ShippingAddress
 Complex types are generally a better fit than owned types when mapping to JSON documents: unlike owned types, complex types have value semantics and no identity, which means they work better in scenarios such as comparing two embedded objects within the same document.
 
 This feature was contributed by [@JoasE](https://github.com/JoasE) - many thanks!
-
-<a name="complex-types-property-chaining"></a>
-
-### Configuring complex type properties via lambda chaining
-
-Previously, configuring a property on a complex type required first calling `ComplexProperty` to get the complex type builder, and then calling `Property` on it:
-
-```csharp
-modelBuilder.Entity<MyEntity>()
-    .ComplexProperty(e => e.Details)
-    .Property(d => d.Description)
-    .HasMaxLength(500);
-```
-
-EF Core 11 now allows configuring complex type properties directly by chaining member access in the lambda expression passed to `Property`:
-
-```csharp
-modelBuilder.Entity<MyEntity>()
-    .Property(e => e.Details.Description)
-    .HasMaxLength(500);
-```
-
-This simplifies model configuration by removing the need to explicitly navigate through intermediate complex type builders to reach the property you want to configure.
 
 <a name="cosmos-indexes"></a>
 
