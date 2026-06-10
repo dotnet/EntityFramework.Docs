@@ -83,29 +83,6 @@ For more information on inheritance mapping strategies, see [Inheritance](xref:c
 
 Complex types are now fully supported in the Azure Cosmos DB provider, embedded as nested JSON objects or arrays. For more information, [see the Cosmos DB section below](#cosmos-complex-types).
 
-<a name="complex-types-property-chaining"></a>
-
-### Configuring complex type properties via lambda chaining
-
-Previously, configuring a property on a complex type required first calling `ComplexProperty` to get the complex type builder, and then calling `Property` on it:
-
-```csharp
-modelBuilder.Entity<MyEntity>()
-    .ComplexProperty(e => e.Details)
-    .Property(d => d.Description)
-    .HasMaxLength(500);
-```
-
-EF Core 11 now allows configuring complex type properties directly by chaining member access in the lambda expression passed to `Property`:
-
-```csharp
-modelBuilder.Entity<MyEntity>()
-    .Property(e => e.Details.Description)
-    .HasMaxLength(500);
-```
-
-This simplifies model configuration by removing the need to explicitly navigate through intermediate complex type builders to reach the property you want to configure.
-
 <a name="complex-types-keys-indexes"></a>
 
 ### Keys and indexes on complex type properties
@@ -661,7 +638,7 @@ Ordering inside `group_concat` requires SQLite 3.44.0 or later.
 
 ### UInt128 support
 
-`Microsoft.Data.Sqlite` can now bind <xref:System.UInt128> parameter values. The value is stored as a zero-padded, 39-digit text representation, which preserves correct ordering and comparison of values directly in the database.
+`Microsoft.Data.Sqlite` can now bind <xref:System.UInt128> parameter values. The value is stored as a zero-padded, 39-digit text representation, which preserves correct ordering and comparison of values directly in the database. Note that reading <xref:System.UInt128> values from data readers is not yet supported.
 
 ## Cosmos DB
 
@@ -696,6 +673,29 @@ public class ShippingAddress
 Complex types are generally a better fit than owned types when mapping to JSON documents: unlike owned types, complex types have value semantics and no identity, which means they work better in scenarios such as comparing two embedded objects within the same document.
 
 This feature was contributed by [@JoasE](https://github.com/JoasE) - many thanks!
+
+<a name="complex-types-property-chaining"></a>
+
+### Configuring complex type properties via lambda chaining
+
+Previously, configuring a property on a complex type required first calling `ComplexProperty` to get the complex type builder, and then calling `Property` on it:
+
+```csharp
+modelBuilder.Entity<MyEntity>()
+    .ComplexProperty(e => e.Details)
+    .Property(d => d.Description)
+    .HasMaxLength(500);
+```
+
+EF Core 11 now allows configuring complex type properties directly by chaining member access in the lambda expression passed to `Property`:
+
+```csharp
+modelBuilder.Entity<MyEntity>()
+    .Property(e => e.Details.Description)
+    .HasMaxLength(500);
+```
+
+This simplifies model configuration by removing the need to explicitly navigate through intermediate complex type builders to reach the property you want to configure.
 
 <a name="cosmos-indexes"></a>
 
