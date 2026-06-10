@@ -352,7 +352,7 @@ protected override void OnModelCreating(ModelBuilder modelBuilder)
 
 #### New behavior
 
-Starting with EF Core 11.0, configuring an owned JSON collection without an explicit key produces an obsoletion warning (`EF8001`). The mapping continues to work, but is now considered deprecated and is expected to be removed in a future release.
+Starting with EF Core 11.0, configuring an owned JSON collection without an explicit key produces an `OwnedEntityMappedToJsonCollectionWarning` warning. The mapping continues to work, but is now considered deprecated and is expected to be removed in a future release.
 
 Owned JSON entities that have an explicit primary key, as well as non-collection owned JSON references, are not affected by this change.
 
@@ -387,12 +387,11 @@ protected override void OnModelCreating(ModelBuilder modelBuilder)
     });
 ```
 
-If you cannot migrate immediately, you can suppress the obsoletion warning to keep building:
+If you cannot migrate immediately, you can suppress the warning via `ConfigureWarnings`:
 
 ```csharp
-#pragma warning disable EF8001 // Owned JSON entities are obsolete
-modelBuilder.Entity<Blog>().OwnsMany(b => b.Posts, b => b.ToJson());
-#pragma warning restore EF8001
+protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    => optionsBuilder.ConfigureWarnings(w => w.Ignore(CoreEventId.OwnedEntityMappedToJsonCollectionWarning));
 ```
 
 <a name="MDS-breaking-changes"></a>
