@@ -123,7 +123,7 @@ If your application uses composite keys whose values can contain the characters 
 
 - **Existing data**: Documents previously stored in Cosmos DB have `id` values using the old escape sequences (e.g. `Post|1|^2F`). After upgrading to EF Core 11, EF will generate unescaped `id` values (e.g. `Post|1|/`) and will no longer find those existing documents. To continue accessing existing data without migration, opt back into the old behavior using the `AppContext` switch described above—however, be aware that the id-collision bug will still be present.
 
-- **New data**: If you are creating a new application or database, avoid using these illegal characters in key values, as they are not valid in Cosmos DB resource `id` values. See the [Azure documentation](https://learn.microsoft.com/dotnet/api/microsoft.azure.documents.resource.id) for details.
+- **New data**: If you are creating a new application or database, avoid using these illegal characters in key values, as they are not valid in Cosmos DB resource `id` values. See the [Azure documentation](/dotnet/api/microsoft.azure.documents.resource.id) for details.
 
 ## Low-impact changes
 
