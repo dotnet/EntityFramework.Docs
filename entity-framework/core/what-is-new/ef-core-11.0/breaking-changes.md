@@ -369,7 +369,7 @@ protected override void OnModelCreating(ModelBuilder modelBuilder)
     => modelBuilder.Entity<Blog>().ComplexCollection(b => b.Posts, b => b.ToJson());
 ```
 
-Alternatively, if you need to keep the owned-type mapping, configure an explicit primary key on the owned type. Once a key is configured, the warning no longer applies:
+Alternatively, if you need to keep the owned-type mapping, configure a non-shadow primary key on the owned type. Once a key is configured, the warning no longer applies:
 
 ```csharp
 public class Post
