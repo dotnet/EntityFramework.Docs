@@ -450,7 +450,7 @@ static void Init()
 
 #### Microsoft.Data.Sqlite now bundles SQLite3 Multiple Ciphers
 
-[Tracking Issue dotnet/efcore#38402](https://github.com/dotnet/efcore/pull/38402)
+[Tracking PR dotnet/efcore#38402](https://github.com/dotnet/efcore/pull/38402)
 
 ##### Old behavior
 
