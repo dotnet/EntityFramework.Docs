@@ -316,7 +316,7 @@ Updates the database to the last migration or to a specified migration.
 |:------------------------------------|:----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | <nobr>`-Migration <String>`</nobr>  | The target migration. Migrations may be identified by name or by ID. The number 0 is a special case that means *before the first migration* and causes all migrations to be reverted. If no migration is specified, the command defaults to the last migration. |
 | <nobr>`-Connection <String>`</nobr> | The connection string to the database. Defaults to the one specified in `AddDbContext` or `OnConfiguring`.                                                                                                                                |
-| <nobr>`-Add`</nobr>                 | Creates a new migration and applies it to the database in a single step. Uses Roslyn to compile the migration at runtime. When specified, `-Migration` is the name for the new migration. |
+| <nobr>`-Add`</nobr>                 | Creates a new migration and applies it to the database in a single step. Uses Roslyn to compile the migration at runtime. When specified, the `-Migration` parameter is required and provides the name for the new migration. |
 | <nobr>`-OutputDir <String>`</nobr>  | The directory to put migration files in. Paths are relative to the target project directory. Requires `-Add`. |
 | <nobr>`-Namespace <String>`</nobr>  | The namespace to use for the generated migration classes. Requires `-Add`. |
 
