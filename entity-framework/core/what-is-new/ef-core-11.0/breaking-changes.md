@@ -23,6 +23,8 @@ This page documents API and behavior changes that have the potential to break ex
 |:--------------------------------------------------------------------------------------------------------------- | -----------|
 | [Sync I/O via the Azure Cosmos DB provider has been fully removed](#cosmos-nosync)                              | Medium     |
 | [Microsoft.Data.SqlClient has been updated to 7.0](#sqlclient-7)                                                | Medium     |
+| [Cosmos: illegal `id` characters are no longer escaped](#cosmos-no-id-escape)                                   | Medium     |
+| [SQL Server compatibility level now defaults to 160](#sqlserver-compatibility-level-160)                       | Low        |
 | [EF Core now throws by default when no migrations are found](#migrations-not-found)                             | Low        |
 | [`EFOptimizeContext` MSBuild property has been removed](#ef-optimize-context-removed)                           | Low        |
 | [EF tools packages no longer reference Microsoft.EntityFrameworkCore.Design](#ef-tools-no-design-dep)           | Low        |
@@ -83,7 +85,79 @@ If your application uses Entra ID authentication with SQL Server, add a referenc
 
 No code changes are required beyond adding this package reference. If you use `SqlAuthenticationMethod.ActiveDirectoryPassword`, migrate to a modern authentication method such as `ActiveDirectoryDefault` or `ActiveDirectoryInteractive`.
 
+<a name="cosmos-no-id-escape"></a>
+
+### Cosmos: illegal `id` characters are no longer escaped
+
+[Tracking Issue #38244](https://github.com/dotnet/efcore/issues/38244)
+
+#### Old behavior
+
+Previously, when generating the Cosmos `id` property value from a composite key that contains multiple parts, the Azure Cosmos DB provider escaped certain characters that are illegal in Cosmos resource `id` values:
+
+| Character | Escaped as |
+|-----------|------------|
+| `/`       | `^2F`      |
+| `\`       | `^5C`      |
+| `?`       | `^3F`      |
+| `#`       | `^23`      |
+
+#### New behavior
+
+Starting with EF Core 11.0, these characters are no longer escaped in the generated `id` value. The `id` value will contain the raw key values without modification. Note that when `id` values are concatenated (i.e. when using a composite key or when the discriminator-in-id behavior is opted into), the `|` character is used as a separator—and any `|` characters already present in key values are escaped to avoid ambiguity. No other escaping is applied.
+
+The old escape behavior can be re-enabled by setting an `AppContext` switch:
+
+```csharp
+AppContext.SetSwitch("Microsoft.EntityFrameworkCore.EscapeIllegalCosmosIdCharacters", true);
+```
+
+#### Why
+
+The previous escaping scheme was non-injective: the escape character `^` was never itself escaped. This meant that a key value containing the literal string `^2F` would produce the same `id` as a key value containing `/`, resulting in silent data corruption where two entities with distinct primary keys would be mapped to the same Cosmos document. Stopping the escaping altogether fixes the collision problem.
+
+#### Mitigations
+
+If your application uses composite keys whose values can contain the characters `/`, `\`, `?`, or `#`, be aware of the following:
+
+- **Existing data**: Documents previously stored in Cosmos DB have `id` values using the old escape sequences (e.g. `Post|1|^2F`). After upgrading to EF Core 11, EF will generate unescaped `id` values (e.g. `Post|1|/`) and will no longer find those existing documents. To continue accessing existing data without migration, opt back into the old behavior using the `AppContext` switch described above—however, be aware that the id-collision bug will still be present.
+
+- **New data**: If you are creating a new application or database, avoid using these illegal characters in key values, as they are not valid in Cosmos DB resource `id` values. See the [Azure documentation](https://learn.microsoft.com/dotnet/api/microsoft.azure.documents.resource.id) for details.
+
 ## Low-impact changes
+
+<a name="sqlserver-compatibility-level-160"></a>
+
+### SQL Server compatibility level now defaults to 160
+
+[Tracking Issue #38198](https://github.com/dotnet/efcore/issues/38198)
+
+#### Old behavior
+
+Previously, when using <xref:Microsoft.EntityFrameworkCore.SqlServerDbContextOptionsExtensions.UseSqlServer*> without explicitly configuring a SQL Server compatibility level, EF Core defaulted to compatibility level 150, corresponding to SQL Server 2019.
+
+#### New behavior
+
+Starting with EF Core 11.0, <xref:Microsoft.EntityFrameworkCore.SqlServerDbContextOptionsExtensions.UseSqlServer*> defaults to compatibility level 160, corresponding to SQL Server 2022. This allows EF to generate SQL which uses SQL Server 2022 features by default. For example, some queries now use `LEAST` and `GREATEST`, including translations for `Math.Min`, `Math.Max`, <xref:Microsoft.EntityFrameworkCore.RelationalDbFunctionsExtensions.Least*>, <xref:Microsoft.EntityFrameworkCore.RelationalDbFunctionsExtensions.Greatest*>, and some `Take`/`Skip` patterns.
+
+If your database runs on SQL Server 2019 or older, or is configured with a compatibility level lower than 160, some SQL generated by EF Core may no longer be supported by the database.
+
+#### Why
+
+SQL Server 2022 has been available for several years, and using compatibility level 160 by default allows EF Core to generate simpler and more efficient SQL for newer SQL Server versions.
+
+#### Mitigations
+
+If your database does not support compatibility level 160, configure EF Core to use the compatibility level supported by your database:
+
+```csharp
+protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+{
+    optionsBuilder.UseSqlServer("<connection string>", o => o.UseCompatibilityLevel(150));
+}
+```
+
+For more information, see the [SQL Server compatibility level documentation](xref:core/providers/sql-server/index#compatibility-level).
 
 <a name="migrations-not-found"></a>
 
