@@ -30,6 +30,7 @@ This page documents API and behavior changes that have the potential to break ex
 | [EF tools packages no longer reference Microsoft.EntityFrameworkCore.Design](#ef-tools-no-design-dep)           | Low        |
 | [SqlVector properties are no longer loaded by default](#sqlvector-not-auto-loaded)                              | Low        |
 | [Cosmos: empty owned collections now return an empty collection instead of null](#cosmos-empty-collections)     | Low        |
+| [Owned JSON collections without an explicit key are obsolete](#owned-json-collections-obsolete)                 | Low        |
 
 ## Medium-impact changes
 
@@ -319,6 +320,78 @@ if (entity.OwnedCollection is { Count: 0 })
 {
     // treated as empty
 }
+```
+
+<a name="owned-json-collections-obsolete"></a>
+
+### Owned JSON collections without an explicit key are obsolete
+
+[Tracking Issue #37289](https://github.com/dotnet/efcore/issues/37289)
+
+#### Old behavior
+
+Previously, owned entity types mapped to a JSON column via <xref:Microsoft.EntityFrameworkCore.Metadata.Builders.OwnedNavigationBuilder.ToJson*> could be used as collections without configuring an explicit primary key. EF Core would synthesize an ordinal (positional) key behind the scenes to identify each item in the collection:
+
+```csharp
+public class Blog
+{
+    public int Id { get; set; }
+    public List<Post> Posts { get; set; } = new();
+}
+
+public class Post
+{
+    // No key property
+    public required string Title { get; set; }
+    public required string Content { get; set; }
+}
+
+protected override void OnModelCreating(ModelBuilder modelBuilder)
+    => modelBuilder.Entity<Blog>().OwnsMany(b => b.Posts, b => b.ToJson());
+```
+
+#### New behavior
+
+Starting with EF Core 11.0, configuring an owned JSON collection without an explicit key produces an `OwnedEntityMappedToJsonCollectionWarning` warning. The mapping continues to work, but is now considered deprecated and is expected to be removed in a future release.
+
+Owned JSON entities that have an explicit primary key, as well as non-collection owned JSON references, are not affected by this change.
+
+#### Why
+
+[Complex types](xref:core/what-is-new/ef-core-10.0/whatsnew#complex-types) became fully supported in EF Core 10, including for [JSON mapping](xref:core/what-is-new/ef-core-10.0/whatsnew#json). Complex types are a better fit than owned types for JSON documents: they have value semantics and no identity, which avoids many of the issues that come from using owned entity types—which are entity types—to model what is fundamentally a value embedded in another document. In particular, owned JSON collections without an explicit key relied on a synthetic ordinal key, which has known limitations and corner cases.
+
+#### Mitigations
+
+The recommended mitigation is to migrate the type to a complex type, which is now the preferred way to map types to JSON:
+
+```csharp
+protected override void OnModelCreating(ModelBuilder modelBuilder)
+    => modelBuilder.Entity<Blog>().ComplexCollection(b => b.Posts, b => b.ToJson());
+```
+
+Alternatively, if you need to keep the owned-type mapping, configure a non-shadow primary key on the owned type. Once a key is configured, the warning no longer applies:
+
+```csharp
+public class Post
+{
+    public int Id { get; set; }
+    public required string Title { get; set; }
+    public required string Content { get; set; }
+}
+
+protected override void OnModelCreating(ModelBuilder modelBuilder)
+    => modelBuilder.Entity<Blog>().OwnsMany(b => b.Posts, b =>
+    {
+        b.ToJson();
+        b.HasKey(p => p.Id);
+    });
+```
+
+If you cannot migrate immediately, you can suppress the warning via `ConfigureWarnings`:
+
+```csharp
+protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    => optionsBuilder.ConfigureWarnings(w => w.Ignore(CoreEventId.OwnedEntityMappedToJsonCollectionWarning));
 ```
 
 <a name="MDS-breaking-changes"></a>
