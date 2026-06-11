@@ -458,13 +458,13 @@ The `Microsoft.Data.Sqlite` package referenced `SQLitePCLRaw.bundle_e_sqlite3`, 
 
 ##### New behavior
 
-Starting with `Microsoft.Data.Sqlite` 11.0, the package references `SQLite3MC.PCLRaw.bundle`, which provides the `e_sqlite3mc` native build ([SQLite3 Multiple Ciphers](https://github.com/utelle/SQLite3MultipleCiphers)). This bundles an encryption-capable SQLite build by default, so encryption (including setting a password) now works out of the box.
+Starting with `Microsoft.Data.Sqlite` 11.0, the package references `SQLite3MC.PCLRaw.bundle`, which provides the `e_sqlite3mc` native build ([SQLite3 Multiple Ciphers](https://github.com/utelle/SQLite3MultipleCiphers)). This build receives updates—including upstream SQLite security fixes—on NuGet.org more promptly than `bundle_e_sqlite3`. As an added bonus, it is encryption-capable by default, so encryption (including setting a password) now works out of the box.
 
 This change applies only to the `Microsoft.Data.Sqlite` package. The EF Core SQLite provider (`Microsoft.EntityFrameworkCore.Sqlite`) intentionally continues to use `bundle_e_sqlite3`.
 
 ##### Why
 
-The no-cost `SQLitePCLRaw.bundle_e_sqlcipher` package was deprecated and removed (see [Encryption-enabled SQLite packages have been removed](#sqlite-encryption-removed)), leaving users without a built-in, no-cost SQLite encryption option. SQLite3 Multiple Ciphers is an actively maintained, no-cost project that restores encryption support, so it was adopted as the default native build for `Microsoft.Data.Sqlite`.
+The primary reason for the switch is maintenance and security: new versions of the `e_sqlite3` native build are no longer published to NuGet.org through `SQLitePCLRaw.bundle_e_sqlite3` in a timely manner, which means security fixes in upstream SQLite can be delayed. SQLite3 Multiple Ciphers is an actively maintained project that tracks upstream SQLite releases and ships updated builds promptly, so it was adopted as the default native build for `Microsoft.Data.Sqlite`. As an added bonus, it also restores a no-cost SQLite encryption option, which had been lost when the `SQLitePCLRaw.bundle_e_sqlcipher` package was deprecated and removed (see [Encryption-enabled SQLite packages have been removed](#sqlite-encryption-removed)).
 
 ##### Mitigations
 
