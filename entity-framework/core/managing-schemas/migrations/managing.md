@@ -96,11 +96,6 @@ This command scaffolds a new migration with the specified name, compiles it usin
 
 If no pending model changes are detected, the command applies any existing pending migrations without creating a new one.
 
-> [!WARNING]
->
-> * This feature requires dynamic code generation and is incompatible with NativeAOT.
-> * Only C# migration generation is supported (no VB.NET or F# support).
-
 ## Customize migration code
 
 While EF Core generally creates accurate migrations, you should always review the code and make sure it corresponds to the desired change; in some cases, it is even necessary to do so.
