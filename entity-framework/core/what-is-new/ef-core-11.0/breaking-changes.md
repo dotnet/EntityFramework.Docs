@@ -122,7 +122,7 @@ If your application uses composite keys whose values can contain the characters 
 
 - **Existing data**: Documents previously stored in Cosmos DB have `id` values using the old escape sequences (e.g. `Post|1|^2F`). After upgrading to EF Core 11, EF will generate unescaped `id` values (e.g. `Post|1|/`) and will no longer find those existing documents. To continue accessing existing data without migration, opt back into the old behavior using the `AppContext` switch described above—however, be aware that the id-collision bug will still be present.
 
-- **New data**: If you are creating a new application or database, avoid using these illegal characters in key values, as they are not valid in Cosmos DB resource `id` values. See the [Azure documentation](https://learn.microsoft.com/dotnet/api/microsoft.azure.documents.resource.id) for details.
+- **New data**: If you are creating a new application or database, avoid using these illegal characters in key values, as they are not valid in Cosmos DB resource `id` values. See the [Azure documentation](/dotnet/api/microsoft.azure.documents.resource.id) for details.
 
 ## Low-impact changes
 
@@ -458,9 +458,9 @@ The `Microsoft.Data.Sqlite` package referenced `SQLitePCLRaw.bundle_e_sqlite3`, 
 
 ##### New behavior
 
-Starting with `Microsoft.Data.Sqlite` 11.0, the package references `SQLite3MC.PCLRaw.bundle`, which provides the `e_sqlite3mc` native build ([SQLite3 Multiple Ciphers](https://github.com/utelle/SQLite3MultipleCiphers)). This build receives updates—including upstream SQLite security fixes—on NuGet.org more promptly than `bundle_e_sqlite3`. As an added bonus, it is encryption-capable by default, so encryption (including setting a password) now works out of the box.
+Starting with `Microsoft.Data.Sqlite` 11.0, the package references `SQLite3MC.PCLRaw.bundle`, which provides the `e_sqlite3mc` native build ([SQLite3 Multiple Ciphers](https://github.com/utelle/SQLite3MultipleCiphers)). This build receives updates—including upstream SQLite security fixes—on NuGet.org more promptly than `bundle_e_sqlite3`. As an added bonus, it is encryption-capable by default, so encryption (including setting a password) now works out of the box. See the [SQLite3 Multiple Ciphers documentation](https://github.com/utelle/SQLite3MultipleCiphers-NuGet#passphrase-based-database-encryption-support) for details on enabling passphrase-based database encryption.
 
-This change applies only to the `Microsoft.Data.Sqlite` package. The EF Core SQLite provider (`Microsoft.EntityFrameworkCore.Sqlite`) intentionally continues to use `bundle_e_sqlite3`.
+This change applies only to the `Microsoft.Data.Sqlite` package. The EF Core SQLite provider (`Microsoft.EntityFrameworkCore.Sqlite`) now references `SQLitePCLRaw.bundle_e_sqlite3`.
 
 ##### Why
 
@@ -474,15 +474,12 @@ Review the following cases, which may require action in some applications:
 
 - **Native library and provider name change.** The bundled native library is now `e_sqlite3mc` (rather than `e_sqlite3`), and the provider initialized by the bundle is `SQLite3Provider_e_sqlite3mc`. This matters if your application:
   - References a specific native asset filename (for example, `e_sqlite3`) in publishing, trimming, AOT, or single-file configuration. Update those references to `e_sqlite3mc`.
-  - Explicitly initializes a provider via `SQLitePCL.Batteries_V2.Init()` or `SQLitePCL.raw.SetProvider(...)`, or references `SQLitePCLRaw.bundle_e_sqlite3` directly alongside `Microsoft.Data.Sqlite`. Ensure a single provider is configured to avoid conflicts.
 
 - **Platform (RID) coverage.** SQLite3 Multiple Ciphers ships native binaries for a different set of runtime identifiers than `bundle_e_sqlite3`. If you target a platform that the new bundle doesn't include, the native library may fail to load at runtime. In that case, revert to the standard build as described below.
 
-- **App size.** The native binaries differ in size, so published application size may change slightly.
-
 - **Reserved encryption keywords.** SQLite3 Multiple Ciphers reserves certain connection-string/URI parameters and PRAGMAs (such as `key`, `hexkey`, and `cipher`) for encryption configuration. This is unlikely to affect typical applications, but if you happened to use these names for unrelated purposes, behavior may differ.
 
-- **Dependency auditing.** A new transitive package (`SQLite3MC.PCLRaw.bundle`) and a new native binary are introduced. Update any package allow-lists, SBOMs, or security/compliance tooling accordingly.
+- **Double-quoted string literal support.** `e_sqlite3mc` doesn't include SQLite's legacy support for double-quoted string literals. If your SQL uses double quotes for string values, change it to use single quotes; double quotes should be used only for identifiers.
 
 If you want to keep using the standard, non-encrypted `e_sqlite3` build, reference `Microsoft.Data.Sqlite.Core` together with `SQLitePCLRaw.bundle_e_sqlite3` instead of the `Microsoft.Data.Sqlite` meta-package:
 
