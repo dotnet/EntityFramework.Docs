@@ -462,7 +462,7 @@ Starting with `Microsoft.Data.Sqlite` 11.0, the package references `SQLite3MC.PC
 
 As an added bonus, the new build is encryption-capable by default, so encryption (including setting a password) now works out of the box. See the [SQLite3 Multiple Ciphers documentation](https://github.com/utelle/SQLite3MultipleCiphers-NuGet#passphrase-based-database-encryption-support) for details on enabling passphrase-based database encryption.
 
-This change applies only to the `Microsoft.Data.Sqlite` package. In EF Core 11, the EF Core SQLite provider (`Microsoft.EntityFrameworkCore.Sqlite`) references `SQLitePCLRaw.bundle_e_sqlite3`, rather than `SQLite3MC.PCLRaw.bundle`, since the EF Core provider doesn't expose SQLite encryption support and continues to use the standard SQLite build by default to preserve existing EF Core application behavior.
+This change applies only to the `Microsoft.Data.Sqlite` package. In EF Core 11, the EF Core SQLite provider (`Microsoft.EntityFrameworkCore.Sqlite`) continues to reference `SQLitePCLRaw.bundle_e_sqlite3` rather than `SQLite3MC.PCLRaw.bundle` to preserve existing EF Core application behavior, since the provider doesn't expose SQLite encryption support.
 
 ##### Why
 
