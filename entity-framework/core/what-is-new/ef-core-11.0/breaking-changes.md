@@ -460,7 +460,7 @@ The `Microsoft.Data.Sqlite` package referenced `SQLitePCLRaw.bundle_e_sqlite3`, 
 
 Starting with `Microsoft.Data.Sqlite` 11.0, the package references `SQLite3MC.PCLRaw.bundle`, which provides the `e_sqlite3mc` native build ([SQLite3 Multiple Ciphers](https://github.com/utelle/SQLite3MultipleCiphers)). This build receives updates—including upstream SQLite security fixes—on NuGet.org more promptly than `bundle_e_sqlite3`. As an added bonus, it is encryption-capable by default, so encryption (including setting a password) now works out of the box. See the [SQLite3 Multiple Ciphers documentation](https://github.com/utelle/SQLite3MultipleCiphers-NuGet#passphrase-based-database-encryption-support) for details on enabling passphrase-based database encryption.
 
-This change applies only to the `Microsoft.Data.Sqlite` package. In EF Core 11, the EF Core SQLite provider (`Microsoft.EntityFrameworkCore.Sqlite`) references `SQLitePCLRaw.bundle_e_sqlite3`, rather than `SQLite3MC.PCLRaw.bundle`, since the EF Core provider doesn't expose SQLite encryption support and continues to use the standard SQLite build by default.
+This change applies only to the `Microsoft.Data.Sqlite` package. In EF Core 11, the EF Core SQLite provider (`Microsoft.EntityFrameworkCore.Sqlite`) references `SQLitePCLRaw.bundle_e_sqlite3`, rather than `SQLite3MC.PCLRaw.bundle`, since the EF Core provider doesn't expose SQLite encryption support and continues to use the standard SQLite build by default to preserve existing EF Core application behavior.
 
 ##### Why
 
@@ -479,7 +479,7 @@ Review the following cases, which may require action in some applications:
 
 - **Reserved encryption keywords.** SQLite3 Multiple Ciphers reserves certain connection-string/URI parameters and PRAGMAs (such as `key`, `hexkey`, and `cipher`) for encryption configuration. This is unlikely to affect typical applications, but if you happened to use these names for unrelated purposes, behavior may differ.
 
-- **Double-quoted string literal support.** `e_sqlite3mc` doesn't include SQLite's legacy support for double-quoted string literals. If your SQL uses double quotes for string values, change it to use single quotes; double quotes should be used only for identifiers.
+- **Double-quoted string literal support.** `e_sqlite3mc` doesn't include SQLite's legacy support for double-quoted string literals. If your SQL uses double quotes for string values, change it to use single quotes; double quotes should be used only for identifiers. Review raw SQL in your application (for example, SQL passed to `FromSql`, `ExecuteSql`, or migrations operations), and use SQL logging or integration tests to identify affected commands.
 
 If you want to keep using the standard, non-encrypted `e_sqlite3` build, reference `Microsoft.Data.Sqlite.Core` together with `SQLitePCLRaw.bundle_e_sqlite3` instead of the `Microsoft.Data.Sqlite` meta-package:
 
