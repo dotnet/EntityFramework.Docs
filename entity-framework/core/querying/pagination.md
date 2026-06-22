@@ -1,7 +1,7 @@
 ---
 title: Pagination - EF Core
 description: Writing paginating queries in Entity Framework Core
-author: roji
+author: SamMonoRT
 ms.date: 12/19/2021
 uid: core/querying/pagination
 ---

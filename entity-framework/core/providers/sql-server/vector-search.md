@@ -1,7 +1,7 @@
 ---
 title: Microsoft SQL Server Database Provider - Vector Search - EF Core
 description: Using vectors and embeddings to perform similarity search with the Entity Framework Core Microsoft SQL Server database provider
-author: roji
+author: SamMonoRT
 ms.date: 06/09/2026
 uid: core/providers/sql-server/vector-search
 ---

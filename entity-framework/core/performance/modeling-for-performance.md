@@ -1,7 +1,7 @@
 ---
 title: Modeling for Performance - EF Core
 description: Modeling efficiently when using Entity Framework Core
-author: roji
+author: SamMonoRT
 ms.date: 10/10/2022
 uid: core/performance/modeling-for-performance
 ---

@@ -1,7 +1,7 @@
 ---
 title: Saving Data - Azure Cosmos DB Provider - EF Core
 description: Saving data with the Azure Cosmos DB EF Core Provider
-author: roji
+author: SamMonoRT
 ms.date: 02/02/2026
 uid: core/providers/cosmos/saving
 ---

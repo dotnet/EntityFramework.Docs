@@ -1,7 +1,7 @@
 ---
 title: SQL Queries - EF Core
 description: Using SQL queries in Entity Framework Core
-author: smitpatel
+author: SamMonoRT
 ms.date: 09/19/2022
 uid: core/querying/sql-queries
 ---

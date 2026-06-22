@@ -1,6 +1,6 @@
 ---
 description: A local database that doesn't require the user to be authenticated
-author: rick-anderson
+author: SamMonoRT
 ms.author: wpickett
 ms.date: 10/23/2024
 ms.topic: include

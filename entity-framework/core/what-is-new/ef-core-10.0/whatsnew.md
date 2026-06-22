@@ -1,7 +1,7 @@
 ---
 title: What's New in EF Core 10
 description: Overview of new features in EF Core 10
-author: roji
+author: SamMonoRT
 ms.date: 10/02/2025
 uid: core/what-is-new/ef-core-10.0/whatsnew
 ---
