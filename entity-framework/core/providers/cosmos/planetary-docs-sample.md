@@ -2,7 +2,6 @@
 title: Azure Cosmos DB Provider - Planetary Docs sample - EF Core
 description: An end-to-end sample to demonstrate create, read and update capabilities in the EF Core Azure Cosmos DB provider.
 author: SamMonoRT
-ms.author: jeliknes
 ms.date: 01/27/2022
 uid: core/providers/cosmos/planetary-docs-sample
 ---
