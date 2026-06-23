@@ -327,7 +327,7 @@ if (entity.OwnedCollection is { Count: 0 })
 
 ### Cosmos: the default discriminator property is now named `Discriminator` in the model
 
-[Tracking Issue #38458](https://github.com/dotnet/efcore/pull/38458)
+[Pull Request #38458](https://github.com/dotnet/efcore/pull/38458)
 
 #### Old behavior
 
