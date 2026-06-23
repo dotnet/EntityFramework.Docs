@@ -118,6 +118,15 @@ The discriminator property name and values can be configured with the standard E
 modelBuilder.Entity<Order>().HasNoDiscriminator();
 ```
 
+> [!NOTE]
+> Starting with EF Core 11.0, the discriminator property is named `Discriminator` in the EF model, while the property written to the JSON document is still named `$type` by default. To change the name used in the JSON documents for the whole model in a single place, use <xref:Microsoft.EntityFrameworkCore.ModelBuilder.HasEmbeddedDiscriminatorName*>:
+>
+> ```csharp
+> modelBuilder.HasEmbeddedDiscriminatorName("$type");
+> ```
+>
+> See the [EF Core 11.0 breaking changes](xref:core/what-is-new/ef-core-11.0/breaking-changes#cosmos-discriminator-property-name) for more details.
+
 Since the same container can contain different entity types, and the JSON `id` property must be unique within a container partition, you cannot have the same `id` value for entities of different types in the same container partition. Compare this to relational databases, where each entity type is mapped to a different table, and therefore has its own, separate key space. It is therefore your responsibility to ensure the `id` uniqueness of documents you insert into a container. If you need to have different entity types with the same primary key values, you can instruct EF to automatically insert the discriminator into the `id` property as follows:
 
 ```csharp
