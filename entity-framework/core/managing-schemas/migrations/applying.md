@@ -355,6 +355,16 @@ Migration locking applies when migrations are applied using any of the following
 
 [SQL scripts](#sql-scripts) are not affected by migration locking, since they are applied outside of EF Core.
 
+> [!NOTE]
+> Starting with EF Core 9, calling `Migrate()` or `MigrateAsync()` will 
+> throw a `PendingModelChangesWarning` exception when the model has 
+> pending changes compared to the last migration. To detect this 
+> condition before deployment, use the 
+> [`dotnet ef migrations has-pending-model-changes`](managing.md#checking-for-pending-model-changes) 
+> command in your CI/CD pipeline. The warning can be suppressed via 
+> `ConfigureWarnings` if necessary, but this is generally not 
+> recommended in production scenarios.
+
 > [!WARNING]
 > The locking mechanism varies significantly across database providers and can involve provider-specific issues. For example, the SQLite provider uses a lock table that can become [abandoned if the process terminates unexpectedly](xref:core/providers/sqlite/limitations#concurrent-migrations-protection). Always consult your provider's documentation for details.
 
