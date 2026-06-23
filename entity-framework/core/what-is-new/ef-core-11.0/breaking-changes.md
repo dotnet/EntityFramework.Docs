@@ -334,7 +334,7 @@ if (entity.OwnedCollection is { Count: 0 })
 |:----------------------------------------------------------------------------------------------------------|------------|
 | [Encryption-enabled SQLite packages have been removed](#sqlite-encryption-removed)                        | Medium     |
 | [Some SQLitePCLRaw bundle packages have been removed](#sqlite-bundles-removed)                            | Medium     |
-| [Microsoft.Data.Sqlite now bundles SQLite3 Multiple Ciphers](#sqlite-bundles-mc)                          | Low        |
+| [Microsoft.Data.Sqlite now bundles SQLite3 Multiple Ciphers](#sqlite3mc)                                   | Low        |
 
 ### Medium-impact changes
 
@@ -360,7 +360,7 @@ The previous no-cost `SQLitePCLRaw.bundle_e_sqlcipher` package was barely mainta
 
 If you need SQLite encryption, you have the following options:
 
-- **SQLite3 Multiple Ciphers**: Starting with Microsoft.Data.Sqlite 11.0, the default SQLite build supports encryption and can be configured to use SQLCipher-compatible encryption. See [Microsoft.Data.Sqlite now bundles SQLite3 Multiple Ciphers](#sqlite-bundles-mc). NuGet packages are also available from [SQLite3MultipleCiphers-NuGet](https://github.com/utelle/SQLite3MultipleCiphers-NuGet).
+- **SQLite3 Multiple Ciphers**: Starting with Microsoft.Data.Sqlite 11.0, the default SQLite build supports encryption and can be configured to use SQLCipher-compatible encryption. See [Microsoft.Data.Sqlite now bundles SQLite3 Multiple Ciphers](#sqlite3mc). NuGet packages are also available from [SQLite3MultipleCiphers-NuGet](https://github.com/utelle/SQLite3MultipleCiphers-NuGet).
   - When encrypting a new database or opening an existing database that was encrypted with SQLCipher, you must configure the cipher scheme in the connection string using URI parameters—for example: `Data Source=file:example.db?cipher=sqlcipher&legacy=4;Password=<password>`. See [How to open an existing database encrypted with SQLCipher](https://github.com/utelle/SQLite3MultipleCiphers-NuGet#how-to-open-an-existing-database-encrypted-with-sqlcipher) for details.
 - **SQLite Encryption Extension (SEE)**: This is the official encryption implementation from the SQLite team. A paid license is required. See [https://sqlite.org/com/see.html](https://sqlite.org/com/see.html) for details. NuGet packages are available through [SourceGear's SQLite build service](https://github.com/ericsink/SQLitePCL.raw/wiki/SQLite-encryption-options-for-use-with-SQLitePCLRaw).
 - **SQLCipher**: Purchase supported builds from [Zetetic](https://www.zetetic.net/sqlcipher/), or build the [open source code](https://github.com/sqlcipher/sqlcipher) yourself.
@@ -454,7 +454,7 @@ static void Init()
 
 ### Low-impact changes
 
-<a name="sqlite-bundles-mc"></a>
+<a name="sqlite3mc"></a>
 
 #### Microsoft.Data.Sqlite now bundles SQLite3 Multiple Ciphers
 
@@ -481,6 +481,8 @@ The primary reason for the switch is maintenance and security: new versions of t
 For most applications, **no action is required**. SQLite3 Multiple Ciphers is a superset of SQLite that behaves identically to the standard build for unencrypted databases—it only applies encryption when you explicitly supply a key or password. Existing unencrypted databases continue to open and work unchanged.
 
 Review the following cases, which may require action in some applications:
+
+- **Direct `SQLitePCLRaw.bundle_e_sqlite3` reference.** If your application directly references `SQLitePCLRaw.bundle_e_sqlite3`, it conflicts with the new `SQLite3MC.PCLRaw.bundle` dependency brought in by `Microsoft.Data.Sqlite` (or `Microsoft.EntityFrameworkCore.Sqlite`). Remove the direct `SQLitePCLRaw.bundle_e_sqlite3` reference unless you intentionally switch to the `.Core` packages shown below.
 
 - **Native library and provider name change.** The bundled native library is now `e_sqlite3mc` (rather than `e_sqlite3`), and the provider initialized by the bundle is `SQLite3Provider_e_sqlite3mc`. This matters if your application:
   - References a specific native asset filename (for example, `e_sqlite3`) in publishing, trimming, AOT, or single-file configuration. Update those references to `e_sqlite3mc`.
