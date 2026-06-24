@@ -1,7 +1,7 @@
 ---
 title: Database Functions - EF Core
 description: Information on database functions supported in EF Core query translation
-author: smitpatel
+author: SamMonoRT
 ms.date: 11/10/2020
 uid: core/querying/database-functions
 ---

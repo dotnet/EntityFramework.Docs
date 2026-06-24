@@ -1,8 +1,7 @@
 ---
 title: Get Started with WPF - EF Core
 description: Getting started tutorial for using WPF with Entity Framework Core
-author: jeremylikness
-ms.author: jeliknes
+author: SamMonoRT
 ms.date: 07/24/2020
 uid: core/get-started/wpf
 ---

@@ -1,7 +1,7 @@
 ---
 title: Choosing a testing strategy - EF Core
 description: Different approaches to testing applications that use Entity Framework Core
-author: roji
+author: SamMonoRT
 ms.date: 11/07/2021
 uid: core/testing/choosing-a-testing-strategy
 ---

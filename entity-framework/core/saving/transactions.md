@@ -1,7 +1,7 @@
 ---
 title: Transactions - EF Core
 description: Managing transactions for atomicity when saving data with Entity Framework Core
-author: roji
+author: SamMonoRT
 ms.date: 9/26/2020
 uid: core/saving/transactions
 ---

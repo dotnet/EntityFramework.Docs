@@ -1,7 +1,7 @@
 ---
 title: Miscellaneous - Microsoft SQL Server Database Provider - EF Core
 description: Miscellaneous for the Microsoft SQL Server database provider
-author: roji
+author: SamMonoRT
 ms.date: 09/20/2022
 uid: core/providers/sql-server/misc
 ---

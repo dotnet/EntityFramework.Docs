@@ -1,7 +1,7 @@
 ---
 title: Related Data and Serialization - EF Core
 description: Information about how cycles in related data with Entity Framework Core can affect serialization frameworks
-author: roji
+author: SamMonoRT
 ms.date: 9/8/2020
 uid: core/querying/related-data/serialization
 ---

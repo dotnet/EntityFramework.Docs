@@ -1,7 +1,7 @@
 ---
 title: Miscellaneous - SQLite Database Provider - EF Core
 description: Miscellaneous information for the SQLite database provider
-author: roji
+author: SamMonoRT
 ms.date: 11/27/2025
 uid: core/providers/sqlite/misc
 ---

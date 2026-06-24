@@ -1,7 +1,7 @@
 ---
 title: Breaking changes in EF Core 10 (EF10) - EF Core
 description: List of breaking changes introduced in Entity Framework Core 10 (EF10)
-author: roji
+author: SamMonoRT
 ms.date: 10/09/2025
 uid: core/what-is-new/ef-core-10.0/breaking-changes
 ---

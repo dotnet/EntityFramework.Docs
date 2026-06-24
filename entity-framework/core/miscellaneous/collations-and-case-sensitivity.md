@@ -1,7 +1,7 @@
 ---
 title: Collations and case sensitivity - EF Core
 description: Configuring collations and case-sensitivity in the database and on queries with Entity Framework Core
-author: roji
+author: SamMonoRT
 ms.date: 04/27/2020
 uid: core/miscellaneous/collations-and-case-sensitivity
 ---
