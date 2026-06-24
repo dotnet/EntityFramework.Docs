@@ -122,7 +122,7 @@ modelBuilder.Entity<Order>().HasNoDiscriminator();
 > Starting with EF Core 11.0, the discriminator property is named `Discriminator` in the EF model. The property written to the JSON document is still named `$type` by default. To change the name used in the JSON documents for the whole model in a single place, use <xref:Microsoft.EntityFrameworkCore.ModelBuilder.HasEmbeddedDiscriminatorName*>:
 >
 > ```csharp
-> modelBuilder.HasEmbeddedDiscriminatorName("$type");
+> modelBuilder.HasEmbeddedDiscriminatorName("Discriminator");
 > ```
 >
 > See the [EF Core 11.0 breaking changes](xref:core/what-is-new/ef-core-11.0/breaking-changes#cosmos-discriminator-property-name) for more details.

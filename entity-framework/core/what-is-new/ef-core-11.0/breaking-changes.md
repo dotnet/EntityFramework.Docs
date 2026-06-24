@@ -365,13 +365,13 @@ var query = context.Set<Session>().Where(e => EF.Property<string>(e, "Discrimina
 To change the JSON discriminator property name for the whole model in a single place, use the model-level <xref:Microsoft.EntityFrameworkCore.ModelBuilder.HasEmbeddedDiscriminatorName*> API instead of configuring each entity type individually:
 
 ```csharp
-modelBuilder.HasEmbeddedDiscriminatorName("$type");
+modelBuilder.HasEmbeddedDiscriminatorName("Discriminator");
 ```
 
 To change only the JSON name for a specific entity type, configure the discriminator property's JSON name with <xref:Microsoft.EntityFrameworkCore.CosmosPropertyBuilderExtensions.ToJsonProperty*>:
 
 ```csharp
-modelBuilder.Entity<Session>().Property<string>("Discriminator").ToJsonProperty("$type");
+modelBuilder.Entity<Session>().Property<string>("Discriminator").ToJsonProperty("Discriminator");
 ```
 
 To restore the previous behavior where the discriminator property is also named `$type` in the model, configure its name explicitly with <xref:Microsoft.EntityFrameworkCore.Metadata.Builders.EntityTypeBuilder.HasDiscriminator*>. Note that this reintroduces an invalid C# identifier and is not recommended when using compiled models or precompiled queries:
