@@ -388,7 +388,7 @@ modelBuilder.Entity<Session>().HasDiscriminator<string>("$type");
 
 #### Old behavior
 
-Previously, owned entity types mapped to a JSON column via <xref:Microsoft.EntityFrameworkCore.Metadata.Builders.OwnedNavigationBuilder.ToJson*> could be used as collections without configuring an explicit primary key. EF Core would synthesize an ordinal (positional) key behind the scenes to identify each item in the collection:
+Previously, owned entity types mapped to a JSON column via <xref:Microsoft.EntityFrameworkCore.RelationalOwnedNavigationBuilderExtensions.ToJson*> could be used as collections without configuring an explicit primary key. EF Core would synthesize an ordinal (positional) key behind the scenes to identify each item in the collection:
 
 ```csharp
 public class Blog
