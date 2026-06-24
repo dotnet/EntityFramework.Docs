@@ -1,7 +1,7 @@
 ---
 title: Introduction to Performance - EF Core
 description: Performance guide for efficiently using Entity Framework Core
-author: roji
+author: SamMonoRT
 ms.date: 12/1/2020
 uid: core/miscellaneous/performance/index
 ---

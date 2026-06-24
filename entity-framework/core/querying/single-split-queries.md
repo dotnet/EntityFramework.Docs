@@ -1,7 +1,7 @@
 ---
 title: Single vs. Split Queries - EF Core
 description: Translating LINQ queries into single and split SQL queries with Entity Framework Core
-author: roji
+author: SamMonoRT
 ms.date: 1/9/2023
 uid: core/querying/single-split-queries
 ---

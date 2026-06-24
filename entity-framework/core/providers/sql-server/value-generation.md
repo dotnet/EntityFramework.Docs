@@ -1,7 +1,7 @@
 ---
 title: Microsoft SQL Server Database Provider - Value Generation - EF Core
 description: Value Generation Patterns Specific to the SQL Server Entity Framework Core Database Provider
-author: roji
+author: SamMonoRT
 ms.date: 11/15/2021
 uid: core/providers/sql-server/value-generation
 ---

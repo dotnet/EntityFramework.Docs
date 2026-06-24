@@ -1,7 +1,7 @@
 ---
 title: Querying Data - EF Core
 description: Overview of information on querying in Entity Framework Core
-author: smitpatel
+author: SamMonoRT
 ms.date: 10/03/2019
 uid: core/querying/index
 ---

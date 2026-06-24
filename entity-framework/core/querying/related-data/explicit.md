@@ -1,7 +1,7 @@
 ---
 title: Explicit Loading of Related Data - EF Core
 description: Explicit loading of related data with Entity Framework Core
-author: roji
+author: SamMonoRT
 ms.date: 9/8/2020
 uid: core/querying/related-data/explicit
 ---

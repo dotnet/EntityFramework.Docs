@@ -1,7 +1,7 @@
 ---
 title: Testing without your Production Database System - EF Core
 description: Techniques for testing EF Core applications without involving  your production database system
-author: roji
+author: SamMonoRT
 ms.date: 01/24/2022
 uid: core/testing/testing-without-the-database
 ---

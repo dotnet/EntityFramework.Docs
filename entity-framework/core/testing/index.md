@@ -1,7 +1,7 @@
 ---
 title: Overview of testing applications that use EF Core - EF Core
 description: Overview of testing applications that use Entity Framework Core
-author: roji
+author: SamMonoRT
 ms.date: 01/17/2021
 uid: core/testing/index
 ---

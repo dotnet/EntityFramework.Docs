@@ -1,7 +1,7 @@
 ---
 title: Microsoft SQL Server Database Provider - Columns - EF Core
 description: Column features specific to the Entity Framework Core SQL Server provider
-author: roji
+author: SamMonoRT
 ms.date: 10/12/2021
 uid: core/providers/sql-server/columns
 ---
