@@ -30,6 +30,7 @@ This page documents API and behavior changes that have the potential to break ex
 | [EF tools packages no longer reference Microsoft.EntityFrameworkCore.Design](#ef-tools-no-design-dep)           | Low        |
 | [SqlVector properties are no longer loaded by default](#sqlvector-not-auto-loaded)                              | Low        |
 | [Cosmos: empty owned collections now return an empty collection instead of null](#cosmos-empty-collections)     | Low        |
+| [Cosmos: the default discriminator property is now named `Discriminator` in the model](#cosmos-discriminator-property-name) | Low        |
 | [Owned JSON collections without an explicit key are obsolete](#owned-json-collections-obsolete)                 | Low        |
 
 ## Medium-impact changes
@@ -320,6 +321,63 @@ if (entity.OwnedCollection is { Count: 0 })
 {
     // treated as empty
 }
+```
+
+<a name="cosmos-discriminator-property-name"></a>
+
+### Cosmos: the default discriminator property is now named `Discriminator` in the model
+
+[Pull Request #38458](https://github.com/dotnet/efcore/pull/38458)
+
+#### Old behavior
+
+EF automatically adds a discriminator property to identify the entity type that a JSON document represents. The name of this property in the JSON document was changed from `Discriminator` to `$type` in [EF Core 9.0](xref:core/what-is-new/ef-core-9.0/breaking-changes#cosmos-discriminator-name-change). To achieve this, EF used `$type` as the name of the discriminator property both in the EF model and in the stored JSON document.
+
+Because `$type` is not a valid C# identifier, the resulting shadow property name caused invalid code to be generated for [compiled models](xref:core/performance/advanced-performance-topics#compiled-models) and [precompiled queries](xref:core/performance/nativeaot-and-precompiled-queries) used with Native AOT.
+
+#### New behavior
+
+Starting with EF Core 11.0, the default discriminator property is once again named `Discriminator` in the EF model, while the name written to the JSON document is unchanged and remains `$type` by default. In other words, the model property name and the JSON property name are now decoupled:
+
+- `entityType.FindDiscriminatorProperty().Name` returns `Discriminator`.
+- `entityType.FindDiscriminatorProperty().GetJsonPropertyName()` returns `$type`.
+
+The format of the stored documents is **not** affected by this change, so existing data continues to work without modification.
+
+#### Why
+
+EF derives some generated C# identifiers (for example, shadow property variable names) from model metadata such as property names. Since `$type` is not a valid C# identifier, using it as the model property name produced uncompilable code for compiled models and precompiled queries. Naming the model property `Discriminator` (a valid identifier) while still writing `$type` to the document keeps generated code valid without changing the on-disk format.
+
+#### Mitigations
+
+For most applications no action is needed, since stored documents are unaffected and continue to use `$type`.
+
+If your code references the discriminator by its **model** property name, `$type` (for example, via <xref:Microsoft.EntityFrameworkCore.EF.Property*> in a query or query filter, or by looking the property up in the metadata), update it to use `Discriminator` instead:
+
+```csharp
+// Before
+var query = context.Set<Session>().Where(e => EF.Property<string>(e, "$type") == "Lecture");
+
+// After
+var query = context.Set<Session>().Where(e => EF.Property<string>(e, "Discriminator") == "Lecture");
+```
+
+To change the JSON discriminator property name for the whole model in a single place--for example, to align it with the model property name--use the model-level <xref:Microsoft.EntityFrameworkCore.ModelBuilder.HasEmbeddedDiscriminatorName*> API instead of configuring each entity type individually:
+
+```csharp
+modelBuilder.HasEmbeddedDiscriminatorName("Discriminator");
+```
+
+To change only the JSON name for a specific entity type--for example, to align it with the model property name--configure the discriminator property's JSON name with <xref:Microsoft.EntityFrameworkCore.CosmosPropertyBuilderExtensions.ToJsonProperty*>:
+
+```csharp
+modelBuilder.Entity<Session>().Property<string>("Discriminator").ToJsonProperty("Discriminator");
+```
+
+To restore the previous behavior where the discriminator property is also named `$type` in the model, configure its name explicitly with <xref:Microsoft.EntityFrameworkCore.Metadata.Builders.EntityTypeBuilder.HasDiscriminator*>. Note that this reintroduces an invalid C# identifier and is not recommended when using compiled models or precompiled queries:
+
+```csharp
+modelBuilder.Entity<Session>().HasDiscriminator<string>("$type");
 ```
 
 <a name="owned-json-collections-obsolete"></a>
