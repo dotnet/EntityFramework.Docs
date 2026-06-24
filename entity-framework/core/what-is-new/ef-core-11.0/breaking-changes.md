@@ -362,13 +362,13 @@ var query = context.Set<Session>().Where(e => EF.Property<string>(e, "$type") ==
 var query = context.Set<Session>().Where(e => EF.Property<string>(e, "Discriminator") == "Lecture");
 ```
 
-To change the JSON discriminator property name for the whole model in a single place, use the model-level <xref:Microsoft.EntityFrameworkCore.ModelBuilder.HasEmbeddedDiscriminatorName*> API instead of configuring each entity type individually:
+To change the JSON discriminator property name for the whole model in a single place--for example, to align it with the model property name--use the model-level <xref:Microsoft.EntityFrameworkCore.ModelBuilder.HasEmbeddedDiscriminatorName*> API instead of configuring each entity type individually:
 
 ```csharp
 modelBuilder.HasEmbeddedDiscriminatorName("Discriminator");
 ```
 
-To change only the JSON name for a specific entity type, configure the discriminator property's JSON name with <xref:Microsoft.EntityFrameworkCore.CosmosPropertyBuilderExtensions.ToJsonProperty*>:
+To change only the JSON name for a specific entity type--for example, to align it with the model property name--configure the discriminator property's JSON name with <xref:Microsoft.EntityFrameworkCore.CosmosPropertyBuilderExtensions.ToJsonProperty*>:
 
 ```csharp
 modelBuilder.Entity<Session>().Property<string>("Discriminator").ToJsonProperty("Discriminator");
