@@ -457,8 +457,6 @@ protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 
 ### `Property` no longer configures primitive collections
 
-[Tracking Issue #38484](https://github.com/dotnet/efcore/pull/38484)
-
 #### Old behavior
 
 Previously, calling <xref:Microsoft.EntityFrameworkCore.Metadata.Builders.EntityTypeBuilder.Property*> for a member whose CLR type is a collection (for example `List<int>`) could result in the member being configured as a [primitive collection](xref:core/what-is-new/ef-core-8.0/whatsnew#primitive-collections), because a property could be promoted to a primitive collection at model finalization based on its type.
