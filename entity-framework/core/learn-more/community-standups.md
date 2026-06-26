@@ -14,6 +14,7 @@ The .NET Data Community Standups are live-streamed monthly (roughly) on Thursday
 
 | Date         | Area                  | Title                                                                                    |
 |--------------|-----------------------|------------------------------------------------------------------------------------------|
+| Jun 25, 2026 | Temporal tables       | [Temporal tables and constraints in SQL Server and PostgreSQL 18](#Jun25_2026)           |
 | May 21, 2026 | EF Core               | [8 Real-World Query Anti-Patterns (and How to Fix Them)](#May21_2026)                    |
 | Apr 23, 2026 | Tools                 | [Lightweight Framework to Automate EF Components](#Apr23_2026)                           |
 | Mar 19, 2026 | DevArt                | [How dotConnect + Entity Developer simplify your workflow](#Mar19_2026)                  |
@@ -111,6 +112,17 @@ The .NET Data Community Standups are live-streamed monthly (roughly) on Thursday
 | May 6, 2020  | Welcome!              | [Introducing the EF Core Community Standup](#one)                                        |
 
 ## 2026
+
+<a name="Jun25_2026"></a>
+
+### Jun 25: [Temporal tables and constraints in SQL Server and PostgreSQL 18](https://www.youtube.com/live/BcbhBFm1MuU?si=qczW0FmktU9xq3c3)
+
+In this session we'll take a deep look at temporal tables and constraints in database. The recently-released PostgreSQL 18 contains new temporal constraint functionality that superficially looks similar to SQL Server's temporal tables, but the two are in reality quite different. We'll dive into the details, compare the two and discuss two completely different concepts of what it means to store temporal data in databases.
+
+Featuring:
+
+- [Shay Rojansky](https://www.roji.org/) (Special guest)
+- [Jiri Cincura](https://www.tabsoverspaces.com/) (Host)
 
 <a name="May21_2026"></a>
 
