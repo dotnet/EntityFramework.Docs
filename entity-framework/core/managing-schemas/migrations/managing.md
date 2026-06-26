@@ -221,6 +221,9 @@ dotnet ef migrations has-pending-model-changes
 
 You can also perform this check programmatically using `context.Database.HasPendingModelChanges()`. This can be used to write a unit test that fails when you forget to add a migration.
 
+> [!NOTE]
+> Starting with EF Core 9, an exception is thrown automatically when `Migrate()` or `MigrateAsync()` is called with pending model changes (warning event ID `RelationalEventId.PendingModelChangesWarning`). See the [applying migrations documentation](xref:core/managing-schemas/migrations/applying#apply-migrations-at-runtime) and the [breaking change note](xref:core/what-is-new/ef-core-9.0/breaking-changes#pending-model-changes) for more information.
+
 ## Resetting all migrations
 
 In some extreme cases, it may be necessary to remove all migrations and start over. This can be easily done by deleting your **Migrations** folder and dropping your database; at that point you can create a new initial migration, which will contain your entire current schema.
