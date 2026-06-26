@@ -805,7 +805,7 @@ For example, looking at the logging for the following call to `SaveChanges`:
 -->
 [!code-csharp[SimpleInsert](../../../../samples/core/Miscellaneous/NewInEFCore7/SaveChangesPerformanceSample.cs?name=SimpleInsert)]
 
-Shows that in EF Core 6.0, the `INSERT` command is wrapped by commands to begin and and then commit a transaction:
+Shows that in EF Core 6.0, the `INSERT` command is wrapped by commands to begin and then commit a transaction:
 
 ```output
 dbug: 9/29/2022 11:43:09.196 RelationalEventId.TransactionStarted[20200] (Microsoft.EntityFrameworkCore.Database.Transaction)

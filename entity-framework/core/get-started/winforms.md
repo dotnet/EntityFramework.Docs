@@ -103,7 +103,7 @@ The application will show a list of categories and a list of products. When a ca
 4. In the **Properties** for the first `DataGridView`, change the **Name** to `dataGridViewCategories`.
 5. In the **Properties** for the second `DataGridView`, change the **Name** to `dataGridViewProducts`.
 6. Also using the **Toolbox**, add a `Button` control.
-7. Name the button `buttonSave` and give it the text "Save". The form should look something this this:
+7. Name the button `buttonSave` and give it the text "Save". The form should look something like this:
 
    ![Form layout](_static/winforms-form-layout.png)
 
