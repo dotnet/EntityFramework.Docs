@@ -489,7 +489,7 @@ Starting with Microsoft.Data.Sqlite 10.0, when using `GetDateTimeOffset` on a te
 
 ##### Why
 
-Is is to align with SQLite's behavior where timestamps without an offset are treated as UTC.
+This is to align with SQLite's behavior where timestamps without an offset are treated as UTC.
 
 ##### Mitigations
 

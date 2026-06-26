@@ -862,7 +862,7 @@ WHERE EXISTS (
     WHERE [b].[value] = @__beer_0)
 ```
 
-`OpenJson` is now used to to extract values from JSON column so that each value can be matched to the passed parameter.
+`OpenJson` is now used to extract values from JSON column so that each value can be matched to the passed parameter.
 
 We can combine the use of `OpenJson` on the parameter with `OpenJson` on the column. For example, to find pubs that stock any one of a variety of lagers:
 
@@ -1242,7 +1242,7 @@ EF7 introduced support for mapping to JSON columns when using Azure SQL/SQL Serv
 The existing [documentation from What's New in EF7](xref:core/what-is-new/ef-core-7.0/whatsnew#json-columns) provides detailed information on JSON mapping, queries, and updates. This documentation now also applies to SQLite.
 
 > [!TIP]
-> The code shown in the EF7 documentation has been updated to also run on SQLite can can be found in [JsonColumnsSample.cs](https://github.com/dotnet/EntityFramework.Docs/tree/main/samples/core/Miscellaneous/NewInEFCore8/JsonColumnsSample.cs).
+> The code shown in the EF7 documentation has been updated to also run on SQLite and can be found in [JsonColumnsSample.cs](https://github.com/dotnet/EntityFramework.Docs/tree/main/samples/core/Miscellaneous/NewInEFCore8/JsonColumnsSample.cs).
 
 #### Queries into JSON columns
 
