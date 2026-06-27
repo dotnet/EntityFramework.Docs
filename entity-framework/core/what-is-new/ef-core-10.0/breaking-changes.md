@@ -31,6 +31,7 @@ This page documents API and behavior changes that have the potential to break ex
 | [Nested complex type properties use full path in column names](#nested-complex-type-column-names)               | Low        |
 | [IDiscriminatorPropertySetConvention signature changed](#discriminator-convention-signature)                    | Low        |
 | [IRelationalCommandDiagnosticsLogger methods add logCommandText parameter](#logger-logcommandtext)              | Low        |
+| [SQL parameter names are now simplified](#simplified-parameter-names)                                           | Low        |
 
 ## Medium-impact changes
 
@@ -458,6 +459,44 @@ public InterceptionResult<DbDataReader> CommandReaderExecuting(
 ```
 
 The `logCommandText` parameter contains the SQL to be logged (with inlined constants potentially redacted), while `command.CommandText` contains the actual SQL that will be executed against the database.
+
+<a name="simplified-parameter-names"></a>
+
+### SQL parameter names are now simplified
+
+[Tracking Issue #35200](https://github.com/dotnet/efcore/pull/35200)
+
+#### Old behavior
+
+Previously, EF generated SQL parameter names with a `__` prefix and a trailing counter. For example, a query referencing a `city` variable produced a parameter named `@__city_0`:
+
+```sql
+@__city_0='London'
+
+SELECT [b].[Id], [b].[Name]
+FROM [Blogs] AS [b]
+WHERE [b].[City] = @__city_0
+```
+
+#### New behavior
+
+Starting with EF Core 10.0, parameter names are simplified to match the originating variable or member name, and a numeric suffix is only added when needed to make a name unique. The same query now produces a parameter named `@city`:
+
+```sql
+@city='London'
+
+SELECT [b].[Id], [b].[Name]
+FROM [Blogs] AS [b]
+WHERE [b].[City] = @city
+```
+
+#### Why
+
+The previous `__` prefix and unconditional counter made the generated SQL harder to read in logs, query plans, and diagnostic output. The simplified names more closely resemble SQL that a developer would write by hand and make it easier to correlate parameters with the variables in your code.
+
+#### Mitigations
+
+This change is transparent for most applications, since EF manages parameter names internally and the executed queries are functionally identical. However, code that depends on the exact parameter names in the generated SQL - such as snapshot tests comparing SQL text, or interceptors and loggers that parse `DbCommand.CommandText` or inspect `DbParameter.ParameterName` - needs to be updated to account for the new names.
 
 <a name="MDS-breaking-changes"></a>
 
