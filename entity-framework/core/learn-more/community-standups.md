@@ -2,7 +2,7 @@
 title: .NET Data Community Standups
 description: Details and links for each episode of the .NET Data Community Standup
 author: SamMonoRT
-ms.date: 02/23/2024
+ms.date: 06/26/2026
 uid: core/learn-more/community-standups
 ---
 
