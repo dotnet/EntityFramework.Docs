@@ -32,6 +32,7 @@ This page documents API and behavior changes that have the potential to break ex
 | [Cosmos: empty owned collections now return an empty collection instead of null](#cosmos-empty-collections)     | Low        |
 | [Cosmos: the default discriminator property is now named `Discriminator` in the model](#cosmos-discriminator-property-name) | Low        |
 | [Owned JSON collections without an explicit key are obsolete](#owned-json-collections-obsolete)                 | Low        |
+| [`Property` no longer configures primitive collections](#property-not-primitive-collection)                     | Low        |
 
 ## Medium-impact changes
 
@@ -451,6 +452,33 @@ If you cannot migrate immediately, you can suppress the warning via `ConfigureWa
 protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     => optionsBuilder.ConfigureWarnings(w => w.Ignore(CoreEventId.OwnedEntityMappedToJsonCollectionWarning));
 ```
+
+<a name="property-not-primitive-collection"></a>
+
+### `Property` no longer configures primitive collections
+
+#### Old behavior
+
+Previously, calling <xref:Microsoft.EntityFrameworkCore.Metadata.Builders.EntityTypeBuilder.Property*> for a member whose CLR type is a collection (for example `List<int>`) could result in the member being configured as a [primitive collection](xref:core/what-is-new/ef-core-8.0/whatsnew#primitive-collections), because a property could be promoted to a primitive collection at model finalization based on its type.
+
+#### New behavior
+
+Starting with EF Core 11.0, whether a property is a primitive collection is determined entirely when the property is configured. A primitive collection must be configured with <xref:Microsoft.EntityFrameworkCore.Metadata.Builders.EntityTypeBuilder.PrimitiveCollection*> (or discovered as one by convention). <xref:Microsoft.EntityFrameworkCore.Metadata.Builders.EntityTypeBuilder.Property*> now always configures the member as a non-collection (scalar) property, and there is no longer any finalization-time promotion to a primitive collection.
+
+#### Why
+
+Treating the element type as a finalization-time concern led to inconsistencies and bugs. For example, a property could be discovered as a primitive collection, but later resolve to a scalar via an inherited value converter, leaving a stale element type that caused an `InvalidCastException` at model finalization. Making primitive collections a creation-time concern also makes mapping unambiguous in cases like `byte[]`, where it is otherwise unclear whether the member should be mapped as a binary scalar or as a collection of bytes.
+
+#### Mitigations
+
+If you relied on `Property` to configure a primitive collection, switch to `PrimitiveCollection` instead:
+
+```csharp
+protected override void OnModelCreating(ModelBuilder modelBuilder)
+    => modelBuilder.Entity<Blog>().PrimitiveCollection(b => b.Tags);
+```
+
+In most cases no change is required, since primitive collections are discovered by convention.
 
 <a name="MDS-breaking-changes"></a>
 
