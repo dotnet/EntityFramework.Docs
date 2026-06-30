@@ -464,7 +464,7 @@ The `logCommandText` parameter contains the SQL to be logged (with inlined const
 
 ### SQL parameter names are now simplified
 
-[Tracking Issue #35200](https://github.com/dotnet/efcore/pull/35200)
+[Tracking Issue #35196](https://github.com/dotnet/efcore/issues/35196)
 
 #### Old behavior
 
@@ -497,6 +497,8 @@ The previous `__` prefix and unconditional counter made the generated SQL harder
 #### Mitigations
 
 This change is transparent for most applications, since EF manages parameter names internally and the executed queries are functionally identical. However, code that depends on the exact parameter names in the generated SQL - such as snapshot tests comparing SQL text, or interceptors and loggers that parse `DbCommand.CommandText` or inspect `DbParameter.ParameterName` - needs to be updated to account for the new names.
+
+Since parameter names are part of the generated SQL text, upgrading may also cause almost all cached query plans to be recompiled on the database server. Large systems should account for a temporary compilation spike immediately after deployment while those plans are rebuilt.
 
 <a name="MDS-breaking-changes"></a>
 
