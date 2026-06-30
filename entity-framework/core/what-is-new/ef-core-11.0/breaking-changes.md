@@ -562,9 +562,7 @@ Review the following cases, which may require action in some applications:
 
 - **Platform (RID) coverage.** SQLite3 Multiple Ciphers doesn't currently include native binaries for every runtime identifier covered by `SourceGear.sqlite3`; for example, `linux-riscv64`, `linux-musl-riscv64`, and `linux-musl-s390x` aren't included. If you target a platform that the new bundle doesn't include, the native library may fail to load at runtime. In that case, revert to the standard build using the package references below.
 
-- **Linux glibc requirement and macOS/Linux opt-out.** The bundled `e_sqlite3mc` library is prebuilt native code. On Linux, it currently requires glibc 2.33 or later; on older distributions, loading it can fail at runtime with an error such as `GLIBC_2.33 not found`. On macOS and Linux, if you need to avoid the bundled library altogether (for example, because of runtime compatibility or because you need to use the system SQLite library), switch to the `.Core` packages and either:
-  - Use `SQLitePCLRaw.bundle_e_sqlite3` to keep using the standard `e_sqlite3` bundled build, as shown below.
-  - Use `SQLitePCLRaw.provider.sqlite3` together with a system-installed or self-built SQLite library that matches your deployment environment, and initialize `SQLitePCL.raw.SetProvider(new SQLitePCL.SQLite3Provider_sqlite3());`.
+- **Linux glibc requirement and macOS/Linux opt-out.** The bundled `e_sqlite3mc` library is prebuilt native code. On Linux, it currently requires glibc 2.33 or later; on older distributions, loading it can fail at runtime with an error such as `GLIBC_2.33 not found`. On macOS and Linux, if you need to avoid the bundled library altogether (for example, because of runtime compatibility or because you need to use the system SQLite library), follow the opt-out steps below.
 
 - **Reserved encryption keywords.** SQLite3 Multiple Ciphers reserves certain connection-string/URI parameters and PRAGMAs (such as `key`, `hexkey`, and `cipher`) for encryption configuration. This is unlikely to affect typical applications, but if you happened to use these names for unrelated purposes, behavior may differ.
 
