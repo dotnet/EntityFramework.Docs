@@ -582,7 +582,7 @@ For EF Core, reference `Microsoft.EntityFrameworkCore.Sqlite.Core` instead of `M
 <PackageReference Include="SQLitePCLRaw.bundle_e_sqlite3" Version="3.x.x" />
 ```
 
-If you need to use a system-installed SQLite library instead of a bundled one, reference the provider directly:
+If you need to use a system-installed SQLite library instead of a bundled one, reference `Microsoft.Data.Sqlite.Core` together with `SQLitePCLRaw.provider.sqlite3` instead of the `Microsoft.Data.Sqlite` meta-package:
 
 ```xml
 <PackageReference Include="Microsoft.Data.Sqlite.Core" Version="11.0.0" />
