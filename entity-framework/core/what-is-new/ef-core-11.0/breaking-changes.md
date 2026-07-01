@@ -562,7 +562,7 @@ Review the following cases, which may require action in some applications:
 
 - **Platform (RID) coverage.** SQLite3 Multiple Ciphers doesn't currently include native binaries for every runtime identifier covered by `SourceGear.sqlite3`; for example, `linux-riscv64`, `linux-musl-riscv64`, and `linux-musl-s390x` aren't included. If you target a platform that the new bundle doesn't include, the native library may fail to load at runtime. In that case, revert to the standard build using the package references below.
 
-- **Linux glibc requirement and macOS/Linux opt-out.** The bundled `e_sqlite3mc` library is prebuilt native code. On Linux, it currently requires glibc 2.33 or later; on older distributions, loading it can fail at runtime with an error such as `GLIBC_2.33 not found`. If the target system is unable to satisfy this requirement follow the opt-out steps below.
+- **Linux glibc requirement and opt-out.** The bundled `e_sqlite3mc` library is prebuilt native code. On Linux, it currently requires glibc 2.33 or later; on older distributions, loading it can fail at runtime with an error such as `GLIBC_2.33 not found`. If the target system is unable to satisfy this requirement, follow the opt-out steps below.
 
 - **Reserved encryption keywords.** SQLite3 Multiple Ciphers reserves certain connection-string/URI parameters and PRAGMAs (such as `key`, `hexkey`, and `cipher`) for encryption configuration. This is unlikely to affect typical applications, but if you happened to use these names for unrelated purposes, behavior may differ.
 
