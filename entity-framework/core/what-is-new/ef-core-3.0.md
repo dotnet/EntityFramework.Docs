@@ -1,7 +1,7 @@
 ---
 title: What is new in EF Core 3.0 - EF Core
 description: Changes and improvements in Entity Framework Core 3.0
-author: smitpatel
+author: SamMonoRT
 ms.date: 11/09/2020
 uid: core/what-is-new/ef-core-3.0
 ---

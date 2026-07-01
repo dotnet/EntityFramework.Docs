@@ -1,7 +1,7 @@
 ---
 title: Breaking changes in EF Core 11 (EF11) - EF Core
 description: List of breaking changes introduced in Entity Framework Core 11 (EF11)
-author: roji
+author: SamMonoRT
 ms.date: 06/30/2026
 uid: core/what-is-new/ef-core-11.0/breaking-changes
 ---
@@ -122,8 +122,7 @@ The previous escaping scheme was non-injective: the escape character `^` was nev
 If your application uses composite keys whose values can contain the characters `/`, `\`, `?`, or `#`, be aware of the following:
 
 - **Existing data**: Documents previously stored in Cosmos DB have `id` values using the old escape sequences (e.g. `Post|1|^2F`). After upgrading to EF Core 11, EF will generate unescaped `id` values (e.g. `Post|1|/`) and will no longer find those existing documents. To continue accessing existing data without migration, opt back into the old behavior using the `AppContext` switch described above—however, be aware that the id-collision bug will still be present.
-
-- **New data**: If you are creating a new application or database, avoid using these illegal characters in key values, as they are not valid in Cosmos DB resource `id` values. See the [Azure documentation](/dotnet/api/microsoft.azure.documents.resource.id) for details.
+- **New data**: If you are creating a new application or database, avoid using these illegal characters in key values, as they are not valid in Cosmos DB resource `id` values. See the [Azure documentation](xref:Microsoft.Azure.Documents.Resource.Id) for details.
 
 ## Low-impact changes
 

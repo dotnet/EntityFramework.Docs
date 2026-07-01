@@ -1,7 +1,7 @@
 ---
 title: Metrics - EF Core
 description: Tracking EF Core performance and diagnosing anomalies with .NET metrics
-author: cincuranet
+author: SamMonoRT
 ms.date: 06/11/2024
 uid: core/logging-events-diagnostics/metrics
 ---

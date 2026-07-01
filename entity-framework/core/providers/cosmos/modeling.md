@@ -1,7 +1,7 @@
 ---
 title: Modeling - Azure Cosmos DB Provider - EF Core
 description: Configuring the model with the Azure Cosmos DB EF Core Provider
-author: roji
+author: SamMonoRT
 ms.date: 06/09/2026
 uid: core/providers/cosmos/modeling
 ---

@@ -2,7 +2,7 @@
 title: SQLite Database Provider - Limitations - EF Core
 description: Limitations of the Entity Framework Core SQLite database provider as compared to other providers
 author: SamMonoRT
-ms.date: 11/15/2021
+ms.date: 04/16/2026
 uid: core/providers/sqlite/limitations
 ---
 # SQLite EF Core Database Provider Limitations
@@ -92,9 +92,25 @@ dotnet ef database update --connection "Data Source=My.db"
 
 ## Concurrent migrations protection
 
-EF9 introduced a locking mechanism when executing migrations. It aims to protect against multiple migration executions happening simultaneously, as that could leave the database in a corrupted state. This is one of the potential problems resulting from applying migrations at runtime using the <xref:Microsoft.EntityFrameworkCore.RelationalDatabaseFacadeExtensions.Migrate%2A> method (see [Applying migrations](xref:core/managing-schemas/migrations/applying) for more information). To mitigate this, EF creates an exclusive lock on the database before any migration operations are applied.
+EF9 introduced a [migration locking mechanism](xref:core/managing-schemas/migrations/applying#migration-locking) to protect against concurrent migration executions. Unlike SQL Server, which uses a session-level application lock (`sp_getapplock`) that is automatically released when the connection closes, SQLite doesn't have built-in application locks. EF Core instead creates a `__EFMigrationsLock` table and inserts a row to acquire the lock.
 
-Unfortunately, SQLite does not have built-in locking mechanism, so EF Core creates a separate table (`__EFMigrationsLock`) and uses it for locking. The lock is released when the migration completes and the seeding code finishes execution. However, if for some reason migration fails in a non-recoverable way, the lock may not be released correctly. If this happens, consecutive migrations will be blocked from executing SQL and therefore never complete. You can manually unblock them by deleting the `__EFMigrationsLock` table in the database.
+### Handling abandoned locks
+
+If the application terminates unexpectedly (for example, the process is killed during migration), the lock row in the `__EFMigrationsLock` table may not be cleaned up. This prevents any subsequent migration from completing, because each attempt will wait indefinitely for the lock to be released.
+
+To resolve an abandoned lock, drop the `__EFMigrationsLock` table from the database:
+
+```sql
+DROP TABLE "__EFMigrationsLock";
+```
+
+Or, alternatively, delete all rows from the table:
+
+```sql
+DELETE FROM "__EFMigrationsLock";
+```
+
+After clearing the lock, subsequent migration operations proceed normally. The table is automatically recreated as needed.
 
 ## See also
 

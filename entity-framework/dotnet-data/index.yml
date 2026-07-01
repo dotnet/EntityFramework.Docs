@@ -7,7 +7,7 @@ brand: dotnet
 metadata:
   title:  .NET (C#) data documentation 
   center  description: This page contains resources about how to work with data using .NET (C#). Use our docs and tutorials to choose from our wide variety of available databases & data access approaches and get started quick!
-  ms.product: entity-framework
+  ms.service: entity-framework
   ms.topic: hub-page
   author: jcjiang
   ms.date: 03/08/2023

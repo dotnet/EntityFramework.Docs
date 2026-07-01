@@ -1,7 +1,7 @@
 ---
 title: Complex Query Operators - EF Core
 description: In-depth information on the more complex LINQ query operators when using Entity Framework Core
-author: smitpatel
+author: SamMonoRT
 ms.date: 10/03/2019
 uid: core/querying/complex-query-operators
 ---
@@ -141,7 +141,7 @@ ORDER BY [b].[Price]
 
 In this case, the GroupBy operator doesn't translate directly to a `GROUP BY` clause in the SQL, but instead, EF Core creates the groupings after the results are returned from the server.
 
-## Left Join
+## Left join
 
 While Left Join isn't a LINQ operator, relational databases have the concept of a Left Join which is frequently used in queries. A particular pattern in LINQ queries gives the same result as a `LEFT JOIN` on the server. EF Core identifies such patterns and generates the equivalent `LEFT JOIN` on the server side. The pattern involves creating a GroupJoin between both the data sources and then flattening out the grouping by using the SelectMany operator with DefaultIfEmpty on the grouping source to match null when the inner doesn't have a related element. The following example shows what that pattern looks like and what it generates.
 

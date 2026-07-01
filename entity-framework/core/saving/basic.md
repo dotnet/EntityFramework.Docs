@@ -37,7 +37,7 @@ Use the <xref:Microsoft.EntityFrameworkCore.DbSet`1.Remove*?displayProperty=name
 
 If the entity already exists in the database, it will be deleted during `SaveChanges`. If the entity has not yet been saved to the database (that is, it is tracked as added) then it will be removed from the context and will no longer be inserted when `SaveChanges` is called.
 
-## Multiple Operations in a single SaveChanges
+## Multiple operations in a single SaveChanges
 
 You can combine multiple Add/Update/Remove operations into a single call to `SaveChanges`:
 

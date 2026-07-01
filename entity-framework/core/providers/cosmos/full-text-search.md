@@ -1,7 +1,7 @@
 ---
 title: Full-Text Search - Azure Cosmos DB Provider - EF Core
 description: Full-text search with the Azure Cosmos DB EF Core Provider
-author: maumar
+author: SamMonoRT
 ms.date: 04/19/2025
 uid: core/providers/cosmos/full-text-search
 ---

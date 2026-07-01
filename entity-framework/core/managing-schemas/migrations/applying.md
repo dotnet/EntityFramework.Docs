@@ -2,7 +2,7 @@
 title: Applying Migrations - EF Core
 description: Strategies for applying schema migrations to production and development databases using Entity Framework Core
 author: SamMonoRT
-ms.date: 10/29/2024
+ms.date: 04/16/2026
 uid: core/managing-schemas/migrations/applying
 ms.custom: sfi-ropc-nochange
 ---
@@ -341,3 +341,27 @@ Note that `MigrateAsync()` builds on top of the `IMigrator` service, which can b
 >
 > * Carefully consider before using this approach in production. Experience has shown that the simplicity of this deployment strategy is outweighed by the issues it creates. Consider generating SQL scripts from migrations instead.
 > * Don't call `EnsureCreatedAsync()` before `MigrateAsync()`. `EnsureCreatedAsync()` bypasses Migrations to create the schema, which causes `MigrateAsync()` to fail.
+
+## Migration locking
+
+Starting with EF Core 9, <xref:Microsoft.EntityFrameworkCore.RelationalDatabaseFacadeExtensions.MigrateAsync*> and <xref:Microsoft.EntityFrameworkCore.RelationalDatabaseFacadeExtensions.Migrate*> automatically acquire a database-wide lock before applying any migrations. This protects against database corruption that could result from multiple application instances running migrations concurrently, which is a common scenario when [applying migrations at runtime](#apply-migrations-at-runtime). The lock is held for the duration of the migration execution, including any [seeding code](xref:core/modeling/data-seeding#use-seeding-method), and is automatically released when the operation completes.
+
+Migration locking applies when migrations are applied using any of the following methods:
+
+* `dotnet ef database update` (.NET CLI)
+* `Update-Database` (Package Manager Console)
+* [Migration bundles](#bundles)
+* <xref:Microsoft.EntityFrameworkCore.RelationalDatabaseFacadeExtensions.MigrateAsync*> and <xref:Microsoft.EntityFrameworkCore.RelationalDatabaseFacadeExtensions.Migrate*> (runtime migration)
+
+[SQL scripts](#sql-scripts) are not affected by migration locking, since they are applied outside of EF Core.
+
+> [!NOTE]
+> Starting with EF Core 9, calling `Migrate()` or `MigrateAsync()` will throw an exception when the model has pending changes compared to the last migration (warning event ID `RelationalEventId.PendingModelChangesWarning`). To detect this condition before deployment, use the [`dotnet ef migrations has-pending-model-changes`](xref:core/managing-schemas/migrations/managing#checking-for-pending-model-changes) command in your CI/CD pipeline. The warning can be suppressed via `ConfigureWarnings` (ignoring `RelationalEventId.PendingModelChangesWarning`) if necessary, but this is generally not recommended in production scenarios. See the [breaking change note](xref:core/what-is-new/ef-core-9.0/breaking-changes#pending-model-changes) for more information.
+
+> [!WARNING]
+> The locking mechanism varies significantly across database providers and can involve provider-specific issues. For example, the SQLite provider uses a lock table that can become [abandoned if the process terminates unexpectedly](xref:core/providers/sqlite/limitations#concurrent-migrations-protection). Always consult your provider's documentation for details.
+
+### Limitations
+
+* Wrapping <xref:Microsoft.EntityFrameworkCore.RelationalDatabaseFacadeExtensions.MigrateAsync*> in an explicit transaction is not supported. See [Exception is thrown when applying migrations in an explicit transaction](xref:core/what-is-new/ef-core-9.0/breaking-changes#migrations-transaction) for details.
+* On SQLite, abandoned migration locks can [block subsequent migrations](xref:core/providers/sqlite/limitations#concurrent-migrations-protection).
