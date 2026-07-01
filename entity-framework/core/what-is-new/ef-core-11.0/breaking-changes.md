@@ -2,7 +2,7 @@
 title: Breaking changes in EF Core 11 (EF11) - EF Core
 description: List of breaking changes introduced in Entity Framework Core 11 (EF11)
 author: roji
-ms.date: 06/11/2026
+ms.date: 06/30/2026
 uid: core/what-is-new/ef-core-11.0/breaking-changes
 ---
 
@@ -562,6 +562,8 @@ Review the following cases, which may require action in some applications:
 
 - **Platform (RID) coverage.** SQLite3 Multiple Ciphers doesn't currently include native binaries for every runtime identifier covered by `SourceGear.sqlite3`; for example, `linux-riscv64`, `linux-musl-riscv64`, and `linux-musl-s390x` aren't included. If you target a platform that the new bundle doesn't include, the native library may fail to load at runtime. In that case, revert to the standard build using the package references below.
 
+- **Linux glibc requirement and opt-out.** The bundled `e_sqlite3mc` library is prebuilt native code. On Linux, it currently requires glibc 2.33 or later; on older distributions, loading it can fail at runtime with an error such as `GLIBC_2.33 not found`. If the target system is unable to satisfy this requirement, follow the opt-out steps below.
+
 - **Reserved encryption keywords.** SQLite3 Multiple Ciphers reserves certain connection-string/URI parameters and PRAGMAs (such as `key`, `hexkey`, and `cipher`) for encryption configuration. This is unlikely to affect typical applications, but if you happened to use these names for unrelated purposes, behavior may differ.
 
 - **Double-quoted string literal support.** `e_sqlite3mc` doesn't include SQLite's legacy support for double-quoted string literals. If your SQL uses double quotes for string values, change it to use single quotes; double quotes should be used only for identifiers. Review raw SQL in your application (for example, SQL passed to `FromSql`, `ExecuteSql`, or migrations operations), and use SQL logging or integration tests to identify affected commands.
@@ -578,4 +580,24 @@ For EF Core, reference `Microsoft.EntityFrameworkCore.Sqlite.Core` instead of `M
 ```xml
 <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite.Core" Version="11.0.0" />
 <PackageReference Include="SQLitePCLRaw.bundle_e_sqlite3" Version="3.x.x" />
+```
+
+If you need to use a system-installed SQLite library instead of a bundled one, reference `Microsoft.Data.Sqlite.Core` together with `SQLitePCLRaw.provider.sqlite3` instead of the `Microsoft.Data.Sqlite` meta-package:
+
+```xml
+<PackageReference Include="Microsoft.Data.Sqlite.Core" Version="11.0.0" />
+<PackageReference Include="SQLitePCLRaw.provider.sqlite3" Version="3.x.x" />
+```
+
+For EF Core:
+
+```xml
+<PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite.Core" Version="11.0.0" />
+<PackageReference Include="SQLitePCLRaw.provider.sqlite3" Version="3.x.x" />
+```
+
+And initialize the provider explicitly before using SQLite:
+
+```csharp
+SQLitePCL.raw.SetProvider(new SQLitePCL.SQLite3Provider_sqlite3());
 ```
