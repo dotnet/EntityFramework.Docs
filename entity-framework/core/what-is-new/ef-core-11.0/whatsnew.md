@@ -459,10 +459,7 @@ var results = await context.Articles
             VectorDistance = vs == null ? null : (double?)vs.Distance
         })
     .Select(x => new
-    {
-        x.Article,
-        RrfScore = (1.0 / (k + x.FullTextRank) ?? 0.0) + (1.0 / (k + x.VectorDistance) ?? 0.0)
-    })
+        RrfScore = ((1.0 / (k + x.FullTextRank)) ?? 0.0) + ((1.0 / (k + x.VectorDistance)) ?? 0.0)
     .OrderByDescending(x => x.RrfScore)
     .Take(10)
     .Select(x => x.Article)
