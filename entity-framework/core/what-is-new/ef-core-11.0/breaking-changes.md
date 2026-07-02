@@ -509,7 +509,7 @@ Previously, `Microsoft.Data.Sqlite` and `Microsoft.Data.Sqlite.Core` targeted `n
 
 ##### New behavior
 
-Starting with Microsoft.Data.Sqlite 11.0, both packages target `net10.0` only. .NET Framework applications can no longer reference or use Microsoft.Data.Sqlite 11.0.
+Starting with `Microsoft.Data.Sqlite` 11.0, both packages target `net10.0` only. .NET Framework applications can no longer reference or use `Microsoft.Data.Sqlite` 11.0.
 
 ##### Why
 
@@ -519,7 +519,7 @@ The `netstandard2.0` target made older, unsupported .NET targets appear to be su
 
 If possible, move the application to .NET 10 or later.
 
-If you must remain on .NET Framework, stay on the latest Microsoft.Data.Sqlite 10.0.x servicing release. The 10.0.x line already uses `SQLite3MC.PCLRaw.bundle`, allowing .NET Framework applications to remain on that servicing line longer while still receiving 10.0.x fixes, including bundled SQLite CVE fixes shipped there.
+If you must remain on .NET Framework, stay on the latest `Microsoft.Data.Sqlite` 10.0.x servicing release. The 10.0.x line already uses `SQLite3MC.PCLRaw.bundle`, allowing .NET Framework applications to update the referenced `SQLite3MC.PCLRaw.bundle` version even after `Microsoft.Data.Sqlite` stops receiving updated.
 
 <a name="sqlite-encryption-removed"></a>
 
