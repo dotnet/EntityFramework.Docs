@@ -2,7 +2,7 @@
 title: Breaking changes in EF Core 11 (EF11) - EF Core
 description: List of breaking changes introduced in Entity Framework Core 11 (EF11)
 author: roji
-ms.date: 03/27/2026
+ms.date: 07/02/2026
 uid: core/what-is-new/ef-core-11.0/breaking-changes
 ---
 
@@ -491,10 +491,35 @@ In most cases no change is required, since primitive collections are discovered 
 
 | **Breaking change**                                                                                       | **Impact** |
 |:----------------------------------------------------------------------------------------------------------|------------|
+| [Microsoft.Data.Sqlite no longer supports .NET Framework](#sqlite-no-netfx)                              | Medium     |
 | [Encryption-enabled SQLite packages have been removed](#sqlite-encryption-removed)                        | Medium     |
 | [Some SQLitePCLRaw bundle packages have been removed](#sqlite-bundles-removed)                            | Medium     |
 
 ### Medium-impact changes
+
+<a name="sqlite-no-netfx"></a>
+
+#### Microsoft.Data.Sqlite no longer supports .NET Framework
+
+[Tracking Issue #35599](https://github.com/dotnet/efcore/issues/35599)
+
+##### Old behavior
+
+Previously, `Microsoft.Data.Sqlite` and `Microsoft.Data.Sqlite.Core` targeted `netstandard2.0`, which allowed them to be used from .NET Framework applications.
+
+##### New behavior
+
+Starting with Microsoft.Data.Sqlite 11.0, both packages target `net10.0` only. .NET Framework applications can no longer reference or use Microsoft.Data.Sqlite 11.0.
+
+##### Why
+
+The `netstandard2.0` target made older, unsupported .NET targets appear to be supported, and it also masked API differences such as `DateOnly` and `TimeOnly` support. Targeting the minimum supported .NET version explicitly makes the supported platform surface clear.
+
+##### Mitigations
+
+If possible, move the application to .NET 10 or later.
+
+If you must remain on .NET Framework, stay on the latest Microsoft.Data.Sqlite 10.0.x servicing release. The 10.0.x line already uses `SQLite3MC.PCLRaw.bundle`, allowing .NET Framework applications to remain on that servicing line longer while still receiving 10.0.x fixes, including bundled SQLite CVE fixes shipped there.
 
 <a name="sqlite-encryption-removed"></a>
 
