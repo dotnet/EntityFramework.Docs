@@ -2,7 +2,7 @@
 title: What's New in EF Core 11
 description: Overview of new features in EF Core 11
 author: SamMonoRT
-ms.date: 04/22/2026
+ms.date: 06/10/2026
 uid: core/what-is-new/ef-core-11.0/whatsnew
 ---
 
@@ -106,6 +106,39 @@ modelBuilder.Entity<MyEntity>()
 
 This simplifies model configuration by removing the need to explicitly navigate through intermediate complex type builders to reach the property you want to configure.
 
+<a name="complex-types-keys-indexes"></a>
+
+### Keys and indexes on complex type properties
+
+Keys and indexes can now use scalar properties nested inside non-collection complex types:
+
+```csharp
+modelBuilder.Entity<Customer>()
+    .HasKey(c => c.CustomerId.Value);
+
+modelBuilder.Entity<Customer>()
+    .HasIndex(c => c.Address.PostalCode);
+```
+
+The same paths can be configured by name:
+
+```csharp
+modelBuilder.Entity<Customer>()
+    .HasIndex("Address.PostalCode");
+```
+
+For relational providers, indexes can also target paths inside complex types mapped to JSON columns. Complex collection paths use `[]` for all elements or a numeric indexer for a specific element:
+
+```csharp
+modelBuilder.Entity<Order>()
+    .ComplexCollection(o => o.Items, b => b.ToJson());
+
+modelBuilder.Entity<Order>()
+    .HasIndex("Items[].Sku");
+```
+
+For more information, see [Keys](xref:core/modeling/keys#keys-on-complex-type-properties) and [Indexes](xref:core/modeling/indexes#indexes-on-complex-type-properties).
+
 <a name="complex-types-stabilization"></a>
 
 ### Stabilization and bug fixes
@@ -186,6 +219,30 @@ ORDER BY [b].[BlogId]
 Both optimizations can have a significant positive impact on query performance, especially when multiple reference navigations are included. A simple, common split query scenario showed a **29% improvement in querying performance**, as the database no longer has to perform the to-one join; single queries are also significantly improved by the removal of the ORDER BY, even if a bit less: one scenario showed a **22% improvement**.
 
 More details on the benchmark are available [here](https://github.com/dotnet/efcore/issues/29182#issuecomment-4231140289), and as always, actual performance in your application will vary based on your schema, data and a variety of other factors.
+
+<a name="linq-fulljoin"></a>
+
+### Support for the new .NET 11 `FullJoin` operator
+
+.NET 11 adds first-class LINQ support for `FullJoin`, which keeps rows from both input collections and matches them when keys are equal. EF Core 11 translates this operator to `FULL JOIN` on relational databases:
+
+```csharp
+var results = await context.Customers
+    .FullJoin(
+        context.Orders,
+        c => c.Id,
+        o => o.CustomerId,
+        (c, o) => new { Customer = c, Order = o })
+    .ToListAsync();
+```
+
+This generates SQL similar to the following:
+
+```sql
+SELECT [c].[Id], [c].[Name], [o].[Id], [o].[CustomerId], [o].[OrderDate]
+FROM [Customers] AS [c]
+FULL JOIN [Orders] AS [o] ON [c].[Id] = [o].[CustomerId]
+```
 
 <a name="linq-strip-noop-casts"></a>
 
@@ -374,6 +431,47 @@ Both methods return `FullTextSearchResult<TEntity>`, giving you access to both t
 
 For more information, see the [full documentation on full-text search](xref:core/providers/sql-server/full-text-search).
 
+<a name="sqlserver-hybrid-search"></a>
+
+#### Hybrid search
+
+SQL Server vector search can be combined with full-text table-valued functions to implement _hybrid search_: full-text search finds exact linguistic matches, vector search finds semantically similar results, and the two rankings are merged. EF Core 11's `FullJoin` support makes this pattern more complete, since highly-ranked rows from either side can contribute to the final results:
+
+```csharp
+var results = await context.Articles
+    .FreeTextTable<Article, int>(textualQuery, topN: k)
+    .Join(
+        context.Articles,
+        fts => fts.Key,
+        a => a.Id,
+        (fts, a) => new { Article = a, fts.Rank })
+    .FullJoin(
+        context.Articles.VectorSearch(a => a.Embedding, queryEmbedding, "cosine")
+            .OrderBy(r => r.Distance)
+            .Take(k)
+            .WithApproximate(),
+        fts => fts.Article.Id,
+        vs => vs.Value.Id,
+        (fts, vs) => new
+        {
+            Article = fts != null ? fts.Article : vs.Value,
+            FullTextRank = fts == null ? null : (int?)fts.Rank,
+            VectorDistance = vs == null ? null : (double?)vs.Distance
+        })
+    .Select(x => new
+    {
+        x.Article,
+        RrfScore = (x.FullTextRank == null ? 0.0 : 1.0 / (k + x.FullTextRank.Value))
+            + (x.VectorDistance == null ? 0.0 : 1.0 / (k + x.VectorDistance.Value))
+    })
+    .OrderByDescending(x => x.RrfScore)
+    .Take(10)
+    .Select(x => x.Article)
+    .ToListAsync();
+```
+
+For more information, see the [SQL Server vector search documentation](xref:core/providers/sql-server/vector-search#hybrid-search).
+
 <a name="sql-server-json-contains"></a>
 
 ### Contains operations using JSON_CONTAINS
@@ -444,6 +542,29 @@ WHERE JSON_CONTAINS([b].[JsonData], 8, N'$.Rating') = 1
 
 For the full `JSON_CONTAINS` SQL Server documentation, see [`JSON_CONTAINS`](/sql/t-sql/functions/json-contains-transact-sql).
 
+<a name="sqlserver-json-indexes"></a>
+
+### JSON indexes
+
+EF Core 11 can create and scaffold [SQL Server JSON indexes](/sql/t-sql/statements/create-json-index-transact-sql) for paths inside complex types mapped to JSON columns:
+
+```csharp
+modelBuilder.Entity<Customer>()
+    .ComplexProperty(c => c.Contact, b => b.ToJson().HasColumnType("json"));
+
+modelBuilder.Entity<Customer>()
+    .HasIndex("Contact.Address.City");
+```
+
+This generates SQL similar to:
+
+```sql
+CREATE JSON INDEX [IX_Customers_Contact_Address_City]
+ON [Customers]([Contact]) FOR (N'$.Address.City');
+```
+
+For more information, see [JSON indexes](xref:core/providers/sql-server/index#json-indexes).
+
 <a name="sqlserver-temporal-clr-properties"></a>
 
 ### Temporal period properties mapped to CLR properties
@@ -504,6 +625,48 @@ For the complete list of date/time function translations, see the [SQL Server fu
 
 * <xref:Microsoft.EntityFrameworkCore.SqlServerDbContextOptionsExtensions.UseSqlServer*> now defaults to compatibility level 160 (SQL Server 2022), enabling SQL Server 2022-specific translations such as `LEAST` and `GREATEST` by default; see the [breaking change note](xref:core/what-is-new/ef-core-11.0/breaking-changes#sqlserver-compatibility-level-160) for more information.
 
+## SQLite
+
+<a name="sqlite-ordered-string-aggregation"></a>
+
+### Ordering in string aggregation
+
+EF Core can translate `string.Join` and `string.Concat` over a grouping to SQLite's `group_concat` aggregate function. Starting with EF 11, these translations also support ordering the aggregated values, by applying `OrderBy`/`OrderByDescending` inside the aggregate. Previously, queries that ordered the values fell back to client evaluation.
+
+For example, the following query concatenates each blog's post titles, ordered by descending post `Id`:
+
+```csharp
+var blogs = await context.Blogs
+    .Select(b => new
+    {
+        b.Name,
+        Posts = string.Join(
+            ", ",
+            b.Posts.OrderByDescending(p => p.Id).Select(p => p.Title))
+    })
+    .ToListAsync();
+```
+
+This translates to the following SQL, which uses `group_concat` with an `ORDER BY` clause:
+
+```sql
+SELECT "b"."Name", COALESCE(group_concat("p"."Title", ', ' ORDER BY "p"."Id" DESC), '') AS "Posts"
+FROM "Blogs" AS "b"
+LEFT JOIN "Posts" AS "p" ON "b"."Id" = "p"."BlogId"
+GROUP BY "b"."Id", "b"."Name"
+```
+
+Ordering inside `group_concat` requires SQLite 3.44.0 or later.
+
+<a name="sqlite-uint128"></a>
+
+### UInt128 support
+
+`Microsoft.Data.Sqlite` can now bind <xref:System.UInt128> parameter values. The value is stored as a zero-padded, 39-digit text representation, which preserves correct ordering and comparison of values directly in the database.
+
+> [!NOTE]
+> Reading <xref:System.UInt128> values from data readers is not yet supported.
+
 ## Cosmos DB
 
 <a name="cosmos-complex-types"></a>
@@ -537,6 +700,31 @@ public class ShippingAddress
 Complex types are generally a better fit than owned types when mapping to JSON documents: unlike owned types, complex types have value semantics and no identity, which means they work better in scenarios such as comparing two embedded objects within the same document.
 
 This feature was contributed by [@JoasE](https://github.com/JoasE) - many thanks!
+
+<a name="cosmos-indexes"></a>
+
+### Indexes and indexing policy
+
+EF Core 11 adds support for more Azure Cosmos DB indexing policy configuration. You can now disable automatic indexing, exclude individual paths when automatic indexing is enabled, and emit explicit single-property, composite, vector, and full-text indexes:
+
+```csharp
+modelBuilder.Entity<Order>(b =>
+{
+    b.HasAutomaticIndexing()
+        .Except("/InternalNotes/?");
+
+    b.HasIndex(o => new { o.CustomerId, o.OrderDate });
+});
+```
+
+Indexes can also traverse complex type properties and complex collections:
+
+```csharp
+modelBuilder.Entity<Order>()
+    .HasIndex(o => o.Items.Select(i => i.Sku));
+```
+
+For more information, see [Indexing policy](xref:core/providers/cosmos/modeling#indexing-policy).
 
 <a name="cosmos-transactional-batches"></a>
 
@@ -710,6 +898,23 @@ When you run `dotnet ef`, the tool searches for a `.config/dotnet-ef.json` file 
 Explicit command-line options always take precedence over configuration file values. Path values for `project` and `startupProject` are resolved relative to the parent of the `.config` directory containing the file.
 
 For more information, see [Configuration file](xref:core/cli/dotnet#configuration-file).
+
+<a name="dotnet-ef-context-wildcard"></a>
+
+### Wildcard context support for migration commands
+
+When a project defines multiple `DbContext` types, several `dotnet ef` commands accept a wildcard (`*`) as the value of the `--context` option to target all contexts at once, instead of running the command separately for each one. The commands that support the wildcard are:
+
+* `dotnet ef migrations list` — lists the migrations for every context.
+* `dotnet ef migrations script` — generates and concatenates a script for every context.
+* `dotnet ef database update` — applies migrations to the database of every context (migration bundles are covered as well).
+* `dotnet ef database drop` — drops the database for every context.
+
+For example, the following command lists the migrations for all contexts in the project:
+
+```dotnetcli
+dotnet ef migrations list --context "*"
+```
 
 ## Other improvements
 
