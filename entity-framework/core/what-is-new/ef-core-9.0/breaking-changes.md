@@ -23,18 +23,19 @@ EF Core 9 targets .NET 8. This means that existing applications that target .NET
 > [!NOTE]
 > If you are using Azure Cosmos DB, please see the [separate section below on Azure Cosmos DB breaking changes](#azure-cosmos-db-breaking-changes).
 
-| **Breaking change**                                                                                       | **Impact** |
-|:----------------------------------------------------------------------------------------------------------|------------|
-| [Exception is thrown when applying migrations if there are pending model changes](#pending-model-changes) | High       |
-| [Exception is thrown when applying migrations in an explicit transaction](#migrations-transaction)        | High       |
-| [`Microsoft.EntityFrameworkCore.Design` not found when using EF tools](#tools-design)                     | Medium     |
-| [`EF.Functions.Unhex()` now returns `byte[]?`](#unhex)                                                    | Low        |
-| [Compiled models now reference value converter methods directly](#compiled-model-private-methods)         | Low        |
-| [SqlFunctionExpression's nullability arguments' arity validated](#sqlfunctionexpression-nullability)      | Low        |
-| [`ToString()` method now returns empty string for `null` instances](#nullable-tostring)                   | Low        |
-| [Shared framework dependencies were updated to 9.0.x](#shared-framework-dependencies)                     | Low        |
-| [EF tools no longer support .NET Framework projects](#ef-tools-no-netfx)                                  | Low        |
-| [`EF.Constant()` and `EF.Parameter()` no longer work inside compiled queries](#ef-constant-compiled)      | Low        |
+| **Breaking change**                                                                                                                                                | **Impact** |
+|:-------------------------------------------------------------------------------------------------------------------------------------------------------------------|------------|
+| [Exception is thrown when applying migrations if there are pending model changes](#pending-model-changes)                                                          | High       |
+| [Exception is thrown when applying migrations in an explicit transaction](#migrations-transaction)                                                                 | High       |
+| [`Microsoft.EntityFrameworkCore.Design` not found when using EF tools](#tools-design)                                                                              | Medium     |
+| [Idempotent migration scripts now wrap each operation in its own `IF NOT EXISTS` block](#idempotent-migration-scripts)                                             | Medium     |
+| [`EF.Functions.Unhex()` now returns `byte[]?`](#unhex)                                                                                                            | Low        |
+| [Compiled models now reference value converter methods directly](#compiled-model-private-methods)                                                                  | Low        |
+| [SqlFunctionExpression's nullability arguments' arity validated](#sqlfunctionexpression-nullability)                                                               | Low        |
+| [`ToString()` method now returns empty string for `null` instances](#nullable-tostring)                                                                            | Low        |
+| [Shared framework dependencies were updated to 9.0.x](#shared-framework-dependencies)                                                                              | Low        |
+| [EF tools no longer support .NET Framework projects](#ef-tools-no-netfx)                                                                                          | Low        |
+| [`EF.Constant()` and `EF.Parameter()` no longer work inside compiled queries](#ef-constant-compiled)                                                               | Low        |
 
 ## High-impact changes
 
@@ -200,6 +201,93 @@ As a workaround before EF 10 is released you can mark the `Design` assembly refe
 ```
 
 This will include it in the generated `.deps.json` file, but has a side effect of copying `Microsoft.EntityFrameworkCore.Design.dll` to the output and publish folders.
+
+<a name="idempotent-migration-scripts"></a>
+
+### Idempotent migration scripts now wrap each operation in its own `IF NOT EXISTS` block
+
+[Tracking Issue #35426](https://github.com/dotnet/efcore/issues/35426)
+
+#### Old behavior
+
+Previously, when generating idempotent migration scripts (using `dotnet ef migrations script --idempotent` or `Script-Migration -Idempotent`), all operations within a single migration were wrapped together in a single `IF NOT EXISTS` check:
+
+```sql
+IF NOT EXISTS (
+    SELECT * FROM [__EFMigrationsHistory]
+    WHERE [MigrationId] = N'20250107175433_AddDepartment'
+)
+BEGIN
+    ALTER TABLE [Employees] ADD [Department] nvarchar(max) NOT NULL DEFAULT N'';
+    UPDATE Employees SET Department = 'IT';
+    INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
+    VALUES (N'20250107175433_AddDepartment', N'9.0.0');
+END;
+```
+
+#### New behavior
+
+Starting with EF Core 9.0, each individual operation within a migration is wrapped in its own `IF NOT EXISTS` check:
+
+```sql
+IF NOT EXISTS (
+    SELECT * FROM [__EFMigrationsHistory]
+    WHERE [MigrationId] = N'20250107175433_AddDepartment'
+)
+BEGIN
+    ALTER TABLE [Employees] ADD [Department] nvarchar(max) NOT NULL DEFAULT N'';
+END;
+
+IF NOT EXISTS (
+    SELECT * FROM [__EFMigrationsHistory]
+    WHERE [MigrationId] = N'20250107175433_AddDepartment'
+)
+BEGIN
+    UPDATE Employees SET Department = 'IT';
+END;
+
+IF NOT EXISTS (
+    SELECT * FROM [__EFMigrationsHistory]
+    WHERE [MigrationId] = N'20250107175433_AddDepartment'
+)
+BEGIN
+    INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
+    VALUES (N'20250107175433_AddDepartment', N'9.0.0');
+END;
+```
+
+#### Why
+
+Wrapping each operation individually provides more granular idempotency, ensuring that if a migration is partially applied (e.g., an error occurs partway through), each operation that has not yet been completed can be re-run independently.
+
+#### Mitigations
+
+If a migration contains a `MigrationBuilder.Sql()` call with a DML statement that references columns or other schema elements added by an earlier operation in the same migration, the idempotent script may fail when executed on SQL Server. This is because SQL Server validates column references at batch compile time. When the DDL and DML are now in separate `IF NOT EXISTS` blocks within the same SQL batch, the column may not be recognized when the DML block is compiled.
+
+For example, given the following migration:
+
+```csharp
+protected override void Up(MigrationBuilder migrationBuilder)
+{
+    migrationBuilder.AddColumn<string>(
+        name: "Department",
+        table: "Employees",
+        nullable: false,
+        defaultValue: "");
+
+    migrationBuilder.Sql("UPDATE Employees SET Department = 'IT'");
+}
+```
+
+The generated idempotent script will fail with `Invalid column name 'Department'` on SQL Server when applied to a database that doesn't yet have the `Department` column.
+
+To work around this, wrap the SQL statement with `EXEC` to defer its compilation until execution time:
+
+```csharp
+migrationBuilder.Sql("EXEC('UPDATE Employees SET Department = ''IT''')");
+```
+
+Alternatively, split the DDL change and the DML data update into separate migrations so that the schema change is applied before the DML migration runs.
 
 ## Low-impact changes
 
