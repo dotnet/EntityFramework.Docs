@@ -35,6 +35,7 @@ EF Core 9 targets .NET 8. This means that existing applications that target .NET
 | [Shared framework dependencies were updated to 9.0.x](#shared-framework-dependencies)                     | Low        |
 | [EF tools no longer support .NET Framework projects](#ef-tools-no-netfx)                                  | Low        |
 | [`EF.Constant()` and `EF.Parameter()` no longer work inside compiled queries](#ef-constant-compiled)      | Low        |
+| [Some `NoTrackingWithIdentityResolution` queries are now prohibited for JSON collections](#no-tracking-with-identity-resolution-json) | Low |
 
 ## High-impact changes
 
@@ -388,6 +389,66 @@ The internal implementation of <xref:Microsoft.EntityFrameworkCore.EF.Constant*>
 #### Mitigations
 
 Either remove the <xref:Microsoft.EntityFrameworkCore.EF.Constant*> or <xref:Microsoft.EntityFrameworkCore.EF.Parameter*> call from the compiled query, or stop using a compiled query for that particular query. Note that removing `EF.Constant()` causes the value to be sent as a SQL parameter rather than inlined as a constant, which may affect query plan performance.
+
+<a name="no-tracking-with-identity-resolution-json"></a>
+
+### Some `NoTrackingWithIdentityResolution` queries are now prohibited for JSON collections
+
+[Tracking Issue #33073](https://github.com/dotnet/efcore/issues/33073)
+
+#### Old behavior
+
+Previously, using <xref:Microsoft.EntityFrameworkCore.EntityFrameworkQueryableExtensions.AsNoTrackingWithIdentityResolution*> (or setting <xref:Microsoft.EntityFrameworkCore.QueryTrackingBehavior.NoTrackingWithIdentityResolution>) with queries that include JSON-mapped entity collections could silently produce incorrect results or data corruption, depending on the order in which entities were processed during materialization. Additionally, such queries could throw an unhelpful `"Invalid token type: 'StartObject'"` exception in some scenarios.
+
+#### New behavior
+
+Starting with EF Core 9.0, EF Core restricts the use of <xref:Microsoft.EntityFrameworkCore.EntityFrameworkQueryableExtensions.AsNoTrackingWithIdentityResolution*> for certain JSON collection query patterns, to prevent silent data corruption:
+
+- If entity instances in a JSON collection would be materialized in an order that could cause data corruption, EF Core throws an exception instructing the user to use a different tracking behavior.
+- Using LINQ queryable operators (such as `OrderBy`, `Where`, `Skip`, `Take`, etc.) directly on JSON collection navigations in a query with `AsNoTrackingWithIdentityResolution()` is now prohibited. For example, the following query would throw an exception:
+
+```csharp
+var blogs = await context.Blogs
+    .AsNoTrackingWithIdentityResolution()
+    .Select(b => new
+    {
+        Blog = b,
+        TopPosts = b.JsonPosts.OrderBy(p => p.Rating).Take(3).ToList()
+    })
+    .ToListAsync();
+```
+
+#### Why
+
+The combination of <xref:Microsoft.EntityFrameworkCore.EntityFrameworkQueryableExtensions.AsNoTrackingWithIdentityResolution*> and JSON collections could silently produce incorrect materialized objects due to how JSON is streamed from the database: nested includes in JSON are part of the parent's materialization rather than being materialized separately. The identity resolution change tracker relies on key values to deduplicate entity instances, but when queryable operators are applied to JSON collections, EF Core cannot reliably propagate those key values to the materializer, resulting in entities with null keys and potential data corruption.
+
+#### Mitigations
+
+Use a regular tracking query if identity resolution is required:
+
+```csharp
+var blogs = await context.Blogs
+    .AsTracking()
+    .Select(b => new
+    {
+        Blog = b,
+        TopPosts = b.JsonPosts.OrderBy(p => p.Rating).Take(3).ToList()
+    })
+    .ToListAsync();
+```
+
+If you do not need identity resolution, use <xref:Microsoft.EntityFrameworkCore.EntityFrameworkQueryableExtensions.AsNoTracking*> instead:
+
+```csharp
+var blogs = await context.Blogs
+    .AsNoTracking()
+    .Select(b => new
+    {
+        Blog = b,
+        TopPosts = b.JsonPosts.OrderBy(p => p.Rating).Take(3).ToList()
+    })
+    .ToListAsync();
+```
 
 ## Azure Cosmos DB breaking changes
 
