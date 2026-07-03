@@ -35,7 +35,7 @@ EF Core 9 targets .NET 8. This means that existing applications that target .NET
 | [Shared framework dependencies were updated to 9.0.x](#shared-framework-dependencies)                     | Low        |
 | [EF tools no longer support .NET Framework projects](#ef-tools-no-netfx)                                  | Low        |
 | [`EF.Constant()` and `EF.Parameter()` no longer work inside compiled queries](#ef-constant-compiled)      | Low        |
-| [Some `NoTrackingWithIdentityResolution` queries are now prohibited for JSON collections](#no-tracking-with-identity-resolution-json) | Low |
+| [Some `NoTrackingWithIdentityResolution` queries are now prohibited for JSON collections](#no-tracking-json) | Low |
 
 ## High-impact changes
 
@@ -390,7 +390,7 @@ The internal implementation of <xref:Microsoft.EntityFrameworkCore.EF.Constant*>
 
 Either remove the <xref:Microsoft.EntityFrameworkCore.EF.Constant*> or <xref:Microsoft.EntityFrameworkCore.EF.Parameter*> call from the compiled query, or stop using a compiled query for that particular query. Note that removing `EF.Constant()` causes the value to be sent as a SQL parameter rather than inlined as a constant, which may affect query plan performance.
 
-<a name="no-tracking-with-identity-resolution-json"></a>
+<a name="no-tracking-json"></a>
 
 ### Some `NoTrackingWithIdentityResolution` queries are now prohibited for JSON collections
 
