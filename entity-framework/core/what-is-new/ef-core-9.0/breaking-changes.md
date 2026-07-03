@@ -405,7 +405,7 @@ Previously, using <xref:Microsoft.EntityFrameworkCore.EntityFrameworkQueryableEx
 Starting with EF Core 9.0, EF Core restricts the use of <xref:Microsoft.EntityFrameworkCore.EntityFrameworkQueryableExtensions.AsNoTrackingWithIdentityResolution*> for certain JSON collection query patterns, to prevent silent data corruption:
 
 - If entity instances in a JSON collection would be materialized in an order that could cause data corruption, EF Core throws an exception instructing the user to use a different tracking behavior.
-- Using LINQ queryable operators (such as `OrderBy`, `Where`, `Skip`, `Take`, etc.) directly on JSON collection navigations in a query with `AsNoTrackingWithIdentityResolution()` is now prohibited. For example, the following query would throw an exception:
+- Using LINQ operators (such as `OrderBy`, `Where`, `Skip`, `Take`, etc.) directly on JSON collection navigations in a query with `AsNoTrackingWithIdentityResolution()` is now prohibited. For example, the following query would throw an exception:
 
 ```csharp
 var blogs = await context.Blogs
@@ -420,7 +420,7 @@ var blogs = await context.Blogs
 
 #### Why
 
-The combination of <xref:Microsoft.EntityFrameworkCore.EntityFrameworkQueryableExtensions.AsNoTrackingWithIdentityResolution*> and JSON collections could silently produce incorrect materialized objects due to how JSON is streamed from the database: nested includes in JSON are part of the parent's materialization rather than being materialized separately. The identity resolution change tracker relies on key values to deduplicate entity instances, but when queryable operators are applied to JSON collections, EF Core cannot reliably propagate those key values to the materializer, resulting in entities with null keys and potential data corruption.
+The combination of <xref:Microsoft.EntityFrameworkCore.EntityFrameworkQueryableExtensions.AsNoTrackingWithIdentityResolution*> and JSON collections could silently produce incorrect materialized objects due to how JSON is streamed from the database: nested includes in JSON are part of the parent's materialization rather than being materialized separately. The stand-alone change tracker used for identity resolution relies on key values to deduplicate entity instances, but when LINQ operators are applied to JSON collections, EF Core cannot reliably propagate those key values to the materializer, resulting in entities with null keys and potential data corruption.
 
 #### Mitigations
 
