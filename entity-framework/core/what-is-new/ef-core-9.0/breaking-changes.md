@@ -35,7 +35,7 @@ EF Core 9 targets .NET 8. This means that existing applications that target .NET
 | [Shared framework dependencies were updated to 9.0.x](#shared-framework-dependencies)                     | Low        |
 | [EF tools no longer support .NET Framework projects](#ef-tools-no-netfx)                                  | Low        |
 | [`EF.Constant()` and `EF.Parameter()` no longer work inside compiled queries](#ef-constant-compiled)      | Low        |
-| [Some `NoTrackingWithIdentityResolution` queries are now prohibited for JSON collections](#no-tracking-json) | Low |
+| [Some `NoTrackingWithIdentityResolution` queries are now prohibited for JSON collections](#no-tracking-json) | Low        |
 
 ## High-impact changes
 
@@ -398,7 +398,7 @@ Either remove the <xref:Microsoft.EntityFrameworkCore.EF.Constant*> or <xref:Mic
 
 #### Old behavior
 
-Previously, using <xref:Microsoft.EntityFrameworkCore.EntityFrameworkQueryableExtensions.AsNoTrackingWithIdentityResolution*> (or setting <xref:Microsoft.EntityFrameworkCore.QueryTrackingBehavior.NoTrackingWithIdentityResolution>) with queries that include JSON-mapped entity collections could silently produce incorrect results or data corruption, depending on the order in which entities were processed during materialization. Additionally, such queries could throw an unhelpful `"Invalid token type: 'StartObject'"` exception in some scenarios.
+Previously, using <xref:Microsoft.EntityFrameworkCore.EntityFrameworkQueryableExtensions.AsNoTrackingWithIdentityResolution*> (or setting <xref:Microsoft.EntityFrameworkCore.QueryTrackingBehavior.NoTrackingWithIdentityResolution>) with queries that include JSON-mapped entity collections could silently produce incorrect results or data corruption, depending on the order in which entities were processed during materialization. Additionally, such queries could throw an unhelpful `Invalid token type: 'StartObject'` exception in some scenarios.
 
 #### New behavior
 
