@@ -511,6 +511,10 @@ using System.Text.Json.Nodes;
 var cosmosClient = new CosmosClient(connectionString);
 var container = cosmosClient.GetContainer("myDatabase", "myContainer");
 
+// Replace with the name of the property configured as the partition key in your container.
+// If the partition key path is /id, set this to "id".
+const string partitionKeyProperty = "myPartitionKeyProperty";
+
 using var feedIterator = container.GetItemQueryIterator<JsonObject>("SELECT * FROM c");
 while (feedIterator.HasMoreResults)
 {
@@ -522,15 +526,15 @@ while (feedIterator.HasMoreResults)
         {
             var newId = oldId[(separatorIndex + 1)..];
 
-            // Adjust the partition key extraction to match your container's partition key path.
-            // If your partition key path is /id, the partition key value must match the id used for that operation.
-            var partitionKeyValue = item["myPartitionKeyProperty"]!.GetValue<string>();
-            var partitionKeyForDelete = new PartitionKey(partitionKeyValue);
+            // Capture the partition key value before updating the id.
+            // When partitionKeyProperty is "id", this captures the old id for the delete operation.
+            var partitionKeyForDelete = new PartitionKey(item[partitionKeyProperty]!.GetValue<string>());
 
             // Update the id to the new value without the discriminator prefix.
             item["id"] = JsonValue.Create(newId);
 
-            var partitionKeyForCreate = new PartitionKey(item["myPartitionKeyProperty"]!.GetValue<string>());
+            // When partitionKeyProperty is "id", read it again after the update to get the new id for the create operation.
+            var partitionKeyForCreate = new PartitionKey(item[partitionKeyProperty]!.GetValue<string>());
 
             // Azure Cosmos DB does not allow changing the id - create a new document and delete the old one.
             await container.CreateItemAsync(item, partitionKeyForCreate);
@@ -541,9 +545,9 @@ while (feedIterator.HasMoreResults)
 ```
 
 > [!NOTE]
-> Replace `myPartitionKeyProperty` with the name of the property that is configured as the partition key in your container. If the partition key uses the `id` field, use the old `id` value when deleting the old document and the new `id` value when creating the new document.
+> Set `partitionKeyProperty` to the name of the property configured as the partition key in your container. When the partition key path is `/id`, the sample correctly uses the old `id` value for the delete operation and the new `id` value for the create operation, since `partitionKeyProperty` is read both before and after updating `item["id"]`.
 >
-> Note that if a crash occurs between the `CreateItemAsync` and `DeleteItemAsync` calls, you may end up with both documents. When re-running the migration, handle this by checking for the new document first or by catching `409 Conflict` from `CreateItemAsync` (and then deleting the old document).
+> If a crash occurs between the `CreateItemAsync` and `DeleteItemAsync` calls, you may end up with both documents. When re-running the migration, handle this by catching `409 Conflict` from `CreateItemAsync` and proceeding to the `DeleteItemAsync` call to remove the old document.
 
 <a name="cosmos-key-changes"></a>
 
