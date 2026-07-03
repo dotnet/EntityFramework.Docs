@@ -29,7 +29,7 @@ Before mapping entity types to different containers, make sure you understand th
 
 Azure Cosmos DB requires all documents to have an `id` JSON property which uniquely identifies them. Like other EF providers, the EF Azure Cosmos DB provider will attempt to find a property named `Id` or `<type name>Id`, and configure that property as the key of your entity type, mapping it to the `id` JSON property. You can configure any property to be the key property by using <xref:Microsoft.EntityFrameworkCore.Metadata.Builders.EntityTypeBuilder`1.HasKey*>; see [the general EF documentation on keys](xref:core/modeling/keys) for more information.
 
-Starting with EF 9.0, the entity's key property is directly mapped to the JSON `id` property — they are one and the same property in the document. This means the key value is not stored twice. For example, a `Blog` entity with `Id = 8` produces a document where the `id` property contains the value `8`:
+Starting with EF 9.0, the entity's key property is directly mapped to the JSON `id` property — they are one and the same property in the document. This means the key value is not stored twice. For example, a `Blog` entity with `Id = 8` produces a document where the `id` property contains the string value `"8"`:
 
 ```json
 {

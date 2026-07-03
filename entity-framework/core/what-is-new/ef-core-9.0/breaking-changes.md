@@ -446,7 +446,7 @@ using System.Text.Json.Nodes;
 var cosmosClient = new CosmosClient(connectionString);
 var container = cosmosClient.GetContainer("myDatabase", "myContainer");
 
-using var feedIterator = container.GetItemQueryIterator<JsonObject>("SELECT * FROM c");
+using var feedIterator = container.GetItemQueryIterator<JsonObject>("SELECT * FROM c WHERE IS_DEFINED(c.Discriminator)");
 while (feedIterator.HasMoreResults)
 {
     foreach (var item in await feedIterator.ReadNextAsync())
@@ -523,15 +523,18 @@ while (feedIterator.HasMoreResults)
             var newId = oldId[(separatorIndex + 1)..];
 
             // Adjust the partition key extraction to match your container's partition key path.
+            // If your partition key path is /id, the partition key value must match the id used for that operation.
             var partitionKeyValue = item["myPartitionKeyProperty"]!.GetValue<string>();
-            var partitionKey = new PartitionKey(partitionKeyValue);
+            var partitionKeyForDelete = new PartitionKey(partitionKeyValue);
 
             // Update the id to the new value without the discriminator prefix.
             item["id"] = JsonValue.Create(newId);
 
+            var partitionKeyForCreate = new PartitionKey(item["myPartitionKeyProperty"]!.GetValue<string>());
+
             // Azure Cosmos DB does not allow changing the id - create a new document and delete the old one.
-            await container.CreateItemAsync(item, partitionKey);
-            await container.DeleteItemAsync<JsonObject>(oldId, partitionKey);
+            await container.CreateItemAsync(item, partitionKeyForCreate);
+            await container.DeleteItemAsync<JsonObject>(oldId, partitionKeyForDelete);
         }
     }
 }
