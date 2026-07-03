@@ -442,6 +442,7 @@ Alternatively, if you wish to update all your documents to use the new `$type` n
 using Microsoft.Azure.Cosmos;
 using System.Text.Json.Nodes;
 
+// Replace with your Cosmos DB connection string.
 var cosmosClient = new CosmosClient(connectionString);
 var container = cosmosClient.GetContainer("myDatabase", "myContainer");
 
@@ -506,6 +507,7 @@ Azure Cosmos DB does not allow updating the `id` property of an existing documen
 using Microsoft.Azure.Cosmos;
 using System.Text.Json.Nodes;
 
+// Replace with your Cosmos DB connection string.
 var cosmosClient = new CosmosClient(connectionString);
 var container = cosmosClient.GetContainer("myDatabase", "myContainer");
 
@@ -578,6 +580,7 @@ Alternatively, if you wish to adopt the new EF 9.0 behavior and your existing do
 using Microsoft.Azure.Cosmos;
 using System.Text.Json.Nodes;
 
+// Replace with your Cosmos DB connection string.
 var cosmosClient = new CosmosClient(connectionString);
 var container = cosmosClient.GetContainer("myDatabase", "myContainer");
 
