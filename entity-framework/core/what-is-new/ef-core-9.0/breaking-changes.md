@@ -436,7 +436,37 @@ modelBuilder.Entity<Session>().HasDiscriminator<string>("Discriminator");
 
 Doing this for all your top-level entity types will make EF behave just like before.
 
-At this point, if you wish, you can also update all your documents to use the new `$type` naming.
+Alternatively, if you wish to update all your documents to use the new `$type` naming so that you no longer need the configuration above, you can do so using the Azure Cosmos DB SDK. The following code renames the `Discriminator` property to `$type` in all documents in a container:
+
+```csharp
+using Microsoft.Azure.Cosmos;
+using System.Text.Json.Nodes;
+
+var cosmosClient = new CosmosClient(connectionString);
+var container = cosmosClient.GetContainer("myDatabase", "myContainer");
+
+using var feedIterator = container.GetItemQueryIterator<JsonObject>("SELECT * FROM c");
+while (feedIterator.HasMoreResults)
+{
+    foreach (var item in await feedIterator.ReadNextAsync())
+    {
+        if (item.ContainsKey("Discriminator"))
+        {
+            item["$type"] = item["Discriminator"]!.DeepClone();
+            item.Remove("Discriminator");
+
+            // The id and partition key are required for ReplaceItemAsync.
+            // Adjust the partition key extraction to match your container's partition key path.
+            var id = item["id"]!.GetValue<string>();
+            var partitionKey = new PartitionKey(item["myPartitionKeyProperty"]!.GetValue<string>());
+            await container.ReplaceItemAsync(item, id, partitionKey);
+        }
+    }
+}
+```
+
+> [!NOTE]
+> Replace `myPartitionKeyProperty` with the name of the property that is configured as the partition key in your container. If your container uses the document `id` as the partition key, use `id` for the partition key value as well.
 
 <a name="cosmos-id-property-changes"></a>
 
@@ -468,7 +498,47 @@ modelBuilder.Entity<Session>().HasDiscriminatorInJsonId();
 
 Doing this for all your top-level entity types will make EF behave just like before.
 
-At this point, if you wish, you can also update all your documents to rewrite their JSON `id` property. Note that this is only possible if entities of different types don't share the same id value within the same container.
+Alternatively, if you wish to update all your existing documents to remove the discriminator value from the `id` property so that you no longer need the configuration above, you can do so using the Azure Cosmos DB SDK. Note that this is only possible if entities of different types don't share the same key value within the same container partition.
+
+Azure Cosmos DB does not allow updating the `id` property of an existing document; instead, you must delete the old document and create a new one with the updated `id`. The following code performs this migration:
+
+```csharp
+using Microsoft.Azure.Cosmos;
+using System.Text.Json.Nodes;
+
+var cosmosClient = new CosmosClient(connectionString);
+var container = cosmosClient.GetContainer("myDatabase", "myContainer");
+
+using var feedIterator = container.GetItemQueryIterator<JsonObject>("SELECT * FROM c");
+while (feedIterator.HasMoreResults)
+{
+    foreach (var item in await feedIterator.ReadNextAsync())
+    {
+        var oldId = item["id"]!.GetValue<string>();
+        var separatorIndex = oldId.IndexOf('|');
+        if (separatorIndex != -1)
+        {
+            var newId = oldId[(separatorIndex + 1)..];
+
+            // Adjust the partition key extraction to match your container's partition key path.
+            var partitionKeyValue = item["myPartitionKeyProperty"]!.GetValue<string>();
+            var partitionKey = new PartitionKey(partitionKeyValue);
+
+            // Update the id to the new value without the discriminator prefix.
+            item["id"] = JsonValue.Create(newId);
+
+            // Azure Cosmos DB does not allow changing the id - create a new document and delete the old one.
+            await container.CreateItemAsync(item, partitionKey);
+            await container.DeleteItemAsync<JsonObject>(oldId, partitionKey);
+        }
+    }
+}
+```
+
+> [!NOTE]
+> Replace `myPartitionKeyProperty` with the name of the property that is configured as the partition key in your container. If the partition key uses the `id` field, pass the old `id` value when deleting the old document and the new `id` value when creating the new document.
+>
+> Note that if a crash occurs between the `CreateItemAsync` and `DeleteItemAsync` calls, the document may be duplicated. Depending on your scenario, you may need to handle this case, for example by re-running the migration idempotently (skipping documents whose `id` does not contain the separator character).
 
 <a name="cosmos-key-changes"></a>
 
@@ -501,6 +571,35 @@ Doing this for all your top-level entity types will make EF behave just like bef
 ```csharp
 modelBuilder.HasShadowIds();
 ```
+
+Alternatively, if you wish to adopt the new EF 9.0 behavior and your existing documents contain the key property stored separately (e.g., as `"Id": 8` alongside `"id": "Blog|8"`), you can remove the redundant key property using the Azure Cosmos DB SDK. If you are also migrating the `id` property format (removing the discriminator prefix), you can combine both steps as shown in the [`id` property migration above](#cosmos-id-property-changes). The following example removes a redundant `"Id"` property if the `id` migration has already been performed:
+
+```csharp
+using Microsoft.Azure.Cosmos;
+using System.Text.Json.Nodes;
+
+var cosmosClient = new CosmosClient(connectionString);
+var container = cosmosClient.GetContainer("myDatabase", "myContainer");
+
+// Adjust "Id" to match your entity's key property name.
+using var feedIterator = container.GetItemQueryIterator<JsonObject>("SELECT * FROM c WHERE IS_DEFINED(c.Id)");
+while (feedIterator.HasMoreResults)
+{
+    foreach (var item in await feedIterator.ReadNextAsync())
+    {
+        item.Remove("Id");
+
+        var id = item["id"]!.GetValue<string>();
+
+        // Adjust the partition key extraction to match your container's partition key path.
+        var partitionKey = new PartitionKey(item["myPartitionKeyProperty"]!.GetValue<string>());
+        await container.ReplaceItemAsync(item, id, partitionKey);
+    }
+}
+```
+
+> [!NOTE]
+> Replace `Id` with the name of your entity's key property and `myPartitionKeyProperty` with the name of the property configured as the partition key in your container.
 
 ### Medium-impact changes
 
