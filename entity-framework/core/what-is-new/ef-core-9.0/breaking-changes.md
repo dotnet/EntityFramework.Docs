@@ -541,9 +541,9 @@ while (feedIterator.HasMoreResults)
 ```
 
 > [!NOTE]
-> Replace `myPartitionKeyProperty` with the name of the property that is configured as the partition key in your container. If the partition key uses the `id` field, pass the old `id` value when deleting the old document and the new `id` value when creating the new document.
+> Replace `myPartitionKeyProperty` with the name of the property that is configured as the partition key in your container. If the partition key uses the `id` field, use the old `id` value when deleting the old document and the new `id` value when creating the new document.
 >
-> Note that if a crash occurs between the `CreateItemAsync` and `DeleteItemAsync` calls, the document may be duplicated. Depending on your scenario, you may need to handle this case, for example by re-running the migration idempotently (skipping documents whose `id` does not contain the separator character).
+> Note that if a crash occurs between the `CreateItemAsync` and `DeleteItemAsync` calls, you may end up with both documents. When re-running the migration, handle this by checking for the new document first or by catching `409 Conflict` from `CreateItemAsync` (and then deleting the old document).
 
 <a name="cosmos-key-changes"></a>
 
