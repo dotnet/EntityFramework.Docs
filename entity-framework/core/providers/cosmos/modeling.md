@@ -29,6 +29,16 @@ Before mapping entity types to different containers, make sure you understand th
 
 Azure Cosmos DB requires all documents to have an `id` JSON property which uniquely identifies them. Like other EF providers, the EF Azure Cosmos DB provider will attempt to find a property named `Id` or `<type name>Id`, and configure that property as the key of your entity type, mapping it to the `id` JSON property. You can configure any property to be the key property by using <xref:Microsoft.EntityFrameworkCore.Metadata.Builders.EntityTypeBuilder`1.HasKey*>; see [the general EF documentation on keys](xref:core/modeling/keys) for more information.
 
+Starting with EF 9.0, the entity's key property is directly mapped to the JSON `id` property — they are one and the same property in the document. This means the key value is not stored twice. For example, a `Blog` entity with `Id = 8` produces a document where the `id` property contains the string value `"8"`:
+
+```json
+{
+    "id": "8",
+    "$type": "Blog",
+    ...
+}
+```
+
 Developers coming to Azure Cosmos DB from other databases sometimes expect the key (`Id`) property to be generated automatically. For example, on SQL Server, EF configures numeric key properties to be IDENTITY columns, where auto-incrementing values are generated in the database. In contrast, Azure Cosmos DB does not support automatic generation of properties, and so key properties must be explicitly set. Inserting an entity type with an unset key property will simply insert the CLR default value for that property (e.g. 0 for `int`), and a second insert will fail; EF issues a warning if you attempt to do this.
 
 If you'd like to have a GUID as your key property, you can configure EF to generate unique, random values at the client:
@@ -36,6 +46,24 @@ If you'd like to have a GUID as your key property, you can configure EF to gener
 ```csharp
 modelBuilder.Entity<Session>().Property(b => b.Id).HasValueGenerator<GuidValueGenerator>();
 ```
+
+### Shadow id
+
+In some cases where a direct mapping to `id` is not possible, EF creates a shadow property that maps to the JSON `id`. This shadow property contains a synthesized value (combining the key and potentially other properties, separated by `|`) that uniquely identifies the document. EF manages this shadow property automatically, but its presence means the key property is stored separately in the document under its own name in addition to the `id` property.
+
+You can also explicitly configure EF to use a shadow `id` property by calling <xref:Microsoft.EntityFrameworkCore.CosmosEntityTypeBuilderExtensions.HasShadowId*>:
+
+```csharp
+modelBuilder.Entity<Session>().HasShadowId();
+```
+
+Or configure all entity types at once:
+
+```csharp
+modelBuilder.HasShadowIds();
+```
+
+This was the default behavior prior to EF 9.0. If you are upgrading from EF 8, see the [breaking change documentation](xref:core/what-is-new/ef-core-9.0/breaking-changes#cosmos-key-changes) for more information.
 
 ## Partition keys
 

@@ -35,6 +35,7 @@ EF Core 9 targets .NET 8. This means that existing applications that target .NET
 | [Shared framework dependencies were updated to 9.0.x](#shared-framework-dependencies)                     | Low        |
 | [EF tools no longer support .NET Framework projects](#ef-tools-no-netfx)                                  | Low        |
 | [`EF.Constant()` and `EF.Parameter()` no longer work inside compiled queries](#ef-constant-compiled)      | Low        |
+| [Some `NoTrackingWithIdentityResolution` queries are now prohibited for JSON collections](#no-tracking-json) | Low        |
 
 ## High-impact changes
 
@@ -389,6 +390,66 @@ The internal implementation of <xref:Microsoft.EntityFrameworkCore.EF.Constant*>
 
 Either remove the <xref:Microsoft.EntityFrameworkCore.EF.Constant*> or <xref:Microsoft.EntityFrameworkCore.EF.Parameter*> call from the compiled query, or stop using a compiled query for that particular query. Note that removing `EF.Constant()` causes the value to be sent as a SQL parameter rather than inlined as a constant, which may affect query plan performance.
 
+<a name="no-tracking-json"></a>
+
+### Some `NoTrackingWithIdentityResolution` queries are now prohibited for JSON collections
+
+[Tracking Issue #33073](https://github.com/dotnet/efcore/issues/33073)
+
+#### Old behavior
+
+Previously, using <xref:Microsoft.EntityFrameworkCore.EntityFrameworkQueryableExtensions.AsNoTrackingWithIdentityResolution*> (or setting <xref:Microsoft.EntityFrameworkCore.QueryTrackingBehavior.NoTrackingWithIdentityResolution>) with queries that include JSON-mapped entity collections could silently produce incorrect results or data corruption, depending on the order in which entities were processed during materialization. Additionally, such queries could throw an unhelpful `Invalid token type: 'StartObject'` exception in some scenarios.
+
+#### New behavior
+
+Starting with EF Core 9.0, EF Core restricts the use of <xref:Microsoft.EntityFrameworkCore.EntityFrameworkQueryableExtensions.AsNoTrackingWithIdentityResolution*> for certain JSON collection query patterns, to prevent silent data corruption:
+
+- If entity instances in a JSON collection would be materialized in an order that could cause data corruption, EF Core throws an exception instructing the user to use a different tracking behavior.
+- Using LINQ operators (such as `OrderBy`, `Where`, `Skip`, `Take`, etc.) directly on JSON collection navigations in a query with `AsNoTrackingWithIdentityResolution()` is now prohibited. For example, the following query would throw an exception:
+
+```csharp
+var blogs = await context.Blogs
+    .AsNoTrackingWithIdentityResolution()
+    .Select(b => new
+    {
+        Blog = b,
+        TopPosts = b.JsonPosts.OrderBy(p => p.Rating).Take(3).ToList()
+    })
+    .ToListAsync();
+```
+
+#### Why
+
+The combination of <xref:Microsoft.EntityFrameworkCore.EntityFrameworkQueryableExtensions.AsNoTrackingWithIdentityResolution*> and JSON collections could silently produce incorrect materialized objects due to how JSON is streamed from the database: nested includes in JSON are part of the parent's materialization rather than being materialized separately. The stand-alone change tracker used for identity resolution relies on key values to deduplicate entity instances, but when LINQ operators are applied to JSON collections, EF Core cannot reliably propagate those key values to the materializer, resulting in entities with null keys and potential data corruption.
+
+#### Mitigations
+
+Use a regular tracking query if identity resolution is required:
+
+```csharp
+var blogs = await context.Blogs
+    .AsTracking()
+    .Select(b => new
+    {
+        Blog = b,
+        TopPosts = b.JsonPosts.OrderBy(p => p.Rating).Take(3).ToList()
+    })
+    .ToListAsync();
+```
+
+If you do not need identity resolution, use <xref:Microsoft.EntityFrameworkCore.EntityFrameworkQueryableExtensions.AsNoTracking*> instead:
+
+```csharp
+var blogs = await context.Blogs
+    .AsNoTracking()
+    .Select(b => new
+    {
+        Blog = b,
+        TopPosts = b.JsonPosts.OrderBy(p => p.Rating).Take(3).ToList()
+    })
+    .ToListAsync();
+```
+
 ## Azure Cosmos DB breaking changes
 
 Extensive work has gone into making the Azure Cosmos DB provider better in 9.0. The changes include a number of high-impact breaking changes; if you are upgrading an existing application, please read the following carefully.
@@ -436,7 +497,38 @@ modelBuilder.Entity<Session>().HasDiscriminator<string>("Discriminator");
 
 Doing this for all your top-level entity types will make EF behave just like before.
 
-At this point, if you wish, you can also update all your documents to use the new `$type` naming.
+Alternatively, if you wish to update all your documents to use the new `$type` naming so that you no longer need the configuration above, you can do so using the Azure Cosmos DB SDK. The following code renames the `Discriminator` property to `$type` in all documents in a container:
+
+```csharp
+using Microsoft.Azure.Cosmos;
+using System.Text.Json.Nodes;
+
+// Replace with your Cosmos DB connection string.
+var cosmosClient = new CosmosClient(connectionString);
+var container = cosmosClient.GetContainer("myDatabase", "myContainer");
+
+using var feedIterator = container.GetItemQueryIterator<JsonObject>("SELECT * FROM c WHERE IS_DEFINED(c.Discriminator)");
+while (feedIterator.HasMoreResults)
+{
+    foreach (var item in await feedIterator.ReadNextAsync())
+    {
+        if (item.ContainsKey("Discriminator"))
+        {
+            item["$type"] = item["Discriminator"]!.DeepClone();
+            item.Remove("Discriminator");
+
+            // The id and partition key are required for ReplaceItemAsync.
+            // Adjust the partition key extraction to match your container's partition key path.
+            var id = item["id"]!.GetValue<string>();
+            var partitionKey = new PartitionKey(item["myPartitionKeyProperty"]!.GetValue<string>());
+            await container.ReplaceItemAsync(item, id, partitionKey);
+        }
+    }
+}
+```
+
+> [!NOTE]
+> Replace `myPartitionKeyProperty` with the name of the property that is configured as the partition key in your container. If your container uses the document `id` as the partition key, use `id` for the partition key value as well.
 
 <a name="cosmos-id-property-changes"></a>
 
@@ -468,7 +560,55 @@ modelBuilder.Entity<Session>().HasDiscriminatorInJsonId();
 
 Doing this for all your top-level entity types will make EF behave just like before.
 
-At this point, if you wish, you can also update all your documents to rewrite their JSON `id` property. Note that this is only possible if entities of different types don't share the same id value within the same container.
+Alternatively, if you wish to update all your existing documents to remove the discriminator value from the `id` property so that you no longer need the configuration above, you can do so using the Azure Cosmos DB SDK. Note that this is only possible if entities of different types don't share the same key value within the same container partition.
+
+Azure Cosmos DB does not allow updating the `id` property of an existing document; instead, you must delete the old document and create a new one with the updated `id`. The following code performs this migration:
+
+```csharp
+using Microsoft.Azure.Cosmos;
+using System.Text.Json.Nodes;
+
+// Replace with your Cosmos DB connection string.
+var cosmosClient = new CosmosClient(connectionString);
+var container = cosmosClient.GetContainer("myDatabase", "myContainer");
+
+// Replace with the name of the property configured as the partition key in your container.
+// If the partition key path is /id, set this to "id".
+const string partitionKeyProperty = "myPartitionKeyProperty";
+
+using var feedIterator = container.GetItemQueryIterator<JsonObject>("SELECT * FROM c");
+while (feedIterator.HasMoreResults)
+{
+    foreach (var item in await feedIterator.ReadNextAsync())
+    {
+        var oldId = item["id"]!.GetValue<string>();
+        var separatorIndex = oldId.IndexOf('|');
+        if (separatorIndex != -1)
+        {
+            var newId = oldId[(separatorIndex + 1)..];
+
+            // Capture the partition key value before updating the id.
+            // When partitionKeyProperty is "id", this captures the old id for the delete operation.
+            var partitionKeyForDelete = new PartitionKey(item[partitionKeyProperty]!.GetValue<string>());
+
+            // Update the id to the new value without the discriminator prefix.
+            item["id"] = JsonValue.Create(newId);
+
+            // When partitionKeyProperty is "id", read it again after the update to get the new id for the create operation.
+            var partitionKeyForCreate = new PartitionKey(item[partitionKeyProperty]!.GetValue<string>());
+
+            // Azure Cosmos DB does not allow changing the id - create a new document and delete the old one.
+            await container.CreateItemAsync(item, partitionKeyForCreate);
+            await container.DeleteItemAsync<JsonObject>(oldId, partitionKeyForDelete);
+        }
+    }
+}
+```
+
+> [!NOTE]
+> Set `partitionKeyProperty` to the name of the property configured as the partition key in your container. When the partition key path is `/id`, the sample correctly uses the old `id` value for the delete operation and the new `id` value for the create operation, since `partitionKeyProperty` is read both before and after updating `item["id"]`.
+>
+> If a crash occurs between the `CreateItemAsync` and `DeleteItemAsync` calls, you may end up with both documents. When re-running the migration, handle this by catching `409 Conflict` from `CreateItemAsync` and proceeding to the `DeleteItemAsync` call to remove the old document.
 
 <a name="cosmos-key-changes"></a>
 
@@ -501,6 +641,36 @@ Doing this for all your top-level entity types will make EF behave just like bef
 ```csharp
 modelBuilder.HasShadowIds();
 ```
+
+Alternatively, if you wish to adopt the new EF 9.0 behavior and your existing documents contain the key property stored separately (e.g., as `"Id": 8` alongside `"id": "Blog|8"`), you can remove the redundant key property using the Azure Cosmos DB SDK. If you are also migrating the `id` property format (removing the discriminator prefix), you can combine both steps as shown in the [`id` property migration above](#cosmos-id-property-changes). The following example removes a redundant `"Id"` property if the `id` migration has already been performed:
+
+```csharp
+using Microsoft.Azure.Cosmos;
+using System.Text.Json.Nodes;
+
+// Replace with your Cosmos DB connection string.
+var cosmosClient = new CosmosClient(connectionString);
+var container = cosmosClient.GetContainer("myDatabase", "myContainer");
+
+// Adjust "Id" to match your entity's key property name.
+using var feedIterator = container.GetItemQueryIterator<JsonObject>("SELECT * FROM c WHERE IS_DEFINED(c.Id)");
+while (feedIterator.HasMoreResults)
+{
+    foreach (var item in await feedIterator.ReadNextAsync())
+    {
+        item.Remove("Id");
+
+        var id = item["id"]!.GetValue<string>();
+
+        // Adjust the partition key extraction to match your container's partition key path.
+        var partitionKey = new PartitionKey(item["myPartitionKeyProperty"]!.GetValue<string>());
+        await container.ReplaceItemAsync(item, id, partitionKey);
+    }
+}
+```
+
+> [!NOTE]
+> Replace `Id` with the name of your entity's key property and `myPartitionKeyProperty` with the name of the property configured as the partition key in your container.
 
 ### Medium-impact changes
 
