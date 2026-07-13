@@ -65,6 +65,37 @@ Add-Migration InitialCreate -OutputDir Your\Directory
 
 ***
 
+## Create and apply a migration in one step
+
+> [!NOTE]
+> This feature was added in EF Core 11.
+
+The `dotnet ef database update` command supports creating and applying a migration in a single step using the `--add` option. This uses Roslyn to compile the migration at runtime, enabling scenarios like .NET Aspire and containerized applications where the application cannot be stopped and rebuilt:
+
+### [.NET CLI](#tab/dotnet-core-cli)
+
+```dotnetcli
+dotnet ef database update InitialCreate --add
+```
+
+The same options available for `dotnet ef migrations add` can be used:
+
+```dotnetcli
+dotnet ef database update AddProducts --add --output-dir Migrations/Products --namespace MyApp.Migrations
+```
+
+### [Visual Studio](#tab/vs)
+
+```powershell
+Update-Database -Migration InitialCreate -Add
+```
+
+***
+
+This command scaffolds a new migration with the specified name, compiles it using Roslyn, and immediately applies it to the database. The migration files are still saved to disk for source control and future recompilation.
+
+If no pending model changes are detected, the command applies any existing pending migrations without creating a new one.
+
 ## Customize migration code
 
 While EF Core generally creates accurate migrations, you should always review the code and make sure it corresponds to the desired change; in some cases, it is even necessary to do so.

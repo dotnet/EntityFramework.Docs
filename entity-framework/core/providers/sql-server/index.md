@@ -2,7 +2,7 @@
 title: Microsoft SQL Server Database Provider - EF Core
 description: Documentation for the database provider that allows Entity Framework Core to be used with Microsoft SQL Server
 author: AndriySvyryd
-ms.date: 11/15/2021
+ms.date: 06/09/2026
 uid: core/providers/sql-server/index
 ---
 # Microsoft SQL Server EF Core Database Provider
@@ -112,6 +112,36 @@ To configure EF with a compatibility level, use `UseCompatibilityLevel()` as fol
 ```c#
 optionsBuilder.UseSqlServer("<CONNECTION STRING>", o => o.UseCompatibilityLevel(170));
 ```
+
+## JSON indexes
+
+Starting with EF Core 11.0, the SQL Server provider can create and scaffold [SQL Server JSON indexes](/sql/t-sql/statements/create-json-index-transact-sql) for paths inside complex types mapped to JSON columns.
+
+For example, the following maps a complex type to a JSON column and creates a JSON index over a nested property:
+
+```csharp
+modelBuilder.Entity<Customer>()
+    .ComplexProperty(c => c.Contact, b => b.ToJson().HasColumnType("json"));
+
+modelBuilder.Entity<Customer>()
+    .HasIndex("Contact.Address.City");
+```
+
+When SQL Server JSON indexes are supported, migrations generate SQL similar to:
+
+```sql
+CREATE JSON INDEX [IX_Customers_Contact_Address_City]
+ON [Customers]([Contact]) FOR (N'$.Address.City');
+```
+
+Multiple paths inside the same JSON column can be indexed together:
+
+```csharp
+modelBuilder.Entity<Customer>()
+    .HasIndex(["Contact.Address.City", "Contact.PhoneNumber"]);
+```
+
+Paths through JSON arrays can use numeric indexers, for example `Orders[0].Number`. SQL Server JSON indexes don't support wildcard indexes over every array element.
 
 ## Connection resiliency
 

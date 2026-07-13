@@ -2,7 +2,7 @@
 title: Modeling - Azure Cosmos DB Provider - EF Core
 description: Configuring the model with the Azure Cosmos DB EF Core Provider
 author: SamMonoRT
-ms.date: 09/26/2024
+ms.date: 06/09/2026
 uid: core/providers/cosmos/modeling
 ---
 # Configuring the model with the EF Core Azure Cosmos DB Provider
@@ -94,6 +94,47 @@ With such a hierarchical partition key, queries can be easily sent only to the a
 If you don't configure a partition key with EF, a warning will be logged at startup; EF Core will create containers with the partition key set to `__partitionKey`, and won't supply any value for it when inserting items. When no partition key is set, your container will be limited to 20 GB of data, which is the maximum storage for a single [logical partition](/azure/cosmos-db/partitioning-overview). While this can work for small dev/ test applications, it is highly discouraged to deploy a production application without a well-configured partition key strategy.
 
 Once your partition key properties are properly configured, you can provide values for them in queries; see [Querying with partition keys](xref:core/providers/cosmos/querying#partition-keys) for more information.
+
+## Indexing policy
+
+Starting with EF Core 11.0, the Azure Cosmos DB provider emits more of the EF model's index configuration into the container [indexing policy](/azure/cosmos-db/index-policy).
+
+By default, Azure Cosmos DB automatically indexes all properties. You can configure this automatic indexing policy and exclude individual paths:
+
+```csharp
+modelBuilder.Entity<Order>()
+    .HasAutomaticIndexing()
+    .Except("/InternalNotes/?");
+```
+
+To index only explicitly configured paths, configure indexes with `HasIndex`. Automatic indexing is disabled automatically as soon as any single-property index is defined, so there is no need to call `HasAutomaticIndexing(false)` explicitly:
+
+```csharp
+modelBuilder.Entity<Order>(b =>
+{
+    b.HasIndex(o => o.OrderNumber);
+    b.HasIndex(o => new { o.CustomerId, o.OrderDate });
+});
+```
+
+When automatic indexing is enabled, single-property indexes are already covered by the default `/*` included path and aren't emitted separately. Composite, vector, and full-text indexes are always emitted.
+
+Indexes can also traverse complex type properties and complex collections. In a string path, `[]` represents all elements of a collection:
+
+```csharp
+modelBuilder.Entity<Order>(b =>
+{
+    b.ComplexCollection(o => o.Items);
+    b.HasIndex("Items[].Sku");
+});
+```
+
+The same index can be configured with a lambda expression:
+
+```csharp
+modelBuilder.Entity<Order>()
+    .HasIndex(o => o.Items.Select(i => i.Sku));
+```
 
 ## Discriminators
 

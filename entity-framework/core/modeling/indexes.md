@@ -2,7 +2,7 @@
 title: Indexes - EF Core
 description: Configuring indexes in an Entity Framework Core model
 author: SamMonoRT
-ms.date: 10/1/2021
+ms.date: 06/09/2026
 uid: core/modeling/indexes
 ---
 # Indexes
@@ -39,6 +39,58 @@ An index can also span more than one column:
 ***
 
 Indexes over multiple columns, also known as *composite indexes*, speed up queries which filter on index's columns, but also queries which only filter on the *first* columns covered by the index. See the [performance docs](xref:core/performance/efficient-querying#use-indexes-properly) for more information.
+
+## Indexes on complex type properties
+
+Starting with EF Core 11.0, indexes can use scalar properties nested inside [complex types](xref:core/what-is-new/ef-core-10.0/whatsnew#complex-types):
+
+```csharp
+modelBuilder.Entity<Customer>()
+    .HasIndex(c => c.Address.PostalCode);
+```
+
+Composite indexes can mix regular entity properties and complex type properties:
+
+```csharp
+modelBuilder.Entity<Customer>()
+    .HasIndex(c => new { c.Region, c.Address.PostalCode });
+```
+
+The same paths can be specified by name:
+
+```csharp
+modelBuilder.Entity<Customer>()
+    .HasIndex("Address.PostalCode");
+```
+
+For complex types mapped to JSON columns, providers may also support indexing paths inside the JSON document:
+
+```csharp
+modelBuilder.Entity<Customer>()
+    .ComplexProperty(c => c.Address, b => b.ToJson());
+
+modelBuilder.Entity<Customer>()
+    .HasIndex("Address.PostalCode");
+```
+
+Indexes over complex collections use collection path syntax. `[]` represents all elements, while `[0]`, `[1]`, and so on represent a specific element:
+
+```csharp
+modelBuilder.Entity<Order>()
+    .ComplexCollection(o => o.Items, b => b.ToJson());
+
+modelBuilder.Entity<Order>()
+    .HasIndex("Items[].Sku");
+```
+
+The same index can be configured with a lambda expression using `Select`:
+
+```csharp
+modelBuilder.Entity<Order>()
+    .HasIndex(o => o.Items.Select(i => i.Sku));
+```
+
+Support for JSON-path indexes depends on the database provider. For example, the SQL Server provider creates SQL Server JSON indexes where supported, while the Azure Cosmos DB provider emits the configured paths into the container indexing policy.
 
 ## Index uniqueness
 
@@ -147,6 +199,14 @@ Some relational databases allow you to configure a set of columns which get incl
 In the following example, the `Url` column is part of the index key, so any query filtering on that column can use the index. But in addition, queries accessing only the `Title` and `PublishedOn` columns will not need to access the table and will run more efficiently:
 
 [!code-csharp[Main](../../../samples/core/Modeling/IndexesAndConstraints/FluentAPI/IndexInclude.cs?name=IndexInclude&highlight=5-9)]
+
+Starting with EF Core 11.0, SQL Server included columns can also refer to scalar properties nested inside complex types:
+
+```csharp
+modelBuilder.Entity<Customer>()
+    .HasIndex(c => c.Name)
+    .IncludeProperties(c => c.Address.City);
+```
 
 ## Check constraints
 

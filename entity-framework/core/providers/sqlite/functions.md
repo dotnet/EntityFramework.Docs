@@ -22,7 +22,9 @@ group.Min(x => x.Property)                            | MIN(Property)
 group.Sum(x => x.Property)                            | SUM(Property)
 group.Sum(x => x.DecimalProperty)                     | ef_sum(DecimalProperty)            | EF Core 9.0
 string.Concat(group.Select(x => x.Property))          | group_concat(Property, '')
+string.Concat(group.OrderBy(x => x.Other).Select(x => x.Property)) | group_concat(Property, '' ORDER BY Other) | EF Core 11.0
 string.Join(separator, group.Select(x => x.Property)) | group_concat(Property, @separator)
+string.Join(separator, group.OrderBy(x => x.Other).Select(x => x.Property)) | group_concat(Property, @separator ORDER BY Other) | EF Core 11.0
 
 ## Binary functions
 

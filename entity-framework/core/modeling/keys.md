@@ -2,7 +2,7 @@
 title: Keys - EF Core
 description: How to configure keys for entity types when using Entity Framework Core
 author: AndriySvyryd
-ms.date: 10/14/2022
+ms.date: 06/09/2026
 uid: core/modeling/keys
 ---
 # Keys
@@ -52,6 +52,24 @@ public class Car
 [!code-csharp[KeyComposite](../../../samples/core/Modeling/Keys/FluentAPI/KeyComposite.cs?name=KeyComposite&highlight=4)]
 
 ***
+
+## Keys on complex type properties
+
+Starting with EF Core 11.0, keys can use scalar properties nested inside non-collection [complex types](xref:core/what-is-new/ef-core-10.0/whatsnew#complex-types).
+
+```csharp
+modelBuilder.Entity<Customer>()
+    .HasKey(c => c.CustomerId.Value);
+```
+
+The same path can be specified by name:
+
+```csharp
+modelBuilder.Entity<Customer>()
+    .HasKey("CustomerId.Value");
+```
+
+Complex properties on the path to a key property are required. Keys can't traverse complex collections or nullable complex properties.
 
 ## Value generation
 
