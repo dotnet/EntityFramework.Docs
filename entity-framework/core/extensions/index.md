@@ -304,6 +304,18 @@ All xml summaries of entities, properties, and enums will be added as comments o
 
 [GitHub repository](https://github.com/roohial57/DotNetComponent_EFCommenter) | [NuGet](https://www.nuget.org/packages/EFCommenter)
 
+### EFCore.Migrations.AutoComments
+
+Automatically applies database comments to tables and columns from XML `<summary>` tags. For EF Core: 6-10.
+
+[GitHub repository](https://github.com/AndreqGav/EFCore.Migrations.AutoComments) | [NuGet](https://www.nuget.org/packages/EFCore.Migrations.AutoComments)
+
+### EFCore.Migrations.CustomSql
+
+Tracks custom SQL and database objects (views, functions, triggers, etc.) as part of the EF model with auto-generated Up/Down migration code. Provider packages add support for specific database engines. For EF Core: 6-9.
+
+[GitHub repository](https://github.com/AndreqGav/EFCore.Migrations.CustomSql) | [NuGet](https://www.nuget.org/packages/EFCore.Migrations.CustomSql)
+
 ## API Integrations
 
 These packages are designed to integrate directly with EF Core to expose various APIs.

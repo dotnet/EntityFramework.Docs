@@ -1,7 +1,7 @@
 ---
 title: NativeAOT Support and Precompiled Queries (Experimental) - EF Core
 description: Publishing NativeAOT Entity Framework Core applications and using precompiled queries
-author: roji
+author: SamMonoRT
 ms.date: 11/10/2024
 uid: core/performance/nativeaot-and-precompiled-queries
 ---

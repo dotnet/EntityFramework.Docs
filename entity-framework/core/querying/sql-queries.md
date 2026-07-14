@@ -1,7 +1,7 @@
 ---
 title: SQL Queries - EF Core
 description: Using SQL queries in Entity Framework Core
-author: smitpatel
+author: SamMonoRT
 ms.date: 09/19/2022
 uid: core/querying/sql-queries
 ---
@@ -162,7 +162,7 @@ Composing with LINQ requires your SQL query to be composable, since EF Core will
 
 SQL Server doesn't allow composing over stored procedure calls, so any attempt to apply additional query operators to such a call will result in invalid SQL. Use <xref:System.Linq.Enumerable.AsEnumerable*> or <xref:Microsoft.EntityFrameworkCore.EntityFrameworkQueryableExtensions.AsAsyncEnumerable*> right after <xref:Microsoft.EntityFrameworkCore.RelationalQueryableExtensions.FromSql*> or <xref:Microsoft.EntityFrameworkCore.RelationalQueryableExtensions.FromSqlRaw*> to make sure that EF Core doesn't try to compose over a stored procedure.
 
-## Change Tracking
+## Change tracking
 
 Queries that use <xref:Microsoft.EntityFrameworkCore.RelationalQueryableExtensions.FromSql*> or <xref:Microsoft.EntityFrameworkCore.RelationalQueryableExtensions.FromSqlRaw*> follow the exact same change tracking rules as any other LINQ query in EF Core. For example, if the query projects entity types, the results are tracked by default.
 

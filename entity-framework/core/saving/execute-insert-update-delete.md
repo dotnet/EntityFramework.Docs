@@ -1,7 +1,7 @@
 ---
 title: ExecuteUpdate and ExecuteDelete - EF Core
 description: Using ExecuteUpdate and ExecuteDelete to save changes with Entity Framework Core
-author: roji
+author: SamMonoRT
 ms.date: 4/30/2023
 uid: core/saving/execute-insert-update-delete
 ---

@@ -1,7 +1,7 @@
 ---
 title: Asynchronous Programming - EF Core
 description: Querying and saving data asynchronously with Entity Framework Core
-author: roji
+author: SamMonoRT
 ms.date: 10/1/2021
 uid: core/miscellaneous/async
 ---

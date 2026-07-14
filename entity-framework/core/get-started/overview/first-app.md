@@ -1,7 +1,7 @@
 ---
 title: Getting Started - EF Core
 description: Getting started tutorial for Entity Framework Core
-author: rick-anderson
+author: SamMonoRT
 ms.date: 09/17/2019
 uid: core/get-started/overview/first-app
 ---

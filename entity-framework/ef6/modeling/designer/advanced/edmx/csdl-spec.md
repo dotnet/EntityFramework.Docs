@@ -184,7 +184,7 @@ The following table describes the attributes that can be applied to the **Collec
 
 ### Example
 
-The following example shows a model-defined function that that uses a **CollectionType** element to specify that the function returns a collection of **Person** entity types (as specified with the **ElementType** attribute).
+The following example shows a model-defined function that uses a **CollectionType** element to specify that the function returns a collection of **Person** entity types (as specified with the **ElementType** attribute).
 
 ``` xml
  <Function Name="LastNamesAfter">

@@ -1,7 +1,7 @@
 ---
 title: Comparisons with null values in queries
 description: Information on how Entity Framework Core handles null comparisons in queries 
-author: maumar
+author: SamMonoRT
 ms.date: 11/11/2020
 uid: core/querying/null-comparisons
 ---

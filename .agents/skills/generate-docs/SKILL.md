@@ -1,12 +1,11 @@
 ---
-name: EF Documentation Generator
-description: This agent creates documentation PRs in the EF documentation site when new features are implemented in EF Core.
-disable-model-invocation: true
+name: Generate EF documentation
+description: Create documentation PRs in the EF documentation site when new features are implemented in EF Core.
 ---
 
 # Document new EF features
 
-Given an EF issue by the user, this custom agent generates documentation for features introduced in that issue and submits a PR to the EF docs repo (dotnet/EntityFramework.Docs).
+Given an EF issue and/or PR, this skill generates documentation for features introduced in that issue/PR and submits a PR to the EF docs repo (dotnet/EntityFramework.Docs).
 
 ## Target branch
 

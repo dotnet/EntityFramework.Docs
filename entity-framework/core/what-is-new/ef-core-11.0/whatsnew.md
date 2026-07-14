@@ -1,7 +1,7 @@
 ---
 title: What's New in EF Core 11
 description: Overview of new features in EF Core 11
-author: roji
+author: SamMonoRT
 ms.date: 06/10/2026
 uid: core/what-is-new/ef-core-11.0/whatsnew
 ---
@@ -461,7 +461,8 @@ var results = await context.Articles
     .Select(x => new
     {
         x.Article,
-        RrfScore = (1.0 / (k + x.FullTextRank) ?? 0.0) + (1.0 / (k + x.VectorDistance) ?? 0.0)
+        RrfScore = (x.FullTextRank == null ? 0.0 : 1.0 / (k + x.FullTextRank.Value))
+            + (x.VectorDistance == null ? 0.0 : 1.0 / (k + x.VectorDistance.Value))
     })
     .OrderByDescending(x => x.RrfScore)
     .Take(10)

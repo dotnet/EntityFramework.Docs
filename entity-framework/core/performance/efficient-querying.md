@@ -1,7 +1,7 @@
 ---
 title: Efficient Querying - EF Core
 description: Performance guide for efficient querying using Entity Framework Core
-author: roji
+author: SamMonoRT
 ms.date: 10/1/2021
 uid: core/performance/efficient-querying
 ---

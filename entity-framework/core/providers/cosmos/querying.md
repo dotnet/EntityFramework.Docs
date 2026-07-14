@@ -1,7 +1,7 @@
 ---
 title: Querying - Azure Cosmos DB Provider - EF Core
 description: Querying with the Azure Cosmos DB EF Core Provider
-author: roji
+author: SamMonoRT
 ms.date: 09/19/2024
 uid: core/providers/cosmos/querying
 ---

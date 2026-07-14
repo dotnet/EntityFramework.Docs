@@ -25,7 +25,7 @@ Properties of this type are not discovered by default as the current EF provider
 
 [!code-csharp[Main](../../../samples/core/Modeling/BulkConfiguration/CurrencyConverter.cs?name=CurrencyConverter)]
 
-### Drawbacks of the Metadata API
+### Drawbacks of the metadata API
 
 - Unlike [Fluent API](xref:core/modeling/index#use-fluent-api-to-configure-a-model), every modification to the model needs to be done explicitly. For example, if some of the `Currency` properties were configured as navigations by a convention then you need to first remove the navigation referencing the CLR property before adding an entity type property for it. [#9117](https://github.com/dotnet/efcore/issues/9117) will improve this.
 - The conventions run after each change. If you remove a navigation discovered by a convention then the convention will run again and could add it back. To prevent this from happening you would need to either delay the conventions until after the property is added by calling <xref:Microsoft.EntityFrameworkCore.Metadata.Conventions.IConventionContext.DelayConventions> and later disposing the returned object or to mark the CLR property as ignored using <xref:Microsoft.EntityFrameworkCore.Metadata.IMutableModel.AddIgnored*>.

@@ -1,7 +1,7 @@
 ---
 title: User-defined function mapping - EF Core
 description: Mapping user-defined functions to database functions
-author: maumar
+author: SamMonoRT
 ms.date: 11/23/2020
 uid: core/querying/user-defined-function-mapping
 ---

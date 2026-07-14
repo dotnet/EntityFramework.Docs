@@ -12,7 +12,7 @@ uid: core/modeling/keyless-entity-types
 
 In addition to regular entity types, an EF Core model can contain _keyless entity types_, which can be used to carry out database queries against data that doesn't contain key values.
 
-## Defining Keyless entity types
+## Defining keyless entity types
 
 Keyless entity types can be defined as follows:
 

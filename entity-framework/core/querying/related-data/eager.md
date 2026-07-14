@@ -1,7 +1,7 @@
 ---
 title: Eager Loading of Related Data - EF Core
 description: Eager loading of related data with Entity Framework Core
-author: roji
+author: SamMonoRT
 ms.date: 11/11/2021
 uid: core/querying/related-data/eager
 ---

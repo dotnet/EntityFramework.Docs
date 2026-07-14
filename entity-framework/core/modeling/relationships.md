@@ -159,7 +159,7 @@ EF supports many different types of relationships, with many different ways thes
 - [_One-to-one relationships_](xref:core/modeling/relationships/one-to-one), in which a single entity is associated with another single entity.
 - [_Many-to-many relationships_](xref:core/modeling/relationships/many-to-many), in which any number of entities are associated with any number of other entities.
 
-If you are new to EF, then trying the examples linked in in the bullet points above is a good way to get a feel for how relationships work.
+If you are new to EF, then trying the examples linked in the bullet points above is a good way to get a feel for how relationships work.
 
 To dig deeper into the properties of entity types involved in relationship mapping, see:
 

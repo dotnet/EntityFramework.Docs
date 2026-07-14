@@ -1,7 +1,7 @@
 ---
 title: Working with nullable reference types - EF Core
 description: Working with C# nullable reference types when using Entity Framework Core
-author: roji
+author: SamMonoRT
 ms.date: 09/09/2019
 uid: core/miscellaneous/nullable-reference-types
 ---

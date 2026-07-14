@@ -1,7 +1,7 @@
 ---
 title: Testing against your Production Database System - EF Core
 description: Techniques for testing EF Core applications against your production database system
-author: roji
+author: SamMonoRT
 ms.date: 1/24/2022
 uid: core/testing/testing-with-the-database
 ---

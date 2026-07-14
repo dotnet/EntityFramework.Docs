@@ -1,7 +1,7 @@
 ---
 title: Single vs. Split Queries - EF Core
 description: Translating LINQ queries into single and split SQL queries with Entity Framework Core
-author: roji
+author: SamMonoRT
 ms.date: 1/9/2023
 uid: core/querying/single-split-queries
 ---
@@ -107,7 +107,7 @@ ORDER BY [b].[BlogId]
 ```
 
 > [!WARNING]
-> When using split queries with Skip/Take on EF versions prior to 10, pay special attention to making your query ordering fully unique; not doing so could cause incorrect data to be returned. For example, if results are ordered only by date, but there can be multiple results with the same date, then each one of the split queries could each get different results from the database. Ordering by both date and ID (or any other unique property or combination of properties) makes the ordering fully unique and avoids this problem. Note that relational databases do not apply any ordering by default, even on the primary key.
+> When using split queries with Skip/Take on EF versions prior to 10, pay special attention to making your query ordering fully unique; not doing so could cause incorrect data to be returned. For example, if results are ordered only by date, but there can be multiple results with the same date, then each one of the split queries could get different results from the database. Ordering by both date and ID (or any other unique property or combination of properties) makes the ordering fully unique and avoids this problem. Note that relational databases do not apply any ordering by default, even on the primary key.
 
 > [!NOTE]
 > One-to-one related entities are always loaded via JOINs in the same query, as it has no performance impact.

@@ -42,6 +42,9 @@ It is possible to apply all configuration specified in types implementing `IEnti
 > [!NOTE]
 > The order in which the configurations will be applied is undefined, therefore this method should only be used when the order doesn't matter.
 
+> [!NOTE]
+> `ApplyConfigurationsFromAssembly` only instantiates configuration types that have a parameterless constructor; the constructor may be public or non-public. Types whose constructors require parameters are skipped, and a `SkippedEntityTypeConfigurationWarning` is logged. To apply such configurations, instantiate them manually and pass them to <xref:Microsoft.EntityFrameworkCore.ModelBuilder.ApplyConfiguration%2A>.
+
 #### Using `EntityTypeConfigurationAttribute` on entity types
 
 Rather than explicitly calling `Configure`, an <xref:Microsoft.EntityFrameworkCore.EntityTypeConfigurationAttribute> can instead be placed on the entity type such that EF Core can find and use appropriate configuration. For example:

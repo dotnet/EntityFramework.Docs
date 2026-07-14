@@ -713,7 +713,7 @@ After these improvements, the gap between the popular "micro-ORM" [Dapper](https
 EF Core 6.0 contains many improvements to the Azure Cosmos DB database provider.
 
 > [!TIP]
-> You can run and debug into all the the Cosmos-specific samples by [downloading the sample code from GitHub](https://github.com/dotnet/EntityFramework.Docs/tree/main/samples/core/Miscellaneous/NewInEFCore6.Cosmos).
+> You can run and debug into all the Cosmos-specific samples by [downloading the sample code from GitHub](https://github.com/dotnet/EntityFramework.Docs/tree/main/samples/core/Miscellaneous/NewInEFCore6.Cosmos).
 
 ### Default to implicit ownership
 
@@ -2537,7 +2537,7 @@ For this reason, EF Core 6.0 will now warn you when saving an optional dependent
 > warn: 9/27/2021 09:25:01.338 RelationalEventId.OptionalDependentWithAllNullPropertiesWarning[20704] (Microsoft.EntityFrameworkCore.Update)
 > The entity of type 'Address' with primary key values {CustomerId: -2147482646} is an optional dependent using table sharing. The entity does not have any property with a non-default value to identify whether the entity exists. This means that when it is queried no object instance will be created instead of an instance with all properties set to default values. Any nested dependents will also be lost. Either don't save any instance with only default values or mark the incoming navigation as required in the model.
 
-This becomes even more tricky where the optional dependent itself acts a a principal for a further optional dependent, also mapped to the same table. Rather than just warning, EF Core 6.0 disallows just cases of nested optional dependents. For example, consider the following model, where `ContactInfo` is owned by `Customer` and `Address` is in turned owned by `ContactInfo`:
+This becomes even more tricky where the optional dependent itself acts as a principal for a further optional dependent, also mapped to the same table. Rather than just warning, EF Core 6.0 disallows just cases of nested optional dependents. For example, consider the following model, where `ContactInfo` is owned by `Customer` and `Address` is in turned owned by `ContactInfo`:
 
 <!--
 public class Customer

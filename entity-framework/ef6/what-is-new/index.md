@@ -2,7 +2,7 @@
 title: What's new - EF6
 description: What's new in Entity Framework 6
 author: SamMonoRT
-ms.date: 05/17/2024
+ms.date: 05/18/2026
 uid: ef6/what-is-new/index
 ---
 # What's new in EF6
@@ -10,6 +10,19 @@ uid: ef6/what-is-new/index
 We highly recommend that you use the latest released version of Entity Framework to ensure you get the latest features and the highest stability.
 However, we realize that you may need to use a previous version, or that you may want to experiment with new improvements in the latest pre-release.
 To install specific versions of EF, see [Get Entity Framework](xref:ef6/fundamentals/install).
+
+## EF 6.5.2
+
+The EF 6.5.2 runtime was released to NuGet in April 2026. See the [release notes](https://github.com/dotnet/ef6/releases/tag/v6.5.2) on GitHub. Notable changes:
+
+- Compatibility with .NET 10 - ports the .NET 10 first-class span support fix so EF6 continues to work correctly on .NET 10 ([#2365](https://github.com/dotnet/ef6/pull/2365)).
+- `Microsoft.Data.SqlClient` was updated to version 5.1.6 ([#2284](https://github.com/dotnet/ef6/pull/2284)).
+- Fixed `HierarchyId` parsing for numbers outside the `Int32` range ([#2362](https://github.com/dotnet/ef6/pull/2362)).
+- Allow the `ef6` tool to run on the newest .NET SDK ([#2396](https://github.com/dotnet/ef6/pull/2396)).
+
+## EF 6.5.1
+
+The EF 6.5.1 runtime was released to NuGet in June 2024. This patch release fixes a broken NuGet package in 6.5.0 ([#2263](https://github.com/dotnet/ef6/pull/2263)).
 
 ## EF 6.5.0
 

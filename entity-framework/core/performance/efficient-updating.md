@@ -1,7 +1,7 @@
 ---
 title: Efficient Updating - EF Core
 description: Performance guide for efficient updating using Entity Framework Core
-author: roji
+author: SamMonoRT
 ms.date: 12/1/2020
 uid: core/performance/efficient-updating
 ---

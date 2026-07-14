@@ -1,8 +1,7 @@
 ---
 title: Get Started with WPF - EF Core
 description: Getting started tutorial for using WPF with Entity Framework Core
-author: jeremylikness
-ms.author: jeliknes
+author: SamMonoRT
 ms.date: 07/24/2020
 uid: core/get-started/wpf
 ---
@@ -17,11 +16,11 @@ The screen shots and code listings in this walkthrough are taken from Visual Stu
 > [!TIP]
 > You can view this article's [sample on GitHub](https://github.com/dotnet/EntityFramework.Docs/tree/main/samples/core/WPF).
 
-## Pre-Requisites
+## Pre-requisites
 
 You need to have Visual Studio 2019 16.3 or later installed with the **.NET desktop workload** selected to complete this walkthrough. For more information about installing the latest version of Visual Studio, see [Install Visual Studio](/visualstudio/install/install-visual-studio).
 
-## Create the Application
+## Create the application
 
 1. Open Visual Studio
 2. On the start window, choose **Create new project**.
@@ -45,7 +44,7 @@ You need to have Visual Studio 2019 16.3 or later installed with the **.NET desk
 > [!NOTE]
 > When you installed the Sqlite package, it automatically pulled down the related **Microsoft.EntityFrameworkCore** base package. The **Microsoft.EntityFrameworkCore.Proxies** package provides support for "lazy-loading" data. This means when you have entities with child entities, only the parents are fetched on the initial load. The proxies detect when an attempt to access the child entities is made and automatically loads them on demand.
 
-## Define a Model
+## Define a model
 
 In this walkthrough you will implement a model using "code first." This means that EF Core will create the database tables and schema based on the C# classes you define.
 
@@ -83,7 +82,7 @@ Press **CTRL+SHIFT+B** or navigate to **Build &gt; Build Solution** to compile t
 > [!TIP]
 > Learn about the different was to keep your database and EF Core models in sync: [Managing Database Schemas](xref:core/managing-schemas/index).
 
-## Lazy Loading
+## Lazy loading
 
 The **Products** property on the **Category** class and **Category** property on the **Product** class are navigation properties. In Entity Framework Core, navigation properties provide a way to navigate a relationship between two entity types.
 
@@ -91,7 +90,7 @@ EF Core gives you an option of loading related entities from the database automa
 
 When using "Plain Old C# Object" (POCO) entity types, EF Core achieves lazy loading by creating instances of derived proxy types during runtime and then overriding virtual properties in your classes to add the loading hook. To get lazy loading of related objects, you must declare navigation property getters as **public** and **virtual** (**Overridable** in Visual Basic), and your class must not be **sealed** (**NotOverridable** in Visual Basic). When using Database First, navigation properties are automatically made virtual to enable lazy loading.
 
-## Bind Object to Controls
+## Bind object to controls
 
 Add the classes that are defined in the model as data sources for this WPF application.
 
@@ -108,7 +107,7 @@ Add the classes that are defined in the model as data sources for this WPF appli
 
 1. Note that the `CategoryId` is set to `ReadOnly` because it is assigned by the database and cannot be changed.
 
-## Adding a Details Grid
+## Adding a details grid
 
 Now that the grid exists to display categories, the details grid can be added to show products. Add this inside the
 `Grid` element, after the categories `DataGrid` element.  
@@ -125,7 +124,7 @@ Your design view should look like this:
 
 ![Screenshot of WPF Designer](_static/wpf-tutorial-designer.jpg)
 
-## Add Code that Handles Data Interaction
+## Add code that handles data interaction
 
 It's time to add some event handlers to the main window.
 
@@ -145,13 +144,13 @@ The code declares a long-running instance of `ProductContext`. The `ProductConte
 > [!NOTE]
 > The code uses a call to `EnsureCreated()` to build the database on the first run. This is acceptable for demos, but in production apps you should look at [migrations](xref:core/managing-schemas/migrations/index) to manage your schema. The code also executes synchronously because it uses a local SQLite database. For production scenarios that typically involve a remote server, consider using the asynchronous versions of the `Load` and `SaveChanges` methods.
 
-## Test the WPF Application
+## Test the WPF application
 
 Compile and run the application by pressing **F5** or choosing **Debug &gt; Start Debugging**. The database should be automatically created with a file named `products.db`. Enter a category name and hit enter, then add products to the lower grid. Click save and watch the grid refresh with the database provided ids. Highlight a row and hit **Delete** to remove the row. The entity will be deleted when you click **Save**.
 
 ![Running application](_static/wpf-tutorial-app.jpg)
 
-## Property Change Notification
+## Property change notification
 
 This example relies on four steps to synchronize the entities with the UI.
 
@@ -165,6 +164,6 @@ This works for our getting started sample, but you may require additional code f
 > [!TIP]
 > To learn more about how to handle changes, read: [How to implement property change notification](/dotnet/framework/wpf/data/how-to-implement-property-change-notification).
 
-## Next Steps
+## Next steps
 
 Learn more about [Configuring a DbContext](xref:core/dbcontext-configuration/index).

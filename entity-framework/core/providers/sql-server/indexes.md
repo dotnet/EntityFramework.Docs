@@ -1,7 +1,7 @@
 ---
 title: Microsoft SQL Server Database Provider - Indexes - EF Core
 description: Index features specific to the Entity Framework Core SQL Server provider
-author: roji
+author: SamMonoRT
 ms.date: 9/1/2020
 uid: core/providers/sql-server/indexes
 ---

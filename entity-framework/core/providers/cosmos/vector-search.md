@@ -1,7 +1,7 @@
 ---
 title: Vector Search - Azure Cosmos DB Provider - EF Core
 description: Vector search with the Azure Cosmos DB EF Core Provider
-author: roji
+author: SamMonoRT
 ms.date: 09/20/2024
 uid: core/providers/cosmos/vector-search
 ---

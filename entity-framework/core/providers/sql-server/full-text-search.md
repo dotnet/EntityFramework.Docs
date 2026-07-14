@@ -1,7 +1,7 @@
 ---
 title: Microsoft SQL Server Database Provider - Full-Text Search - EF Core
 description: Using full-text search with the Entity Framework Core Microsoft SQL Server database provider
-author: roji
+author: SamMonoRT
 ms.date: 02/05/2026
 uid: core/providers/sql-server/full-text-search
 ---

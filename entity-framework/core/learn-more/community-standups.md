@@ -2,7 +2,7 @@
 title: .NET Data Community Standups
 description: Details and links for each episode of the .NET Data Community Standup
 author: SamMonoRT
-ms.date: 02/23/2024
+ms.date: 06/26/2026
 uid: core/learn-more/community-standups
 ---
 
@@ -14,6 +14,9 @@ The .NET Data Community Standups are live-streamed monthly (roughly) on Thursday
 
 | Date         | Area                  | Title                                                                                    |
 |--------------|-----------------------|------------------------------------------------------------------------------------------|
+| Jun 25, 2026 | Temporal tables       | [Temporal tables and constraints in SQL Server and PostgreSQL 18](#Jun25_2026)           |
+| May 21, 2026 | EF Core               | [8 Real-World Query Anti-Patterns (and How to Fix Them)](#May21_2026)                    |
+| Apr 23, 2026 | Tools                 | [Lightweight Framework to Automate EF Components](#Apr23_2026)                           |
 | Mar 19, 2026 | DevArt                | [How dotConnect + Entity Developer simplify your workflow](#Mar19_2026)                  |
 | Feb 12, 2026 | AI                    | [Adam tells us about Microsoft.Extensions.DataIngestion](#Feb12_2026)                    |
 | Nov 20, 2025 | Release               | [EF 10 release celebration 🎉](#Nov20_2025)                                              |
@@ -109,6 +112,45 @@ The .NET Data Community Standups are live-streamed monthly (roughly) on Thursday
 | May 6, 2020  | Welcome!              | [Introducing the EF Core Community Standup](#one)                                        |
 
 ## 2026
+
+<a name="Jun25_2026"></a>
+
+### Jun 25: [Temporal tables and constraints in SQL Server and PostgreSQL 18](https://www.youtube.com/live/BcbhBFm1MuU?si=qczW0FmktU9xq3c3)
+
+In this session we'll take a deep look at temporal tables and constraints in database. The recently-released PostgreSQL 18 contains new temporal constraint functionality that superficially looks similar to SQL Server's temporal tables, but the two are in reality quite different. We'll dive into the details, compare the two and discuss two completely different concepts of what it means to store temporal data in databases.
+
+Featuring:
+
+- [Shay Rojansky](https://www.roji.org/) (Special guest)
+- [Jiri Cincura](https://www.tabsoverspaces.com/) (Host)
+
+<a name="May21_2026"></a>
+
+### May 21: [8 Real-World Query Anti-Patterns (and How to Fix Them)](https://www.youtube.com/live/jlR6KFuFODI?si=PSCUNSrqo0-fVDJw)
+
+Join us for another show, where Chris Woodruff teaches us about 8 query anti-patterns and how to fix them.
+
+Featuring:
+
+- [Chris Woodruff](https://woodruff.dev/) (Special guest)
+- [Jiri Cincura](https://www.tabsoverspaces.com/) (Host)
+- [Shay Rojansky](https://www.roji.org/) (Host)
+
+<a name="Apr23_2026"></a>
+
+### Apr 23: [Lightweight Framework to Automate EF Components](https://www.youtube.com/live/qTE6_VAMzS4?si=Q3lqINl3l_NQj4Mf)
+
+Join us for a stream where Klaus Kirchhoff introduces "Lightweight Framework to Automate EF Components".
+
+Featuring:
+
+- [Klaus Kirchhoff](https://jobbots24.de/) (Special guest)
+- [Jiri Cincura](https://www.tabsoverspaces.com/) (Host)
+- [Shay Rojansky](https://www.roji.org/) (Host)
+
+Links:
+
+- [jb24-DbFactory](https://jobbots24.de/#section3)
 
 <a name="Mar19_2026"></a>
 
@@ -419,7 +461,7 @@ Featuring:
 
 Links:
 
-- Product: [Hot Chocolate for GraphQL](https://chillicream.com/docs/hotchocolate)
+- Product: [Hot Chocolate for GraphQL](https://chillicream.com/docs/hotchocolate/v14)
 - Docs: [Hot Chocolate and Entity Framework Core](https://chillicream.com/docs/hotchocolate/v14/integrations/entity-framework)
 
 <a name="value-generation"></a>

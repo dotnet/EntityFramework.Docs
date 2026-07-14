@@ -1,7 +1,7 @@
 ---
 title: Client vs. Server Evaluation - EF Core
 description: Client and server evaluation of queries with Entity Framework Core
-author: smitpatel
+author: SamMonoRT
 ms.date: 11/09/2020
 uid: core/querying/client-eval
 ---

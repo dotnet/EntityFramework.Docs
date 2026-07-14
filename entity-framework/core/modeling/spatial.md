@@ -52,11 +52,11 @@ There are several spatial data types. Which type you use depends on the types of
 
 Using the base Geometry type allows any type of shape to be specified by the property.
 
-## Longitude and Latitude
+## Longitude and latitude
 
 Coordinates in NTS are in terms of X and Y values. To represent longitude and latitude, use X for longitude and Y for latitude. Note that this is **backwards** from the `latitude, longitude` format in which you typically see these values.
 
-## Querying Data
+## Querying data
 
 The following entity classes could be used to map to tables in the [Wide World Importers sample database](https://go.microsoft.com/fwlink/?LinkID=800630).
 
@@ -74,7 +74,7 @@ In LINQ, the NTS methods and properties available as database functions will be 
 
 The spatial NuGet packages also enable [reverse engineering](xref:core/managing-schemas/scaffolding) models with spatial properties, but you need to install the package ***before*** running `Scaffold-DbContext` or `dotnet ef dbcontext scaffold`. If you don't, you'll receive warnings about not finding type mappings for the columns and the columns will be skipped.
 
-## SRID Ignored during client operations
+## SRID ignored during client operations
 
 NTS ignores SRID values during operations. It assumes a planar coordinate system. This means that if you specify coordinates in terms of longitude and latitude, some client-evaluated values like distance, length, and area will be in degrees, not meters. For more meaningful values, you first need to project the coordinates to another coordinate system using a library like [ProjNet (for GeoAPI)](https://github.com/NetTopologySuite/ProjNet4GeoAPI).
 

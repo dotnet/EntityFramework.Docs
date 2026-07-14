@@ -153,9 +153,9 @@ Options:
 | Option                                    | Description                                                                                                                      |
 |:------------------------------------------|:---------------------------------------------------------------------------------------------------------------------------------|
 | <nobr>`--connection <CONNECTION>`</nobr>  | The connection string to the database. Defaults to the one specified in `AddDbContext` or `OnConfiguring`. |
-| <nobr>`--add`</nobr>                      | Creates a new migration and applies it to the database in a single step. Uses Roslyn to compile the migration at runtime. When specified, the `<MIGRATION>` argument is required and provides the name for the new migration. |
-| <nobr>`--output-dir <PATH>`</nobr>        | The directory to put migration files in. Paths are relative to the target project directory. Requires `--add`. |
-| <nobr>`--namespace <NAMESPACE>`</nobr>    | The namespace to use for the generated migration classes. Requires `--add`. |
+| <nobr>`--add`</nobr>                      | Creates a new migration and applies it to the database in a single step. Uses Roslyn to compile the migration at runtime. When specified, the `<MIGRATION>` argument is required and provides the name for the new migration. Added in EF Core 11. |
+| <nobr>`--output-dir <PATH>`</nobr>        | The directory to put migration files in. Paths are relative to the target project directory. Requires `--add`. Added in EF Core 11. |
+| <nobr>`--namespace <NAMESPACE>`</nobr>    | The namespace to use for the generated migration classes. Requires `--add`. Added in EF Core 11. |
 
 The [common options](#common-options) are listed above.
 

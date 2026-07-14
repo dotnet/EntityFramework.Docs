@@ -68,7 +68,7 @@ The logs show the following for this query:
 Executed ReadItem (73 ms, 1 RU) ActivityId='13f0f8b8-d481-47f0-bf41-67f7deb008b2', Container='test', Id='8', Partition='["someValue"]'
 ```
 
-Here, no SQL query is sent at all. Instead, the provider performs an an extremely efficient _point read_ (`ReadItem` API), which directly fetches the document given the partition key and ID. This is the most efficient and cost-effective kind of read you can perform in Azure Cosmos DB; [see the Azure Cosmos DB documentation](/azure/cosmos-db/nosql/how-to-dotnet-read-item) for more information about point reads.
+Here, no SQL query is sent at all. Instead, the provider performs an extremely efficient _point read_ (`ReadItem` API), which directly fetches the document given the partition key and ID. This is the most efficient and cost-effective kind of read you can perform in Azure Cosmos DB; [see the Azure Cosmos DB documentation](/azure/cosmos-db/nosql/how-to-dotnet-read-item) for more information about point reads.
 
 To learn more about querying with partition keys and point reads, [see the querying documentation page](xref:core/providers/cosmos/querying).
 
@@ -145,7 +145,7 @@ For more information, see the documentation on [querying with partition keys](xr
 
 ### Significantly improved LINQ querying capabilities
 
-In EF 9.0, the LINQ translation capabilities of the the Azure Cosmos DB provider have been greatly expanded, and the provider can now execute significantly more query types. The full list of query improvements is too long to list, but here are the main highlights:
+In EF 9.0, the LINQ translation capabilities of the Azure Cosmos DB provider have been greatly expanded, and the provider can now execute significantly more query types. The full list of query improvements is too long to list, but here are the main highlights:
 
 * Full support for EF's primitive collections, allowing you to perform LINQ querying on collections of e.g. ints or strings. See [What's new in EF8: primitive collections](xref:core/what-is-new/ef-core-8.0/whatsnew#primitive-collections) for more information.
 * Support for arbitrary querying over non-primitive collections.
@@ -173,7 +173,7 @@ First, previous versions of EF inserted the discriminator value into the JSON `i
 }
 ```
 
-This was done in order to allow for documents of different types (e.g. Blog and Post) and the same key value (1099) to exist within the same container partition. Starting with EF 9.0, the `id` property contains contains only the key value:
+This was done in order to allow for documents of different types (e.g. Blog and Post) and the same key value (1099) to exist within the same container partition. Starting with EF 9.0, the `id` property contains only the key value:
 
 ```json
 {
@@ -1087,6 +1087,8 @@ The above were only some of the more important query improvements in EF9; see [t
 ### Protection against concurrent migrations
 
 EF9 introduces a locking mechanism to protect against multiple migration executions happening simultaneously, as that could leave the database in a corrupted state. This doesn't happen when migrations are deployed to the production environment using [recommended methods](/ef/core/managing-schemas/migrations/applying#sql-scripts), but can happen if migrations are applied at runtime using the [`DbContext.Database.MigrateAsync()`](/dotnet/api/microsoft.entityframeworkcore.relationaldatabasefacadeextensions.migrate) method. We recommend applying migrations at deployment, rather than as part of application startup, but that can result in more complicated application architectures (e.g. [when using .NET Aspire projects](/dotnet/aspire/database/ef-core-migrations)).
+
+For more information, see [Migration locking](/ef/core/managing-schemas/migrations/applying#migration-locking).
 
 > [!NOTE]
 > If you are using Sqlite database, see [potential issues associated with this feature](/ef/core/providers/sqlite/limitations#concurrent-migrations-protection).

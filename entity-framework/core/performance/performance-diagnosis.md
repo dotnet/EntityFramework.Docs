@@ -1,7 +1,7 @@
 ---
 title: Performance Diagnosis - EF Core
 description: Diagnosing Entity Framework Core performance and identifying bottlenecks
-author: roji
+author: SamMonoRT
 ms.date: 12/1/2020
 uid: core/performance/performance-diagnosis
 ---
