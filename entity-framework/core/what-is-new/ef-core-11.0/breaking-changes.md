@@ -2,7 +2,7 @@
 title: Breaking changes in EF Core 11 (EF11) - EF Core
 description: List of breaking changes introduced in Entity Framework Core 11 (EF11)
 author: SamMonoRT
-ms.date: 06/30/2026
+ms.date: 07/02/2026
 uid: core/what-is-new/ef-core-11.0/breaking-changes
 ---
 
@@ -30,7 +30,9 @@ This page documents API and behavior changes that have the potential to break ex
 | [EF tools packages no longer reference Microsoft.EntityFrameworkCore.Design](#ef-tools-no-design-dep)           | Low        |
 | [SqlVector properties are no longer loaded by default](#sqlvector-not-auto-loaded)                              | Low        |
 | [Cosmos: empty owned collections now return an empty collection instead of null](#cosmos-empty-collections)     | Low        |
+| [Cosmos: the default discriminator property is now named `Discriminator` in the model](#cosmos-discriminator-property-name) | Low        |
 | [Owned JSON collections without an explicit key are obsolete](#owned-json-collections-obsolete)                 | Low        |
+| [`Property` no longer configures primitive collections](#property-not-primitive-collection)                     | Low        |
 
 ## Medium-impact changes
 
@@ -321,6 +323,63 @@ if (entity.OwnedCollection is { Count: 0 })
 }
 ```
 
+<a name="cosmos-discriminator-property-name"></a>
+
+### Cosmos: the default discriminator property is now named `Discriminator` in the model
+
+[Pull Request #38458](https://github.com/dotnet/efcore/pull/38458)
+
+#### Old behavior
+
+EF automatically adds a discriminator property to identify the entity type that a JSON document represents. The name of this property in the JSON document was changed from `Discriminator` to `$type` in [EF Core 9.0](xref:core/what-is-new/ef-core-9.0/breaking-changes#cosmos-discriminator-name-change). To achieve this, EF used `$type` as the name of the discriminator property both in the EF model and in the stored JSON document.
+
+Because `$type` is not a valid C# identifier, the resulting shadow property name caused invalid code to be generated for [compiled models](xref:core/performance/advanced-performance-topics#compiled-models) and [precompiled queries](xref:core/performance/nativeaot-and-precompiled-queries) used with Native AOT.
+
+#### New behavior
+
+Starting with EF Core 11.0, the default discriminator property is once again named `Discriminator` in the EF model, while the name written to the JSON document is unchanged and remains `$type` by default. In other words, the model property name and the JSON property name are now decoupled:
+
+- `entityType.FindDiscriminatorProperty().Name` returns `Discriminator`.
+- `entityType.FindDiscriminatorProperty().GetJsonPropertyName()` returns `$type`.
+
+The format of the stored documents is **not** affected by this change, so existing data continues to work without modification.
+
+#### Why
+
+EF derives some generated C# identifiers (for example, shadow property variable names) from model metadata such as property names. Since `$type` is not a valid C# identifier, using it as the model property name produced uncompilable code for compiled models and precompiled queries. Naming the model property `Discriminator` (a valid identifier) while still writing `$type` to the document keeps generated code valid without changing the on-disk format.
+
+#### Mitigations
+
+For most applications no action is needed, since stored documents are unaffected and continue to use `$type`.
+
+If your code references the discriminator by its **model** property name, `$type` (for example, via <xref:Microsoft.EntityFrameworkCore.EF.Property*> in a query or query filter, or by looking the property up in the metadata), update it to use `Discriminator` instead:
+
+```csharp
+// Before
+var query = context.Set<Session>().Where(e => EF.Property<string>(e, "$type") == "Lecture");
+
+// After
+var query = context.Set<Session>().Where(e => EF.Property<string>(e, "Discriminator") == "Lecture");
+```
+
+To change the JSON discriminator property name for the whole model in a single place--for example, to align it with the model property name--use the model-level <xref:Microsoft.EntityFrameworkCore.ModelBuilder.HasEmbeddedDiscriminatorName*> API instead of configuring each entity type individually:
+
+```csharp
+modelBuilder.HasEmbeddedDiscriminatorName("Discriminator");
+```
+
+To change only the JSON name for a specific entity type--for example, to align it with the model property name--configure the discriminator property's JSON name with <xref:Microsoft.EntityFrameworkCore.CosmosPropertyBuilderExtensions.ToJsonProperty*>:
+
+```csharp
+modelBuilder.Entity<Session>().Property<string>("Discriminator").ToJsonProperty("Discriminator");
+```
+
+To restore the previous behavior where the discriminator property is also named `$type` in the model, configure its name explicitly with <xref:Microsoft.EntityFrameworkCore.Metadata.Builders.EntityTypeBuilder.HasDiscriminator*>. Note that this reintroduces an invalid C# identifier and is not recommended when using compiled models or precompiled queries:
+
+```csharp
+modelBuilder.Entity<Session>().HasDiscriminator<string>("$type");
+```
+
 <a name="owned-json-collections-obsolete"></a>
 
 ### Owned JSON collections without an explicit key are obsolete
@@ -393,6 +452,33 @@ protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     => optionsBuilder.ConfigureWarnings(w => w.Ignore(CoreEventId.OwnedEntityMappedToJsonCollectionWarning));
 ```
 
+<a name="property-not-primitive-collection"></a>
+
+### `Property` no longer configures primitive collections
+
+#### Old behavior
+
+Previously, calling <xref:Microsoft.EntityFrameworkCore.Metadata.Builders.EntityTypeBuilder.Property*> for a member whose CLR type is a collection (for example `List<int>`) could result in the member being configured as a [primitive collection](xref:core/what-is-new/ef-core-8.0/whatsnew#primitive-collections), because a property could be promoted to a primitive collection at model finalization based on its type.
+
+#### New behavior
+
+Starting with EF Core 11.0, whether a property is a primitive collection is determined entirely when the property is configured. A primitive collection must be configured with <xref:Microsoft.EntityFrameworkCore.Metadata.Builders.EntityTypeBuilder.PrimitiveCollection*> (or discovered as one by convention). <xref:Microsoft.EntityFrameworkCore.Metadata.Builders.EntityTypeBuilder.Property*> now always configures the member as a non-collection (scalar) property, and there is no longer any finalization-time promotion to a primitive collection.
+
+#### Why
+
+Treating the element type as a finalization-time concern led to inconsistencies and bugs. For example, a property could be discovered as a primitive collection, but later resolve to a scalar via an inherited value converter, leaving a stale element type that caused an `InvalidCastException` at model finalization. Making primitive collections a creation-time concern also makes mapping unambiguous in cases like `byte[]`, where it is otherwise unclear whether the member should be mapped as a binary scalar or as a collection of bytes.
+
+#### Mitigations
+
+If you relied on `Property` to configure a primitive collection, switch to `PrimitiveCollection` instead:
+
+```csharp
+protected override void OnModelCreating(ModelBuilder modelBuilder)
+    => modelBuilder.Entity<Blog>().PrimitiveCollection(b => b.Tags);
+```
+
+In most cases no change is required, since primitive collections are discovered by convention.
+
 <a name="MDS-breaking-changes"></a>
 
 ## Microsoft.Data.Sqlite breaking changes
@@ -404,11 +490,36 @@ protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 
 | **Breaking change**                                                                                       | **Impact** |
 |:----------------------------------------------------------------------------------------------------------|------------|
+| [Microsoft.Data.Sqlite no longer supports .NET Framework](#sqlite-no-netfx)                              | Medium     |
 | [Encryption-enabled SQLite packages have been removed](#sqlite-encryption-removed)                        | Medium     |
 | [Some SQLitePCLRaw bundle packages have been removed](#sqlite-bundles-removed)                            | Medium     |
 | [Microsoft.Data.Sqlite now bundles SQLite3 Multiple Ciphers](#sqlite3mc)                                   | Low        |
 
 ### Medium-impact changes
+
+<a name="sqlite-no-netfx"></a>
+
+#### Microsoft.Data.Sqlite no longer supports .NET Framework
+
+[Tracking Issue #35599](https://github.com/dotnet/efcore/issues/35599)
+
+##### Old behavior
+
+Previously, `Microsoft.Data.Sqlite` and `Microsoft.Data.Sqlite.Core` targeted `netstandard2.0`, which allowed them to be used from .NET Framework applications.
+
+##### New behavior
+
+Starting with `Microsoft.Data.Sqlite` 11.0, both packages target `net10.0` only. .NET Framework applications can no longer reference or use `Microsoft.Data.Sqlite` 11.0.
+
+##### Why
+
+The `netstandard2.0` target made older, unsupported .NET targets appear to be supported, and it also masked API differences such as `DateOnly` and `TimeOnly` support. Targeting the minimum supported .NET version explicitly makes the supported platform surface clear.
+
+##### Mitigations
+
+If possible, move the application to .NET 10 or later.
+
+If you must remain on .NET Framework, stay on the latest `Microsoft.Data.Sqlite` 10.0.x servicing release. The 10.0.x line already uses `SQLite3MC.PCLRaw.bundle`, allowing .NET Framework applications to update the referenced `SQLite3MC.PCLRaw.bundle` version even after `Microsoft.Data.Sqlite` stops receiving updates.
 
 <a name="sqlite-encryption-removed"></a>
 
