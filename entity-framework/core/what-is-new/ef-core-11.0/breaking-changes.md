@@ -531,7 +531,7 @@ Previously, `SQLitePCLRaw.bundle_e_sqlite3` included native SQLite builds for Un
 
 ##### New behavior
 
-Starting with `SQLitePCLRaw.bundle_e_sqlite3` 2.1.12 (referenced by Microsoft.Data.Sqlite 11.0), native builds for UWP and classic Xamarin are no longer included. Applications targeting these platforms can no longer use the bundled native SQLite library.
+Starting with `SQLitePCLRaw.bundle_e_sqlite3` 2.1.12 (referenced by `Microsoft.Data.Sqlite` 11.0), native builds for UWP and classic Xamarin are no longer included. Applications targeting these platforms can no longer use the bundled native SQLite library.
 
 ##### Why
 
