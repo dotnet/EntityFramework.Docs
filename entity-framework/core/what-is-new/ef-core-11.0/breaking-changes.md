@@ -491,9 +491,7 @@ In most cases no change is required, since primitive collections are discovered 
 | **Breaking change**                                                                                       | **Impact** |
 |:----------------------------------------------------------------------------------------------------------|------------|
 | [Microsoft.Data.Sqlite no longer supports .NET Framework](#sqlite-no-netfx)                              | Medium     |
-| [Encryption-enabled SQLite packages have been removed](#sqlite-encryption-removed)                        | Medium     |
-| [Some SQLitePCLRaw bundle packages have been removed](#sqlite-bundles-removed)                            | Medium     |
-| [Microsoft.Data.Sqlite now bundles SQLite3 Multiple Ciphers](#sqlite3mc)                                   | Low        |
+| [SQLite no longer supports UWP and classic Xamarin](#sqlite-no-uwp-xamarin)                              | Medium     |
 
 ### Medium-impact changes
 
@@ -519,195 +517,28 @@ The `netstandard2.0` target made older, unsupported .NET targets appear to be su
 
 If possible, move the application to .NET 10 or later.
 
-If you must remain on .NET Framework, stay on the latest `Microsoft.Data.Sqlite` 10.0.x servicing release. The 10.0.x line already uses `SQLite3MC.PCLRaw.bundle`, allowing .NET Framework applications to update the referenced `SQLite3MC.PCLRaw.bundle` version even after `Microsoft.Data.Sqlite` stops receiving updates.
+If you must remain on .NET Framework, stay on the latest `Microsoft.Data.Sqlite` 10.0.x servicing release. The 10.0.x line uses `SQLitePCLRaw.bundle_e_sqlite3`, allowing .NET Framework applications to update the referenced `SQLitePCLRaw.bundle_e_sqlite3` version even after `Microsoft.Data.Sqlite` stops receiving updates.
 
-<a name="sqlite-encryption-removed"></a>
+<a name="sqlite-no-uwp-xamarin"></a>
 
-#### Encryption-enabled SQLite packages have been removed
-
-[Tracking Issue #5108](https://github.com/dotnet/EntityFramework.Docs/issues/5108)
-
-##### Old behavior
-
-Previously, the `SQLitePCLRaw.bundle_e_sqlcipher` NuGet package provided encryption-enabled SQLite builds at no cost.
-
-##### New behavior
-
-Starting with SQLitePCLRaw 3.0 (used by Microsoft.Data.Sqlite 11.0), the `SQLitePCLRaw.bundle_e_sqlcipher` package has been deprecated and removed from NuGet. No-cost encryption-enabled SQLite builds are no longer distributed.
-
-##### Why
-
-The previous no-cost `SQLitePCLRaw.bundle_e_sqlcipher` package was barely maintained, which is a significant concern for encryption software where security vulnerabilities may go unpatched. The SQLitePCLRaw maintainer removed these builds in version 3.0 in favor of professionally maintained, paid alternatives that provide ongoing security updates.
-
-##### Mitigations
-
-If you need SQLite encryption, you have the following options:
-
-- **SQLite3 Multiple Ciphers**: Starting with Microsoft.Data.Sqlite 11.0, the default SQLite build supports encryption and can be configured to use SQLCipher-compatible encryption. See [Microsoft.Data.Sqlite now bundles SQLite3 Multiple Ciphers](#sqlite3mc). NuGet packages are also available from [SQLite3MultipleCiphers-NuGet](https://github.com/utelle/SQLite3MultipleCiphers-NuGet).
-  - When encrypting a new database or opening an existing database that was encrypted with SQLCipher, you must configure the cipher scheme in the connection string using URI parameters—for example: `Data Source=file:example.db?cipher=sqlcipher&legacy=4;Password=<password>`. See [How to open an existing database encrypted with SQLCipher](https://github.com/utelle/SQLite3MultipleCiphers-NuGet#how-to-open-an-existing-database-encrypted-with-sqlcipher) for details.
-- **SQLite Encryption Extension (SEE)**: This is the official encryption implementation from the SQLite team. A paid license is required. See [https://sqlite.org/com/see.html](https://sqlite.org/com/see.html) for details. NuGet packages are available through [SourceGear's SQLite build service](https://github.com/ericsink/SQLitePCL.raw/wiki/SQLite-encryption-options-for-use-with-SQLitePCLRaw).
-- **SQLCipher**: Purchase supported builds from [Zetetic](https://www.zetetic.net/sqlcipher/), or build the [open source code](https://github.com/sqlcipher/sqlcipher) yourself.
-
-For more details, see [SQLite encryption options for use with SQLitePCLRaw](https://github.com/ericsink/SQLitePCL.raw/wiki/SQLite-encryption-options-for-use-with-SQLitePCLRaw) and [SQLitePCLRaw 3.0 Release Notes](https://github.com/ericsink/SQLitePCL.raw/blob/main/v3.md).
-
-<a name="sqlite-bundles-removed"></a>
-
-#### Some SQLitePCLRaw bundle packages have been removed
+#### SQLite no longer supports UWP and classic Xamarin
 
 [Tracking Issue #5108](https://github.com/dotnet/EntityFramework.Docs/issues/5108)
 
 ##### Old behavior
 
-Previously, the `SQLitePCLRaw.bundle_sqlite3`, `SQLitePCLRaw.bundle_winsqlite3`, `SQLitePCLRaw.bundle_green`, and `SQLitePCLRaw.bundle_e_sqlite3mc` packages provided a convenient way to configure SQLitePCLRaw with the corresponding SQLite provider.
+Previously, `SQLitePCLRaw.bundle_e_sqlite3` included native SQLite builds for Universal Windows Platform (UWP) and classic Xamarin (Xamarin.iOS, Xamarin.Android, and Xamarin.Mac) targets.
 
 ##### New behavior
 
-Starting with SQLitePCLRaw 3.0 (used by Microsoft.Data.Sqlite 11.0), these bundle packages have been removed. If your application depended on one of these bundles, use one of the following migration paths.
+Starting with `SQLitePCLRaw.bundle_e_sqlite3` 2.1.12 (referenced by Microsoft.Data.Sqlite 11.0), native builds for UWP and classic Xamarin are no longer included. Applications targeting these platforms can no longer use the bundled native SQLite library.
 
 ##### Why
 
-Each of these bundle packages contained only a single line of configuration code and added unnecessary packaging overhead. The corresponding provider packages are still supported.
+UWP and classic Xamarin are legacy platforms that are no longer actively supported. The SQLitePCLRaw maintainer dropped these builds to reduce maintenance overhead and to keep up with newer upstream SQLite releases (`SQLitePCLRaw.bundle_e_sqlite3` 2.1.12 ships [SQLite 3.53.0](https://sqlite.org/releaselog/3_53_0.html)).
 
 ##### Mitigations
 
-**If using `bundle_sqlite3` or `bundle_winsqlite3`**, replace the removed bundle package with the corresponding provider package:
+Migrate UWP applications to the [Windows App SDK](/windows/apps/windows-app-sdk/) and classic Xamarin applications to [.NET MAUI](/dotnet/maui/), which are supported on modern .NET.
 
-```xml
-<!-- Old -->
-<PackageReference Include="SQLitePCLRaw.bundle_sqlite3" Version="2.x.x" />
-<!-- or -->
-<PackageReference Include="SQLitePCLRaw.bundle_winsqlite3" Version="2.x.x" />
-
-<!-- New -->
-<PackageReference Include="SQLitePCLRaw.provider.sqlite3" Version="3.x.x" />
-<!-- or -->
-<PackageReference Include="SQLitePCLRaw.provider.winsqlite3" Version="3.x.x" />
-```
-
-Then add explicit initialization before using SQLite:
-
-```csharp
-// For sqlite3
-static void Init()
-{
-    SQLitePCL.raw.SetProvider(new SQLitePCL.SQLite3Provider_sqlite3());
-}
-
-// For winsqlite3
-static void Init()
-{
-    SQLitePCL.raw.SetProvider(new SQLitePCL.SQLite3Provider_winsqlite3());
-}
-```
-
-**If using `bundle_e_sqlite3mc`**, replace the package reference with `SQLite3MC.PCLRaw.bundle`:
-
-```xml
-<!-- Old -->
-<PackageReference Include="SQLitePCLRaw.bundle_e_sqlite3mc" Version="2.x.x" />
-
-<!-- New -->
-<PackageReference Include="SQLite3MC.PCLRaw.bundle" Version="2.x.x" />
-```
-
-**If using `bundle_green`**, the recommended migration path is to switch to `SQLitePCLRaw.bundle_e_sqlite3`. Alternatively, use `SQLitePCLRaw.config.e_sqlite3` paired with a separate native library package like `SourceGear.sqlite3`, which allows you to update the SQLite version independently:
-
-```xml
-<PackageReference Include="SQLitePCLRaw.bundle_e_sqlite3" Version="3.x.x" />
-```
-
-If you only target iOS and want to continue using the system SQLite library, reference the provider directly:
-
-```xml
-<PackageReference Include="SQLitePCLRaw.core" Version="3.x.x" />
-<PackageReference Include="SQLitePCLRaw.provider.sqlite3" Version="3.x.x" />
-```
-
-And initialize it explicitly:
-
-```csharp
-static void Init()
-{
-    SQLitePCL.raw.SetProvider(new SQLitePCL.SQLite3Provider_sqlite3());
-}
-```
-
-> [!NOTE]
-> If you are using `SQLitePCLRaw.bundle_e_sqlite3`, no changes are required—just update the version number. See the [SQLitePCLRaw 3.0 Release Notes](https://github.com/ericsink/SQLitePCL.raw/blob/main/v3.md) for details.
-
-### Low-impact changes
-
-<a name="sqlite3mc"></a>
-
-#### Microsoft.Data.Sqlite now bundles SQLite3 Multiple Ciphers
-
-[Tracking PR dotnet/efcore#38402](https://github.com/dotnet/efcore/pull/38402)
-
-##### Old behavior
-
-The `Microsoft.Data.Sqlite` package referenced `SQLitePCLRaw.bundle_e_sqlite3`, which provides the standard `e_sqlite3` native SQLite build. This build has no encryption support, so setting a password (for example, via `SqliteConnectionStringBuilder.Password` or the `Password` connection-string keyword) failed at runtime.
-
-##### New behavior
-
-Starting with `Microsoft.Data.Sqlite` 11.0, the package references `SQLite3MC.PCLRaw.bundle`, which provides the `e_sqlite3mc` native build ([SQLite3 Multiple Ciphers](https://github.com/utelle/SQLite3MultipleCiphers)). This build receives updates on NuGet.org more promptly than `SQLitePCLRaw.bundle_e_sqlite3`.
-
-As an added bonus, encryption (including setting a password) now works out of the box. See the [SQLite3 Multiple Ciphers documentation](https://github.com/utelle/SQLite3MultipleCiphers-NuGet#passphrase-based-database-encryption-support) for details on enabling passphrase-based database encryption.
-
-This change also applies to the EF Core SQLite provider (`Microsoft.EntityFrameworkCore.Sqlite`), which references `SQLite3MC.PCLRaw.bundle` through `Microsoft.Data.Sqlite`.
-
-##### Why
-
-The primary reason for the switch is maintenance and security: new versions of the `e_sqlite3` native build are no longer published to NuGet.org through `SQLitePCLRaw.bundle_e_sqlite3` in a timely manner, which means security fixes in upstream SQLite can be delayed. SQLite3 Multiple Ciphers is an actively maintained project that tracks upstream SQLite releases and ships updated builds promptly, so it was adopted as the default native build for `Microsoft.Data.Sqlite`. As an added bonus, it also supports encryption. This means it can replace the `SQLitePCLRaw.bundle_e_sqlcipher` package that was deprecated and removed (see [Encryption-enabled SQLite packages have been removed](#sqlite-encryption-removed)).
-
-##### Mitigations
-
-For most applications, **no action is required**. SQLite3 Multiple Ciphers is a superset of SQLite that behaves identically to the standard build for unencrypted databases—it only applies encryption when you explicitly supply a key or password. Existing unencrypted databases continue to open and work unchanged.
-
-Review the following cases, which may require action in some applications:
-
-- **Direct `SQLitePCLRaw.bundle_e_sqlite3` reference.** If your application directly references `SQLitePCLRaw.bundle_e_sqlite3`, it conflicts with the new `SQLite3MC.PCLRaw.bundle` dependency brought in by `Microsoft.Data.Sqlite` (or `Microsoft.EntityFrameworkCore.Sqlite`). Remove the direct `SQLitePCLRaw.bundle_e_sqlite3` reference unless you intentionally switch to the `.Core` packages shown below.
-
-- **Native library and provider name change.** The bundled native library is now `e_sqlite3mc` (rather than `e_sqlite3`), and the provider initialized by the bundle is `SQLite3Provider_e_sqlite3mc`. This matters if your application:
-  - References a specific native asset filename (for example, `e_sqlite3`) in publishing, trimming, AOT, or single-file configuration. Update those references to `e_sqlite3mc`.
-
-- **Platform (RID) coverage.** SQLite3 Multiple Ciphers doesn't currently include native binaries for every runtime identifier covered by `SourceGear.sqlite3`; for example, `linux-riscv64`, `linux-musl-riscv64`, and `linux-musl-s390x` aren't included. If you target a platform that the new bundle doesn't include, the native library may fail to load at runtime. In that case, revert to the standard build using the package references below.
-
-- **Linux glibc requirement and opt-out.** The bundled `e_sqlite3mc` library is prebuilt native code. On Linux, it currently requires glibc 2.33 or later; on older distributions, loading it can fail at runtime with an error such as `GLIBC_2.33 not found`. If the target system is unable to satisfy this requirement, follow the opt-out steps below.
-
-- **Reserved encryption keywords.** SQLite3 Multiple Ciphers reserves certain connection-string/URI parameters and PRAGMAs (such as `key`, `hexkey`, and `cipher`) for encryption configuration. This is unlikely to affect typical applications, but if you happened to use these names for unrelated purposes, behavior may differ.
-
-- **Double-quoted string literal support.** `e_sqlite3mc` doesn't include SQLite's legacy support for double-quoted string literals. If your SQL uses double quotes for string values, change it to use single quotes; double quotes should be used only for identifiers. Review raw SQL in your application (for example, SQL passed to `FromSql`, `ExecuteSql`, or migrations operations), and use SQL logging or integration tests to identify affected commands.
-
-If you want to keep using the standard, non-encrypted `e_sqlite3` build, reference `Microsoft.Data.Sqlite.Core` together with `SQLitePCLRaw.bundle_e_sqlite3` instead of the `Microsoft.Data.Sqlite` meta-package:
-
-```xml
-<PackageReference Include="Microsoft.Data.Sqlite.Core" Version="11.0.0" />
-<PackageReference Include="SQLitePCLRaw.bundle_e_sqlite3" Version="3.x.x" />
-```
-
-For EF Core, reference `Microsoft.EntityFrameworkCore.Sqlite.Core` instead of `Microsoft.EntityFrameworkCore.Sqlite` and add the standard bundle:
-
-```xml
-<PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite.Core" Version="11.0.0" />
-<PackageReference Include="SQLitePCLRaw.bundle_e_sqlite3" Version="3.x.x" />
-```
-
-If you need to use a system-installed SQLite library instead of a bundled one, reference `Microsoft.Data.Sqlite.Core` together with `SQLitePCLRaw.provider.sqlite3` instead of the `Microsoft.Data.Sqlite` meta-package:
-
-```xml
-<PackageReference Include="Microsoft.Data.Sqlite.Core" Version="11.0.0" />
-<PackageReference Include="SQLitePCLRaw.provider.sqlite3" Version="3.x.x" />
-```
-
-For EF Core:
-
-```xml
-<PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite.Core" Version="11.0.0" />
-<PackageReference Include="SQLitePCLRaw.provider.sqlite3" Version="3.x.x" />
-```
-
-And initialize the provider explicitly before using SQLite:
-
-```csharp
-SQLitePCL.raw.SetProvider(new SQLitePCL.SQLite3Provider_sqlite3());
-```
+If you must remain on UWP or classic Xamarin, stay on an earlier version of `SQLitePCLRaw.bundle_e_sqlite3` that still includes the native builds for these platforms.
