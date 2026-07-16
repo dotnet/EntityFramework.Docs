@@ -492,6 +492,7 @@ In most cases no change is required, since primitive collections are discovered 
 |:----------------------------------------------------------------------------------------------------------|------------|
 | [Microsoft.Data.Sqlite no longer supports .NET Framework](#sqlite-no-netfx)                              | Medium     |
 | [SQLite no longer supports UWP and classic Xamarin](#sqlite-no-uwp-xamarin)                              | Medium     |
+| [Some SQLitePCLRaw bundle packages are no longer maintained](#sqlite-bundles-deprecated)                  | Medium     |
 
 ### Medium-impact changes
 
@@ -542,3 +543,100 @@ UWP and classic Xamarin are legacy platforms that are no longer actively support
 Migrate UWP applications to the [Windows App SDK](/windows/apps/windows-app-sdk/) and classic Xamarin applications to [.NET MAUI](/dotnet/maui/), which are supported on modern .NET.
 
 If you must remain on UWP or classic Xamarin, stay on an earlier version of `SQLitePCLRaw.bundle_e_sqlite3` that still includes the native builds for these platforms.
+
+<a name="sqlite-bundles-deprecated"></a>
+
+#### Some SQLitePCLRaw bundle packages are no longer maintained
+
+[Tracking Issue #5108](https://github.com/dotnet/EntityFramework.Docs/issues/5108)
+
+##### Old behavior
+
+Previously, the `SQLitePCLRaw.bundle_e_sqlcipher`, `SQLitePCLRaw.bundle_sqlite3`, `SQLitePCLRaw.bundle_winsqlite3`, `SQLitePCLRaw.bundle_green`, and `SQLitePCLRaw.bundle_e_sqlite3mc` packages provided a convenient way to configure SQLitePCLRaw with the corresponding SQLite provider. In particular, `SQLitePCLRaw.bundle_e_sqlcipher` provided no-cost encryption-enabled SQLite builds via SQLCipher.
+
+##### New behavior
+
+The `SQLitePCLRaw.bundle_e_sqlcipher`, `SQLitePCLRaw.bundle_sqlite3`, `SQLitePCLRaw.bundle_winsqlite3`, `SQLitePCLRaw.bundle_green`, and `SQLitePCLRaw.bundle_e_sqlite3mc` packages are no longer updated by the SQLitePCLRaw maintainer and are not compatible with `SQLitePCLRaw.Core` 3.0 and later. Applications that reference any of these packages should migrate to the recommended alternatives to avoid future breakage.
+
+##### Why
+
+The SQLitePCLRaw maintainer removed these bundles in version 3.0; each bundle contained only a single line of configuration code and added unnecessary packaging overhead while the underlying provider packages continue to be supported. The `SQLitePCLRaw.bundle_e_sqlcipher` package is particularly affected: it provided encryption-enabled builds that are barely maintained, which is a security concern for encryption software where vulnerabilities may go unpatched.
+
+##### Mitigations
+
+**If using `SQLitePCLRaw.bundle_e_sqlcipher`** (encryption-enabled SQLite), migrate to one of the following alternatives:
+
+- **SQLite3 Multiple Ciphers**: NuGet packages are available from [SQLite3MultipleCiphers-NuGet](https://github.com/utelle/SQLite3MultipleCiphers-NuGet). Reference `Microsoft.Data.Sqlite.Core` together with `SQLite3MC.PCLRaw.bundle`:
+
+  ```xml
+  <PackageReference Include="Microsoft.Data.Sqlite.Core" Version="11.0.0" />
+  <PackageReference Include="SQLite3MC.PCLRaw.bundle" Version="2.x.x" />
+  ```
+
+  When encrypting a new database or opening an existing database that was encrypted with SQLCipher, configure the cipher scheme using URI parameters—for example: `Data Source=file:example.db?cipher=sqlcipher&legacy=4`. See [How to open an existing database encrypted with SQLCipher](https://github.com/utelle/SQLite3MultipleCiphers-NuGet#how-to-open-an-existing-database-encrypted-with-sqlcipher) for details.
+
+- **SQLite Encryption Extension (SEE)**: The official encryption implementation from the SQLite team. A paid license is required. See [https://sqlite.org/com/see.html](https://sqlite.org/com/see.html) and [SourceGear's SQLite build service](https://github.com/ericsink/SQLitePCL.raw/wiki/SQLite-encryption-options-for-use-with-SQLitePCLRaw) for NuGet options.
+
+- **SQLCipher**: Purchase supported builds from [Zetetic](https://www.zetetic.net/sqlcipher/), or build the [open source code](https://github.com/sqlcipher/sqlcipher) yourself.
+
+**If using `SQLitePCLRaw.bundle_sqlite3` or `SQLitePCLRaw.bundle_winsqlite3`**, replace the bundle package with the corresponding provider package:
+
+```xml
+<!-- Old -->
+<PackageReference Include="SQLitePCLRaw.bundle_sqlite3" Version="2.x.x" />
+<!-- or -->
+<PackageReference Include="SQLitePCLRaw.bundle_winsqlite3" Version="2.x.x" />
+
+<!-- New -->
+<PackageReference Include="SQLitePCLRaw.provider.sqlite3" Version="3.x.x" />
+<!-- or -->
+<PackageReference Include="SQLitePCLRaw.provider.winsqlite3" Version="3.x.x" />
+```
+
+Then add explicit initialization before using SQLite:
+
+```csharp
+// For sqlite3
+static void Init()
+{
+    SQLitePCL.raw.SetProvider(new SQLitePCL.SQLite3Provider_sqlite3());
+}
+
+// For winsqlite3
+static void Init()
+{
+    SQLitePCL.raw.SetProvider(new SQLitePCL.SQLite3Provider_winsqlite3());
+}
+```
+
+**If using `SQLitePCLRaw.bundle_e_sqlite3mc`**, replace the package reference with `SQLite3MC.PCLRaw.bundle`:
+
+```xml
+<!-- Old -->
+<PackageReference Include="SQLitePCLRaw.bundle_e_sqlite3mc" Version="2.x.x" />
+
+<!-- New -->
+<PackageReference Include="SQLite3MC.PCLRaw.bundle" Version="2.x.x" />
+```
+
+**If using `SQLitePCLRaw.bundle_green`**, switch to `SQLitePCLRaw.bundle_e_sqlite3`. Alternatively, use `SQLitePCLRaw.config.e_sqlite3` paired with a separate native library package such as `SourceGear.sqlite3`, which allows updating the SQLite version independently:
+
+```xml
+<PackageReference Include="SQLitePCLRaw.bundle_e_sqlite3" Version="3.x.x" />
+```
+
+If you only target iOS and want to use the system SQLite library, reference the provider directly and initialize it explicitly:
+
+```xml
+<PackageReference Include="SQLitePCLRaw.core" Version="3.x.x" />
+<PackageReference Include="SQLitePCLRaw.provider.sqlite3" Version="3.x.x" />
+```
+
+```csharp
+static void Init()
+{
+    SQLitePCL.raw.SetProvider(new SQLitePCL.SQLite3Provider_sqlite3());
+}
+```
+
+For more details, see [SQLite encryption options for use with SQLitePCLRaw](https://github.com/ericsink/SQLitePCL.raw/wiki/SQLite-encryption-options-for-use-with-SQLitePCLRaw) and [SQLitePCLRaw 3.0 Release Notes](https://github.com/ericsink/SQLitePCL.raw/blob/main/v3.md).
