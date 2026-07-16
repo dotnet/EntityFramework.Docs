@@ -556,7 +556,7 @@ Previously, the `SQLitePCLRaw.bundle_e_sqlcipher`, `SQLitePCLRaw.bundle_sqlite3`
 
 ##### New behavior
 
-The `SQLitePCLRaw.bundle_e_sqlcipher`, `SQLitePCLRaw.bundle_sqlite3`, `SQLitePCLRaw.bundle_winsqlite3`, `SQLitePCLRaw.bundle_green`, and `SQLitePCLRaw.bundle_e_sqlite3mc` packages are no longer updated by the SQLitePCLRaw maintainer and are not compatible with `SQLitePCLRaw.Core` 3.0 and later. Applications that reference any of these packages should migrate to the recommended alternatives to avoid future breakage.
+The `SQLitePCLRaw.bundle_e_sqlcipher`, `SQLitePCLRaw.bundle_sqlite3`, `SQLitePCLRaw.bundle_winsqlite3`, `SQLitePCLRaw.bundle_green`, and `SQLitePCLRaw.bundle_e_sqlite3mc` packages are no longer updated by the SQLitePCLRaw maintainer. They are not compatible with `SQLitePCLRaw.Core` 3.0 and later, so applications that directly reference any of these packages alongside `SQLitePCLRaw.Core` 3.x will encounter conflicts. Applications should migrate to the recommended alternatives to avoid future breakage.
 
 ##### Why
 
