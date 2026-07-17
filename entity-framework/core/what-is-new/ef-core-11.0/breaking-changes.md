@@ -491,8 +491,8 @@ In most cases no change is required, since primitive collections are discovered 
 | **Breaking change**                                                                                       | **Impact** |
 |:----------------------------------------------------------------------------------------------------------|------------|
 | [Microsoft.Data.Sqlite no longer supports .NET Framework](#sqlite-no-netfx)                              | Medium     |
-| [SQLite no longer supports UWP and classic Xamarin](#sqlite-no-uwp-xamarin)                              | Medium     |
 | [Some SQLitePCLRaw bundle packages are no longer maintained](#sqlite-bundles-deprecated)                  | Medium     |
+| [SQLite no longer supports UWP and classic Xamarin](#sqlite-no-uwp-xamarin)                              | Low        |
 
 ### Medium-impact changes
 
@@ -520,30 +520,6 @@ If possible, move the application to .NET 10 or later.
 
 If you must remain on .NET Framework, stay on the latest `Microsoft.Data.Sqlite` 10.0.x servicing release. The 10.0.x line uses `SQLitePCLRaw.bundle_e_sqlite3`, allowing .NET Framework applications to update the referenced `SQLitePCLRaw.bundle_e_sqlite3` version even after `Microsoft.Data.Sqlite` stops receiving updates.
 
-<a name="sqlite-no-uwp-xamarin"></a>
-
-#### SQLite no longer supports UWP and classic Xamarin
-
-[Tracking Issue #5108](https://github.com/dotnet/EntityFramework.Docs/issues/5108)
-
-##### Old behavior
-
-Previously, `SQLitePCLRaw.bundle_e_sqlite3` included native SQLite builds for Universal Windows Platform (UWP) and classic Xamarin (Xamarin.iOS, Xamarin.Android, and Xamarin.Mac) targets.
-
-##### New behavior
-
-Starting with `SQLitePCLRaw.bundle_e_sqlite3` 2.1.12 (referenced by `Microsoft.Data.Sqlite` 11.0), native builds for UWP and classic Xamarin are no longer included. Applications targeting these platforms can no longer use the bundled native SQLite library.
-
-##### Why
-
-UWP and classic Xamarin are legacy platforms that are no longer actively supported. The SQLitePCLRaw maintainer dropped these builds to reduce maintenance overhead and to keep up with newer upstream SQLite releases (`SQLitePCLRaw.bundle_e_sqlite3` 2.1.12 ships [SQLite 3.53.0](https://sqlite.org/releaselog/3_53_0.html)).
-
-##### Mitigations
-
-Migrate UWP applications to the [Windows App SDK](/windows/apps/windows-app-sdk/) and classic Xamarin applications to [.NET MAUI](/dotnet/maui/), which are supported on modern .NET.
-
-If you must remain on UWP or classic Xamarin, stay on an earlier version of `SQLitePCLRaw.bundle_e_sqlite3` that still includes the native builds for these platforms.
-
 <a name="sqlite-bundles-deprecated"></a>
 
 #### Some SQLitePCLRaw bundle packages are no longer maintained
@@ -552,7 +528,7 @@ If you must remain on UWP or classic Xamarin, stay on an earlier version of `SQL
 
 ##### Old behavior
 
-Previously, the `SQLitePCLRaw.bundle_e_sqlcipher`, `SQLitePCLRaw.bundle_sqlite3`, `SQLitePCLRaw.bundle_winsqlite3`, `SQLitePCLRaw.bundle_green`, and `SQLitePCLRaw.bundle_e_sqlite3mc` packages provided a convenient way to configure SQLitePCLRaw with the corresponding SQLite provider. In particular, `SQLitePCLRaw.bundle_e_sqlcipher` provided no-cost encryption-enabled SQLite builds via SQLCipher.
+Previously, the `SQLitePCLRaw.bundle_e_sqlcipher`, `SQLitePCLRaw.bundle_sqlite3`, `SQLitePCLRaw.bundle_winsqlite3`, `SQLitePCLRaw.bundle_green`, and `SQLitePCLRaw.bundle_e_sqlite3mc` packages provided a convenient way to configure SQLitePCLRaw with the corresponding SQLite provider.
 
 ##### New behavior
 
@@ -640,3 +616,29 @@ static void Init()
 ```
 
 For more details, see [SQLite encryption options for use with SQLitePCLRaw](https://github.com/ericsink/SQLitePCL.raw/wiki/SQLite-encryption-options-for-use-with-SQLitePCLRaw) and [SQLitePCLRaw 3.0 Release Notes](https://github.com/ericsink/SQLitePCL.raw/blob/main/v3.md).
+
+### Low-impact changes
+
+<a name="sqlite-no-uwp-xamarin"></a>
+
+#### SQLite no longer supports UWP and classic Xamarin
+
+[Tracking Issue #5108](https://github.com/dotnet/EntityFramework.Docs/issues/5108)
+
+##### Old behavior
+
+Previously, `SQLitePCLRaw.bundle_e_sqlite3` included native SQLite builds for Universal Windows Platform (UWP) and classic Xamarin (Xamarin.iOS, Xamarin.Android, and Xamarin.Mac) targets.
+
+##### New behavior
+
+Starting with `SQLitePCLRaw.bundle_e_sqlite3` 2.1.12 (referenced by `Microsoft.Data.Sqlite` 11.0), native builds for UWP and classic Xamarin are no longer included. Applications targeting these platforms can no longer use the bundled native SQLite library.
+
+##### Why
+
+[SQLite 3.53.0](https://sqlite.org/releaselog/3_53_0.html) (shipped by `SQLitePCLRaw.bundle_e_sqlite3` 2.1.12) no longer supports UWP and classic Xamarin. The SQLitePCLRaw maintainer dropped these builds in order to keep up with newer upstream SQLite releases.
+
+##### Mitigations
+
+Migrate UWP applications to the [Windows App SDK](/windows/apps/windows-app-sdk/) and classic Xamarin applications to [.NET MAUI](/dotnet/maui/), which are supported on modern .NET.
+
+If you must remain on UWP or classic Xamarin, stay on an earlier version of `SQLitePCLRaw.bundle_e_sqlite3` that still includes the native builds for these platforms.
