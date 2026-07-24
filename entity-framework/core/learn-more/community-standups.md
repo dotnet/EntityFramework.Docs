@@ -14,6 +14,7 @@ The .NET Data Community Standups are live-streamed monthly (roughly) on Thursday
 
 | Date         | Area                  | Title                                                                                    |
 |--------------|-----------------------|------------------------------------------------------------------------------------------|
+| Jul 23, 2026 | Tools                 | [SQL Database Project Power Tools](#Jul23_2026)           |
 | Jun 25, 2026 | Temporal tables       | [Temporal tables and constraints in SQL Server and PostgreSQL 18](#Jun25_2026)           |
 | May 21, 2026 | EF Core               | [8 Real-World Query Anti-Patterns (and How to Fix Them)](#May21_2026)                    |
 | Apr 23, 2026 | Tools                 | [Lightweight Framework to Automate EF Components](#Apr23_2026)                           |
@@ -112,6 +113,23 @@ The .NET Data Community Standups are live-streamed monthly (roughly) on Thursday
 | May 6, 2020  | Welcome!              | [Introducing the EF Core Community Standup](#one)                                        |
 
 ## 2026
+
+<a name="Jul23_2026"></a>
+
+### Jul 23: [SQL Database Project Power Tools](https://www.youtube.com/live/HAdKPBGBhyQ?si=5YpiXluiB6ywJP1r)
+
+Long time EF Core contributor ErikEJ will show us his SQL Database Project Power Tools - enhancing the developer experience for SQL Database Projects in Visual Studio and SSMS.
+
+Featuring:
+
+- [Erik Ejlskov Jensen](https://github.com/erikej) (Special guest)
+- [Jiri Cincura](https://www.tabsoverspaces.com/) (Host)
+
+Links:
+
+- [SQL Database Project Power Tools](https://marketplace.visualstudio.com/items?itemName=ErikEJ.SQLProjectPowerTools)
+- [Open SSMS VSIX Gallery](https://ssmsgallery.azurewebsites.net/)
+- [SQLite Toolbox Extension for Visual Studio](https://www.youtube.com/watch?v=sPOpaxd5-Pk)
 
 <a name="Jun25_2026"></a>
 
