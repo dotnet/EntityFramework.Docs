@@ -213,6 +213,34 @@ Note that `FromSql` was introduced in EF 9.0. In previous versions, `FromSqlRaw`
 
 For more information on SQL querying, see the [relational documentation on SQL queries](xref:core/querying/sql-queries); most of that content is relevant for the Azure Cosmos DB provider as well.
 
+## Undefined values in projections
+
+In Azure Cosmos DB, a document property can be `undefined` — this happens when the property is simply not present in the JSON document. This can occur when navigating through an optional relationship that is `null` for some documents, or when a property was added to the model after existing documents were written.
+
+> [!NOTE]
+> EF Core 11 changed how undefined values are handled in projections. See the [breaking changes documentation](xref:core/what-is-new/ef-core-11.0/breaking-changes#cosmos-undefined-projection) for details.
+
+Starting with EF Core 11, when any part of an anonymous type or DTO projection evaluates to `undefined`, an `InvalidOperationException` is thrown with the message "A part of the projection was undefined, use the coalesce operator to handle possible undefined values."
+
+To handle undefined values in projections, use <xref:Microsoft.EntityFrameworkCore.CosmosDbFunctionsExtensions.IsDefined*> to filter out documents where a value is missing:
+
+```csharp
+var results = await context.Entities
+    .Where(x => EF.Functions.IsDefined(x.Associate!.NestedAssociate!.Id))
+    .Select(x => new { x.Associate!.NestedAssociate!.Id })
+    .ToListAsync();
+```
+
+Alternatively, use <xref:Microsoft.EntityFrameworkCore.CosmosDbFunctionsExtensions.CoalesceUndefined*> to substitute a default value for any property that could be `undefined`:
+
+```csharp
+var results = await context.Entities
+    .Select(x => new { Id = EF.Functions.CoalesceUndefined(x.Associate!.NestedAssociate!.Id, Guid.Empty) })
+    .ToListAsync();
+```
+
+Note that `EF.Functions.CoalesceUndefined` coalesces `undefined`, not `null`. To coalesce `null`, use the regular C# `??` operator.
+
 ## Function mappings
 
 This section shows which .NET methods and members are translated into which SQL functions when querying with the Azure Cosmos DB provider.

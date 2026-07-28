@@ -45,6 +45,8 @@ Patch releases usually ship monthly, but have a long lead time.
 
 See the [release planning process](xref:core/what-is-new/release-planning) for more information on how we decide what to ship in each release. We typically don't do detailed planning for further out than the next major or minor release.
 
-## EF Core 10.0
+## EF Core 11.0
 
-The next planned stable release is **EF Core 10.0**, or just **EF10**, scheduled for **November 2025**.
+The next planned stable release is **EF Core 11.0**, or just **EF11**, scheduled for **November 2026**.
+
+See [What's New in EF Core 11](xref:core/what-is-new/ef-core-11.0/whatsnew) for the list of features added to EF Core 11.
