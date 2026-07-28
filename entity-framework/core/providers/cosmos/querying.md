@@ -236,6 +236,28 @@ var results = await context.Entities
     .ToListAsync();
 ```
 
+### Naked projections and SELECT VALUE
+
+A _naked projection_ — where a single value is projected directly without wrapping it in a DTO or anonymous type — is translated using `SELECT VALUE` in Cosmos DB SQL. As a result, any documents where the projected value is `undefined` are **silently skipped** and not included in the results:
+
+```csharp
+// Naked projection - translated as SELECT VALUE, undefined results are silently omitted
+var ids = await context.Entities
+    .Select(x => x.Associate!.NestedAssociate!.Id)
+    .ToListAsync();
+```
+
+In contrast, any top-level instantiation in the projection (anonymous type, DTO, entity, or complex type) does **not** use `SELECT VALUE`. When a part of such a projection is `undefined`, an `InvalidOperationException` is thrown as described above.
+
+If silently skipping undefined results is not the desired behavior, wrap the projected value in an anonymous type or DTO to get a consistent error instead:
+
+```csharp
+// Wrapped in an anonymous type - does not use SELECT VALUE, throws if undefined
+var results = await context.Entities
+    .Select(x => new { x.Associate!.NestedAssociate!.Id })
+    .ToListAsync();
+```
+
 ## Function mappings
 
 This section shows which .NET methods and members are translated into which SQL functions when querying with the Azure Cosmos DB provider.

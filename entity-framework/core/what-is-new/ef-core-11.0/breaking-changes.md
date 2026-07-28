@@ -131,7 +131,7 @@ If your application uses composite keys whose values can contain the characters 
 
 ### Cosmos: exception thrown when a projection evaluates to undefined
 
-[Tracking Issue #38550](https://github.com/dotnet/efcore/pull/38550)
+[Tracking Issue #34067](https://github.com/dotnet/efcore/issues/34067)
 
 #### Old behavior
 
