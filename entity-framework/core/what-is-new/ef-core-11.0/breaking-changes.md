@@ -150,7 +150,7 @@ var singlePropResults = await context.Entities
 
 // Previously threw InvalidOperationException: Nullable object must have a value
 var multiPropResults = await context.Entities
-    .Select(x => new { x.Associate!.NestedAssociate!.Id, x.Associate.NestedAssociate.String })
+    .Select(x => new { x.Associate!.NestedAssociate!.Id, x.Associate!.NestedAssociate!.String })
     .ToListAsync();
 ```
 
