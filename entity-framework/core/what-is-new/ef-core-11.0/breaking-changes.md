@@ -23,6 +23,7 @@ This page documents API and behavior changes that have the potential to break ex
 |:--------------------------------------------------------------------------------------------------------------- | -----------|
 | [Sync I/O via the Azure Cosmos DB provider has been fully removed](#cosmos-nosync)                              | Medium     |
 | [Microsoft.Data.SqlClient has been updated to 7.0](#sqlclient-7)                                                | Medium     |
+| [Cosmos: exception thrown when a projection evaluates to undefined](#cosmos-undefined-projection)               | Medium     |
 | [Cosmos: illegal `id` characters are no longer escaped](#cosmos-no-id-escape)                                   | Medium     |
 | [SQL Server compatibility level now defaults to 160](#sqlserver-compatibility-level-160)                       | Low        |
 | [EF Core now throws by default when no migrations are found](#migrations-not-found)                             | Low        |
@@ -125,6 +126,65 @@ If your application uses composite keys whose values can contain the characters 
 
 - **Existing data**: Documents previously stored in Cosmos DB have `id` values using the old escape sequences (e.g. `Post|1|^2F`). After upgrading to EF Core 11, EF will generate unescaped `id` values (e.g. `Post|1|/`) and will no longer find those existing documents. To continue accessing existing data without migration, opt back into the old behavior using the `AppContext` switch described above—however, be aware that the id-collision bug will still be present.
 - **New data**: If you are creating a new application or database, avoid using these illegal characters in key values, as they are not valid in Cosmos DB resource `id` values. See the [Azure documentation](xref:Microsoft.Azure.Documents.Resource.Id) for details.
+
+<a name="cosmos-undefined-projection"></a>
+
+### Cosmos: exception thrown when a projection evaluates to undefined
+
+[Tracking Issue #38550](https://github.com/dotnet/efcore/pull/38550)
+
+#### Old behavior
+
+Previously, when projecting properties in anonymous type or DTO projections via navigation over optional relationships where a segment of the path was absent in the Cosmos DB document (causing the projected value to be `undefined`), the behavior was inconsistent:
+
+- With **single-property** anonymous type or DTO projections, EF translated the query using `SELECT VALUE`, which silently filtered out any documents where the projected value was `undefined`. This meant fewer results were returned than expected, with no indication of the missing data.
+- With **multi-property** anonymous type or DTO projections, an `InvalidOperationException` with the message "Nullable object must have a value" was thrown.
+
+For example, given an entity `Entity` with an optional owned `Associate` which in turn has an optional owned `NestedAssociate`:
+
+```csharp
+// Previously silently returned fewer results (undefined results were filtered out)
+var singlePropResults = await context.Entities
+    .Select(x => new { x.Associate!.NestedAssociate!.Id })
+    .ToListAsync();
+
+// Previously threw InvalidOperationException: Nullable object must have a value
+var multiPropResults = await context.Entities
+    .Select(x => new { x.Associate!.NestedAssociate!.Id, x.Associate.NestedAssociate.String })
+    .ToListAsync();
+```
+
+#### New behavior
+
+Starting with EF Core 11.0, an `InvalidOperationException` is thrown in both cases when any part of the projection evaluates to `undefined` in Azure Cosmos DB. The exception message is:
+
+> A part of the projection was undefined, use the coalesce operator to handle possible undefined values.
+
+#### Why
+
+The previous behavior was inconsistent. Single-property projections could silently discard results, making it easy to miss data without any indication of the problem. The new behavior ensures consistent, predictable error reporting whenever a projection encounters an undefined value.
+
+#### Mitigations
+
+Use <xref:Microsoft.EntityFrameworkCore.CosmosDbFunctionsExtensions.IsDefined*> to filter out documents where the projected value is missing:
+
+```csharp
+var results = await context.Entities
+    .Where(x => EF.Functions.IsDefined(x.Associate!.NestedAssociate!.Id))
+    .Select(x => new { x.Associate!.NestedAssociate!.Id })
+    .ToListAsync();
+```
+
+Alternatively, use <xref:Microsoft.EntityFrameworkCore.CosmosDbFunctionsExtensions.CoalesceUndefined*> to provide a default value for properties that could be `undefined`:
+
+```csharp
+var results = await context.Entities
+    .Select(x => new
+    {
+        Id = EF.Functions.CoalesceUndefined(x.Associate!.NestedAssociate!.Id, Guid.Empty)
+    })
+    .ToListAsync();
+```
 
 ## Low-impact changes
 
