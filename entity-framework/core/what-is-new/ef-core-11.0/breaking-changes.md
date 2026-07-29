@@ -21,7 +21,7 @@ This page documents API and behavior changes that have the potential to break ex
 
 | **Breaking change**                                                                                             | **Impact** |
 |:--------------------------------------------------------------------------------------------------------------- | -----------|
-| [Cosmos: `__jObject` shadow property removed; JObject no longer used for serialization](#cosmos-jObject-removed) | High       |
+| [Cosmos: `__jObject` shadow property removed; JObject no longer used for serialization](#cosmos-jObject-removed) | Low        |
 | [Cosmos: Unmapped properties are no longer preserved](#cosmos-unmapped-properties)                              | High       |
 | [Sync I/O via the Azure Cosmos DB provider has been fully removed](#cosmos-nosync)                              | Medium     |
 | [Microsoft.Data.SqlClient has been updated to 7.0](#sqlclient-7)                                                | Medium     |
@@ -38,47 +38,6 @@ This page documents API and behavior changes that have the potential to break ex
 | [`Property` no longer configures primitive collections](#property-not-primitive-collection)                     | Low        |
 
 ## High-impact changes
-
-<a name="cosmos-jObject-removed"></a>
-
-### Cosmos: `__jObject` shadow property removed; JObject no longer used for serialization
-
-[Tracking Issue #5421](https://github.com/dotnet/EntityFramework.Docs/issues/5421)
-
-#### Old behavior
-
-Previously, the Azure Cosmos DB provider added a shadow property named `"__jObject"` of type `JObject` (from `Newtonsoft.Json`) to every entity type. This property contained the raw JSON document as received from and sent to Cosmos DB, allowing access to unmapped or raw data:
-
-```csharp
-var order = await context.Orders.FirstAsync();
-var rawJson = context.Entry(order).Property<JObject>("__jObject").CurrentValue;
-var billingAddress = rawJson["BillingAddress"]?.Value<string>();
-```
-
-EF Core used `Newtonsoft.Json` (via `JObject`) internally for all document serialization and deserialization.
-
-#### New behavior
-
-Starting with EF Core 11, the `__jObject` shadow property no longer exists. EF Core now uses `System.Text.Json` (`Utf8JsonReader`/`Utf8JsonWriter`) for document serialization and deserialization, and no longer depends on `Newtonsoft.Json`.
-
-Accessing the `"__jObject"` property will throw an `InvalidOperationException`.
-
-#### Why
-
-The `JObject`-based approach required a dependency on `Newtonsoft.Json` and limited performance improvements. Switching to `System.Text.Json` aligns EF Core Cosmos with the rest of the .NET ecosystem and enables significant performance gains in the materializer.
-
-#### Mitigations
-
-To access the raw JSON document, use the `CosmosClient` directly instead of relying on `__jObject`:
-
-```csharp
-var cosmosClient = context.Database.GetCosmosClient();
-var container = cosmosClient.GetContainer("myDatabase", "myContainer");
-var response = await container.ReadItemAsync<JsonElement>("1", new PartitionKey("1"));
-var billingAddress = response.Resource.GetProperty("BillingAddress").GetString();
-```
-
-For more information, see [Working with Unstructured Data in Azure Cosmos DB](xref:core/providers/cosmos/unstructured-data).
 
 <a name="cosmos-unmapped-properties"></a>
 
@@ -198,6 +157,47 @@ If your application uses composite keys whose values can contain the characters 
 - **New data**: If you are creating a new application or database, avoid using these illegal characters in key values, as they are not valid in Cosmos DB resource `id` values. See the [Azure documentation](xref:Microsoft.Azure.Documents.Resource.Id) for details.
 
 ## Low-impact changes
+
+<a name="cosmos-jObject-removed"></a>
+
+### Cosmos: `__jObject` shadow property removed; JObject no longer used for serialization
+
+[Tracking Issue #5421](https://github.com/dotnet/EntityFramework.Docs/issues/5421)
+
+#### Old behavior
+
+Previously, the Azure Cosmos DB provider added a shadow property named `"__jObject"` of type `JObject` (from `Newtonsoft.Json`) to every entity type. This property contained the raw JSON document as received from and sent to Cosmos DB, allowing access to unmapped or raw data:
+
+```csharp
+var order = await context.Orders.FirstAsync();
+var rawJson = context.Entry(order).Property<JObject>("__jObject").CurrentValue;
+var billingAddress = rawJson["BillingAddress"]?.Value<string>();
+```
+
+EF Core used `Newtonsoft.Json` (via `JObject`) internally for all document serialization and deserialization.
+
+#### New behavior
+
+Starting with EF Core 11, the `__jObject` shadow property no longer exists. EF Core now uses `System.Text.Json` (`Utf8JsonReader`/`Utf8JsonWriter`) for document serialization and deserialization, and no longer depends on `Newtonsoft.Json`.
+
+Accessing the `"__jObject"` property will throw an `InvalidOperationException`.
+
+#### Why
+
+The `JObject`-based approach required a dependency on `Newtonsoft.Json` and limited performance improvements. Switching to `System.Text.Json` aligns EF Core Cosmos with the rest of the .NET ecosystem and enables significant performance gains in the materializer.
+
+#### Mitigations
+
+To access the raw JSON document, use the `CosmosClient` directly instead of relying on `__jObject`:
+
+```csharp
+var cosmosClient = context.Database.GetCosmosClient();
+var container = cosmosClient.GetContainer("myDatabase", "myContainer");
+var response = await container.ReadItemAsync<JsonElement>("1", new PartitionKey("1"));
+var billingAddress = response.Resource.GetProperty("BillingAddress").GetString();
+```
+
+For more information, see [Working with Unstructured Data in Azure Cosmos DB](xref:core/providers/cosmos/unstructured-data).
 
 <a name="sqlserver-compatibility-level-160"></a>
 
