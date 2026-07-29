@@ -488,7 +488,7 @@ In most cases no change is required, since primitive collections are discovered 
 
 #### Old behavior
 
-Previously, when a split query (using `AsSplitQuery()`) encountered out-of-order or orphaned child rows caused by concurrent data modifications between the split query's SQL statements, EF Core silently discarded the affected child collections. The result was an entity with an empty collection even though the parent and its related data were never modified—no exception was thrown and no warning was logged.
+Previously, when a split query (using `AsSplitQuery()`) encountered out-of-order or orphaned child rows caused by concurrent data modifications between the split query's SQL statements, EF Core silently discarded the affected child collections. The result was an entity with an empty collection even though the related rows still existed—no exception was thrown and no warning was logged.
 
 #### New behavior
 
@@ -505,8 +505,10 @@ Silently returning incorrect data (empty collections for entities that have rela
 The simplest mitigation is to re-execute the query; the concurrent modification is transient and the retry will typically succeed:
 
 ```csharp
+const int maxRetries = 3;
+
 List<Blog> blogs;
-while (true)
+for (var attempt = 0; attempt < maxRetries; attempt++)
 {
     try
     {
@@ -516,7 +518,7 @@ while (true)
             .ToListAsync();
         break;
     }
-    catch (DbQueryConcurrencyException)
+    catch (DbQueryConcurrencyException) when (attempt < maxRetries - 1)
     {
         // Retry on concurrent modification
     }
@@ -526,12 +528,15 @@ while (true)
 Alternatively, wrap the split query in a serializable or snapshot transaction to prevent concurrent modifications from affecting the results:
 
 ```csharp
-await using var transaction = await context.Database.BeginTransactionAsync(IsolationLevel.Snapshot);
+await using var transaction =
+    await context.Database.BeginTransactionAsync(IsolationLevel.Serializable);
 
 var blogs = await context.Blogs
     .Include(b => b.Posts)
     .AsSplitQuery()
     .ToListAsync();
+
+await transaction.CommitAsync();
 ```
 
 If neither retry nor a transaction is acceptable, switch to a single query (`AsSingleQuery()`) which is always consistent:
