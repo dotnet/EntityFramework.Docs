@@ -316,6 +316,12 @@ Tracks custom SQL and database objects (views, functions, triggers, etc.) as par
 
 [GitHub repository](https://github.com/AndreqGav/EFCore.Migrations.CustomSql) | [NuGet](https://www.nuget.org/packages/EFCore.Migrations.CustomSql)
 
+### DataArc.EntityFrameworkCore
+
+Extends Entity Framework Core with structured command and query execution across registered `DbContext` boundaries. Includes command and query builders, bulk and parallel operations, structured execution results, transaction-aware execution, and database generation. Commercially licensed with a 14-day evaluation trial. For EF Core: 6-10.
+
+[Website](https://www.dataarc.dev) | [GitHub repository](https://github.com/SolidArcSoftware/DataArc.EntityFrameworkCore) | [NuGet](https://www.nuget.org/packages/DataArc.EntityFrameworkCore) | [Documentation](https://solidarcsoftware.github.io/DataArc.EntityFrameworkCore/)
+
 ## API Integrations
 
 These packages are designed to integrate directly with EF Core to expose various APIs.
