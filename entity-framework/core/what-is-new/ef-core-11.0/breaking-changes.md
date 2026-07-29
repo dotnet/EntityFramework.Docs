@@ -475,7 +475,7 @@ If you relied on the previous rounding behavior, apply explicit rounding in your
 
 ```csharp
 var result = await context.Products
-    .Select(p => (int)Math.Round((double)(p.Int / (p.Int + 1))))
+    .Select(p => (int)Math.Round((double)p.Int / (p.Int + 1)))
     .SingleAsync();
 ```
 

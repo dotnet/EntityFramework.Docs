@@ -38,7 +38,7 @@ In EF Core 10 and earlier, it was possible to access properties not tracked by E
 ```
 
 > [!WARNING]
-> The `"__jObject"` property was part of the EF Core infrastructure and has been removed in EF Core 11. It should not be used in any version of EF Core as it is no longer available.
+> The `"__jObject"` property was part of the EF Core infrastructure. It exists only in EF Core 10 and earlier, and has been removed starting with EF Core 11.
 
 ## Using CosmosClient
 
