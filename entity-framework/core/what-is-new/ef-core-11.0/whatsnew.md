@@ -903,10 +903,7 @@ For more information, see [Configuration file](xref:core/cli/dotnet#configuratio
 
 ### `-NoBuild` for PMC `Update-Database`
 
-> [!NOTE]
-> This feature is being introduced in EF Core 11, which is currently in preview.
-
-The Package Manager Console `Update-Database` command now supports the `-NoBuild` switch, which skips the project build step before applying migrations. This aligns `Update-Database` with `Add-Migration`, which already supported `-NoBuild`.
+Starting with EF Core 11, the Package Manager Console `Update-Database` command supports the `-NoBuild` switch, which skips the project build step before applying migrations. This aligns `Update-Database` with `Add-Migration`, which already supports `-NoBuild`.
 
 This is useful when a build succeeds but produces warnings that Visual Studio's Package Manager Console treats as errors (such as NuGet vulnerability warnings), which would otherwise block the command from running:
 
