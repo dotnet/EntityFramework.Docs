@@ -196,7 +196,7 @@ This can be used to manage any aspect of your database, including:
 * Triggers
 * Views
 
-In most cases, EF Core will automatically wrap each migration in its own transaction when applying migrations. Unfortunately, some migrations operations cannot be performed within a transaction in some databases; for these cases, you may opt out of the transaction by passing `suppressTransaction: true` to `migrationBuilder.Sql`.
+In most cases, EF Core will automatically wrap migrations in a transaction when applying migrations. Prior to EF Core 9, each migration was wrapped in its own transaction. Starting with EF Core 9, all pending migrations are applied within a single transaction as part of [migration locking](xref:core/managing-schemas/migrations/applying#migration-locking). Unfortunately, some migration operations cannot be performed within a transaction in some databases; for these cases, you may opt out of the transaction by passing `suppressTransaction: true` to `migrationBuilder.Sql`.
 
 ## Remove a migration
 

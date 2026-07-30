@@ -346,6 +346,8 @@ Note that `MigrateAsync()` builds on top of the `IMigrator` service, which can b
 
 Starting with EF Core 9, <xref:Microsoft.EntityFrameworkCore.RelationalDatabaseFacadeExtensions.MigrateAsync*> and <xref:Microsoft.EntityFrameworkCore.RelationalDatabaseFacadeExtensions.Migrate*> automatically acquire a database-wide lock before applying any migrations. This protects against database corruption that could result from multiple application instances running migrations concurrently, which is a common scenario when [applying migrations at runtime](#apply-migrations-at-runtime). The lock is held for the duration of the migration execution, including any [seeding code](xref:core/modeling/data-seeding#use-seeding-method), and is automatically released when the operation completes.
 
+In addition, starting with EF Core 9, all pending migrations are applied within a single transaction. Prior to EF Core 9, each migration was wrapped in its own transaction. If any migration fails, the entire transaction is rolled back, leaving the database in the state it was in before `Migrate()` or `MigrateAsync()` was called.
+
 Migration locking applies when migrations are applied using any of the following methods:
 
 * `dotnet ef database update` (.NET CLI)
