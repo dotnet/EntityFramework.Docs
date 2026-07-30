@@ -791,6 +791,25 @@ For more information, [see the documentation](xref:core/providers/cosmos/saving#
 
 This feature was contributed by [@JoasE](https://github.com/JoasE) - many thanks!
 
+<a name="cosmos-undefined-projection"></a>
+
+### Consistent behavior for undefined values in projections
+
+Previously, when projecting scalar properties via optional navigations where a document path was absent (resulting in an `undefined` value in Cosmos DB), behavior was inconsistent: single-property anonymous type projections silently dropped those results, while multi-property projections threw a cryptic exception.
+
+EF Core 11 now consistently throws an `InvalidOperationException` when any part of a projection evaluates to `undefined`. Use <xref:Microsoft.EntityFrameworkCore.CosmosDbFunctionsExtensions.IsDefined*> to filter or <xref:Microsoft.EntityFrameworkCore.CosmosDbFunctionsExtensions.CoalesceUndefined*> to provide fallbacks:
+
+```csharp
+var results = await context.Entities
+    .Where(x => EF.Functions.IsDefined(x.Associate!.NestedAssociate!.Id))
+    .Select(x => new { x.Associate!.NestedAssociate!.Id })
+    .ToListAsync();
+```
+
+For more information, see the [breaking changes documentation](xref:core/what-is-new/ef-core-11.0/breaking-changes#cosmos-undefined-projection).
+
+This feature was contributed by [@JoasE](https://github.com/JoasE) - many thanks!
+
 ## Migrations
 
 <a name="migrations-exclude-fk"></a>
