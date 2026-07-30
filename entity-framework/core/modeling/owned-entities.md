@@ -11,6 +11,9 @@ EF Core allows you to model entity types that can only ever appear on navigation
 
 Owned entities are essentially a part of the owner and cannot exist without it, they are conceptually similar to [aggregates](https://martinfowler.com/bliki/DDD_Aggregate.html). This means that the owned entity is by definition on the dependent side of the relationship with the owner.
 
+> [!TIP]
+> If you are modeling a [value object](https://martinfowler.com/bliki/ValueObject.html) - an object without its own identity, such as an `Address` or `Coordinate` - consider using a [complex type](xref:core/modeling/complex-types) instead of an owned entity type. Unlike owned types, complex types have value semantics and no hidden key, which avoids a number of pitfalls; see [Complex types vs. owned entity types](xref:core/modeling/complex-types#complex-types-vs-owned-entity-types) for a comparison.
+
 ## Configuring types as owned
 
 In most providers, entity types are never configured as owned by convention - you must explicitly use the `OwnsOne` method in `OnModelCreating` or annotate the type with `OwnedAttribute` to configure the type as owned. The Azure Cosmos DB provider is an exception to this. Because Azure Cosmos DB is a document database, the provider configures all related entity types as owned by default.

@@ -339,6 +339,9 @@ We'd like to call out Andrea Canciani ([@ranma42](https://github.com/ranma42)) f
 
 ### Complex types: GroupBy and ExecuteUpdate support
 
+> [!TIP]
+> For comprehensive documentation on complex types, see [Complex types](xref:core/modeling/complex-types).
+
 #### GroupBy
 
 > [!TIP]

@@ -17,6 +17,9 @@ EF11 requires the .NET 11 SDK to build and requires the .NET 11 runtime to run. 
 
 ## Complex types
 
+> [!TIP]
+> For comprehensive documentation on complex types, see [Complex types](xref:core/modeling/complex-types).
+
 <a name="complex-types-tpt-tpc"></a>
 
 ### Complex types and JSON columns on entity types with TPT/TPC inheritance

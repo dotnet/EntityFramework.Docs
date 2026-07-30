@@ -18,6 +18,9 @@ EF8 requires the [.NET 8 SDK](https://aka.ms/get-dotnet-8) to build and requires
 
 ## Value objects using Complex Types
 
+> [!TIP]
+> This section introduces complex types. For comprehensive documentation, see [Complex types](xref:core/modeling/complex-types).
+
 Objects saved to the database can be split into three broad categories:
 
 - Objects that are unstructured and hold a single value. For example, `int`, `Guid`, `string`, `IPAddress`. These are (somewhat loosely) called "primitive types".
