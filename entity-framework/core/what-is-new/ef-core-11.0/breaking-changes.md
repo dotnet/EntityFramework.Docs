@@ -25,6 +25,7 @@ This page documents API and behavior changes that have the potential to break ex
 | [Cosmos: Unmapped properties are no longer preserved](#cosmos-unmapped-properties)                              | High       |
 | [Sync I/O via the Azure Cosmos DB provider has been fully removed](#cosmos-nosync)                              | Medium     |
 | [Microsoft.Data.SqlClient has been updated to 7.0](#sqlclient-7)                                                | Medium     |
+| [Cosmos: exception thrown when a projection evaluates to undefined](#cosmos-undefined-projection)               | Medium     |
 | [Cosmos: illegal `id` characters are no longer escaped](#cosmos-no-id-escape)                                   | Medium     |
 | [SQL Server compatibility level now defaults to 160](#sqlserver-compatibility-level-160)                       | Low        |
 | [EF Core now throws by default when no migrations are found](#migrations-not-found)                             | Low        |
@@ -36,6 +37,7 @@ This page documents API and behavior changes that have the potential to break ex
 | [Cosmos: floating-point values are now truncated when materializing to fixed-point types](#cosmos-truncation)   | Low        |
 | [Owned JSON collections without an explicit key are obsolete](#owned-json-collections-obsolete)                 | Low        |
 | [`Property` no longer configures primitive collections](#property-not-primitive-collection)                     | Low        |
+| [Split queries now throw when concurrent modifications are detected](#split-query-concurrency-exception)         | Low        |
 
 ## High-impact changes
 
@@ -155,6 +157,65 @@ If your application uses composite keys whose values can contain the characters 
 
 - **Existing data**: Documents previously stored in Cosmos DB have `id` values using the old escape sequences (e.g. `Post|1|^2F`). After upgrading to EF Core 11, EF will generate unescaped `id` values (e.g. `Post|1|/`) and will no longer find those existing documents. To continue accessing existing data without migration, opt back into the old behavior using the `AppContext` switch described above—however, be aware that the id-collision bug will still be present.
 - **New data**: If you are creating a new application or database, avoid using these illegal characters in key values, as they are not valid in Cosmos DB resource `id` values. See the [Azure documentation](xref:Microsoft.Azure.Documents.Resource.Id) for details.
+
+<a name="cosmos-undefined-projection"></a>
+
+### Cosmos: exception thrown when a projection evaluates to undefined
+
+[Tracking Issue #34067](https://github.com/dotnet/efcore/issues/34067)
+
+#### Old behavior
+
+Previously, when projecting properties in anonymous type or DTO projections via navigation over optional relationships where a segment of the path was absent in the Cosmos DB document (causing the projected value to be `undefined`), the behavior was inconsistent:
+
+- With **single-property** anonymous type or DTO projections, EF translated the query using `SELECT VALUE`, which silently filtered out any documents where the projected value was `undefined`. This meant fewer results were returned than expected, with no indication of the missing data.
+- With **multi-property** anonymous type or DTO projections, an `InvalidOperationException` with the message "Nullable object must have a value" was thrown.
+
+For example, given an entity `Entity` with an optional owned `Associate` which in turn has an optional owned `NestedAssociate`:
+
+```csharp
+// Previously silently returned fewer results (undefined results were filtered out)
+var singlePropResults = await context.Entities
+    .Select(x => new { x.Associate!.NestedAssociate!.Id })
+    .ToListAsync();
+
+// Previously threw InvalidOperationException: Nullable object must have a value
+var multiPropResults = await context.Entities
+    .Select(x => new { x.Associate!.NestedAssociate!.Id, x.Associate!.NestedAssociate!.String })
+    .ToListAsync();
+```
+
+#### New behavior
+
+Starting with EF Core 11.0, an `InvalidOperationException` is thrown in both cases when any part of the projection evaluates to `undefined` in Azure Cosmos DB. The exception message is:
+
+> A part of the projection was undefined, use the coalesce operator to handle possible undefined values.
+
+#### Why
+
+The previous behavior was inconsistent. Single-property projections could silently discard results, making it easy to miss data without any indication of the problem. The new behavior ensures consistent, predictable error reporting whenever a projection encounters an undefined value.
+
+#### Mitigations
+
+Use <xref:Microsoft.EntityFrameworkCore.CosmosDbFunctionsExtensions.IsDefined*> to filter out documents where the projected value is missing:
+
+```csharp
+var results = await context.Entities
+    .Where(x => EF.Functions.IsDefined(x.Associate!.NestedAssociate!.Id))
+    .Select(x => new { x.Associate!.NestedAssociate!.Id })
+    .ToListAsync();
+```
+
+Alternatively, use <xref:Microsoft.EntityFrameworkCore.CosmosDbFunctionsExtensions.CoalesceUndefined*> to provide a default value for properties that could be `undefined`:
+
+```csharp
+var results = await context.Entities
+    .Select(x => new
+    {
+        Id = EF.Functions.CoalesceUndefined(x.Associate!.NestedAssociate!.Id, Guid.Empty)
+    })
+    .ToListAsync();
+```
 
 ## Low-impact changes
 
@@ -577,6 +638,74 @@ protected override void OnModelCreating(ModelBuilder modelBuilder)
 ```
 
 In most cases no change is required, since primitive collections are discovered by convention.
+
+<a name="split-query-concurrency-exception"></a>
+
+### Split queries now throw when concurrent modifications are detected
+
+[Tracking Issue #33826](https://github.com/dotnet/efcore/issues/33826)
+
+#### Old behavior
+
+Previously, when a split query (using `AsSplitQuery()`) encountered out-of-order or orphaned child rows caused by concurrent data modifications between the split query's SQL statements, EF Core silently discarded the affected child collections. The result was an entity with an empty collection even though the related rows still existed—no exception was thrown and no warning was logged.
+
+#### New behavior
+
+Starting with EF Core 11.0, EF Core throws a `DbQueryConcurrencyException` when split query results cannot be correlated because of concurrent data modifications. The exception message describes the situation and suggests remediation:
+
+> The results of a split query could not be correlated because the data was modified concurrently while the query was executing. Re-execute the query, or execute it within a serializable or snapshot transaction to prevent concurrent modifications.
+
+#### Why
+
+Silently returning incorrect data (empty collections for entities that have related rows) is far worse than surfacing an error. This scenario is intrinsically caused by the lack of data-consistency guarantees in split queries when the database is modified between statements. Throwing a retriable exception makes the problem visible and gives callers a clear path to recovery.
+
+#### Mitigations
+
+The simplest mitigation is to re-execute the query; the concurrent modification is transient and the retry will typically succeed:
+
+```csharp
+const int maxRetries = 3;
+
+List<Blog> blogs;
+for (var attempt = 0; attempt < maxRetries; attempt++)
+{
+    try
+    {
+        blogs = await context.Blogs
+            .Include(b => b.Posts)
+            .AsSplitQuery()
+            .ToListAsync();
+        break;
+    }
+    catch (DbQueryConcurrencyException) when (attempt < maxRetries - 1)
+    {
+        // Retry on concurrent modification
+    }
+}
+```
+
+Alternatively, wrap the split query in a serializable or snapshot transaction to prevent concurrent modifications from affecting the results:
+
+```csharp
+await using var transaction =
+    await context.Database.BeginTransactionAsync(IsolationLevel.Serializable);
+
+var blogs = await context.Blogs
+    .Include(b => b.Posts)
+    .AsSplitQuery()
+    .ToListAsync();
+
+await transaction.CommitAsync();
+```
+
+If neither retry nor a transaction is acceptable, switch to a single query (`AsSingleQuery()`) which is always consistent:
+
+```csharp
+var blogs = await context.Blogs
+    .Include(b => b.Posts)
+    .AsSingleQuery()
+    .ToListAsync();
+```
 
 <a name="MDS-breaking-changes"></a>
 

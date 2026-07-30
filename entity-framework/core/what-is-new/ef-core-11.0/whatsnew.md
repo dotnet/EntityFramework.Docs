@@ -802,6 +802,23 @@ As part of this change, the `__jObject` shadow property (of type `JObject`) that
 > [!IMPORTANT]
 > These are breaking changes. See the [breaking changes documentation](xref:core/what-is-new/ef-core-11.0/breaking-changes#cosmos-jObject-removed) for details and mitigations.
 
+<a name="cosmos-undefined-projection"></a>
+
+### Consistent behavior for undefined values in projections
+
+Previously, when projecting scalar properties via optional navigations where a document path was absent (resulting in an `undefined` value in Cosmos DB), behavior was inconsistent: single-property anonymous type projections silently dropped those results, while multi-property projections threw a cryptic exception.
+
+EF Core 11 now consistently throws an `InvalidOperationException` when any part of a projection evaluates to `undefined`. Use <xref:Microsoft.EntityFrameworkCore.CosmosDbFunctionsExtensions.IsDefined*> to filter or <xref:Microsoft.EntityFrameworkCore.CosmosDbFunctionsExtensions.CoalesceUndefined*> to provide fallbacks:
+
+```csharp
+var results = await context.Entities
+    .Where(x => EF.Functions.IsDefined(x.Associate!.NestedAssociate!.Id))
+    .Select(x => new { x.Associate!.NestedAssociate!.Id })
+    .ToListAsync();
+```
+
+For more information, see the [breaking changes documentation](xref:core/what-is-new/ef-core-11.0/breaking-changes#cosmos-undefined-projection).
+
 This feature was contributed by [@JoasE](https://github.com/JoasE) - many thanks!
 
 ## Migrations
@@ -911,6 +928,23 @@ When you run `dotnet ef`, the tool searches for a `.config/dotnet-ef.json` file 
 Explicit command-line options always take precedence over configuration file values. Path values for `project` and `startupProject` are resolved relative to the parent of the `.config` directory containing the file.
 
 For more information, see [Configuration file](xref:core/cli/dotnet#configuration-file).
+
+<a name="pmc-nobuild"></a>
+
+### `-NoBuild` for PMC migrations commands
+
+Starting with EF Core 11, the Package Manager Console `Add-Migration` and `Update-Database` commands support the `-NoBuild` switch, which skips the project build step before running the command.
+
+This is useful when a build succeeds but produces warnings that Visual Studio's Package Manager Console treats as errors (such as NuGet vulnerability warnings), which would otherwise block the commands from running:
+
+```powershell
+Add-Migration MyMigration -NoBuild
+Update-Database -NoBuild
+```
+
+Only use `-NoBuild` when the project is already up-to-date, since running with a stale build may produce unexpected results.
+
+For more information, see the [PMC tools reference](xref:core/cli/powershell).
 
 <a name="dotnet-ef-context-wildcard"></a>
 
