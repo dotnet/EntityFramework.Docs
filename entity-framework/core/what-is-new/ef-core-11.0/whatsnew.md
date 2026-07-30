@@ -918,6 +918,23 @@ Explicit command-line options always take precedence over configuration file val
 
 For more information, see [Configuration file](xref:core/cli/dotnet#configuration-file).
 
+<a name="pmc-nobuild"></a>
+
+### `-NoBuild` for PMC migrations commands
+
+Starting with EF Core 11, the Package Manager Console `Add-Migration` and `Update-Database` commands support the `-NoBuild` switch, which skips the project build step before running the command.
+
+This is useful when a build succeeds but produces warnings that Visual Studio's Package Manager Console treats as errors (such as NuGet vulnerability warnings), which would otherwise block the commands from running:
+
+```powershell
+Add-Migration MyMigration -NoBuild
+Update-Database -NoBuild
+```
+
+Only use `-NoBuild` when the project is already up-to-date, since running with a stale build may produce unexpected results.
+
+For more information, see the [PMC tools reference](xref:core/cli/powershell).
+
 <a name="dotnet-ef-context-wildcard"></a>
 
 ### Wildcard context support for migration commands
