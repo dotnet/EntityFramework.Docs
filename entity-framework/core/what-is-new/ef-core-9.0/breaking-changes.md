@@ -459,7 +459,7 @@ var blogs = await context.Blogs
 
 #### Old behavior
 
-Previously, each migration was wrapped in its own individual transaction when applying migrations.
+Previously, EF Core would (by default) wrap each migration in its own transaction when applying migrations.
 
 #### New behavior
 
