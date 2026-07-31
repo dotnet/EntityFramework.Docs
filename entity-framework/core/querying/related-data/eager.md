@@ -7,6 +7,17 @@ uid: core/querying/related-data/eager
 ---
 # Eager Loading of Related Data
 
+## The model
+
+The examples in this article use a blogging model with a `Blog` that has many `Post`s. Each `Blog` also has an owner and a `Theme`, and each `Post` has an author and a set of tags:
+
+[!code-csharp[Main](../../../../samples/core/Querying/RelatedData/Blog.cs)]
+
+[!code-csharp[Main](../../../../samples/core/Querying/RelatedData/Post.cs)]
+
+> [!TIP]
+> You can view the [sample](https://github.com/dotnet/EntityFramework.Docs/tree/main/samples/core/Querying/RelatedData) for this article on GitHub.
+
 ## Eager loading
 
 You can use the `Include` method to specify related data to be included in query results. In the following example, the blogs that are returned in the results will have their `Posts` property populated with the related posts.
