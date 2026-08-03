@@ -832,7 +832,7 @@ static void Init()
 If you only target iOS and want to use the system SQLite library, reference the provider directly and initialize it explicitly:
 
 ```xml
-<PackageReference Include="SQLitePCLRaw.core" Version="3.x.x" />
+<PackageReference Include="SQLitePCLRaw.Core" Version="3.x.x" />
 <PackageReference Include="SQLitePCLRaw.provider.sqlite3" Version="3.x.x" />
 ```
 

@@ -2,7 +2,7 @@
 title: What's New in EF Core 11
 description: Overview of new features in EF Core 11
 author: SamMonoRT
-ms.date: 06/10/2026
+ms.date: 08/03/2026
 uid: core/what-is-new/ef-core-11.0/whatsnew
 ---
 

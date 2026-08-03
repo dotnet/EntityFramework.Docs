@@ -2,7 +2,7 @@
 title: EF Core tools reference (Package Manager Console) - EF Core
 description: Reference guide for the Entity Framework Core Visual Studio Package Manager Console
 author: SamMonoRT
-ms.date: 11/08/2024
+ms.date: 08/03/2026
 uid: core/cli/powershell
 ms.custom: sfi-ropc-nochange
 ---

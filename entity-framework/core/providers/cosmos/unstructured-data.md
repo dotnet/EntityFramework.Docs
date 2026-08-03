@@ -2,7 +2,7 @@
 title: Azure Cosmos DB Provider - Working with Unstructured Data - EF Core
 description: How to work with Azure Cosmos DB unstructured data using Entity Framework Core
 author: AndriySvyryd
-ms.date: 11/05/2019
+ms.date: 08/03/2026
 uid: core/providers/cosmos/unstructured-data
 ---
 # Working with Unstructured Data in EF Core Azure Cosmos DB Provider
