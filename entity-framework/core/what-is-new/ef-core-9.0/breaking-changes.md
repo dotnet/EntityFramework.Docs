@@ -36,6 +36,7 @@ EF Core 9 targets .NET 8. This means that existing applications that target .NET
 | [EF tools no longer support .NET Framework projects](#ef-tools-no-netfx)                                  | Low        |
 | [`EF.Constant()` and `EF.Parameter()` no longer work inside compiled queries](#ef-constant-compiled)      | Low        |
 | [Some `NoTrackingWithIdentityResolution` queries are now prohibited for JSON collections](#no-tracking-json) | Low        |
+| [All pending migrations are applied in a single transaction](#migrations-single-transaction)              | Low        |
 
 ## High-impact changes
 
@@ -449,6 +450,28 @@ var blogs = await context.Blogs
     })
     .ToListAsync();
 ```
+
+<a name="migrations-single-transaction"></a>
+
+### All pending migrations are applied in a single transaction
+
+[Tracking Issue #34439](https://github.com/dotnet/efcore/issues/34439)
+
+#### Old behavior
+
+Previously, EF Core would (by default) wrap each migration in its own transaction when applying migrations.
+
+#### New behavior
+
+Starting with EF Core 9.0, all pending migrations are applied within a single transaction as part of [migration locking](xref:core/managing-schemas/migrations/applying#migration-locking). If any migration fails, the entire transaction is rolled back. This behavior was reverted in EF Core 10.
+
+#### Why
+
+Applying all migrations in a single transaction ensures the database is either fully up-to-date or left unchanged if an error occurs, avoiding intermediate states.
+
+#### Mitigations
+
+If you need per-migration transaction behavior in EF Core 9, upgrade to EF Core 10, which reverts to wrapping each migration in its own transaction.
 
 ## Azure Cosmos DB breaking changes
 
