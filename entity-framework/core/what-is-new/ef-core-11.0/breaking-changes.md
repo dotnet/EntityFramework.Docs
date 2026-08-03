@@ -21,12 +21,12 @@ This page documents API and behavior changes that have the potential to break ex
 
 | **Breaking change**                                                                                             | **Impact** |
 |:--------------------------------------------------------------------------------------------------------------- | -----------|
-| [Cosmos: `__jObject` shadow property removed; JObject no longer used for serialization](#cosmos-jObject-removed) | Low        |
 | [Cosmos: Unmapped properties are no longer preserved](#cosmos-unmapped-properties)                              | High       |
 | [Sync I/O via the Azure Cosmos DB provider has been fully removed](#cosmos-nosync)                              | Medium     |
 | [Microsoft.Data.SqlClient has been updated to 7.0](#sqlclient-7)                                                | Medium     |
 | [Cosmos: exception thrown when a projection evaluates to undefined](#cosmos-undefined-projection)               | Medium     |
 | [Cosmos: illegal `id` characters are no longer escaped](#cosmos-no-id-escape)                                   | Medium     |
+| [Cosmos: `__jObject` shadow property removed; JObject no longer used for serialization](#cosmos-jObject-removed) | Low        |
 | [SQL Server compatibility level now defaults to 160](#sqlserver-compatibility-level-160)                       | Low        |
 | [EF Core now throws by default when no migrations are found](#migrations-not-found)                             | Low        |
 | [`EFOptimizeContext` MSBuild property has been removed](#ef-optimize-context-removed)                           | Low        |
