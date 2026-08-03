@@ -220,6 +220,12 @@ Both optimizations can have a significant positive impact on query performance, 
 
 More details on the benchmark are available [here](https://github.com/dotnet/efcore/issues/29182#issuecomment-4231140289), and as always, actual performance in your application will vary based on your schema, data and a variety of other factors.
 
+<a name="linq-groupby-enhancements"></a>
+
+### GroupBy enhancements
+
+EF Core 11 improves the translation and materialization of `GroupBy` queries. Queries can now compose navigation access and joins over a per-group top result, and aggregates over reference navigations are translated using joins before grouping rather than correlated subqueries. Left-joined non-entity projections, including anonymous types and DTOs, are also correctly materialized through joins and grouping. For more information, see [#38479](https://github.com/dotnet/efcore/pull/38479), [#38499](https://github.com/dotnet/efcore/pull/38499), [#38555](https://github.com/dotnet/efcore/pull/38555), [#38577](https://github.com/dotnet/efcore/pull/38577), [#38668](https://github.com/dotnet/efcore/pull/38668), and [#38687](https://github.com/dotnet/efcore/pull/38687).
+
 <a name="linq-fulljoin"></a>
 
 ### Support for the new .NET 11 `FullJoin` operator
