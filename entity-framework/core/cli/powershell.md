@@ -122,7 +122,7 @@ Parameters:
 | Parameter                          | Description                                                                                                             |
 |:-----------------------------------|:------------------------------------------------------------------------------------------------------------------------|
 | <nobr>`-Name <String>`</nobr>      | The name of the migration. This is a positional parameter and is required.                                              |
-| <nobr>`-OutputDir <String>`</nobr> | The directory use to output the files. Paths are relative to the target project directory. Defaults to "Migrations". |
+| <nobr>`-OutputDir <String>`</nobr> | The directory to use for the output files. Paths are relative to the target project directory. Defaults to "Migrations". |
 | <nobr>`-Namespace <String>`</nobr> | The namespace to use for the generated classes. Defaults to generated from the output directory.  |
 | <nobr>`-NoBuild`</nobr>            | Don't build the project before running the command. Intended to be used when the build is up-to-date. Added in EF Core 11. |
 

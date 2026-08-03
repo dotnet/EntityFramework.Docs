@@ -791,7 +791,7 @@ For more information, [see the documentation](xref:core/providers/cosmos/saving#
 
 This feature was contributed by [@JoasE](https://github.com/JoasE) - many thanks!
 
-<a name="cosmos-modernized-materializer"></a>
+<a name="cosmos-modernized-json-serializer"></a>
 
 ### Modernized JSON serializer
 
@@ -800,7 +800,7 @@ EF Core 11 modernizes the Azure Cosmos DB provider's document serialization and 
 As part of this change, the `__jObject` shadow property (of type `JObject`) that was previously added to every entity type has been removed, and unmapped JSON properties in documents are no longer preserved on round-trip.
 
 > [!IMPORTANT]
-> These are breaking changes. See the [breaking changes documentation](xref:core/what-is-new/ef-core-11.0/breaking-changes#cosmos-jObject-removed) for details and mitigations.
+> These are breaking changes. See the [breaking changes documentation](xref:core/what-is-new/ef-core-11.0/breaking-changes#cosmos-jObject-removed) and [Cosmos: Unmapped properties are no longer preserved](xref:core/what-is-new/ef-core-11.0/breaking-changes#cosmos-unmapped-properties) for details and mitigations.
 
 <a name="cosmos-undefined-projection"></a>
 

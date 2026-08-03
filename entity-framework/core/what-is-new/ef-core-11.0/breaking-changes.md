@@ -57,7 +57,7 @@ Starting with EF Core 11, unmapped JSON properties in a Cosmos DB document are i
 
 #### Why
 
-Because `__jObject` has been removed (see above), there is no mechanism to preserve unmapped properties. EF Core 11 uses a lean JSON reader that only processes the properties it knows about from the model.
+Because `__jObject` has been removed (see [Cosmos: `__jObject` shadow property removed; JObject no longer used for serialization](#cosmos-jObject-removed)), there is no mechanism to preserve unmapped properties. EF Core 11 uses a lean JSON reader that only processes the properties it knows about from the model.
 
 #### Mitigations
 
