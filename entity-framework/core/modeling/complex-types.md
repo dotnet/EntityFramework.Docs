@@ -170,7 +170,7 @@ Each element of the collection is stored as a JSON object inside the array, and 
 CREATE TABLE [Distributors] (
     [Id] int NOT NULL IDENTITY,
     [Name] nvarchar(max) NOT NULL,
-    [ShippingCenters] nvarchar(max) NOT NULL,
+    [ShippingCenters] json NOT NULL,
     CONSTRAINT [PK_Distributors] PRIMARY KEY ([Id])
 );
 ```
