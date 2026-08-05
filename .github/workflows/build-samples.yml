@@ -2,13 +2,13 @@ name: Build Samples
 
 on:
   push:
-    branches: [live]
+    branches: [live, main]
     paths:
       - "samples/core/**"
       - "samples/end2end/**"
       - ".github/workflows/build-samples.yml"
   pull_request:
-    branches: [live]
+    branches: [live, main]
     paths:
       - "samples/core/**"
       - "samples/end2end/**"
@@ -26,7 +26,12 @@ jobs:
         uses: actions/setup-dotnet@v4
         with:
           dotnet-version: 10.0.x
-          include-prerelease: true
+
+      - name: Setup .NET 11.0 SDK (preview)
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 11.0.x
+          dotnet-quality: preview
 
       - name: Build samples
         working-directory: samples/core
