@@ -199,6 +199,8 @@
         href: core/modeling/table-splitting.md
       - name: Owned entity types
         href: core/modeling/owned-entities.md
+      - name: Complex types
+        href: core/modeling/complex-types.md
       - name: Keyless entity types
         href: core/modeling/keyless-entity-types.md
       - name: Spatial data

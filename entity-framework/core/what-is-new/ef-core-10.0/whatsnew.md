@@ -239,6 +239,9 @@ In EF 10 we improved this experience - EF will now materialize a default value f
 
 Complex types are used to model types which are contained within your entity types and have no identity of their own; while entity types are (usually) mapped to a database table, complex types can be mapped to columns in their container table ("table splitting"), or to a single JSON column. Complex types introduce document modeling techniques, which can bring substantial performance benefits as traditional JOINs are avoided, and can make your database modeling much simpler and more natural.
 
+> [!TIP]
+> For comprehensive documentation on complex types, see [Complex types](xref:core/modeling/complex-types).
+
 ### Table splitting
 
 For example, the following maps a customer's addresses as complex types:
