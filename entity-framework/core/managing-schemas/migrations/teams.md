@@ -37,7 +37,7 @@ If, when merging a branch, a diverged migration tree is detected, resolve it by 
 
 After doing this, your migration is cleanly based on top of any migrations that have been added in the other branch, and its context snapshot contains all previous changes. Your migration can now be safely shared with the rest of the team.
 
-Don't run `migrations remove` after parallel migrations have already been merged into an invalid sequence. The command restores the model represented by the preceding migration's designer metadata, which may not contain the other branch's changes. Use source control to return to a coherent pre-merge state, and then follow the steps above.
+Don't run `dotnet ef migrations remove` (or `Remove-Migration`) after parallel migrations have already been merged into an invalid sequence. The command restores the model represented by the preceding migration's designer metadata, which may not contain the other branch's changes. Use source control to return to a coherent pre-merge state, and then follow the steps above.
 
 ## Revert migration changes in source control
 

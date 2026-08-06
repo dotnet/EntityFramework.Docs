@@ -64,6 +64,6 @@ Update-Database -Args '--environment Production'
   [2]: xref:core/dbcontext-configuration/index
   [3]: /aspnet/core/fundamentals/host/web-host
   [4]: /aspnet/core/fundamentals/host/generic-host
-  [5]: xref:core/dbcontext-configuration/index#dbcontext-in-dependency-injection-for-aspnet-core
-  [6]: xref:core/dbcontext-configuration/index#dbcontext-in-dependency-injection-for-aspnet-core
+  [5]: xref:core/dbcontext-configuration/index
+  [6]: xref:Microsoft.Extensions.DependencyInjection.EntityFrameworkServiceCollectionExtensions.AddDbContext*
   [7]: xref:core/dbcontext-configuration/index#basic-dbcontext-initialization-with-new
