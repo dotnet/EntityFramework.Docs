@@ -33,7 +33,8 @@ These methods can be set up in the [options configuration step](/ef/core/dbconte
 [!code-csharp[ContextOptionSeeding](../../../samples/core/Modeling/DataSeeding/DataSeedingContext.cs?name=ContextOptionSeeding)]
 
 > [!NOTE]
-> <xref:Microsoft.EntityFrameworkCore.DbContextOptionsBuilder.UseSeeding*> is called from the <xref:Microsoft.EntityFrameworkCore.Storage.IDatabaseCreator.EnsureCreated*> method, and <xref:Microsoft.EntityFrameworkCore.DbContextOptionsBuilder.UseAsyncSeeding*> is called from the <xref:Microsoft.EntityFrameworkCore.Storage.IDatabaseCreator.EnsureCreatedAsync*> method. When using this feature, it is recommended to implement both <xref:Microsoft.EntityFrameworkCore.DbContextOptionsBuilder.UseSeeding*> and <xref:Microsoft.EntityFrameworkCore.DbContextOptionsBuilder.UseAsyncSeeding*> methods using similar logic, even if the code using EF is asynchronous. EF Core tooling currently relies on the synchronous version of the method and will not seed the database correctly if the <xref:Microsoft.EntityFrameworkCore.DbContextOptionsBuilder.UseSeeding*> method is not implemented.
+> <xref:Microsoft.EntityFrameworkCore.DbContextOptionsBuilder.UseSeeding*>/<xref:Microsoft.EntityFrameworkCore.DbContextOptionsBuilder.UseAsyncSeeding*> are invoked during <xref:Microsoft.EntityFrameworkCore.Storage.IDatabaseCreator.EnsureCreated*>/<xref:Microsoft.EntityFrameworkCore.Storage.IDatabaseCreator.EnsureCreatedAsync*> and after migrations are applied (for example, `Migrate`/`MigrateAsync`, `dotnet ef database update`, and migration bundles).
+> EF Core tooling and bundles currently rely on the synchronous delegate, so always implement `UseSeeding` even if your application normally uses asynchronous APIs.
 
 ### Deployment behavior
 
