@@ -2,7 +2,7 @@
 title: Data Seeding - EF Core
 description: Using data seeding to populate a database with an initial set of data using Entity Framework Core
 author: AndriySvyryd
-ms.date: 10/10/2024
+ms.date: 08/05/2026
 uid: core/modeling/data-seeding
 ---
 
@@ -34,6 +34,24 @@ These methods can be set up in the [options configuration step](/ef/core/dbconte
 
 > [!NOTE]
 > <xref:Microsoft.EntityFrameworkCore.DbContextOptionsBuilder.UseSeeding*> is called from the <xref:Microsoft.EntityFrameworkCore.Storage.IDatabaseCreator.EnsureCreated*> method, and <xref:Microsoft.EntityFrameworkCore.DbContextOptionsBuilder.UseAsyncSeeding*> is called from the <xref:Microsoft.EntityFrameworkCore.Storage.IDatabaseCreator.EnsureCreatedAsync*> method. When using this feature, it is recommended to implement both <xref:Microsoft.EntityFrameworkCore.DbContextOptionsBuilder.UseSeeding*> and <xref:Microsoft.EntityFrameworkCore.DbContextOptionsBuilder.UseAsyncSeeding*> methods using similar logic, even if the code using EF is asynchronous. EF Core tooling currently relies on the synchronous version of the method and will not seed the database correctly if the <xref:Microsoft.EntityFrameworkCore.DbContextOptionsBuilder.UseSeeding*> method is not implemented.
+
+### Deployment behavior
+
+`UseSeeding` and `UseAsyncSeeding` run only when EF Core performs a database initialization or migration operation. Choose a deployment mechanism accordingly:
+
+| Operation | Seeding delegate invoked |
+| --- | --- |
+| `EnsureCreated` or `Migrate` | `UseSeeding` |
+| `EnsureCreatedAsync` or `MigrateAsync` | `UseAsyncSeeding` |
+| `dotnet ef database update` or `Update-Database` | `UseSeeding` |
+| Migration bundle | `UseSeeding` |
+| SQL script executed by an external SQL tool | None |
+
+For automated deployment that must run `UseSeeding`, use a [migration bundle](xref:core/managing-schemas/migrations/applying#bundles) or a dedicated initialization process. EF Core tools and bundles invoke the synchronous delegate, so always implement `UseSeeding` even if the application normally uses asynchronous APIs. Use a SQL script when review or DBA execution is required and seed data is represented by migration operations instead. See [Applying Migrations](xref:core/managing-schemas/migrations/applying#choose-a-deployment-strategy) for the tradeoffs.
+
+Seeding also runs after a migration downgrade. If the application supports downgrading to a migration that doesn't contain every table used by the seeding code, check that the required schema exists before querying it. This is especially important when reverting all migrations by targeting `0`.
+
+Aspire applications can coordinate local migration execution and publish migration bundles or scripts with the [Aspire EF Core migrations integration](https://aspire.dev/integrations/databases/efcore/migrations/).
 
 <a name="custom-initialization-logic"></a>
 
@@ -82,8 +100,10 @@ See the [full sample project](https://github.com/dotnet/EntityFramework.Docs/tre
 
 Once the data has been added to the model, [migrations](xref:core/managing-schemas/migrations/index) should be used to apply the changes.
 
+`HasData` changes are converted to `InsertData`, `UpdateData`, and `DeleteData` operations when a migration is scaffolded. Calling `Migrate` doesn't independently inspect the current `HasData` configuration. After changing model-managed data, add and deploy a new migration.
+
 > [!TIP]
-> If you need to apply migrations as part of an automated deployment you can [create a SQL script](xref:core/managing-schemas/migrations/applying#sql-scripts) that can be previewed before execution.
+> For automated deployment, use a [migration bundle](xref:core/managing-schemas/migrations/applying#bundles). Use a [SQL script](xref:core/managing-schemas/migrations/applying#sql-scripts) when it must be previewed or changed before execution.
 
 Alternatively, you can use <xref:Microsoft.EntityFrameworkCore.Infrastructure.DatabaseFacade.EnsureCreatedAsync*> to create a new database containing the managed data, for example for a test database or when using the in-memory provider or any non-relational database. Note that if the database already exists, <xref:Microsoft.EntityFrameworkCore.Infrastructure.DatabaseFacade.EnsureCreatedAsync*> will neither update the schema nor managed data in the database. For relational databases you shouldn't call <xref:Microsoft.EntityFrameworkCore.Infrastructure.DatabaseFacade.EnsureCreatedAsync*> if you plan to use Migrations.
 
@@ -116,3 +136,5 @@ If your scenario includes any of the following it is recommended to use <xref:Mi
 When a migration is added the changes to the data specified with <xref:Microsoft.EntityFrameworkCore.Metadata.Builders.EntityTypeBuilder`1.HasData*> are transformed to calls to `InsertData()`, `UpdateData()`, and `DeleteData()`. One way of working around some of the limitations of <xref:Microsoft.EntityFrameworkCore.Metadata.Builders.EntityTypeBuilder`1.HasData*> is to manually add these calls or [custom operations](xref:core/managing-schemas/migrations/operations) to the migration instead.
 
 [!code-csharp[CustomInsert](../../../samples/core/Modeling/DataSeeding/Migrations/20241016041555_Initial.cs?name=CustomInsert)]
+
+These operations are appropriate when the values and keys are fixed when the migration is written. They don't query the current database state. See [Data operations in migrations](xref:core/managing-schemas/migrations/managing#data-operations) for examples of `InsertData`, `UpdateData`, `DeleteData`, and provider-specific SQL transformations.

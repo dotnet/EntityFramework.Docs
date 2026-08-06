@@ -13,11 +13,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\WebApplication1.Data\WebApplication1.Data.csproj" />
-    <ProjectReference Include="..\WebApplication1.Migrations\WebApplication1.Migrations.csproj">
-      <!-- Not working. See dotnet/sdk#952 -->
-      <PrivateAssets>all</PrivateAssets>
-      <ExcludeAssets>compile</ExcludeAssets>
-    </ProjectReference>
+    <ProjectReference Include="..\WebApplication1.Migrations\WebApplication1.Migrations.csproj" />
   </ItemGroup>
 
 </Project>

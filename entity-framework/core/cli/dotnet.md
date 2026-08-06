@@ -87,12 +87,12 @@ It's also possible to [put migrations code in a class library separate from the 
 
 ### Other target frameworks
 
-The CLI tools work with .NET projects and .NET Framework projects. Apps that have the EF Core model in a .NET Standard class library might not have a .NET or .NET Framework project. For example, this is true of Xamarin and Universal Windows Platform apps. In such cases, you can create a .NET console app project whose only purpose is to act as startup project for the tools. The project can be a dummy project with no real code &mdash; it is only needed to provide a target for the tooling.
+The CLI tools must execute application code using a .NET runtime. Don't use a platform-specific application, such as .NET MAUI, WinUI, Blazor WebAssembly, or Azure Functions, as the startup project for the tools. Instead, put migrations in a normal cross-platform .NET project with an [`IDesignTimeDbContextFactory<TContext>`](xref:core/cli/dbcontext-creation#from-a-design-time-factory), and use that project as both the target and startup project. See [Using a Separate Migrations Project](xref:core/managing-schemas/migrations/projects#platform-specific-applications).
 
 > [!IMPORTANT]
 > Xamarin.Android, Xamarin.iOS, Xamarin.Mac are now integrated directly into .NET (starting with .NET 6) as .NET for Android, .NET for iOS, and .NET for macOS. If you're building with these project types today, they should be upgraded to .NET SDK-style projects for continued support. For more information about upgrading Xamarin projects to .NET, see the [Upgrade from Xamarin to .NET & .NET MAUI](/dotnet/maui/migration) documentation.
 
-Why is a dummy project required? As mentioned earlier, the tools have to execute application code at design time. To do that, they need to use the .NET runtime. When the EF Core model is in a project that targets .NET or .NET Framework, the EF Core tools borrow the runtime from the project. They can't do that if the EF Core model is in a .NET Standard class library. The .NET Standard is not an actual .NET implementation; it's a specification of a set of APIs that .NET implementations must support. Therefore .NET Standard is not sufficient for the EF Core tools to execute application code. The dummy project you create to use as startup project provides a concrete target platform into which the tools can load the .NET Standard class library.
+The process running the tools must be able to load the target and startup assemblies. For example, a 64-bit tool process can't load an x86-only startup assembly. Prefer an AnyCPU migrations project. If design-time dependencies require a specific architecture, invoke a matching .NET SDK explicitly. The `--runtime` option controls restore for a runtime identifier; it does not change the architecture of the current tool process.
 
 ### ASP.NET Core environment
 
@@ -158,6 +158,9 @@ Options:
 | <nobr>`--namespace <NAMESPACE>`</nobr>    | The namespace to use for the generated migration classes. Requires `--add`. Added in EF Core 11. |
 
 The [common options](#common-options) are listed above.
+
+> [!WARNING]
+> The migration argument specifies the state the database should be in after the command completes. If the database is currently at a newer migration, the command reverts every migration newer than the target by executing its `Down` operations. It doesn't apply one older migration out of order.
 
 The following examples update the database to a specified migration. The first uses the migration name and the second uses the migration ID and a specified connection:
 
@@ -366,6 +369,8 @@ The [common options](#common-options) are listed above.
 ## `dotnet ef migrations script`
 
 Generates a SQL script from migrations.
+
+If `--output` isn't specified, the command writes the script to standard output.
 
 Arguments:
 

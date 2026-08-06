@@ -2,7 +2,7 @@
 title: Migrations Overview - EF Core
 description: Overview of using migrations to manage database schemas with Entity Framework Core
 author: SamMonoRT
-ms.date: 10/28/2020
+ms.date: 08/05/2026
 uid: core/managing-schemas/migrations/index
 ---
 # Migrations Overview
@@ -15,6 +15,9 @@ At a high level, migrations function in the following way:
 * Once a new migration has been generated, it can be applied to a database in various ways. EF Core records all applied migrations in a special history table, allowing it to know which migrations have been applied and which haven't.
 
 The rest of this page is a step-by-step beginner's guide for using migrations. Consult the other pages in this section for more in-depth information.
+
+> [!TIP]
+> Use the EF tools directly for local development. For platform-specific applications, put migrations in a [separate project with a design-time factory](xref:core/managing-schemas/migrations/projects). For deployment automation, generate a [migration bundle](xref:core/managing-schemas/migrations/applying#bundles); use a reviewed [SQL script](xref:core/managing-schemas/migrations/applying#sql-scripts) when SQL approval or modification is required. Aspire applications should use the [Aspire EF Core migrations integration](https://aspire.dev/integrations/databases/efcore/migrations/).
 
 ## Getting started
 
@@ -140,7 +143,7 @@ Sometimes you may want to reference types from another DbContext. This can lead 
 
 ### Next steps
 
-The above was only a brief introduction to migrations. Please consult the other documentation pages to learn more about [managing migrations](xref:core/managing-schemas/migrations/managing), [applying them](xref:core/managing-schemas/migrations/applying), and other aspects. The [.NET CLI tool reference](xref:core/cli/index) also contains useful information on the different commands
+The above was only a brief introduction to migrations. Learn more about [managing migrations](xref:core/managing-schemas/migrations/managing), [choosing a deployment strategy](xref:core/managing-schemas/migrations/applying#choose-a-deployment-strategy), and [using a separate migrations project](xref:core/managing-schemas/migrations/projects). The [.NET CLI tool reference](xref:core/cli/index) contains the complete command options.
 
 ## Additional resources
 
