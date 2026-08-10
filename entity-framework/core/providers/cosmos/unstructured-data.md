@@ -2,7 +2,7 @@
 title: Azure Cosmos DB Provider - Working with Unstructured Data - EF Core
 description: How to work with Azure Cosmos DB unstructured data using Entity Framework Core
 author: AndriySvyryd
-ms.date: 11/05/2019
+ms.date: 08/03/2026
 uid: core/providers/cosmos/unstructured-data
 ---
 # Working with Unstructured Data in EF Core Azure Cosmos DB Provider
@@ -11,7 +11,10 @@ EF Core was designed to make it easy to work with data that follows a schema def
 
 ## Accessing the raw JSON
 
-It is possible to access the properties that are not tracked by EF Core through a special property in [shadow-state](xref:core/modeling/shadow-properties) named `"__jObject"` that contains a `JObject` representing the data received from the store and data that will be stored:
+> [!NOTE]
+> The `"__jObject"` shadow property was removed in EF Core 11. See [Breaking changes in EF Core 11](xref:core/what-is-new/ef-core-11.0/breaking-changes#cosmos-jObject-removed) for details.
+
+In EF Core 10 and earlier, it was possible to access properties not tracked by EF Core through a special property in [shadow-state](xref:core/modeling/shadow-properties) named `"__jObject"` that contained a `JObject` representing the data received from the store and data that will be stored:
 
 [!code-csharp[Unmapped](../../../../samples/core/Cosmos/UnstructuredData/Sample.cs?highlight=21,22&name=Unmapped)]
 
@@ -35,10 +38,7 @@ It is possible to access the properties that are not tracked by EF Core through 
 ```
 
 > [!WARNING]
-> The `"__jObject"` property is part of the EF Core infrastructure and should only be used as a last resort as it is likely to have different behavior in future releases.
-
-> [!NOTE]
-> Changes to the entity will override the values stored in `"__jObject"` during `SaveChanges`.
+> The `"__jObject"` property was part of the EF Core infrastructure. It exists only in EF Core 10 and earlier, and has been removed starting with EF Core 11.
 
 ## Using CosmosClient
 

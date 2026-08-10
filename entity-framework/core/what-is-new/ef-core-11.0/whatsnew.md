@@ -2,7 +2,7 @@
 title: What's New in EF Core 11
 description: Overview of new features in EF Core 11
 author: SamMonoRT
-ms.date: 06/10/2026
+ms.date: 08/03/2026
 uid: core/what-is-new/ef-core-11.0/whatsnew
 ---
 
@@ -222,6 +222,12 @@ ORDER BY [b].[BlogId]
 Both optimizations can have a significant positive impact on query performance, especially when multiple reference navigations are included. A simple, common split query scenario showed a **29% improvement in querying performance**, as the database no longer has to perform the to-one join; single queries are also significantly improved by the removal of the ORDER BY, even if a bit less: one scenario showed a **22% improvement**.
 
 More details on the benchmark are available [here](https://github.com/dotnet/efcore/issues/29182#issuecomment-4231140289), and as always, actual performance in your application will vary based on your schema, data and a variety of other factors.
+
+<a name="linq-groupby-enhancements"></a>
+
+### GroupBy enhancements
+
+EF Core 11 improves the translation and materialization of `GroupBy` queries. Queries can now compose navigation access and joins over a per-group top result, and aggregates over reference navigations are translated using joins before grouping rather than correlated subqueries. Left-joined non-entity projections, including anonymous types and DTOs, are also correctly materialized through joins and grouping. For more information, see [#38479](https://github.com/dotnet/efcore/pull/38479), [#38499](https://github.com/dotnet/efcore/pull/38499), [#38555](https://github.com/dotnet/efcore/pull/38555), [#38577](https://github.com/dotnet/efcore/pull/38577), [#38668](https://github.com/dotnet/efcore/pull/38668), and [#38687](https://github.com/dotnet/efcore/pull/38687).
 
 <a name="linq-fulljoin"></a>
 
@@ -794,6 +800,36 @@ For more information, [see the documentation](xref:core/providers/cosmos/saving#
 
 This feature was contributed by [@JoasE](https://github.com/JoasE) - many thanks!
 
+<a name="cosmos-modernized-json-serializer"></a>
+
+### Modernized JSON serializer
+
+EF Core 11 modernizes the Azure Cosmos DB provider's document serialization and deserialization to use `System.Text.Json` (`Utf8JsonReader`/`Utf8JsonWriter`) internally, replacing the previous `Newtonsoft.Json`-based approach. This improves performance and removes the dependency on `Newtonsoft.Json`.
+
+As part of this change, the `__jObject` shadow property (of type `JObject`) that was previously added to every entity type has been removed, and unmapped JSON properties in documents are no longer preserved on round-trip.
+
+> [!IMPORTANT]
+> These are breaking changes. See the [breaking changes documentation](xref:core/what-is-new/ef-core-11.0/breaking-changes#cosmos-jObject-removed) and [Cosmos: Unmapped properties are no longer preserved](xref:core/what-is-new/ef-core-11.0/breaking-changes#cosmos-unmapped-properties) for details and mitigations.
+
+<a name="cosmos-undefined-projection"></a>
+
+### Consistent behavior for undefined values in projections
+
+Previously, when projecting scalar properties via optional navigations where a document path was absent (resulting in an `undefined` value in Cosmos DB), behavior was inconsistent: single-property anonymous type projections silently dropped those results, while multi-property projections threw a cryptic exception.
+
+EF Core 11 now consistently throws an `InvalidOperationException` when any part of a projection evaluates to `undefined`. Use <xref:Microsoft.EntityFrameworkCore.CosmosDbFunctionsExtensions.IsDefined*> to filter or <xref:Microsoft.EntityFrameworkCore.CosmosDbFunctionsExtensions.CoalesceUndefined*> to provide fallbacks:
+
+```csharp
+var results = await context.Entities
+    .Where(x => EF.Functions.IsDefined(x.Associate!.NestedAssociate!.Id))
+    .Select(x => new { x.Associate!.NestedAssociate!.Id })
+    .ToListAsync();
+```
+
+For more information, see the [breaking changes documentation](xref:core/what-is-new/ef-core-11.0/breaking-changes#cosmos-undefined-projection).
+
+This feature was contributed by [@JoasE](https://github.com/JoasE) - many thanks!
+
 ## Migrations
 
 <a name="migrations-exclude-fk"></a>
@@ -901,6 +937,23 @@ When you run `dotnet ef`, the tool searches for a `.config/dotnet-ef.json` file 
 Explicit command-line options always take precedence over configuration file values. Path values for `project` and `startupProject` are resolved relative to the parent of the `.config` directory containing the file.
 
 For more information, see [Configuration file](xref:core/cli/dotnet#configuration-file).
+
+<a name="pmc-nobuild"></a>
+
+### `-NoBuild` for PMC migrations commands
+
+Starting with EF Core 11, the Package Manager Console `Add-Migration` and `Update-Database` commands support the `-NoBuild` switch, which skips the project build step before running the command.
+
+This is useful when a build succeeds but produces warnings that Visual Studio's Package Manager Console treats as errors (such as NuGet vulnerability warnings), which would otherwise block the commands from running:
+
+```powershell
+Add-Migration MyMigration -NoBuild
+Update-Database -NoBuild
+```
+
+Only use `-NoBuild` when the project is already up-to-date, since running with a stale build may produce unexpected results.
+
+For more information, see the [PMC tools reference](xref:core/cli/powershell).
 
 <a name="dotnet-ef-context-wildcard"></a>
 

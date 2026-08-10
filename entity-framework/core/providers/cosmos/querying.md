@@ -2,7 +2,7 @@
 title: Querying - Azure Cosmos DB Provider - EF Core
 description: Querying with the Azure Cosmos DB EF Core Provider
 author: SamMonoRT
-ms.date: 09/19/2024
+ms.date: 08/03/2026
 uid: core/providers/cosmos/querying
 ---
 # Querying with the EF Core Azure Cosmos DB Provider
@@ -212,6 +212,51 @@ FROM (
 Note that <xref:Microsoft.EntityFrameworkCore.CosmosQueryableExtensions.FromSql*> was introduced in EF 9.0. In previous versions, <xref:Microsoft.EntityFrameworkCore.CosmosQueryableExtensions.FromSqlRaw*> can be used instead, although note that that method is vulnerable to SQL injection attacks.
 
 For more information on SQL querying, see the [relational documentation on SQL queries](xref:core/querying/sql-queries); most of that content is relevant for the Azure Cosmos DB provider as well.
+
+## Undefined values in projections
+
+In Azure Cosmos DB, a document property can be `undefined` — this happens when the property is simply not present in the JSON document. This can occur when navigating through an optional relationship that is absent for some documents, or when a property was added to the model after existing documents were written.
+
+Starting with EF Core 11, when any part of an anonymous type or DTO projection evaluates to `undefined`, an `InvalidOperationException` is thrown with the message "A part of the projection was undefined, use the coalesce operator to handle possible undefined values." See the [breaking changes documentation](xref:core/what-is-new/ef-core-11.0/breaking-changes#cosmos-undefined-projection) for details on upgrading from EF Core 10 and earlier.
+
+To handle undefined values in projections, use <xref:Microsoft.EntityFrameworkCore.CosmosDbFunctionsExtensions.IsDefined*> to filter out documents where a value is missing:
+
+```csharp
+var results = await context.Entities
+    .Where(x => EF.Functions.IsDefined(x.Associate!.NestedAssociate!.Id))
+    .Select(x => new { x.Associate!.NestedAssociate!.Id })
+    .ToListAsync();
+```
+
+Alternatively, use <xref:Microsoft.EntityFrameworkCore.CosmosDbFunctionsExtensions.CoalesceUndefined*> to substitute a default value for any property that could be `undefined`:
+
+```csharp
+var results = await context.Entities
+    .Select(x => new { Id = EF.Functions.CoalesceUndefined(x.Associate!.NestedAssociate!.Id, Guid.Empty) })
+    .ToListAsync();
+```
+
+### Naked projections and SELECT VALUE
+
+A _naked projection_ — where a single value is projected directly without wrapping it in a DTO or anonymous type — is translated using `SELECT VALUE` in Cosmos DB SQL. As a result, any documents where the projected value is `undefined` are **silently skipped** and not included in the results:
+
+```csharp
+// Naked projection - translated as SELECT VALUE, undefined results are silently omitted
+var ids = await context.Entities
+    .Select(x => x.Associate!.NestedAssociate!.Id)
+    .ToListAsync();
+```
+
+In contrast, any top-level instantiation in the projection (anonymous type, DTO, entity, or complex type) does **not** use `SELECT VALUE`. When a part of such a projection is `undefined`, an `InvalidOperationException` is thrown as described above.
+
+If silently skipping undefined results is not the desired behavior, wrap the projected value in an anonymous type or DTO to get a consistent error instead:
+
+```csharp
+// Wrapped in an anonymous type - does not use SELECT VALUE, throws if undefined
+var results = await context.Entities
+    .Select(x => new { x.Associate!.NestedAssociate!.Id })
+    .ToListAsync();
+```
 
 ## Function mappings
 

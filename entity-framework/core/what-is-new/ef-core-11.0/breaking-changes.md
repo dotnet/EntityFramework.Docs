@@ -2,7 +2,7 @@
 title: Breaking changes in EF Core 11 (EF11) - EF Core
 description: List of breaking changes introduced in Entity Framework Core 11 (EF11)
 author: SamMonoRT
-ms.date: 06/30/2026
+ms.date: 07/02/2026
 uid: core/what-is-new/ef-core-11.0/breaking-changes
 ---
 
@@ -21,16 +21,50 @@ This page documents API and behavior changes that have the potential to break ex
 
 | **Breaking change**                                                                                             | **Impact** |
 |:--------------------------------------------------------------------------------------------------------------- | -----------|
+| [Cosmos: Unmapped properties are no longer preserved](#cosmos-unmapped-properties)                              | High       |
 | [Sync I/O via the Azure Cosmos DB provider has been fully removed](#cosmos-nosync)                              | Medium     |
 | [Microsoft.Data.SqlClient has been updated to 7.0](#sqlclient-7)                                                | Medium     |
+| [Cosmos: exception thrown when a projection evaluates to undefined](#cosmos-undefined-projection)               | Medium     |
 | [Cosmos: illegal `id` characters are no longer escaped](#cosmos-no-id-escape)                                   | Medium     |
+| [Cosmos: `__jObject` shadow property removed; JObject no longer used for serialization](#cosmos-jObject-removed) | Low        |
 | [SQL Server compatibility level now defaults to 160](#sqlserver-compatibility-level-160)                       | Low        |
 | [EF Core now throws by default when no migrations are found](#migrations-not-found)                             | Low        |
 | [`EFOptimizeContext` MSBuild property has been removed](#ef-optimize-context-removed)                           | Low        |
 | [EF tools packages no longer reference Microsoft.EntityFrameworkCore.Design](#ef-tools-no-design-dep)           | Low        |
 | [SqlVector properties are no longer loaded by default](#sqlvector-not-auto-loaded)                              | Low        |
 | [Cosmos: empty owned collections now return an empty collection instead of null](#cosmos-empty-collections)     | Low        |
+| [Cosmos: the default discriminator property is now named `Discriminator` in the model](#cosmos-discriminator-property-name) | Low        |
+| [Cosmos: floating-point values are now truncated when materializing to fixed-point types](#cosmos-truncation)   | Low        |
 | [Owned JSON collections without an explicit key are obsolete](#owned-json-collections-obsolete)                 | Low        |
+| [`Property` no longer configures primitive collections](#property-not-primitive-collection)                     | Low        |
+| [Split queries now throw when concurrent modifications are detected](#split-query-concurrency-exception)         | Low        |
+
+## High-impact changes
+
+<a name="cosmos-unmapped-properties"></a>
+
+### Cosmos: Unmapped properties are no longer preserved
+
+[Tracking Issue #5421](https://github.com/dotnet/EntityFramework.Docs/issues/5421)
+
+#### Old behavior
+
+Previously, when EF Core read a Cosmos DB document that contained JSON properties not mapped in the EF model, those extra properties were preserved in the `__jObject` shadow property and written back to the database on the next `SaveChanges`. Unmapped data in documents was transparently round-tripped.
+
+#### New behavior
+
+Starting with EF Core 11, unmapped JSON properties in a Cosmos DB document are ignored when reading. Any extra properties that are not part of the EF model will be lost if the entity is subsequently saved.
+
+#### Why
+
+Because `__jObject` has been removed (see [Cosmos: `__jObject` shadow property removed; JObject no longer used for serialization](#cosmos-jObject-removed)), there is no mechanism to preserve unmapped properties. EF Core 11 uses a lean JSON reader that only processes the properties it knows about from the model.
+
+#### Mitigations
+
+If your application relies on preserving unmapped data, consider one of the following options:
+
+- **Use `CosmosClient` directly** for documents where you need full control over the JSON shape.
+- **Map all relevant properties** explicitly in your EF model, including any extra fields that should be preserved.
 
 ## Medium-impact changes
 
@@ -124,7 +158,107 @@ If your application uses composite keys whose values can contain the characters 
 - **Existing data**: Documents previously stored in Cosmos DB have `id` values using the old escape sequences (e.g. `Post|1|^2F`). After upgrading to EF Core 11, EF will generate unescaped `id` values (e.g. `Post|1|/`) and will no longer find those existing documents. To continue accessing existing data without migration, opt back into the old behavior using the `AppContext` switch described above—however, be aware that the id-collision bug will still be present.
 - **New data**: If you are creating a new application or database, avoid using these illegal characters in key values, as they are not valid in Cosmos DB resource `id` values. See the [Azure documentation](xref:Microsoft.Azure.Documents.Resource.Id) for details.
 
+<a name="cosmos-undefined-projection"></a>
+
+### Cosmos: exception thrown when a projection evaluates to undefined
+
+[Tracking Issue #34067](https://github.com/dotnet/efcore/issues/34067)
+
+#### Old behavior
+
+Previously, when projecting properties in anonymous type or DTO projections via navigation over optional relationships where a segment of the path was absent in the Cosmos DB document (causing the projected value to be `undefined`), the behavior was inconsistent:
+
+- With **single-property** anonymous type or DTO projections, EF translated the query using `SELECT VALUE`, which silently filtered out any documents where the projected value was `undefined`. This meant fewer results were returned than expected, with no indication of the missing data.
+- With **multi-property** anonymous type or DTO projections, an `InvalidOperationException` with the message "Nullable object must have a value" was thrown.
+
+For example, given an entity `Entity` with an optional owned `Associate` which in turn has an optional owned `NestedAssociate`:
+
+```csharp
+// Previously silently returned fewer results (undefined results were filtered out)
+var singlePropResults = await context.Entities
+    .Select(x => new { x.Associate!.NestedAssociate!.Id })
+    .ToListAsync();
+
+// Previously threw InvalidOperationException: Nullable object must have a value
+var multiPropResults = await context.Entities
+    .Select(x => new { x.Associate!.NestedAssociate!.Id, x.Associate!.NestedAssociate!.String })
+    .ToListAsync();
+```
+
+#### New behavior
+
+Starting with EF Core 11.0, an `InvalidOperationException` is thrown in both cases when any part of the projection evaluates to `undefined` in Azure Cosmos DB. The exception message is:
+
+> A part of the projection was undefined, use the coalesce operator to handle possible undefined values.
+
+#### Why
+
+The previous behavior was inconsistent. Single-property projections could silently discard results, making it easy to miss data without any indication of the problem. The new behavior ensures consistent, predictable error reporting whenever a projection encounters an undefined value.
+
+#### Mitigations
+
+Use <xref:Microsoft.EntityFrameworkCore.CosmosDbFunctionsExtensions.IsDefined*> to filter out documents where the projected value is missing:
+
+```csharp
+var results = await context.Entities
+    .Where(x => EF.Functions.IsDefined(x.Associate!.NestedAssociate!.Id))
+    .Select(x => new { x.Associate!.NestedAssociate!.Id })
+    .ToListAsync();
+```
+
+Alternatively, use <xref:Microsoft.EntityFrameworkCore.CosmosDbFunctionsExtensions.CoalesceUndefined*> to provide a default value for properties that could be `undefined`:
+
+```csharp
+var results = await context.Entities
+    .Select(x => new
+    {
+        Id = EF.Functions.CoalesceUndefined(x.Associate!.NestedAssociate!.Id, Guid.Empty)
+    })
+    .ToListAsync();
+```
+
 ## Low-impact changes
+
+<a name="cosmos-jObject-removed"></a>
+
+### Cosmos: `__jObject` shadow property removed; JObject no longer used for serialization
+
+[Tracking Issue #5421](https://github.com/dotnet/EntityFramework.Docs/issues/5421)
+
+#### Old behavior
+
+Previously, the Azure Cosmos DB provider added a shadow property named `"__jObject"` of type `JObject` (from `Newtonsoft.Json`) to every entity type. This property contained the raw JSON document as received from and sent to Cosmos DB, allowing access to unmapped or raw data:
+
+```csharp
+var order = await context.Orders.FirstAsync();
+var rawJson = context.Entry(order).Property<JObject>("__jObject").CurrentValue;
+var billingAddress = rawJson["BillingAddress"]?.Value<string>();
+```
+
+EF Core used `Newtonsoft.Json` (via `JObject`) internally for all document serialization and deserialization.
+
+#### New behavior
+
+Starting with EF Core 11, the `__jObject` shadow property no longer exists. EF Core now uses `System.Text.Json` (`Utf8JsonReader`/`Utf8JsonWriter`) for document serialization and deserialization, and no longer depends on `Newtonsoft.Json`.
+
+Accessing the `"__jObject"` property will throw an `InvalidOperationException`.
+
+#### Why
+
+The `JObject`-based approach required a dependency on `Newtonsoft.Json` and limited performance improvements. Switching to `System.Text.Json` aligns EF Core Cosmos with the rest of the .NET ecosystem and enables significant performance gains in the materializer.
+
+#### Mitigations
+
+To access the raw JSON document, use the `CosmosClient` directly instead of relying on `__jObject`:
+
+```csharp
+var cosmosClient = context.Database.GetCosmosClient();
+var container = cosmosClient.GetContainer("myDatabase", "myContainer");
+var response = await container.ReadItemAsync<JsonElement>("1", new PartitionKey("1"));
+var billingAddress = response.Resource.GetProperty("BillingAddress").GetString();
+```
+
+For more information, see [Working with Unstructured Data in Azure Cosmos DB](xref:core/providers/cosmos/unstructured-data).
 
 <a name="sqlserver-compatibility-level-160"></a>
 
@@ -321,6 +455,91 @@ if (entity.OwnedCollection is { Count: 0 })
 }
 ```
 
+<a name="cosmos-discriminator-property-name"></a>
+
+### Cosmos: the default discriminator property is now named `Discriminator` in the model
+
+[Pull Request #38458](https://github.com/dotnet/efcore/pull/38458)
+
+#### Old behavior
+
+EF automatically adds a discriminator property to identify the entity type that a JSON document represents. The name of this property in the JSON document was changed from `Discriminator` to `$type` in [EF Core 9.0](xref:core/what-is-new/ef-core-9.0/breaking-changes#cosmos-discriminator-name-change). To achieve this, EF used `$type` as the name of the discriminator property both in the EF model and in the stored JSON document.
+
+Because `$type` is not a valid C# identifier, the resulting shadow property name caused invalid code to be generated for [compiled models](xref:core/performance/advanced-performance-topics#compiled-models) and [precompiled queries](xref:core/performance/nativeaot-and-precompiled-queries) used with Native AOT.
+
+#### New behavior
+
+Starting with EF Core 11.0, the default discriminator property is once again named `Discriminator` in the EF model, while the name written to the JSON document is unchanged and remains `$type` by default. In other words, the model property name and the JSON property name are now decoupled:
+
+- `entityType.FindDiscriminatorProperty().Name` returns `Discriminator`.
+- `entityType.FindDiscriminatorProperty().GetJsonPropertyName()` returns `$type`.
+
+The format of the stored documents is **not** affected by this change, so existing data continues to work without modification.
+
+#### Why
+
+EF derives some generated C# identifiers (for example, shadow property variable names) from model metadata such as property names. Since `$type` is not a valid C# identifier, using it as the model property name produced uncompilable code for compiled models and precompiled queries. Naming the model property `Discriminator` (a valid identifier) while still writing `$type` to the document keeps generated code valid without changing the on-disk format.
+
+#### Mitigations
+
+For most applications no action is needed, since stored documents are unaffected and continue to use `$type`.
+
+If your code references the discriminator by its **model** property name, `$type` (for example, via <xref:Microsoft.EntityFrameworkCore.EF.Property*> in a query or query filter, or by looking the property up in the metadata), update it to use `Discriminator` instead:
+
+```csharp
+// Before
+var query = context.Set<Session>().Where(e => EF.Property<string>(e, "$type") == "Lecture");
+
+// After
+var query = context.Set<Session>().Where(e => EF.Property<string>(e, "Discriminator") == "Lecture");
+```
+
+To change the JSON discriminator property name for the whole model in a single place--for example, to align it with the model property name--use the model-level <xref:Microsoft.EntityFrameworkCore.ModelBuilder.HasEmbeddedDiscriminatorName*> API instead of configuring each entity type individually:
+
+```csharp
+modelBuilder.HasEmbeddedDiscriminatorName("Discriminator");
+```
+
+To change only the JSON name for a specific entity type--for example, to align it with the model property name--configure the discriminator property's JSON name with <xref:Microsoft.EntityFrameworkCore.CosmosPropertyBuilderExtensions.ToJsonProperty*>:
+
+```csharp
+modelBuilder.Entity<Session>().Property<string>("Discriminator").ToJsonProperty("Discriminator");
+```
+
+To restore the previous behavior where the discriminator property is also named `$type` in the model, configure its name explicitly with <xref:Microsoft.EntityFrameworkCore.Metadata.Builders.EntityTypeBuilder.HasDiscriminator*>. Note that this reintroduces an invalid C# identifier and is not recommended when using compiled models or precompiled queries:
+
+```csharp
+modelBuilder.Entity<Session>().HasDiscriminator<string>("$type");
+```
+
+<a name="cosmos-truncation"></a>
+
+### Cosmos: Floating-point values are now truncated when materializing to fixed-point types
+
+[Tracking Issue #38138](https://github.com/dotnet/efcore/issues/38138)
+
+#### Old behavior
+
+Previously, when a query projection returned a floating-point value (e.g., the result of a numeric expression such as `3 / 4` returned by Cosmos as `0.75`) and the target property was a fixed-point type (`int`, `long`, `decimal`, etc.), EF Core would **round** the value. For example, `0.75` would materialize as `1`.
+
+#### New behavior
+
+Starting with EF Core 11, such values are **truncated** instead of rounded. `0.75` now materializes as `0`, matching standard .NET integer truncation behavior (`(int)0.75 == 0`).
+
+#### Why
+
+Truncation is the standard .NET behavior for explicit numeric conversions and is consistent with how other providers behave. The previous rounding behavior was a bug.
+
+#### Mitigations
+
+If you relied on the previous rounding behavior, apply explicit rounding in your queries using `Math.Round`:
+
+```csharp
+var result = await context.Products
+    .Select(p => (int)Math.Round((double)p.Int / (p.Int + 1)))
+    .SingleAsync();
+```
+
 <a name="owned-json-collections-obsolete"></a>
 
 ### Owned JSON collections without an explicit key are obsolete
@@ -393,6 +612,101 @@ protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     => optionsBuilder.ConfigureWarnings(w => w.Ignore(CoreEventId.OwnedEntityMappedToJsonCollectionWarning));
 ```
 
+<a name="property-not-primitive-collection"></a>
+
+### `Property` no longer configures primitive collections
+
+#### Old behavior
+
+Previously, calling <xref:Microsoft.EntityFrameworkCore.Metadata.Builders.EntityTypeBuilder.Property*> for a member whose CLR type is a collection (for example `List<int>`) could result in the member being configured as a [primitive collection](xref:core/what-is-new/ef-core-8.0/whatsnew#primitive-collections), because a property could be promoted to a primitive collection at model finalization based on its type.
+
+#### New behavior
+
+Starting with EF Core 11.0, whether a property is a primitive collection is determined entirely when the property is configured. A primitive collection must be configured with <xref:Microsoft.EntityFrameworkCore.Metadata.Builders.EntityTypeBuilder.PrimitiveCollection*> (or discovered as one by convention). <xref:Microsoft.EntityFrameworkCore.Metadata.Builders.EntityTypeBuilder.Property*> now always configures the member as a non-collection (scalar) property, and there is no longer any finalization-time promotion to a primitive collection.
+
+#### Why
+
+Treating the element type as a finalization-time concern led to inconsistencies and bugs. For example, a property could be discovered as a primitive collection, but later resolve to a scalar via an inherited value converter, leaving a stale element type that caused an `InvalidCastException` at model finalization. Making primitive collections a creation-time concern also makes mapping unambiguous in cases like `byte[]`, where it is otherwise unclear whether the member should be mapped as a binary scalar or as a collection of bytes.
+
+#### Mitigations
+
+If you relied on `Property` to configure a primitive collection, switch to `PrimitiveCollection` instead:
+
+```csharp
+protected override void OnModelCreating(ModelBuilder modelBuilder)
+    => modelBuilder.Entity<Blog>().PrimitiveCollection(b => b.Tags);
+```
+
+In most cases no change is required, since primitive collections are discovered by convention.
+
+<a name="split-query-concurrency-exception"></a>
+
+### Split queries now throw when concurrent modifications are detected
+
+[Tracking Issue #33826](https://github.com/dotnet/efcore/issues/33826)
+
+#### Old behavior
+
+Previously, when a split query (using `AsSplitQuery()`) encountered out-of-order or orphaned child rows caused by concurrent data modifications between the split query's SQL statements, EF Core silently discarded the affected child collections. The result was an entity with an empty collection even though the related rows still existed—no exception was thrown and no warning was logged.
+
+#### New behavior
+
+Starting with EF Core 11.0, EF Core throws a `DbQueryConcurrencyException` when split query results cannot be correlated because of concurrent data modifications. The exception message describes the situation and suggests remediation:
+
+> The results of a split query could not be correlated because the data was modified concurrently while the query was executing. Re-execute the query, or execute it within a serializable or snapshot transaction to prevent concurrent modifications.
+
+#### Why
+
+Silently returning incorrect data (empty collections for entities that have related rows) is far worse than surfacing an error. This scenario is intrinsically caused by the lack of data-consistency guarantees in split queries when the database is modified between statements. Throwing a retriable exception makes the problem visible and gives callers a clear path to recovery.
+
+#### Mitigations
+
+The simplest mitigation is to re-execute the query; the concurrent modification is transient and the retry will typically succeed:
+
+```csharp
+const int maxRetries = 3;
+
+List<Blog> blogs;
+for (var attempt = 0; attempt < maxRetries; attempt++)
+{
+    try
+    {
+        blogs = await context.Blogs
+            .Include(b => b.Posts)
+            .AsSplitQuery()
+            .ToListAsync();
+        break;
+    }
+    catch (DbQueryConcurrencyException) when (attempt < maxRetries - 1)
+    {
+        // Retry on concurrent modification
+    }
+}
+```
+
+Alternatively, wrap the split query in a serializable or snapshot transaction to prevent concurrent modifications from affecting the results:
+
+```csharp
+await using var transaction =
+    await context.Database.BeginTransactionAsync(IsolationLevel.Serializable);
+
+var blogs = await context.Blogs
+    .Include(b => b.Posts)
+    .AsSplitQuery()
+    .ToListAsync();
+
+await transaction.CommitAsync();
+```
+
+If neither retry nor a transaction is acceptable, switch to a single query (`AsSingleQuery()`) which is always consistent:
+
+```csharp
+var blogs = await context.Blogs
+    .Include(b => b.Posts)
+    .AsSingleQuery()
+    .ToListAsync();
+```
+
 <a name="MDS-breaking-changes"></a>
 
 ## Microsoft.Data.Sqlite breaking changes
@@ -404,62 +718,72 @@ protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 
 | **Breaking change**                                                                                       | **Impact** |
 |:----------------------------------------------------------------------------------------------------------|------------|
-| [Encryption-enabled SQLite packages have been removed](#sqlite-encryption-removed)                        | Medium     |
-| [Some SQLitePCLRaw bundle packages have been removed](#sqlite-bundles-removed)                            | Medium     |
-| [Microsoft.Data.Sqlite now bundles SQLite3 Multiple Ciphers](#sqlite3mc)                                   | Low        |
+| [Microsoft.Data.Sqlite no longer supports .NET Framework](#sqlite-no-netfx)                              | Medium     |
+| [Some SQLitePCLRaw bundle packages are no longer maintained](#sqlite-bundles-deprecated)                  | Medium     |
+| [SQLite no longer supports UWP and classic Xamarin](#sqlite-no-uwp-xamarin)                              | Low        |
 
 ### Medium-impact changes
 
-<a name="sqlite-encryption-removed"></a>
+<a name="sqlite-no-netfx"></a>
 
-#### Encryption-enabled SQLite packages have been removed
+#### Microsoft.Data.Sqlite no longer supports .NET Framework
+
+[Tracking Issue #35599](https://github.com/dotnet/efcore/issues/35599)
+
+##### Old behavior
+
+Previously, `Microsoft.Data.Sqlite` and `Microsoft.Data.Sqlite.Core` targeted `netstandard2.0`, which allowed them to be used from .NET Framework applications.
+
+##### New behavior
+
+Starting with `Microsoft.Data.Sqlite` 11.0, both packages target `net10.0` only. .NET Framework applications can no longer reference or use `Microsoft.Data.Sqlite` 11.0.
+
+##### Why
+
+The `netstandard2.0` target made older, unsupported .NET targets appear to be supported, and it also masked API differences such as `DateOnly` and `TimeOnly` support. Targeting the minimum supported .NET version explicitly makes the supported platform surface clear.
+
+##### Mitigations
+
+If possible, move the application to .NET 10 or later.
+
+If you must remain on .NET Framework, stay on the latest `Microsoft.Data.Sqlite` 10.0.x servicing release. The 10.0.x line uses `SQLitePCLRaw.bundle_e_sqlite3`, allowing .NET Framework applications to update the referenced `SQLitePCLRaw.bundle_e_sqlite3` version even after `Microsoft.Data.Sqlite` stops receiving updates.
+
+<a name="sqlite-bundles-deprecated"></a>
+
+#### Some SQLitePCLRaw bundle packages are no longer maintained
 
 [Tracking Issue #5108](https://github.com/dotnet/EntityFramework.Docs/issues/5108)
 
 ##### Old behavior
 
-Previously, the `SQLitePCLRaw.bundle_e_sqlcipher` NuGet package provided encryption-enabled SQLite builds at no cost.
+Previously, the `SQLitePCLRaw.bundle_e_sqlcipher`, `SQLitePCLRaw.bundle_sqlite3`, `SQLitePCLRaw.bundle_winsqlite3`, `SQLitePCLRaw.bundle_green`, and `SQLitePCLRaw.bundle_e_sqlite3mc` packages provided a convenient way to configure SQLitePCLRaw with the corresponding SQLite provider.
 
 ##### New behavior
 
-Starting with SQLitePCLRaw 3.0 (used by Microsoft.Data.Sqlite 11.0), the `SQLitePCLRaw.bundle_e_sqlcipher` package has been deprecated and removed from NuGet. No-cost encryption-enabled SQLite builds are no longer distributed.
+The `SQLitePCLRaw.bundle_e_sqlcipher`, `SQLitePCLRaw.bundle_sqlite3`, `SQLitePCLRaw.bundle_winsqlite3`, `SQLitePCLRaw.bundle_green`, and `SQLitePCLRaw.bundle_e_sqlite3mc` packages are no longer updated by the SQLitePCLRaw maintainer. They are not compatible with `SQLitePCLRaw.Core` 3.0 and later, so applications that directly reference any of these packages alongside `SQLitePCLRaw.Core` 3.x will encounter conflicts. Applications should migrate to the recommended alternatives to avoid future breakage.
 
 ##### Why
 
-The previous no-cost `SQLitePCLRaw.bundle_e_sqlcipher` package was barely maintained, which is a significant concern for encryption software where security vulnerabilities may go unpatched. The SQLitePCLRaw maintainer removed these builds in version 3.0 in favor of professionally maintained, paid alternatives that provide ongoing security updates.
+The SQLitePCLRaw maintainer removed these bundles in version 3.0; each bundle contained only a single line of configuration code and added unnecessary packaging overhead while the underlying provider packages continue to be supported. The `SQLitePCLRaw.bundle_e_sqlcipher` package is particularly affected: it provided encryption-enabled builds that are barely maintained, which is a security concern for encryption software where vulnerabilities may go unpatched.
 
 ##### Mitigations
 
-If you need SQLite encryption, you have the following options:
+**If using `SQLitePCLRaw.bundle_e_sqlcipher`** (encryption-enabled SQLite), migrate to one of the following alternatives:
 
-- **SQLite3 Multiple Ciphers**: Starting with Microsoft.Data.Sqlite 11.0, the default SQLite build supports encryption and can be configured to use SQLCipher-compatible encryption. See [Microsoft.Data.Sqlite now bundles SQLite3 Multiple Ciphers](#sqlite3mc). NuGet packages are also available from [SQLite3MultipleCiphers-NuGet](https://github.com/utelle/SQLite3MultipleCiphers-NuGet).
-  - When encrypting a new database or opening an existing database that was encrypted with SQLCipher, you must configure the cipher scheme in the connection string using URI parameters—for example: `Data Source=file:example.db?cipher=sqlcipher&legacy=4;Password=<password>`. See [How to open an existing database encrypted with SQLCipher](https://github.com/utelle/SQLite3MultipleCiphers-NuGet#how-to-open-an-existing-database-encrypted-with-sqlcipher) for details.
-- **SQLite Encryption Extension (SEE)**: This is the official encryption implementation from the SQLite team. A paid license is required. See [https://sqlite.org/com/see.html](https://sqlite.org/com/see.html) for details. NuGet packages are available through [SourceGear's SQLite build service](https://github.com/ericsink/SQLitePCL.raw/wiki/SQLite-encryption-options-for-use-with-SQLitePCLRaw).
+- **SQLite3 Multiple Ciphers**: NuGet packages are available from [SQLite3MultipleCiphers-NuGet](https://github.com/utelle/SQLite3MultipleCiphers-NuGet). Reference `Microsoft.Data.Sqlite.Core` together with `SQLite3MC.PCLRaw.bundle`:
+
+  ```xml
+  <PackageReference Include="Microsoft.Data.Sqlite.Core" Version="11.0.0" />
+  <PackageReference Include="SQLite3MC.PCLRaw.bundle" Version="2.x.x" />
+  ```
+
+  When encrypting a new database or opening an existing database that was encrypted with SQLCipher, configure the cipher scheme using URI parameters—for example: `Data Source=file:example.db?cipher=sqlcipher&legacy=4`. See [How to open an existing database encrypted with SQLCipher](https://github.com/utelle/SQLite3MultipleCiphers-NuGet#how-to-open-an-existing-database-encrypted-with-sqlcipher) for details.
+
+- **SQLite Encryption Extension (SEE)**: The official encryption implementation from the SQLite team. A paid license is required. See [https://sqlite.org/com/see.html](https://sqlite.org/com/see.html) and [SourceGear's SQLite build service](https://github.com/ericsink/SQLitePCL.raw/wiki/SQLite-encryption-options-for-use-with-SQLitePCLRaw) for NuGet options.
+
 - **SQLCipher**: Purchase supported builds from [Zetetic](https://www.zetetic.net/sqlcipher/), or build the [open source code](https://github.com/sqlcipher/sqlcipher) yourself.
 
-For more details, see [SQLite encryption options for use with SQLitePCLRaw](https://github.com/ericsink/SQLitePCL.raw/wiki/SQLite-encryption-options-for-use-with-SQLitePCLRaw) and [SQLitePCLRaw 3.0 Release Notes](https://github.com/ericsink/SQLitePCL.raw/blob/main/v3.md).
-
-<a name="sqlite-bundles-removed"></a>
-
-#### Some SQLitePCLRaw bundle packages have been removed
-
-[Tracking Issue #5108](https://github.com/dotnet/EntityFramework.Docs/issues/5108)
-
-##### Old behavior
-
-Previously, the `SQLitePCLRaw.bundle_sqlite3`, `SQLitePCLRaw.bundle_winsqlite3`, `SQLitePCLRaw.bundle_green`, and `SQLitePCLRaw.bundle_e_sqlite3mc` packages provided a convenient way to configure SQLitePCLRaw with the corresponding SQLite provider.
-
-##### New behavior
-
-Starting with SQLitePCLRaw 3.0 (used by Microsoft.Data.Sqlite 11.0), these bundle packages have been removed. If your application depended on one of these bundles, use one of the following migration paths.
-
-##### Why
-
-Each of these bundle packages contained only a single line of configuration code and added unnecessary packaging overhead. The corresponding provider packages are still supported.
-
-##### Mitigations
-
-**If using `bundle_sqlite3` or `bundle_winsqlite3`**, replace the removed bundle package with the corresponding provider package:
+**If using `SQLitePCLRaw.bundle_sqlite3` or `SQLitePCLRaw.bundle_winsqlite3`**, replace the bundle package with the corresponding provider package:
 
 ```xml
 <!-- Old -->
@@ -489,7 +813,7 @@ static void Init()
 }
 ```
 
-**If using `bundle_e_sqlite3mc`**, replace the package reference with `SQLite3MC.PCLRaw.bundle`:
+**If using `SQLitePCLRaw.bundle_e_sqlite3mc`**, replace the package reference with `SQLite3MC.PCLRaw.bundle`:
 
 ```xml
 <!-- Old -->
@@ -499,20 +823,18 @@ static void Init()
 <PackageReference Include="SQLite3MC.PCLRaw.bundle" Version="2.x.x" />
 ```
 
-**If using `bundle_green`**, the recommended migration path is to switch to `SQLitePCLRaw.bundle_e_sqlite3`. Alternatively, use `SQLitePCLRaw.config.e_sqlite3` paired with a separate native library package like `SourceGear.sqlite3`, which allows you to update the SQLite version independently:
+**If using `SQLitePCLRaw.bundle_green`**, switch to `SQLitePCLRaw.bundle_e_sqlite3`. Alternatively, use `SQLitePCLRaw.config.e_sqlite3` paired with a separate native library package such as `SourceGear.sqlite3`, which allows updating the SQLite version independently:
 
 ```xml
 <PackageReference Include="SQLitePCLRaw.bundle_e_sqlite3" Version="3.x.x" />
 ```
 
-If you only target iOS and want to continue using the system SQLite library, reference the provider directly:
+If you only target iOS and want to use the system SQLite library, reference the provider directly and initialize it explicitly:
 
 ```xml
-<PackageReference Include="SQLitePCLRaw.core" Version="3.x.x" />
+<PackageReference Include="SQLitePCLRaw.Core" Version="3.x.x" />
 <PackageReference Include="SQLitePCLRaw.provider.sqlite3" Version="3.x.x" />
 ```
-
-And initialize it explicitly:
 
 ```csharp
 static void Init()
@@ -521,82 +843,30 @@ static void Init()
 }
 ```
 
-> [!NOTE]
-> If you are using `SQLitePCLRaw.bundle_e_sqlite3`, no changes are required—just update the version number. See the [SQLitePCLRaw 3.0 Release Notes](https://github.com/ericsink/SQLitePCL.raw/blob/main/v3.md) for details.
+For more details, see [SQLite encryption options for use with SQLitePCLRaw](https://github.com/ericsink/SQLitePCL.raw/wiki/SQLite-encryption-options-for-use-with-SQLitePCLRaw) and [SQLitePCLRaw 3.0 Release Notes](https://github.com/ericsink/SQLitePCL.raw/blob/main/v3.md).
 
 ### Low-impact changes
 
-<a name="sqlite3mc"></a>
+<a name="sqlite-no-uwp-xamarin"></a>
 
-#### Microsoft.Data.Sqlite now bundles SQLite3 Multiple Ciphers
+#### SQLite no longer supports UWP and classic Xamarin
 
-[Tracking PR dotnet/efcore#38402](https://github.com/dotnet/efcore/pull/38402)
+[Tracking Issue #5108](https://github.com/dotnet/EntityFramework.Docs/issues/5108)
 
 ##### Old behavior
 
-The `Microsoft.Data.Sqlite` package referenced `SQLitePCLRaw.bundle_e_sqlite3`, which provides the standard `e_sqlite3` native SQLite build. This build has no encryption support, so setting a password (for example, via `SqliteConnectionStringBuilder.Password` or the `Password` connection-string keyword) failed at runtime.
+Previously, `SQLitePCLRaw.bundle_e_sqlite3` included native SQLite builds for Universal Windows Platform (UWP) and classic Xamarin (Xamarin.iOS, Xamarin.Android, and Xamarin.Mac) targets.
 
 ##### New behavior
 
-Starting with `Microsoft.Data.Sqlite` 11.0, the package references `SQLite3MC.PCLRaw.bundle`, which provides the `e_sqlite3mc` native build ([SQLite3 Multiple Ciphers](https://github.com/utelle/SQLite3MultipleCiphers)). This build receives updates on NuGet.org more promptly than `SQLitePCLRaw.bundle_e_sqlite3`.
-
-As an added bonus, encryption (including setting a password) now works out of the box. See the [SQLite3 Multiple Ciphers documentation](https://github.com/utelle/SQLite3MultipleCiphers-NuGet#passphrase-based-database-encryption-support) for details on enabling passphrase-based database encryption.
-
-This change also applies to the EF Core SQLite provider (`Microsoft.EntityFrameworkCore.Sqlite`), which references `SQLite3MC.PCLRaw.bundle` through `Microsoft.Data.Sqlite`.
+Starting with `SQLitePCLRaw.bundle_e_sqlite3` 2.1.12 (referenced by `Microsoft.Data.Sqlite` 11.0), native builds for UWP and classic Xamarin are no longer included. Applications targeting these platforms can no longer use the bundled native SQLite library.
 
 ##### Why
 
-The primary reason for the switch is maintenance and security: new versions of the `e_sqlite3` native build are no longer published to NuGet.org through `SQLitePCLRaw.bundle_e_sqlite3` in a timely manner, which means security fixes in upstream SQLite can be delayed. SQLite3 Multiple Ciphers is an actively maintained project that tracks upstream SQLite releases and ships updated builds promptly, so it was adopted as the default native build for `Microsoft.Data.Sqlite`. As an added bonus, it also supports encryption. This means it can replace the `SQLitePCLRaw.bundle_e_sqlcipher` package that was deprecated and removed (see [Encryption-enabled SQLite packages have been removed](#sqlite-encryption-removed)).
+[SQLite 3.53.0](https://sqlite.org/releaselog/3_53_0.html) (shipped by `SQLitePCLRaw.bundle_e_sqlite3` 2.1.12) no longer supports UWP and classic Xamarin. The SQLitePCLRaw maintainer dropped these builds in order to keep up with newer upstream SQLite releases.
 
 ##### Mitigations
 
-For most applications, **no action is required**. SQLite3 Multiple Ciphers is a superset of SQLite that behaves identically to the standard build for unencrypted databases—it only applies encryption when you explicitly supply a key or password. Existing unencrypted databases continue to open and work unchanged.
+Migrate UWP applications to the [Windows App SDK](/windows/apps/windows-app-sdk/) and classic Xamarin applications to [.NET MAUI](/dotnet/maui/), which are supported on modern .NET.
 
-Review the following cases, which may require action in some applications:
-
-- **Direct `SQLitePCLRaw.bundle_e_sqlite3` reference.** If your application directly references `SQLitePCLRaw.bundle_e_sqlite3`, it conflicts with the new `SQLite3MC.PCLRaw.bundle` dependency brought in by `Microsoft.Data.Sqlite` (or `Microsoft.EntityFrameworkCore.Sqlite`). Remove the direct `SQLitePCLRaw.bundle_e_sqlite3` reference unless you intentionally switch to the `.Core` packages shown below.
-
-- **Native library and provider name change.** The bundled native library is now `e_sqlite3mc` (rather than `e_sqlite3`), and the provider initialized by the bundle is `SQLite3Provider_e_sqlite3mc`. This matters if your application:
-  - References a specific native asset filename (for example, `e_sqlite3`) in publishing, trimming, AOT, or single-file configuration. Update those references to `e_sqlite3mc`.
-
-- **Platform (RID) coverage.** SQLite3 Multiple Ciphers doesn't currently include native binaries for every runtime identifier covered by `SourceGear.sqlite3`; for example, `linux-riscv64`, `linux-musl-riscv64`, and `linux-musl-s390x` aren't included. If you target a platform that the new bundle doesn't include, the native library may fail to load at runtime. In that case, revert to the standard build using the package references below.
-
-- **Linux glibc requirement and opt-out.** The bundled `e_sqlite3mc` library is prebuilt native code. On Linux, it currently requires glibc 2.33 or later; on older distributions, loading it can fail at runtime with an error such as `GLIBC_2.33 not found`. If the target system is unable to satisfy this requirement, follow the opt-out steps below.
-
-- **Reserved encryption keywords.** SQLite3 Multiple Ciphers reserves certain connection-string/URI parameters and PRAGMAs (such as `key`, `hexkey`, and `cipher`) for encryption configuration. This is unlikely to affect typical applications, but if you happened to use these names for unrelated purposes, behavior may differ.
-
-- **Double-quoted string literal support.** `e_sqlite3mc` doesn't include SQLite's legacy support for double-quoted string literals. If your SQL uses double quotes for string values, change it to use single quotes; double quotes should be used only for identifiers. Review raw SQL in your application (for example, SQL passed to `FromSql`, `ExecuteSql`, or migrations operations), and use SQL logging or integration tests to identify affected commands.
-
-If you want to keep using the standard, non-encrypted `e_sqlite3` build, reference `Microsoft.Data.Sqlite.Core` together with `SQLitePCLRaw.bundle_e_sqlite3` instead of the `Microsoft.Data.Sqlite` meta-package:
-
-```xml
-<PackageReference Include="Microsoft.Data.Sqlite.Core" Version="11.0.0" />
-<PackageReference Include="SQLitePCLRaw.bundle_e_sqlite3" Version="3.x.x" />
-```
-
-For EF Core, reference `Microsoft.EntityFrameworkCore.Sqlite.Core` instead of `Microsoft.EntityFrameworkCore.Sqlite` and add the standard bundle:
-
-```xml
-<PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite.Core" Version="11.0.0" />
-<PackageReference Include="SQLitePCLRaw.bundle_e_sqlite3" Version="3.x.x" />
-```
-
-If you need to use a system-installed SQLite library instead of a bundled one, reference `Microsoft.Data.Sqlite.Core` together with `SQLitePCLRaw.provider.sqlite3` instead of the `Microsoft.Data.Sqlite` meta-package:
-
-```xml
-<PackageReference Include="Microsoft.Data.Sqlite.Core" Version="11.0.0" />
-<PackageReference Include="SQLitePCLRaw.provider.sqlite3" Version="3.x.x" />
-```
-
-For EF Core:
-
-```xml
-<PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite.Core" Version="11.0.0" />
-<PackageReference Include="SQLitePCLRaw.provider.sqlite3" Version="3.x.x" />
-```
-
-And initialize the provider explicitly before using SQLite:
-
-```csharp
-SQLitePCL.raw.SetProvider(new SQLitePCL.SQLite3Provider_sqlite3());
-```
+If you must remain on UWP or classic Xamarin, stay on an earlier version of `SQLitePCLRaw.bundle_e_sqlite3` that still includes the native builds for these platforms.
