@@ -2,7 +2,7 @@
 title: EF Core tools reference (Package Manager Console) - EF Core
 description: Reference guide for the Entity Framework Core Visual Studio Package Manager Console
 author: SamMonoRT
-ms.date: 11/08/2024
+ms.date: 08/03/2026
 uid: core/cli/powershell
 ms.custom: sfi-ropc-nochange
 ---
@@ -122,8 +122,9 @@ Parameters:
 | Parameter                          | Description                                                                                                             |
 |:-----------------------------------|:------------------------------------------------------------------------------------------------------------------------|
 | <nobr>`-Name <String>`</nobr>      | The name of the migration. This is a positional parameter and is required.                                              |
-| <nobr>`-OutputDir <String>`</nobr> | The directory use to output the files. Paths are relative to the target project directory. Defaults to "Migrations". |
+| <nobr>`-OutputDir <String>`</nobr> | The directory to use for the output files. Paths are relative to the target project directory. Defaults to "Migrations". |
 | <nobr>`-Namespace <String>`</nobr> | The namespace to use for the generated classes. Defaults to generated from the output directory.  |
+| <nobr>`-NoBuild`</nobr>            | Don't build the project before running the command. Intended to be used when the build is up-to-date. Added in EF Core 11. |
 
 The [common parameters](#common-parameters) are listed above.
 
@@ -319,6 +320,7 @@ Updates the database to the last migration or to a specified migration.
 | <nobr>`-Add`</nobr>                 | Creates a new migration and applies it to the database in a single step. Uses Roslyn to compile the migration at runtime. When specified, a migration name is required and provides the name for the new migration. Added in EF Core 11. |
 | <nobr>`-OutputDir <String>`</nobr>  | The directory to put migration files in. Paths are relative to the target project directory. Requires `-Add`. Added in EF Core 11. |
 | <nobr>`-Namespace <String>`</nobr>  | The namespace to use for the generated migration classes. Requires `-Add`. Added in EF Core 11. |
+| <nobr>`-NoBuild`</nobr>             | Don't build the project before running the command. Intended to be used when the build is up-to-date. Added in EF Core 11. |
 
 The [common parameters](#common-parameters) are listed above.
 
