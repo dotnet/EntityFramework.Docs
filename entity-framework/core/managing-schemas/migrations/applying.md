@@ -2,7 +2,7 @@
 title: Applying Migrations - EF Core
 description: Strategies for applying schema migrations to production and development databases using Entity Framework Core
 author: SamMonoRT
-ms.date: 04/16/2026
+ms.date: 08/05/2026
 uid: core/managing-schemas/migrations/applying
 ms.custom: sfi-ropc-nochange
 ---
@@ -13,9 +13,26 @@ Once your migrations have been added, they need to be deployed and applied to yo
 > [!NOTE]
 > Whatever your deployment strategy, always inspect the generated migrations and test them before applying to a production database. A migration may drop a column when the intent was to rename it, or may fail for various reasons when applied to a database.
 
+## Choose a deployment strategy
+
+For automated deployment, use a [migration bundle](#bundles). A bundle is a deployment artifact that can be generated in CI and executed later without the .NET SDK, the EF Core tools, or the application's source code. Use a [SQL script](#sql-scripts) instead when the SQL must be reviewed, modified, archived, or handed to a DBA before it is applied.
+
+For local development, `dotnet ef database update` or `Update-Database` is usually the simplest option. Aspire projects should use the [Aspire EF Core migrations integration](https://aspire.dev/integrations/databases/efcore/migrations/) to coordinate local migration execution and to publish bundles or scripts.
+
+| Strategy | Recommended use | Review SQL before execution | Requires SDK and source at execution | Uses EF migration locking | Runs EF seeding delegates |
+| --- | --- | :---: | :---: | :---: | :---: |
+| [SQL script](#sql-scripts) | DBA-controlled or review-gated deployment | Yes | No | No | No |
+| [Migration bundle](#bundles) | Automated deployment | No | No | Yes | Yes |
+| [EF command-line tools](#command-line-tools) | Local development and testing | No | Yes | Yes | Yes |
+| [Runtime migration](#apply-migrations-at-runtime) | Applications that accept startup migration tradeoffs | No | No | Yes | Yes |
+
+EF Core 9 and later use migration locking. Synchronous operations and tooling invoke `UseSeeding`; asynchronous operations invoke `UseAsyncSeeding`.
+
+Use a separate identity for deployment that has permission to change the schema. The identity used by the application at run time should normally have only the permissions the application needs to read and write data.
+
 ## SQL scripts
 
-The recommended way to deploy migrations to a production database is by generating SQL scripts. The advantages of this strategy include the following:
+SQL scripts are recommended when the deployment process requires the generated SQL to be inspected or changed before execution. The advantages of this strategy include the following:
 
 * SQL scripts can be reviewed for accuracy; this is important since applying schema changes to production databases is a potentially dangerous operation that could involve data loss.
 * In some cases, the scripts can be tuned to fit the specific needs of a production database.
@@ -30,6 +47,12 @@ The following generates a SQL script from a blank database to the latest migrati
 
 ```dotnetcli
 dotnet ef migrations script
+```
+
+By default, the command writes the script to standard output. Use `--output` (or `-o`) to create a deployment artifact with a predictable name:
+
+```dotnetcli
+dotnet ef migrations script --idempotent --output artifacts/migrations.sql
 ```
 
 #### With From (to implied)
@@ -63,6 +86,12 @@ The following generates a SQL script from a blank database to the latest migrati
 Script-Migration
 ```
 
+Use `-Output` to write the script to a specific file:
+
+```powershell
+Script-Migration -Idempotent -Output artifacts\migrations.sql
+```
+
 #### With From (to implied)
 
 The following generates a SQL script from the given migration to the latest migration.
@@ -91,9 +120,13 @@ Script generation accepts the following two arguments to indicate which range of
 * The **from** migration should be the last migration applied to the database before running the script. If no migrations have been applied, specify `0` (this is the default).
 * The **to** migration is the last migration that will be applied to the database after running the script. This defaults to the last migration in your project.
 
+Migration scripts update an existing database. Provision the database itself through your infrastructure deployment or database administration process before applying the script. Database creation typically requires a different connection, elevated permissions, and provider-specific configuration.
+
 ## Idempotent SQL scripts
 
 The SQL scripts generated above can only be applied to change your schema from one migration to another; it is your responsibility to apply the script appropriately, and only to databases in the correct migration state. EF Core also supports generating **idempotent** scripts, which internally check which migrations have already been applied (via the migrations history table), and only apply missing ones. This is useful if you don't exactly know what the last migration applied to the database was, or if you are deploying to multiple databases that may each be at a different migration.
+
+Idempotent script support depends on the database provider. For example, SQLite doesn't currently support generating idempotent migration scripts.
 
 The following generates idempotent migrations:
 
@@ -160,6 +193,36 @@ Note that this can be used to roll back to an earlier migration as well.
 
 For more information on applying migrations via the command-line tools, see the [EF Core tools reference](xref:core/cli/index).
 
+## Environment and configuration
+
+The tools execute application code to construct the `DbContext`. Provider selection, connection strings, and model configuration can therefore depend on the application environment. EF Core design-time tooling uses the `Development` environment when neither `ASPNETCORE_ENVIRONMENT` nor `DOTNET_ENVIRONMENT` is set.
+
+Set the environment explicitly when generating a deployment artifact and when executing a bundle. For example, in PowerShell:
+
+```powershell
+$env:ASPNETCORE_ENVIRONMENT = 'Production'
+dotnet ef migrations bundle --output artifacts\efbundle.exe
+```
+
+```powershell
+$env:ASPNETCORE_ENVIRONMENT = 'Production'
+.\efbundle.exe --connection $env:DEPLOYMENT_CONNECTION_STRING
+```
+
+Or in a POSIX-compatible shell:
+
+```bash
+ASPNETCORE_ENVIRONMENT=Production \
+    dotnet ef migrations bundle --output artifacts/efbundle
+
+ASPNETCORE_ENVIRONMENT=Production \
+    ./efbundle --connection "$DEPLOYMENT_CONNECTION_STRING"
+```
+
+This also prevents a bundle from loading development user secrets unexpectedly. A safer default environment for bundles is tracked by [dotnet/efcore#36188](https://github.com/dotnet/efcore/issues/36188). Environment selection in the Visual Studio publish experience is tracked by [dotnet/efcore#11950](https://github.com/dotnet/efcore/issues/11950).
+
+Don't store production connection strings in source control or embed them in the bundle. Supply the deployment connection from the deployment system's secret store. The deployment identity should have schema permissions; the normal application identity usually shouldn't.
+
 ## Bundles
 
 Migration bundles are single-file executables that can be used to apply migrations to a database. They address some of the shortcomings of the SQL script and command-line tools:
@@ -168,19 +231,22 @@ Migration bundles are single-file executables that can be used to apply migratio
 * The transaction handling and continue-on-error behavior of these tools are inconsistent and sometimes unexpected. This can leave your database in an undefined state if a failure occurs when applying migrations.
 * Bundles can be generated as part of your CI process and easily executed later as part of your deployment process.
 * Bundles can be executed without installing the .NET SDK or EF Tool (or even the .NET Runtime, when self-contained), and they don't require the project's source code.
+* Bundles use EF Core's migration locking and run configured `UseSeeding` logic.
+
+Unlike a SQL script, a bundle does not currently provide a way to inspect the SQL it will execute or list the migrations it contains. If your deployment requires SQL review, generate a script instead. Bundle inspection improvements are tracked by [dotnet/efcore#25872](https://github.com/dotnet/efcore/issues/25872).
 
 ### [.NET CLI](#tab/dotnet-core-cli)
 
 The following generates a bundle:
 
 ```dotnetcli
-dotnet ef migrations bundle
+dotnet ef migrations bundle --output artifacts/efbundle
 ```
 
 The following generates a self-contained bundle for Linux:
 
 ```dotnetcli
-dotnet ef migrations bundle --self-contained -r linux-x64
+dotnet ef migrations bundle --self-contained --target-runtime linux-x64 --output artifacts/efbundle
 ```
 
 ### [Visual Studio](#tab/vs)
@@ -188,13 +254,13 @@ dotnet ef migrations bundle --self-contained -r linux-x64
 The following generates a bundle:
 
 ```powershell
-Bundle-Migration
+Bundle-Migration -Output artifacts\efbundle.exe
 ```
 
 The following generates a self-contained bundle for Linux:
 
-```dotnetcli
-Bundle-Migration -SelfContained -TargetRuntime linux-x64
+```powershell
+Bundle-Migration -SelfContained -TargetRuntime linux-x64 -Output artifacts\efbundle
 ```
 
 ***
@@ -226,8 +292,28 @@ The following example applies migrations to a local SQL Server instance using th
 .\efbundle.exe --connection 'Data Source=(local)\MSSQLSERVER;Initial Catalog=Blogging;User ID=myUsername;Password={;'$Credential;'here'}'
 ```
 
+To roll the database back, pass the migration that should remain applied. Passing `0` reverts all migrations:
+
+```powershell
+.\efbundle.exe PreviousMigration --connection 'Data Source=(local)\MSSQLSERVER;Initial Catalog=Blogging;Integrated Security=True'
+.\efbundle.exe 0 --connection 'Data Source=(local)\MSSQLSERVER;Initial Catalog=Blogging;Integrated Security=True'
+```
+
 > [!WARNING]
-> Don't forget to copy appsettings.json alongside your bundle. The bundle relies on the presence of appsettings.json in the execution directory.
+> A rollback executes the `Down` operations of every migration newer than the target and may result in data loss. Review and test rollback behavior before using it on production data.
+>
+> Configured seeding code runs after a downgrade. It must tolerate the schema of the target migration, including a missing application schema when the target is `0`.
+
+> [!WARNING]
+> If context configuration reads `appsettings.json`, copy the required settings files alongside the bundle. Configuration files are resolved from the bundle's execution directory. Don't put production secrets in these files; supply them through a secure configuration source or the `--connection` option.
+
+### Containers and deployment jobs
+
+Generate the bundle during the build and run it as a one-shot deployment job after the database is healthy. Don't install the SDK or run `dotnet ef` in the application image, and don't make every application replica run migrations from its entrypoint. Configure the deployment platform not to restart the migration container after it exits successfully.
+
+For Aspire applications, `AddEFMigrations` can coordinate migrations during local development. During publishing, `PublishAsMigrationBundle` can emit a bundle or a container image, and `PublishAsMigrationScript` can emit a SQL script. See [Apply EF Core migrations in Aspire](https://aspire.dev/integrations/databases/efcore/migrations/) for one-shot job configuration for Azure Container Apps, Docker Compose, and Kubernetes.
+
+The [migration bundle sample](https://github.com/dotnet/EntityFramework.Docs/tree/main/samples/core/Schemas/MigrationBundle) demonstrates two SQLite migrations, idempotent seeding, forward application, and rollback-safe seeding.
 
 ### Migration bundle example
 
@@ -310,7 +396,9 @@ PS C:\local\AllTogetherNow\SixOh>
 
 ## Apply migrations at runtime
 
-It's possible for the application itself to apply migrations programmatically, typically during startup. While productive for local development and testing of migrations, this approach is inappropriate for managing production databases, for the following reasons:
+It's possible for the application itself to apply migrations programmatically, typically during startup. EF Core 9 and later protect migration execution with a database-wide lock, so this can be acceptable for applications that prefer simple deployment and can tolerate startup migration behavior. A separate migration deployment step is still preferred when review, least-privilege credentials, coordinated rollout, or high availability is important.
+
+Consider the following tradeoffs:
 
 * For versions of EF prior to 9, if multiple instances of your application are running, both applications could attempt to apply the migration concurrently and fail (or worse, cause data corruption).
 * Similarly, if an application is accessing the database while another application migrates it, this can cause severe issues.
@@ -339,7 +427,7 @@ Note that `MigrateAsync()` builds on top of the `IMigrator` service, which can b
 
 > [!WARNING]
 >
-> * Carefully consider before using this approach in production. Experience has shown that the simplicity of this deployment strategy is outweighed by the issues it creates. Consider generating SQL scripts from migrations instead.
+> * Carefully consider before using this approach in production. Prefer a migration bundle for automation or a SQL script when review and approval are required.
 > * Don't call `EnsureCreatedAsync()` before `MigrateAsync()`. `EnsureCreatedAsync()` bypasses Migrations to create the schema, which causes `MigrateAsync()` to fail.
 
 ## Migration locking

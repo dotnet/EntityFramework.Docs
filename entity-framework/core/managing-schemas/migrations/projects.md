@@ -2,33 +2,60 @@
 title: Using a Separate Migrations Project - EF Core
 description: Using a separate migration project for managing database schemas with Entity Framework Core
 author: SamMonoRT
-ms.date: 11/06/2020
+ms.date: 08/05/2026
 uid: core/managing-schemas/migrations/projects
 ---
 
 # Using a Separate Migrations Project
 
-You may want to store your migrations in a different project than the one containing your `DbContext`. This is recommended if your project uses a platform-specific project type, such as WinUI, Xamarin, MAUI, Blazor, or Azure Functions, or if it targets a specific runtime identifier (RID). You can also use this strategy to maintain multiple sets of migrations, for example, one for development and another for release-to-release upgrades.
+You can store migrations in a different project from the one containing your `DbContext`. This is recommended when the application project is platform-specific, such as WinUI, .NET MAUI, Blazor WebAssembly, or Azure Functions, or when it targets a specific runtime identifier (RID). It can also be used to maintain more than one set of migrations.
 
 > [!TIP]
 > You can view this article's [sample on GitHub](https://github.com/dotnet/EntityFramework.Docs/tree/main/samples/core/Schemas/ThreeProjectMigrations).
 
-## Steps
+## Project layout
 
-1. Create a new class library.
+The sample uses three projects:
 
-2. Add a reference to your DbContext project.
+| Project | Responsibility | References |
+| --- | --- | --- |
+| `WebApplication1.Data` | Owns the `DbContext` and entity types | EF Core provider |
+| `WebApplication1.Migrations` | Owns migrations, the model snapshot, and design-time context creation | Data project, EF Core provider, and `Microsoft.EntityFrameworkCore.Design` |
+| `WebApplication1` | Runs the application | Data project and migrations project |
 
-3. Move the migrations and model snapshot files to the class library.
-   > [!TIP]
-   > If you have no existing migrations, generate one in the project containing the DbContext then move it.
-   > This is important because if the migrations project does not contain an existing migration, the Add-Migration command will be unable to find the DbContext.
+The application needs a reference to the migrations project when it discovers or applies migrations at run time, for example by calling `Migrate`. If migrations are applied only by a deployment artifact and the application never loads them, that reference isn't required.
 
-4. Configure the migrations assembly:
+## Configure the projects
+
+1. Create a class library for the migrations and add a reference to the project containing the `DbContext`.
+
+2. Add the database provider and `Microsoft.EntityFrameworkCore.Design` to the migrations project. Mark the design package as a private development dependency:
+
+   ```xml
+   <ItemGroup>
+     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="...">
+       <PrivateAssets>all</PrivateAssets>
+       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+     </PackageReference>
+     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="..." />
+   </ItemGroup>
+
+   <ItemGroup>
+     <ProjectReference Include="..\WebApplication1.Data\WebApplication1.Data.csproj" />
+   </ItemGroup>
+   ```
+
+3. Implement [`IDesignTimeDbContextFactory<TContext>`](xref:core/cli/dbcontext-creation#from-a-design-time-factory) in the migrations project. The factory allows the tools to create the context without running the application project:
+
+   [!code-csharp[](../../../../samples/core/Schemas/ThreeProjectMigrations/WebApplication1.Migrations/ApplicationDbContextFactory.cs#snippet_DesignTimeFactory)]
+
+   Keep design-time provider and model configuration consistent with the runtime configuration. The sample accepts an optional connection string argument and uses a local development connection when no argument is supplied.
+
+4. Configure the migrations assembly when registering the context at run time:
 
    [!code-csharp[](../../../../samples/core/Schemas/ThreeProjectMigrations/WebApplication1/Startup.cs#snippet_MigrationsAssembly)]
 
-5. Add a reference to your migrations project from the **startup** project.
+5. If the application applies migrations or otherwise discovers them at run time, add a normal reference from the application to the migrations project:
 
    ```xml
    <ItemGroup>
@@ -36,29 +63,73 @@ You may want to store your migrations in a different project than the one contai
    </ItemGroup>
    ```
 
-   If this causes a circular dependency, you can update the base output path of the **migrations** project instead:
+   The data project must not reference the migrations project. That would create a circular dependency because the migrations project already references the data project.
 
-   ```xml
-   <PropertyGroup>
-     <BaseOutputPath>..\WebApplication1\bin\</BaseOutputPath>
-   </PropertyGroup>
-   ```
+6. If migrations already exist, move all migration files and the model snapshot to the migrations project and update their namespaces. When there are no existing migrations, the design-time factory allows the initial migration to be created directly in the migrations project.
 
-If you did everything correctly, you should be able to add new migrations to the project.
+## Use the tools
 
-## [.NET CLI](#tab/dotnet-core-cli)
+Use the migrations project as both the [target project and startup project](xref:core/cli/dotnet#target-project-and-startup-project). The target project receives generated files, while the startup project is built and executed by the tools. In this layout, using the migrations project for both prevents the tools from executing application startup code.
+
+### [.NET CLI](#tab/dotnet-core-cli)
+
+Run these commands from the solution directory:
 
 ```dotnetcli
-dotnet ef migrations add NewMigration --project WebApplication1.Migrations
+dotnet ef migrations add NewMigration \
+    --project WebApplication1.Migrations \
+    --startup-project WebApplication1.Migrations
 ```
 
-## [Visual Studio](#tab/vs)
+The same project options apply to other commands:
+
+```dotnetcli
+dotnet ef migrations list \
+    --project WebApplication1.Migrations \
+    --startup-project WebApplication1.Migrations
+
+dotnet ef migrations script --output artifacts/migrations.sql \
+    --project WebApplication1.Migrations \
+    --startup-project WebApplication1.Migrations
+
+dotnet ef migrations bundle --output artifacts/efbundle \
+    --project WebApplication1.Migrations \
+    --startup-project WebApplication1.Migrations
+```
+
+Starting with EF Core 11, repeated project options can be stored in [`.config/dotnet-ef.json`](xref:core/cli/dotnet#configuration-file).
+
+### [Visual Studio](#tab/vs)
+
+Use the migrations project for both `-Project` and `-StartupProject`:
 
 ```powershell
-Add-Migration NewMigration -Project WebApplication1.Migrations
+Add-Migration NewMigration `
+    -Project WebApplication1.Migrations `
+    -StartupProject WebApplication1.Migrations
 ```
+
+The same parameters can be passed to `Get-Migration`, `Script-Migration`, `Bundle-Migration`, and the other Package Manager Console commands.
 
 ***
 
-> [!TIP]
-> If your application uses dependency injection, consider implementing <xref:Microsoft.EntityFrameworkCore.Design.IDesignTimeDbContextFactory`1> in your migrations project. This allows the EF tools to create your `DbContext` without needing to run the startup project. For more information, see [From a design-time factory](xref:core/cli/dbcontext-creation#from-a-design-time-factory).
+Build the migrations project before running commands with `--no-build`, or before another process consumes its output. A normal `dotnet ef` command builds the target and startup projects automatically.
+
+## Platform-specific applications
+
+Don't use a platform-specific application project as the startup project for EF tools. Mobile, browser, desktop, function, and RID-specific projects can require a workload or native host that `dotnet ef` can't execute. Starting with EF Core 11, the tools warn when a platform-specific startup project is used.
+
+Use the layout described above for .NET MAUI, WinUI, Blazor WebAssembly, Azure Functions, and similar applications:
+
+1. Put the context and entity types in a shared data project.
+2. Put migrations and `IDesignTimeDbContextFactory<TContext>` in a normal cross-platform .NET project.
+3. Run the tools with the migrations project as the target and startup project.
+4. Reference the migrations project from the application only if the application loads or applies migrations at run time.
+
+Direct tooling support for Xamarin and MAUI platform projects isn't planned; see [dotnet/efcore#7152](https://github.com/dotnet/efcore/issues/7152). Xamarin applications should first be [upgraded to .NET MAUI](/dotnet/maui/migration).
+
+### Process architecture
+
+The process running the tools must be able to load every design-time assembly. A 64-bit Visual Studio or .NET process can't load an x86-only startup assembly, and the same constraint applies to Arm64 and other architectures. Prefer an AnyCPU migrations project. If design-time dependencies require a specific architecture, invoke a matching .NET SDK explicitly.
+
+The design-time process architecture is separate from the deployment target. When creating a bundle, use `--target-runtime` or `-TargetRuntime` to generate an artifact for the deployment RID, such as `linux-arm64` or `osx-arm64`.

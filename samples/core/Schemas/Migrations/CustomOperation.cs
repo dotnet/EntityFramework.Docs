@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Migrations.Operations;
 using Microsoft.EntityFrameworkCore.Migrations.Operations.Builders;
+using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.EntityFrameworkCore.Update;
 
 #region snippet_CreateUserOperation
@@ -59,7 +60,7 @@ public class MyMigrationsSqlGenerator : SqlServerMigrationsSqlGenerator
         MigrationCommandListBuilder builder)
     {
         var sqlHelper = Dependencies.SqlGenerationHelper;
-        var stringMapping = Dependencies.TypeMappingSource.FindMapping(typeof(string));
+        var stringMapping = Dependencies.TypeMappingSource.GetMapping(typeof(string));
 
         builder
             .Append("CREATE USER ")
