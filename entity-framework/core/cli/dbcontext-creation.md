@@ -2,14 +2,14 @@
 title: Design-time DbContext Creation - EF Core
 description: Strategies for creating a design-time DbContext with Entity Framework Core
 author: SamMonoRT
-ms.date: 10/27/2020
+ms.date: 08/05/2026
 uid: core/cli/dbcontext-creation
 ---
 # Design-time DbContext Creation
 
 Some of the EF Core Tools commands (for example, the [Migrations][1] commands) require a derived `DbContext` instance to be created at design time in order to gather details about the application's entity types and how they map to a database schema. In most cases, it is desirable that the `DbContext` thereby created is configured in a similar way to how it would be [configured at run time][2].
 
-There are various ways the tools try to create the `DbContext`:
+There are various ways the tools try to create the `DbContext`. If an [`IDesignTimeDbContextFactory<TContext>`](#from-a-design-time-factory) is found, the tools use it instead of the other creation patterns. A design-time factory is the recommended pattern for a [separate migrations project](xref:core/managing-schemas/migrations/projects) and for applications whose startup project is platform-specific.
 
 ## From application services
 
@@ -34,7 +34,9 @@ You can also tell the tools how to create your DbContext by implementing the <xr
 
 [!code-csharp[Main](../../../samples/core/Miscellaneous/CommandLine/BloggingContextFactory.cs#BloggingContextFactory)]
 
-A design-time factory can be especially useful if you need to configure the `DbContext` differently for design time than at run time, if the `DbContext` constructor takes additional parameters are not registered in DI, if you are not using DI at all, or if for some reason you prefer not to have a `CreateHostBuilder` method in your ASP.NET Core application's `Main` class.
+A design-time factory can be especially useful if the context constructor has dependencies that aren't registered in DI, if you aren't using DI, or if the application startup project can't be executed by the tools.
+
+Configure the same provider, model options, and migrations assembly at design time that the application uses at run time. Otherwise, the tools can scaffold migrations for a model that differs from the model used by the application. Don't assume that an optional command-line argument is present; validate arguments and provide a suitable development default or configuration source.
 
 ## Args
 
@@ -62,6 +64,6 @@ Update-Database -Args '--environment Production'
   [2]: xref:core/dbcontext-configuration/index
   [3]: /aspnet/core/fundamentals/host/web-host
   [4]: /aspnet/core/fundamentals/host/generic-host
-  [5]: xref:core/dbcontext-configuration/index#constructor-argument
-  [6]: xref:core/dbcontext-configuration/index#using-dbcontext-with-dependency-injection
-  [7]: xref:core/dbcontext-configuration/index#onconfiguring
+  [5]: xref:core/dbcontext-configuration/index
+  [6]: xref:Microsoft.Extensions.DependencyInjection.EntityFrameworkServiceCollectionExtensions.AddDbContext*
+  [7]: xref:core/dbcontext-configuration/index#basic-dbcontext-initialization-with-new

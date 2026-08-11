@@ -2,12 +2,18 @@
 title: Custom Migrations Operations - EF Core
 description: Managing custom and raw SQL migrations for database schema management with Entity Framework Core
 author: SamMonoRT
-ms.date: 10/27/2020
+ms.date: 08/05/2026
 uid: core/managing-schemas/migrations/operations
 ---
 # Custom Migrations Operations
 
 The MigrationBuilder API allows you to perform many different kinds of operations during a migration, but it's far from exhaustive. However, the API is also extensible allowing you to define your own operations. There are two ways to extend the API: Using the `Sql()` method, or by defining custom `MigrationOperation` objects.
+
+## Built-in data operations
+
+Before defining a custom operation, consider the built-in `InsertData`, `UpdateData`, and `DeleteData` operations. They generate provider-specific SQL for fixed values and rows identified by explicit keys. Use `MigrationBuilder.Sql()` for transformations that calculate values from existing database rows.
+
+See [Data operations](xref:core/managing-schemas/migrations/managing#data-operations) for complete, reversible samples of inserting, updating, deleting, and transforming data in migrations.
 
 To illustrate, let's look at implementing an operation that creates a database user using each approach. In our migrations, we want to enable writing the following code:
 

@@ -81,12 +81,12 @@ It's also possible to [put migrations code in a class library separate from the 
 
 ### Other target frameworks
 
-The Package Manager Console tools work with .NET or .NET Framework projects. Apps that have the EF Core model in a .NET Standard class library might not have a .NET or .NET Framework project. For example, this is true of Xamarin and Universal Windows Platform apps. In such cases, you can create a .NET or .NET Framework console app project whose only purpose is to act as startup project for the tools. The project can be a dummy project with no real code &mdash; it is only needed to provide a target for the tooling.
+The Package Manager Console tools must execute application code using a .NET runtime. Don't use a platform-specific application, such as .NET MAUI, WinUI, Blazor WebAssembly, or Azure Functions, as the startup project for the tools. Instead, put migrations in a normal cross-platform .NET project with an [`IDesignTimeDbContextFactory<TContext>`](xref:core/cli/dbcontext-creation#from-a-design-time-factory), and use that project as both the target and startup project. See [Using a Separate Migrations Project](xref:core/managing-schemas/migrations/projects#platform-specific-applications).
 
 > [!IMPORTANT]
 > Xamarin.Android, Xamarin.iOS, Xamarin.Mac are now integrated directly into .NET (starting with .NET 6) as .NET for Android, .NET for iOS, and .NET for macOS. If you're building with these project types today, they should be upgraded to .NET SDK-style projects for continued support. For more information about upgrading Xamarin projects to .NET, see the [Upgrade from Xamarin to .NET & .NET MAUI](/dotnet/maui/migration) documentation.
 
-Why is a dummy project required? As mentioned earlier, the tools have to execute application code at design time. To do that, they need to use the .NET or .NET Framework runtime. When the EF Core model is in a project that targets .NET or .NET Framework, the EF Core tools borrow the runtime from the project. They can't do that if the EF Core model is in a .NET Standard class library. The .NET Standard is not an actual .NET implementation; it's a specification of a set of APIs that .NET implementations must support. Therefore .NET Standard is not sufficient for the EF Core tools to execute application code. The dummy project you create to use as startup project provides a concrete target platform into which the tools can load the .NET Standard class library.
+Visual Studio and Package Manager Console normally run as 64-bit processes and can't load an x86-only startup assembly. Prefer an AnyCPU migrations project. When all design-time dependencies must be x86, use the .NET CLI with an explicitly selected x86 SDK/tool host.
 
 ### ASP.NET Core environment
 
@@ -323,6 +323,9 @@ Updates the database to the last migration or to a specified migration.
 | <nobr>`-NoBuild`</nobr>             | Don't build the project before running the command. Intended to be used when the build is up-to-date. Added in EF Core 11. |
 
 The [common parameters](#common-parameters) are listed above.
+
+> [!WARNING]
+> `-Migration` specifies the state the database should be in after the command completes. If the database is currently at a newer migration, the command reverts every migration newer than the target by executing its `Down` operations. It doesn't apply one older migration out of order.
 
 > [!TIP]
 > The `Migration` parameter supports tab-expansion.
