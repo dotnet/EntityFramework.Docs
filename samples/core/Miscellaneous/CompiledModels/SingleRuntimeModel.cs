@@ -1,4 +1,5 @@
-﻿using CompiledModelTest;
+﻿using System;
+using CompiledModelTest;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 
@@ -11,6 +12,11 @@ namespace SingleRuntimeModel;
 [DbContext(typeof(BlogsContext))]
 partial class BlogsContextModel : RuntimeModel
 {
+    private BlogsContextModel()
+        : base(skipDetectChanges: false, modelId: Guid.NewGuid(), entityTypeCount: 0)
+    {
+    }
+
     private static BlogsContextModel _instance;
     public static IModel Instance
     {
