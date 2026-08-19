@@ -36,7 +36,7 @@ A typical unit-of-work when using Entity Framework Core (EF Core) involves:
 >   - Unmanaged resources are freed.
 >   - Events or other hooks are unregistered. Unregistering prevents memory leaks when the instance remains referenced.
 > - [DbContext is **Not thread-safe**](#avoiding-dbcontext-threading-issues). Don't share contexts between threads. Make sure to [await](/dotnet/csharp/language-reference/operators/await) all async calls before continuing to use the context instance.
-> - An <xref:System.InvalidOperationException> thrown by EF Core code can put the context into an unrecoverable state. Such exceptions indicate a program error and are not designed to be recovered from.
+> - An <xref:System.InvalidOperationException> thrown by EF Core code can put the context into an unrecoverable state. Such exceptions indicate a program error and are not designed to be recovered from. The application should not attempt to continue using the context instance.
 
 ## DbContext in dependency injection for ASP.NET Core
 
