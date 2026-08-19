@@ -91,7 +91,7 @@ SELECT JSON_VALUE([j].[Metadata], N'$.Filter')
 FROM [JsonEntities] AS [j]
 ```
 
-The value converter is taken from the expression passed as the function argument. Therefore, this pattern works for a mapped property such as `JsonEntity.Metadata`, but configuring the parameter store type does not make arbitrary dictionary values translatable. Convert in-memory values to the provider type before passing them as parameters.
+The value converter is taken from the expression passed as the function argument. Therefore, this pattern works for a mapped property such as `JsonEntity.Metadata`, but configuring the parameter store type does not make arbitrary dictionary values translatable. To use an in-memory dictionary, serialize it and pass the resulting string to a separately mapped method whose CLR parameter is `string`.
 
 ## Mapping a method to a custom SQL
 
