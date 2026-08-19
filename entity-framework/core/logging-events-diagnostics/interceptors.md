@@ -2,7 +2,7 @@
 title: Interceptors - EF Core
 description: Interception for database operations and other events
 author: SamMonoRT
-ms.date: 02/26/2026
+ms.date: 08/19/2026
 uid: core/logging-events-diagnostics/interceptors
 ms.custom: sfi-ropc-nochange
 ---
