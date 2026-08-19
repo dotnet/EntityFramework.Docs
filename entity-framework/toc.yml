@@ -636,8 +636,8 @@
             href: ef6/modeling/code-first/migrations/existing-database.md
           - name: Customize Migrations history
             href: ef6/modeling/code-first/migrations/history-customization.md
-          - name: Use Migrate.exe
-            href: ef6/modeling/code-first/migrations/migrate-exe.md
+          - name: Use ef6.exe
+            href: ef6/modeling/code-first/migrations/ef6-exe.md
           - name: Migrations in team environments
             href: ef6/modeling/code-first/migrations/teams.md
       - name: Use EF Designer

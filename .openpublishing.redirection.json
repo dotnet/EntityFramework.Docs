@@ -141,6 +141,11 @@
             "redirect_document_id": false
         },
         {
+            "source_path": "entity-framework/ef6/modeling/code-first/migrations/migrate-exe.md",
+            "redirect_url": "/ef/ef6/modeling/code-first/migrations/ef6-exe",
+            "redirect_document_id": true
+        },
+        {
             "source_path": "entity-framework/core/get-started/aspnetcore/existing-db.md",
             "redirect_url": "/aspnet/core/data/ef-rp/intro",
             "redirect_document_id": false
