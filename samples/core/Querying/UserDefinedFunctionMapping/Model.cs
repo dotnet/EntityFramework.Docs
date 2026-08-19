@@ -53,6 +53,11 @@ public class BloggingContext : DbContext
         => throw new NotSupportedException();
     #endregion
 
+    #region BuiltInFunctionDefinition
+    public static bool IsDate(string value)
+        => throw new NotSupportedException();
+    #endregion
+
     #region HasTranslationFunctionDefinition
     public double PercentageDifference(double first, int second)
         => throw new NotSupportedException();
@@ -141,6 +146,12 @@ public class BloggingContext : DbContext
         #region BasicFunctionConfiguration
         modelBuilder.HasDbFunction(typeof(BloggingContext).GetMethod(nameof(ActivePostCountForBlog), [typeof(int)]))
             .HasName("CommentedPostCountForBlog");
+        #endregion
+
+        #region BuiltInFunctionConfiguration
+        modelBuilder.HasDbFunction(typeof(BloggingContext).GetMethod(nameof(IsDate), [typeof(string)]))
+            .HasName("ISDATE")
+            .IsBuiltIn();
         #endregion
 
         #region HasTranslationFunctionConfiguration

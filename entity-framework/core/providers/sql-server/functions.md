@@ -2,7 +2,7 @@
 title: Function Mappings - Microsoft SQL Server Database Provider - EF Core
 description: Function Mappings of the Microsoft SQL Server database provider
 author: SamMonoRT
-ms.date: 4/14/2026
+ms.date: 08/19/2026
 uid: core/providers/sql-server/functions
 ---
 # Function Mappings of the Microsoft SQL Server Provider
@@ -10,6 +10,8 @@ uid: core/providers/sql-server/functions
 This page shows which .NET members are translated into which SQL functions when using the SQL Server provider.
 
 ## Aggregate functions
+
+For general information about using aggregate functions in queries, see [Aggregate functions](xref:core/querying/complex-query-operators#aggregate-functions).
 
 .NET                                                                    | SQL                              | Added in
 ----------------------------------------------------------------------- | -------------------------------- | --------

@@ -2,7 +2,7 @@
 title: User-defined function mapping - EF Core
 description: Mapping user-defined functions to database functions
 author: SamMonoRT
-ms.date: 11/23/2020
+ms.date: 08/19/2026
 uid: core/querying/user-defined-function-mapping
 ---
 # User-defined function mapping
@@ -62,6 +62,22 @@ Will produce this SQL:
 SELECT [b].[BlogId], [b].[Rating], [b].[Url]
 FROM [Blogs] AS [b]
 WHERE [dbo].[CommentedPostCountForBlog]([b].[BlogId]) > 1
+```
+
+### Mapping a method to a built-in function
+
+EF Core considers a mapped function to be user-defined by default. Some databases distinguish built-in and user-defined functions when generating SQL. For example, SQL Server requires user-defined functions to be schema-qualified, but built-in functions aren't schema-qualified.
+
+Use `IsBuiltIn` to map a CLR method to a built-in function:
+
+[!code-csharp[Main](../../../samples/core/Querying/UserDefinedFunctionMapping/Model.cs#BuiltInFunctionDefinition)]
+
+[!code-csharp[Main](../../../samples/core/Querying/UserDefinedFunctionMapping/Model.cs#BuiltInFunctionConfiguration)]
+
+The <xref:Microsoft.EntityFrameworkCore.DbFunctionAttribute.IsBuiltIn> property provides the same configuration when using an attribute:
+
+```csharp
+[DbFunction(Name = "ISDATE", IsBuiltIn = true)]
 ```
 
 ## Mapping a method to a custom SQL
