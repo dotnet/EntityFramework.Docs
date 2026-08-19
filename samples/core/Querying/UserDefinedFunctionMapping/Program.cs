@@ -54,6 +54,11 @@ internal class Program
         #endregion
         var result1 = await query1.ToListAsync();
 
+        #region JsonFunctionQuery
+        var jsonQuery = context.JsonEntities.Select(e => BloggingContext.JsonValue(e.Metadata, "$.Filter"));
+        #endregion
+        var jsonResults = await jsonQuery.ToListAsync();
+
         #region HasTranslationQuery
         var query2 = from p in context.Posts
                      select context.PercentageDifference(p.BlogId, 3);

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Text.Json;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Query.SqlExpressions;
 using Microsoft.EntityFrameworkCore.Storage;
@@ -42,14 +43,27 @@ public class Comment
 }
 #endregion
 
+public class JsonEntity
+{
+    public int Id { get; set; }
+    public Dictionary<string, string> Metadata { get; set; }
+}
+
 public class BloggingContext : DbContext
 {
     public DbSet<Blog> Blogs { get; set; }
     public DbSet<Post> Posts { get; set; }
     public DbSet<Comment> Comments { get; set; }
+    public DbSet<JsonEntity> JsonEntities { get; set; }
 
     #region BasicFunctionDefinition
     public int ActivePostCountForBlog(int blogId)
+        => throw new NotSupportedException();
+    #endregion
+
+    #region JsonFunctionDefinition
+    [DbFunction(Name = "JSON_VALUE", IsBuiltIn = true, IsNullable = true)]
+    public static string JsonValue(Dictionary<string, string> json, string path)
         => throw new NotSupportedException();
     #endregion
 
@@ -139,8 +153,21 @@ public class BloggingContext : DbContext
                 new Comment { CommentId = 6, PostId = 3, Text = "I couldn't agree with you more", Likes = 2 });
 
         #region BasicFunctionConfiguration
-        modelBuilder.HasDbFunction(typeof(BloggingContext).GetMethod(nameof(ActivePostCountForBlog), [typeof(int)]))
-            .HasName("CommentedPostCountForBlog");
+        modelBuilder.HasDbFunction(() => ActivePostCountForBlog(default))
+            .HasName("CommentedPostCountForBlog")
+            .HasSchema("dbo");
+        #endregion
+
+        #region JsonFunctionConfiguration
+        modelBuilder.Entity<JsonEntity>()
+            .Property(e => e.Metadata)
+            .HasConversion(
+                value => JsonSerializer.Serialize(value, (JsonSerializerOptions)null),
+                value => JsonSerializer.Deserialize<Dictionary<string, string>>(value, (JsonSerializerOptions)null));
+
+        var jsonValueFunction = modelBuilder.HasDbFunction(() => JsonValue(default, default));
+        jsonValueFunction.HasStoreType("nvarchar(4000)");
+        jsonValueFunction.HasParameter("json").HasStoreType("nvarchar(max)");
         #endregion
 
         #region HasTranslationFunctionConfiguration
