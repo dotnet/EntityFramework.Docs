@@ -79,31 +79,64 @@ public class AuditingInterceptor : ISaveChangesInterceptor
 
     #region SaveChangesFailed
     public void SaveChangesFailed(DbContextErrorEventData eventData)
+        => UpdateAudit(eventData.Exception.Message);
+
+    public Task SaveChangesFailedAsync(
+        DbContextErrorEventData eventData,
+        CancellationToken cancellationToken = default)
+        => UpdateAuditAsync(eventData.Exception.Message, cancellationToken);
+    #endregion
+
+    #region SaveChangesCanceled
+    public void SaveChangesCanceled(DbContextEventData eventData)
+        => UpdateAudit("SaveChanges was canceled.");
+
+    public Task SaveChangesCanceledAsync(
+        DbContextEventData eventData,
+        CancellationToken cancellationToken = default)
+        => UpdateAuditAsync("SaveChanges was canceled.", CancellationToken.None);
+    #endregion
+
+    #region ThrowingConcurrencyException
+    public InterceptionResult ThrowingConcurrencyException(
+        ConcurrencyExceptionEventData eventData,
+        InterceptionResult result)
+    {
+        UpdateAudit(eventData.Exception.Message);
+        return result;
+    }
+
+    public async ValueTask<InterceptionResult> ThrowingConcurrencyExceptionAsync(
+        ConcurrencyExceptionEventData eventData,
+        InterceptionResult result,
+        CancellationToken cancellationToken = default)
+    {
+        await UpdateAuditAsync(eventData.Exception.Message, cancellationToken);
+        return result;
+    }
+    #endregion
+
+    private void UpdateAudit(string errorMessage)
     {
         using var auditContext = new AuditContext(_connectionString);
-
-        auditContext.Attach(_audit);
-        _audit.Succeeded = false;
-        _audit.EndTime = DateTime.UtcNow;
-        _audit.ErrorMessage = eventData.Exception.Message;
-
+        UpdateAudit(errorMessage, auditContext);
         auditContext.SaveChanges();
     }
 
-    public async Task SaveChangesFailedAsync(
-        DbContextErrorEventData eventData,
-        CancellationToken cancellationToken = default)
+    private async Task UpdateAuditAsync(string errorMessage, CancellationToken cancellationToken)
     {
         using var auditContext = new AuditContext(_connectionString);
+        UpdateAudit(errorMessage, auditContext);
+        await auditContext.SaveChangesAsync(cancellationToken);
+    }
 
+    private void UpdateAudit(string errorMessage, AuditContext auditContext)
+    {
         auditContext.Attach(_audit);
         _audit.Succeeded = false;
         _audit.EndTime = DateTime.UtcNow;
-        _audit.ErrorMessage = eventData.Exception.InnerException?.Message;
-
-        await auditContext.SaveChangesAsync(cancellationToken);
+        _audit.ErrorMessage = errorMessage;
     }
-    #endregion
 
     #region CreateAudit
     private static SaveChangesAudit CreateAudit(DbContext context)

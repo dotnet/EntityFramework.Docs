@@ -24,7 +24,7 @@ The following table shows the available interceptor interfaces:
 | <xref:Microsoft.EntityFrameworkCore.Diagnostics.IDbCommandInterceptor>          | Creating commands</br>Executing commands</br>Command failures</br>Disposing the command's DbDataReader                                                                     | No                                     |
 | <xref:Microsoft.EntityFrameworkCore.Diagnostics.IDbConnectionInterceptor>       | Opening and closing connections</br>Creating connections</br>Connection failures                                                                                            | No                                     |
 | <xref:Microsoft.EntityFrameworkCore.Diagnostics.IDbTransactionInterceptor>      | Creating transactions</br>Using existing transactions</br>Committing transactions</br>Rolling back transactions</br>Creating and using savepoints</br>Transaction failures | No                                     |
-| <xref:Microsoft.EntityFrameworkCore.Diagnostics.ISaveChangesInterceptor>        | SavingChanges/SavedChanges</br>SaveChangesFailed</br>Optimistic concurrency handling                                                                                       | No                                     |
+| <xref:Microsoft.EntityFrameworkCore.Diagnostics.ISaveChangesInterceptor>        | SavingChanges/SavedChanges</br>SaveChangesFailed/SaveChangesCanceled</br>Optimistic concurrency handling                                                                     | No                                     |
 | <xref:Microsoft.EntityFrameworkCore.Diagnostics.IMaterializationInterceptor>    | Creating, initializing, and finalizing entity instances from query results                                                                                                  | Yes                                    |
 | <xref:Microsoft.EntityFrameworkCore.Diagnostics.IQueryExpressionInterceptor>    | Modifying the LINQ expression tree before a query is compiled                                                                                                               | Yes                                    |
 | <xref:Microsoft.EntityFrameworkCore.Diagnostics.IIdentityResolutionInterceptor> | Resolving identity conflicts when tracking entities                                                                                                                         | Yes                                    |
@@ -705,7 +705,7 @@ The general idea for auditing with the interceptor is:
 * An audit message is created at the beginning of SaveChanges and is written to the auditing database
 * SaveChanges is allowed to continue
 * If SaveChanges succeeds, then the audit message is updated to indicate success
-* If SaveChanges fails, then the audit message is updated to indicate the failure
+* If SaveChanges fails or is canceled, then the audit message is updated to indicate the outcome
 
 The first stage is handled before any changes are sent to the database using overrides of <xref:Microsoft.EntityFrameworkCore.Diagnostics.ISaveChangesInterceptor.SavingChanges*?displayProperty=nameWithType> and <xref:Microsoft.EntityFrameworkCore.Diagnostics.ISaveChangesInterceptor.SavingChangesAsync*?displayProperty=nameWithType>.
 
@@ -841,9 +841,12 @@ The audit entity is stored on the interceptor so that it can be accessed again o
 
 The audit entity is attached to the audit context, since it already exists in the database and needs to be updated. We then set `Succeeded` and `EndTime`, which marks these properties as modified so SaveChanges will send an update to the audit database.
 
-#### Detecting failure
+#### Detecting failure, cancellation, and concurrency conflicts
 
-Failure is handled in much the same way as success, but in the <xref:Microsoft.EntityFrameworkCore.Diagnostics.ISaveChangesInterceptor.SaveChangesFailed*?displayProperty=nameWithType> or <xref:Microsoft.EntityFrameworkCore.Diagnostics.ISaveChangesInterceptor.SaveChangesFailedAsync*?displayProperty=nameWithType> method. The event data contains the exception that was thrown.
+Ordinary failures are handled in much the same way as success, but in the <xref:Microsoft.EntityFrameworkCore.Diagnostics.ISaveChangesInterceptor.SaveChangesFailed*?displayProperty=nameWithType> or <xref:Microsoft.EntityFrameworkCore.Diagnostics.ISaveChangesInterceptor.SaveChangesFailedAsync*?displayProperty=nameWithType> method. The event data contains the exception that was thrown.
+
+> [!NOTE]
+> `SaveChangesFailed` and `SaveChangesFailedAsync` are not called for every exception. Starting with EF Core 7, a canceled operation calls <xref:Microsoft.EntityFrameworkCore.Diagnostics.ISaveChangesInterceptor.SaveChangesCanceled*?displayProperty=nameWithType> or <xref:Microsoft.EntityFrameworkCore.Diagnostics.ISaveChangesInterceptor.SaveChangesCanceledAsync*?displayProperty=nameWithType>. Starting with EF Core 8, a <xref:Microsoft.EntityFrameworkCore.DbUpdateConcurrencyException> calls <xref:Microsoft.EntityFrameworkCore.Diagnostics.ISaveChangesInterceptor.ThrowingConcurrencyException*?displayProperty=nameWithType> or <xref:Microsoft.EntityFrameworkCore.Diagnostics.ISaveChangesInterceptor.ThrowingConcurrencyExceptionAsync*?displayProperty=nameWithType> before the exception is thrown. It does not call `SaveChangesFailed` or `SaveChangesFailedAsync`.
 
 <!--
     public void SaveChangesFailed(DbContextErrorEventData eventData)
@@ -875,6 +878,14 @@ Failure is handled in much the same way as success, but in the <xref:Microsoft.E
     }
 -->
 [!code-csharp[SaveChangesFailed](../../../samples/core/Miscellaneous/SaveChangesInterception/AuditingInterceptor.cs?name=SaveChangesFailed)]
+
+The auditing interceptor also handles cancellation separately. The asynchronous callback does not pass the canceled token to the audit operation, so that the outcome can still be recorded.
+
+[!code-csharp[SaveChangesCanceled](../../../samples/core/Miscellaneous/SaveChangesInterception/AuditingInterceptor.cs?name=SaveChangesCanceled)]
+
+Concurrency interception occurs immediately before EF Core throws the exception and allows the exception to be suppressed. This interceptor records the conflict and returns the existing result without suppressing it.
+
+[!code-csharp[ThrowingConcurrencyException](../../../samples/core/Miscellaneous/SaveChangesInterception/AuditingInterceptor.cs?name=ThrowingConcurrencyException)]
 
 #### Demonstration
 

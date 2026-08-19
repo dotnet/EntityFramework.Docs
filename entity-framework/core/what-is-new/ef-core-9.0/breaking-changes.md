@@ -2,7 +2,7 @@
 title: Breaking changes in EF Core 9 (EF9) - EF Core
 description: List of breaking changes introduced in Entity Framework Core 9 (EF9)
 author: SamMonoRT
-ms.date: 01/17/2025
+ms.date: 08/19/2026
 uid: core/what-is-new/ef-core-9.0/breaking-changes
 ---
 
@@ -37,6 +37,8 @@ EF Core 9 targets .NET 8. This means that existing applications that target .NET
 | [`EF.Constant()` and `EF.Parameter()` no longer work inside compiled queries](#ef-constant-compiled)      | Low        |
 | [Some `NoTrackingWithIdentityResolution` queries are now prohibited for JSON collections](#no-tracking-json) | Low        |
 | [All pending migrations are applied in a single transaction](#migrations-single-transaction)              | Low        |
+| [Primitive collection APIs were replaced](#primitive-collection-apis)                                      | Low        |
+| [SQL Server `IndexOf` now propagates null values](#indexof-null)                                            | Low        |
 
 ## High-impact changes
 
@@ -232,6 +234,69 @@ var binaryData = await context.Blogs.Select(b => EF.Functions.Unhex(b.HexString)
 ```
 
 Otherwise, add runtime checks for null on the return value of Unhex().
+
+<a name="primitive-collection-apis"></a>
+
+### Primitive collection APIs were replaced
+
+[Tracking Issue #33456](https://github.com/dotnet/efcore/issues/33456)
+
+#### Old behavior
+
+In EF Core 8, the following APIs were used for comparing and JSON serialization of primitive collections:
+
+- `ListComparer<TElement>`
+- `NullableValueTypeListComparer<TElement>`
+- `ObjectListComparer<TElement>`
+- `JsonCollectionReaderWriter<TCollection, TConcreteCollection, TElement>`
+- `JsonNullableStructCollectionReaderWriter<TCollection, TConcreteCollection, TElement>`
+
+#### New behavior
+
+Starting with EF Core 9.0, these APIs have been replaced by APIs specialized for the collection element type:
+
+| **EF Core 8 API** | **EF Core 9 API** |
+|:------------------|:------------------|
+| `ListComparer<TElement>` | `ListOfValueTypesComparer<TConcreteList, TElement>` |
+| `NullableValueTypeListComparer<TElement>` | `ListOfNullableValueTypesComparer<TConcreteList, TElement>` |
+| `ObjectListComparer<TElement>` | `ListOfReferenceTypesComparer<TConcreteList, TElement>` |
+| `JsonCollectionReaderWriter<TCollection, TConcreteCollection, TElement>` | `JsonCollectionOfStructsReaderWriter<TConcreteCollection, TElement>` or `JsonCollectionOfReferencesReaderWriter<TConcreteCollection, TElement>` |
+| `JsonNullableStructCollectionReaderWriter<TCollection, TConcreteCollection, TElement>` | `JsonCollectionOfNullableStructsReaderWriter<TConcreteCollection, TElement>` |
+
+#### Why
+
+Primitive collection infrastructure was consolidated across relational and Azure Cosmos DB providers. The new APIs use the exact concrete collection type when creating snapshots and distinguish between non-nullable value types, nullable value types, and reference types. This enables support for nested and read-only collections.
+
+#### Mitigations
+
+Code that directly uses one of the removed APIs must use the replacement appropriate for its element type. Supply the concrete collection type, such as `List<int>`, as `TConcreteList` or `TConcreteCollection`, and the element type as `TElement`.
+
+<a name="indexof-null"></a>
+
+### SQL Server `IndexOf` now propagates null values
+
+[Tracking Issue #18773](https://github.com/dotnet/efcore/issues/18773)
+
+#### Old behavior
+
+Previously, when SQL Server translated `IndexOf` with an empty search string, it returned `0` even if the string being searched was `null`.
+
+#### New behavior
+
+Starting with EF Core 9.0, SQL Server returns `null` for `IndexOf` when the string being searched is `null`. This matches the translation used by SQLite.
+
+#### Why
+
+The new translation follows standard null propagation and no longer treats a null string as containing an empty string at index zero.
+
+#### Mitigations
+
+To retain the previous behavior, handle null explicitly in the query:
+
+```csharp
+var indexes = context.Entities
+    .Select(e => e.NullableString == null ? 0 : e.NullableString.IndexOf(string.Empty));
+```
 
 <a name="compiled-model-private-methods"></a>
 
