@@ -248,7 +248,77 @@ var overAverageIds = await context.Database
 
 <xref:Microsoft.EntityFrameworkCore.RelationalDatabaseFacadeExtensions.SqlQuery*> can be used with any scalar type supported by your database provider. If you'd like to use a type not supported by your database provider, you can use [pre-convention configuration](xref:core/modeling/bulk-configuration#pre-convention-configuration) to define a value conversion for it.
 
+<xref:Microsoft.EntityFrameworkCore.RelationalDatabaseFacadeExtensions.SqlQuery*> isn't limited to scalar types. You can also project each row of the result set into an arbitrary CLR type that isn't part of your EF model, as long as the type has a property for every column in the result set. See [Querying unmapped types](#querying-unmapped-types) below for more details.
+
 <xref:Microsoft.EntityFrameworkCore.RelationalDatabaseFacadeExtensions.SqlQueryRaw*> allows for dynamic construction of SQL queries, just like <xref:Microsoft.EntityFrameworkCore.RelationalQueryableExtensions.FromSqlRaw*> does for entity types.
+
+## Querying unmapped types
+
+> [!NOTE]
+> Returning unmapped types from <xref:Microsoft.EntityFrameworkCore.RelationalDatabaseFacadeExtensions.SqlQuery*> was introduced in EF Core 8.0. Support for unmapped types that contain nested [complex types](xref:core/modeling/complex-types) was added in a later release.
+
+In addition to scalar types, <xref:Microsoft.EntityFrameworkCore.RelationalDatabaseFacadeExtensions.SqlQuery*> can populate instances of an arbitrary CLR type from the result set of a SQL query, without including that type in the EF model. The type used for the query results can contain common mapping constructs supported by EF Core, such as parameterized constructors and mapping attributes. For example, given the following type:
+
+```csharp
+public class BlogPost
+{
+    public int Id { get; set; }
+    public string Title { get; set; }
+    public string Content { get; set; }
+    public DateOnly PublishedOn { get; set; }
+    public int BlogId { get; set; }
+}
+```
+
+The type can be queried using <xref:Microsoft.EntityFrameworkCore.RelationalDatabaseFacadeExtensions.SqlQuery*> in the same way as scalar types:
+
+```csharp
+var start = new DateOnly(2022, 1, 1);
+var end = new DateOnly(2023, 1, 1);
+var posts = await context.Database
+    .SqlQuery<BlogPost>($"SELECT * FROM Posts AS p WHERE p.PublishedOn >= {start} AND p.PublishedOn < {end}")
+    .ToListAsync();
+```
+
+The type used must have a property for every value in the result set, but it doesn't need to match any table in the database - it can, for example, represent a subset of columns, or the result of a join across multiple tables.
+
+> [!NOTE]
+> Unmapped types used in this way don't have keys defined and cannot have relationships to other types. Types with relationships must be mapped in the model.
+
+### Unmapped complex types
+
+The unmapped type returned by <xref:Microsoft.EntityFrameworkCore.RelationalDatabaseFacadeExtensions.SqlQuery*> can also contain nested [complex types](xref:core/modeling/complex-types), allowing you to group several columns from the result set into a nested value object. For example, consider a `Address` complex type that is nested within a `Customer` result type:
+
+```csharp
+public class Customer
+{
+    public int Id { get; set; }
+    public string Name { get; set; }
+    public Address Address { get; set; }
+}
+
+public class Address
+{
+    public string Line1 { get; set; }
+    public string City { get; set; }
+    public string PostCode { get; set; }
+    public string Country { get; set; }
+}
+```
+
+The nested complex type properties are populated from the result set using the same column-name conventions used when mapping complex types in the model, where each nested property maps to a column named with the complex property name and the nested property name joined by an underscore (for example, `Address_City`):
+
+```csharp
+var customers = await context.Database
+    .SqlQuery<Customer>(
+        $"""
+         SELECT [Id], [Name], [Address_Line1], [Address_City], [Address_PostCode], [Address_Country]
+         FROM [Customers]
+         """)
+    .ToListAsync();
+```
+
+As with complex types in the model, the nested type doesn't have a key and cannot define relationships to other types.
 
 ## Executing non-querying SQL
 
