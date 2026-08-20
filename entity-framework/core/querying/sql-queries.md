@@ -257,7 +257,7 @@ var overAverageIds = await context.Database
 > [!NOTE]
 > Returning unmapped types from <xref:Microsoft.EntityFrameworkCore.RelationalDatabaseFacadeExtensions.SqlQuery*> was introduced in EF Core 8.0. Support for unmapped types that contain nested [complex types](xref:core/modeling/complex-types) was added in a later release.
 
-In addition to scalar types, <xref:Microsoft.EntityFrameworkCore.RelationalDatabaseFacadeExtensions.SqlQuery*> can populate instances of a mappable CLR type from the result set of a SQL query, without including that type in the EF model. The type used for the query results can contain common mapping constructs supported by EF Core, such as parameterized constructors and mapping attributes. For example, given the following type:
+In addition to scalar types, <xref:Microsoft.EntityFrameworkCore.RelationalDatabaseFacadeExtensions.SqlQuery*> can populate instances of a mappable CLR type from the result set of a SQL query, without including that type in the EF model. The type used for the query results can contain common mapping constructs supported by EF Core, such as parameterized constructors and mapping attributes. The type used must have a property for every value in the result set, but do not need to match any table in the database. For example, given the following type:
 
 ```csharp
 public class BlogPost
@@ -290,7 +290,6 @@ The type used must have a property for every value in the result set, but it doe
 The unmapped type returned by <xref:Microsoft.EntityFrameworkCore.RelationalDatabaseFacadeExtensions.SqlQuery*> can also contain nested [complex types](xref:core/modeling/complex-types), allowing you to group several columns from the result set into a nested value object. For example, consider an `Address` complex type that is nested within a `Customer` result type:
 
 ```csharp
-[ComplexType]
 public class Customer
 {
     public int Id { get; set; }
@@ -298,6 +297,7 @@ public class Customer
     public Address Address { get; set; }
 }
 
+[ComplexType]
 public class Address
 {
     public string Line1 { get; set; }
