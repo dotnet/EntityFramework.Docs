@@ -26,7 +26,9 @@ group.Max(x => x.Property)                                              | MAX(Pr
 group.Min(x => x.Property)                                              | MIN(Property)
 group.Sum(x => x.Property)                                              | SUM(Property)
 string.Concat(group.Select(x => x.Property))                            | STRING_AGG(Property, N'')
+string.Concat(group.OrderBy(x => x.Other).Select(x => x.Property))      | STRING_AGG(Property, N'') WITHIN GROUP (ORDER BY Other) | EF Core 11.0
 string.Join(separator, group.Select(x => x.Property))                   | STRING_AGG(Property, @separator)
+string.Join(separator, group.OrderBy(x => x.Other).Select(x => x.Property)) | STRING_AGG(Property, @separator) WITHIN GROUP (ORDER BY Other) | EF Core 11.0
 
 ## Binary functions
 
