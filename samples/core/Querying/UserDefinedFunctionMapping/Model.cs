@@ -5,6 +5,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Text.Json;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.EntityFrameworkCore.Query.SqlExpressions;
 using Microsoft.EntityFrameworkCore.Storage;
 
@@ -163,7 +164,11 @@ public class BloggingContext : DbContext
             .Property(e => e.Metadata)
             .HasConversion(
                 value => JsonSerializer.Serialize(value, (JsonSerializerOptions)null),
-                value => JsonSerializer.Deserialize<Dictionary<string, string>>(value, (JsonSerializerOptions)null));
+                value => JsonSerializer.Deserialize<Dictionary<string, string>>(value, (JsonSerializerOptions)null),
+                new ValueComparer<Dictionary<string, string>>(
+                    (c1, c2) => c1.Count == c2.Count && !c1.Except(c2).Any(),
+                    c => c.Aggregate(0, (a, kvp) => a ^ HashCode.Combine(kvp.Key, kvp.Value)),
+                    c => c.ToDictionary(kvp => kvp.Key, kvp => kvp.Value)));
 
         var jsonValueFunction = modelBuilder.HasDbFunction(() => JsonValue(default, default));
         jsonValueFunction.HasStoreType("nvarchar(4000)");
