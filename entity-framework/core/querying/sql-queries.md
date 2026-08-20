@@ -287,7 +287,7 @@ The type used must have a property for every value in the result set, but it doe
 
 ### Unmapped complex types
 
-The unmapped type returned by <xref:Microsoft.EntityFrameworkCore.RelationalDatabaseFacadeExtensions.SqlQuery*> can also contain nested [complex types](xref:core/modeling/complex-types), allowing you to group several columns from the result set into a nested value object. For example, consider a `Address` complex type that is nested within a `Customer` result type:
+The unmapped type returned by <xref:Microsoft.EntityFrameworkCore.RelationalDatabaseFacadeExtensions.SqlQuery*> can also contain nested [complex types](xref:core/modeling/complex-types), allowing you to group several columns from the result set into a nested value object. For example, consider an `Address` complex type that is nested within a `Customer` result type:
 
 ```csharp
 public class Customer
