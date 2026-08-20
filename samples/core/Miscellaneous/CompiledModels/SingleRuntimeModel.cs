@@ -3,7 +3,7 @@ using CompiledModelTest;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 
-#pragma warning disable 219, 612, 618
+#pragma warning disable 219, 612, 618, EF1001
 #nullable disable
 
 namespace SingleRuntimeModel;
