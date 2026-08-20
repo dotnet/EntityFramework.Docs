@@ -84,13 +84,6 @@ additionalContent:
           - url: core/providers/index.md
             text: "All current Database Providers"
       # Card
-      - title: DbContext configuration and initialization
-        links:
-          - url: core/dbcontext-configuration/index.md
-            text: "Overview"
-          - url: core/performance/advanced-performance-topics.md#dbcontext-pooling
-            text: "Context pooling"
-      # Card
       - title: Create a model
         links:
           - url: core/modeling/index.md
@@ -244,6 +237,8 @@ additionalContent:
             text: "NativeAOT and precompiled queries"
           - url: core/performance/advanced-performance-topics.md
             text: "Advanced performance topics"
+          - url: core/performance/advanced-performance-topics.md#dbcontext-pooling
+            text: "Context pooling"
       # Card
       - title: Design-time tools reference
         links:
@@ -274,8 +269,6 @@ additionalContent:
             text: "Connection resiliency"
           - url: core/miscellaneous/connection-strings.md
             text: "Connection strings"
-          - url: core/performance/advanced-performance-topics.md#dbcontext-pooling
-            text: "Context pooling"
           - url: core/miscellaneous/multitenancy.md
             text: "Support multi-tenant databases"
           - url: core/miscellaneous/plugins.md
