@@ -23,7 +23,7 @@ For most applications, this default behavior is sufficient. You should only manu
 Starting with EF Core 7.0, you can control whether EF automatically creates a transaction when calling `SaveChanges` and no user transaction exists. Set <xref:Microsoft.EntityFrameworkCore.Infrastructure.DatabaseFacade.AutoTransactionBehavior> to one of the following values:
 
 * <xref:Microsoft.EntityFrameworkCore.AutoTransactionBehavior.WhenNeeded> (default): EF creates a transaction only when needed. For example, most single SQL statements execute in a transaction implicitly, so EF doesn't create an explicit transaction.
-* <xref:Microsoft.EntityFrameworkCore.AutoTransactionBehavior.Always>: EF always creates a transaction if no user transaction exists. This may add database roundtrips which degrade performance.
+* <xref:Microsoft.EntityFrameworkCore.AutoTransactionBehavior.Always>: EF always creates a transaction if no user transaction exists. This may add database roundtrips, which can degrade performance.
 * <xref:Microsoft.EntityFrameworkCore.AutoTransactionBehavior.Never>: EF never creates a transaction automatically.
 
 For example, configure EF to always create a transaction before calling `SaveChanges`:
@@ -35,7 +35,7 @@ context.Database.AutoTransactionBehavior = AutoTransactionBehavior.Always;
 `Always` can be useful if application code relies on <xref:Microsoft.EntityFrameworkCore.Diagnostics.IDbTransactionInterceptor> transaction creation callbacks being invoked when `SaveChanges` doesn't use a user transaction.
 
 > [!WARNING]
-> Use `AutoTransactionBehavior.Never` with caution. If a failure occurs, the database could be left in an inconsistent state.
+> Use `AutoTransactionBehavior.Never` with caution. If `SaveChanges` needs to execute multiple commands and a failure occurs, earlier commands may have already been committed, leaving partial changes in the database.
 
 ## Controlling transactions
 
