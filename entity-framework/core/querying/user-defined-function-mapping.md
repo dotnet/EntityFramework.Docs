@@ -66,11 +66,11 @@ FROM [Blogs] AS [b]
 WHERE [dbo].[CommentedPostCountForBlog]([b].[BlogId]) > 1
 ```
 
-## Mapping a built-in function
+## Mapping a function using DbFunctionAttribute
 
-A static method on the context can also be mapped by applying <xref:Microsoft.EntityFrameworkCore.DbFunctionAttribute>. The attribute's `Name`, `Schema`, `IsBuiltIn`, and `IsNullable` properties configure the corresponding characteristics of the database function. The fluent API methods `HasName`, `HasSchema`, `IsBuiltIn`, and `IsNullable` provide the same configuration.
+Instead of registering a function in `OnModelCreating`, a static method can be mapped directly by applying <xref:Microsoft.EntityFrameworkCore.DbFunctionAttribute>. The attribute's `Name`, `Schema`, `IsBuiltIn`, and `IsNullable` properties configure the corresponding characteristics of the database function; these are the same characteristics configured by the `HasName`, `HasSchema`, `IsBuiltIn`, and `IsNullable` fluent API methods when using `HasDbFunction`. Methods annotated with `DbFunctionAttribute` are discovered and registered automatically, so no call to `HasDbFunction` is required.
 
-For example, the following method maps SQL Server's built-in `JSON_VALUE` function. Because `IsBuiltIn` is `true`, EF Core emits the function name without a schema.
+For example, the following method uses `DbFunctionAttribute` to map SQL Server's built-in `JSON_VALUE` function. Because `IsBuiltIn` is `true`, EF Core emits the function name without a schema.
 
 [!code-csharp[Main](../../../samples/core/Querying/UserDefinedFunctionMapping/Model.cs#JsonFunctionDefinition)]
 
