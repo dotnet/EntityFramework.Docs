@@ -68,7 +68,7 @@ WHERE [dbo].[CommentedPostCountForBlog]([b].[BlogId]) > 1
 
 ## Mapping a function using DbFunctionAttribute
 
-Instead of registering a function in `OnModelCreating`, a static method can be mapped directly by applying <xref:Microsoft.EntityFrameworkCore.DbFunctionAttribute>. The attribute's `Name`, `Schema`, `IsBuiltIn`, and `IsNullable` properties configure the corresponding characteristics of the database function; these are the same characteristics configured by the `HasName`, `HasSchema`, `IsBuiltIn`, and `IsNullable` fluent API methods when using `HasDbFunction`. Methods annotated with `DbFunctionAttribute` are discovered and registered automatically, so no call to `HasDbFunction` is required.
+Instead of registering a function in `OnModelCreating`, a static method declared on the `DbContext` can be mapped directly by applying <xref:Microsoft.EntityFrameworkCore.DbFunctionAttribute>. The attribute's `Name`, `Schema`, `IsBuiltIn`, and `IsNullable` properties configure the corresponding characteristics of the database function; these are the same characteristics configured by the `HasName`, `HasSchema`, `IsBuiltIn`, and `IsNullable` fluent API methods when using `HasDbFunction`. Attributed methods on the context are discovered and registered automatically; attributed methods on other classes must still be registered with `HasDbFunction`. Call `HasDbFunction` for an automatically registered method only when a builder is needed for additional fluent configuration, as in the store-type example below.
 
 For example, the following method uses `DbFunctionAttribute` to map SQL Server's built-in `JSON_VALUE` function. Because `IsBuiltIn` is `true`, EF Core emits the function name without a schema.
 
