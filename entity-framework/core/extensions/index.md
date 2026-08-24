@@ -39,6 +39,17 @@ Entity Developer is a powerful O/RM designer for ADO.NET Entity Framework, NHibe
 
 [Website](https://www.devart.com/entitydeveloper/)
 
+### LINQKit
+
+LINQKit is a free set of extensions for LINQ to SQL and Entity Framework power users. It comprises the following:
+
+An extensible implementation of AsExpandable()
+A public expression visitor base class (ExpressionVisitor)
+PredicateBuilder
+Linq.Expr and Linq.Func shortcut methods
+
+[GitHub repository](https://github.com/scottksmith95/LINQKit) | [NuGet](https://www.nuget.org/packages/linqkit)
+
 ### DevMagic EF Core Sidekick
 
 EF Core Sidekick is a Visual Studio extension that enhances the power of auto code generation in Visual Studio. It provides a set of tools and templates for generating EF Core entities and derived DbContext from existing database, and then generating services and REST APIs from the entities. For EF Core: 6-9.
