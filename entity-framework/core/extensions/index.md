@@ -43,11 +43,13 @@ Entity Developer is a powerful O/RM designer for ADO.NET Entity Framework, NHibe
 
 LINQKit is a free set of extensions for LINQ to SQL and Entity Framework power users. It comprises the following:
 
-An extensible implementation of AsExpandable()
-A public expression visitor base class (ExpressionVisitor)
-PredicateBuilder
-Linq.Expr and Linq.Func shortcut methods
+- An extensible implementation of AsExpandable()
+- A public expression visitor base class (ExpressionVisitor)
+- PredicateBuilder
+- Linq.Expr and Linq.Func shortcut methods
 
+For EF Core: 2-9.
+ 
 [GitHub repository](https://github.com/scottksmith95/LINQKit) | [NuGet](https://www.nuget.org/packages/linqkit)
 
 ### DevMagic EF Core Sidekick
