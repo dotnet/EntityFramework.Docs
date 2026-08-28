@@ -14,7 +14,8 @@ The .NET Data Community Standups are live-streamed monthly (roughly) on Thursday
 
 | Date         | Area                  | Title                                                                                    |
 |--------------|-----------------------|------------------------------------------------------------------------------------------|
-| Jul 23, 2026 | Tools                 | [SQL Database Project Power Tools](#Jul23_2026)           |
+| Aug 28, 2026 | EF Core               | [How to start contributing to Entity Framework Core](#Aug28_2026)                        |
+| Jul 23, 2026 | Tools                 | [SQL Database Project Power Tools](#Jul23_2026)                                          |
 | Jun 25, 2026 | Temporal tables       | [Temporal tables and constraints in SQL Server and PostgreSQL 18](#Jun25_2026)           |
 | May 21, 2026 | EF Core               | [8 Real-World Query Anti-Patterns (and How to Fix Them)](#May21_2026)                    |
 | Apr 23, 2026 | Tools                 | [Lightweight Framework to Automate EF Components](#Apr23_2026)                           |
@@ -113,6 +114,21 @@ The .NET Data Community Standups are live-streamed monthly (roughly) on Thursday
 | May 6, 2020  | Welcome!              | [Introducing the EF Core Community Standup](#one)                                        |
 
 ## 2026
+
+<a name="Aug28_2026"></a>
+
+### Aug 28: [How to start contributing to Entity Framework Core](https://www.youtube.com/live/YQDpayHlilE?si=hgHZgfvQVJ3AwBNY)
+
+Learn how to start contributing to the Entity Framework Core project. Where to start. How to build the repository. How it is layered. How tests work. Etc.
+
+Featuring:
+
+- [Jiri Cincura](https://www.tabsoverspaces.com/) (Guest & Host)
+
+Links:
+
+- [EF Core repository](https://github.com/dotnet/efcore)
+- [EF Core docs repository](https://github.com/dotnet/EntityFramework.Docs)
 
 <a name="Jul23_2026"></a>
 
