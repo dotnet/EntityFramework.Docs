@@ -1,3 +1,4 @@
+
 ---
 title: SQL Queries - EF Core
 description: Using SQL queries in Entity Framework Core
@@ -255,7 +256,7 @@ var overAverageIds = await context.Database
 ## Querying unmapped types
 
 > [!NOTE]
-> Returning unmapped types from <xref:Microsoft.EntityFrameworkCore.RelationalDatabaseFacadeExtensions.SqlQuery*> was introduced in EF Core 8.0. Support for unmapped types that contain nested [complex types](xref:core/modeling/complex-types) was added in a later release.
+> Returning unmapped types from <xref:Microsoft.EntityFrameworkCore.RelationalDatabaseFacadeExtensions.SqlQuery*> was introduced in EF Core 8.0.
 
 In addition to scalar types, <xref:Microsoft.EntityFrameworkCore.RelationalDatabaseFacadeExtensions.SqlQuery*> can populate instances of a mappable CLR type from the result set of a SQL query, without including that type in the EF model. The type used for the query results can contain common mapping constructs supported by EF Core, such as parameterized constructors and mapping attributes. The type used must have a property for every value in the result set, but does not need to match any table in the database. For example, given the following type:
 
