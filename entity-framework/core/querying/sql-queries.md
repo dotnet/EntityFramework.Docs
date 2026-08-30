@@ -1,4 +1,3 @@
-
 ---
 title: SQL Queries - EF Core
 description: Using SQL queries in Entity Framework Core
