@@ -63,7 +63,7 @@ public class BloggingContext : DbContext
     #endregion
 
     #region BuiltInFunctionDefinition
-    public static bool IsDate(string value)
+    public static int IsDate(string value)
         => throw new NotSupportedException();
     #endregion
 
