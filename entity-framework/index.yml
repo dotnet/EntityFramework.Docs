@@ -84,38 +84,6 @@ additionalContent:
           - url: core/providers/index.md
             text: "All current Database Providers"
       # Card
-      - title: Platforms
-        links:
-          - url: core/miscellaneous/platforms.md
-            text: "All supported platforms"
-          - url: /aspnet/core/data/ef-rp/intro
-            text: "ASP.NET Core Razor Pages"
-          - url: /aspnet/core/data/ef-mvc/
-            text: "ASP.NET Core MVC"
-          - url: /aspnet/core/blazor/blazor-server-ef-core
-            text: "Blazor Server"
-          - url: core/get-started/wpf.md
-            text: "Windows Presentation Foundation (WPF)"
-          - url: core/get-started/winforms.md
-            text: "Windows Forms (WinForms)"
-      # Card
-      - title: Fundamentals
-        links:
-          - url: core/miscellaneous/connection-strings.md
-            text: "Connection strings"
-          - url: core/logging-events-diagnostics/index.md
-            text: "Logging"
-          - url: core/miscellaneous/connection-resiliency.md
-            text: "Connection resiliency"
-          - url: core/testing/index.md
-            text: "Testing"
-          - url: core/dbcontext-configuration/index.md
-            text: "Configure a DbContext"
-          - url: core/miscellaneous/nullable-reference-types.md
-            text: "Nullable reference types"
-          - url: core/miscellaneous/collations-and-case-sensitivity.md
-            text: "Collations and case sensitivity"
-      # Card
       - title: Create a model
         links:
           - url: core/modeling/index.md
@@ -128,16 +96,41 @@ additionalContent:
             text: "Keys"
           - url: core/modeling/generated-properties.md
             text: "Generated values"
+          - url: core/modeling/shadow-properties.md
+            text: "Shadow and indexer properties"
           - url: core/modeling/relationships.md
             text: "Relationships"
-          - url: core/modeling/data-seeding.md
-            text: "Data seeding"
-          - url: core/modeling/owned-entities.md
-            text: "Owned entity types"
-          - url: core/modeling/keyless-entity-types.md
-            text: "Keyless entity types"
+          - url: core/modeling/indexes.md
+            text: "Indexes and constraints"
+          - url: core/modeling/inheritance.md
+            text: "Inheritance"
+          - url: core/modeling/sequences.md
+            text: "Sequences"
       # Card
-      - title: Query
+      - title: Manage database schemas
+        links:
+          - url: core/managing-schemas/index.md
+            text: "Overview"
+          - url: core/managing-schemas/migrations/index.md
+            text: "Migrations overview"
+          - url: core/managing-schemas/migrations/managing.md
+            text: "Managing migrations"
+          - url: core/managing-schemas/migrations/applying.md
+            text: "Applying migrations"
+          - url: core/managing-schemas/migrations/teams.md
+            text: "Team environments"
+          - url: core/managing-schemas/migrations/operations.md
+            text: "Custom operations"
+          - url: core/managing-schemas/migrations/projects.md
+            text: "Use a separate project"
+          - url: core/managing-schemas/migrations/providers.md
+            text: "Multiple providers"
+          - url: core/managing-schemas/ensure-created.md
+            text: "Create and drop APIs"
+          - url: core/managing-schemas/scaffolding/index.md
+            text: "Reverse engineering (scaffolding)"
+      # Card
+      - title: Query data
         links:
           - url: core/querying/index.md
             text: "Overview"
@@ -145,41 +138,20 @@ additionalContent:
             text: "Client vs. server evaluation"
           - url: core/querying/tracking.md
             text: "Tracking vs. no-tracking"
-          - url: core/querying/complex-query-operators.md
-            text: "Complex query operators"
           - url: core/querying/related-data/index.md
             text: "Load related data"
-          - url: core/querying/async.md
-            text: "Asynchronous queries"
-          - url: core/querying/raw-sql.md
-            text: "Raw SQL queries"
+          - url: core/querying/single-split-queries.md
+            text: "Split queries"
+          - url: core/querying/complex-query-operators.md
+            text: "Complex query operators"
+          - url: core/querying/pagination.md
+            text: "Pagination"
+          - url: core/querying/sql-queries.md
+            text: "SQL queries"
+          - url: core/querying/database-functions.md
+            text: "Database functions"
           - url: core/querying/user-defined-function-mapping.md
             text: "User-defined function mapping"
-          - url: core/querying/filters.md
-            text: "Global query filters"
-          - url: core/querying/null-comparisons.md
-            text: "Comparisons with null values in queries"
-      # Card
-      - title: Manage database schemas
-        links:
-          - url: core/managing-schemas/index.md
-            text: "Overview"
-          - url: core/managing-schemas/migrations/index.md
-            text: "Migration overview"
-          - url: core/managing-schemas/migrations/teams.md
-            text: "Migration of team environments"
-          - url: core/managing-schemas/migrations/operations.md
-            text: "Migration - custom  operations"
-          - url: core/managing-schemas/migrations/projects.md
-            text: "Migration - Use a separate project"
-          - url: core/managing-schemas/migrations/providers.md
-            text: "Migration - multiple providers"
-          - url: core/managing-schemas/migrations/history-table.md
-            text: "Migration - custom history table"
-          - url: core/managing-schemas/ensure-created.md
-            text: "Create and drop APIs"
-          - url: core/managing-schemas/scaffolding/index.md
-            text: "Reverse engineering (scaffolding)"
       # Card
       - title: Save data
         links:
@@ -193,14 +165,82 @@ additionalContent:
             text: "Cascade delete"
           - url: core/saving/concurrency.md
             text: "Concurrency conflicts"
+          - url: core/saving/execute-insert-update-delete.md
+            text: "ExecuteUpdate and ExecuteDelete"
           - url: core/saving/transactions.md
             text: "Transactions"
-          - url: core/saving/async.md
-            text: "Asynchronous saving"
           - url: core/saving/disconnected-entities.md
             text: "Disconnected entities"
       # Card
-      - title: Command-line reference
+      - title: Change tracking
+        links:
+          - url: core/change-tracking/index.md
+            text: "Overview"
+          - url: core/change-tracking/explicit-tracking.md
+            text: "Explicitly tracking entities"
+          - url: core/change-tracking/entity-entries.md
+            text: "Accessing tracked entities"
+          - url: core/change-tracking/relationship-changes.md
+            text: "Changing foreign keys and navigations"
+          - url: core/change-tracking/change-detection.md
+            text: "Change detection and notifications"
+          - url: core/change-tracking/identity-resolution.md
+            text: "Identity resolution"
+          - url: core/change-tracking/miscellaneous.md
+            text: "Additional change tracking features"
+          - url: core/change-tracking/debug-views.md
+            text: "Change tracker debugging"
+      # Card
+      - title: Logging, events, and diagnostics
+        links:
+          - url: core/logging-events-diagnostics/index.md
+            text: "Overview"
+          - url: core/logging-events-diagnostics/simple-logging.md
+            text: "Simple logging"
+          - url: core/logging-events-diagnostics/extensions-logging.md
+            text: "Microsoft.Extensions.Logging"
+          - url: core/logging-events-diagnostics/events.md
+            text: "Events"
+          - url: core/logging-events-diagnostics/interceptors.md
+            text: "Interceptors"
+          - url: core/logging-events-diagnostics/diagnostic-listeners.md
+            text: "Diagnostic listeners"
+          - url: core/logging-events-diagnostics/metrics.md
+            text: "Metrics"
+      # Card
+      - title: Testing
+        links:
+          - url: core/testing/index.md
+            text: "Introduction to testing"
+          - url: core/testing/choosing-a-testing-strategy.md
+            text: "Choosing a testing strategy"
+          - url: core/testing/testing-with-the-database.md
+            text: "Testing against your production database system"
+          - url: core/testing/testing-without-the-database.md
+            text: "Testing without your production database system"
+          - url: core/testing/advanced-topics.md
+            text: "Advanced testing topics"
+      # Card
+      - title: Performance
+        links:
+          - url: core/performance/index.md
+            text: "Introduction"
+          - url: core/performance/performance-diagnosis.md
+            text: "Performance diagnosis"
+          - url: core/performance/efficient-querying.md
+            text: "Efficient querying"
+          - url: core/performance/efficient-updating.md
+            text: "Efficient updating"
+          - url: core/performance/modeling-for-performance.md
+            text: "Modeling for performance"
+          - url: core/performance/nativeaot-and-precompiled-queries.md
+            text: "NativeAOT and precompiled queries"
+          - url: core/performance/advanced-performance-topics.md
+            text: "Advanced performance topics"
+          - url: core/performance/advanced-performance-topics.md#dbcontext-pooling
+            text: "Context pooling"
+      # Card
+      - title: Design-time tools reference
         links:
           - url: core/cli/index.md
             text: "Overview"
@@ -208,13 +248,31 @@ additionalContent:
             text: "Package Manager Console (Visual Studio)"
           - url: core/cli/dotnet.md
             text: ".NET Core CLI"
+          - url: core/cli/msbuild.md
+            text: "MSBuild tasks"
           - url: core/cli/dbcontext-creation.md
             text: "Design-time DbContext creation"
           - url: core/cli/services.md
             text: "Design-time services"
       # Card
-      - title: Previous versions
+      - title: Miscellaneous
         links:
+          - url: core/miscellaneous/platforms.md
+            text: "Supported .NET implementations"
+          - url: core/miscellaneous/async.md
+            text: "Asynchronous programming"
+          - url: core/miscellaneous/nullable-reference-types.md
+            text: "Nullable reference types"
+          - url: core/miscellaneous/collations-and-case-sensitivity.md
+            text: "Collations and case sensitivity"
+          - url: core/miscellaneous/connection-resiliency.md
+            text: "Connection resiliency"
+          - url: core/miscellaneous/connection-strings.md
+            text: "Connection strings"
+          - url: core/miscellaneous/multitenancy.md
+            text: "Support multi-tenant databases"
+          - url: core/miscellaneous/plugins.md
+            text: "Plug-in APIs"
           - url: ef6/get-started.md
             text: "Entity Framework 6"
   # footer (optional)
