@@ -2,7 +2,7 @@
 title: Entity Types - EF Core
 description: How to configure and map entity types using Entity Framework Core
 author: AndriySvyryd
-ms.date: 10/25/2021
+ms.date: 08/19/2026
 uid: core/modeling/entity-types
 ---
 # Entity Types
@@ -82,6 +82,14 @@ Rather than specifying the schema for each table, you can also define the defaul
 [!code-csharp[Main](../../../samples/core/Modeling/EntityTypes/FluentAPI/DefaultSchema.cs?name=DefaultSchema&highlight=3)]
 
 Note that setting the default schema will also affect other database objects, such as sequences.
+
+## Table triggers
+
+You can use the Fluent API to specify that a database trigger exists for a table:
+
+[!code-csharp[HasTrigger](../../../samples/core/Miscellaneous/NewInEFCore7/SaveChangesPerformanceSample.cs?name=HasTrigger)]
+
+Calling `HasTrigger` only registers the trigger in the EF model. EF migrations don't create the trigger in the database; add the trigger DDL to a migration using [`migrationBuilder.Sql`](xref:core/managing-schemas/migrations/managing#arbitrary-changes-via-raw-sql).
 
 ## View mapping
 
