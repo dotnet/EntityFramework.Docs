@@ -302,7 +302,7 @@ public class AttributeBasedPropertyDiscoveryConvention : PropertyDiscoveryConven
                 entityTypeBuilder.Property(memberInfo);
             }
             else if (memberInfo is PropertyInfo propertyInfo
-                     && Dependencies.TypeMappingSource.FindMapping(propertyInfo) != null)
+                     && Dependencies.TypeMappingSource.FindMapping(propertyInfo.PropertyType) != null)
             {
                 entityTypeBuilder.Ignore(propertyInfo.Name);
             }

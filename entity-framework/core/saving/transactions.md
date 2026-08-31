@@ -2,7 +2,7 @@
 title: Transactions - EF Core
 description: Managing transactions for atomicity when saving data with Entity Framework Core
 author: SamMonoRT
-ms.date: 9/26/2020
+ms.date: 08/19/2026
 uid: core/saving/transactions
 ---
 # Using Transactions
@@ -17,6 +17,25 @@ Transactions allow several database operations to be processed in an atomic mann
 By default, if the database provider supports transactions, all changes in a single call to `SaveChanges` are applied in a transaction. If any of the changes fail, then the transaction is rolled back and none of the changes are applied to the database. This means that `SaveChanges` is guaranteed to either completely succeed, or leave the database unmodified if an error occurs.
 
 For most applications, this default behavior is sufficient. You should only manually control transactions if your application requirements deem it necessary.
+
+## Controlling automatic transactions
+
+You can control whether EF automatically creates a transaction when calling `SaveChanges` and no user transaction exists. Set <xref:Microsoft.EntityFrameworkCore.Infrastructure.DatabaseFacade.AutoTransactionBehavior> to one of the following values:
+
+* <xref:Microsoft.EntityFrameworkCore.AutoTransactionBehavior.WhenNeeded> (default): EF creates a transaction only when needed. For example, most single SQL statements execute in a transaction implicitly, so EF doesn't create an explicit transaction.
+* <xref:Microsoft.EntityFrameworkCore.AutoTransactionBehavior.Always>: EF always creates a transaction if no user transaction exists. This may add database roundtrips, which can degrade performance.
+* <xref:Microsoft.EntityFrameworkCore.AutoTransactionBehavior.Never>: EF never creates a transaction automatically.
+
+For example, configure EF to always create a transaction before calling `SaveChanges`:
+
+```csharp
+context.Database.AutoTransactionBehavior = AutoTransactionBehavior.Always;
+```
+
+`Always` can be useful if application code relies on <xref:Microsoft.EntityFrameworkCore.Diagnostics.IDbTransactionInterceptor> transaction creation callbacks being invoked when `SaveChanges` doesn't use a user transaction.
+
+> [!WARNING]
+> Use `AutoTransactionBehavior.Never` with caution. If `SaveChanges` needs to execute multiple commands and a failure occurs, earlier commands may have already been committed, leaving partial changes in the database.
 
 ## Controlling transactions
 

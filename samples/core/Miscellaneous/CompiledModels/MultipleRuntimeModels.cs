@@ -4,7 +4,7 @@ using CompiledModelTest;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 
-#pragma warning disable 219, 612, 618
+#pragma warning disable 219, 612, 618, EF1001
 #nullable disable
 
 namespace MultipleRuntimeModels;
@@ -37,6 +37,11 @@ public static class RuntimeModelCache
 [DbContext(typeof(BlogsContext))]
 partial class BlogsContextModel1 : RuntimeModel
 {
+    private BlogsContextModel1()
+        : base(skipDetectChanges: false, modelId: Guid.NewGuid(), entityTypeCount: 0)
+    {
+    }
+
     private static BlogsContextModel1 _instance;
     public static IModel Instance
     {
@@ -61,6 +66,11 @@ partial class BlogsContextModel1 : RuntimeModel
 [DbContext(typeof(BlogsContext))]
 partial class BlogsContextModel2 : RuntimeModel
 {
+    private BlogsContextModel2()
+        : base(skipDetectChanges: false, modelId: Guid.NewGuid(), entityTypeCount: 0)
+    {
+    }
+
     private static BlogsContextModel2 _instance;
     public static IModel Instance
     {
