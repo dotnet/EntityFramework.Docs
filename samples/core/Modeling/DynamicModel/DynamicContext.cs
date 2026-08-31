@@ -12,7 +12,7 @@ public class DynamicContext : DbContext
     #region OnConfiguring
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         => optionsBuilder
-            .UseInMemoryDatabase("DynamicContext")
+            .UseInMemoryDatabase($"DynamicContext-{UseIntProperty}")
             .ReplaceService<IModelCacheKeyFactory, DynamicModelCacheKeyFactory>();
     #endregion
 
