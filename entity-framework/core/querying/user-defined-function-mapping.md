@@ -66,6 +66,22 @@ FROM [Blogs] AS [b]
 WHERE [dbo].[CommentedPostCountForBlog]([b].[BlogId]) > 1
 ```
 
+### Mapping a method to a built-in function
+
+EF Core considers a mapped function to be user-defined by default. Some databases distinguish built-in and user-defined functions when generating SQL. For example, SQL Server requires user-defined functions to be schema-qualified, but built-in functions aren't schema-qualified.
+
+Use `IsBuiltIn` to map a CLR method to a built-in function:
+
+[!code-csharp[Main](../../../samples/core/Querying/UserDefinedFunctionMapping/Model.cs#BuiltInFunctionDefinition)]
+
+[!code-csharp[Main](../../../samples/core/Querying/UserDefinedFunctionMapping/Model.cs#BuiltInFunctionConfiguration)]
+
+The <xref:Microsoft.EntityFrameworkCore.DbFunctionAttribute.IsBuiltIn> property provides the same configuration when using an attribute:
+
+```csharp
+[DbFunction(Name = "ISDATE", IsBuiltIn = true)]
+```
+
 ## Mapping a function using DbFunctionAttribute
 
 Instead of registering a function in `OnModelCreating`, a static method declared on the `DbContext` can be mapped directly by applying <xref:Microsoft.EntityFrameworkCore.DbFunctionAttribute>. The attribute's `Name`, `Schema`, `IsBuiltIn`, and `IsNullable` properties configure the corresponding characteristics of the database function; these are the same characteristics configured by the `HasName`, `HasSchema`, `IsBuiltIn`, and `IsNullable` fluent API methods when using `HasDbFunction`. Attributed methods on the context are discovered and registered automatically; attributed methods on other classes must still be registered with `HasDbFunction`. Call `HasDbFunction` for an automatically registered method only when a builder is needed for additional fluent configuration, as in the store-type example below.

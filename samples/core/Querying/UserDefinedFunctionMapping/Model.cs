@@ -62,6 +62,11 @@ public class BloggingContext : DbContext
         => throw new NotSupportedException();
     #endregion
 
+    #region BuiltInFunctionDefinition
+    public static int IsDate(string value)
+        => throw new NotSupportedException();
+    #endregion
+
     #region JsonFunctionDefinition
     [DbFunction(Name = "JSON_VALUE", IsBuiltIn = true, IsNullable = true)]
     public static string JsonValue(Dictionary<string, string> json, string path)
@@ -173,6 +178,12 @@ public class BloggingContext : DbContext
         var jsonValueFunction = modelBuilder.HasDbFunction(() => JsonValue(default, default));
         jsonValueFunction.HasStoreType("nvarchar(4000)");
         jsonValueFunction.HasParameter("json").HasStoreType("nvarchar(max)");
+        #endregion
+
+        #region BuiltInFunctionConfiguration
+        modelBuilder.HasDbFunction(typeof(BloggingContext).GetMethod(nameof(IsDate), [typeof(string)]))
+            .HasName("ISDATE")
+            .IsBuiltIn();
         #endregion
 
         #region HasTranslationFunctionConfiguration

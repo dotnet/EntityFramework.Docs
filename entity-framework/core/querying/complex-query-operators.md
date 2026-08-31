@@ -2,7 +2,7 @@
 title: Complex Query Operators - EF Core
 description: In-depth information on the more complex LINQ query operators when using Entity Framework Core
 author: SamMonoRT
-ms.date: 10/03/2019
+ms.date: 08/19/2026
 uid: core/querying/complex-query-operators
 ---
 # Complex Query Operators
@@ -114,7 +114,9 @@ HAVING COUNT(*) > 0
 ORDER BY [p].[AuthorId]
 ```
 
-The aggregate operators EF Core supports are as follows
+### Aggregate functions
+
+Aggregate functions are typically used in the projection after `GroupBy`. Each aggregate produces a scalar value, so the projection can contain both the grouping key and aggregate results. The standard LINQ aggregate operators EF Core supports are as follows:
 
 | .NET                     | SQL           |
 |--------------------------|---------------|
@@ -126,6 +128,41 @@ The aggregate operators EF Core supports are as follows
 | Sum(x => x.Property)     | SUM(Property) |
 
 Additional aggregate operators may be supported. Check your provider docs for more function mappings.
+
+Some aggregate functions allow their input to be composed. Depending on the provider, `Where` can filter the input, `OrderBy` can specify its ordering, and `Distinct` can remove duplicates. The following query illustrates these shapes:
+
+```csharp
+var query = context.Posts
+    .GroupBy(p => p.AuthorId)
+    .Select(g => new
+    {
+        g.Key,
+        Count = g.Count(),
+        DistinctBlogCount = g.Select(p => p.BlogId).Distinct().Count(),
+        OrderedTitles = string.Join(
+            "|",
+            g.OrderBy(p => p.Title).Select(p => p.Title)),
+        FilteredTitles = string.Join(
+            "|",
+            g.Where(p => p.Rating >= 4).Select(p => p.Title))
+    });
+```
+
+The supported aggregate functions and compositions vary by provider. Consult the provider's function mappings to determine which forms are translated.
+
+Standard LINQ aggregate operators have `IQueryable` overloads and can be applied directly to an entire query. Some provider-specific aggregate functions expose only `IEnumerable` overloads and therefore can only be used within a grouping. To apply one of these functions to an entire query, group by a constant:
+
+```csharp
+var standardDeviation = context.Posts
+    .GroupBy(_ => 1)
+    .Select(g => EF.Functions.StandardDeviationSample(g.Select(p => p.Rating)))
+    .FirstOrDefault();
+```
+
+The constant creates a single group over the query results. If the source contains no rows, no group is created and `FirstOrDefault` returns the default value.
+
+> [!NOTE]
+> EF Core doesn't currently support mapping user-defined aggregate functions. This is tracked by [issue #27934](https://github.com/dotnet/efcore/issues/27934).
 
 Even though there is no database structure to represent an `IGrouping`, in some cases, EF Core 7.0 and newer can create the groupings after the results are returned from the database. This is similar to how the [`Include`](xref:core/querying/related-data/eager) operator works when including related collections. The following LINQ query uses the GroupBy operator to group the results by the value of their Price property.
 

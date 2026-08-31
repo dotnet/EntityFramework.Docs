@@ -2,7 +2,7 @@
 title: Function Mappings - SQLite Database Provider - EF Core
 description: Function Mappings of the SQLite EF Core database provider
 author: SamMonoRT
-ms.date: 7/26/2023
+ms.date: 08/19/2026
 uid: core/providers/sqlite/functions
 ---
 # Function Mappings of the SQLite EF Core Provider
@@ -10,6 +10,8 @@ uid: core/providers/sqlite/functions
 This page shows which .NET members are translated into which SQL functions when using the SQLite provider.
 
 ## Aggregate functions
+
+For general information about using aggregate functions in queries, see [Aggregate functions](xref:core/querying/complex-query-operators#aggregate-functions).
 
 .NET                                                  | SQL                                | Added in
 ----------------------------------------------------- | ---------------------------------- | --------
