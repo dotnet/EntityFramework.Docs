@@ -2,7 +2,7 @@
 title: User-defined function mapping - EF Core
 description: Mapping user-defined functions to database functions
 author: SamMonoRT
-ms.date: 11/23/2020
+ms.date: 08/19/2026
 uid: core/querying/user-defined-function-mapping
 ---
 # User-defined function mapping
@@ -46,11 +46,13 @@ The body of the CLR method is not important. The method will not be invoked clie
 > [!NOTE]
 > In the example, the method is defined on `DbContext`, but it can also be defined as a static method inside other classes.
 
-This function definition can now be associated with user-defined function in the model configuration:
+This function definition can now be associated with a user-defined function in the model configuration:
 
 [!code-csharp[Main](../../../samples/core/Querying/UserDefinedFunctionMapping/Model.cs#BasicFunctionConfiguration)]
 
-By default, EF Core tries to map CLR function to a user-defined function with the same name. If the names differ, we can use `HasName` to provide the correct name for the user-defined function we want to map to.
+The lambda overload of <xref:Microsoft.EntityFrameworkCore.RelationalModelBuilderExtensions.HasDbFunction*> avoids manually looking up the `MethodInfo`. The `default` argument values are only used to identify the method; they are never sent to the database.
+
+By default, EF Core maps the CLR method to a database function with the same name in the default schema. Use <xref:Microsoft.EntityFrameworkCore.Metadata.Builders.DbFunctionBuilderBase.HasName*> and <xref:Microsoft.EntityFrameworkCore.Metadata.Builders.DbFunctionBuilderBase.HasSchema*> when the name or schema differs.
 
 Now, executing the following query:
 
@@ -64,9 +66,36 @@ FROM [Blogs] AS [b]
 WHERE [dbo].[CommentedPostCountForBlog]([b].[BlogId]) > 1
 ```
 
+## Mapping a function using DbFunctionAttribute
+
+Instead of registering a function in `OnModelCreating`, a static method declared on the `DbContext` can be mapped directly by applying <xref:Microsoft.EntityFrameworkCore.DbFunctionAttribute>. The attribute's `Name`, `Schema`, `IsBuiltIn`, and `IsNullable` properties configure the corresponding characteristics of the database function; these are the same characteristics configured by the `HasName`, `HasSchema`, `IsBuiltIn`, and `IsNullable` fluent API methods when using `HasDbFunction`. Attributed methods on the context are discovered and registered automatically; attributed methods on other classes must still be registered with `HasDbFunction`. Call `HasDbFunction` for an automatically registered method only when a builder is needed for additional fluent configuration, as in the store-type example below.
+
+For example, the following method uses `DbFunctionAttribute` to map SQL Server's built-in `JSON_VALUE` function. Because `IsBuiltIn` is `true`, EF Core emits the function name without a schema.
+
+[!code-csharp[Main](../../../samples/core/Querying/UserDefinedFunctionMapping/Model.cs#JsonFunctionDefinition)]
+
+### Configuring store types
+
+Use <xref:Microsoft.EntityFrameworkCore.Metadata.Builders.DbFunctionBuilder.HasStoreType*> to configure a function's return store type and <xref:Microsoft.EntityFrameworkCore.Metadata.Builders.DbFunctionParameterBuilder.HasStoreType*> to configure a parameter's store type. This is particularly useful when the CLR parameter type has no native database mapping.
+
+In this example, `JsonEntity.Metadata` is a dictionary stored as `nvarchar(max)` through a value converter. The `json` function parameter has the same store type, while the result uses the `nvarchar(4000)` type returned by `JSON_VALUE`:
+
+[!code-csharp[Main](../../../samples/core/Querying/UserDefinedFunctionMapping/Model.cs#JsonFunctionConfiguration)]
+
+The function can then be used with the converted property:
+
+[!code-csharp[Main](../../../samples/core/Querying/UserDefinedFunctionMapping/Program.cs#JsonFunctionQuery)]
+
+```sql
+SELECT JSON_VALUE([j].[Metadata], N'$.Filter')
+FROM [JsonEntities] AS [j]
+```
+
+The value converter is taken from the expression passed as the function argument. Therefore, this pattern works for a mapped property such as `JsonEntity.Metadata`, but configuring the parameter store type does not make arbitrary dictionary values translatable. To use an in-memory dictionary, serialize it and pass the resulting string to a separately mapped method whose CLR parameter is `string`.
+
 ## Mapping a method to a custom SQL
 
-EF Core also allows for user-defined functions that get converted to a specific SQL. The SQL expression is provided using `HasTranslation` method during user-defined function configuration.
+EF Core also allows a CLR method to be translated directly to a SQL expression rather than a database function. The SQL expression is provided using <xref:Microsoft.EntityFrameworkCore.Metadata.Builders.DbFunctionBuilder.HasTranslation*> during function configuration.
 
 In the example below, we'll create a function that computes percentage difference between two integers.
 
@@ -89,9 +118,12 @@ SELECT 100 * (ABS(CAST([p].[BlogId] AS float) - 3) / ((CAST([p].[BlogId] AS floa
 FROM [Posts] AS [p]
 ```
 
+> [!CAUTION]
+> `HasTranslation` works with the SQL expression tree, not SQL text. The translation must construct valid <xref:Microsoft.EntityFrameworkCore.Query.SqlExpressions.SqlExpression> objects with the correct type mappings, nullability, and argument nullability propagation. Incorrect metadata can produce invalid SQL or incorrect query results, and the expression types used by a translation may be specific to a database provider. Use this low-level API only after understanding the provider's SQL expression tree; prefer a regular function mapping or an existing provider translation when possible.
+
 ## Configuring nullability of user-defined function based on its arguments
 
-If the user-defined function can only return `null` when one or more of its arguments are `null`, EFCore provides way to specify that, resulting in more performant SQL. It can be done by adding a `PropagatesNullability()` call to the relevant function parameters model configuration.
+If nullability propagates from a function argument—that is, the function returns `null` whenever that argument is `null`—EF Core can generate more efficient SQL. Configure this by calling <xref:Microsoft.EntityFrameworkCore.Metadata.Builders.DbFunctionParameterBuilder.PropagatesNullability*> for the relevant parameters. For more information about how EF Core compensates for SQL's three-valued logic, see [Query null semantics](xref:core/querying/null-comparisons).
 
 To illustrate this, define user function `ConcatStrings`:
 
@@ -133,7 +165,7 @@ WHERE ([dbo].[ConcatStrings]([b].[Url], CONVERT(VARCHAR(11), [b].[Rating])) <> N
 The second query doesn't need to re-evaluate the function itself to test its nullability.
 
 > [!NOTE]
-> This optimization should only be used if the function can only return `null` when it's parameters are `null`.
+> Only configure nullability propagation when the function can return `null` solely because one or more of the configured parameters are `null`.
 
 ## Mapping a queryable function to a table-valued function
 
@@ -168,7 +200,7 @@ And below is the mapping:
 [!code-csharp[Main](../../../samples/core/Querying/UserDefinedFunctionMapping/Model.cs#QueryableFunctionConfigurationHasDbFunction)]
 
 > [!NOTE]
-> A queryable function must be mapped to a table-valued function and can't make use of `HasTranslation`.
+> A queryable function must be mapped to a table-valued function. `HasTranslation` supports scalar functions only and can't be used for a table-valued function.
 
 When the function is mapped, the following query:
 
