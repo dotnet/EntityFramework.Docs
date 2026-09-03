@@ -88,11 +88,11 @@ The following table maps `migrate.exe` arguments to their `ef6.exe database upda
 | `<configurationType>` | `--migrations-config` |
 | `<contextAssembly>` | No equivalent. Put it in the same directory as the assembly passed to `--assembly`. |
 | `/targetMigration` | `--target` |
-| `/startUpDirectory` | `--project-dir` |
+| `/startupDirectory` | `--project-dir` |
 | `/scriptFile` | `--script` |
 | `/sourceMigration` | `--source` |
-| `/startUpConfigurationFile` | `--config` |
-| `/startUpDataDirectory` | `--data-dir` |
+| `/startupConfigurationFile` | `--config` |
+| `/startupDataDirectory` | `--data-dir` |
 | `/connectionStringName` | `--connection-string-name` |
 | `/connectionString` | `--connection-string` |
 | `/connectionProviderName` | `--connection-provider` |
