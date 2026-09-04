@@ -46,7 +46,9 @@ Use `--target` to apply all migrations through a specific migration.
 
 ## Specify project directory
 
-    ef6.exe database update --assembly MyApp.exe --config MyApp.exe.config --project-dir C:\MyApp
+~~~console
+ef6.exe database update --assembly MyApp.exe --config MyApp.exe.config --project-dir C:\MyApp
+~~~
 
 Use `--project-dir` to set the project directory used to resolve dependencies and relative file paths.
 
