@@ -17,10 +17,10 @@ Code First Migrations can update a database from Visual Studio, but you can also
 When you install Entity Framework using NuGet, `ef6.exe` is in the tools folder of the NuGet package. With PackageReference, the package is stored in the global packages folder. For example:
 
 ```text
-%USERPROFILE%\.nuget\packages\entityframework\6.4.4\tools\net45\win-x86\ef6.exe
+%USERPROFILE%\.nuget\packages\entityframework\6.5.2\tools\net45\any\ef6.exe
 ```
 
-Replace `6.4.4` with the version of Entity Framework installed in your project.
+Replace `6.5.2` with the version of Entity Framework installed in your project.
 
 ## View the options
 
