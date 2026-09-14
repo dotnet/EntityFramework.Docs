@@ -173,7 +173,7 @@ Here is a list of content we put together specifically for the EF 5 release:
         -   [Fluent API with VB.NET](xref:ef6/modeling/code-first/fluent/vb)
         -   [Code First Migrations](xref:ef6/modeling/code-first/migrations/index)
         -   [Automatic Code First Migrations](xref:ef6/modeling/code-first/migrations/automatic)
-        -   [Migrate.exe](xref:ef6/modeling/code-first/migrations/migrate-exe)
+        -   [ef6.exe](xref:ef6/modeling/code-first/migrations/ef6-exe)
         -   [Defining DbSets](xref:ef6/modeling/code-first/dbsets)
     -   EF Designer
         -   [Model First (walkthrough and video)](xref:ef6/modeling/designer/workflows/model-first)
