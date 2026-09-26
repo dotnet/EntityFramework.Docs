@@ -47,3 +47,65 @@ Reverting a source control commit doesn't change any database. Before removing m
 * If the migration has been applied, migrate the database to an earlier migration while the migration code is still available, or deploy a new corrective migration. Keep application and database deployment compatible throughout the rollback.
 
 Don't remove migration source that is still recorded in a shared database. If the code was already reverted, check out or restore the commit containing the migration to generate and test the rollback, and then commit a coherent migration sequence.
+
+## Review and gate migration scripts
+
+Production deployments often require sign-off on schema changes. Instead of applying migrations directly, generate the SQL that EF Core would execute and run it through the same review process as other changes.
+
+Generate the script for review in CI:
+
+```dotnetcli
+dotnet ef migrations script --idempotent -o artifacts/migrate.sql
+```
+
+Note that idempotent scripts depend on provider support. For example, SQLite doesn't currently support generating them; in that case generate a versioned script pair instead.
+
+Use Azure DevOps [approvals and gates](https://learn.microsoft.com/azure/devops/pipelines/process/approvals) (or the equivalent in your CI system) to hold the deployment until a reviewer signs off on the exact SQL:
+
+```yaml
+stages:
+- stage: generate
+  jobs:
+  - job: build
+    steps:
+    - script: dotnet ef migrations script --idempotent -o $(Build.ArtifactStagingDirectory)/migrate.sql
+      displayName: Generate migration script
+    - script: dotnet ef migrations script PreviousMigration Latest -o $(Build.ArtifactStagingDirectory)/rollback.sql
+      displayName: Generate rollback script
+    - publish: $(Build.ArtifactStagingDirectory)
+      artifact: sql
+
+- stage: review
+  jobs:
+  - deployment: signoff
+    environment: dba-review
+    strategy:
+      runOnce:
+        deploy:
+          steps:
+          - download: current
+            artifact: sql
+          - script: echo "Review migrate.sql and rollback.sql in $(Pipeline.Workspace)/sql"
+
+- stage: deploy
+  jobs:
+  - deployment: apply
+    environment: production
+    strategy:
+      runOnce:
+        deploy:
+          steps:
+          - download: current
+            artifact: sql
+          - script: sqlcmd -i "$(Pipeline.Workspace)/sql/migrate.sql"
+            displayName: Apply the approved script
+```
+
+Deploy the reviewed script itself rather than regenerating SQL at deploy time, so reviewers approve the exact operations that run.
+
+### Rollback scripts
+
+In `dotnet ef migrations script`, `from` describes the initial database state and `to` the target state; a `from` newer than `to` emits the migrations' `Down` operations instead. Generate a rollback script from the current (newer) migration state back to an earlier target and store it next to the forward script.
+
+> [!WARNING]
+> A rollback script runs the migrations' `Down` operations, but it can't generally reconstruct data that the forward migration dropped or transformed. Test the rollback against a copy of the production schema and review the data impact before relying on it.
