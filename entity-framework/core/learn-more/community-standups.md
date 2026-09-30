@@ -14,6 +14,7 @@ The .NET Data Community Standups are live-streamed monthly (roughly) on Thursday
 
 | Date         | Area                  | Title                                                                                    |
 |--------------|-----------------------|------------------------------------------------------------------------------------------|
+| Sep 24, 2026 | EF Core               | [You won't believe what Chris is doing with EF interceptors 🤯](#Sep24_2026)             |
 | Aug 28, 2026 | EF Core               | [How to start contributing to Entity Framework Core](#Aug28_2026)                        |
 | Jul 23, 2026 | Tools                 | [SQL Database Project Power Tools](#Jul23_2026)                                          |
 | Jun 25, 2026 | Temporal tables       | [Temporal tables and constraints in SQL Server and PostgreSQL 18](#Jun25_2026)           |
@@ -114,6 +115,21 @@ The .NET Data Community Standups are live-streamed monthly (roughly) on Thursday
 | May 6, 2020  | Welcome!              | [Introducing the EF Core Community Standup](#one)                                        |
 
 ## 2026
+
+<a name="Sep24_2026"></a>
+
+### Sep 24: [You won't believe what Chris is doing with EF interceptors 🤯](https://www.youtube.com/live/FBfjbb4qtDI?si=jUHDmOKQKOy5bnYH)
+
+Join us for another show where Chris Klug shows us all the things he uses interceptors for!
+
+Featuring:
+
+- [Chris Klug](https://www.fearofoblivion.com/) (Special guest)
+- [Jiri Cincura](https://www.tabsoverspaces.com/) (Host)
+
+Links:
+
+- Demo: <https://github.com/ChrisKlug/ef-core-interceptor-demo>
 
 <a name="Aug28_2026"></a>
 
@@ -348,10 +364,6 @@ Featuring:
 - [Maurycy Markowski](https://github.com/maumar) (Special guest)
 - [Jiri Cincura](https://www.tabsoverspaces.com/) (Host)
 - [Shay Rojansky](https://www.roji.org/) (Host)
-
-Links:
-
-- Demo: <https://github.com/ChrisKlug/efcore-dto-demo>
 
 <a name="Mar19_2025"></a>
 
