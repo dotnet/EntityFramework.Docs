@@ -322,6 +322,12 @@ Extends Entity Framework Core with structured command and query execution across
 
 [Website](https://www.dataarc.dev) | [GitHub repository](https://github.com/SolidArcSoftware/DataArc.EntityFrameworkCore) | [NuGet](https://www.nuget.org/packages/DataArc.EntityFrameworkCore) | [Documentation](https://solidarcsoftware.github.io/DataArc.EntityFrameworkCore/)
 
+### EfQueryComplexity
+
+Detects overly complex queries and either logs them or throws. Checks include unbounded result sets, maximum `Take`, expression node count and depth, navigation and include depth, collections in a single query, and `IN` list size. Useful for bounding queries shaped by untrusted clients, such as through GraphQL or OData. For EF Core: 10.
+
+[GitHub repository](https://github.com/SimonCropp/EfQueryComplexity) | [NuGet](https://www.nuget.org/packages/EfQueryComplexity/)
+
 ## API Integrations
 
 These packages are designed to integrate directly with EF Core to expose various APIs.
