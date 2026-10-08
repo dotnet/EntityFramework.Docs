@@ -318,11 +318,7 @@ Tracks custom SQL and database objects (views, functions, triggers, etc.) as par
 
 ### DataArc.EntityFrameworkCore
 
-Extends Entity Framework Core with high-performance bulk and parallel persistence while preserving the standard EF Core `DbContext` programming model. Includes bulk operations, parallel execution, transaction-aware persistence, and APIs for coordinating execution across EF Core workloads.
-
-The core `DataArc.EntityFrameworkCore` package is free to use. Optional commercial SQL Server tooling is available through `DataArc.EntityFrameworkCore.SqlServer`, adding transactional bulk execution, multi-`DbContext` coordination, and relational model composition.
-
-For EF Core: 6-10.
+Extends Entity Framework Core with bulk and parallel operations, transaction-aware persistence, and optional commercial SQL Server tooling. The core package is free. For EF Core: 6-10.
 
 [Website](https://www.dataarc.dev) | [GitHub repository](https://github.com/SolidArcSoftware/DataArc.EntityFrameworkCore) | [NuGet](https://www.nuget.org/packages/DataArc.EntityFrameworkCore) | [Documentation](https://solidarcsoftware.github.io/DataArc.EntityFrameworkCore/)
 
