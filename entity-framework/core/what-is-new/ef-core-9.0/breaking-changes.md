@@ -257,7 +257,7 @@ Starting with EF Core 9.0, these APIs have been replaced by APIs specialized for
 
 | **EF Core 8 API** | **EF Core 9 API** |
 |:------------------|:------------------|
-| `ListComparer<TElement>` | `ListOfValueTypesComparer<TConcreteList, TElement>` |
+| `ListComparer<TElement>` | `ListOfValueTypesComparer<TConcreteList, TElement>` for non-nullable value types, or `ListOfReferenceTypesComparer<TConcreteList, TElement>` for reference types |
 | `NullableValueTypeListComparer<TElement>` | `ListOfNullableValueTypesComparer<TConcreteList, TElement>` |
 | `ObjectListComparer<TElement>` | `ListOfReferenceTypesComparer<TConcreteList, TElement>` |
 | `JsonCollectionReaderWriter<TCollection, TConcreteCollection, TElement>` | `JsonCollectionOfStructsReaderWriter<TConcreteCollection, TElement>` or `JsonCollectionOfReferencesReaderWriter<TConcreteCollection, TElement>` |
