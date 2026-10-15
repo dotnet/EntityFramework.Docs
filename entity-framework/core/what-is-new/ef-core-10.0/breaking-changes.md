@@ -94,7 +94,7 @@ Earlier versions of Microsoft.Data.SqlClient did not depend on Microsoft.Identit
 
 #### New behavior
 
-Microsoft.Data.SqlClient 6.1.6 introduces a dependency on Microsoft.Identity.Client.Broker, which can drastically increase the size of the published application when using the EF Core SQL Server provider.
+Microsoft.Data.SqlClient 6.1.6 introduces a dependency on Microsoft.Identity.Client.Broker, which is required for Microsoft Entra ID authentication and can drastically increase the size of the published application when using the EF Core SQL Server provider.
 
 #### Why
 
@@ -102,7 +102,7 @@ The additional dependency is introduced by Microsoft.Data.SqlClient, rather than
 
 #### Mitigations
 
-If your application doesn't need to connect to Azure SQL, explicitly reference Microsoft.Data.SqlClient 7.1.x in your project to override the version used by EF Core. Starting with version 7.0, Microsoft.Data.SqlClient no longer includes Azure/Entra ID authentication dependencies in its core package.
+If your application doesn't use Microsoft Entra ID authentication, explicitly reference Microsoft.Data.SqlClient 7.1.x in your project to override the version used by EF Core. Starting with version 7.0, Microsoft.Data.SqlClient no longer includes Azure/Entra ID authentication dependencies in its core package.
 
 For details, including the additional package required for Entra ID authentication, see [Microsoft.Data.SqlClient has been updated to 7.0](xref:core/what-is-new/ef-core-11.0/breaking-changes#sqlclient-7).
 
