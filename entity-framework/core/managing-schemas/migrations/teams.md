@@ -60,7 +60,7 @@ dotnet ef migrations script --idempotent -o artifacts/migrate.sql
 
 Note that idempotent scripts depend on provider support. For example, SQLite doesn't currently support generating them; in that case generate a versioned script pair instead.
 
-Use Azure DevOps [approvals and gates](https://learn.microsoft.com/azure/devops/pipelines/process/approvals) (or the equivalent in your CI system) to hold the deployment until a reviewer signs off on the exact SQL:
+Use Azure DevOps [approvals and gates](/azure/devops/pipelines/process/approvals) (or the equivalent in your CI system) to hold the deployment until a reviewer signs off on the exact SQL:
 
 ```yaml
 stages:
