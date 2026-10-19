@@ -2,7 +2,7 @@
 title: Connection Strings - EF Core
 description: Managing connection strings under different environments with Entity Framework Core
 author: SamMonoRT
-ms.date: 10/27/2016
+ms.date: 10/19/2026
 uid: core/miscellaneous/connection-strings
 ms.custom: sfi-ropc-nochange
 ---
@@ -35,6 +35,15 @@ See the [Configuration section of the ASP.NET Core documentation](/aspnet/core/f
 dotnet user-secrets init
 dotnet user-secrets set ConnectionStrings:YourDatabaseAlias "Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=YourDatabase"
 ```
+
+For example, to connect to a SQL Server instance running locally in a Docker container, use SQL authentication with a user ID and password instead of LocalDB:
+
+```dotnetcli
+dotnet user-secrets set ConnectionStrings:YourDatabaseAlias "Server=localhost,1433;Database=YourDatabase;User Id=<username>;Password=<password>;TrustServerCertificate=True"
+```
+
+> [!NOTE]
+> `TrustServerCertificate=True` skips validation of the server's certificate. Use it only for local development, for example with the self-signed certificate of a SQL Server container. Remove it for other environments and use a server certificate that the client trusts.
 
 Then, in scaffolding, use a connection string that consists of `Name=<database-alias>`.
 
