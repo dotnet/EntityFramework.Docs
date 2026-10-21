@@ -2,7 +2,7 @@
 title: Function Mappings - SQLite Database Provider - EF Core
 description: Function Mappings of the SQLite EF Core database provider
 author: SamMonoRT
-ms.date: 08/19/2026
+ms.date: 10/22/2026
 uid: core/providers/sqlite/functions
 ---
 # Function Mappings of the SQLite EF Core Provider
@@ -20,7 +20,9 @@ group.Average(x => x.DecimalProperty)                 | ef_avg(DecimalProperty) 
 group.Count()                                         | COUNT(*)
 group.LongCount()                                     | COUNT(*)
 group.Max(x => x.Property)                            | MAX(Property)
+group.Max(x => x.DecimalProperty)                     | ef_max(DecimalProperty)            | EF Core 10.0
 group.Min(x => x.Property)                            | MIN(Property)
+group.Min(x => x.DecimalProperty)                     | ef_min(DecimalProperty)            | EF Core 10.0
 group.Sum(x => x.Property)                            | SUM(Property)
 group.Sum(x => x.DecimalProperty)                     | ef_sum(DecimalProperty)            | EF Core 9.0
 string.Concat(group.Select(x => x.Property))          | group_concat(Property, '')
@@ -45,7 +47,7 @@ EF.Functions.Unhex(value, ignoreChars)         | unhex(@value, @ignoreChars)
 
 .NET                      | SQL
 ------------------------- | ---
-boolValue.ToString()      | CAST(@boolValue AS TEXT)
+boolValue.ToString()      | CASE WHEN @boolValue THEN 'True' ELSE 'False' END
 byteValue.ToString()      | CAST(@byteValue AS TEXT)
 bytes.ToString()          | CAST(@bytes AS TEXT)
 charValue.ToString()      | CAST(@charValue AS TEXT)
@@ -81,7 +83,7 @@ DateTime.Now                    | datetime('now', 'localtime')
 DateTime.Today                  | datetime('now', 'localtime', 'start of day')
 DateTime.UtcNow                 | datetime('now')
 dateTime.AddDays(value)         | datetime(@dateTime, @value \|\| ' days')
-dateTime.AddHours(value)        | datetime(@dateTime, @d \|\| ' hours')
+dateTime.AddHours(value)        | datetime(@dateTime, @value \|\| ' hours')
 dateTime.AddMilliseconds(value) | datetime(@dateTime, (@value / 1000.0) \|\| ' seconds')
 dateTime.AddMinutes(value)      | datetime(@dateTime, @value \|\| ' minutes')
 dateTime.AddMonths(months)      | datetime(@dateTime, @months \|\| ' months')
@@ -119,7 +121,7 @@ decimalValue <= d                | ef_compare(@decimalValue, @d) <= 0
 decimalValue > d                 | ef_compare(@decimalValue, @d) > 0
 decimalValue >= d                | ef_compare(@decimalValue, @d) >= 0
 double.DegreesToRadians(degrees) | radians(@degrees)
-double.RadiansToDegrees(radians) | degrees(@dradians)
+double.RadiansToDegrees(radians) | degrees(@radians)
 doubleValue % d                  | mod(@doubleValue, @d)
 EF.Functions.Random()            | abs(random() / 9223372036854780000.0)
 Math.Abs(value)                  | abs(@value)
