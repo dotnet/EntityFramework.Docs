@@ -14,6 +14,7 @@ The .NET Data Community Standups are live-streamed monthly (roughly) on Thursday
 
 | Date         | Area                  | Title                                                                                    |
 |--------------|-----------------------|------------------------------------------------------------------------------------------|
+| Oct 22, 2026 | T-SQL                 | [Teach your AI agent database design with T-SQL static code analysis](#Oct22_2026)       |
 | Sep 24, 2026 | EF Core               | [You won't believe what Chris is doing with EF interceptors 🤯](#Sep24_2026)             |
 | Aug 28, 2026 | EF Core               | [How to start contributing to Entity Framework Core](#Aug28_2026)                        |
 | Jul 23, 2026 | Tools                 | [SQL Database Project Power Tools](#Jul23_2026)                                          |
@@ -115,6 +116,23 @@ The .NET Data Community Standups are live-streamed monthly (roughly) on Thursday
 | May 6, 2020  | Welcome!              | [Introducing the EF Core Community Standup](#one)                                        |
 
 ## 2026
+
+<a name="Oct22_2026"></a>
+
+### Oct 22: [Teach your AI agent database design with T-SQL static code analysis](https://www.youtube.com/live/j1Jn0fyJEDI?si=PIoYdzrG1QWsIuw-)
+
+_Canceled._
+
+~~Erik will show two ways you can take advantage of the open-source set of T-SQL static analysis rules, and the surrounding set of tools, that he maintains.~~
+
+~~First, you can get live code analysis of your SQL scripts as you type them in VS Code, Visual Studio and SQL Server Management Studio.~~
+
+~~Secondly, in companionship with EF Core Power Tools, you can build your database model (and EF Core model) with AI and guide it by enforcing the more than 140 rules in the package.~~
+
+Featuring:
+
+- [Erik Ejlskov Jensen](https://github.com/erikej) (Special guest)
+- [Jiri Cincura](https://www.tabsoverspaces.com/) (Host)
 
 <a name="Sep24_2026"></a>
 
