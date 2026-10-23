@@ -328,6 +328,12 @@ Detects overly complex queries and either logs them or throws. Checks include un
 
 [GitHub repository](https://github.com/SimonCropp/EfQueryComplexity) | [NuGet](https://www.nuget.org/packages/EfQueryComplexity/)
 
+### EFCore.ComplexIndexes
+
+Adds migrations support for indexes on properties of complex types, which EF Core 10 cannot index. Includes composite, unique, filtered and descending indexes, with PostgreSQL (GIN/GiST, expression indexes, exclusion and temporal constraints) and SQL Server (clustered, covering, online) options. For EF Core: 10.
+
+[GitHub repository](https://github.com/CaffeinatedCoder/EFCore.ComplexIndexes) | [NuGet](https://www.nuget.org/packages/EFCore.ComplexIndexes)
+
 ## API Integrations
 
 These packages are designed to integrate directly with EF Core to expose various APIs.
