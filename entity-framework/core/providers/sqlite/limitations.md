@@ -2,7 +2,7 @@
 title: SQLite Database Provider - Limitations - EF Core
 description: Limitations of the Entity Framework Core SQLite database provider as compared to other providers
 author: SamMonoRT
-ms.date: 04/16/2026
+ms.date: 10/22/2026
 uid: core/providers/sqlite/limitations
 ---
 # SQLite EF Core Database Provider Limitations
@@ -19,16 +19,17 @@ The common relational library (shared by EF Core relational database providers) 
 
 ## Query limitations
 
-SQLite doesn't natively support the following data types. EF Core can read and write values of these types, and querying for equality (`where e.Property == value`) is also supported. Other operations, however, like comparison and ordering will require evaluation on the client.
+SQLite doesn't natively support the following data types. EF Core can read and write values of these types, and querying for equality (`where e.Property == value`) is also supported. Other operations, however, like comparison and ordering, aren't translated to SQL and have to be evaluated on the client.
 
 * `DateTimeOffset`
-* `decimal`
 * `TimeSpan`
 * `ulong`
 
 Instead of `DateTimeOffset`, we recommend using `DateTime` values. When handling multiple time zones, we recommend converting the values to UTC before saving and then converting back to the appropriate time zone.
 
-The `decimal` type provides a high level of precision. If you don't need that level of precision, however, we recommend using `double` instead. You can use a [value converter](xref:core/modeling/value-conversions) to continue using `decimal` in your classes.
+SQLite doesn't natively support `decimal` either, but EF Core translates comparison, ordering, arithmetic and aggregate operations on `decimal` values to functions and a collation that it registers on the connection, such as `ef_compare` and `EF_DECIMAL`. See [Function Mappings](xref:core/providers/sqlite/functions) for the translations.
+
+If you don't need the precision of `decimal`, you can use `double` instead. You can use a [value converter](xref:core/modeling/value-conversions) to continue using `decimal` in your classes.
 
 ```csharp
 modelBuilder.Entity<MyEntity>()

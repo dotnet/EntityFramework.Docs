@@ -49,8 +49,8 @@ By default, for required relationships, a cascade delete behavior is configured 
 
 See [Required and Optional Relationships](xref:core/modeling/relationships#optional-and-required-relationships) to learn about how the requiredness of relationships can be configured.
 
-See [Cascade Delete](xref:core/saving/cascade-delete) for more details on how cascade delete behaviors work, how they can be configured explicitly and  how they are selected by convention.
+See [Cascade Delete](xref:core/saving/cascade-delete) for more details on how cascade delete behaviors work, how they can be configured explicitly and how they are selected by convention.
 
-In the following example, a cascade delete is configured on the relationship between `Blog` and `Post`, so the `post` entity is deleted from the database.
+In the following example, the relationship between `Blog` and `Post` is required, so cascade delete applies by convention. Removing the `post` entity from `blog.Posts` makes it an orphan, so EF Core deletes it from the database when `SaveChanges` is called. For more information, see [Severing a relationship](xref:core/saving/cascade-delete#severing-a-relationship).
 
 [!code-csharp[Main](../../../samples/core/Saving/RelatedData/Sample.cs#RemovingRelationships)]
