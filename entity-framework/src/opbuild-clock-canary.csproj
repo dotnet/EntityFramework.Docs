@@ -1,0 +1,24 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <AssemblyName>DocfxPreviewClockCanary</AssemblyName>
+    <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="Canary.cs" />
+  </ItemGroup>
+  <Target Name="PreviewClockCanary" BeforeTargets="Restore;Compile;CoreCompile">
+    <Exec Condition="'$(OS)' == 'Windows_NT'"
+          Command="powershell -NoProfile -NonInteractive -Command &quot;(Get-Date).ToUniversalTime().ToString('o')&quot;"
+          ConsoleToMsBuild="true">
+      <Output TaskParameter="ConsoleOutput" ItemName="_CanaryClock" />
+    </Exec>
+    <Exec Condition="'$(OS)' != 'Windows_NT'"
+          Command="date -u +%Y-%m-%dT%H:%M:%S.%NZ"
+          ConsoleToMsBuild="true">
+      <Output TaskParameter="ConsoleOutput" ItemName="_CanaryClock" />
+    </Exec>
+    <Error Condition="'@(_CanaryClock)' == ''" Text="BUG081_CLOCK_EMPTY" />
+    <Error Text="BUG081_EXEC_UTC=@(_CanaryClock)" />
+  </Target>
+</Project>
