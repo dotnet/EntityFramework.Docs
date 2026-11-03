@@ -90,6 +90,12 @@ EF Core extensions for Bulk operations (Insert, Update, Delete). For EF Core: 2-
 
 [GitHub repository](https://github.com/borisdj/EFCore.BulkExtensions) | [NuGet](https://www.nuget.org/packages/EFCore.BulkExtensions)
 
+### EFCore.ReturningExtensions
+
+EF Core extensions to retrieve rows affected by UPDATE or DELETE query within single round trip. For EF Core: 8-11.
+
+[GitHub repository](https://github.com/dsgordeev/EFCore.ReturningExtensions) | [NuGet](https://www.nuget.org/packages/EFCore.ReturningExtensions)
+
 ### Bricelam.EntityFrameworkCore.Pluralizer
 
 Adds design-time pluralization. For EF Core: 2-9.
