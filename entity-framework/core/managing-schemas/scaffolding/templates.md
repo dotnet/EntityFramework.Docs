@@ -7,9 +7,6 @@ uid: core/managing-schemas/scaffolding/templates
 ---
 # Custom Reverse Engineering Templates
 
-> [!NOTE]
-> This feature was added in EF Core 7.
-
 While [reverse engineering](xref:core/managing-schemas/scaffolding), Entity Framework Core strives to scaffold good, general-purpose code that can be used in a variety of app types and uses [common coding conventions](/dotnet/csharp/fundamentals/coding-style/coding-conventions) for a consistent look and a familiar feel. Sometimes, however, more specialized code and alternative coding styles are desirable. This article shows how to customize the scaffolded code using [T4 text templates](/visualstudio/modeling/code-generation-and-t4-text-templates).
 
 ## Prerequisites

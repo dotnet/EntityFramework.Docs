@@ -32,10 +32,10 @@
     items:
     - name: Welcome!
       href: core/index.md
-    - name: "What's new in EF Core 10.0"
-      href: core/what-is-new/ef-core-10.0/whatsnew.md
-    - name: "Breaking changes in EF Core 10.0"
-      href: core/what-is-new/ef-core-10.0/breaking-changes.md
+    - name: "What's new in EF Core 11.0"
+      href: core/what-is-new/ef-core-11.0/whatsnew.md
+    - name: "Breaking changes in EF Core 11.0"
+      href: core/what-is-new/ef-core-11.0/breaking-changes.md
     - name: Getting started
       items:
       - name: EF Core Overview
