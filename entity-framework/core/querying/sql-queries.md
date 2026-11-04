@@ -19,10 +19,6 @@ var blogs = await context.Blogs
     .ToListAsync();
 ```
 
-> [!NOTE]
->
-> <xref:Microsoft.EntityFrameworkCore.RelationalQueryableExtensions.FromSql*> was introduced in EF Core 7.0. When using older versions, use <xref:Microsoft.EntityFrameworkCore.RelationalQueryableExtensions.FromSqlInterpolated*> instead.
-
 SQL queries can be used to execute a stored procedure which returns entity data:
 
 ```csharp
