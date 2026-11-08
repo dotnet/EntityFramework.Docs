@@ -374,6 +374,12 @@ A standard for implementing REST APIs with specifications for discovery, filteri
 
 [GitHub repository](https://github.com/OData) | [NuGet](https://www.nuget.org/packages/Microsoft.OData.Core/)
 
+### Raffinert.Expressions.EntityFrameworkCore
+
+Enables composition and reuse of strongly typed predicates and projections in EF Core queries. Expands nested expression invocations for SQL translation and supports dynamic query composition. For EF Core: 10.
+
+[GitHub repository](https://github.com/Raffinert/Expressions) | [NuGet](https://www.nuget.org/packages/Raffinert.Expressions.EntityFrameworkCore)
+
 ## Extensions for unsupported EF Core versions
 
 ### EntityFrameworkCore.SqlServer.HierarchyId
@@ -506,9 +512,3 @@ For EF Core: 6-7.
 A source generator that can generate strongly-typed-id classes automatically for entities. For EF Core: 7.
 
 [GitHub repository](https://github.com/yangzhongke/LessCode.EFCore.StronglyTypedId)
-
-### Raffinert.Expressions.EntityFrameworkCore
-
-Enables composition and reuse of strongly typed predicates and projections in EF Core queries. Expands nested expression invocations for SQL translation and supports dynamic query composition. For EF Core: 10.
-
-[GitHub repository](https://github.com/Raffinert/Expressions) | [NuGet](https://www.nuget.org/packages/Raffinert.Expressions.EntityFrameworkCore)
