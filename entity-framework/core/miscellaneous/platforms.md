@@ -25,7 +25,7 @@ Several older .NET implementations are no longer supported. See the sections bel
 
 ## .NET
 
-EF Core is a .NET library. EF Core version versions 11.0 target .NET version 11.0.
+EF Core is a .NET library. EF Core version 11.0 targets .NET version 11.0.
 
 .NET supports multiple platforms including Windows, Linux, macOS, iOS, Android, and Wasm. For more details on which version are supported, see the [.NET Supported OS Policy](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
