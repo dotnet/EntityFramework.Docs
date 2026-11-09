@@ -163,11 +163,10 @@ The application now needs a small amount of code to connect EF Core to the data-
 
    ![View Code](_static/winforms-view-code.png)
 
-2. Add a private field to hold the `DbContext` for the session, and add overrides for the `OnLoad` and `OnClosing` methods. The code should look like this:
+2. Add a private field to hold the `DbContext` for the session, and add overrides for the <xref:System.Windows.Forms.Form.OnLoad*> and <xref:System.Windows.Forms.Form.OnFormClosing*> methods. The code should look like this:
 
 ```csharp
 using Microsoft.EntityFrameworkCore;
-using System.ComponentModel;
 
 namespace GetStartedWinForms
 {
@@ -195,9 +194,9 @@ namespace GetStartedWinForms
             this.categoryBindingSource.DataSource = dbContext.Categories.Local.ToBindingList();
         }
 
-        protected override void OnClosing(CancelEventArgs e)
+        protected override void OnFormClosing(FormClosingEventArgs e)
         {
-            base.OnClosing(e);
+            base.OnFormClosing(e);
 
             this.dbContext?.Dispose();
             this.dbContext = null;
@@ -214,7 +213,7 @@ The `OnLoad` method is called when the form is loaded. At this time
 - The `Load` extension method is used to load all the categories from database into the `DbContext`. These entities will now be tracked by the `DbContext`, which will detect any changes made when the categories are edited by the user.
 - The `categoryBindingSource.DataSource` property is initialized to the categories that are being tracked by the `DbContext`. This is done by calling `Local.ToBindingList()` on the `Categories` `DbSet` property. `Local` provides access to a local view of the tracked categories, with events hooked up to ensure the local data stays in sync with the displayed data, and vice versa. `ToBindingList()` exposes this data as an `IBindingList`, which is understood by Windows Forms data binding.
 
-The `OnClosing` method is called when the form is closed. At this time, the `DbContext` is disposed, which ensures any database resources will be freed, and the `dbContext` field is set to null so that it cannot be used again.
+The <xref:System.Windows.Forms.Form.OnFormClosing*> method is called when the form is closing. At this time, the `DbContext` is disposed, which ensures any database resources will be freed, and the `dbContext` field is set to null so that it cannot be used again.
 
 ## Populating the Products view
 
