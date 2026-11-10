@@ -19,24 +19,24 @@ This page documents API and behavior changes that have the potential to break ex
 
 | **Breaking change**                                                                                                      | **Impact** |
 |:------------------------------------------------------------------------------------------------------------------------ | -----------|
-| [Proxies now throw for navigations whose accessors they cannot override](#proxy-navigation-visibility)                   | Low        |
+| [Proxies now throw for members whose accessors they cannot override](#proxy-member-visibility)                           | Low        |
 
 ## Low-impact changes
 
-<a name="proxy-navigation-visibility"></a>
+<a name="proxy-member-visibility"></a>
 
-### Proxies now throw for navigations whose accessors they cannot override
+### Proxies now throw for members whose accessors they cannot override
 
-[Tracking Issue #32352](https://github.com/dotnet/efcore/issues/32352)
+[Tracking Issue #32352](https://github.com/dotnet/efcore/issues/32352) (navigations) and [Tracking Issue #39589](https://github.com/dotnet/efcore/issues/39589) (properties)
 
 #### Old behavior
 
-Lazy-loading proxies (`UseLazyLoadingProxies`) require navigation getters to be `virtual`, and change-tracking proxies (`UseChangeTrackingProxies`) require navigation setters to be `virtual`. EF Core checked only that the accessor was `virtual`.
+Lazy-loading proxies (`UseLazyLoadingProxies`) require navigation getters to be `virtual`, and change-tracking proxies (`UseChangeTrackingProxies`) require the setters of navigations and of all mapped properties to be `virtual`. EF Core checked only that the accessor was `virtual`.
 
 The proxy types are generated in a separate assembly (`DynamicProxyGenAssembly2`), so they can only override accessors that are visible to that assembly. An accessor that is `internal virtual` or `private protected virtual` passed model validation but was never overridden. No error was reported, and:
 
 - With lazy-loading proxies, the navigation was never loaded and was always `null` (or empty).
-- With change-tracking proxies, changes to the navigation were not detected and were not saved.
+- With change-tracking proxies, changes to the navigation or property were not detected and were not saved.
 
 For example, with lazy-loading proxies enabled, `Profile` below was `null` after querying a `Pool`, even when a related `Profile` existed:
 
@@ -48,12 +48,23 @@ public class Pool
 }
 ```
 
+And with change-tracking proxies enabled, changing `Name` below did not mark the entity as modified, so the change was never saved:
+
+```csharp
+public class Blog
+{
+    public virtual int Id { get; set; }
+    public virtual string? Name { get; internal set; }
+}
+```
+
 #### New behavior
 
-Starting with EF Core 12, model validation throws an <xref:System.InvalidOperationException> when a proxy cannot override the accessor it needs for a navigation:
+Starting with EF Core 12, model validation throws an <xref:System.InvalidOperationException> when a proxy cannot override the accessor it needs:
 
-- For lazy-loading proxies, the navigation getter must be visible to the proxy assembly.
-- For change-tracking proxies, the navigation setter must be visible to the proxy assembly. This includes collection navigations, so `public virtual ICollection<Post> Posts { get; internal set; }` now throws.
+- For lazy-loading proxies, the getter of each navigation must be visible to the proxy assembly.
+- For change-tracking proxies, the setter of each navigation must be visible to the proxy assembly. This includes collection navigations, so `public virtual ICollection<Post> Posts { get; internal set; }` now throws.
+- For change-tracking proxies, the setter of each mapped property must also be visible to the proxy assembly. This includes key properties, properties of owned types, and the mapped indexer property. Properties without a setter are not affected.
 
 An accessor is visible if it is `public`, `protected`, or `protected internal`, or if the assembly that declares it has `[assembly: InternalsVisibleTo("DynamicProxyGenAssembly2")]`. A `private` accessor is never visible.
 
@@ -61,11 +72,11 @@ The exception is not thrown:
 
 - For a navigation on which lazy-loading is disabled with `EnableLazyLoading(false)`.
 - For lazy-loading proxies when `IgnoreNonVirtualNavigations` is specified. The navigation is then not proxied and is not lazy-loaded, as before.
-- For lazy-loading proxies when only the setter is not visible. Only the getter needs to be overridden.
+- For lazy-loading proxies when only the setter is not visible. Only the getter needs to be overridden, and lazy-loading proxies do not intercept properties.
 
 #### Why
 
-Navigations that silently did not load, or silently did not save, were very hard to diagnose. Throwing during model validation reports the problem immediately and names the property.
+Navigations that silently did not load, and changes that were silently not saved, were very hard to diagnose. Throwing during model validation reports the problem immediately and names the member.
 
 #### Mitigations
 
@@ -73,7 +84,7 @@ Use one of the following:
 
 - Make the accessor `public`, `protected` or `protected internal`.
 - Add `[assembly: InternalsVisibleTo("DynamicProxyGenAssembly2")]` to the assembly that declares the entity type. If the assembly is strong-named, the attribute must also specify the public key of the proxy assembly; see the Castle DynamicProxy documentation.
-- If the navigation was never meant to be lazy-loaded, disable lazy-loading for it, or call `IgnoreNonVirtualNavigations`:
+- If a navigation was never meant to be lazy-loaded, disable lazy-loading for it, or call `IgnoreNonVirtualNavigations`:
 
 ```csharp
 optionsBuilder.UseLazyLoadingProxies(b => b.IgnoreNonVirtualNavigations());
@@ -83,4 +94,4 @@ optionsBuilder.UseLazyLoadingProxies(b => b.IgnoreNonVirtualNavigations());
 modelBuilder.Entity<Pool>().Navigation(e => e.Profile).EnableLazyLoading(false);
 ```
 
-Change-tracking proxies have no equivalent opt-out, so for these the accessor must be made visible.
+Change-tracking proxies have no equivalent opt-out, so for these the accessors of navigations and mapped properties must be made visible.
