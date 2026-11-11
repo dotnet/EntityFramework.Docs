@@ -14,6 +14,8 @@ Several older .NET implementations are no longer supported. See the sections bel
 
 | EF Core           | .NET & .NET Core | .NET Standard | .NET Framework |
 |------------------ | ---------------- | ------------- | -------------- |
+| **11.0**          | 11.0             |               |                |
+| **10.0**          | 10.0             |               |                |
 | **9.0**           | 8.0              |               |                |
 | **8.0**           | 8.0              |               |                |
 | ~~**7.0**~~ (EOL) | 6.0              |               |                |
@@ -23,7 +25,7 @@ Several older .NET implementations are no longer supported. See the sections bel
 
 ## .NET
 
-EF Core is a .NET library. EF Core version versions 8.0 and 9.0 both target .NET version 8.0. In general, we target the latest [LTS release](/lifecycle/products/microsoft-net-and-net-core) of .NET. This enables you to upgrade to a newer, STS release of EF Core to take advantage of the latest features without having to upgrade your entire app. There may be exceptions to this, however, as runtime features sometimes get added that require us to depend on the latest version of .NET.
+EF Core is a .NET library. EF Core version 11.0 targets .NET version 11.0.
 
 .NET supports multiple platforms including Windows, Linux, macOS, iOS, Android, and Wasm. For more details on which version are supported, see the [.NET Supported OS Policy](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
