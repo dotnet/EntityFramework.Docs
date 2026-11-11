@@ -1,5 +1,5 @@
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Sqlite.Metadata;
+using Microsoft.EntityFrameworkCore.Metadata;
 
 namespace EFCore.Sqlite.ValueGeneration;
 

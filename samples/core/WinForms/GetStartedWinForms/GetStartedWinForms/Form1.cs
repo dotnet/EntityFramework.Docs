@@ -1,5 +1,4 @@
 using Microsoft.EntityFrameworkCore;
-using System.ComponentModel;
 
 namespace GetStartedWinForms
 {
@@ -27,9 +26,9 @@ namespace GetStartedWinForms
             this.categoryBindingSource.DataSource = dbContext.Categories.Local.ToBindingList();
         }
 
-        protected override void OnClosing(CancelEventArgs e)
+        protected override void OnFormClosing(FormClosingEventArgs e)
         {
-            base.OnClosing(e);
+            base.OnFormClosing(e);
 
             this.dbContext?.Dispose();
             this.dbContext = null;
