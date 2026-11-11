@@ -6,7 +6,7 @@
   </PropertyGroup>
   
   <PropertyGroup>
-    <DefaultNetCoreTargetFramework>net6.0</DefaultNetCoreTargetFramework>
+    <DefaultNetCoreTargetFramework>net11.0</DefaultNetCoreTargetFramework>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)'=='Release'">
