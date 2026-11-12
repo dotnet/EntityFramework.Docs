@@ -31,7 +31,7 @@ highlightedContent:
     # Card
     - title: "API reference browser"
       itemType: reference
-      url: /dotnet/api/?view=efcore-10.0&preserve-view=true
+      url: /dotnet/api/?view=efcore-11.0&preserve-view=true
     # Card
     - title: ".NET (C#) data documentation hub"
       itemType: reference
