@@ -380,6 +380,13 @@ Enables composition and reuse of strongly typed predicates and projections in EF
 
 [GitHub repository](https://github.com/Raffinert/Expressions) | [NuGet](https://www.nuget.org/packages/Raffinert.Expressions.EntityFrameworkCore)
 
+```
+### ModelHub.MultiTenancy
+
+Claim-based multi-tenancy for ASP.NET Core and EF Core. The tenant comes from the signed-in user's token. A global query filter keeps every query inside that tenant, and a SaveChanges interceptor stamps new rows and refuses writes that impact another tenant's data. Supports sub-tenants and audited platform-admin impersonation - For EF Core: 8, 10.
+
+[GitHub repository](https://github.com/modelhub-solutions/ModelHub.MultiTenancy) | [NuGet](https://www.nuget.org/packages/ModelHub.MultiTenancy.EntityFrameworkCore)
+```
 ## Extensions for unsupported EF Core versions
 
 ### EntityFrameworkCore.SqlServer.HierarchyId
