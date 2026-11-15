@@ -64,8 +64,8 @@ A `null` collection and an empty one have different meanings in many models, and
 
 ```csharp
 modelBuilder.Entity<Blog>()
-    .Navigation(b => b.Posts)
-    .Metadata.SetIsNullable(false);
+    .Metadata.FindNavigation(nameof(Blog.Posts))!
+    .SetIsNullable(false);
 ```
 
 - If you use compiled models, regenerate them to pick up the nullable configuration. Existing compiled models keep working but treat the collections as non-nullable.
