@@ -39,11 +39,11 @@ For example, after migrations had been added to `Migrations/2025`, `dotnet ef mi
 
 When `--output-dir` is specified, the model snapshot is written to that directory as well, together with the migration and designer files. This applies to relative paths, to paths outside the project directory, to absolute paths, and when `--namespace` is also specified.
 
-If the context already has a snapshot in a different file, the new snapshot is written first and the old file is then deleted, so that only one snapshot remains. The old file is deleted only when exactly one file in the project or the output directory declares the snapshot class. If there are several, or the existing snapshot can't be found, nothing is deleted and a warning is reported. If a file with the snapshot's name already exists in the output directory but declares a different class, such as the snapshot of another `DbContext`, the command fails instead of overwriting it.
+EF doesn't move or delete the previous snapshot. If the context's existing snapshot is in a different file, the project now contains two snapshot classes with the same name and doesn't compile until you delete the old file.
 
-With `--dry-run`, the planned move is reported but nothing is changed.
+If a file with the snapshot's name already exists in the output directory and the context has no snapshot, such as the snapshot of another `DbContext`, the command fails instead of overwriting it. If the context does have a snapshot, an existing file in the output directory is overwritten with the updated snapshot.
 
-The path of a deleted snapshot is returned in the new `PreviousSnapshotFile` property of <xref:Microsoft.EntityFrameworkCore.Migrations.Design.MigrationFiles>, and in the JSON output of the command.
+With `--dry-run`, nothing is written.
 
 #### Why
 
@@ -51,6 +51,5 @@ The `--output-dir` option is documented as the directory to put the generated fi
 
 #### Mitigations
 
-- If you pass a different `--output-dir` for each batch of migrations, for example `Migrations/2025` and then `Migrations/2026`, the snapshot now moves each time. Use the same output directory for every migration, or omit `--output-dir` after the first one to keep new files beside the existing ones.
-- The snapshot's path changes when it moves. Make sure the new path is committed and, if your project lists compile items explicitly, included in the project. The Package Manager Console updates these project items for you.
-- If the snapshot is outside the project directory, pass the same `--output-dir` to every `migrations add` command. Otherwise EF can't find the existing snapshot, warns, and writes a second one inside the project.
+- If you pass a different `--output-dir` for each batch of migrations, for example `Migrations/2025` and then `Migrations/2026`, delete the previous snapshot file after each `migrations add`, or use the same output directory for every migration. Omit `--output-dir` to keep new files beside the existing ones.
+- If your project lists compile items explicitly, include the new snapshot file and remove the old one.
