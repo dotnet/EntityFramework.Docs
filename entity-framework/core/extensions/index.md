@@ -382,7 +382,7 @@ Enables composition and reuse of strongly typed predicates and projections in EF
 
 ### ModelHub.MultiTenancy
 
-Claim-based multi-tenancy for ASP.NET Core and EF Core. The tenant comes from the signed-in user's token. A global query filter keeps every query inside that tenant, and a SaveChanges interceptor stamps new rows and refuses writes that impact another tenant's data. Supports sub-tenants and audited platform-admin impersonation. For EF Core: 8, 10.
+Claim-based multi-tenancy for ASP.NET Core: a global query filter and a SaveChanges interceptor keep every query and write inside the signed-in user's tenant. For EF Core: 8, 10.
 
 [GitHub repository](https://github.com/modelhub-solutions/ModelHub.MultiTenancy) | [NuGet](https://www.nuget.org/packages/ModelHub.MultiTenancy.EntityFrameworkCore)
 
