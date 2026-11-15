@@ -83,7 +83,7 @@ Navigations that silently did not load, and changes that were silently not saved
 Use one of the following:
 
 - Make the accessor `public`, `protected` or `protected internal`.
-- Add `[assembly: InternalsVisibleTo("DynamicProxyGenAssembly2")]` to the assembly that declares the entity type. If the assembly is strong-named, the attribute must also specify the public key of the proxy assembly; see the Castle DynamicProxy documentation.
+- Add `[assembly: InternalsVisibleTo("DynamicProxyGenAssembly2")]` to the assembly that declares the member. This is the assembly that declares the accessor, which is not the one that declares the entity type when the member is inherited from a base type in another assembly. If the assembly is strong-named, the attribute must also specify the public key of the proxy assembly; see the Castle DynamicProxy documentation.
 - If a navigation was never meant to be lazy-loaded, disable lazy-loading for it, or call `IgnoreNonVirtualNavigations`:
 
 ```csharp
