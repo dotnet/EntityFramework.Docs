@@ -2,7 +2,7 @@
 title: Breaking changes in EF Core 12 (EF12) - EF Core
 description: List of breaking changes introduced in Entity Framework Core 12 (EF12)
 author: ajcvickers
-ms.date: 11/10/2026
+ms.date: 11/16/2026
 uid: core/what-is-new/ef-core-12.0/breaking-changes
 ---
 
@@ -67,6 +67,8 @@ Starting with EF Core 12, model validation throws an <xref:System.InvalidOperati
 - For change-tracking proxies, the setter of each mapped property must also be visible to the proxy assembly. This includes key properties, properties of owned types, and the mapped indexer property. Properties without a setter are not affected.
 
 An accessor is visible if it is `public`, `protected`, or `protected internal`, or if the assembly that declares it has `[assembly: InternalsVisibleTo("DynamicProxyGenAssembly2")]`. A `private` accessor is never visible.
+
+Members declared on abstract entity types are not validated, so the same problem can still occur silently there.
 
 The exception is not thrown:
 
