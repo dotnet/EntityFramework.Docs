@@ -45,17 +45,27 @@ Here, with `PeriodId` as a foreign key, no index on `PeriodId` alone was created
 
 #### New behavior
 
-An index that has a filter set explicitly, with `HasFilter` or by calling the metadata API, no longer counts as covering a foreign key. EF creates the foreign key's own index, in addition to the filtered one. This applies whether the filtered index is added before or after the foreign key, and it is re-evaluated when the filter is added, changed or removed.
+An index that has a filter, and starts with a foreign key's properties but has more properties after them, no longer counts as covering the foreign key. EF creates the foreign key's own index, in addition to the filtered one. This applies whether the filtered index is added before or after the foreign key, and it is re-evaluated when the filter is added, changed or removed.
 
 A model like the one above now has two indexes: the filtered `(PeriodId, CompanyId)` index and a new `IX_Invoices_PeriodId`. The first migration generated after updating contains a `CreateIndex` for each such foreign key.
 
+This also applies to a filter that EF sets by convention, when it excludes rows that a lookup on the foreign key needs. The filter that SQL Server adds to unique indexes over nullable columns (`[A] IS NOT NULL AND [B] IS NOT NULL`) excludes the rows where any of those columns is null. If one of the nullable columns isn't a foreign key column, those rows are excluded even though a lookup on the foreign key needs them. For example, with SQL Server:
+
+```csharp
+modelBuilder.Entity<Invoice>()
+    .HasIndex(i => new { i.PeriodId, i.CompanyId })   // both int?
+    .IsUnique();
+```
+
+Here SQL Server filters the index with `[PeriodId] IS NOT NULL AND [CompanyId] IS NOT NULL`, so a new index on `PeriodId` is created if it is a foreign key.
+
 Some cases behave as before:
 
-- Filters that EF sets by convention are ignored. In particular, the filter that SQL Server adds to unique indexes over nullable columns (`[A] IS NOT NULL AND [B] IS NOT NULL`) doesn't cause new indexes, so existing models that only have those filters are unchanged.
-- An unnamed index with a filter on exactly the foreign key's properties is still the foreign key's index, because a model can't contain two unnamed indexes on the same properties. Giving the filtered index a name makes EF create a separate index for the foreign key.
+- An index on exactly the foreign key's properties is still the foreign key's index, whatever its filter and whether or not it has a name. A filter can't be interpreted, and a second index on the same properties would duplicate it. This includes the index that `dotnet ef dbcontext scaffold` generates for an optional one-to-one relationship, such as `HasIndex(i => i.PeriodId, "IX_Invoices_PeriodId").IsUnique().HasFilter("([PeriodId] IS NOT NULL)")`.
+- A filter that EF sets by convention still lets the index cover the foreign key if every nullable column it excludes is one of the foreign key's columns, since a lookup on the foreign key never needs rows with nulls in them. Existing models whose only filters are the ones SQL Server adds, on indexes that start with the foreign key and don't have other nullable columns, are unchanged.
 - Table-specific filters, which come from the root of a table-sharing hierarchy rather than from the index itself, aren't taken into account.
 
-The new `RelationalForeignKeyIndexConvention` replaces `ForeignKeyIndexConvention` for relational providers. `ForeignKeyIndexConvention` gets a protected virtual `IsPartial` method, which returns `false` by default, and a protected virtual `ProcessIndexCoverageChanged` method.
+The new `RelationalForeignKeyIndexConvention` replaces `ForeignKeyIndexConvention` for relational providers. `ForeignKeyIndexConvention` gets a protected virtual `IsPartial(IConventionIndex, IReadOnlyList<IConventionPropertyBase>)` method, which returns `false` by default, and a protected virtual `OnIndexCoverageChanged` method.
 
 #### Why
 
@@ -64,4 +74,5 @@ An index with a filter contains only the rows that satisfy the filter. Queries a
 #### Mitigations
 
 - In most cases the new index is wanted, and no action is needed other than applying the migration. On a large table, creating the index can take time and may lock the table depending on the database, so review the generated migration before applying it.
+- If a SQL Server unique index over nullable columns gets a foreign key index you don't want, make its other columns non-nullable if the data allows it, since the filter then only excludes rows with nulls in the foreign key's columns.
 - To keep the previous behavior for your application, use a custom convention that derives from `RelationalForeignKeyIndexConvention` and overrides `IsPartial` to return `false`.
