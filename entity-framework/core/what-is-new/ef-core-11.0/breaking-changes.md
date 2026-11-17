@@ -38,6 +38,7 @@ This page documents API and behavior changes that have the potential to break ex
 | [Owned JSON collections without an explicit key are obsolete](#owned-json-collections-obsolete)                 | Low        |
 | [`Property` no longer configures primitive collections](#property-not-primitive-collection)                     | Low        |
 | [Split queries now throw when concurrent modifications are detected](#split-query-concurrency-exception)         | Low        |
+| [Assigning the same owned instance to more than one navigation now throws](#owned-instance-shared)               | Low        |
 
 ## High-impact changes
 
@@ -706,6 +707,44 @@ var blogs = await context.Blogs
     .AsSingleQuery()
     .ToListAsync();
 ```
+
+<a name="owned-instance-shared"></a>
+
+### Assigning the same owned instance to more than one navigation now throws
+
+[Tracking Issue #5521](https://github.com/dotnet/EntityFramework.Docs/issues/5521)
+
+#### Old behavior
+
+Previously, EF Core did not check whether the same owned entity instance was referenced from more than one ownership navigation. Depending on the model and the state of the owners, this either failed at `SaveChanges` with an unrelated foreign key error, or was saved with unexpected results. For example, assigning one owned navigation of a tracked entity to another saved the same values into both sets of columns:
+
+```csharp
+var customer = await context.Customers.SingleAsync(c => c.Id == 1);
+customer.Billing = customer.Shipping;
+await context.SaveChangesAsync(); // Saved; both column sets now contain the Shipping values
+```
+
+When two new owners shared an instance of an optional owned type, both were inserted, but only one of them got the owned values. The other one was saved with `null` for that navigation.
+
+#### New behavior
+
+Starting with EF Core 11.0, EF Core throws an `InvalidOperationException` when the same owned instance is referenced from more than one ownership navigation. The check runs when the owner starts being tracked and when changes are detected:
+
+> The same object instance of type 'Address' is being referenced from the navigation 'Shipping' on 'Customer' and from the navigation 'Billing' on 'Customer'. Owned entity types cannot have multiple owners pointing to the same instance. Consider creating a copy of the object to use for each navigation.
+
+#### Why
+
+Owned types are entity types, so each owned instance belongs to exactly one owner. Sharing an instance was never supported, and saving duplicated or missing data without an error is worse than failing early. See [dotnet/efcore#38446](https://github.com/dotnet/efcore/pull/38446).
+
+#### Mitigations
+
+Give each navigation its own instance, for example by copying the shared object:
+
+```csharp
+customer.Billing = new Address { City = customer.Shipping.City };
+```
+
+Alternatively, consider mapping the type as a [complex type](xref:core/what-is-new/ef-core-10.0/whatsnew#complex-types), which has value semantics and no identity.
 
 <a name="MDS-breaking-changes"></a>
 
