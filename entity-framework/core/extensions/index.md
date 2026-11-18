@@ -60,9 +60,9 @@ efmig is a multi-platform GUI application that speeds up daily development when 
 
 ### EFCore.Visualizer
 
-With Entity Framework Core query plan debugger visualizer, you can view the query plan of your queries directly inside Visual Studio. Currently, the visualizer supports SQL Server and PostgreSQL. For EF Core: 7-8.
+With Entity Framework Core query plan debugger visualizer, you can view the query plan of your queries directly inside Visual Studio and VS Code. The visualizer supports SQL Server, PostgreSQL, SQLite and Oracle, and MySQL in Visual Studio. For EF Core: 7-11.
 
-[Visual Studio Marketplace](https://marketplace.visualstudio.com/items?itemName=GiorgiDalakishvili.EFCoreVisualizer)
+[Visual Studio Marketplace](https://marketplace.visualstudio.com/items?itemName=GiorgiDalakishvili.EFCoreVisualizer) | [VS Code Marketplace](https://marketplace.visualstudio.com/items?itemName=GiorgiDalakishvili.vscode-efcore-visualizer)
 
 ## Extensions
 
