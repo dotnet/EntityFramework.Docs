@@ -60,9 +60,9 @@ efmig is a multi-platform GUI application that speeds up daily development when 
 
 ### EFCore.Visualizer
 
-With Entity Framework Core query plan debugger visualizer, you can view the query plan of your queries directly inside Visual Studio. Currently, the visualizer supports SQL Server and PostgreSQL. For EF Core: 7-8.
+With Entity Framework Core query plan debugger visualizer, you can view the query plan of your queries directly inside Visual Studio and VS Code. The visualizer supports SQL Server, PostgreSQL, SQLite and Oracle, and MySQL in Visual Studio. For EF Core: 7-11.
 
-[Visual Studio Marketplace](https://marketplace.visualstudio.com/items?itemName=GiorgiDalakishvili.EFCoreVisualizer)
+[Visual Studio Marketplace](https://marketplace.visualstudio.com/items?itemName=GiorgiDalakishvili.EFCoreVisualizer) | [VS Code Marketplace](https://marketplace.visualstudio.com/items?itemName=GiorgiDalakishvili.vscode-efcore-visualizer)
 
 ## Extensions
 
@@ -382,7 +382,7 @@ Enables composition and reuse of strongly typed predicates and projections in EF
 
 ### ModelHub.MultiTenancy
 
-Claim-based multi-tenancy for ASP.NET Core: a global query filter and a SaveChanges interceptor keep every query and write inside the signed-in user's tenant. For EF Core: 8, 10.
+Claim-based multi-tenancy for ASP.NET Core: a global query filter and a SaveChanges interceptor scope queries and writes to the signed-in user's tenant. Platform admins bypass both, and `IgnoreQueryFilters()` lifts the read filter only. For EF Core: 8, 10.
 
 [GitHub repository](https://github.com/modelhub-solutions/ModelHub.MultiTenancy) | [NuGet](https://www.nuget.org/packages/ModelHub.MultiTenancy.EntityFrameworkCore)
 
