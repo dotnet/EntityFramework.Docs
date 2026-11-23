@@ -29,6 +29,7 @@ This page documents API and behavior changes that have the potential to break ex
 | [Cosmos: `__jObject` shadow property removed; JObject no longer used for serialization](#cosmos-jObject-removed) | Low        |
 | [SQL Server compatibility level now defaults to 160](#sqlserver-compatibility-level-160)                       | Low        |
 | [EF Core now throws by default when no migrations are found](#migrations-not-found)                             | Low        |
+| [Scaffolded migration class names now include the migration ID](#migration-class-names)                        | Low        |
 | [`EFOptimizeContext` MSBuild property has been removed](#ef-optimize-context-removed)                           | Low        |
 | [EF tools packages no longer reference Microsoft.EntityFrameworkCore.Design](#ef-tools-no-design-dep)           | Low        |
 | [SqlVector properties are no longer loaded by default](#sqlvector-not-auto-loaded)                              | Low        |
@@ -325,6 +326,37 @@ Or to log the event instead of throwing:
 ```csharp
 options.ConfigureWarnings(w => w.Log(RelationalEventId.MigrationsNotFound))
 ```
+
+<a name="migration-class-names"></a>
+
+### Scaffolded migration class names now include the migration ID
+
+[Tracking Issue #36066](https://github.com/dotnet/efcore/issues/36066)
+
+#### Old behavior
+
+Previously, EF Core used the migration name as the scaffolded class name. For example, `dotnet ef migrations add AddBlog` generated a class named `AddBlog`.
+
+#### New behavior
+
+Starting with EF Core 11.0, EF Core uses the full migration ID, including its timestamp, as the scaffolded class name. In C#, a migration with the ID `20261118152232_AddBlog` generates a class named `_20261118152232_AddBlog` in both the migration and its designer file. Existing migrations and their IDs are unchanged.
+
+The underscores in the new class names can trigger [CA1707](/dotnet/fundamentals/code-analysis/quality-rules/ca1707) in the migration file, which can cause a build to fail if the rule is enabled and warnings are treated as errors.
+
+#### Why
+
+Using the migration ID avoids conflicts with existing .NET type names and compiler warnings for names that could conflict with future C# keywords.
+
+#### Mitigations
+
+If CA1707 causes build failures, disable the rule for migration files in the project's `.editorconfig`. Adjust the path if your migrations are stored elsewhere:
+
+```ini
+[Migrations/*.cs]
+dotnet_diagnostic.CA1707.severity = none
+```
+
+Update any code that directly references a newly scaffolded migration class to use its new name.
 
 <a name="ef-optimize-context-removed"></a>
 
