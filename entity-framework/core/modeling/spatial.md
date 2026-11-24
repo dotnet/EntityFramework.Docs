@@ -2,7 +2,7 @@
 title: Spatial Data - EF Core
 description: Using spatial data in an Entity Framework Core model
 author: SamMonoRT
-ms.date: 11/15/2021
+ms.date: 11/24/2026
 uid: core/modeling/spatial
 ---
 # Spatial Data
@@ -20,6 +20,7 @@ Microsoft.EntityFrameworkCore.Sqlite    | [Microsoft.EntityFrameworkCore.Sqlite.
 Microsoft.EntityFrameworkCore.InMemory  | [NetTopologySuite](https://www.nuget.org/packages/NetTopologySuite)
 Oracle.EntityFrameworkCore              | [Oracle.EntityFrameworkCore.NetTopologySuite](https://www.nuget.org/packages/Oracle.EntityFrameworkCore.NetTopologySuite)
 Npgsql.EntityFrameworkCore.PostgreSQL   | [Npgsql.EntityFrameworkCore.PostgreSQL.NetTopologySuite](https://www.nuget.org/packages/Npgsql.EntityFrameworkCore.PostgreSQL.NetTopologySuite)
+Microting.EntityFrameworkCore.MySql     | [Microting.EntityFrameworkCore.MySql.NetTopologySuite](https://www.nuget.org/packages/Microting.EntityFrameworkCore.MySql.NetTopologySuite)
 Pomelo.EntityFrameworkCore.MySql        | [Pomelo.EntityFrameworkCore.MySql.NetTopologySuite](https://www.nuget.org/packages/Pomelo.EntityFrameworkCore.MySql.NetTopologySuite)
 Devart.Data.MySql.EFCore                | [Devart.Data.MySql.EFCore.NetTopologySuite](https://www.nuget.org/packages/Devart.Data.MySql.EFCore.NetTopologySuite)
 Devart.Data.Oracle.EFCore               | [Devart.Data.Oracle.EFCore.NetTopologySuite](https://www.nuget.org/packages/Devart.Data.Oracle.EFCore.NetTopologySuite)

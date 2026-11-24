@@ -2,7 +2,7 @@
 title: EF Core NuGet Packages
 description: Overview of the different Entity Framework Core NuGet packages
 author: SamMonoRT
-ms.date: 10/21/2024
+ms.date: 11/24/2026
 uid: core/what-is-new/nuget-packages
 ---
 
@@ -42,10 +42,10 @@ Common database providers are listed in the table below. See [database providers
 | SQLite                            | [Microsoft.EntityFrameworkCore.Sqlite](https://www.nuget.org/packages/Microsoft.EntityFrameworkCore.Sqlite)
 | Azure Cosmos DB                   | [Microsoft.EntityFrameworkCore.Cosmos](https://www.nuget.org/packages/Microsoft.EntityFrameworkCore.Cosmos)
 | PostgreSQL                        | [Npgsql.EntityFrameworkCore.PostgreSQL](https://www.nuget.org/packages/Npgsql.EntityFrameworkCore.PostgreSQL/)*
-| MySQL                             | [Pomelo.EntityFrameworkCore.MySql](https://www.nuget.org/packages/Pomelo.EntityFrameworkCore.MySql/)*
+| MySQL                             | [Microting.EntityFrameworkCore.MySql](https://www.nuget.org/packages/Microting.EntityFrameworkCore.MySql/)*
 | EF Core in-memory database**      | [Microsoft.EntityFrameworkCore.InMemory](https://www.nuget.org/packages/Microsoft.EntityFrameworkCore.InMemory)
 
-*These are popular, high quality, open-source providers developed and shipped by the community. The other providers listed are shipped by Microsoft.
+*These are open-source providers developed and shipped by the community. The other providers listed are shipped by Microsoft.
 
 **Carefully consider whether to use the in-memory provider. It is not designed for production use, and also may not be [the best solution for testing](xref:core/testing/index).
 
@@ -72,7 +72,7 @@ There are many [extensions for EF Core](xref:core/extensions/index) published bo
 | Spatial support for SQL Server               | [Microsoft.EntityFrameworkCore.SqlServer.NetTopologySuite](https://www.nuget.org/packages/Microsoft.EntityFrameworkCore.SqlServer.NetTopologySuite/) | [NetTopologySuite](https://www.nuget.org/packages/NetTopologySuite/) and [NetTopologySuite.IO.SqlServerBytes](https://www.nuget.org/packages/NetTopologySuite.IO.SqlServerBytes/)
 | Spatial support for SQLite                   | [Microsoft.EntityFrameworkCore.Sqlite.NetTopologySuite](https://www.nuget.org/packages/Microsoft.EntityFrameworkCore.Sqlite.NetTopologySuite/) | [NetTopologySuite](https://www.nuget.org/packages/NetTopologySuite/) and [NetTopologySuite.IO.SpatiaLite](https://www.nuget.org/packages/NetTopologySuite.IO.SpatiaLite/)
 | Spatial support for PostgreSQL               | [Npgsql.EntityFrameworkCore.PostgreSQL.NetTopologySuite](https://www.nuget.org/packages/Npgsql.EntityFrameworkCore.PostgreSQL.NetTopologySuite) | [NetTopologySuite](https://www.nuget.org/packages/NetTopologySuite/) and [NetTopologySuite.IO.PostGIS](https://www.nuget.org/packages/NetTopologySuite.IO.PostGIS/) (via [Npgsql.NetTopologySuite](https://www.nuget.org/packages/Npgsql.NetTopologySuite/))
-| Spatial support for MySQL                    | [Pomelo.EntityFrameworkCore.MySql.NetTopologySuite](https://www.nuget.org/packages/Pomelo.EntityFrameworkCore.MySql.NetTopologySuite) | [NetTopologySuite](https://www.nuget.org/packages/NetTopologySuite/)
+| Spatial support for MySQL                    | [Microting.EntityFrameworkCore.MySql.NetTopologySuite](https://www.nuget.org/packages/Microting.EntityFrameworkCore.MySql.NetTopologySuite) | [NetTopologySuite](https://www.nuget.org/packages/NetTopologySuite/)
 
 ## Other packages
 
@@ -89,7 +89,7 @@ Other EF Core packages are pulled in as dependencies of the database provider pa
 
 ## Packages for database provider testing
 
-The following packages are used to test database providers built in external GitHub repositories. See [efcore.pg](https://github.com/npgsql/efcore.pg) and [Pomelo.EntityFrameworkCore.MySql](https://github.com/PomeloFoundation/Pomelo.EntityFrameworkCore.MySql) for examples. Applications should not install these packages.
+The following packages are used to test database providers built in external GitHub repositories. See [efcore.pg](https://github.com/npgsql/efcore.pg) and [Microting.EntityFrameworkCore.MySql](https://github.com/microting/Pomelo.EntityFrameworkCore.MySql) for examples. Applications should not install these packages.
 
 | Functionality                                              | Package
 |:-----------------------------------------------------------|--------
