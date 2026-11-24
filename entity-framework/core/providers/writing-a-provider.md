@@ -2,7 +2,7 @@
 title: Writing a Database Provider - EF Core
 description: Information on writing a new Entity Framework Core provider
 author: SamMonoRT
-ms.date: 10/27/2016
+ms.date: 11/24/2026
 uid: core/providers/writing-a-provider
 ---
 
@@ -10,7 +10,7 @@ uid: core/providers/writing-a-provider
 
 For information about writing an Entity Framework Core database provider, see [So You (Still) Want to Write an EF Core Provider](https://anasismail.com/so-you-still-want-to-write-an-ef-core-provider/) by [Anas Ismail Khan](https://github.com/anasik). For the original post covering EF Core 1.1, see [So you want to write an EF Core provider](https://blog.oneunicorn.com/2016/11/11/so-you-want-to-write-an-ef-core-provider/) by [Arthur Vickers](https://github.com/ajcvickers).
 
-The EF Core codebase is open source and contains several database providers that can be used as a reference. You can find the source code at <https://github.com/dotnet/efcore>. It may also be helpful to look at the code for commonly used third-party providers, such as [Npgsql](https://github.com/npgsql/Npgsql.EntityFrameworkCore.PostgreSQL), [Pomelo MySQL](https://github.com/PomeloFoundation/Pomelo.EntityFrameworkCore.MySql), and [SQL Server Compact](https://github.com/ErikEJ/EntityFramework.SqlServerCompact). In particular, these projects are set up to extend from and run functional tests that we publish on NuGet. This kind of setup is strongly recommended.
+The EF Core codebase is open source and contains several database providers that can be used as a reference. You can find the source code at <https://github.com/dotnet/efcore>. It may also be helpful to look at the code for third-party providers, such as [Npgsql](https://github.com/npgsql/Npgsql.EntityFrameworkCore.PostgreSQL), [Microting MySQL](https://github.com/microting/Pomelo.EntityFrameworkCore.MySql), and [SQL Server Compact](https://github.com/ErikEJ/EntityFramework.SqlServerCompact). In particular, these projects are set up to extend from and run functional tests that we publish on NuGet. This kind of setup is strongly recommended.
 
 ## Community standup videos
 

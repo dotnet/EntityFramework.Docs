@@ -9,7 +9,7 @@ metadata:
   description: Entity Framework is a modern object-relation mapper that lets you build a clean, portable, and high-level data access layer with .NET (C#) across a variety of databases, including SQL Database (on-premises and Azure), SQLite, MySQL, PostgreSQL, and Azure Cosmos DB. It supports LINQ queries, change tracking, updates, and schema migrations.
   ms.topic: hub-page
   author: jcjiang
-  ms.date: 03/08/2023
+  ms.date: 11/24/2026
 
 # highlightedContent section (optional)
 # Maximum of 8 items
@@ -71,7 +71,7 @@ additionalContent:
             text: "SQLite"
           - url: http://www.npgsql.org/efcore/index.html
             text: "PostgreSQL"
-          - url: https://github.com/PomeloFoundation/Pomelo.EntityFrameworkCore.MySql
+          - url: https://github.com/microting/Pomelo.EntityFrameworkCore.MySql
             text: "MySQL and MariaDB"
           - url: core/providers/cosmos/index.md
             text: "Azure Cosmos DB for NoSQL"
