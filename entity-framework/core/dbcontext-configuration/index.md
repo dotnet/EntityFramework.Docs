@@ -2,7 +2,7 @@
 title: DbContext Lifetime, Configuration, and Initialization - EF Core
 description: Patterns for creating and managing DbContext instances with or without dependency injection
 author: SamMonoRT
-ms.date: 09/30/2025
+ms.date: 11/24/2026
 uid: core/dbcontext-configuration/index
 ms.custom: sfi-ropc-nochange
 ---
