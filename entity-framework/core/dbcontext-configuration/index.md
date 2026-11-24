@@ -2,7 +2,7 @@
 title: DbContext Lifetime, Configuration, and Initialization - EF Core
 description: Patterns for creating and managing DbContext instances with or without dependency injection
 author: SamMonoRT
-ms.date: 09/30/2025
+ms.date: 11/24/2026
 uid: core/dbcontext-configuration/index
 ms.custom: sfi-ropc-nochange
 ---
@@ -246,7 +246,7 @@ The following table contains examples for common database providers.
 | SQLite                     | `.UseSqlite(connectionString)`               | [Microsoft.EntityFrameworkCore.Sqlite](https://www.nuget.org/packages/Microsoft.EntityFrameworkCore.Sqlite/)       |
 | EF Core in-memory database | `.UseInMemoryDatabase(databaseName)`         | [Microsoft.EntityFrameworkCore.InMemory](https://www.nuget.org/packages/Microsoft.EntityFrameworkCore.InMemory/)   |
 | PostgreSQL*                | `.UseNpgsql(connectionString)`               | [Npgsql.EntityFrameworkCore.PostgreSQL](https://www.nuget.org/packages/Npgsql.EntityFrameworkCore.PostgreSQL/)     |
-| MySQL/MariaDB*             | `.UseMySql(connectionString)`                | [Pomelo.EntityFrameworkCore.MySql](https://www.nuget.org/packages/Pomelo.EntityFrameworkCore.MySql/)               |
+| MySQL/MariaDB*             | `.UseMySql(connectionString, serverVersion)` | [Microting.EntityFrameworkCore.MySql](https://www.nuget.org/packages/Microting.EntityFrameworkCore.MySql/)           |
 | Oracle*                    | `.UseOracle(connectionString)`               | [Oracle.EntityFrameworkCore](https://www.nuget.org/packages/Oracle.EntityFrameworkCore/)                           |
 
 *These database providers are not shipped by Microsoft. See [Database Providers](xref:core/providers/index) for more information about database providers.
